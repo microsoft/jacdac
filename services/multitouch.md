@@ -17,19 +17,27 @@ It's best to ignore this (unless debugging), and use events.
 
 Most events include the channel number of the input.
 
-    event touch { channel: u32 } @ 0x01
+    event touch @ 0x01 {
+        channel: u32
+    }
 
 Emitted when an input is touched.
 
-    event release { channel: u32 } @ 0x02
+    event release @ 0x02 {
+        channel: u32
+    }
 
 Emitted when an input is no longer touched.
 
-    event tap { channel: u32 } @ 0x03
+    event tap @ 0x03 {
+        channel: u32
+    }
 
 Emitted when an input is briefly touched. TODO Not implemented.
 
-    event long_press { channel: u32 } @ 0x04
+    event long_press @ 0x04 {
+        channel: u32
+    }
 
 Emitted when an input is touched for longer than 500ms. TODO Not implemented.
 

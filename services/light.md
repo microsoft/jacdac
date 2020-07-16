@@ -92,6 +92,7 @@ and could not allow change.
 Specifies the number of pixels in the strip.
 Controllers which are sold with lights should default to the correct length
 and could not allow change.
+Increasing length at runtime leads to ineffective use of memory and may lead to controller reboot.
 
     rw max_power = 200: u16 mA @ 0x07
 

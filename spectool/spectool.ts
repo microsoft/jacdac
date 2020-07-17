@@ -32,9 +32,9 @@ interface InterfaceInfo {
     name: string;
     identifier: number; // register/command/event number
     description: string; // this can get long
-    hasNaturalAlignment: boolean;
-    isOptional: boolean;
     fields: InterfaceMember[]; // most registers have a single member, named "_"
+    packed?: boolean;
+    optional?: boolean;
 }
 
 interface InterfaceMember {
@@ -68,8 +68,14 @@ function toJSON(filecontent: string, includes?: SMap<ServiceInfo>, filename = ""
     let lineNo = 0
     let noteId = "short"
     let lastCmd: InterfaceInfo
+    let descIface: InterfaceInfo
 
     const baseInfo = includes ? includes["_base"] : undefined
+    const usedIds: SMap<string> = {}
+    for (const prev of values(includes)) {
+        if (prev.classIdentifier)
+            usedIds[prev.classIdentifier + ""] = prev.name
+    }
 
     try {
         for (let line of filecontent.split(/\n/)) {
@@ -82,6 +88,12 @@ function toJSON(filecontent: string, includes?: SMap<ServiceInfo>, filename = ""
 
     if (errors.length)
         info.errors = errors
+
+    for (const k of Object.keys(info.notes))
+        info.notes[k] = normalizeMD(info.notes[k])
+    for (const v of values(info.interfaces))
+        v.description = normalizeMD(v.description)
+
     return info
 
     function processLine(line: string) {
@@ -105,7 +117,8 @@ function toJSON(filecontent: string, includes?: SMap<ServiceInfo>, filename = ""
         if (!interpret) {
             const m = /^(#+)\s*(.*)/.exec(line)
             if (m) {
-                let [hd, cont] = m
+                let [_full, hd, cont] = m
+                descIface = null
                 cont = cont.trim()
                 const newNoteId = cont.toLowerCase()
                 if (hd == "#" && !info.name) {
@@ -121,10 +134,15 @@ function toJSON(filecontent: string, includes?: SMap<ServiceInfo>, filename = ""
                 }
             }
 
-            if (line || info.notes[noteId]) {
-                if (!info.notes[noteId])
-                    info.notes[noteId] = ""
-                info.notes[noteId] += line + "\n"
+            if (descIface) {
+                if (descIface.description || line)
+                    descIface.description += line + "\n"
+            } else {
+                if (line || info.notes[noteId]) {
+                    if (!info.notes[noteId])
+                        info.notes[noteId] = ""
+                    info.notes[noteId] += line + "\n"
+                }
             }
         } else {
             const expanded = line
@@ -169,8 +187,13 @@ function toJSON(filecontent: string, includes?: SMap<ServiceInfo>, filename = ""
     }
 
     function finishInterface() {
-        interfaceObject.hasNaturalAlignment = hasNaturalAlignment(interfaceObject)
+        interfaceObject.packed = hasNaturalAlignment(interfaceObject) ? undefined : true
         interfaceObject = null
+    }
+
+    function normalizeMD(md: string) {
+        return md
+            .replace(/\n+$/, "")
     }
 
     function checkBraces(words: string[]) {
@@ -199,13 +222,12 @@ function toJSON(filecontent: string, includes?: SMap<ServiceInfo>, filename = ""
             name: normalizeName(name),
             identifier: undefined,
             description: "",
-            isOptional: false,
-            hasNaturalAlignment: false,
             fields: []
         }
+        descIface = interfaceObject
         if (words[0] == "?") {
             words.shift()
-            interfaceObject.isOptional = true
+            interfaceObject.optional = true
         }
 
         const key = isResp ? "resp:" + interfaceObject.name : interfaceObject.name
@@ -292,11 +314,12 @@ function toJSON(filecontent: string, includes?: SMap<ServiceInfo>, filename = ""
         if (words.length)
             error(`excessive tokens at the end of member: ${words[0]}...`)
 
+        const [st, t] = normalizeStorageType(tp)
         interfaceObject.fields.push({
             name,
             unit,
-            type: normalizeType(tp),
-            storage: storageTypeFor(tp),
+            type: t,
+            storage: st,
             defaultValue,
         })
     }
@@ -307,7 +330,7 @@ function toJSON(filecontent: string, includes?: SMap<ServiceInfo>, filename = ""
             error("expecting: enum NAME : TYPE {")
         enumObject = {
             name: normalizeName(words[1]),
-            storage: normalizeStorageType(words[3]),
+            storage: normalizeStorageType(words[3])[0],
             members: {}
         }
         if (info.enums[enumObject.name])
@@ -352,6 +375,8 @@ function toJSON(filecontent: string, includes?: SMap<ServiceInfo>, filename = ""
             case "class":
             case "identifier":
                 info.classIdentifier = parseIntCheck(words[2])
+                if (usedIds[info.classIdentifier + ""])
+                    error(`class identifier 0x${info.classIdentifier.toString(16)} already used in ${usedIds[info.classIdentifier + ""]}`)
                 break
             default:
                 error("unknown metadata field: " + words[0])
@@ -390,13 +415,15 @@ function toJSON(filecontent: string, includes?: SMap<ServiceInfo>, filename = ""
         return n
     }
 
-    function normalizeStorageType(tp: string): StorageType {
+    function normalizeStorageType(tp: string): [StorageType, string] {
+        if (info.enums[tp])
+            return [info.enums[tp].storage, tp]
         if (!tp)
             error("expecting type here")
         let tp2 = tp.replace(/_t$/, "").toLowerCase()
         switch (tp2) {
             case "bool":
-                return "u8"
+                return ["u8", tp2]
             case "i8":
             case "u8":
             case "i16":
@@ -405,22 +432,20 @@ function toJSON(filecontent: string, includes?: SMap<ServiceInfo>, filename = ""
             case "u32":
             case "i64":
             case "u64":
+                return [tp2, tp2]
             case "bytes":
-                return tp2
             case "utf8":
             case "string":
             case "i32[]":
-                return "bytes"
+                return ["bytes", tp2]
             default:
                 error("unknown type: " + tp)
-                return "u32"
+                return ["u32", tp2]
         }
     }
 
     function normalizeType(tp: string) {
-        if (info.enums[tp])
-            return tp
-        return normalizeStorageType(tp)
+        return normalizeStorageType(tp)[1]
     }
 
     function normalizeUnit(unit: string): Unit {
@@ -493,7 +518,7 @@ function toUpper(name: string) {
 }
 
 function packed(iface: InterfaceInfo) {
-    if (iface.hasNaturalAlignment) return ""
+    if (iface.packed) return ""
     else return " __attribute__((packed))"
 }
 
@@ -668,19 +693,19 @@ function nodeMain() {
         console.log(`process ${fn}`)
         const cont: string = fs.readFileSync(path.join(dn, fn), "utf8")
         const json = toJSON(cont, includes)
-        if (fn[0] == "_")
-            includes[fn.replace(/\.md$/, "")] = json
+        const key = fn.replace(/\.md$/, "")
+        includes[key] = json
 
         if (json.errors) {
             for (let e of json.errors) {
                 const fn2 = e.file ? path.join(dn, e.file + ".md") : fn
                 console.error(`${fn2}(${e.line}): ${e.message}`)
             }
-            break
+            process.exit(1)
         } else {
             const cnv = converters()
             for (let n of Object.keys(cnv)) {
-                fs.writeFileSync(path.join(outp, n, json.name + "." + n), cnv[n](json))
+                fs.writeFileSync(path.join(outp, n, fn.slice(0, -3) + "." + n), cnv[n](json))
             }
         }
     }

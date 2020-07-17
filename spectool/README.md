@@ -175,5 +175,5 @@ inside of the `event` command.
 This 32 bit are available, it's recommended to stick to low numbers.
 
 Many events have no arguments, like the `take_off` one.
-Arguments can be specified as for other interfaces.
+Arguments can be specified as for registers and commands.
 

@@ -72,14 +72,17 @@ typically `0` and in that case are not specified).
 The value is unsigned and 16 bit long, and is expressed in milliseconds.
 The address of the register is `0x80` (register ranges are specified in `_base.md`).
 The text after the register definition ends up in `description` field in JSON.
+Register name (nor description) is never sent over wire (same applies to commands
+and events).
 
 The next line specifies a read-only register, giving current temperature in degrees Kelvin.
 A 32 bit value is used to avoid overflows.
 
 The third register is unit-less.
-It is also one that does not change, at least until the device resets.
+It is also one that does not change, at least until the device resets
+(in the case of this service, the reset is usually quite spectacular).
 
-The fourth registers is current acceleration.
+The fourth register is current acceleration.
 The `i22.10` type is signed 32 bit integer, where the value is shifted by 10 bits.
 That is, the last 10 bits is the fractional part.
 The values are expressed in `g`, which is Earth-standard gravity.
@@ -157,7 +160,7 @@ All events are emitted three times, to ensure good reception.
 
 Rockets leaves the launch pad.
 
-    command bird_in_nozzle @ 0x02 {
+    event bird_in_nozzle @ 0x02 {
         nozzle_id: u8
     }
 

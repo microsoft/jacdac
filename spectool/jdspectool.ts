@@ -1,34 +1,34 @@
 /// <reference path="jdspec.d.ts" />
 
 
-function toJSON(filecontent: string, includes?: jd.SMap<jd.ServiceSpec>, filename = ""): jd.ServiceSpec {
-    let info: jd.ServiceSpec = {
+function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>, filename = ""): jdspec.ServiceSpec {
+    let info: jdspec.ServiceSpec = {
         name: "",
         extends: [],
         notes: {},
         classIdentifier: 0,
         enums: {},
-        interfaces: {},
+        packets: {},
     }
 
     let backticksType = ""
-    let enumObject: jd.EnumInfo = null
-    let interfaceObject: jd.InterfaceInfo = null
-    let errors: jd.Diagnostic[] = []
+    let enumInfo: jdspec.EnumInfo = null
+    let packetInfo: jdspec.PacketInfo = null
+    let errors: jdspec.Diagnostic[] = []
     let lineNo = 0
     let noteId = "short"
-    let lastCmd: jd.InterfaceInfo
-    let descIface: jd.InterfaceInfo
+    let lastCmd: jdspec.PacketInfo
+    let packetsToDescribe: jdspec.PacketInfo[]
 
     const baseInfo = includes ? includes["_base"] : undefined
-    const usedIds: jd.SMap<string> = {}
+    const usedIds: jdspec.SMap<string> = {}
     for (const prev of values(includes)) {
         if (prev.classIdentifier)
             usedIds[prev.classIdentifier + ""] = prev.name
     }
 
     try {
-        for (let line of filecontent.split(/\n/)) {
+        for (let line of filecontent.split(/\r?\n/)) {
             lineNo++
             processLine(line)
         }
@@ -41,7 +41,7 @@ function toJSON(filecontent: string, includes?: jd.SMap<jd.ServiceSpec>, filenam
 
     for (const k of Object.keys(info.notes))
         info.notes[k] = normalizeMD(info.notes[k])
-    for (const v of values(info.interfaces))
+    for (const v of values(info.packets))
         v.description = normalizeMD(v.description)
 
     return info
@@ -68,7 +68,7 @@ function toJSON(filecontent: string, includes?: jd.SMap<jd.ServiceSpec>, filenam
             const m = /^(#+)\s*(.*)/.exec(line)
             if (m) {
                 let [_full, hd, cont] = m
-                descIface = null
+                packetsToDescribe = null
                 cont = cont.trim()
                 const newNoteId = cont.toLowerCase()
                 if (hd == "#" && !info.name) {
@@ -84,9 +84,9 @@ function toJSON(filecontent: string, includes?: jd.SMap<jd.ServiceSpec>, filenam
                 }
             }
 
-            if (descIface) {
-                if (descIface.description || line)
-                    descIface.description += line + "\n"
+            if (packetsToDescribe) {
+                for (const iface of packetsToDescribe)
+                    iface.description += line + "\n"
             } else {
                 if (line || info.notes[noteId]) {
                     if (!info.notes[noteId])
@@ -95,6 +95,8 @@ function toJSON(filecontent: string, includes?: jd.SMap<jd.ServiceSpec>, filenam
                 }
             }
         } else {
+            if (packetsToDescribe && packetsToDescribe[0].description)
+                packetsToDescribe = null
             const expanded = line
                 .replace(/\/\/.*/, "")
                 .replace(/[\?@:=,\{\};]/g, s => " " + s + " ")
@@ -118,72 +120,75 @@ function toJSON(filecontent: string, includes?: jd.SMap<jd.ServiceSpec>, filenam
                 case "ro":
                 case "rw":
                 case "event":
-                    startInterface(words)
+                    startPacket(words)
                     break
                 case "}":
-                    if (interfaceObject) {
-                        finishInterface()
-                    } else if (enumObject) {
-                        enumObject = null
+                    if (packetInfo) {
+                        finishPacket()
+                    } else if (enumInfo) {
+                        enumInfo = null
                     } else {
                         error("nothing to end here")
                     }
                     break
                 default:
-                    if (interfaceObject) interfaceMember(words)
-                    else if (enumObject) enumMember(words)
+                    if (packetInfo) packetField(words)
+                    else if (enumInfo) enumMember(words)
                     else metadataMember(words)
             }
         }
     }
 
-    function finishInterface() {
-        interfaceObject.packed = hasNaturalAlignment(interfaceObject) ? undefined : true
-        interfaceObject = null
+    function finishPacket() {
+        packetInfo.packed = hasNaturalAlignment(packetInfo) ? undefined : true
+        packetInfo = null
     }
 
     function normalizeMD(md: string) {
         return md
+            .replace(/^\n+/, "")
             .replace(/\n+$/, "")
     }
 
     function checkBraces(words: string[]) {
-        if (enumObject || interfaceObject)
+        if (enumInfo || packetInfo)
             error("already in braces")
         if (words) {
             if (words[2] != "{")
                 error(`expecting: ${words[0]} NAME {`)
         }
 
-        enumObject = null
-        interfaceObject = null
+        enumInfo = null
+        packetInfo = null
     }
 
-    function startInterface(words: string[]) {
+    function startPacket(words: string[]) {
         checkBraces(null)
-        const kind = words.shift() as any as jd.InterfaceKind
+        const kind = words.shift() as any as jdspec.PacketKind
         let name = words.shift()
         const isReport = kind == "report"
         if (isReport && lastCmd && !/^\w+$/.test(name)) {
             words.unshift(name)
             name = lastCmd.name
         }
-        interfaceObject = {
+        packetInfo = {
             kind,
             name: normalizeName(name),
             identifier: undefined,
             description: "",
             fields: []
         }
-        descIface = interfaceObject
+        if (!packetsToDescribe)
+            packetsToDescribe = []
+        packetsToDescribe.push(packetInfo)
         if (words[0] == "?") {
             words.shift()
-            interfaceObject.optional = true
+            packetInfo.optional = true
         }
 
-        const key = isReport ? "report:" + interfaceObject.name : interfaceObject.name
-        if (info.interfaces[key])
-            error("interface redefinition")
+        const key = isReport ? "report:" + packetInfo.name : packetInfo.name
+        if (info.packets[key])
+            error("packet redefinition")
 
         const atat = words.indexOf("@")
         if (atat >= 0) {
@@ -192,7 +197,7 @@ function toJSON(filecontent: string, includes?: jd.SMap<jd.ServiceSpec>, filenam
             if (isNaN(v)) {
                 v = 0
                 if (baseInfo) {
-                    const baseIntf = baseInfo.interfaces[w]
+                    const baseIntf = baseInfo.packets[w]
                     if (baseIntf) {
                         v = baseIntf.identifier
                         if (baseIntf.kind != kind)
@@ -203,19 +208,19 @@ function toJSON(filecontent: string, includes?: jd.SMap<jd.ServiceSpec>, filenam
                     error(`${w} cannot be resolved, since _base is missing`)
                 }
             }
-            interfaceObject.identifier = v
+            packetInfo.identifier = v
             words.splice(atat, 2)
         } else {
             if (isReport && lastCmd)
-                interfaceObject.identifier = lastCmd.identifier
+                packetInfo.identifier = lastCmd.identifier
             else
-                error(`@ not found at ${interfaceObject.name}`)
+                error(`@ not found at ${packetInfo.name}`)
         }
 
-        info.interfaces[interfaceObject.name] = interfaceObject
+        info.packets[key] = packetInfo
 
         if (kind == "command")
-            lastCmd = interfaceObject
+            lastCmd = packetInfo
         else
             lastCmd = null
 
@@ -223,8 +228,8 @@ function toJSON(filecontent: string, includes?: jd.SMap<jd.ServiceSpec>, filenam
             if (words.indexOf("{") >= 0)
                 error("member need to use either block or inline syntax, not both")
             words.unshift("_")
-            interfaceMember(words)
-            finishInterface()
+            packetField(words)
+            finishPacket()
         } else {
             const last = words.shift()
             if (last == "{") {
@@ -232,13 +237,13 @@ function toJSON(filecontent: string, includes?: jd.SMap<jd.ServiceSpec>, filenam
                     words.shift()
                 if (words[0] == "}") {
                     words.shift()
-                    finishInterface()
+                    finishPacket()
                 }
                 if (words.length)
                     error(`excessive tokens: ${words[0]}...`)
             } else {
                 if (last === undefined && kind == "event") {
-                    finishInterface()
+                    finishPacket()
                 } else {
                     error("expecting '{'")
                 }
@@ -246,7 +251,7 @@ function toJSON(filecontent: string, includes?: jd.SMap<jd.ServiceSpec>, filenam
         }
     }
 
-    function interfaceMember(words: string[]) {
+    function packetField(words: string[]) {
         const name = normalizeName(words.shift())
         let defaultValue: number = undefined
         let op = words.shift()
@@ -266,7 +271,7 @@ function toJSON(filecontent: string, includes?: jd.SMap<jd.ServiceSpec>, filenam
         if (words.length)
             error(`excessive tokens at the end of member: ${words[0]}...`)
 
-        interfaceObject.fields.push({
+        packetInfo.fields.push({
             name,
             unit,
             shift: shift || undefined,
@@ -280,21 +285,21 @@ function toJSON(filecontent: string, includes?: jd.SMap<jd.ServiceSpec>, filenam
         checkBraces(null)
         if (words[2] != ":" || words[4] != "{")
             error("expecting: enum NAME : TYPE {")
-        enumObject = {
+        enumInfo = {
             name: normalizeName(words[1]),
             storage: normalizeStorageType(words[3])[0],
             members: {}
         }
-        if (info.enums[enumObject.name])
+        if (info.enums[enumInfo.name])
             error("enum redefinition")
-        info.enums[enumObject.name] = enumObject
+        info.enums[enumInfo.name] = enumInfo
     }
 
 
     function enumMember(words: string[]) {
         if (words[1] != "=" || words.length != 3)
             error(`expecting: FILD_NAME = INTEGER`)
-        enumObject.members[normalizeName(words[0])] = parseIntCheck(words[2])
+        enumInfo.members[normalizeName(words[0])] = parseIntCheck(words[2])
     }
 
     function parseIntCheck(w: string) {
@@ -342,12 +347,12 @@ function toJSON(filecontent: string, includes?: jd.SMap<jd.ServiceSpec>, filenam
         const inner = includes["_" + name]
         if (!inner)
             return error("include file not found: " + name)
-        if (Object.keys(info.interfaces).length || Object.keys(info.enums).length)
+        if (Object.keys(info.packets).length || Object.keys(info.enums).length)
             error("extends: only allowed on top")
         if (inner.errors)
             errors = errors.concat(inner.errors)
         info.enums = clone(inner.enums)
-        info.interfaces = clone(inner.interfaces)
+        info.packets = clone(inner.packets)
     }
 
     function clone<T>(v: T): T {
@@ -367,7 +372,7 @@ function toJSON(filecontent: string, includes?: jd.SMap<jd.ServiceSpec>, filenam
         return n
     }
 
-    function normalizeStorageType(tp: string): [jd.StorageType, string, number] {
+    function normalizeStorageType(tp: string): [jdspec.StorageType, string, number] {
         if (info.enums[tp])
             return [info.enums[tp].storage, tp, 0]
         if (!tp)
@@ -405,7 +410,7 @@ function toJSON(filecontent: string, includes?: jd.SMap<jd.ServiceSpec>, filenam
         }
     }
 
-    function normalizeUnit(unit: string): jd.Unit {
+    function normalizeUnit(unit: string): jdspec.Unit {
         switch (unit) {
             case undefined:
             case null:
@@ -428,7 +433,7 @@ function toJSON(filecontent: string, includes?: jd.SMap<jd.ServiceSpec>, filenam
         }
     }
 
-    function hasNaturalAlignment(iface: jd.InterfaceInfo) {
+    function hasNaturalAlignment(iface: jdspec.PacketInfo) {
         let bitOffset = 0
 
         for (let m of iface.fields) {
@@ -444,7 +449,7 @@ function toJSON(filecontent: string, includes?: jd.SMap<jd.ServiceSpec>, filenam
     }
 }
 
-function values<T>(o: jd.SMap<T>): T[] {
+function values<T>(o: jdspec.SMap<T>): T[] {
     let r: T[] = []
     for (let k of Object.keys(o))
         r.push(o[k])
@@ -455,7 +460,7 @@ function fail(msg: string) {
     throw new Error(msg)
 }
 
-function bitSize(tp: jd.StorageType) {
+function bitSize(tp: jdspec.StorageType) {
     const m = /^[iu](\d+)/.exec(tp)
     if (m) {
         return parseInt(m[1])
@@ -470,12 +475,12 @@ function toUpper(name: string) {
     return name.replace(/([a-z])([A-Z])/g, (x, a, b) => a + "_" + b).toUpperCase()
 }
 
-function packed(iface: jd.InterfaceInfo) {
+function packed(iface: jdspec.PacketInfo) {
     if (iface.packed) return ""
     else return " __attribute__((packed))"
 }
 
-function toH(info: jd.ServiceSpec) {
+function toH(info: jdspec.ServiceSpec) {
     let r = "// Autogenerated C header file for " + info.name + "\n"
     const hdDef = `_JACDAC_${toUpper(info.name)}_H`
     r += `#ifndef ${hdDef}\n`
@@ -486,7 +491,7 @@ function toH(info: jd.ServiceSpec) {
         for (let k of Object.keys(en.members))
             r += "#define " + enPref + "_" + toUpper(k) + " " + en.members[k] + "\n"
     }
-    for (let iface of values(info.interfaces)) {
+    for (let iface of values(info.packets)) {
         r += `\n// ${iface.kind} ${iface.name}\n`
         r += `typedef struct ${iface.name} {\n`
         for (let f of iface.fields) {
@@ -507,8 +512,8 @@ function toH(info: jd.ServiceSpec) {
     return r
 }
 
-function toHPP(info: jd.ServiceSpec) {
-    let r = "// Autogenerated C++ header file for " + info.name + "\n"
+function toHPP(info: jdspec.ServiceSpec) {
+    let r = "// Auto-generated C++ header file for " + info.name + "\n"
     const hdDef = `_JACDAC_${toUpper(info.name)}_HPP`
     r += `#ifndef ${hdDef}\n`
     r += `#define ${hdDef} 1\n`
@@ -518,7 +523,7 @@ function toHPP(info: jd.ServiceSpec) {
             r += "    " + k + " = " + en.members[k] + ",\n"
         r += "}\n"
     }
-    for (let iface of values(info.interfaces)) {
+    for (let iface of values(info.packets)) {
         r += `\n// ${iface.kind} ${iface.name}\n`
         r += `struct ${iface.name} {\n`
         for (let f of iface.fields) {
@@ -549,7 +554,7 @@ const tsNumFmt = {
     i32: "Int32LE:l",
 }
 
-function toTS(info: jd.ServiceSpec) {
+function toTS(info: jdspec.ServiceSpec) {
     let r = "// Autogenerated TypeScript file for " + info.name + "\n"
     r += "namespace " + info.name + " {\n"
     for (let en of values(info.enums)) {
@@ -558,7 +563,7 @@ function toTS(info: jd.ServiceSpec) {
             r += "    " + k + " = " + en.members[k] + ",\n"
         r += "}\n"
     }
-    for (let iface of values(info.interfaces)) {
+    for (let iface of values(info.packets)) {
         r += `\n// ${iface.kind} ${iface.name}\n`
         r += `export class ${iface.name} {\n`
         let offset = 0
@@ -610,9 +615,9 @@ function toTS(info: jd.ServiceSpec) {
 declare var process: any;
 declare var require: any;
 
-function converters(): jd.SMap<(s: jd.ServiceSpec) => string> {
+function converters(): jdspec.SMap<(s: jdspec.ServiceSpec) => string> {
     return {
-        "json": (j: jd.ServiceSpec) => JSON.stringify(j, null, 2),
+        "json": (j: jdspec.ServiceSpec) => JSON.stringify(j, null, 2),
         /*
         "ts": toTS,
         "c": toH,
@@ -632,7 +637,7 @@ function nodeMain() {
     const dn = process.argv[2]
     console.log("processing diretory " + dn + "...")
     const files: string[] = fs.readdirSync(dn)
-    const includes: jd.SMap<jd.ServiceSpec> = {}
+    const includes: jdspec.SMap<jdspec.ServiceSpec> = {}
     files.sort()
 
     const outp = path.join(dn, "generated")

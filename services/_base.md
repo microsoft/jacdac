@@ -16,7 +16,7 @@ Commands follow.
     report { ... }
 
 Enumeration data for control service; service-specific advertisement data otherwise.
-Control broadcasts is automatically every 500ms, but other service have to be queried to provide it.
+Control broadcasts it automatically every 500ms, but other service have to be queried to provide it.
 
     report event @ 0x01 {
         event_id: u32

@@ -1,4 +1,4 @@
-declare namespace jd {
+declare namespace jdspec {
     type SMap<T> = { [v: string]: T; }
 
     /**
@@ -33,7 +33,7 @@ declare namespace jd {
          * List of extended service types (eg. 'sensor').
          * 
          * This is for reference only. Inherited registers/commands/etc are included
-         * in our interface object.
+         * in our packets object.
          */
         extends: string[];
 
@@ -60,7 +60,7 @@ declare namespace jd {
         /**
          * Registers, commands, and events defined in service.
          */
-        interfaces: SMap<InterfaceInfo>;
+        packets: SMap<PacketInfo>;
 
         /**
          * If parsing of markdown fails, this includes the parse errors. Set to null/undefined when no errors.
@@ -98,18 +98,20 @@ declare namespace jd {
      * 
      * ro registers cannot be written.
      * 
+     * const registers cannot be written, and also don't change at least until reset.
+     * 
      * events are passed inside of event report, and can be also piped via streams. 
      */
-    type InterfaceKind = "report" | "command" | "const" | "ro" | "rw" | "event"
+    type PacketKind = "report" | "command" | "const" | "ro" | "rw" | "event"
 
     /**
      * Spec for a report/command/register or event.
      */
-    interface InterfaceInfo {
+    interface PacketInfo {
         /**
-         * Kind of this interface.
+         * Kind of this packet.
          */
-        kind: InterfaceKind;
+        kind: PacketKind;
 
         /**
          * Name in lower case snake case.
@@ -128,12 +130,12 @@ declare namespace jd {
         description: string;
 
         /**
-         * Binary layout of arguments of this interface (if any).
+         * Binary layout of arguments of this packet (if any).
          * 
          * Many interfaces will have only a single field, named "_" - the spec language
          * has a shorthand syntax for that.
          */
-        fields: InterfaceMember[];
+        fields: PacketMember[];
 
         /**
          * If present and true, the binary layout of fields does not follow natural alignment
@@ -142,15 +144,15 @@ declare namespace jd {
         packed?: boolean;
 
         /**
-         * If present and true, the given interface is optional and can be left out by implementation.
+         * If present and true, the handling of given packet is optional and can be left out by implementation.
          */
         optional?: boolean;
     }
 
     /**
-     * Spec for a single entry in interface binary layout.
+     * Spec for a single entry in packet binary layout.
      */
-    interface InterfaceMember {
+    interface PacketMember {
         /**
          * Name of member. Can be "_" if there's only a single member.
          */

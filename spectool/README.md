@@ -12,6 +12,9 @@ English specification text.
 The code sections can be in triple backticks or with the 4 leading spaces.
 Examples in this document only use the leading spaces form.
 
+The bulk of the specification talks about packet formats.
+There are three main types of packets described: registers, commands, and events.
+
 ## Example
 
 First, let's go through a simple example, commenting on various functionality.

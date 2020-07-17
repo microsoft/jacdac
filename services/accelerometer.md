@@ -1,7 +1,7 @@
 # Button
 
     identifier: 0x1f140409
-    extends: sensor
+    extends: _sensor
 
 A 3-axis accelerometer.
 

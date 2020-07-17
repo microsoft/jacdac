@@ -1,7 +1,7 @@
 # Slider
 
     identifier: 0x1f274746
-    extends: sensor
+    extends: _sensor
 
 A slider potentiometer.
 

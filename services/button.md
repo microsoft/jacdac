@@ -1,7 +1,7 @@
 # Button
 
     identifier: 0x1473a263
-    extends: sensor
+    extends: _sensor
 
 A simple push-button.
 

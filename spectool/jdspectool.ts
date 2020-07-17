@@ -247,7 +247,7 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
                     warn(`${kind} @ 0x${v.toString(16)} should be expressed with a name from _base.md`)
             } else if (isHigh) {
                 if (!info.highCommands)
-                    warn(`${kind} @ 0x${v.toString(16)} is from the extended range but 'extended: 1' missing`)
+                    warn(`${kind} @ 0x${v.toString(16)} is from the extended range but 'high: 1' missing`)
             }
 
             packetInfo.identifier = v
@@ -417,15 +417,18 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
     function processInclude(name: string) {
         if (name == "base")
             return
-        const inner = includes["_" + name]
+        const inner = includes[name]
         if (!inner)
             return error("include file not found: " + name)
         if (Object.keys(info.packets).length || Object.keys(info.enums).length)
-            error("extends: only allowed on top")
+            error("extends: only allowed on top of the .md file")
         if (inner.errors)
             errors = errors.concat(inner.errors)
         info.enums = clone(inner.enums)
         info.packets = clone(inner.packets)
+        if (inner.highCommands)
+            info.highCommands = true
+        info.notes = clone(inner.notes)
     }
 
     function clone<T>(v: T): T {

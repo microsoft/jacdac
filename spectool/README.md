@@ -188,14 +188,14 @@ Arguments can be specified as for registers and commands.
 ## Extending specs
 
 Service specs can extend certain base specs.
-Currently, this only applies to `_sensor.md` spec.
+Currently, this mostly applies to `_sensor.md` spec.
 For example:
 
 ```markdown
 # Button
 
     identifier: 0x1473a263
-    extends: sensor
+    extends: _sensor
 
 A simple push-button.
 
@@ -228,3 +228,9 @@ In fact, this is the only way to refer to the addresses in the system range:
 if the example used `@ 0x101` instead of `@ reading`, the jdspectool would
 generate an error.
 
+## Other features
+
+jdspectool validates ranges of commands and register addresses.
+If you want to use high commands or registers (above 0x100/0x200; note that for vast majority
+of services this should not be needed),
+include `high: 1` after `identifier: ...` (the error message will tell you that).

@@ -1,7 +1,7 @@
 # Multitouch
 
     identifier: 0x18d55e2b
-    extends: sensor
+    extends: _sensor
 
 A capacitive touch sensor with multiple inputs.
 

@@ -18,12 +18,23 @@ Commands follow.
 Enumeration data for control service; service-specific advertisement data otherwise.
 Control broadcasts it automatically every 500ms, but other service have to be queried to provide it.
 
+    command get_register @ 0x1000 {}
+    report { ... }
+
+Registers number `N` is fetched by issuing command `0x1000 | N`.
+The report format is the same as the format of the register.
+
+    command set_register @ 0x2000 { ... }
+
+Registers number `N` is set by issuing command `0x2000 | N`, with the format
+the same as the format of the register.
+
     report event @ 0x01 {
         event_id: u32
         event_argument: u32
     }
 
-Event from sensor or on broadcast service. 
+Event from sensor or a broadcast service. 
 
     command calibrate @ 0x02 { }
     report { }

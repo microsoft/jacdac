@@ -94,7 +94,7 @@ Controllers which are sold with lights should default to the correct length
 and could not allow change.
 Increasing length at runtime leads to ineffective use of memory and may lead to controller reboot.
 
-    rw max_power = 200: u16 mA @ 0x07
+    rw max_power = 200: u16 mA @ max_power
 
 Limit the power drawn by the light-strip (and controller).
 

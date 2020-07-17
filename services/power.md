@@ -10,7 +10,7 @@ A power-provider service.
 
 Turn the power to the bus on/off.
 
-    rw max_power = 500: u16 mA @ 0x07
+    rw max_power = 500: u16 mA @ max_power
 
 Limit the power provided by the service.
 

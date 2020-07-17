@@ -194,20 +194,62 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
         if (atat >= 0) {
             const w = words[atat + 1]
             let v = parseInt(w)
+            let isSet = true
+            let isSymbolic = false
             if (isNaN(v)) {
                 v = 0
+                isSet = false
                 if (baseInfo) {
-                    const baseIntf = baseInfo.packets[w]
-                    if (baseIntf) {
-                        v = baseIntf.identifier
-                        if (baseIntf.kind != kind)
-                            error(`kind mismatch on ${w}: ${baseIntf} vs {kind}`)
+                    const basePacket = baseInfo.packets[w]
+                    if (basePacket) {
+                        v = basePacket.identifier
+                        isSymbolic = true
+                        if (basePacket.kind != kind)
+                            error(`kind mismatch on ${w}: ${basePacket} vs {kind}`)
+                        else
+                            isSet = true
                     } else
                         error(`${w} not found in _base`)
                 } else {
                     error(`${w} cannot be resolved, since _base is missing`)
                 }
             }
+
+            let isUser = false
+            let isSystem = false
+            let isExtended = 0x200 <= v && v <= 0xeff
+            switch (kind) {
+                case "const":
+                case "ro":
+                    isSystem = 0x100 <= v && v <= 0x17f
+                    isUser = 0x180 <= v && v <= 0x1ff
+                    break
+                case "rw":
+                    isSystem = 0x00 <= v && v <= 0x7f
+                    isUser = 0x80 <= v && v <= 0xff
+                    break
+                case "report":
+                case "command":
+                    isSystem = 0x00 <= v && v <= 0x7f
+                    isUser = 0x80 <= v && v <= 0xff
+                    isExtended = 0x100 <= v && v <= 0xeff
+                    break
+                case "event":
+                    isUser = 0x0000 <= v && v <= 0xffff
+                    isExtended = 0x10000 <= v && v <= 0xffffffff
+                    break
+            }
+
+            if (isUser) {
+                // ok
+            } else if (isSystem) {
+                if (!isSymbolic)
+                    warn(`${kind} @ 0x${v.toString(16)} should be expressed with a name from _base.md`)
+            } else if (isExtended) {
+                if (!info.extendedCommands)
+                    warn(`${kind} @ 0x${v.toString(16)} is from the extended range but 'extended: 1' missing`)
+            }
+
             packetInfo.identifier = v
             words.splice(atat, 2)
         } else {
@@ -335,6 +377,9 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
                 if (usedIds[info.classIdentifier + ""])
                     error(`class identifier 0x${info.classIdentifier.toString(16)} already used in ${usedIds[info.classIdentifier + ""]}`)
                 break
+            case "extended":
+                info.extendedCommands = !!parseIntCheck(words[2])
+                break
             default:
                 error("unknown metadata field: " + words[0])
                 break
@@ -361,6 +406,14 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
 
     function error(msg: string) {
         if (!msg) msg = "syntax error"
+        if (errors.some(e => e.line == lineNo && e.message == msg))
+            return
+        errors.push({ file: filename, line: lineNo, message: msg })
+    }
+
+    function warn(msg: string) {
+        if (/common.*registers/i.test(info.name))
+            return // no warnings in _base
         if (errors.some(e => e.line == lineNo && e.message == msg))
             return
         errors.push({ file: filename, line: lineNo, message: msg })

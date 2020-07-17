@@ -217,7 +217,7 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
 
             let isUser = false
             let isSystem = false
-            let isExtended = 0x200 <= v && v <= 0xeff
+            let isHigh = 0x200 <= v && v <= 0xeff
             switch (kind) {
                 case "const":
                 case "ro":
@@ -232,11 +232,11 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
                 case "command":
                     isSystem = 0x00 <= v && v <= 0x7f
                     isUser = 0x80 <= v && v <= 0xff
-                    isExtended = 0x100 <= v && v <= 0xeff
+                    isHigh = 0x100 <= v && v <= 0xeff
                     break
                 case "event":
                     isUser = 0x0000 <= v && v <= 0xffff
-                    isExtended = 0x10000 <= v && v <= 0xffffffff
+                    isHigh = 0x10000 <= v && v <= 0xffffffff
                     break
             }
 
@@ -245,8 +245,8 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
             } else if (isSystem) {
                 if (!isSymbolic)
                     warn(`${kind} @ 0x${v.toString(16)} should be expressed with a name from _base.md`)
-            } else if (isExtended) {
-                if (!info.extendedCommands)
+            } else if (isHigh) {
+                if (!info.highCommands)
                     warn(`${kind} @ 0x${v.toString(16)} is from the extended range but 'extended: 1' missing`)
             }
 
@@ -364,6 +364,27 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
         return v
     }
 
+    function looksRandom(n: number) {
+        const s = n.toString(16)
+        const h = "0123456789abcdef"
+        for (let i = 0; i < h.length; ++i) {
+            const hh = h[i]
+            if (s.indexOf(hh + hh + hh) >= 0)
+                return false
+        }
+        if (/f00d|dead|deaf|beef/.test(s))
+            return false
+        return true
+    }
+
+    function genRandom() {
+        for (; ;) {
+            const m = (Math.random() * 0xfffffff) | 0x10000000
+            if (looksRandom(m))
+                return m
+        }
+    }
+
     function metadataMember(words: string[]) {
         if ((words[1] != "=" && words[1] != ":") || words.length != 3)
             error(`expecting: FILD_NAME = VALUE or FIELD_NAME : VALUE`)
@@ -374,11 +395,16 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
             case "class":
             case "identifier":
                 info.classIdentifier = parseIntCheck(words[2])
+                const gen = `how about 0x${genRandom().toString(16)}`
+                if (!(info.classIdentifier == 0 || (0x10000001 <= info.classIdentifier && info.classIdentifier <= 0x1ffffff0)))
+                    error(`class identifier out of range; ${gen}`)
+                if (!looksRandom(info.classIdentifier))
+                    error(`class identifier doesn't look random; ${gen}`)
                 if (usedIds[info.classIdentifier + ""])
-                    error(`class identifier 0x${info.classIdentifier.toString(16)} already used in ${usedIds[info.classIdentifier + ""]}`)
+                    error(`class identifier 0x${info.classIdentifier.toString(16)} already used in ${usedIds[info.classIdentifier + ""]}; ${gen}`)
                 break
-            case "extended":
-                info.extendedCommands = !!parseIntCheck(words[2])
+            case "high":
+                info.highCommands = !!parseIntCheck(words[2])
                 break
             default:
                 error("unknown metadata field: " + words[0])

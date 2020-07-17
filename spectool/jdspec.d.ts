@@ -65,7 +65,7 @@ declare namespace jdspec {
         /**
          * The service uses commands/registers over 0x100/0x200
          */
-        extendedCommands?: boolean;
+        highCommands?: boolean;
 
         /**
          * If parsing of markdown fails, this includes the parse errors. Set to null/undefined when no errors.

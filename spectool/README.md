@@ -180,3 +180,46 @@ This 32 bit are available, it's recommended to stick to low numbers.
 Many events have no arguments, like the `take_off` one.
 Arguments can be specified as for registers and commands.
 
+## Extending specs
+
+Service specs can extend certain base specs.
+Currently, this only applies to `_sensor.md` spec.
+For example:
+
+```markdown
+# Button
+
+    identifier: 0x1473a263
+    extends: sensor
+
+A simple push-button.
+
+## Registers
+
+    ro pressed: bool @ reading
+
+Indicates whether the button is currently active (pressed).
+
+## Events
+
+    event down @ 0x01
+
+Emitted when button goes from inactive (`pressed == 0`) to active.
+
+    event up @ 0x02
+
+Emitted when button goes from active (`pressed == 1`) to inactive.
+```
+
+All registers from the `_sensor.md` will be included (meaning `is_streaming` and `streaming_interval`).
+Similarly, all commands and events would be included (but there are none).
+
+The address of `pressed` register is specified as `@ reading`, meaning the
+address of the `reading` register in `_base.md`.
+Services cannot extend `_base.md`, because it includes a large number of packets that are
+never all present at the same time in a regular service.
+However, the names of these packets can be used in places of addresses.
+In fact, this is the only way to refer to the addresses in the system range:
+if the example used `@ 0x101` instead of `@ reading`, the jdspectool would
+generate an error.
+

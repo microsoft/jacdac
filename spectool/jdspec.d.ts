@@ -13,7 +13,7 @@ declare namespace jd {
      * 
      * Many fields have no unit (eg. because they represent counts); in that case empty string is used.
      */
-    type Unit = "" | "frac" | "s" | "ms" | "us" | "mV" | "mA" | "mWh" | "C" | "K"
+    type Unit = "" | "frac" | "s" | "ms" | "us" | "mV" | "mA" | "mWh" | "C" | "K" | "g"
 
     /**
      * Service specification.
@@ -166,6 +166,11 @@ declare namespace jd {
          *   - i32[] - an array of signed 32 bit values
          */
         type: string;
+
+        /**
+         * If present, specifies the raw value should be divided by (1 << shift) before usage.
+         */
+        shift?: number;
 
         /**
          * A Unit helping to interpret value.

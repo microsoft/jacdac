@@ -258,17 +258,18 @@ function toJSON(filecontent: string, includes?: jd.SMap<jd.ServiceSpec>, filenam
         if (op != ":")
             error("expecting ':'")
 
-        let tp = normalizeType(words.shift())
+        let tp = words.shift()
+        const [st, t, shift] = normalizeStorageType(tp)
 
         let unit = normalizeUnit(words.shift())
 
         if (words.length)
             error(`excessive tokens at the end of member: ${words[0]}...`)
 
-        const [st, t] = normalizeStorageType(tp)
         interfaceObject.fields.push({
             name,
             unit,
+            shift: shift || undefined,
             type: t,
             storage: st,
             defaultValue,
@@ -366,15 +367,25 @@ function toJSON(filecontent: string, includes?: jd.SMap<jd.ServiceSpec>, filenam
         return n
     }
 
-    function normalizeStorageType(tp: string): [jd.StorageType, string] {
+    function normalizeStorageType(tp: string): [jd.StorageType, string, number] {
         if (info.enums[tp])
-            return [info.enums[tp].storage, tp]
+            return [info.enums[tp].storage, tp, 0]
         if (!tp)
             error("expecting type here")
         let tp2 = tp.replace(/_t$/, "").toLowerCase()
+        const m = /^([ui])(\d+)\.(\d+)$/.exec(tp2)
+        if (m) {
+            const a = parseIntCheck(m[2])
+            const b = parseIntCheck(m[3])
+            const len = a + b
+            if (!(len == 8 || len == 16 || len == 32 || len == 64))
+                error(`fixed point ${tp} can't be ${len} bits`)
+            return [(m[1] + len) as any, tp2, b]
+        }
+
         switch (tp2) {
             case "bool":
-                return ["u8", tp2]
+                return ["u8", tp2, 0]
             case "i8":
             case "u8":
             case "i16":
@@ -383,19 +394,15 @@ function toJSON(filecontent: string, includes?: jd.SMap<jd.ServiceSpec>, filenam
             case "u32":
             case "i64":
             case "u64":
-                return [tp2, tp2]
+                return [tp2, tp2, 0]
             case "bytes":
             case "string":
             case "i32[]":
-                return ["bytes", tp2]
+                return ["bytes", tp2, 0]
             default:
                 error("unknown type: " + tp)
-                return ["u32", tp2]
+                return ["u32", tp2, 0]
         }
-    }
-
-    function normalizeType(tp: string) {
-        return normalizeStorageType(tp)[1]
     }
 
     function normalizeUnit(unit: string): jd.Unit {
@@ -413,18 +420,12 @@ function toJSON(filecontent: string, includes?: jd.SMap<jd.ServiceSpec>, filenam
             case "mWh":
             case "K":
             case "C":
+            case "g":
                 return unit
             default:
                 error(`expecting unit, got '${unit}'`)
                 return ""
         }
-    }
-
-    function storageTypeFor(tp: string) {
-        const norm = normalizeType(tp)
-        if (info.enums[norm])
-            return info.enums[norm].storage
-        return normalizeStorageType(norm)
     }
 
     function hasNaturalAlignment(iface: jd.InterfaceInfo) {

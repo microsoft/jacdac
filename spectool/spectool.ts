@@ -1,58 +1,8 @@
-/*
-Usage:
-    tsc tools/spectool.ts && node tools/spectool.js services/
-Files are written in services/generated
-*/
+/// <reference path="jdspec.d.ts" />
 
-type SMap<T> = { [v: string]: T; }
 
-type StorageType = "i8" | "u8" | "i16" | "u16" | "i32" | "u32" | "i64" | "u64" | "bytes"
-type Unit = "" | "frac" | "s" | "ms" | "us" | "mV" | "mA" | "mWh"
-
-interface ServiceInfo {
-    name: string;
-    notes: SMap<string>;
-    classIdentifier: number;
-    extends: string[];
-    enums: SMap<EnumInfo>;
-    interfaces: SMap<InterfaceInfo>;
-    errors?: Diagnostic[]; // possible parse errors
-}
-
-interface EnumInfo {
-    name: string;
-    storage: StorageType;
-    members: SMap<number>;
-}
-
-type InterfaceKind = "report" | "command" | "ro" | "rw" | "event"
-
-interface InterfaceInfo {
-    kind: InterfaceKind;
-    name: string;
-    identifier: number; // register/command/event number
-    description: string; // this can get long
-    fields: InterfaceMember[]; // most registers have a single member, named "_"
-    packed?: boolean;
-    optional?: boolean;
-}
-
-interface InterfaceMember {
-    name: string;
-    type: string; // this can be enum name
-    unit: Unit;
-    storage: StorageType;
-    defaultValue?: number;
-}
-
-interface Diagnostic {
-    file: string;
-    line: number;
-    message: string;
-}
-
-function toJSON(filecontent: string, includes?: SMap<ServiceInfo>, filename = ""): ServiceInfo {
-    let info: ServiceInfo = {
+function toJSON(filecontent: string, includes?: jd.SMap<jd.ServiceSpec>, filename = ""): jd.ServiceSpec {
+    let info: jd.ServiceSpec = {
         name: "",
         extends: [],
         notes: {},
@@ -62,16 +12,16 @@ function toJSON(filecontent: string, includes?: SMap<ServiceInfo>, filename = ""
     }
 
     let backticksType = ""
-    let enumObject: EnumInfo = null
-    let interfaceObject: InterfaceInfo = null
-    let errors: Diagnostic[] = []
+    let enumObject: jd.EnumInfo = null
+    let interfaceObject: jd.InterfaceInfo = null
+    let errors: jd.Diagnostic[] = []
     let lineNo = 0
     let noteId = "short"
-    let lastCmd: InterfaceInfo
-    let descIface: InterfaceInfo
+    let lastCmd: jd.InterfaceInfo
+    let descIface: jd.InterfaceInfo
 
     const baseInfo = includes ? includes["_base"] : undefined
-    const usedIds: SMap<string> = {}
+    const usedIds: jd.SMap<string> = {}
     for (const prev of values(includes)) {
         if (prev.classIdentifier)
             usedIds[prev.classIdentifier + ""] = prev.name
@@ -210,10 +160,10 @@ function toJSON(filecontent: string, includes?: SMap<ServiceInfo>, filename = ""
 
     function startInterface(words: string[]) {
         checkBraces(null)
-        const kind = words.shift() as any as InterfaceKind
+        const kind = words.shift() as any as jd.InterfaceKind
         let name = words.shift()
-        const isResp = kind == "report"
-        if (isResp && lastCmd && !/^\w+$/.test(name)) {
+        const isReport = kind == "report"
+        if (isReport && lastCmd && !/^\w+$/.test(name)) {
             words.unshift(name)
             name = lastCmd.name
         }
@@ -230,7 +180,7 @@ function toJSON(filecontent: string, includes?: SMap<ServiceInfo>, filename = ""
             interfaceObject.optional = true
         }
 
-        const key = isResp ? "resp:" + interfaceObject.name : interfaceObject.name
+        const key = isReport ? "report:" + interfaceObject.name : interfaceObject.name
         if (info.interfaces[key])
             error("interface redefinition")
 
@@ -255,7 +205,7 @@ function toJSON(filecontent: string, includes?: SMap<ServiceInfo>, filename = ""
             interfaceObject.identifier = v
             words.splice(atat, 2)
         } else {
-            if (isResp && lastCmd)
+            if (isReport && lastCmd)
                 interfaceObject.identifier = lastCmd.identifier
             else
                 error(`@ not found at ${interfaceObject.name}`)
@@ -415,7 +365,7 @@ function toJSON(filecontent: string, includes?: SMap<ServiceInfo>, filename = ""
         return n
     }
 
-    function normalizeStorageType(tp: string): [StorageType, string] {
+    function normalizeStorageType(tp: string): [jd.StorageType, string] {
         if (info.enums[tp])
             return [info.enums[tp].storage, tp]
         if (!tp)
@@ -434,7 +384,6 @@ function toJSON(filecontent: string, includes?: SMap<ServiceInfo>, filename = ""
             case "u64":
                 return [tp2, tp2]
             case "bytes":
-            case "utf8":
             case "string":
             case "i32[]":
                 return ["bytes", tp2]
@@ -448,7 +397,7 @@ function toJSON(filecontent: string, includes?: SMap<ServiceInfo>, filename = ""
         return normalizeStorageType(tp)[1]
     }
 
-    function normalizeUnit(unit: string): Unit {
+    function normalizeUnit(unit: string): jd.Unit {
         switch (unit) {
             case undefined:
             case null:
@@ -475,7 +424,7 @@ function toJSON(filecontent: string, includes?: SMap<ServiceInfo>, filename = ""
         return normalizeStorageType(norm)
     }
 
-    function hasNaturalAlignment(iface: InterfaceInfo) {
+    function hasNaturalAlignment(iface: jd.InterfaceInfo) {
         let bitOffset = 0
 
         for (let m of iface.fields) {
@@ -491,7 +440,7 @@ function toJSON(filecontent: string, includes?: SMap<ServiceInfo>, filename = ""
     }
 }
 
-function values<T>(o: SMap<T>): T[] {
+function values<T>(o: jd.SMap<T>): T[] {
     let r: T[] = []
     for (let k of Object.keys(o))
         r.push(o[k])
@@ -502,7 +451,7 @@ function fail(msg: string) {
     throw new Error(msg)
 }
 
-function bitSize(tp: StorageType) {
+function bitSize(tp: jd.StorageType) {
     const m = /^[iu](\d+)/.exec(tp)
     if (m) {
         return parseInt(m[1])
@@ -517,12 +466,12 @@ function toUpper(name: string) {
     return name.replace(/([a-z])([A-Z])/g, (x, a, b) => a + "_" + b).toUpperCase()
 }
 
-function packed(iface: InterfaceInfo) {
+function packed(iface: jd.InterfaceInfo) {
     if (iface.packed) return ""
     else return " __attribute__((packed))"
 }
 
-function toH(info: ServiceInfo) {
+function toH(info: jd.ServiceSpec) {
     let r = "// Autogenerated C header file for " + info.name + "\n"
     const hdDef = `_JACDAC_${toUpper(info.name)}_H`
     r += `#ifndef ${hdDef}\n`
@@ -554,7 +503,7 @@ function toH(info: ServiceInfo) {
     return r
 }
 
-function toHPP(info: ServiceInfo) {
+function toHPP(info: jd.ServiceSpec) {
     let r = "// Autogenerated C++ header file for " + info.name + "\n"
     const hdDef = `_JACDAC_${toUpper(info.name)}_HPP`
     r += `#ifndef ${hdDef}\n`
@@ -596,7 +545,7 @@ const tsNumFmt = {
     i32: "Int32LE:l",
 }
 
-function toTS(info: ServiceInfo) {
+function toTS(info: jd.ServiceSpec) {
     let r = "// Autogenerated TypeScript file for " + info.name + "\n"
     r += "namespace " + info.name + " {\n"
     for (let en of values(info.enums)) {
@@ -657,9 +606,9 @@ function toTS(info: ServiceInfo) {
 declare var process: any;
 declare var require: any;
 
-function converters(): SMap<(s: ServiceInfo) => string> {
+function converters(): jd.SMap<(s: jd.ServiceSpec) => string> {
     return {
-        "json": (j: ServiceInfo) => JSON.stringify(j, null, 2),
+        "json": (j: jd.ServiceSpec) => JSON.stringify(j, null, 2),
         /*
         "ts": toTS,
         "c": toH,
@@ -679,7 +628,7 @@ function nodeMain() {
     const dn = process.argv[2]
     console.log("processing diretory " + dn + "...")
     const files: string[] = fs.readdirSync(dn)
-    const includes: SMap<ServiceInfo> = {}
+    const includes: jd.SMap<jd.ServiceSpec> = {}
     files.sort()
 
     const outp = path.join(dn, "generated")
@@ -709,6 +658,9 @@ function nodeMain() {
             }
         }
     }
+
+    fs.writeFileSync(path.join(outp, "services.json"), JSON.stringify(includes, null, 2))
+
 
     function mkdir(n: string) {
         try {

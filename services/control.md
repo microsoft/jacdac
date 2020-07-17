@@ -23,7 +23,7 @@ Reset device. ACK may or may not be sent.
 
 ## Registers
 
-    ro device_description: utf8 @ 0x180
+    ro device_description: string @ 0x180
 
 Identifies the type of hardware (eg., ACME Corp. Servo X-42 Rev C)
 
@@ -35,7 +35,7 @@ A numeric code for the string above; used to identify firmware images.
 
 Typically the same as `device_class` unless device was flashed by hand; the bootloader will respond to that code.
 
-    ro firmware_version: utf8 @ 0x185
+    ro firmware_version: string @ 0x185
 
 A string describing firmware version; typically semver.
 

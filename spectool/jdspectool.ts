@@ -395,6 +395,8 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
             case "class":
             case "identifier":
                 info.classIdentifier = parseIntCheck(words[2])
+                if (info.name != "Control" && info.classIdentifier == 0)
+                    info.classIdentifier = 1
                 const gen = `how about 0x${genRandom().toString(16)}`
                 if (!(info.classIdentifier == 0 || (0x10000001 <= info.classIdentifier && info.classIdentifier <= 0x1ffffff0)))
                     error(`class identifier out of range; ${gen}`)

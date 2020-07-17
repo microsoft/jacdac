@@ -28,7 +28,12 @@ A controller for a liquid-propelled rocket.
 ```
 
 The first line specifies the name of the service (`name` in JSON format).
-Then we assign is unique identifier (`classIdentifier` in JSON format). These identifers are always of the form `0x1-------`.
+
+Then we assign is unique identifier (`classIdentifier` in JSON format).
+These identifers are always of the form `0x1-------`.
+If you're just defining a new service, specify it as `1` or other invalid value
+and the jdspectool will suggest a valid random identifier.
+
 What follows is a short description of the service (`notes["short"]` in JSON).
 
 ```markdown

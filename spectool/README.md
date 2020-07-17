@@ -234,3 +234,12 @@ jdspectool validates ranges of commands and register addresses.
 If you want to use high commands or registers (above 0x100/0x200; note that for vast majority
 of services this should not be needed),
 include `high: 1` after `identifier: ...` (the error message will tell you that).
+
+## Planned features
+
+```
+register temperature: i8 C @ reading [
+    typical_min: -20,
+    typical_max: 40
+] 
+```

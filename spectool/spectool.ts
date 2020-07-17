@@ -5,12 +5,15 @@ Files are written in services/generated
 */
 
 type SMap<T> = { [v: string]: T; }
+
+type StorageType = "i8" | "u8" | "i16" | "u16" | "i32" | "u32" | "i64" | "u64" | "bytes"
+type Unit = "" | "frac" | "s" | "ms" | "us" | "mV" | "mA" | "mWh"
+
 interface ServiceInfo {
     name: string;
-    description: string;
-    class: number;
-    dependencies: string[];
-    mode: string;
+    notes: SMap<string>;
+    classIdentifier: number;
+    extends: string[];
     enums: SMap<EnumInfo>;
     interfaces: SMap<InterfaceInfo>;
     errors?: Diagnostic[]; // possible parse errors
@@ -18,24 +21,28 @@ interface ServiceInfo {
 
 interface EnumInfo {
     name: string;
-    storage: string;
+    storage: StorageType;
     members: SMap<number>;
 }
 
+type InterfaceKind = "report" | "command" | "ro" | "rw" | "event"
+
 interface InterfaceInfo {
-    // TODO drop "interface"
-    kind: "report" | "command" | "control";
+    kind: InterfaceKind;
     name: string;
+    identifier: number; // register/command/event number
+    description: string; // this can get long
     hasNaturalAlignment: boolean;
-    members: InterfaceMember[];
+    isOptional: boolean;
+    fields: InterfaceMember[]; // most registers have a single member, named "_"
 }
 
 interface InterfaceMember {
     name: string;
-    type: string;
-    storage: string;
-    fixedValue?: number;
-    fixedValueName?: string;
+    type: string; // this can be enum name
+    unit: Unit;
+    storage: StorageType;
+    defaultValue?: number;
 }
 
 interface Diagnostic {
@@ -44,13 +51,12 @@ interface Diagnostic {
     message: string;
 }
 
-function toJSON(filecontent: string, includes?: SMap<string>, filename = ""): ServiceInfo {
+function toJSON(filecontent: string, includes?: SMap<ServiceInfo>, filename = ""): ServiceInfo {
     let info: ServiceInfo = {
         name: "",
-        mode: "",
-        dependencies: [],
-        description: "",
-        class: 0,
+        extends: [],
+        notes: {},
+        classIdentifier: 0,
         enums: {},
         interfaces: {},
     }
@@ -58,9 +64,12 @@ function toJSON(filecontent: string, includes?: SMap<string>, filename = ""): Se
     let backticksType = ""
     let enumObject: EnumInfo = null
     let interfaceObject: InterfaceInfo = null
-    let metadataObject: ServiceInfo = null
     let errors: Diagnostic[] = []
     let lineNo = 0
+    let noteId = "short"
+    let lastCmd: InterfaceInfo
+
+    const baseInfo = includes ? includes["_base"] : undefined
 
     try {
         for (let line of filecontent.split(/\n/)) {
@@ -76,31 +85,51 @@ function toJSON(filecontent: string, includes?: SMap<string>, filename = ""): Se
     return info
 
     function processLine(line: string) {
-        if (!info.description) {
-            const m = /^#([^#]+)/.exec(line)
-            if (m) {
-                info.description = m[1].trim()
-                if (!info.name)
-                    info.name = info.description.replace(/\s+/g, "")
-            }
-        }
         if (backticksType) {
             if (line.trim() == "```") {
                 backticksType = null
-                return
+                if (backticksType == "default")
+                    return
             }
         } else {
             const m = /^```(.*)/.exec(line)
             if (m) {
                 backticksType = m[1] || "default"
-                return
+                if (backticksType == "default")
+                    return
             }
         }
 
-        if (backticksType == "default") {
+        const interpret = backticksType == "default" || line.slice(0, 4) == "    "
+
+        if (!interpret) {
+            const m = /^(#+)\s*(.*)/.exec(line)
+            if (m) {
+                let [hd, cont] = m
+                cont = cont.trim()
+                const newNoteId = cont.toLowerCase()
+                if (hd == "#" && !info.name) {
+                    info.name = cont
+                    line = ""
+                } else if (newNoteId == "registers" || newNoteId == "commands" || newNoteId == "events" || newNoteId == "examples") {
+                    noteId = newNoteId
+                    line = ""
+                } else {
+                    if (noteId == "short")
+                        noteId = "long"
+                    // keep line
+                }
+            }
+
+            if (line || info.notes[noteId]) {
+                if (!info.notes[noteId])
+                    info.notes[noteId] = ""
+                info.notes[noteId] += line + "\n"
+            }
+        } else {
             const expanded = line
                 .replace(/\/\/.*/, "")
-                .replace(/[:=,{};]+/g, s => " " + s + " ")
+                .replace(/[\?@:=,\{\};]/g, s => " " + s + " ")
                 .trim()
             if (!expanded)
                 return
@@ -110,27 +139,23 @@ function toJSON(filecontent: string, includes?: SMap<string>, filename = ""): Se
             let cmd = words[0]
             // allow for `command = Foo.Bar` etc (ie. command is not a keyword there)
             if (words[1] == ":" || words[1] == "=")
-                cmd = "n/a"
+                cmd = ":"
             switch (cmd) {
                 case "enum":
                     startEnum(words)
                     break
-                case "metadata":
-                    startMetadata(words)
-                    break
                 case "report":
                 case "command":
-                case "control":
+                case "ro":
+                case "rw":
+                case "event":
                     startInterface(words)
                     break
                 case "}":
                     if (interfaceObject) {
-                        interfaceObject.hasNaturalAlignment = hasNaturalAlignment(interfaceObject)
-                        interfaceObject = null
+                        finishInterface()
                     } else if (enumObject) {
                         enumObject = null
-                    } else if (metadataObject) {
-                        metadataObject = null
                     } else {
                         error("nothing to end here")
                     }
@@ -138,15 +163,18 @@ function toJSON(filecontent: string, includes?: SMap<string>, filename = ""): Se
                 default:
                     if (interfaceObject) interfaceMember(words)
                     else if (enumObject) enumMember(words)
-                    else if (metadataObject) metadataMember(words)
-                    else error("line outside of enum or interface")
+                    else metadataMember(words)
             }
         }
     }
 
+    function finishInterface() {
+        interfaceObject.hasNaturalAlignment = hasNaturalAlignment(interfaceObject)
+        interfaceObject = null
+    }
 
     function checkBraces(words: string[]) {
-        if (enumObject || interfaceObject || metadataObject)
+        if (enumObject || interfaceObject)
             error("already in braces")
         if (words) {
             if (words[2] != "{")
@@ -155,50 +183,121 @@ function toJSON(filecontent: string, includes?: SMap<string>, filename = ""): Se
 
         enumObject = null
         interfaceObject = null
-        metadataObject = null
     }
 
     function startInterface(words: string[]) {
-        checkBraces(words)
-        interfaceObject = {
-            kind: words[0] as any,
-            name: normalizeName(words[1]),
-            hasNaturalAlignment: false,
-            members: []
+        checkBraces(null)
+        const kind = words.shift() as any as InterfaceKind
+        let name = words.shift()
+        const isResp = kind == "report"
+        if (isResp && lastCmd && !/^\w+$/.test(name)) {
+            words.unshift(name)
+            name = lastCmd.name
         }
-        if (info.interfaces[interfaceObject.name])
+        interfaceObject = {
+            kind,
+            name: normalizeName(name),
+            identifier: undefined,
+            description: "",
+            isOptional: false,
+            hasNaturalAlignment: false,
+            fields: []
+        }
+        if (words[0] == "?") {
+            words.shift()
+            interfaceObject.isOptional = true
+        }
+
+        const key = isResp ? "resp:" + interfaceObject.name : interfaceObject.name
+        if (info.interfaces[key])
             error("interface redefinition")
+
+        const atat = words.indexOf("@")
+        if (atat >= 0) {
+            const w = words[atat + 1]
+            let v = parseInt(w)
+            if (isNaN(v)) {
+                v = 0
+                if (baseInfo) {
+                    const baseIntf = baseInfo.interfaces[w]
+                    if (baseIntf) {
+                        v = baseIntf.identifier
+                        if (baseIntf.kind != kind)
+                            error(`kind mismatch on ${w}: ${baseIntf} vs {kind}`)
+                    } else
+                        error(`${w} not found in _base`)
+                } else {
+                    error(`${w} cannot be resolved, since _base is missing`)
+                }
+            }
+            interfaceObject.identifier = v
+            words.splice(atat, 2)
+        } else {
+            if (isResp && lastCmd)
+                interfaceObject.identifier = lastCmd.identifier
+            else
+                error(`@ not found at ${interfaceObject.name}`)
+        }
+
         info.interfaces[interfaceObject.name] = interfaceObject
+
+        if (kind == "command")
+            lastCmd = interfaceObject
+        else
+            lastCmd = null
+
+        if (words[0] == "=" || words[0] == ":") {
+            if (words.indexOf("{") >= 0)
+                error("member need to use either block or inline syntax, not both")
+            words.unshift("_")
+            interfaceMember(words)
+            finishInterface()
+        } else {
+            const last = words.shift()
+            if (last == "{") {
+                if (words[0] == "...")
+                    words.shift()
+                if (words[0] == "}") {
+                    words.shift()
+                    finishInterface()
+                }
+                if (words.length)
+                    error(`excessive tokens: ${words[0]}...`)
+            } else {
+                if (last === undefined && kind == "event") {
+                    finishInterface()
+                } else {
+                    error("expecting '{'")
+                }
+            }
+        }
     }
 
     function interfaceMember(words: string[]) {
-        if ((words[1] != "=" && words[1] != ":") || words.length != 3)
-            return error(`expecting: FILD_NAME : TYPE or FILED_NAME = ENUM_MEMBER`)
-        let tp = ""
-        let fixedValue: number = undefined
-        let fixedValueName: string = undefined
+        const name = normalizeName(words.shift())
+        let defaultValue: number = undefined
+        let op = words.shift()
+        if (op == "=") {
+            defaultValue = parseIntCheck(words.shift())
+            op = words.shift()
+        }
 
-        if (words[1] == "=") {
-            const w = words[2].split(/\./)
-            if (w.length != 2)
-                return error(`expecting enum member here`)
-            const en = info.enums[w[0]]
-            if (!en)
-                return error(`${w[0]} is not an enum type`)
-            tp = w[0]
-            if (!en.members.hasOwnProperty(w[1]))
-                return error(`${w[1]} is not a member of ${w[0]}`)
-            fixedValueName = words[2]
-            fixedValue = en.members[w[1]]
-        } else
-            tp = words[2]
+        if (op != ":")
+            error("expecting ':'")
 
-        interfaceObject.members.push({
-            name: normalizeName(words[0]),
+        let tp = normalizeType(words.shift())
+
+        let unit = normalizeUnit(words.shift())
+
+        if (words.length)
+            error(`excessive tokens at the end of member: ${words[0]}...`)
+
+        interfaceObject.fields.push({
+            name,
+            unit,
             type: normalizeType(tp),
             storage: storageTypeFor(tp),
-            fixedValue,
-            fixedValueName
+            defaultValue,
         })
     }
 
@@ -223,16 +322,23 @@ function toJSON(filecontent: string, includes?: SMap<string>, filename = ""): Se
         enumObject.members[normalizeName(words[0])] = parseIntCheck(words[2])
     }
 
-    function startMetadata(words: string[]) {
-        checkBraces(words)
-        info.name = words[1]
-        metadataObject = info
-    }
-
     function parseIntCheck(w: string) {
         const v = parseInt(w)
-        if (isNaN(v))
-            error("expecting integer here")
+        if (isNaN(v)) {
+            const ww = w.split(/\./)
+            if (ww.length != 2) {
+                error(`expecting int or enum member here`)
+                return 0
+            }
+            const en = info.enums[ww[0]]
+            if (!en) {
+                error(`${ww[0]} is not an enum type`)
+                return 0
+            }
+            if (!en.members.hasOwnProperty(ww[1]))
+                error(`${ww[1]} is not a member of ${ww[0]}`)
+            return en.members[ww[1]] || 0
+        }
         return v
     }
 
@@ -240,18 +346,12 @@ function toJSON(filecontent: string, includes?: SMap<string>, filename = ""): Se
         if ((words[1] != "=" && words[1] != ":") || words.length != 3)
             error(`expecting: FILD_NAME = VALUE or FIELD_NAME : VALUE`)
         switch (words[0]) {
-            case "inherits":
+            case "extends":
                 processInclude(words[2])
-                break
-            case "mode":
-                info.mode = words[2]
                 break
             case "class":
             case "identifier":
-                info.class = parseIntCheck(words[2])
-                break
-            case "dependencies":
-                info.dependencies = words.slice(2)
+                info.classIdentifier = parseIntCheck(words[2])
                 break
             default:
                 error("unknown metadata field: " + words[0])
@@ -260,13 +360,21 @@ function toJSON(filecontent: string, includes?: SMap<string>, filename = ""): Se
     }
 
     function processInclude(name: string) {
-        if (!includes[name])
+        if (name == "base")
+            return
+        const inner = includes["_" + name]
+        if (!inner)
             return error("include file not found: " + name)
-        const inner = toJSON(includes[name], includes, name)
+        if (Object.keys(info.interfaces).length || Object.keys(info.enums).length)
+            error("extends: only allowed on top")
         if (inner.errors)
             errors = errors.concat(inner.errors)
-        info.enums = inner.enums
-        info.interfaces = inner.interfaces
+        info.enums = clone(inner.enums)
+        info.interfaces = clone(inner.interfaces)
+    }
+
+    function clone<T>(v: T): T {
+        return JSON.parse(JSON.stringify(v))
     }
 
     function error(msg: string) {
@@ -282,13 +390,31 @@ function toJSON(filecontent: string, includes?: SMap<string>, filename = ""): Se
         return n
     }
 
-    function normalizeStorageType(tp: string) {
-        if (!tp) error("expecting type here")
-        let tp2 = tp.replace(/_t$/, "")
-        tp2 = tp2.toLowerCase()
-        if (/u?int\d+/.test(tp2) || tp2 == "string")
-            return tp2
-        error("unknown type: " + tp)
+    function normalizeStorageType(tp: string): StorageType {
+        if (!tp)
+            error("expecting type here")
+        let tp2 = tp.replace(/_t$/, "").toLowerCase()
+        switch (tp2) {
+            case "bool":
+                return "u8"
+            case "i8":
+            case "u8":
+            case "i16":
+            case "u16":
+            case "i32":
+            case "u32":
+            case "i64":
+            case "u64":
+            case "bytes":
+                return tp2
+            case "utf8":
+            case "string":
+            case "i32[]":
+                return "bytes"
+            default:
+                error("unknown type: " + tp)
+                return "u32"
+        }
     }
 
     function normalizeType(tp: string) {
@@ -297,17 +423,37 @@ function toJSON(filecontent: string, includes?: SMap<string>, filename = ""): Se
         return normalizeStorageType(tp)
     }
 
+    function normalizeUnit(unit: string): Unit {
+        switch (unit) {
+            case undefined:
+            case null:
+                return ""
+            case "":
+            case "frac":
+            case "s":
+            case "ms":
+            case "us":
+            case "mV":
+            case "mA":
+            case "mWh":
+                return unit
+            default:
+                error(`expecting unit, got '${unit}'`)
+                return ""
+        }
+    }
+
     function storageTypeFor(tp: string) {
         const norm = normalizeType(tp)
         if (info.enums[norm])
             return info.enums[norm].storage
-        return norm
+        return normalizeStorageType(norm)
     }
 
     function hasNaturalAlignment(iface: InterfaceInfo) {
         let bitOffset = 0
 
-        for (let m of iface.members) {
+        for (let m of iface.fields) {
             let sz = bitSize(m.storage)
             if (sz == 0)
                 continue
@@ -331,12 +477,12 @@ function fail(msg: string) {
     throw new Error(msg)
 }
 
-function bitSize(tp: string) {
-    const m = /^u?int(\d+)/.exec(tp)
+function bitSize(tp: StorageType) {
+    const m = /^[iu](\d+)/.exec(tp)
     if (m) {
         return parseInt(m[1])
     }
-    if (tp == "string")
+    if (tp == "bytes")
         return 0
     fail("cannot determine size of " + tp)
     return 0
@@ -365,9 +511,9 @@ function toH(info: ServiceInfo) {
     for (let iface of values(info.interfaces)) {
         r += `\n// ${iface.kind} ${iface.name}\n`
         r += `typedef struct ${iface.name} {\n`
-        for (let f of iface.members) {
+        for (let f of iface.fields) {
             let def = ""
-            if (f.storage == "string") {
+            if (f.storage == "bytes") {
                 def = `char ${f.name}[0]`
             } else {
                 def = `${f.storage}_t ${f.name}`
@@ -397,9 +543,9 @@ function toHPP(info: ServiceInfo) {
     for (let iface of values(info.interfaces)) {
         r += `\n// ${iface.kind} ${iface.name}\n`
         r += `struct ${iface.name} {\n`
-        for (let f of iface.members) {
+        for (let f of iface.fields) {
             let def = ""
-            if (f.storage == "string") {
+            if (f.storage == "bytes") {
                 def = `char ${f.name}[0]`
             } else {
                 if (f.storage != f.type)
@@ -417,12 +563,12 @@ function toHPP(info: ServiceInfo) {
 }
 
 const tsNumFmt = {
-    uint8: "UInt8LE:B",
-    uint16: "UInt16LE:H",
-    uint32: "UInt32LE:L",
-    int8: "Int8LE:b",
-    int16: "Int16LE:h",
-    int32: "Int32LE:l",
+    u8: "UInt8LE:B",
+    u16: "UInt16LE:H",
+    u32: "UInt32LE:L",
+    i8: "Int8LE:b",
+    i16: "Int16LE:h",
+    i32: "Int32LE:l",
 }
 
 function toTS(info: ServiceInfo) {
@@ -441,10 +587,10 @@ function toTS(info: ServiceInfo) {
         let stringMem = ""
         let fmtstring = "<"
         let intMems: string[] = []
-        for (let f of iface.members) {
+        for (let f of iface.fields) {
             let getter = ""
             let setter = ""
-            if (f.storage == "string") {
+            if (f.storage == "bytes") {
                 stringMem = f.name
                 getter = `this._data.slice(${offset}).toString()`
             } else {
@@ -489,9 +635,11 @@ declare var require: any;
 function converters(): SMap<(s: ServiceInfo) => string> {
     return {
         "json": (j: ServiceInfo) => JSON.stringify(j, null, 2),
+        /*
         "ts": toTS,
         "c": toH,
         "cpp": toHPP,
+        */
     }
 }
 
@@ -506,9 +654,8 @@ function nodeMain() {
     const dn = process.argv[2]
     console.log("processing diretory " + dn + "...")
     const files: string[] = fs.readdirSync(dn)
-    const includes: SMap<string> = {}
+    const includes: SMap<ServiceInfo> = {}
     files.sort()
-    files.reverse()
 
     const outp = path.join(dn, "generated")
     mkdir(outp)
@@ -519,13 +666,11 @@ function nodeMain() {
         if (!/\.md$/.test(fn) || fn[0] == ".")
             continue
         console.log(`process ${fn}`)
-        const cont = fs.readFileSync(path.join(dn, fn), "utf8")
-        if (!/^0x/.test(fn)) {
-            includes[fn.replace(/\.md$/, "")] = cont
-            continue
-        }
-
+        const cont: string = fs.readFileSync(path.join(dn, fn), "utf8")
         const json = toJSON(cont, includes)
+        if (fn[0] == "_")
+            includes[fn.replace(/\.md$/, "")] = json
+
         if (json.errors) {
             for (let e of json.errors) {
                 const fn2 = e.file ? path.join(dn, e.file + ".md") : fn

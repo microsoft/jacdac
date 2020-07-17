@@ -100,6 +100,8 @@ Limit the power drawn by the light-strip (and controller).
 
 ## Commands
 
-    command run @ 0x81 { program: u8[] }
+    command run @ 0x81 {
+        program: bytes
+    }
 
 Run the given light "program". See service description for details.

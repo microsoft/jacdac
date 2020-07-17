@@ -2,11 +2,11 @@
 
     identifier: 0x1b57b1d7
 
-A buzzer.
+A simple buzzer.
 
 ## Registers
 
-    rw volume: u8 frac @ intensity
+    rw volume = 255: u8 frac @ intensity
 
 The volume (duty cycle) of the buzzer.
 
@@ -22,4 +22,3 @@ Play a PWM tone with given period and duty for given duration.
 The duty is scaled down with `volume` register.
 To play tone at frequency `F` Hz and volume `V` (in `0..max`) you will want
 to send `P = 1000000 / F` and `D = P * V / (2 * max)`.
-

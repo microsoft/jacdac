@@ -13,7 +13,7 @@ declare namespace jd {
      * 
      * Many fields have no unit (eg. because they represent counts); in that case empty string is used.
      */
-    type Unit = "" | "frac" | "s" | "ms" | "us" | "mV" | "mA" | "mWh"
+    type Unit = "" | "frac" | "s" | "ms" | "us" | "mV" | "mA" | "mWh" | "C" | "K"
 
     /**
      * Service specification.
@@ -100,7 +100,7 @@ declare namespace jd {
      * 
      * events are passed inside of event report, and can be also piped via streams. 
      */
-    type InterfaceKind = "report" | "command" | "ro" | "rw" | "event"
+    type InterfaceKind = "report" | "command" | "const" | "ro" | "rw" | "event"
 
     /**
      * Spec for a report/command/register or event.

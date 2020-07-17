@@ -30,7 +30,7 @@ Voltage on input.
 
 Fraction of charge in the battery.
 
-    ro battery_capacity?: u32 mWh @ 0x183
+    const battery_capacity?: u32 mWh @ 0x183
 
 Energy that can be delivered to the bus when battery is fully charged.
 This excludes conversion overheads if any.

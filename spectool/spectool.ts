@@ -114,6 +114,7 @@ function toJSON(filecontent: string, includes?: jd.SMap<jd.ServiceSpec>, filenam
                     break
                 case "report":
                 case "command":
+                case "const":
                 case "ro":
                 case "rw":
                 case "event":
@@ -410,6 +411,8 @@ function toJSON(filecontent: string, includes?: jd.SMap<jd.ServiceSpec>, filenam
             case "mV":
             case "mA":
             case "mWh":
+            case "K":
+            case "C":
                 return unit
             default:
                 error(`expecting unit, got '${unit}'`)

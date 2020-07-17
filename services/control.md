@@ -23,23 +23,23 @@ Reset device. ACK may or may not be sent.
 
 ## Registers
 
-    ro device_description: string @ 0x180
+    const device_description: string @ 0x180
 
 Identifies the type of hardware (eg., ACME Corp. Servo X-42 Rev C)
 
-    ro device_class: u32 @ 0x181
+    const device_class: u32 @ 0x181
 
 A numeric code for the string above; used to identify firmware images.
 
-    ro bootloader_device_class: u32 @ 0x184
+    const bootloader_device_class: u32 @ 0x184
 
 Typically the same as `device_class` unless device was flashed by hand; the bootloader will respond to that code.
 
-    ro firmware_version: string @ 0x185
+    const firmware_version: string @ 0x185
 
 A string describing firmware version; typically semver.
 
-    ro temperature: i8 @ 0x182
+    ro temperature: i8 C @ 0x182
 
 MCU temperature in degrees Celsius (approximate).
 

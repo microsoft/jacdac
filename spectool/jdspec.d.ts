@@ -25,6 +25,17 @@ declare namespace jdspec {
         name: string;
 
         /**
+         * Name of the service, in CamelCase.
+         */
+        camelName: string;
+
+        /**
+         * Short name of the service, to use in name prefixes.
+         */
+        shortName: string;
+
+
+        /**
          * When written in hex, it has the form 0x1xxxxxxx (except for control service).
          */
         classIdentifier: number;
@@ -122,13 +133,13 @@ declare namespace jdspec {
          * Name in lower case snake case.
          */
         name: string;
-        
+
         /**
          * This either a command/report number, an identifier for event, or a register number, which is combined
          * with 0x1000/0x2000 to get command for reading/writing.
          */
         identifier: number;
-        
+
         /**
          * Text that follows the definition in markdown.
          */

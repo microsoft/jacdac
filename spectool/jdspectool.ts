@@ -77,8 +77,8 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
                     info.name = cont
                     info.camelName = cont
                         .replace(/\s+/g, " ")
-                        .replace(/[ -](.)/, (f, l) => l.toUpperCase())
-                        .replace(/[^\w]+/, "_")
+                        .replace(/[ -](.)/g, (f, l) => l.toUpperCase())
+                        .replace(/[^\w]+/g, "_")
                     info.shortName = info.camelName
                     line = ""
                 } else if (newNoteId == "registers" || newNoteId == "commands" || newNoteId == "events" || newNoteId == "examples") {
@@ -153,8 +153,8 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
 
     function normalizeMD(md: string) {
         return md
-            .replace(/^\n+/, "")
-            .replace(/\n+$/, "")
+            .replace(/^\s+/, "")
+            .replace(/\s+$/, "")
     }
 
     function checkBraces(words: string[]) {
@@ -600,7 +600,7 @@ function toHex(n: number) {
 
 function unitPref(f: jdspec.PacketMember) {
     if (!f.unit) return ""
-    else return f.unit + ", "
+    else return f.unit + " "
 }
 
 function toH(info: jdspec.ServiceSpec) {
@@ -616,17 +616,11 @@ function toH(info: jdspec.ServiceSpec) {
             r += "#define " + enPref + "_" + toUpper(k) + " " + en.members[k] + "\n"
     }
     for (let pkt of values(info.packets)) {
-        let inner = "CMD"
-        if (isRegister(pkt.kind))
-            inner = "REG"
-        else if (pkt.kind == "event")
-            inner = "EV"
-        r += `#define ${pref}${inner}_${toUpper(pkt.name)} ${toHex(pkt.identifier)}`
         let typeInfo = ""
         let needsStruct = false
         if (pkt.fields.length == 0) {
             if (pkt.kind != "event")
-                typeInfo = "empty"
+                typeInfo = "Empty " + pkt.kind
         } else if (pkt.fields.length == 1 && pkt.fields[0].name == "_") {
             const f0 = pkt.fields[0]
             typeInfo = cStorage(f0.storage)
@@ -638,16 +632,40 @@ function toH(info: jdspec.ServiceSpec) {
         }
 
         if (isRegister(pkt.kind)) {
-            r += " // " + pkt.kind
-            if (typeInfo) r += ", " + typeInfo
-        } else {
+            let info = ""
+            if (pkt.kind == "ro") info = "Read-only"
+            else if (pkt.kind == "const") info = "Constant"
+            else info = "Read-write"
             if (typeInfo)
-                r += " // " + typeInfo
+                typeInfo = info + " " + typeInfo
+            else
+                typeInfo = info
         }
-        r += "\n"
+
+        if (pkt.kind == "report") {
+            r += "// Report: " + typeInfo + "\n"
+        } else {
+            if (pkt.description) {
+                let desc = pkt.description.replace(/\n\n[^]*/, "")
+                if (typeInfo)
+                    desc = typeInfo + ". " + desc
+                if (desc.indexOf("\n") > 0)
+                    r += "\n/**\n * " + desc.replace(/\n/g, "\n * ") + "\n */\n"
+                else
+                    r += "\n/** " + desc + " */\n"
+            }
+            let inner = "CMD"
+            if (isRegister(pkt.kind))
+                inner = "REG"
+            else if (pkt.kind == "event")
+                inner = "EV"
+            r += `#define ${pref}${inner}_${toUpper(pkt.name)} ${toHex(pkt.identifier)}\n`
+        }
 
         if (needsStruct) {
-            const tname = "jd_" + toLower(info.camelName) + "_" + toLower(pkt.name)
+            let tname = "jd_" + toLower(info.camelName) + "_" + toLower(pkt.name)
+            if (pkt.kind == "report")
+                tname += "_report"
             r += `typedef struct ${tname} {\n`
             for (let f of pkt.fields) {
                 let def = ""
@@ -793,7 +811,7 @@ function nodeMain() {
     }
 
     const dn = process.argv[2]
-    console.log("processing diretory " + dn + "...")
+    console.log("processing directory " + dn + "...")
     const files: string[] = fs.readdirSync(dn)
     const includes: jdspec.SMap<jdspec.ServiceSpec> = {}
     files.sort()

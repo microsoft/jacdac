@@ -13,7 +13,7 @@ declare namespace jdspec {
      * 
      * Many fields have no unit (eg. because they represent counts); in that case empty string is used.
      */
-    type Unit = "" | "frac" | "s" | "ms" | "us" | "mV" | "mA" | "mWh" | "C" | "K" | "g" | "perc"
+    type Unit = "" | "frac" | "s" | "ms" | "us" | "mV" | "mA" | "mWh" | "C" | "K" | "g" | "%RH"
 
     /**
      * Service specification.
@@ -141,6 +141,11 @@ declare namespace jdspec {
         identifier: number;
 
         /**
+         * If present, this packet has identifier named after base class.
+         */
+        identifierName?: string;
+
+        /**
          * Text that follows the definition in markdown.
          */
         description: string;
@@ -163,6 +168,11 @@ declare namespace jdspec {
          * If present and true, the handling of given packet is optional and can be left out by implementation.
          */
         optional?: boolean;
+
+        /**
+         * If present and true, this packet was derived from base class.
+         */
+        derived?: boolean;
     }
 
     /**

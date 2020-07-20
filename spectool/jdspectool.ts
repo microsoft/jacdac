@@ -46,6 +46,14 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
     for (const v of values(info.packets))
         v.description = normalizeMD(v.description)
 
+    if (!info.camelName)
+        info.camelName = info.name
+            .replace(/\s+/g, " ")
+            .replace(/[ -](.)/g, (f, l) => l.toUpperCase())
+            .replace(/[^\w]+/g, "_")
+    if (!info.shortName)
+        info.shortName = info.camelName
+
     return info
 
     function processLine(line: string) {
@@ -75,11 +83,6 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
                 const newNoteId = cont.toLowerCase()
                 if (hd == "#" && !info.name) {
                     info.name = cont
-                    info.camelName = cont
-                        .replace(/\s+/g, " ")
-                        .replace(/[ -](.)/g, (f, l) => l.toUpperCase())
-                        .replace(/[^\w]+/g, "_")
-                    info.shortName = info.camelName
                     line = ""
                 } else if (newNoteId == "registers" || newNoteId == "commands" || newNoteId == "events" || newNoteId == "examples") {
                     noteId = newNoteId
@@ -202,7 +205,6 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
             const w = words[atat + 1]
             let v = parseInt(w)
             let isSet = true
-            let isSymbolic = false
             if (isNaN(v)) {
                 v = 0
                 isSet = false
@@ -210,7 +212,7 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
                     const basePacket = baseInfo.packets[w]
                     if (basePacket) {
                         v = basePacket.identifier
-                        isSymbolic = true
+                        packetInfo.identifierName = w
                         if (basePacket.kind != kind)
                             error(`kind mismatch on ${w}: ${basePacket} vs {kind}`)
                         else
@@ -250,7 +252,7 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
             if (isUser) {
                 // ok
             } else if (isSystem) {
-                if (!isSymbolic)
+                if (!packetInfo.identifierName)
                     warn(`${kind} @ ${toHex(v)} should be expressed with a name from _base.md`)
             } else if (isHigh) {
                 if (!info.highCommands)
@@ -439,6 +441,8 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
             errors = errors.concat(inner.errors)
         info.enums = clone(inner.enums)
         info.packets = clone(inner.packets)
+        for (const pkt of values(info.packets))
+            pkt.derived = true
         if (inner.highCommands)
             info.highCommands = true
         info.notes = clone(inner.notes)
@@ -523,7 +527,7 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
             case "K":
             case "C":
             case "g":
-            case "perc":
+            case "%RH":
                 return unit
             default:
                 error(`expecting unit, got '${unit}'`)
@@ -578,13 +582,13 @@ function toLower(name: string) {
 }
 
 function packed(iface: jdspec.PacketInfo) {
-    if (iface.packed) return ""
+    if (!iface.packed) return ""
     else return " __attribute__((packed))"
 }
 
 function cStorage(tp: jdspec.StorageType) {
     if (tp == "bytes")
-        return "uint8_t[]"
+        return "bytes"
     return tp.replace(/^i/, "int").replace(/^u/, "uint") + "_t"
 }
 
@@ -600,7 +604,16 @@ function toHex(n: number) {
 
 function unitPref(f: jdspec.PacketMember) {
     if (!f.unit) return ""
-    else return f.unit + " "
+    else return prettyUnit(f.unit) + " "
+}
+
+function prettyUnit(u: jdspec.Unit): string {
+    switch (u) {
+        case "us": return "μs"
+        case "C": return "°C"
+        case "frac": return "fraction"
+        default: return u
+    }
 }
 
 function toH(info: jdspec.ServiceSpec) {
@@ -611,35 +624,43 @@ function toH(info: jdspec.ServiceSpec) {
     const pref = "JD_" + toUpper(info.shortName) + "_"
     for (let en of values(info.enums)) {
         const enPref = pref + toUpper(en.name)
-        r += `\n// enum ${en.name} (${en.storage})\n`
+        r += `\n// enum ${en.name} (${cStorage(en.storage)})\n`
         for (let k of Object.keys(en.members))
             r += "#define " + enPref + "_" + toUpper(k) + " " + en.members[k] + "\n"
     }
-    for (let pkt of values(info.packets)) {
+    for (const pkt of values(info.packets)) {
+        if (pkt.derived)
+            continue
         let typeInfo = ""
         let needsStruct = false
         if (pkt.fields.length == 0) {
             if (pkt.kind != "event")
-                typeInfo = "Empty " + pkt.kind
-        } else if (pkt.fields.length == 1 && pkt.fields[0].name == "_") {
+                typeInfo = "No args"
+        } else if (pkt.fields.length == 1) {
             const f0 = pkt.fields[0]
             typeInfo = cStorage(f0.storage)
             if (f0.type != f0.storage)
                 typeInfo = f0.type + " (" + typeInfo + ")"
             typeInfo = unitPref(f0) + typeInfo
+            if (f0.name != "_")
+                typeInfo = f0.name + " " + typeInfo
         } else {
             needsStruct = true
         }
 
-        if (isRegister(pkt.kind)) {
-            let info = ""
-            if (pkt.kind == "ro") info = "Read-only"
-            else if (pkt.kind == "const") info = "Constant"
-            else info = "Read-write"
-            if (typeInfo)
-                typeInfo = info + " " + typeInfo
-            else
-                typeInfo = info
+        if (pkt.fields.length == 1) {
+            if (isRegister(pkt.kind)) {
+                let info = ""
+                if (pkt.kind == "ro") info = "Read-only"
+                else if (pkt.kind == "const") info = "Constant"
+                else info = "Read-write"
+                if (typeInfo)
+                    typeInfo = info + " " + typeInfo
+                else
+                    typeInfo = info
+            } else if (typeInfo) {
+                typeInfo = "Argument: " + typeInfo
+            }
         }
 
         if (pkt.kind == "report") {
@@ -659,7 +680,10 @@ function toH(info: jdspec.ServiceSpec) {
                 inner = "REG"
             else if (pkt.kind == "event")
                 inner = "EV"
-            r += `#define ${pref}${inner}_${toUpper(pkt.name)} ${toHex(pkt.identifier)}\n`
+            let val = toHex(pkt.identifier)
+            if (pkt.identifierName)
+                val = "JD_" + inner + "_" + toUpper(pkt.identifierName)
+            r += `#define ${pref}${inner}_${toUpper(pkt.name)} ${val}\n`
         }
 
         if (needsStruct) {
@@ -678,44 +702,11 @@ function toH(info: jdspec.ServiceSpec) {
                 if (f.storage != f.type)
                     def += "  // " + unitPref(f) + f.type
                 else if (f.unit)
-                    def += " // " + f.unit
+                    def += " // " + prettyUnit(f.unit)
                 r += "    " + def + "\n"
             }
             r += `}${packed(pkt)} ${tname}_t;\n\n`
         }
-    }
-    r += "\n#endif\n"
-    return r
-}
-
-function toHPP(info: jdspec.ServiceSpec) {
-    let r = "// Auto-generated C++ header file for " + info.name + "\n"
-    const hdDef = `_JACDAC_${toUpper(info.name)}_HPP`
-    r += `#ifndef ${hdDef}\n`
-    r += `#define ${hdDef} 1\n`
-    for (let en of values(info.enums)) {
-        r += `\nenum class ${en.name} : ${en.storage}_t {\n`
-        for (let k of Object.keys(en.members))
-            r += "    " + k + " = " + en.members[k] + ",\n"
-        r += "}\n"
-    }
-    for (let iface of values(info.packets)) {
-        r += `\n// ${iface.kind} ${iface.name}\n`
-        r += `struct ${iface.name} {\n`
-        for (let f of iface.fields) {
-            let def = ""
-            if (f.storage == "bytes") {
-                def = `char ${f.name}[0]`
-            } else {
-                if (f.storage != f.type)
-                    def = `${f.type} ${f.name}`
-                else
-                    def = `${f.storage}_t ${f.name}`
-            }
-            def += ";"
-            r += "    " + def + "\n"
-        }
-        r += `}${packed(iface)};\n`
     }
     r += "\n#endif\n"
     return r

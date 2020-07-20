@@ -1,7 +1,8 @@
-# Button
+# Accelerometer
 
     identifier: 0x1f140409
     extends: _sensor
+    camel: accel
 
 A 3-axis accelerometer.
 

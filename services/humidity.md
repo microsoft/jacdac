@@ -9,6 +9,6 @@ A sensor measuring humidity of outside environment.
 
 Default streaming interval is 1s.
 
-    ro humidity: u22.10 perc @ reading
+    ro humidity: u22.10 %RH @ reading
 
 The relative humidity in percentage of full water saturation.

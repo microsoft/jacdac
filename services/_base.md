@@ -1,7 +1,6 @@
 # Common registers and commands
 
     camel: base
-    short: base
 
 Service specification will always list explicitly registers and commands defined here.
 They can be listed with say `@ intensity` instead of `@ 0x01`.

@@ -39,7 +39,7 @@ Typically the same as `device_class` unless device was flashed by hand; the boot
 
 A string describing firmware version; typically semver.
 
-    ro temperature: i8 C @ 0x182
+    ro temperature: i16 C @ 0x182
 
 MCU temperature in degrees Celsius (approximate).
 

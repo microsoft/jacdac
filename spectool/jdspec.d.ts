@@ -13,7 +13,7 @@ declare namespace jdspec {
      * 
      * Many fields have no unit (eg. because they represent counts); in that case empty string is used.
      */
-    type Unit = "" | "frac" | "s" | "ms" | "us" | "mV" | "mA" | "mWh" | "C" | "K" | "g" | "%RH"
+    type Unit = "" | "frac" | "s" | "ms" | "us" | "mV" | "mA" | "mWh" | "C" | "K" | "g" | "%RH" | "bytes"
 
     /**
      * Service specification.

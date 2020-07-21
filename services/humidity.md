@@ -1,4 +1,4 @@
-# Thermometer
+# Humidity
 
     identifier: 0x16c810b8
     extends: _sensor

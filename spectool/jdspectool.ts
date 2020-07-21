@@ -528,6 +528,7 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
             case "C":
             case "g":
             case "%RH":
+            case "bytes":
                 return unit
             default:
                 error(`expecting unit, got '${unit}'`)

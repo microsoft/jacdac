@@ -1,4 +1,3 @@
-
 # JACDAC-v1 spec
 
 What follows is a short operational specification for JACDAC v1.
@@ -7,7 +6,7 @@ The main changes with respect to [JACDAC v0](https://jacdac.org/specification/) 
 * there is only one baud-rate supported (1Mbit)
 * frame starts (as it did) and ends (new) with a UART break "character";
   the break at the end typically generates an interrupt that can be used to shut down DMA transfer
-* all packets include full 64 bit address of either source of destination;
+* all packets include full 64 bit identifier of either source of destination;
   the 8 bit compressed address is gone, and so it address allocation
 * CRC fixed to be CRC-16-CCITT
 * announce packets now contain only service classes; device name is gone and
@@ -302,7 +301,7 @@ They should indicate that in their advertisement packet.
 
 ## Commands
 
-Commands are partitioned as follows:
+Command codes are partitioned as follows:
 
 * `0x0000-0x007f` - commands common to all services, defined in `jdprotocol.h`
 * `0x0080-0x0eff` - commands defined per-service
@@ -318,12 +317,12 @@ Each register is logically between 1 bit and 236 bytes in size.
 If register is written with a value shorter than register size, the
 value is zero-extended or sign-extended depending on register.
 
-Registers are identified by 12 bit indices and not memory addresses
+Registers are identified by 12 bit indices, called register codes, and not memory addresses
 and are non-overlapping.
 For example, it's possible to have register `0x090` of size `12`
 and non-overlapping register `0x091` of size `4`.
 
-Registers are partitioned as follows:
+Register codes are partitioned as follows:
 
 * `0x001-0x07f` - r/w common to all services
 * `0x080-0x0ff` - r/w defined per-service

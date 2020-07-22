@@ -78,7 +78,7 @@ The first register we define can be read and written.
 When the device restarts, its value is `100` (default values are
 typically `0` and in that case are not specified).
 The value is unsigned and 16 bit long, and is expressed in milliseconds.
-The address of the register is `0x80` (register ranges are specified in `_base.md`).
+The register code is `0x80` (code ranges are specified in `_base.md`).
 The text after the register definition ends up in `description` field in JSON.
 Register name (nor description) is never sent over wire (same applies to commands
 and events).
@@ -111,7 +111,7 @@ Now, let's move on to commands.
 ## Commands
 
     command launch @ 0x80 {
-        launch_code: u32
+        launch_secret_code: u32
         delay: u32 ms
     }
     report {
@@ -138,10 +138,11 @@ can be used to abort it with the second command.
 Note that `report` syntax skips name and command code - these are copied from the preceding
 `command`.
 
-Also note that `0x80` command code is used, which is the same as the register address for 
+Also note that `0x80` command code is used, which is the same as the register code for 
 `oxygen_delay`.
-This is allowed, as registers occupy separate namespace from commands (they use masks of `0x1000`
-and `0x2000` to form command codes).
+This is allowed, as register codes occupy separate namespace from command codes -
+register codes combined with masks of `0x1000` or `0x2000` form command codes
+for getting or setting registers.
 Again, `_base.md` has ranges for allowed command codes.
 
 The next command doesn't have a associated report.

@@ -7,7 +7,7 @@ They can be listed with say `@ intensity` instead of `@ 0x01`.
 
 ## Commands
 
-Commands are subdivided as follows:
+Command codes are subdivided as follows:
 * Commands `0x000-0x07f` - common to all services
 * Commands `0x080-0xeff` - defined per-service
 * Commands `0xf00-0xfff` - reserved for implementation
@@ -52,7 +52,7 @@ Request human-readable description of service.
 
 ## Registers
 
-Register are subdivided as follows:
+Register codes are subdivided as follows:
 * Registers `0x001-0x07f` - r/w common to all services
 * Registers `0x080-0x0ff` - r/w defined per-service
 * Registers `0x100-0x17f` - r/o common to all services

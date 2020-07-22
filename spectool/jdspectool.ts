@@ -16,6 +16,7 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
     let backticksType = ""
     let enumInfo: jdspec.EnumInfo = null
     let packetInfo: jdspec.PacketInfo = null
+    let pipePacket: jdspec.PacketInfo = null
     let errors: jdspec.Diagnostic[] = []
     let lineNo = 0
     let noteId = "short"
@@ -122,8 +123,11 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
                 cmd = ":"
             switch (cmd) {
                 case "enum":
+                case "flags":
                     startEnum(words)
                     break
+                case "meta":
+                case "pipe":
                 case "report":
                 case "command":
                 case "const":
@@ -174,7 +178,25 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
 
     function startPacket(words: string[]) {
         checkBraces(null)
-        const kind = words.shift() as any as jdspec.PacketKind
+        const kindSt = words.shift()
+        let kind: jdspec.PacketKind = "command"
+        if (kindSt == "meta") {
+            let w2 = words.shift()
+            if (w2 == "pipe")
+                w2 = words.shift()
+            if (w2 == "report" || w2 == "command")
+                kind = ("meta_pipe_" + w2) as any
+            else
+                error("invalid token after meta")
+        } else if (kindSt == "pipe") {
+            let w2 = words.shift()
+            if (w2 == "report" || w2 == "command")
+                kind = ("pipe_" + w2) as any
+            else
+                error("invalid token after pipe")
+        } else {
+            kind = kindSt as any
+        }
         let name = words.shift()
         const isReport = kind == "report"
         if (isReport && lastCmd && !/^\w+$/.test(name)) {
@@ -200,8 +222,18 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
         if (info.packets[key])
             error("packet redefinition")
 
+        if (/pipe/.test(kind)) {
+            if (!pipePacket)
+                error("pipe definitions can only occur after the pipe-open packet")
+            else
+                packetInfo.pipeType = pipePacket.pipeType
+        }
+
         const atat = words.indexOf("@")
-        if (atat >= 0) {
+        if (kind == "pipe_command" || kind == "pipe_report") {
+            // no identifier
+            packetInfo.identifier = 0
+        } else if (atat >= 0) {
             const w = words[atat + 1]
             let v = parseInt(w)
             let isSet = true
@@ -322,12 +354,22 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
         if (words.length)
             error(`excessive tokens at the end of member: ${words[0]}...`)
 
+        if (/pipe/.test(t)) {
+            packetInfo.pipeType = packetInfo.name
+            if (pipePacket && pipePacket.name == packetInfo.name && packetInfo.kind == "report") {
+                // keep old pipePacket
+            } else {
+                pipePacket = packetInfo
+            }
+        }
+
         packetInfo.fields.push({
             name,
             unit,
             shift: shift || undefined,
             type: t,
             storage: st,
+            isSimpleType: canonicalType(st) == t || undefined,
             defaultValue,
         })
     }
@@ -339,6 +381,7 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
         enumInfo = {
             name: normalizeName(words[1]),
             storage: normalizeStorageType(words[3])[0],
+            isFlags: words[0] == "flags" || undefined,
             members: {}
         }
         if (info.enums[enumInfo.name])
@@ -486,12 +529,12 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
             const len = a + b
             if (!(len == 8 || len == 16 || len == 32 || len == 64))
                 error(`fixed point ${tp} can't be ${len} bits`)
-            return [(m[1] + len) as any, tp2, b]
+            return [(m[1] == "i" ? -1 : 1) * (len >> 3), tp2, b]
         }
 
         switch (tp2) {
             case "bool":
-                return ["u8", tp2, 0]
+                return [1, tp2, 0]
             case "i8":
             case "u8":
             case "i16":
@@ -500,14 +543,23 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
             case "u32":
             case "i64":
             case "u64":
-                return [tp2, tp2, 0]
+                let sz = parseIntCheck(tp2.replace(/^./, "")) >> 3
+                if (tp2[0] == "i") sz = -sz
+                return [sz, tp2, 0]
+            case "pipe":
+                return [12, tp2, 0]
+            case "pipe_port":
+                return [2, tp2, 0]
             case "bytes":
             case "string":
             case "i32[]":
-                return ["bytes", tp2, 0]
+                return [0, tp2, 0]
             default:
+                const m = /^u8\[(\d+)\]$/.exec(tp2)
+                if (m)
+                    return [parseIntCheck(m[1]), tp2, 0]
                 error("unknown type: " + tp)
-                return ["u32", tp2, 0]
+                return [4, tp2, 0]
         }
     }
 
@@ -537,15 +589,15 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
     }
 
     function hasNaturalAlignment(iface: jdspec.PacketInfo) {
-        let bitOffset = 0
+        let byteOffset = 0
 
         for (let m of iface.fields) {
-            let sz = bitSize(m.storage)
+            let sz = byteSize(m.storage)
             if (sz == 0)
                 continue
-            if (bitOffset % sz != 0)
+            if (!/^u8\[/.test(m.type) && byteOffset % sz != 0)
                 return false
-            bitOffset += sz
+            byteOffset += sz
         }
 
         return true
@@ -563,15 +615,8 @@ function fail(msg: string) {
     throw new Error(msg)
 }
 
-function bitSize(tp: jdspec.StorageType) {
-    const m = /^[iu](\d+)/.exec(tp)
-    if (m) {
-        return parseInt(m[1])
-    }
-    if (tp == "bytes")
-        return 0
-    fail("cannot determine size of " + tp)
-    return 0
+function byteSize(tp: jdspec.StorageType) {
+    return Math.abs(tp)
 }
 
 function toUpper(name: string) {
@@ -588,9 +633,21 @@ function packed(iface: jdspec.PacketInfo) {
 }
 
 function cStorage(tp: jdspec.StorageType) {
-    if (tp == "bytes")
+    if (tp == 0)
         return "bytes"
-    return tp.replace(/^i/, "int").replace(/^u/, "uint") + "_t"
+    if (tp < 0)
+        return `int${-tp * 8}_t`
+    else
+        return `uint${tp * 8}_t`
+}
+
+function canonicalType(tp: jdspec.StorageType): string {
+    if (tp == 0)
+        return "bytes"
+    if (tp < 0)
+        return `i${-tp * 8}`
+    else
+        return `u${tp * 8}`
 }
 
 function isRegister(k: jdspec.PacketKind) {
@@ -640,7 +697,7 @@ function toH(info: jdspec.ServiceSpec) {
         } else if (pkt.fields.length == 1) {
             const f0 = pkt.fields[0]
             typeInfo = cStorage(f0.storage)
-            if (f0.type != f0.storage)
+            if (!f0.isSimpleType)
                 typeInfo = f0.type + " (" + typeInfo + ")"
             typeInfo = unitPref(f0) + typeInfo
             if (f0.name != "_")
@@ -694,13 +751,13 @@ function toH(info: jdspec.ServiceSpec) {
             r += `typedef struct ${tname} {\n`
             for (let f of pkt.fields) {
                 let def = ""
-                if (f.storage == "bytes") {
+                if (f.storage == 0) {
                     def = `char ${f.name}[0]`
                 } else {
                     def = `${cStorage(f.storage)} ${f.name}`
                 }
                 def += ";"
-                if (f.storage != f.type)
+                if (!f.isSimpleType)
                     def += "  // " + unitPref(f) + f.type
                 else if (f.unit)
                     def += " // " + prettyUnit(f.unit)
@@ -741,7 +798,7 @@ function toTS(info: jdspec.ServiceSpec) {
         for (let f of iface.fields) {
             let getter = ""
             let setter = ""
-            if (f.storage == "bytes") {
+            if (f.storage == 0) {
                 stringMem = f.name
                 getter = `this._data.slice(${offset}).toString()`
             } else {
@@ -753,7 +810,7 @@ function toTS(info: jdspec.ServiceSpec) {
                 fmtstring += py
                 numf = "NumberFormat." + nn
                 getter = `this._data.getNumber(${numf}, ${offset})`
-                if (f.storage != f.type)
+                if (!f.isSimpleType)
                     getter += " as " + f.type
                 setter = `this._data.setNumber(${numf}, ${offset}, v)`
             }
@@ -761,7 +818,7 @@ function toTS(info: jdspec.ServiceSpec) {
                 r += `    get ${f.name}(): ${f.type} { return ${getter} }\n`
             if (setter)
                 r += `    set ${f.name}(v: ${f.type}) { ${setter} }\n`
-            offset += (bitSize(f.storage) + 7) >> 3
+            offset += byteSize(f.storage)
         }
         r += `    get byteSize() { return ${offset} }\n`
         r += `    constructor(public _data${stringMem ? "" : "?"}: Buffer) {\n`

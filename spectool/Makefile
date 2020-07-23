@@ -1,4 +1,4 @@
 all:
 	#rm -rf ../services/generated
-	tsc jdspectool.ts
-	node jdspectool ../services
+	tsc
+	node built/jdspectool ../services

@@ -224,9 +224,14 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
             packetInfo.optional = true
         }
 
-        const key = isReport ? "report:" + packetInfo.name : packetInfo.name
-        if (info.packets[key])
+        const prev = info.packets.filter(p => p.name == packetInfo.name)
+        if (prev.length == 0) {
+            // OK
+        } else if (prev.length == 1 && prev[0].kind == "command" && packetInfo.kind == "report") {
+            // OK
+        } else {
             error("packet redefinition")
+        }
 
         if (/pipe/.test(kind)) {
             if (!pipePacket)
@@ -247,7 +252,7 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
                 v = 0
                 isSet = false
                 if (baseInfo) {
-                    const basePacket = baseInfo.packets[w]
+                    const basePacket = baseInfo.packets.find(p => p.name == w)
                     if (basePacket) {
                         v = basePacket.identifier
                         packetInfo.identifierName = w
@@ -306,7 +311,7 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
                 error(`@ not found at ${packetInfo.name}`)
         }
 
-        info.packets[key] = packetInfo
+        info.packets.push(packetInfo)
 
         if (kind == "command")
             lastCmd = packetInfo
@@ -660,7 +665,7 @@ function isRegister(k: jdspec.PacketKind) {
     return (k == "ro" || k == "rw" || k == "const")
 }
 
-function toHex(n: number) {
+function toHex(n: number): string {
     if (n < 0)
         return "-" + toHex(n)
     return "0x" + n.toString(16)
@@ -776,7 +781,7 @@ function toH(info: jdspec.ServiceSpec) {
     return r
 }
 
-const tsNumFmt = {
+const tsNumFmt: jdspec.SMap<string> = {
     u8: "UInt8LE:B",
     u16: "UInt16LE:H",
     u32: "UInt32LE:L",

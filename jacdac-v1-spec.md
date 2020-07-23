@@ -1,5 +1,5 @@
 ---
-permalink /
+permalink: /
 ---
 
 # JACDAC-v1 spec

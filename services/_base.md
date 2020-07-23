@@ -89,7 +89,7 @@ Period between packets of data when streaming in milliseconds.
 Read-only value of the sensor, also reported in streaming.
 
     rw low_threshold: i32 @ 0x05
-    rw high_threshold: i32 @ 0x05
+    rw high_threshold: i32 @ 0x06
 
 Thresholds for event generation for event generation for analog sensors.
 

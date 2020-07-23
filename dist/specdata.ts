@@ -215,7 +215,7 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
       {
         "kind": "rw",
         "name": "high_threshold",
-        "identifier": 5,
+        "identifier": 6,
         "description": "Thresholds for event generation for event generation for analog sensors.",
         "fields": [
           {
@@ -509,7 +509,7 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
       {
         "kind": "command",
         "name": "set_session",
-        "identifier": 128,
+        "identifier": 129,
         "description": "The flashing host should generate a random id, and use this command to set it.",
         "fields": [
           {
@@ -524,7 +524,7 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
       {
         "kind": "report",
         "name": "set_session",
-        "identifier": 128,
+        "identifier": 129,
         "description": "The flashing host should generate a random id, and use this command to set it.",
         "fields": [
           {
@@ -2304,7 +2304,7 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
         "kind": "command",
         "name": "connect",
         "identifier": 129,
-        "description": "Connect to named network. Password can be appended after NUL-terminated ssid.",
+        "description": "Connect to named network. Password can be appended after ssid. Both strings have to be NUL-terminated.",
         "fields": [
           {
             "name": "ssid",

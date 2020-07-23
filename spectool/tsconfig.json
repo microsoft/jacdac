@@ -8,6 +8,7 @@
         "outDir": "built",
         "noImplicitThis": true,
         "noImplicitAny": true,
+        "types": [ ],
         "moduleResolution": "node"
     },
     "include": [

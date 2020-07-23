@@ -315,6 +315,10 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
                 error(`@ not found at ${packetInfo.name}`)
         }
 
+        if (info.packets.some(p => p.kind == packetInfo.kind && p.identifier == packetInfo.identifier)) {
+            error("packet identifier already used")
+        }
+
         info.packets.push(packetInfo)
 
         if (kind == "command")

@@ -4,13 +4,14 @@
 function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>, filename = ""): jdspec.ServiceSpec {
     let info: jdspec.ServiceSpec = {
         name: "",
+        shortId: filename.replace(/\.md$/, "").replace(/.*\//, ""),
         camelName: "",
         shortName: "",
         extends: [],
         notes: {},
         classIdentifier: 0,
         enums: {},
-        packets: {},
+        packets: [],
     }
 
     let backticksType = ""
@@ -44,7 +45,7 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
 
     for (const k of Object.keys(info.notes))
         info.notes[k] = normalizeMD(info.notes[k])
-    for (const v of values(info.packets))
+    for (const v of info.packets)
         v.description = normalizeMD(v.description)
 
     if (!info.camelName)
@@ -54,6 +55,11 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
             .replace(/[^\w]+/g, "_")
     if (!info.shortName)
         info.shortName = info.camelName
+
+    if (info.camelName == "base")
+        info.classIdentifier = 0x1fff_fff1
+    else if (info.camelName == "sensor")
+        info.classIdentifier = 0x1fff_fff2
 
     return info
 
@@ -277,7 +283,7 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
                     break
                 case "event":
                     isUser = 0x0000 <= v && v <= 0xffff
-                    isHigh = 0x10000 <= v && v <= 0xffffffff
+                    isHigh = 0x1_0000 <= v && v <= 0xffff_ffff
                     break
             }
 
@@ -431,7 +437,7 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
 
     function genRandom() {
         for (; ;) {
-            const m = (Math.random() * 0xfffffff) | 0x10000000
+            const m = (Math.random() * 0xfff_ffff) | 0x1000_0000
             if (looksRandom(m))
                 return m
         }
@@ -450,7 +456,7 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
                 if (info.name != "Control" && info.classIdentifier == 0)
                     info.classIdentifier = 1
                 const gen = `how about ${toHex(genRandom())}`
-                if (!(info.classIdentifier == 0 || (0x10000001 <= info.classIdentifier && info.classIdentifier <= 0x1ffffff0)))
+                if (!(info.classIdentifier == 0 || (0x1000_0001 <= info.classIdentifier && info.classIdentifier <= 0x1fff_ff00)))
                     error(`class identifier out of range; ${gen}`)
                 if (!looksRandom(info.classIdentifier))
                     error(`class identifier doesn't look random; ${gen}`)
@@ -484,7 +490,7 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
             errors = errors.concat(inner.errors)
         info.enums = clone(inner.enums)
         info.packets = clone(inner.packets)
-        for (const pkt of values(info.packets))
+        for (const pkt of info.packets)
             pkt.derived = true
         if (inner.highCommands)
             info.highCommands = true
@@ -503,7 +509,7 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
     }
 
     function warn(msg: string) {
-        if (/common.*registers/i.test(info.name))
+        if (info.camelName == "base")
             return // no warnings in _base
         if (errors.some(e => e.line == lineNo && e.message == msg))
             return
@@ -686,7 +692,7 @@ function toH(info: jdspec.ServiceSpec) {
         for (let k of Object.keys(en.members))
             r += "#define " + enPref + "_" + toUpper(k) + " " + en.members[k] + "\n"
     }
-    for (const pkt of values(info.packets)) {
+    for (const pkt of info.packets) {
         if (pkt.derived)
             continue
         let typeInfo = ""
@@ -788,7 +794,7 @@ function toTS(info: jdspec.ServiceSpec) {
             r += "    " + k + " = " + en.members[k] + ",\n"
         r += "}\n"
     }
-    for (let iface of values(info.packets)) {
+    for (let iface of info.packets) {
         r += `\n// ${iface.kind} ${iface.name}\n`
         r += `export class ${iface.name} {\n`
         let offset = 0
@@ -875,7 +881,7 @@ function nodeMain() {
             continue
         console.log(`process ${fn}`)
         const cont: string = fs.readFileSync(path.join(dn, fn), "utf8")
-        const json = toJSON(cont, includes)
+        const json = toJSON(cont, includes, fn)
         const key = fn.replace(/\.md$/, "")
         includes[key] = json
 
@@ -893,7 +899,7 @@ function nodeMain() {
         }
     }
 
-    fs.writeFileSync(path.join(outp, "services.json"), JSON.stringify(includes, null, 2))
+    fs.writeFileSync(path.join(outp, "services.json"), JSON.stringify(values(includes), null, 2))
 
 
     function mkdir(n: string) {

@@ -1,5 +1,7 @@
 # Sensor
 
+    camel: sensor
+
 Base class for sensors.
 
 ## Registers

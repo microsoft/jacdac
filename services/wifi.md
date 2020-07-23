@@ -37,7 +37,7 @@ Initiate search for WiFi networks. Results are returned via pipe, one entry per 
         ssid: string
     }
 
-Connect to named network. Password can be appended after NUL-terminated ssid.
+Connect to named network. Password can be appended after ssid. Both strings have to be NUL-terminated.
 
     command disconnect @ 0x82 {}
 

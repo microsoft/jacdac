@@ -1,3 +1,7 @@
+---
+permalink /
+---
+
 # JACDAC-v1 spec
 
 What follows is a short operational specification for JACDAC v1.

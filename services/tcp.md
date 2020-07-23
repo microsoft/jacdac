@@ -10,7 +10,7 @@ Data transfer over TCP/IP and TLS stream sockets.
         inbound: pipe
     }
     report {
-        outbound_port: u16
+        outbound_port: pipe_port
     }
 
 Open pair of pipes between network peripheral and a controlling device. In/outbound refers to direction from/to internet.

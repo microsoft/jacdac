@@ -23,6 +23,7 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
     let noteId = "short"
     let lastCmd: jdspec.PacketInfo
     let packetsToDescribe: jdspec.PacketInfo[]
+    let nextRepeats: boolean = undefined
 
     const baseInfo = includes ? includes["_base"] : undefined
     const usedIds: jdspec.SMap<string> = {}
@@ -60,6 +61,9 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
         info.classIdentifier = 0x1fff_fff1
     else if (info.camelName == "sensor")
         info.classIdentifier = 0x1fff_fff2
+
+    if (info.shortName != "control" && !info.classIdentifier)
+        error("identifier: not specified")
 
     return info
 
@@ -346,6 +350,10 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
     }
 
     function packetField(words: string[]) {
+        if (words.length == 2 && words[0] == "repeats") {
+            nextRepeats = true
+            return
+        }
         const name = normalizeName(words.shift())
         let defaultValue: number = undefined
         let op = words.shift()
@@ -382,7 +390,9 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
             storage: st,
             isSimpleType: canonicalType(st) == t || undefined,
             defaultValue,
+            startRepeats: nextRepeats
         })
+        nextRepeats = undefined
     }
 
     function startEnum(words: string[]) {
@@ -892,7 +902,7 @@ function nodeMain() {
 
         if (json.errors) {
             for (let e of json.errors) {
-                const fn2 = e.file ? path.join(dn, e.file + ".md") : fn
+                const fn2 = e.file ? path.join(dn, e.file) : fn
                 console.error(`${fn2}(${e.line}): ${e.message}`)
             }
             process.exit(1)

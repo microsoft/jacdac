@@ -235,6 +235,11 @@ declare namespace jdspec {
          * If default value for a register is non-zero, it is specified here.
          */
         defaultValue?: number;
+
+        /**
+         * If set, this and following fields repeat in order, to fill the packet.
+         */
+        startRepeats?: boolean;
     }
 
     /**

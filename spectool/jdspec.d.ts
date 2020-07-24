@@ -41,6 +41,11 @@ declare namespace jdspec {
         shortId: string;
 
         /**
+         * The full markdown source for the spec.
+         */
+        source?: string;
+
+        /**
          * When written in hex, it has the form 0x1xxxxxxx (except for control service).
          */
         classIdentifier: number;

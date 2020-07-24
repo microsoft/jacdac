@@ -12,6 +12,7 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
         classIdentifier: 0,
         enums: {},
         packets: [],
+        source: filecontent,
     }
 
     let backticksType = ""

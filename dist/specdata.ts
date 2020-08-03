@@ -282,9 +282,11 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
     "shortId": "accelerometer",
     "camelName": "accel",
     "shortName": "accel",
-    "extends": [],
+    "extends": [
+      "_sensor"
+    ],
     "notes": {
-      "short": "Base class for sensors.\nA 3-axis accelerometer.",
+      "short": "A 3-axis accelerometer.",
       "events": "All events are debounced."
     },
     "classIdentifier": 521405449,
@@ -653,9 +655,11 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
     "shortId": "button",
     "camelName": "Button",
     "shortName": "Button",
-    "extends": [],
+    "extends": [
+      "_sensor"
+    ],
     "notes": {
-      "short": "Base class for sensors.\nA simple push-button.\n\nNote: this service will stream readings while the button is pressed and shortly after it's released, even\nwhen `is_streaming == 0`. TODO remove this?"
+      "short": "A simple push-button.\n\nNote: this service will stream readings while the button is pressed and shortly after it's released, even\nwhen `is_streaming == 0`. TODO remove this?"
     },
     "classIdentifier": 343122531,
     "enums": {},
@@ -869,9 +873,11 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
     "shortId": "crank",
     "camelName": "RotaryEncoder",
     "shortName": "crank",
-    "extends": [],
+    "extends": [
+      "_sensor"
+    ],
     "notes": {
-      "short": "Base class for sensors.\nAn incremental rotary encoder - converts angular motion of a shaft to digital signal."
+      "short": "An incremental rotary encoder - converts angular motion of a shaft to digital signal."
     },
     "classIdentifier": 284830153,
     "enums": {},
@@ -950,9 +956,11 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
     "shortId": "gamepad",
     "camelName": "Gamepad",
     "shortName": "Gamepad",
-    "extends": [],
+    "extends": [
+      "_sensor"
+    ],
     "notes": {
-      "short": "Base class for sensors.\nA gamepad with direction and action buttons for 1 or more players."
+      "short": "A gamepad with direction and action buttons for 1 or more players."
     },
     "classIdentifier": 501915758,
     "enums": {
@@ -1125,9 +1133,11 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
     "shortId": "humidity",
     "camelName": "Humidity",
     "shortName": "Humidity",
-    "extends": [],
+    "extends": [
+      "_sensor"
+    ],
     "notes": {
-      "short": "Base class for sensors.\nA sensor measuring humidity of outside environment.",
+      "short": "A sensor measuring humidity of outside environment.",
       "registers": "Default streaming interval is 1s."
     },
     "classIdentifier": 382210232,
@@ -1454,9 +1464,11 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
     "shortId": "multitouch",
     "camelName": "Multitouch",
     "shortName": "Multitouch",
-    "extends": [],
+    "extends": [
+      "_sensor"
+    ],
     "notes": {
-      "short": "Base class for sensors.\nA capacitive touch sensor with multiple inputs.",
+      "short": "A capacitive touch sensor with multiple inputs.",
       "events": "Most events include the channel number of the input."
     },
     "classIdentifier": 416636459,
@@ -1975,9 +1987,11 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
     "shortId": "slider",
     "camelName": "Slider",
     "shortName": "Slider",
-    "extends": [],
+    "extends": [
+      "_sensor"
+    ],
     "notes": {
-      "short": "Base class for sensors.\nA slider potentiometer."
+      "short": "A slider potentiometer."
     },
     "classIdentifier": 522667846,
     "enums": {},
@@ -2164,9 +2178,11 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
     "shortId": "temperature",
     "camelName": "Temperature",
     "shortName": "Temperature",
-    "extends": [],
+    "extends": [
+      "_sensor"
+    ],
     "notes": {
-      "short": "Base class for sensors.\nA thermometer measuring outside environment.",
+      "short": "A thermometer measuring outside environment.",
       "registers": "Default streaming interval is 1s."
     },
     "classIdentifier": 337754823,

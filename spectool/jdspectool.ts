@@ -514,7 +514,8 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
             pkt.derived = true
         if (inner.highCommands)
             info.highCommands = true
-        info.notes = clone(inner.notes)
+        info.notes = {}
+        info.extends = inner.extends.concat([name])
     }
 
     function clone<T>(v: T): T {

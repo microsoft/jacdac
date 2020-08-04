@@ -1,5 +1,28 @@
 # Overview
 
-This is just a dummy page to test gatsby integration.
+What follows is a short operational specification for JACDAC v1.
+The main changes with respect to [JACDAC v0](https://jacdac.org/specification/) are:
 
-* [Bla](./sub/bla)
+* there is only one baud-rate supported (1Mbit)
+* frame starts (as it did) and ends (new) with a UART break "character";
+  the break at the end typically generates an interrupt that can be used to shut down DMA transfer
+* all packets include full 64 bit identifier of either source of destination;
+  the 8 bit compressed address is gone, and so it address allocation
+* CRC fixed to be CRC-16-CCITT
+* announce packets now contain only service classes; device name is gone and
+  advertisement data can be queried from the service
+* all packets include standardized 16-bit command, plus any custom data
+* a protocol-level light-weight acknowledge mechanism is introduced
+* several packets sharing device identifier can be sent in one physical frame
+
+
+Refer to [JACDAC v0 specification](https://jacdac.org/specification/) for general description of use
+cases etc.
+Please note that _services_ in this document refer to host services in v0 spec,
+while _clients_ refer to client services.
+
+* [Requirements](./requirements)
+* [Frames and Packets](./frames-and-packets)
+* [Physical layer](./physical-layer)
+* [Control layer](./control-layer)
+* [Commands](./commands)

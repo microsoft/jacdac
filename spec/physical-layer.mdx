@@ -1,0 +1,78 @@
+# Physical layer
+
+Communication is done over a single line, using UART peripheral running at 1MHz,
+8 bit per byte, no parity, 1 stop bit, LSB first (standard).
+The line is held high when idle with either internal or external pull up of
+around 20-50kΩ per device.
+
+## Reception
+
+Normally, devices are set up to trigger an interrupt on line going low, with UART disabled.
+When the line goes low, the device performs the following steps:
+* zero-out header of the packet to be received
+* wait for line going high again
+* setup a UART in receive mode
+* start reception
+* setup a timer for 100us (TODO)
+* when the timer fires, if the header is still all zero, signal timeout and abort reception
+* otherwise, given that the header declares size to be `N`, setup timer for `(N + 16) * 12 + 60` (and don't touch reception)
+* if UART break is detected, abort reception, abort the timer and process incoming packet (see below)
+* if timer fires, signal timeout and abort reception
+* setup line as input with pull up and reception interrupt
+* possibly, start transmission timer (see below)
+
+## Processing incoming packets
+
+We arrive here when a UART break was detected.
+
+* optionally, check if at least `N + 16` bytes was received;
+  this may be difficult depending on DMA hardware, so can be skipped
+* compute CRC of bytes `2` until `N + 16` of data;
+  if it doesn't match the CRC in the first two bytes, signal error and stop processing this packet
+* do control layer processing of packet (next section)
+
+## Transmission
+
+Devices should maintain a queue of packets to send.
+When either transmission or reception finishes, and the queue is non-empty
+the device should set up a timer for a random period roughly between 100us and 200us.
+If this timer fires before any reception starts, the device can start
+transmitting as described here.
+
+* disable reception interrupt
+* if we are already in reception abort transmission
+* as quickly as possible, probe the line and if it's high, pull it low
+* if the line was low, abort transmission and start reception as if the reception interrupt triggered
+* wait ~10us
+* pull the line high
+* wait ~40us
+* configure UART for transmission and start it
+* when transmission ends:
+* disable UART
+* pull the line high
+* pull it low
+* wait ~10us
+* pull the line high
+* setup line as input with pull up and reception interrupt
+* possibly, start transmission timer (see above)
+
+Wait times need to be determined experimentally, so that the following are observed:
+* initial low pulse is 11-15us
+* the gap between end of low pulse and start of UART transmission is 40-50us (TODO)
+* spacing between characters in UART transmission should be never more than 9us,
+  and on average less than 2us
+* the gap after UART transmission and before final break is less than 10us
+* the final break is 11-15us
+
+The probe-and-pull operation can typically be performed in a few cycles
+and is critical to do as quick as possible.
+The time difference between probe and set is the collision window of the protocol.
+This can be typically brought down to around 50-100ns depending on MCU speed and GPIO hardware.
+Typically, you'll want to add a function that is forced to be non-inline
+and takes all arguments it needs pre-computed (GPIO port address, pin mask etc.).
+It's good idea to look at disassembly of that function.
+
+Such collision window cause about 0.3% packet loss when two devices try to
+write on the bus as quickly as possible.
+The packet loss grows quadratically with number of devices, but typically
+devices do not flood the bus, which results in much lower packet losses.

@@ -1,6 +1,7 @@
 # Control
 
     identifier: 0x00000000
+    camel: ctrl
 
 Control service is always service number `0`.
 It handles actions common to all services on a device.

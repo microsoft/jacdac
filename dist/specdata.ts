@@ -747,8 +747,8 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
   {
     "name": "Control",
     "shortId": "control",
-    "camelName": "Control",
-    "shortName": "Control",
+    "camelName": "ctrl",
+    "shortName": "ctrl",
     "extends": [],
     "notes": {
       "short": "Control service is always service number `0`.\nIt handles actions common to all services on a device."
@@ -866,7 +866,7 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
         ]
       }
     ],
-    "source": "# Control\n\n    identifier: 0x00000000\n\nControl service is always service number `0`.\nIt handles actions common to all services on a device.\n\n\n\n## Commands\n\n    command noop @ 0x80 { }\n\nDo nothing. Always ignored. Can be used to test ACKs.\n\n    command identify @ 0x81 { }\n\nBlink an LED or otherwise draw user's attention.\n\n    command reset @ 0x82 { }\n\nReset device. ACK may or may not be sent.\n\n## Registers\n\n    const device_description: string @ 0x180\n\nIdentifies the type of hardware (eg., ACME Corp. Servo X-42 Rev C)\n\n    const device_class: u32 @ 0x181\n\nA numeric code for the string above; used to identify firmware images.\n\n    const bootloader_device_class: u32 @ 0x184\n\nTypically the same as `device_class` unless device was flashed by hand; the bootloader will respond to that code.\n\n    const firmware_version: string @ 0x185\n\nA string describing firmware version; typically semver.\n\n    ro temperature: i16 C @ 0x182\n\nMCU temperature in degrees Celsius (approximate).\n\n    ro uptime: u64 us @ 0x186\n\nNumber of microseconds since boot.\n\n"
+    "source": "# Control\n\n    identifier: 0x00000000\n    camel: ctrl\n\nControl service is always service number `0`.\nIt handles actions common to all services on a device.\n\n\n\n## Commands\n\n    command noop @ 0x80 { }\n\nDo nothing. Always ignored. Can be used to test ACKs.\n\n    command identify @ 0x81 { }\n\nBlink an LED or otherwise draw user's attention.\n\n    command reset @ 0x82 { }\n\nReset device. ACK may or may not be sent.\n\n## Registers\n\n    const device_description: string @ 0x180\n\nIdentifies the type of hardware (eg., ACME Corp. Servo X-42 Rev C)\n\n    const device_class: u32 @ 0x181\n\nA numeric code for the string above; used to identify firmware images.\n\n    const bootloader_device_class: u32 @ 0x184\n\nTypically the same as `device_class` unless device was flashed by hand; the bootloader will respond to that code.\n\n    const firmware_version: string @ 0x185\n\nA string describing firmware version; typically semver.\n\n    ro temperature: i16 C @ 0x182\n\nMCU temperature in degrees Celsius (approximate).\n\n    ro uptime: u64 us @ 0x186\n\nNumber of microseconds since boot.\n\n"
   },
   {
     "name": "Rotary encoder",
@@ -2244,8 +2244,8 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
   {
     "name": "WIFI",
     "shortId": "wifi",
-    "camelName": "WIFI",
-    "shortName": "WIFI",
+    "camelName": "wifi",
+    "shortName": "wifi",
     "extends": [],
     "notes": {
       "short": "Discovery and connection to WiFi networks. Separate TCP service is used for data transfer.",
@@ -2372,6 +2372,6 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
         "fields": []
       }
     ],
-    "source": "# WIFI\n\n    identifier: 0x18aae1fa\n\nDiscovery and connection to WiFi networks. Separate TCP service is used for data transfer.\n\n## Commands\n\n    flags APFlags : u32 {\n        HasPassword = 0x0001\n        WPS = 0x0002\n        HasSecondaryChannelAbove = 0x0004\n        HasSecondaryChannelBelow = 0x0008\n        IEEE_802_11B = 0x0100\n        IEEE_802_11A = 0x0200\n        IEEE_802_11G = 0x0400\n        IEEE_802_11N = 0x0800\n        IEEE_802_11AC = 0x1000\n        IEEE_802_11AX = 0x2000\n        IEEE_802_LongRange = 0x8000\n    }\n    command scan @ 0x80 {\n        results: pipe\n    }\n    pipe report results {\n        flags: APFlags\n        reserved: u32\n        rssi: i8\n        channel: u8\n        bssid: u8[6]\n        ssid: string\n    }\n\nInitiate search for WiFi networks. Results are returned via pipe, one entry per packet.\n\n    command connect @ 0x81 {\n        ssid: string\n    }\n\nConnect to named network. Password can be appended after ssid. Both strings have to be NUL-terminated.\n\n    command disconnect @ 0x82 {}\n\nDisconnect from current WiFi network if any.\n\n## Event\n\n    event got_ip @ 0x01\n\nEmitted upon successful join and IP address assignment.\n\n    event lost_ip @ 0x02\n\nEmitted when disconnected from network.\n"
+    "source": "# WIFI\n\n    identifier: 0x18aae1fa\n    camel: wifi\n\nDiscovery and connection to WiFi networks. Separate TCP service is used for data transfer.\n\n## Commands\n\n    flags APFlags : u32 {\n        HasPassword = 0x0001\n        WPS = 0x0002\n        HasSecondaryChannelAbove = 0x0004\n        HasSecondaryChannelBelow = 0x0008\n        IEEE_802_11B = 0x0100\n        IEEE_802_11A = 0x0200\n        IEEE_802_11G = 0x0400\n        IEEE_802_11N = 0x0800\n        IEEE_802_11AC = 0x1000\n        IEEE_802_11AX = 0x2000\n        IEEE_802_LongRange = 0x8000\n    }\n    command scan @ 0x80 {\n        results: pipe\n    }\n    pipe report results {\n        flags: APFlags\n        reserved: u32\n        rssi: i8\n        channel: u8\n        bssid: u8[6]\n        ssid: string\n    }\n\nInitiate search for WiFi networks. Results are returned via pipe, one entry per packet.\n\n    command connect @ 0x81 {\n        ssid: string\n    }\n\nConnect to named network. Password can be appended after ssid. Both strings have to be NUL-terminated.\n\n    command disconnect @ 0x82 {}\n\nDisconnect from current WiFi network if any.\n\n## Event\n\n    event got_ip @ 0x01\n\nEmitted upon successful join and IP address assignment.\n\n    event lost_ip @ 0x02\n\nEmitted when disconnected from network.\n"
   }
 ]

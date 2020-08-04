@@ -829,7 +829,7 @@ function toTS(info: jdspec.ServiceSpec) {
     const pref = upperCamel(info.camelName)
     for (let en of values(info.enums)) {
         const enPref = pref + upperCamel(en.name)
-        r += `\nexport const enum ${enPref} { // ${cStorage(en.storage)}\n`
+        r += `\nexport enum ${enPref} { // ${cStorage(en.storage)}\n`
         for (let k of Object.keys(en.members))
             r += "    " + k + " = " + toHex(en.members[k]) + ",\n"
         r += "}\n\n"
@@ -859,7 +859,7 @@ function toTS(info: jdspec.ServiceSpec) {
             .replace(/^\n+/, "")
             .replace(/\n$/, "")
             .replace(/\n/g, "\n    ")
-        r += `export const enum ${pref}${k} {\n    ${inner}\n}\n\n`
+        r += `export enum ${pref}${k} {\n    ${inner}\n}\n\n`
     }
     return r
 }

@@ -34,7 +34,7 @@ There is no silicon implementation of JacDac SWS and a microcontroller is curren
 To recap, SWS requires the following basic functionality:
 
 * Transmitting / receiving UART-style (10 bits: 1 byte, 1 stop bit, 1 start bit) bytes at 1Mbaud in half-duplex mode (implemented in hardware or in software via bit-banging).
-* A GPIO with an internal or external pull up (10 K) and support for interrupts (implemented in hardware or in software by spin waiting).
+* A GPIO with an internal or external 300k pull up and support for interrupts (implemented in hardware or in software by spin waiting).
 * The ability to keep time (whether through instruction counting or a hardware timer).
 * The ability to generate random numbers (or at least seed a software random number generator).
 

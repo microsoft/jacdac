@@ -73,7 +73,7 @@ JacDac has been implemented on the following 32-bit ARM processors:
 
 ## Error detection
 
-An error condition must be triggered whenever any of the following protocol timings are violated.
+The image below captures key timings of JacDac SWS. An error condition must be triggered whenever any of the protocol timings are violated.
 
 ![An image depicting a JacDac transmission. A JacDac transmission begins with a start pulse of 11-14 us, a inter lo data spacing of minimally 40 us before data commences. A JacDac transmission ends with an end pulse of 11-14 us.](./images/jacdac-proto-timings.svg)
 

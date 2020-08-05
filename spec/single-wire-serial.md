@@ -79,9 +79,13 @@ The image below captures key timings of JacDac SWS. An error condition must be t
 
 | Identifier 	| Name 	| Duration min/max (us) 	|
 |------------	|-------------	|----------	|
-| A          	|Start Pulse	|11/15	|
-| B          	|Start Data Gap	|40/69	|
-| C          	|Data Byte Gap	|0/80	|
-| D          	|Data End Gap	|0/80	|
-| E          	|End Pulse	|11/15	|
-| F          	|Frame-to-frame Gap	|100	|
+| A          	|Start pulse	|11/15	|
+| B          	|Start-data gap	|40/69	|
+| C          	|Data-byte gap	|0/80	|
+| D          	|Data-end gap	|0/80	|
+| E          	|End pulse	|11/15	|
+| F          	|Frame-to-frame gap	|100	|
+
+The image below encapsulates how these timings should be used during packet reception:
+
+![An image depicting a JacDac transmission. A JacDac transmission begins with a start pulse of 11-14 us, a inter lo data spacing of minimally 40 us before data commences. A JacDac transmission ends with an end pulse of 11-14 us.](./images/jacdac-state-diagram.svg)

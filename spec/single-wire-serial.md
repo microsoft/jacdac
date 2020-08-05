@@ -23,6 +23,8 @@ When the start pulse is over, devices have minimally 40 microseconds to configur
 
 After the transmitter has sent its data, it must then pulse the line low one final time to signal to other devices it has finished its transmission. The duration of this end pulse is between 11 and 15 microseconds so to trigger another UART break condition. The end pulse can come immediately after the last data byte, but it must occur within 80 microseconds of the last data byte. If it does not, an error condition is generated and devices must wait until the bus has entered an idle state.
 
+A small amount of time must pass before another transmission can begin. Devices must wait minimally 100 microseconds plus a randomly generated backoff value so that multiple devices do not initiate transmission at precisely the same time. It is therefore extremely important that all devices have some randomness in their transmission sequence to reduce the likelihood of data loss.
+
 A complete JacDac transmission and the beginning of another are captured in the image below.
 
 ![An image depicting a JacDac transmission. A JacDac transmission begins with a start pulse of 11-14 us, a inter lo data spacing of minimally 40 us before data commences. A JacDac transmission ends with an end pulse of 11-14 us.](./images/jacdac-activity.svg)
@@ -31,18 +33,19 @@ A complete JacDac transmission and the beginning of another are captured in the 
 
 There is no silicon implementation of JacDac SWS and a microcontroller is currently required to implement the behaviour above. The diversity of microcontrollers and the flexibility of UART hardware means that there are many pathways to reaching a specification compliant JacDac SWS implementation.
 
-To recap, SWS requires the following basic functionality:
+To recap, JacDac SWS requires the following basic functionality:
 
 * Transmitting / receiving UART-style (10 bits: 1 byte, 1 stop bit, 1 start bit) bytes at 1Mbaud in half-duplex mode (implemented in hardware or in software via bit-banging).
 * A GPIO with an internal or external 300k pull up and support for interrupts (implemented in hardware or in software by spin waiting).
 * The ability to keep time (whether through instruction counting or a hardware timer).
 * The ability to generate random numbers (or at least seed a software random number generator).
 
+<!--
 We enumerate a few of the options we have explored below.
 
 #### 32-bit ARM processors
 
-Many ARM processors come with DMA-able (Direct Memory Access) UART peripherals. This means that no CPU intervention is required to send or receive UART data. Many of these processors also support half-duplex mode and internally tie RX to TX together when it is selected. For microcontrollers that do not support internal ties, these pins can usually be connected to each other externally for the same effect. Internal pull ups and timers are often come built in with this class of microcontroller.
+Many ARM processors come with DMA-able (Direct Memory Access) UART peripherals. This means that no CPU intervention is required to send or receive UART data. Many of these processors also support half-duplex mode and internally tie RX to TX together when this mode is selected. For microcontrollers that do not support internal ties, these pins can usually be connected to each other externally for the same effect. Internal pull ups and timers often also come built into this class of microcontroller.
 
 JacDac has been implemented on the following 32-bit ARM processors:
 
@@ -52,7 +55,7 @@ JacDac has been implemented on the following 32-bit ARM processors:
 
 #### 8-bit processors
 
-8-bit processors are typically not as capable as 32-bit ARM processors, but they are often cheaper. Throughout the design of JacDac we have considered this class of processor and have implemented JacDac on 8-bit processors with and without UART support. Through a software UART implementation via the PADAUK PMS150C, JacDac can be added to any sensor at the cost of 2.5 US cents.
+8-bit processors are typically not as capable as 32-bit ARM processors, but they are often cheaper. Throughout the design of JacDac we have considered this class of processor and have implemented JacDac on 8-bit processors with and without UART support. Through a software UART implementation via the PADAUK PMS150C, JacDac can be added to any sensor at the cost of 2.5 US cents.-->
 
 ## Transmission sequence
 
@@ -75,7 +78,7 @@ JacDac has been implemented on the following 32-bit ARM processors:
 
 The image below captures key timings of JacDac SWS. An error condition must be triggered whenever any of the protocol timings are violated.
 
-![An image depicting a JacDac transmission. A JacDac transmission begins with a start pulse of 11-14 us, a inter lo data spacing of minimally 40 us before data commences. A JacDac transmission ends with an end pulse of 11-14 us.](./images/jacdac-proto-timings.svg)
+![An image depicting a JacDac transmission with portions of the signal labelled, A-F.](./images/jacdac-proto-timings.svg)
 
 | Identifier 	| Name 	| Duration min/max (us) 	|
 |------------	|-------------	|----------	|
@@ -84,8 +87,17 @@ The image below captures key timings of JacDac SWS. An error condition must be t
 | C          	|Data-byte gap	|0/80	|
 | D          	|Data-end gap	|0/80	|
 | E          	|End pulse	|11/15	|
-| F          	|Frame-to-frame gap	|100	|
+| F          	|Frame-to-frame gap	|100/	|
 
-The image below encapsulates how these timings should be used during packet reception:
+The image below encapsulates how these timings should be used during frame reception:
 
-![An image depicting a JacDac transmission. A JacDac transmission begins with a start pulse of 11-14 us, a inter lo data spacing of minimally 40 us before data commences. A JacDac transmission ends with an end pulse of 11-14 us.](./images/jacdac-state-diagram.svg)
+![An image depicting the state machine to be used when receiving a JacDac packet. Whenever any timing is exceeded, the device should wait for the frame-to-frame gap to elapse before listening for another packet.](./images/jacdac-state-diagram.svg)
+
+
+## Frame layout
+
+The previous sections have discussed how a frame is represented on the wire, there has been little discussion around how data is represented in memory.
+
+
+
+A JacDac frame can contain multiple data packets.

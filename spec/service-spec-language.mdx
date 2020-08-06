@@ -1,3 +1,4 @@
+import RandomGenerator from "../../docs/src/components/RandomGenerator"
 
 # Service Specification Language
 
@@ -31,8 +32,10 @@ The first line specifies the name of the service (`name` in JSON format).
 
 Then we assign is unique identifier (`classIdentifier` in JSON format).
 These identifers are always of the form `0x1-------`.
-If you're just defining a new service, specify it as `1` or other invalid value
+If you're just defining a new service, you can use the random generator below or specify it as `1` or other invalid value
 and the jdspectool will suggest a valid random identifier.
+
+<RandomGenerator />
 
 What follows is a short description of the service (`notes["short"]` in JSON).
 

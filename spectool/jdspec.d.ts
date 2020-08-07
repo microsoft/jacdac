@@ -223,6 +223,7 @@ declare namespace jdspec {
 
         /**
          * If present, specifies the raw value should be divided by (1 << shift) before usage.
+         * Always set when unit is 'frac'.
          */
         shift?: number;
 
@@ -240,6 +241,16 @@ declare namespace jdspec {
          * If default value for a register is non-zero, it is specified here.
          */
         defaultValue?: number;
+
+        /**
+         * Minimum typical scaled (shifted) value when specified.
+         */
+        minValue?: number;
+
+        /**
+         * Maximum typical scaled (shifted) value when specified.
+         */
+        maxValue?: number;
 
         /**
          * If set, this and following fields repeat in order, to fill the packet.

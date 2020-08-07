@@ -328,8 +328,6 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
             lastCmd = null
 
         if (words[0] == "=" || words[0] == ":") {
-            if (words.indexOf("{") >= 0)
-                error("member need to use either block or inline syntax, not both")
             words.unshift("_")
             packetField(words)
             finishPacket()
@@ -371,14 +369,53 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
             error("expecting ':'")
 
         let tp = words.shift()
-        const [st, t, shift] = normalizeStorageType(tp)
+        const [storage, type, typeShift] = normalizeStorageType(tp)
 
-        let unit = normalizeUnit(words.shift())
+        let tok = words.shift()
+        let unit: jdspec.Unit = ""
+        if (tok != "{") {
+            unit = normalizeUnit(tok)
+            tok = words.shift()
+        }
 
-        if (words.length)
-            error(`excessive tokens at the end of member: ${words[0]}...`)
+        let minValue: number = undefined
+        let maxValue: number = undefined
+        if (tok == "{") {
+            while (words.length) {
+                tok = words.shift()
+                if (tok == "}")
+                    break
+                switch (tok) {
+                    case "max":
+                        maxValue = parseVal()
+                        break
+                    case "min":
+                        minValue = parseVal()
+                        break
+                    default:
+                        error("unknown constraint: " + tok)
+                        break
+                }
+                if (words[0] == ",") words.shift()
+            }
+            if (tok == "}") tok = null
 
-        if (/pipe/.test(t)) {
+            function parseVal() {
+                const eq = words.shift()
+                if (eq != "=" && eq != ":")
+                    error("expecting '='")
+                const val = words.shift()
+                return parseIntCheck(val, true)
+            }
+        }
+
+        if (minValue === undefined && maxValue !== undefined && storage > 0)
+            minValue = 0
+
+        if (tok)
+            error(`excessive tokens at the end of member: ${tok}...`)
+
+        if (/pipe/.test(type)) {
             packetInfo.pipeType = packetInfo.name
             if (pipePacket && pipePacket.name == packetInfo.name && packetInfo.kind == "report") {
                 // keep old pipePacket
@@ -387,14 +424,23 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
             }
         }
 
+        let shift = typeShift || undefined
+        if (unit == "frac") {
+            shift = Math.abs(storage) * 8
+            if (storage < 0)
+                shift -= 1
+        }
+
         packetInfo.fields.push({
             name,
             unit,
-            shift: shift || undefined,
-            type: t,
-            storage: st,
-            isSimpleType: canonicalType(st) == t || undefined,
+            shift,
+            type,
+            storage,
+            isSimpleType: canonicalType(storage) == type || undefined,
             defaultValue,
+            minValue,
+            maxValue,
             startRepeats: nextRepeats
         })
         nextRepeats = undefined
@@ -422,24 +468,34 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
         enumInfo.members[normalizeName(words[0])] = parseIntCheck(words[2])
     }
 
-    function parseIntCheck(w: string) {
-        const v = parseInt(w)
-        if (isNaN(v)) {
-            const ww = w.split(/\./)
-            if (ww.length != 2) {
-                error(`expecting int or enum member here`)
-                return 0
-            }
-            const en = info.enums[ww[0]]
-            if (!en) {
-                error(`${ww[0]} is not an enum type`)
-                return 0
-            }
-            if (!en.members.hasOwnProperty(ww[1]))
-                error(`${ww[1]} is not a member of ${ww[0]}`)
-            return en.members[ww[1]] || 0
+    function parseIntCheck(w: string, allowFloat = false) {
+        if (/^-?0x[a-f\d_]+$/i.test(w) || /^-?[\d_]+$/.test(w)) {
+            const v = parseInt(w.replace(/_/g, "")) // allow for 0x3fff_ffff syntax
+            if (isNaN(v))
+                error("can't parse int: " + w)
+            return v
         }
-        return v
+
+        if (allowFloat && /^-?\d*(\.\d*)?(e(-?)\d+)?$/.test(w)) {
+            const v = parseFloat(w)
+            if (isNaN(v))
+                error("can't parse float: " + w)
+            return v
+        }
+
+        const ww = w.split(/\./)
+        if (ww.length != 2) {
+            error(`expecting int or enum member here`)
+            return 0
+        }
+        const en = info.enums[ww[0]]
+        if (!en) {
+            error(`${ww[0]} is not an enum type`)
+            return 0
+        }
+        if (!en.members.hasOwnProperty(ww[1]))
+            error(`${ww[1]} is not a member of ${ww[0]}`)
+        return en.members[ww[1]] || 0
     }
 
     function looksRandom(n: number) {

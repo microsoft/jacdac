@@ -72,7 +72,7 @@ This is either binary on/off (0 or non-zero), or can be gradual (eg. brightness 
 
 The primary value of actuator (eg. servo pulse length, or motor duty cycle).
 
-    rw max_power = 500: u16 mA @ 0x07
+    rw max_power = 500: u16 mA {max = 1000} @ 0x07
 
 Limit the power drawn by the service, in mA.
 

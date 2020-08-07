@@ -10,9 +10,10 @@ A power-provider service.
 
 Turn the power to the bus on/off.
 
-    rw max_power = 500: u16 mA @ max_power
+    rw max_power = 500: u16 mA {max = 1000} @ max_power
 
-Limit the power provided by the service.
+Limit the power provided by the service. The actual maximum limit will depend on hardware.
+This field may be read-only in some implementations - you should read it back after setting.
 
     ro overload: bool @ 0x181
 
@@ -22,7 +23,7 @@ Indicates whether the power has been shut down due to overdraw.
 
 Present current draw from the bus.
 
-    ro battery_voltage: u16 mV @ 0x180
+    ro battery_voltage: u16 mV {min = 3000, max = 6000} @ 0x180
 
 Voltage on input.
 
@@ -40,4 +41,4 @@ This excludes conversion overheads if any.
 
 Many USB power packs need current to be drawn from time to time to prevent shutdown.
 This regulates how often and for how long such current is drawn.
-Typically a 1/8W 22 ohm resistor is used as load limiting the duty cycle to 10%.
+Typically a 1/8W 22 ohm resistor is used as load. This limits the duty cycle to 10%.

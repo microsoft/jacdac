@@ -112,7 +112,7 @@ Now, let's move on to commands.
 
     command launch @ 0x80 {
         launch_secret_code: u32
-        delay: u32 ms
+        delay: u32 ms { min = 1000, max = 3_600_000 }
     }
     report {
         launch_id: u32;
@@ -135,6 +135,8 @@ Here, no `note["commands"]` is provided (if it were, it would be used similar to
 The first command is used to initiate launch sequence.
 The controller will respond with a number identifier for this particular launch, which
 can be used to abort it with the second command.
+The `delay` field is constrained to be between 1 second and 1 hour.
+
 Note that `report` syntax skips name and command code - these are copied from the preceding
 `command`.
 
@@ -235,12 +237,3 @@ jdspectool validates ranges of commands and register addresses.
 If you want to use high commands or registers (above 0x100/0x200; note that for vast majority
 of services this should not be needed),
 include `high: 1` after `identifier: ...` (the error message will tell you that).
-
-## Planned features
-
-```
-register temperature: i8 C @ reading [
-    typical_min: -20,
-    typical_max: 40
-] 
-```

@@ -26,8 +26,8 @@ Discovery and connection to WiFi networks. Separate TCP service is used for data
     pipe report results {
         flags: APFlags
         reserved: u32
-        rssi: i8
-        channel: u8
+        rssi: i8 {min = -200, max = -20}
+        channel: u8 {min = 1, max = 13}
         bssid: u8[6]
         ssid: string
     }

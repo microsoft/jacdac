@@ -22,7 +22,7 @@ A gamepad with direction and action buttons for 1 or more players.
     command announce @ announce {}
     report {
         flags: u8
-        num_players: u8
+        num_players: u8 {typicalMax = 4}
     repeats:
         button_present: Button
     }

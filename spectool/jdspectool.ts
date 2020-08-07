@@ -983,11 +983,6 @@ function nodeMain() {
     }
 
     fs.writeFileSync(path.join(outp, "spec.json"), JSON.stringify(values(includes), null, 2))
-    fs.writeFileSync(path.join(outp, "specdata.ts"),
-        '/// <reference path="../spectool/jdspec.d.ts" />\n' +
-        'export const serviceSpecifications: jdspec.ServiceSpec[] = ' +
-        JSON.stringify(values(includes), null, 2))
-
     fs.writeFileSync(path.join(outp, "specconstants.ts"), concats["ts"])
 
     function mkdir(n: string) {

@@ -148,7 +148,9 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
             "type": "u16",
             "storage": 2,
             "isSimpleType": true,
-            "defaultValue": 500
+            "defaultValue": 500,
+            "typicalMax": 500,
+            "typicalMin": 0
           }
         ]
       },
@@ -228,7 +230,7 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
         ]
       }
     ],
-    "source": "# Common registers and commands\n\n    camel: base\n\nService specification will always list explicitly registers and commands defined here.\nThey can be listed with say `@ intensity` instead of `@ 0x01`.\n\n## Commands\n\nCommand codes are subdivided as follows:\n* Commands `0x000-0x07f` - common to all services\n* Commands `0x080-0xeff` - defined per-service\n* Commands `0xf00-0xfff` - reserved for implementation\n\nCommands follow.\n\n    command announce @ 0x00 { }\n    report { ... }\n\nEnumeration data for control service; service-specific advertisement data otherwise.\nControl broadcasts it automatically every 500ms, but other service have to be queried to provide it.\n\n    command get_register @ 0x1000 {}\n    report { ... }\n\nRegisters number `N` is fetched by issuing command `0x1000 | N`.\nThe report format is the same as the format of the register.\n\n    command set_register @ 0x2000 { ... }\n\nRegisters number `N` is set by issuing command `0x2000 | N`, with the format\nthe same as the format of the register.\n\n    report event @ 0x01 {\n        event_id: u32\n        event_argument: u32\n    }\n\nEvent from sensor or a broadcast service. \n\n    command calibrate @ 0x02 { }\n    report { }\n\nRequest to calibrate a sensor. The report indicates the calibration is done.\n\n    command description @ 0x03 { }\n    report {\n        text: string\n    }\n\nRequest human-readable description of service.\n\n## Registers\n\nRegister codes are subdivided as follows:\n* Registers `0x001-0x07f` - r/w common to all services\n* Registers `0x080-0x0ff` - r/w defined per-service\n* Registers `0x100-0x17f` - r/o common to all services\n* Registers `0x180-0x1ff` - r/o defined per-service\n* Registers `0x200-0xeff` - custom, defined per-service\n* Registers `0xf00-0xfff` - reserved for implementation, should not be seen on the wire\n\nThe types listed are typical. Check spec for particular service for exact type,\nand a service-specific name for a register (eg. `value` could be `pulse_length`).\nAll registers default to `0` unless otherwise indicated.\n\n    rw intensity: u32 @ 0x01\n\nThis is either binary on/off (0 or non-zero), or can be gradual (eg. brightness of an RGB LED strip).\n\n    rw value: i32 @ 0x02\n\nThe primary value of actuator (eg. servo pulse length, or motor duty cycle).\n\n    rw max_power = 500: u16 mA @ 0x07\n\nLimit the power drawn by the service, in mA.\n\n    rw is_streaming: bool @ 0x03\n\nEnables/disables broadcast streaming\n\n    rw streaming_interval = 100: u32 ms @ 0x04\n\nPeriod between packets of data when streaming in milliseconds.\n\n    ro reading: i32 @ 0x101\n\nRead-only value of the sensor, also reported in streaming.\n\n    rw low_threshold: i32 @ 0x05\n    rw high_threshold: i32 @ 0x06\n\nThresholds for event generation for event generation for analog sensors.\n\n"
+    "source": "# Common registers and commands\n\n    camel: base\n\nService specification will always list explicitly registers and commands defined here.\nThey can be listed with say `@ intensity` instead of `@ 0x01`.\n\n## Commands\n\nCommand codes are subdivided as follows:\n* Commands `0x000-0x07f` - common to all services\n* Commands `0x080-0xeff` - defined per-service\n* Commands `0xf00-0xfff` - reserved for implementation\n\nCommands follow.\n\n    command announce @ 0x00 { }\n    report { ... }\n\nEnumeration data for control service; service-specific advertisement data otherwise.\nControl broadcasts it automatically every 500ms, but other service have to be queried to provide it.\n\n    command get_register @ 0x1000 {}\n    report { ... }\n\nRegisters number `N` is fetched by issuing command `0x1000 | N`.\nThe report format is the same as the format of the register.\n\n    command set_register @ 0x2000 { ... }\n\nRegisters number `N` is set by issuing command `0x2000 | N`, with the format\nthe same as the format of the register.\n\n    report event @ 0x01 {\n        event_id: u32\n        event_argument: u32\n    }\n\nEvent from sensor or a broadcast service. \n\n    command calibrate @ 0x02 { }\n    report { }\n\nRequest to calibrate a sensor. The report indicates the calibration is done.\n\n    command description @ 0x03 { }\n    report {\n        text: string\n    }\n\nRequest human-readable description of service.\n\n## Registers\n\nRegister codes are subdivided as follows:\n* Registers `0x001-0x07f` - r/w common to all services\n* Registers `0x080-0x0ff` - r/w defined per-service\n* Registers `0x100-0x17f` - r/o common to all services\n* Registers `0x180-0x1ff` - r/o defined per-service\n* Registers `0x200-0xeff` - custom, defined per-service\n* Registers `0xf00-0xfff` - reserved for implementation, should not be seen on the wire\n\nThe types listed are typical. Check spec for particular service for exact type,\nand a service-specific name for a register (eg. `value` could be `pulse_length`).\nAll registers default to `0` unless otherwise indicated.\n\n    rw intensity: u32 @ 0x01\n\nThis is either binary on/off (0 or non-zero), or can be gradual (eg. brightness of an RGB LED strip).\n\n    rw value: i32 @ 0x02\n\nThe primary value of actuator (eg. servo pulse length, or motor duty cycle).\n\n    rw max_power = 500: u16 mA {typicalMax = 500} @ 0x07\n\nLimit the power drawn by the service, in mA.\n\n    rw is_streaming: bool @ 0x03\n\nEnables/disables broadcast streaming\n\n    rw streaming_interval = 100: u32 ms @ 0x04\n\nPeriod between packets of data when streaming in milliseconds.\n\n    ro reading: i32 @ 0x101\n\nRead-only value of the sensor, also reported in streaming.\n\n    rw low_threshold: i32 @ 0x05\n    rw high_threshold: i32 @ 0x06\n\nThresholds for event generation for event generation for analog sensors.\n\n"
   },
   {
     "name": "Sensor",
@@ -269,13 +271,15 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
             "type": "u32",
             "storage": 4,
             "isSimpleType": true,
-            "defaultValue": 100
+            "defaultValue": 100,
+            "typicalMin": 1,
+            "typicalMax": 60000
           }
         ],
         "identifierName": "streaming_interval"
       }
     ],
-    "source": "# Sensor\n\n    camel: sensor\n\nBase class for sensors.\n\n## Registers\n\n    rw is_streaming: bool @ is_streaming\n\nEnables/disables broadcast streaming\n\n    rw streaming_interval = 100: u32 ms @ streaming_interval\n\nPeriod between packets of data when streaming in milliseconds.\n"
+    "source": "# Sensor\n\n    camel: sensor\n\nBase class for sensors.\n\n## Registers\n\n    rw is_streaming: bool @ is_streaming\n\nEnables/disables broadcast streaming\n\n    rw streaming_interval = 100: u32 ms {typicalMin = 1, typicalMax = 60000} @ streaming_interval\n\nPeriod between packets of data when streaming in milliseconds.\n"
   },
   {
     "name": "Accelerometer",
@@ -320,7 +324,9 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
             "type": "u32",
             "storage": 4,
             "isSimpleType": true,
-            "defaultValue": 100
+            "defaultValue": 100,
+            "typicalMin": 1,
+            "typicalMax": 60000
           }
         ],
         "identifierName": "streaming_interval",
@@ -692,7 +698,9 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
             "type": "u32",
             "storage": 4,
             "isSimpleType": true,
-            "defaultValue": 100
+            "defaultValue": 100,
+            "typicalMin": 1,
+            "typicalMax": 60000
           }
         ],
         "identifierName": "streaming_interval",
@@ -802,7 +810,9 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
             "unit": "",
             "type": "u32",
             "storage": 4,
-            "isSimpleType": true
+            "isSimpleType": true,
+            "absoluteMin": 805306368,
+            "absoluteMax": 1073741823
           }
         ]
       },
@@ -817,7 +827,9 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
             "unit": "",
             "type": "u32",
             "storage": 4,
-            "isSimpleType": true
+            "isSimpleType": true,
+            "absoluteMin": 805306368,
+            "absoluteMax": 1073741823
           }
         ]
       },
@@ -846,7 +858,9 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
             "unit": "C",
             "type": "i16",
             "storage": -2,
-            "isSimpleType": true
+            "isSimpleType": true,
+            "typicalMin": -10,
+            "typicalMax": 150
           }
         ]
       },
@@ -866,7 +880,7 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
         ]
       }
     ],
-    "source": "# Control\n\n    identifier: 0x00000000\n    camel: ctrl\n\nControl service is always service number `0`.\nIt handles actions common to all services on a device.\n\n\n\n## Commands\n\n    command noop @ 0x80 { }\n\nDo nothing. Always ignored. Can be used to test ACKs.\n\n    command identify @ 0x81 { }\n\nBlink an LED or otherwise draw user's attention.\n\n    command reset @ 0x82 { }\n\nReset device. ACK may or may not be sent.\n\n## Registers\n\n    const device_description: string @ 0x180\n\nIdentifies the type of hardware (eg., ACME Corp. Servo X-42 Rev C)\n\n    const device_class: u32 @ 0x181\n\nA numeric code for the string above; used to identify firmware images.\n\n    const bootloader_device_class: u32 @ 0x184\n\nTypically the same as `device_class` unless device was flashed by hand; the bootloader will respond to that code.\n\n    const firmware_version: string @ 0x185\n\nA string describing firmware version; typically semver.\n\n    ro temperature: i16 C @ 0x182\n\nMCU temperature in degrees Celsius (approximate).\n\n    ro uptime: u64 us @ 0x186\n\nNumber of microseconds since boot.\n\n"
+    "source": "# Control\n\n    identifier: 0x00000000\n    camel: ctrl\n\nControl service is always service number `0`.\nIt handles actions common to all services on a device.\n\n\n\n## Commands\n\n    command noop @ 0x80 { }\n\nDo nothing. Always ignored. Can be used to test ACKs.\n\n    command identify @ 0x81 { }\n\nBlink an LED or otherwise draw user's attention.\n\n    command reset @ 0x82 { }\n\nReset device. ACK may or may not be sent.\n\n## Registers\n\n    const device_description: string @ 0x180\n\nIdentifies the type of hardware (eg., ACME Corp. Servo X-42 Rev C)\n\n    const device_class: u32 { absoluteMin = 0x3000_0000, absoluteMax = 0x3fff_ffff } @ 0x181\n\nA numeric code for the string above; used to identify firmware images.\n\n    const bootloader_device_class: u32 { absoluteMin = 0x3000_0000, absoluteMax = 0x3fff_ffff } @ 0x184\n\nTypically the same as `device_class` unless device was flashed by hand; the bootloader will respond to that code.\n\n    const firmware_version: string @ 0x185\n\nA string describing firmware version; typically semver.\n\n    ro temperature: i16 C { typicalMin = -10, typicalMax = 150 } @ 0x182\n\nMCU temperature in degrees Celsius (approximate).\n\n    ro uptime: u64 us @ 0x186\n\nNumber of microseconds since boot.\n\n"
   },
   {
     "name": "Rotary encoder",
@@ -910,7 +924,9 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
             "type": "u32",
             "storage": 4,
             "isSimpleType": true,
-            "defaultValue": 100
+            "defaultValue": 100,
+            "typicalMin": 1,
+            "typicalMax": 60000
           }
         ],
         "identifierName": "streaming_interval",
@@ -1010,7 +1026,9 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
             "type": "u32",
             "storage": 4,
             "isSimpleType": true,
-            "defaultValue": 100
+            "defaultValue": 100,
+            "typicalMin": 1,
+            "typicalMax": 60000
           }
         ],
         "identifierName": "streaming_interval",
@@ -1042,7 +1060,9 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
             "unit": "",
             "type": "u8",
             "storage": 1,
-            "isSimpleType": true
+            "isSimpleType": true,
+            "typicalMax": 4,
+            "typicalMin": 0
           },
           {
             "name": "button_present",
@@ -1076,6 +1096,7 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
           {
             "name": "pressure",
             "unit": "frac",
+            "shift": 8,
             "type": "u8",
             "storage": 1,
             "isSimpleType": true
@@ -1126,7 +1147,7 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
         ]
       }
     ],
-    "source": "# Gamepad\n\n    identifier: 0x1deaa06e\n    extends: _sensor\n\nA gamepad with direction and action buttons for 1 or more players.\n\n## Commands\n\n    enum Button : u16 {\n        Left = 1\n        Up = 2\n        Right = 3\n        Down = 4\n        A = 5\n        B = 6\n        Menu = 7\n        MenuAlt = 8\n        Reset = 9\n        Exit = 10\n    }\n    command announce @ announce {}\n    report {\n        flags: u8\n        num_players: u8\n    repeats:\n        button_present: Button\n    }\n\nIndicates number of players supported and which buttons are present on the controller.\n\n## Registers\n\n    ro buttons @ reading {\n    repeats:\n        button: Button\n        player_index: u8\n        pressure: u8 frac\n    }\n\nIndicates which buttons are currently active (pressed).\n`pressure` should be `0xff` for digital buttons, and proportional for analog ones.\n\n## Events\n\n    event down @ 0x01 {\n        button: Button\n        player_index: u16\n    }\n\nEmitted when button goes from inactive to active.\n\n    event up @ 0x02 {\n        button: Button\n        player_index: u16\n    }\n\nEmitted when button goes from active to inactive.\n"
+    "source": "# Gamepad\n\n    identifier: 0x1deaa06e\n    extends: _sensor\n\nA gamepad with direction and action buttons for 1 or more players.\n\n## Commands\n\n    enum Button : u16 {\n        Left = 1\n        Up = 2\n        Right = 3\n        Down = 4\n        A = 5\n        B = 6\n        Menu = 7\n        MenuAlt = 8\n        Reset = 9\n        Exit = 10\n    }\n    command announce @ announce {}\n    report {\n        flags: u8\n        num_players: u8 {typicalMax = 4}\n    repeats:\n        button_present: Button\n    }\n\nIndicates number of players supported and which buttons are present on the controller.\n\n## Registers\n\n    ro buttons @ reading {\n    repeats:\n        button: Button\n        player_index: u8\n        pressure: u8 frac\n    }\n\nIndicates which buttons are currently active (pressed).\n`pressure` should be `0xff` for digital buttons, and proportional for analog ones.\n\n## Events\n\n    event down @ 0x01 {\n        button: Button\n        player_index: u16\n    }\n\nEmitted when button goes from inactive to active.\n\n    event up @ 0x02 {\n        button: Button\n        player_index: u16\n    }\n\nEmitted when button goes from active to inactive.\n"
   },
   {
     "name": "Humidity",
@@ -1171,7 +1192,9 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
             "type": "u32",
             "storage": 4,
             "isSimpleType": true,
-            "defaultValue": 100
+            "defaultValue": 100,
+            "typicalMin": 1,
+            "typicalMax": 60000
           }
         ],
         "identifierName": "streaming_interval",
@@ -1188,13 +1211,15 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
             "unit": "%RH",
             "shift": 10,
             "type": "u22.10",
-            "storage": 4
+            "storage": 4,
+            "typicalMax": 100,
+            "typicalMin": 0
           }
         ],
         "identifierName": "reading"
       }
     ],
-    "source": "# Humidity\n\n    identifier: 0x16c810b8\n    extends: _sensor\n\nA sensor measuring humidity of outside environment.\n\n## Registers\n\nDefault streaming interval is 1s.\n\n    ro humidity: u22.10 %RH @ reading\n\nThe relative humidity in percentage of full water saturation.\n"
+    "source": "# Humidity\n\n    identifier: 0x16c810b8\n    extends: _sensor\n\nA sensor measuring humidity of outside environment.\n\n## Registers\n\nDefault streaming interval is 1s.\n\n    ro humidity: u22.10 %RH {typicalMax = 100} @ reading\n\nThe relative humidity in percentage of full water saturation.\n"
   },
   {
     "name": "Light",
@@ -1228,6 +1253,7 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
           {
             "name": "_",
             "unit": "frac",
+            "shift": 8,
             "type": "u8",
             "storage": 1,
             "isSimpleType": true,
@@ -1245,6 +1271,7 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
           {
             "name": "_",
             "unit": "frac",
+            "shift": 8,
             "type": "u8",
             "storage": 1,
             "isSimpleType": true
@@ -1434,6 +1461,7 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
           {
             "name": "_",
             "unit": "frac",
+            "shift": 15,
             "type": "i16",
             "storage": -2,
             "isSimpleType": true
@@ -1502,7 +1530,9 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
             "type": "u32",
             "storage": 4,
             "isSimpleType": true,
-            "defaultValue": 100
+            "defaultValue": 100,
+            "typicalMin": 1,
+            "typicalMax": 60000
           }
         ],
         "identifierName": "streaming_interval",
@@ -1621,6 +1651,7 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
           {
             "name": "_",
             "unit": "frac",
+            "shift": 8,
             "type": "u8",
             "storage": 1,
             "isSimpleType": true,
@@ -1633,7 +1664,7 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
         "kind": "command",
         "name": "play_tone",
         "identifier": 128,
-        "description": "Play a PWM tone with given period and duty for given duration.\nThe duty is scaled down with `volume` register.\nTo play tone at frequency `F` Hz and volume `V` (in `0..max`) you will want\nto send `P = 1000000 / F` and `D = P * V / (2 * max)`.",
+        "description": "Play a PWM tone with given period and duty for given duration.\nThe duty is scaled down with `volume` register.\nTo play tone at frequency `F` Hz and volume `V` (in `0..1`) you will want\nto send `P = 1000000 / F` and `D = P * V / 2`.",
         "fields": [
           {
             "name": "period",
@@ -1659,7 +1690,7 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
         ]
       }
     ],
-    "source": "# Music\n\n    identifier: 0x1b57b1d7\n\nA simple buzzer.\n\n## Registers\n\n    rw volume = 255: u8 frac @ intensity\n\nThe volume (duty cycle) of the buzzer.\n\n## Commands\n\n    command play_tone @ 0x80 {\n        period: u16 us\n        duty: u16 us\n        duration: u16 ms\n    }\n\nPlay a PWM tone with given period and duty for given duration.\nThe duty is scaled down with `volume` register.\nTo play tone at frequency `F` Hz and volume `V` (in `0..max`) you will want\nto send `P = 1000000 / F` and `D = P * V / (2 * max)`.\n"
+    "source": "# Music\n\n    identifier: 0x1b57b1d7\n\nA simple buzzer.\n\n## Registers\n\n    rw volume = 255: u8 frac @ intensity\n\nThe volume (duty cycle) of the buzzer.\n\n## Commands\n\n    command play_tone @ 0x80 {\n        period: u16 us\n        duty: u16 us\n        duration: u16 ms\n    }\n\nPlay a PWM tone with given period and duty for given duration.\nThe duty is scaled down with `volume` register.\nTo play tone at frequency `F` Hz and volume `V` (in `0..1`) you will want\nto send `P = 1000000 / F` and `D = P * V / 2`.\n"
   },
   {
     "name": "Power",
@@ -1693,7 +1724,7 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
         "kind": "rw",
         "name": "max_power",
         "identifier": 7,
-        "description": "Limit the power provided by the service.",
+        "description": "Limit the power provided by the service. The actual maximum limit will depend on hardware.\nThis field may be read-only in some implementations - you should read it back after setting.",
         "fields": [
           {
             "name": "_",
@@ -1701,7 +1732,9 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
             "type": "u16",
             "storage": 2,
             "isSimpleType": true,
-            "defaultValue": 500
+            "defaultValue": 500,
+            "typicalMax": 500,
+            "typicalMin": 0
           }
         ],
         "identifierName": "max_power"
@@ -1747,7 +1780,9 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
             "unit": "mV",
             "type": "u16",
             "storage": 2,
-            "isSimpleType": true
+            "isSimpleType": true,
+            "typicalMin": 4500,
+            "typicalMax": 5500
           }
         ]
       },
@@ -1760,6 +1795,7 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
           {
             "name": "_",
             "unit": "frac",
+            "shift": 16,
             "type": "u16",
             "storage": 2,
             "isSimpleType": true
@@ -1787,7 +1823,7 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
         "kind": "rw",
         "name": "keep_on_pulse_duration",
         "identifier": 128,
-        "description": "Many USB power packs need current to be drawn from time to time to prevent shutdown.\nThis regulates how often and for how long such current is drawn.\nTypically a 1/8W 22 ohm resistor is used as load limiting the duty cycle to 10%.",
+        "description": "Many USB power packs need current to be drawn from time to time to prevent shutdown.\nThis regulates how often and for how long such current is drawn.\nTypically a 1/8W 22 ohm resistor is used as load. This limits the duty cycle to 10%.",
         "fields": [
           {
             "name": "_",
@@ -1803,7 +1839,7 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
         "kind": "rw",
         "name": "keep_on_pulse_period",
         "identifier": 129,
-        "description": "Many USB power packs need current to be drawn from time to time to prevent shutdown.\nThis regulates how often and for how long such current is drawn.\nTypically a 1/8W 22 ohm resistor is used as load limiting the duty cycle to 10%.",
+        "description": "Many USB power packs need current to be drawn from time to time to prevent shutdown.\nThis regulates how often and for how long such current is drawn.\nTypically a 1/8W 22 ohm resistor is used as load. This limits the duty cycle to 10%.",
         "fields": [
           {
             "name": "_",
@@ -1816,7 +1852,7 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
         ]
       }
     ],
-    "source": "# Power\n\n    identifier: 0x1fa4c95a\n\nA power-provider service.\n\n## Registers\n\n    rw enabled = 1: bool @ intensity\n\nTurn the power to the bus on/off.\n\n    rw max_power = 500: u16 mA @ max_power\n\nLimit the power provided by the service.\n\n    ro overload: bool @ 0x181\n\nIndicates whether the power has been shut down due to overdraw.\n\n    ro current_draw: u16 mA @ reading\n\nPresent current draw from the bus.\n\n    ro battery_voltage: u16 mV @ 0x180\n\nVoltage on input.\n\n    ro battery_charge?: u16 frac @ 0x182\n\nFraction of charge in the battery.\n\n    const battery_capacity?: u32 mWh @ 0x183\n\nEnergy that can be delivered to the bus when battery is fully charged.\nThis excludes conversion overheads if any.\n\n    rw keep_on_pulse_duration = 600: u16 ms @ 0x80\n    rw keep_on_pulse_period = 20000: u16 ms @ 0x81\n\nMany USB power packs need current to be drawn from time to time to prevent shutdown.\nThis regulates how often and for how long such current is drawn.\nTypically a 1/8W 22 ohm resistor is used as load limiting the duty cycle to 10%.\n"
+    "source": "# Power\n\n    identifier: 0x1fa4c95a\n\nA power-provider service.\n\n## Registers\n\n    rw enabled = 1: bool @ intensity\n\nTurn the power to the bus on/off.\n\n    rw max_power = 500: u16 mA {typicalMax = 500} @ max_power\n\nLimit the power provided by the service. The actual maximum limit will depend on hardware.\nThis field may be read-only in some implementations - you should read it back after setting.\n\n    ro overload: bool @ 0x181\n\nIndicates whether the power has been shut down due to overdraw.\n\n    ro current_draw: u16 mA @ reading\n\nPresent current draw from the bus.\n\n    ro battery_voltage: u16 mV {typicalMin = 4500, typicalMax = 5500} @ 0x180\n\nVoltage on input.\n\n    ro battery_charge?: u16 frac @ 0x182\n\nFraction of charge in the battery.\n\n    const battery_capacity?: u32 mWh @ 0x183\n\nEnergy that can be delivered to the bus when battery is fully charged.\nThis excludes conversion overheads if any.\n\n    rw keep_on_pulse_duration = 600: u16 ms @ 0x80\n    rw keep_on_pulse_period = 20000: u16 ms @ 0x81\n\nMany USB power packs need current to be drawn from time to time to prevent shutdown.\nThis regulates how often and for how long such current is drawn.\nTypically a 1/8W 22 ohm resistor is used as load. This limits the duty cycle to 10%.\n"
   },
   {
     "name": "PWM Light",
@@ -1840,6 +1876,7 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
           {
             "name": "_",
             "unit": "frac",
+            "shift": 16,
             "type": "u16",
             "storage": 2,
             "isSimpleType": true
@@ -1888,6 +1925,7 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
           {
             "name": "start_intensity",
             "unit": "frac",
+            "shift": 16,
             "type": "u16",
             "storage": 2,
             "isSimpleType": true,
@@ -1959,7 +1997,9 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
             "unit": "us",
             "type": "u32",
             "storage": 4,
-            "isSimpleType": true
+            "isSimpleType": true,
+            "typicalMin": 500,
+            "typicalMax": 2500
           }
         ],
         "identifierName": "value"
@@ -1980,7 +2020,7 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
         "identifierName": "intensity"
       }
     ],
-    "source": "# Servo\n\n    identifier: 0x12fc9103\n\nServo is a small motor directed with a PWM signal.\nThis services fixes the servo period at 20ms, and the pulse can be regulated.\n\n## Registers\n\n    rw pulse: u32 us @ value\n\nSpecifies length of the pulse in microseconds. The period is always 20ms.\n\n    rw enabled: bool @ intensity\n\nTurn the power to the servo on/off."
+    "source": "# Servo\n\n    identifier: 0x12fc9103\n\nServo is a small motor directed with a PWM signal.\nThis services fixes the servo period at 20ms, and the pulse can be regulated.\n\n## Registers\n\n    rw pulse: u32 us {typicalMin = 500, typicalMax = 2500} @ value\n\nSpecifies length of the pulse in microseconds. The period is always 20ms.\n\n    rw enabled: bool @ intensity\n\nTurn the power to the servo on/off."
   },
   {
     "name": "Slider",
@@ -2024,7 +2064,9 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
             "type": "u32",
             "storage": 4,
             "isSimpleType": true,
-            "defaultValue": 100
+            "defaultValue": 100,
+            "typicalMin": 1,
+            "typicalMax": 60000
           }
         ],
         "identifierName": "streaming_interval",
@@ -2039,6 +2081,7 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
           {
             "name": "_",
             "unit": "frac",
+            "shift": 16,
             "type": "u16",
             "storage": 2,
             "isSimpleType": true
@@ -2216,7 +2259,9 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
             "type": "u32",
             "storage": 4,
             "isSimpleType": true,
-            "defaultValue": 100
+            "defaultValue": 100,
+            "typicalMin": 1,
+            "typicalMax": 60000
           }
         ],
         "identifierName": "streaming_interval",
@@ -2312,14 +2357,18 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
             "unit": "",
             "type": "i8",
             "storage": -1,
-            "isSimpleType": true
+            "isSimpleType": true,
+            "typicalMin": -100,
+            "typicalMax": -20
           },
           {
             "name": "channel",
             "unit": "",
             "type": "u8",
             "storage": 1,
-            "isSimpleType": true
+            "isSimpleType": true,
+            "typicalMin": 1,
+            "typicalMax": 13
           },
           {
             "name": "bssid",
@@ -2372,6 +2421,6 @@ export const serviceSpecifications: jdspec.ServiceSpec[] = [
         "fields": []
       }
     ],
-    "source": "# WIFI\n\n    identifier: 0x18aae1fa\n    camel: wifi\n\nDiscovery and connection to WiFi networks. Separate TCP service is used for data transfer.\n\n## Commands\n\n    flags APFlags : u32 {\n        HasPassword = 0x0001\n        WPS = 0x0002\n        HasSecondaryChannelAbove = 0x0004\n        HasSecondaryChannelBelow = 0x0008\n        IEEE_802_11B = 0x0100\n        IEEE_802_11A = 0x0200\n        IEEE_802_11G = 0x0400\n        IEEE_802_11N = 0x0800\n        IEEE_802_11AC = 0x1000\n        IEEE_802_11AX = 0x2000\n        IEEE_802_LongRange = 0x8000\n    }\n    command scan @ 0x80 {\n        results: pipe\n    }\n    pipe report results {\n        flags: APFlags\n        reserved: u32\n        rssi: i8\n        channel: u8\n        bssid: u8[6]\n        ssid: string\n    }\n\nInitiate search for WiFi networks. Results are returned via pipe, one entry per packet.\n\n    command connect @ 0x81 {\n        ssid: string\n    }\n\nConnect to named network. Password can be appended after ssid. Both strings have to be NUL-terminated.\n\n    command disconnect @ 0x82 {}\n\nDisconnect from current WiFi network if any.\n\n## Event\n\n    event got_ip @ 0x01\n\nEmitted upon successful join and IP address assignment.\n\n    event lost_ip @ 0x02\n\nEmitted when disconnected from network.\n"
+    "source": "# WIFI\n\n    identifier: 0x18aae1fa\n    camel: wifi\n\nDiscovery and connection to WiFi networks. Separate TCP service is used for data transfer.\n\n## Commands\n\n    flags APFlags : u32 {\n        HasPassword = 0x0001\n        WPS = 0x0002\n        HasSecondaryChannelAbove = 0x0004\n        HasSecondaryChannelBelow = 0x0008\n        IEEE_802_11B = 0x0100\n        IEEE_802_11A = 0x0200\n        IEEE_802_11G = 0x0400\n        IEEE_802_11N = 0x0800\n        IEEE_802_11AC = 0x1000\n        IEEE_802_11AX = 0x2000\n        IEEE_802_LongRange = 0x8000\n    }\n    command scan @ 0x80 {\n        results: pipe\n    }\n    pipe report results {\n        flags: APFlags\n        reserved: u32\n        rssi: i8 {typicalMin = -100, typicalMax = -20}\n        channel: u8 {typicalMin = 1, typicalMax = 13}\n        bssid: u8[6]\n        ssid: string\n    }\n\nInitiate search for WiFi networks. Results are returned via pipe, one entry per packet.\n\n    command connect @ 0x81 {\n        ssid: string\n    }\n\nConnect to named network. Password can be appended after ssid. Both strings have to be NUL-terminated.\n\n    command disconnect @ 0x82 {}\n\nDisconnect from current WiFi network if any.\n\n## Event\n\n    event got_ip @ 0x01\n\nEmitted upon successful join and IP address assignment.\n\n    event lost_ip @ 0x02\n\nEmitted when disconnected from network.\n"
   }
 ]

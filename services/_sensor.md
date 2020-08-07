@@ -10,6 +10,6 @@ Base class for sensors.
 
 Enables/disables broadcast streaming
 
-    rw streaming_interval = 100: u32 ms {min = 1, max = 60000} @ streaming_interval
+    rw streaming_interval = 100: u32 ms {typicalMin = 1, typicalMax = 60000} @ streaming_interval
 
 Period between packets of data when streaming in milliseconds.

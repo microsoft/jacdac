@@ -245,12 +245,22 @@ declare namespace jdspec {
         /**
          * Minimum typical scaled (shifted) value when specified.
          */
-        minValue?: number;
+        typicalMin?: number;
 
         /**
          * Maximum typical scaled (shifted) value when specified.
          */
-        maxValue?: number;
+        typicalMax?: number;
+
+        /**
+         * Minimum absolute scaled (shifted) value when specified.
+         */
+        absoluteMin?: number;
+
+        /**
+         * Maximum absolute scaled (shifted) value when specified.
+         */
+        absoluteMax?: number;
 
         /**
          * If set, this and following fields repeat in order, to fill the packet.

@@ -378,19 +378,35 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
             tok = words.shift()
         }
 
-        let minValue: number = undefined
-        let maxValue: number = undefined
+        let shift = typeShift || undefined
+        if (unit == "frac") {
+            shift = Math.abs(storage) * 8
+            if (storage < 0)
+                shift -= 1
+        }
+
+        const field: jdspec.PacketMember = {
+            name,
+            unit,
+            shift,
+            type,
+            storage,
+            isSimpleType: canonicalType(storage) == type || undefined,
+            defaultValue,
+            startRepeats: nextRepeats
+        }
+
         if (tok == "{") {
             while (words.length) {
                 tok = words.shift()
                 if (tok == "}")
                     break
                 switch (tok) {
-                    case "max":
-                        maxValue = parseVal()
-                        break
-                    case "min":
-                        minValue = parseVal()
+                    case "typicalMin":
+                    case "typicalMax":
+                    case "absoluteMin":
+                    case "absoluteMax":
+                        (field as any)[tok] = parseVal()
                         break
                     default:
                         error("unknown constraint: " + tok)
@@ -409,11 +425,14 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
             }
         }
 
-        if (minValue === undefined && maxValue !== undefined && storage > 0)
-            minValue = 0
-
         if (tok)
             error(`excessive tokens at the end of member: ${tok}...`)
+
+        if (field.typicalMin === undefined && field.typicalMax !== undefined && storage > 0)
+            field.typicalMin = 0
+
+        if (field.absoluteMin === undefined && field.absoluteMax !== undefined && storage > 0)
+            field.absoluteMin = 0
 
         if (/pipe/.test(type)) {
             packetInfo.pipeType = packetInfo.name
@@ -424,25 +443,7 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
             }
         }
 
-        let shift = typeShift || undefined
-        if (unit == "frac") {
-            shift = Math.abs(storage) * 8
-            if (storage < 0)
-                shift -= 1
-        }
-
-        packetInfo.fields.push({
-            name,
-            unit,
-            shift,
-            type,
-            storage,
-            isSimpleType: canonicalType(storage) == type || undefined,
-            defaultValue,
-            minValue,
-            maxValue,
-            startRepeats: nextRepeats
-        })
+        packetInfo.fields.push(field)
         nextRepeats = undefined
     }
 

@@ -10,7 +10,7 @@ A power-provider service.
 
 Turn the power to the bus on/off.
 
-    rw max_power = 500: u16 mA {typicalMax = 500} @ max_power
+    rw max_power = 500: u16 mA {typical_max = 500} @ max_power
 
 Limit the power provided by the service. The actual maximum limit will depend on hardware.
 This field may be read-only in some implementations - you should read it back after setting.
@@ -23,7 +23,7 @@ Indicates whether the power has been shut down due to overdraw.
 
 Present current draw from the bus.
 
-    ro battery_voltage: u16 mV {typicalMin = 4500, typicalMax = 5500} @ 0x180
+    ro battery_voltage: u16 mV {typical_min = 4500, typical_max = 5500} @ 0x180
 
 Voltage on input.
 

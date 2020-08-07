@@ -7,7 +7,7 @@ This services fixes the servo period at 20ms, and the pulse can be regulated.
 
 ## Registers
 
-    rw pulse: u32 us {typicalMin = 500, typicalMax = 2500} @ value
+    rw pulse: u32 us {typical_min = 500, typical_max = 2500} @ value
 
 Specifies length of the pulse in microseconds. The period is always 20ms.
 

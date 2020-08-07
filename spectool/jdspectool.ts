@@ -401,6 +401,7 @@ function toJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>,
                 tok = words.shift()
                 if (tok == "}")
                     break
+                tok = camelize(tok)
                 switch (tok) {
                     case "typicalMin":
                     case "typicalMax":
@@ -824,8 +825,14 @@ const tsNumFmt: jdspec.SMap<string> = {
     "-4": "Int32LE:l",
 }
 
+
+function camelize(name: string) {
+    return name.replace(/_([a-z])/g, (_, l) => l.toUpperCase())
+}
+
 function upperCamel(name: string) {
-    return name[0].toUpperCase() + name.slice(1).replace(/_([a-z])/g, (_, l) => l.toUpperCase())
+    name = camelize(name)
+    return name[0].toUpperCase() + name.slice(1)
 }
 
 function addComment(pkt: jdspec.PacketInfo) {

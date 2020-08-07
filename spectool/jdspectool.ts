@@ -717,7 +717,7 @@ function packed(iface: jdspec.PacketInfo) {
 }
 
 function cStorage(tp: jdspec.StorageType) {
-    if (tp == 0)
+    if (tp == 0 || [1, 2, 4, 8].indexOf(Math.abs(tp)) < 0)
         return "bytes"
     if (tp < 0)
         return `int${-tp * 8}_t`
@@ -955,6 +955,7 @@ function nodeMain() {
     for (let n of Object.keys(converters()))
         mkdir(path.join(outp, n))
 
+    const concats: jdspec.SMap<string> = {}
     for (let fn of files) {
         if (!/\.md$/.test(fn) || fn[0] == ".")
             continue
@@ -973,7 +974,10 @@ function nodeMain() {
         } else {
             const cnv = converters()
             for (let n of Object.keys(cnv)) {
-                fs.writeFileSync(path.join(outp, n, fn.slice(0, -3) + "." + n), cnv[n](json))
+                const convResult = cnv[n](json)
+                fs.writeFileSync(path.join(outp, n, fn.slice(0, -3) + "." + n), convResult)
+                if (!concats[n]) concats[n] = ""
+                concats[n] += convResult
             }
         }
     }
@@ -983,6 +987,8 @@ function nodeMain() {
         '/// <reference path="../spectool/jdspec.d.ts" />\n' +
         'export const serviceSpecifications: jdspec.ServiceSpec[] = ' +
         JSON.stringify(values(includes), null, 2))
+
+    fs.writeFileSync(path.join(outp, "specconstants.ts"), concats["ts"])
 
     function mkdir(n: string) {
         try {

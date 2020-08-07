@@ -3,4 +3,4 @@ all:
 	tsc
 	node built/jdspectool ../services
 	cp ../services/generated/spec.json ../dist/
-	cp ../services/generated/specdata.ts ../dist/
+	cp ../services/generated/*.ts ../dist/

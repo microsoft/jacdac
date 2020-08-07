@@ -1,0 +1,17 @@
+# Requirements
+
+MCUs implementing JACDAC typically need the following:
+* a UART module
+* DMA for said UART (if device does nothing but JACDAC, it may be fine to skip this)
+* some source of randomness; can be ADC of a floating input or internal temperature sensor
+
+It is possible not to use DMA, if the MCU isn't doing anything else (eg., our bootloader
+implementations doesn't use DMA nor interrupts).
+
+It's important that devices don't come up with the same "random" numbers every time
+they power on, and critical that two instances of the same device don't that.
+Typically, you can take temperature readings a couple thousand times (they will fluctuate slightly),
+hash the results and use that as a random seed.
+Other option is a floating ADC.
+Yet another is timing pin capacitance.
+Initial contents of RAM does not appear to be random, despite the fact that it may look like it is.

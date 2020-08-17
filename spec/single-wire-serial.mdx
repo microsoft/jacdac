@@ -1,33 +1,35 @@
 # Single Wire Serial (SWS)
 
+### Version 1.0
+
 The JACDAC single wire serial (SWS) implementation provides a universal interface for interconnecting microcontrollers and peripherals. It makes use of an often forgotten protocol that is nearly as common as I2C and SPI, __UART__.
 
 JACDAC devices that use the single wire serial implementation are connected in a bus topology to a shared electrical medium (wire, or PCB trace). Each device operates a software stack consisting of four layers:
 
 1. [Physical](#the-physical-layer): this layer handles the transmission and reception of packets.
-2. [Transport](./transport.md): this layer handles packet queuing for user applications and optionally manages reliable communication via pipes.
-3. [Control](./control.md): this layer is responsible advertising a device on the bus and receiving control commands from other devices.
-4. (optional) [Service](./service.md): this layer contains zero or more services that serve resources to the bus. Services model device resources and can be physical resources like sensors, or virtual resources like memory.
+<!--2. [Transport](./transport.md): this layer handles packet queuing for user applications and optionally manages reliable communication via pipes.-->
+2. [Control](#the-control-layer): this layer is responsible advertising a device on the bus, receiving control commands from other devices, and routing packets to applications.
+2. (optional) [Service](./service.md): this layer contains zero or more services that serve resources to the bus. Services model device resources and can be physical resources like sensors, or virtual resources like memory.
 
-![An image describing the topology of JACDAC. Each device is connected to a shared bus and has a software stack that consists of: physical, transport, control and an optional service layer.](./images/JACDAC-stack.svg)
+![An image describing the topology of JACDAC. Each device is connected to a shared bus and has a software stack that consists of: physical, transport, control and an optional service layer.](./images/JACDAC-stack.png)
 
 ## The Physical Layer
 
-For communication JACDAC SWS reuses the often forgotten RS232 (UART) peripheral, common to many microcontrollers. Devices operate UART peripherals in half-duplex mode and are connected together to form a single bus. This bus requires a shared data line and a common ground line between devices.
+For communication JACDAC SWS reuses the often forgotten RS232 (UART) peripheral, common to many microcontrollers. Devices operate the UART peripheral in half-duplex mode and are connected together to form a single bus. This bus requires a common data and ground line to be shared between devices.
 
-Like with standard UART, a logical one is represented as 3.3V and a logical 0 as 0V. Data bytes are 10 bits long and are composed of 1 start bit, 8 data bits, and one stop bit. JACDAC devices must only communicate at 1 Mbaud. When no data is being transmitted, the bus must read as a logical one.
+Like with standard UART, a logical one is represented as 3.3V and a logical 0 as 0V. Data bytes are 10 bits long and are composed of 1 start bit, 8 data bits, and one stop bit. JACDAC devices must only communicate at 1 Mbaud and when no data is being transmitted, the bus must read as a logical one (3.3V).
 
-In the SWS implementation of JACDAC, any device can initiate a transmission at any time. Because of this, devices must assert control over the bus before sending any data. This is where JACDAC differs from half-duplex UART–––devices must assert control over the bus by pulsing the line low before transmitting any data. This low pulse is known as the start pulse and must be between 11 and 15 microseconds in duration. This duration is recognised as a break condition on most UART hardware.
+In JACDAC SWS, any device can initiate a transmission at any time. Because of this, devices must assert control over the bus before sending any data. This is where JACDAC differs from half-duplex UART–––devices must assert control over the bus by pulsing the line low before transmitting any data. This low pulse is known as the start pulse and must be between 11 and 15 microseconds in duration. This duration is recognised as a break condition on most UART hardware.
 
-When the start pulse is over, devices have minimally 40 microseconds to configure IO registers to receive UART data. If no data byte is received within 80 microseconds, an error condition must be triggered and devices must wait for the bus to return to an idle state. This means that the first data byte must commence at 69 microseconds after the lo pulse in order to be specification compliant.
+When the start pulse is over, devices have minimally 40 microseconds to configure IO registers to receive UART data. If no data byte is received within 100 microseconds, an error condition must be triggered and devices must wait for the bus to return to an idle state. This means that the first data byte must commence at 89 microseconds after the completion of the start pulse in order to be specification compliant.
 
-After the transmitter has sent its data, it must then pulse the line low one final time to signal to other devices it has finished its transmission. The duration of this end pulse is between 11 and 15 microseconds so to trigger another UART break condition. The end pulse can come immediately after the last data byte, but it must occur within 80 microseconds of the last data byte. If it does not, an error condition is generated and devices must wait until the bus has entered an idle state.
+After the transmitter has sent the data portion of a frame, it must then pulse the line low one final time to signal the end of a transmission. The duration of this end pulse is between 11 and 15 microseconds so to trigger another UART break condition. The end pulse can come immediately after the last data byte, but it must occur within 80 microseconds of the last data byte. If it does not, an error condition is generated.
 
 A small amount of time must pass before another transmission can begin. Devices must wait minimally 100 microseconds plus a randomly generated backoff value so that multiple devices do not initiate transmission at precisely the same time. It is therefore extremely important that all devices have some randomness in their transmission sequence to reduce the likelihood of data loss.
 
 A complete JACDAC transmission and the beginning of another are captured in the image below.
 
-![An image depicting a JACDAC transmission. A JACDAC transmission begins with a start pulse of 11-14 us, a inter lo data spacing of minimally 40 us before data commences. A JACDAC transmission ends with an end pulse of 11-14 us.](./images/JACDAC-activity.svg)
+![An image depicting a JACDAC transmission. A JACDAC transmission begins with a start pulse of 11-14 us, a inter lo data spacing of minimally 40 us before data commences. A JACDAC transmission ends with an end pulse of 11-14 us.](./images/JACDAC-activity.png)
 
 ### Hardware requirements
 
@@ -71,14 +73,14 @@ JACDAC has been implemented on the following 32-bit ARM processors:
 
 1. Place GPIO in high impedence input mode with a PullUp.
 2. Enable GPIO edge interrupts, UART break interrupts, or spin wait until the line goes low.
-3. When the start pulse has been detected configure UART registers appropriately. We recommend UART hardware is enabled after the start pulse is complete––otherwise the UART hardware may incorrectly detect a data byte or trigger an error condition.
-4. Receive data until the end pulse is detected. This can be achieved easily on most hardware via interrupts or by polling the line state from software.
+3. When the start pulse has finished, configure UART registers appropriately. It is better to wait until the start pulse is complete as in some cases UART hardware may incorrectly detect a data byte or trigger an error condition.
+4. Receive data until the end pulse is detected.
 
 ## Error detection
 
-The image below captures key timings of JACDAC SWS. An error condition must be triggered whenever any of the protocol timings are violated.
+The image and table below captures key timings of JACDAC SWS.
 
-![An image depicting a JACDAC transmission with portions of the signal labelled, A-F.](./images/JACDAC-proto-timings.svg)
+![An image depicting a JACDAC transmission with portions of the signal labelled, A-F.](./images/JACDAC-proto-timings.png)
 
 | Identifier 	| Name 	| Duration min/max (us) 	|
 |------------	|-------------	|----------	|
@@ -89,14 +91,16 @@ The image below captures key timings of JACDAC SWS. An error condition must be t
 | E          	|End pulse	|11/15	|
 | F          	|Frame-to-frame gap	|100/	|
 
-The image below encapsulates how these timings should be used during frame reception:
+The state machine below encapsulates how these timings should be used during frame reception:
 
-![An image depicting the state machine to be used when receiving a JACDAC packet. Whenever any timing is exceeded, the device should wait for the frame-to-frame gap to elapse before listening for another packet.](./images/JACDAC-state-diagram.svg)
+![An image depicting the state machine to be used when receiving a JACDAC packet. Whenever any timing is exceeded, the device should wait for the frame-to-frame gap to elapse before listening for another packet.](./images/JACDAC-state-diagram.png)
 
 
 ## Frame layout
 
-The previous sections have discussed how a frame is represented on the wire but there has been little discussion around how data is organised within a frame.
+![An image depicting a JACDAC transmission. A JACDAC transmission begins with a start pulse of 11-14 us, a inter lo data spacing of minimally 40 us before data commences. A JACDAC transmission ends with an end pulse of 11-14 us.](./images/JACDAC-activity.png)
+
+The previous sections have discussed line signalling of a frame but there has been little discussion around how the data portion of a frame is organised.
 
 A JACDAC frame has the following layout in memory:
 
@@ -111,18 +115,19 @@ struct _jd_frame_t {
 typedef struct _jd_frame_t jd_frame_t;
 ```
 
-On the wire, the frame must be transmitted in little endian format (i.e. low byte of `frame_crc` first). The total maximum frame size is 252 bytes, selected to keep the total size of packet under `255` (the DMA limit on some hardware)
-and aligned to 4. The following table defines the meaning and size of the fields above.
+On the wire, the frame must be transmitted in little endian format (i.e. low byte of `frame_crc` first). The total maximum frame size is 252 bytes, selected to keep the total size of packet under `255` (the DMA limit on some hardware)and aligned to 4. The following table defines the meaning and size of the fields in the structure above.
 
 | Memory offset | Field size (bytes) 	| Field name 	| Description  	|
 |--------|------------	|-------------	|----------	|
-| 0 | 2          	|frame_crc	| 16-bit	CRC CCITT of all following fields. |
+| 0 | 2          	|frame_crc	| [16-bit CRC CCITT](https://en.wikipedia.org/wiki/Cyclic_redundancy_check) of all following fields. |
 | 2 | 1          	|frame_size	| Size of the data field.	|
 | 3 | 1          	|frame_flags	| Flags specific to this frame.	|
 | 4 | 8          	|device_identifier	| 64-bit device identifier.	|
 | 12 | 1 * frame_size   	|data	| The data payload of the frame.	|
 
-The data portion of a JACDAC frame is also structured and is internally divided into 1 or more packets. __Zero length frames are not supported__. Each packet has the following layout in memory:
+The data portion of a JACDAC frame is also structured and is internally divided into 1 or more packets. __Zero length frames are not supported__.
+
+Each packet has the following layout in memory:
 
 ```c
 struct _jd_packet_t {
@@ -134,13 +139,41 @@ struct _jd_packet_t {
 typedef struct _jd_packet_t jd_packet_t;
 ```
 
-The following table defines the meaning and size of the fields above. The meaning of these fields will become clearer later on in this document.
+The following table defines the meaning and size of the fields in the structure above. The meaning of these fields will become clearer later on in this document.
 
 | Memory offset | Field size (bytes) 	| Field name 	| Description  	|
 |--------|------------	|-------------	|----------	|
 | 12 | 1	|packet_size	| The size of the payload field. Maximum size is 236 bytes. |
 | 13 | 1	|service_instance	| The instance number of the destination service.	|
 | 14 | 2	|service_command	| The command number for the action to be performed.	|
-| 16 | 1 * packet_size	|payload	| The packt data payload destined for a particular service.	|
+| 16 | 1 * packet_size	|payload	| The packet data payload destined for a particular service.	|
 
-Packets are placed back-to-back inside the frame `data` field and must be padded so they start at a 4 byte boundary (i.e. `packet_size` is divisible by 4). Logically, packets placed in the same frame all share the frame fields and thus the same `device_identifier`. Therefore only one device can be addressed by a JACDAC frame at a time.
+Packets are placed back-to-back inside the frame `data` field and must be padded so they start at a 4 byte boundary (i.e. `packet_size` is divisible by 4). Logically, packets placed in the same frame all share the same frame fields and thus the same `device_identifier`. This means only one device can be addressed in a single frame.
+
+
+## Services
+
+The way JACDAC devices share resources with other devices on the bus are through __services__. Services can represent physical hardware resources (e.g. an accelerometer) or pure virtual resources (e.g. distributed shared memory).
+
+Each service has an associated application programming interface (API). Each API can fall into one of two categories:
+
+* __Registers__: Properties that represent the state of a service. Registers can be inspected and modified, depending on what permissions are configured.
+* __Commands__: Actions that can be performed on a service. Ultimately, commands can also affect the state of a register.
+
+
+
+## The control service
+
+JACDAC devices that are providing services to the bus must implement the Control service.
+
+The control service is responsible for advertising a device and maintaining a list of active devices on the bus. This list does not have to be an exhaustive list and can consist of only those devices of particular interest.
+
+JACDAC SWS provides an easy way for devices to spot devices of interest on the bus. Roughly every 500 milliseconds, devices announce their presence in an advertisement report. The report contains a list of services for  to use on the bus. If a device has no services to offer it is not required to send an advertisement packet.
+
+
+## Packet routing
+
+Packets are routed to __services__, which are discussed later on in this document. Each packet contains all the information required for a packet to reach its intended service.
+
+
+## Unique device identifiers

@@ -1,6 +1,6 @@
 # JACDAC specification
 
-Read specification at https://microsoft.github.io/jacdac-ts
+Read the interactive specification at https://microsoft.github.io/jacdac-ts .
 
 ## Contributing
 

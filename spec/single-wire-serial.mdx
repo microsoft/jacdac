@@ -102,7 +102,7 @@ The state machine below encapsulates how these timings should be used during fra
 
 The previous sections have discussed line signalling of a frame but there has been little discussion around how the data portion of a frame is organised.
 
-A JACDAC frame has the following layout in memory:
+The data portion of a JACDAC frame has the following layout in memory:
 
 ```c
 struct _jd_frame_t {
@@ -133,7 +133,7 @@ Each packet has the following layout in memory:
 struct _jd_packet_t {
     uint8_t packet_size;
     uint8_t service_instance;
-    uint16_t service_command;
+    uint16_t service_api;
     uint8_t payload[236];
 } __attribute__((__packed__, aligned(4)));
 typedef struct _jd_packet_t jd_packet_t;
@@ -145,7 +145,7 @@ The following table defines the meaning and size of the fields in the structure 
 |--------|------------	|-------------	|----------	|
 | 12 | 1	|packet_size	| The size of the payload field. Maximum size is 236 bytes. |
 | 13 | 1	|service_instance	| The instance number of the destination service.	|
-| 14 | 2	|service_command	| The command number for the action to be performed.	|
+| 14 | 2	|service_api	| An API number that identifies a particular register/command.	|
 | 16 | 1 * packet_size	|payload	| The packet data payload destined for a particular service.	|
 
 Packets are placed back-to-back inside the frame `data` field and must be padded so they start at a 4 byte boundary (i.e. `packet_size` is divisible by 4). Logically, packets placed in the same frame all share the same frame fields and thus the same `device_identifier`. This means only one device can be addressed in a single frame.
@@ -160,7 +160,38 @@ Each service has an associated application programming interface (API). Each API
 * __Registers__: Properties that represent the state of a service. Registers can be inspected and modified, depending on what permissions are configured.
 * __Commands__: Actions that can be performed on a service. Ultimately, commands can also affect the state of a register.
 
+Each register or command has a number associated with it and the contents of a JACDAC packet references this number via the `service_api` field. These numbers are referred to as "register codes" or "command codes" respectively. Both register and command codes are 12-bits in length; the `service_api` field itself is 16-bits in length.
 
+The top nibble of the `service_api` is used to specify the type of operation:
+
+| Value | Operation 	|
+|--------|------------	|
+| `0x0XXX` | Command	|
+| `0x1XXX` | Register read	|
+| `0x2XXX` | Register write	|
+| `0x3XXX`- `0xfXXX` | Reserved	|
+
+
+Command codes have the following defined ranges:
+
+| Command code range | Purpose 	|
+|--------|------------	|
+| `0x000-0x07f` | Command codes common to all services	|
+| `0x080-0xeff` | Command codes specific to a service	|
+| `0xf00-0xfff` | Reserved	|
+
+When creating a new service, new commands must begin at 0x080. Note that all commands have the top nibble set to zero.
+
+Registers can be only be accessed by a read or write operation. To perform either operation the register code is combined with the operation nibble listed above (i.e. `0x1` for a read, `0x2` for a write):
+
+| Register code range | Purpose 	|
+|--------|------------	|
+| `0x000-0xfff` | Register codes specific to a service	|
+
+Registers can have read-only and write only attributes. Trying to write to a read-only register will result in a nop (no operation).
+
+Registers are variable length and can logically be between 1 bit and 236 bytes (max payload) in size. Sequential register codes do not overlap with one another. For example, it is possible to have register `0x090` of size `12`
+and non-overlapping register `0x091` of size `4`.
 
 ## The control service
 

@@ -11,7 +11,7 @@ JACDAC devices that use the single wire serial implementation are connected in a
 2. [Control](#the-control-layer): this layer is responsible advertising a device on the bus, receiving control commands from other devices, and routing packets to applications.
 2. (optional) [Service](./service.md): this layer contains zero or more services that serve resources to the bus. Services model device resources and can be physical resources like sensors, or virtual resources like memory.
 
-![An image describing the topology of JACDAC. Each device is connected to a shared bus and has a software stack that consists of: physical, transport, control and an optional service layer.](./images/JACDAC-stack.png)
+![An image describing the topology of JACDAC. Each device is connected to a shared bus and has a software stack that consists of: physical, transport, control and an optional service layer.](./images/jacdac-stack.png)
 
 ## The Physical Layer
 
@@ -29,7 +29,7 @@ A small amount of time must pass before another transmission can begin. Devices 
 
 A complete JACDAC transmission and the beginning of another are captured in the image below.
 
-![An image depicting a JACDAC transmission. A JACDAC transmission begins with a start pulse of 11-14 us, a inter lo data spacing of minimally 40 us before data commences. A JACDAC transmission ends with an end pulse of 11-14 us.](./images/JACDAC-activity.png)
+![An image depicting a JACDAC transmission. A JACDAC transmission begins with a start pulse of 11-14 us, a inter lo data spacing of minimally 40 us before data commences. A JACDAC transmission ends with an end pulse of 11-14 us.](./images/jacdac-activity.png)
 
 ### Hardware requirements
 
@@ -80,7 +80,7 @@ JACDAC has been implemented on the following 32-bit ARM processors:
 
 The image and table below captures key timings of JACDAC SWS.
 
-![An image depicting a JACDAC transmission with portions of the signal labelled, A-F.](./images/JACDAC-proto-timings.png)
+![An image depicting a JACDAC transmission with portions of the signal labelled, A-F.](./images/jacdac-proto-timings.png)
 
 | Identifier 	| Name 	| Duration min/max (us) 	|
 |------------	|-------------	|----------	|
@@ -93,12 +93,12 @@ The image and table below captures key timings of JACDAC SWS.
 
 The state machine below encapsulates how these timings should be used during frame reception:
 
-![An image depicting the state machine to be used when receiving a JACDAC packet. Whenever any timing is exceeded, the device should wait for the frame-to-frame gap to elapse before listening for another packet.](./images/JACDAC-state-diagram.png)
+![An image depicting the state machine to be used when receiving a JACDAC packet. Whenever any timing is exceeded, the device should wait for the frame-to-frame gap to elapse before listening for another packet.](./images/jacdac-state-diagram.png)
 
 
 ## Frame layout
 
-![An image depicting a JACDAC transmission. A JACDAC transmission begins with a start pulse of 11-14 us, a inter lo data spacing of minimally 40 us before data commences. A JACDAC transmission ends with an end pulse of 11-14 us.](./images/JACDAC-activity.png)
+![An image depicting a JACDAC transmission. A JACDAC transmission begins with a start pulse of 11-14 us, a inter lo data spacing of minimally 40 us before data commences. A JACDAC transmission ends with an end pulse of 11-14 us.](./images/jacdac-activity.png)
 
 The previous sections have discussed line signalling of a frame but there has been little discussion around how the data portion of a frame is organised.
 

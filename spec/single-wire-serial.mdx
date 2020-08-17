@@ -155,12 +155,12 @@ Packets are placed back-to-back inside the frame `data` field and must be padded
 
 The way JACDAC devices share resources with other devices on the bus are through __services__. Services can represent physical hardware resources (e.g. an accelerometer) or pure virtual resources (e.g. distributed shared memory).
 
-Each service has an associated application programming interface (API). Each API can fall into one of two categories:
+Each service has an associated application programming interface (API). APIs can fall into one of two categories:
 
-* __Registers__: Properties that represent the state of a service. Registers can be inspected and modified, depending on what permissions are configured.
-* __Commands__: Actions that can be performed on a service. Ultimately, commands can also affect the state of a register.
+* __Registers__: Properties that represent the state of a service. They can be inspected and modified, depending on what permissions are configured.
+* __Commands__: Actions that can be performed on a service. Ultimately, commands can also affect register state.
 
-Each register or command has a number associated with it and the contents of a JACDAC packet references this number via the `service_api` field. These numbers are referred to as "register codes" and "command codes" respectively. Both register and command codes are 12-bits in length, whilst the `service_api` field itself is 16-bits in length.
+Each register or command has a number associated with it and the contents of a JACDAC packet references this number via the `service_api` field. These numbers are referred to as "register codes" and "command codes" respectively. Both register and command codes are 12-bits in length, whilst the `service_api` field itself is 16-bits.
 
 ### Operations
 
@@ -188,11 +188,11 @@ However, services __must not__ allocate any common or reserved command codes. Th
 | `0x000-0x07f` | Common command codes	|
 | `0xf00-0xfff` | Reserved command codes	|
 
-All services are expected to respond to application common command codes.
+All services are expected to respond to applicable common command codes.
 
 ### Register codes
 
-Registers can be only be accessed by a read or write operation. To perform either operation the register code is combined with the operation nibble listed above (i.e. `0x1` for a read, `0x2` for a write):
+Registers can only be accessed by a read or write operation. To perform either operation the register code is combined with an [operation nibble](#operation-nibble) (i.e. `0x1` for a read, `0x2` for a write):
 
 | Register code range | Purpose 	|
 |--------|------------	|

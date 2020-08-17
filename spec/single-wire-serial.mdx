@@ -160,9 +160,11 @@ Each service has an associated application programming interface (API). Each API
 * __Registers__: Properties that represent the state of a service. Registers can be inspected and modified, depending on what permissions are configured.
 * __Commands__: Actions that can be performed on a service. Ultimately, commands can also affect the state of a register.
 
-Each register or command has a number associated with it and the contents of a JACDAC packet references this number via the `service_api` field. These numbers are referred to as "register codes" or "command codes" respectively. Both register and command codes are 12-bits in length; the `service_api` field itself is 16-bits in length.
+Each register or command has a number associated with it and the contents of a JACDAC packet references this number via the `service_api` field. These numbers are referred to as "register codes" and "command codes" respectively. Both register and command codes are 12-bits in length, whilst the `service_api` field itself is 16-bits in length.
 
-The top nibble of the `service_api` is used to specify the type of operation:
+### Operations
+
+Codes do not make use of the full 16-bits of the `service_api` field because the top nibble (known as the _operation nibble_) is used to specify the operation. The following table below outlines the possible operations and XXX refers to any register or command code:
 
 | Value | Operation 	|
 |--------|------------	|
@@ -171,16 +173,24 @@ The top nibble of the `service_api` is used to specify the type of operation:
 | `0x2XXX` | Register write	|
 | `0x3XXX`- `0xfXXX` | Reserved	|
 
+### Command codes
 
-Command codes have the following defined ranges:
+Services may freely define their own commands in the following range:
 
 | Command code range | Purpose 	|
 |--------|------------	|
-| `0x000-0x07f` | Command codes common to all services	|
-| `0x080-0xeff` | Command codes specific to a service	|
-| `0xf00-0xfff` | Reserved	|
+| `0x080-0xeff` | Service defined command codes 	|
 
-When creating a new service, new commands must begin at 0x080. Note that all commands have the top nibble set to zero.
+However, services __must not__ allocate any common or reserved command codes. These ranges are specified in the table below:
+
+| Command code range | Purpose 	|
+|--------|------------	|
+| `0x000-0x07f` | Common command codes	|
+| `0xf00-0xfff` | Reserved command codes	|
+
+All services are expected to respond to application common command codes.
+
+### Register codes
 
 Registers can be only be accessed by a read or write operation. To perform either operation the register code is combined with the operation nibble listed above (i.e. `0x1` for a read, `0x2` for a write):
 

@@ -133,7 +133,7 @@ Each packet has the following layout in memory:
 struct _jd_packet_t {
     uint8_t packet_size;
     uint8_t service_instance;
-    uint16_t service_api;
+    uint16_t service_command;
     uint8_t payload[236];
 } __attribute__((__packed__, aligned(4)));
 typedef struct _jd_packet_t jd_packet_t;
@@ -145,7 +145,7 @@ The following table defines the meaning and size of the fields in the structure 
 |--------|------------	|-------------	|----------	|
 | 12 | 1	|packet_size	| The size of the payload field. Maximum size is 236 bytes. |
 | 13 | 1	|service_instance	| The instance number of the destination service.	|
-| 14 | 2	|service_api	| An API number that identifies a particular register/command.	|
+| 14 | 2	|service_command	| A number that specifies an operation and code combination.	|
 | 16 | 1 * packet_size	|payload	| The packet data payload destined for a particular service.	|
 
 Packets are placed back-to-back inside the frame `data` field and must be padded so they start at a 4 byte boundary (i.e. `packet_size` is divisible by 4). Logically, packets placed in the same frame all share the same frame fields and thus the same `device_identifier`. This means only one device can be addressed in a single frame.
@@ -153,61 +153,73 @@ Packets are placed back-to-back inside the frame `data` field and must be padded
 
 ## Services
 
-The way JACDAC devices share resources with other devices on the bus are through __services__. Services can represent physical hardware resources (e.g. an accelerometer) or pure virtual resources (e.g. distributed shared memory).
+The way JACDAC devices share resources with other devices on the bus are through __services__. Services can represent physical hardware resources (e.g. an accelerometer) or pure virtual resources (e.g. distributed shared memory). Services act on __commands__ and optionally respond with or emit __reports__.
 
-Each service has an associated application programming interface (API). APIs can fall into one of two categories:
+Services themselves are specified in a custom markdown language. The specification lists the possible commands and reports a service can consume and emit. Specifications can also inherit from other specifications. A great example of this can be seen in the [sensor specification](../services/_sensor.md). JACDAC sensors inherit commands and reports from this specification, creating a set of base functionality for _all_ sensors.
 
-* __Registers__: Properties that represent the state of a service. They can be inspected and modified, depending on what permissions are configured.
-* __Commands__: Actions that can be performed on a service. Ultimately, commands can also affect register state.
+### Commands
 
-Each register or command has a number associated with it and the contents of a JACDAC packet references this number via the `service_api` field. These numbers are referred to as "register codes" and "command codes" respectively. Both register and command codes are 12-bits in length, whilst the `service_api` field itself is 16-bits.
+Commands are 16-bit and specified in the `service_command` field of a JACDAC packet. A command is composed of a 4-bit operation and a 12-bit code.
 
-### Operations
+The operation is stored in the top most nibble of the `service_command` field. The following table below outlines all possible operations; XXX represents any 12-bit command code:
 
-Codes do not make use of the full 16-bits of the `service_api` field because the top nibble (known as the _operation nibble_) is used to specify the operation. The following table below outlines the possible operations and XXX refers to any register or command code:
-
-| Value | Operation 	|
+| Operation number | Command 	|
 |--------|------------	|
-| `0x0XXX` | Command	|
+| `0x0XXX` | Action	|
 | `0x1XXX` | Register read	|
 | `0x2XXX` | Register write	|
 | `0x3XXX`- `0xfXXX` | Reserved	|
 
-### Command codes
+#### Actions
 
-Services may freely define their own commands in the following range:
+Actions are a type of command that cause a service to begin to carry out a task. An example action might be to set the angle of a servo to 90 degrees.
 
-| Command code range | Purpose 	|
+Services can freely allocate their own action command codes in the following range:
+
+| Action code range | Purpose 	|
 |--------|------------	|
-| `0x080-0xeff` | Service defined command codes 	|
+| `0x080-0xeff` | Service defined action command codes 	|
 
-However, services __must not__ allocate any common or reserved command codes. These ranges are specified in the table below:
+However, services __must not__ allocate any of the common or reserved action command codes specified in the table below:
 
-| Command code range | Purpose 	|
+| Action code range | Purpose 	|
 |--------|------------	|
-| `0x000-0x07f` | Common command codes	|
-| `0xf00-0xfff` | Reserved command codes	|
+| `0x000-0x07f` | Common action command codes	|
+| `0xf00-0xfff` | Reserved action command codes	|
 
-All services are expected to respond to applicable common command codes.
+Common action command codes are allocated to base specifications (e.g. the [sensor specification](../services/_sensor.md)). Any service that inherits from a base specification is expected to respond to command codes it specifies.
 
-### Register codes
+#### Registers
 
-Registers can only be accessed by a read or write operation. To perform either operation the register code is combined with an [operation nibble](#operation-nibble) (i.e. `0x1` for a read, `0x2` for a write):
+Registers are properties that represent the state of a service.  Registers are variable length and are between 1 byte and 236 bytes (max payload) in size. Sequential register codes do not overlap with one another. For example, it is possible to have register `0x090` of size `12` and non-overlapping register `0x091` of size `4`.
+
+Registers can be accessed and modified by register read (`0x1XXX`) and register write (`0x2XXX`) operations. Registers can be specified to be read-only or read-write capable . Trying to write to a read-only register will result in a nop (no operation). Because registers can have different access attributes they are segmented into different command code ranges.
+
+Register command codes can be freely allocated in the following ranges:
 
 | Register code range | Purpose 	|
 |--------|------------	|
-| `0x000-0xfff` | Register codes specific to a service	|
+| `0x080-0x0ff` | Read-write register codes specific to a service	|
+| `0x180-0x1ff` | Read-only register codes specific to a service	|
+| `0x280-0x2ff` | Additional register codes specific to a service. May be used in exceptional circumstances.	|
 
-Registers can have read-only and write only attributes. Trying to write to a read-only register will result in a nop (no operation).
+However, services __must not__ allocate any of the common or reserved register command codes specified in the table below:
 
-Registers are variable length and can logically be between 1 bit and 236 bytes (max payload) in size. Sequential register codes do not overlap with one another. For example, it is possible to have register `0x090` of size `12`
-and non-overlapping register `0x091` of size `4`.
+| Register code range | Purpose 	|
+|--------|------------	|
+| `0x001-0x07f` | Read-write registers common to all services	|
+| `0x100-0x17f` | Read-only registers common to all services	|
+| `0xf00-0xfff` | Reserved for future use.	|
+
+Common register command codes are allocated to base specifications (e.g. the [sensor specification](../services/_sensor.md)). Any service that inherits from a base specification is expected to implement and respond to the registers it specifies.
+
+### Reports
 
 ## The control service
 
 JACDAC devices that are providing services to the bus must implement the Control service.
 
-The control service is responsible for advertising a device and maintaining a list of active devices on the bus. This list does not have to be an exhaustive list and can consist of only those devices of particular interest.
+The control service is responsible for advertising a device and maintaining a list of active devices on the bus. This list does not have to be an exhaustive list and can consist of only those devices of particular interest or no devices at all.
 
 JACDAC SWS provides an easy way for devices to spot devices of interest on the bus. Roughly every 500 milliseconds, devices announce their presence in an advertisement report. The report contains a list of services for  to use on the bus. If a device has no services to offer it is not required to send an advertisement packet.
 

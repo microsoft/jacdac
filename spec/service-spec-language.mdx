@@ -1,6 +1,8 @@
-import RandomGenerator from "../../docs/src/components/RandomGenerator"
+---
+title: Service Specification Language
+---
 
-# Service Specification Language
+import RandomGenerator from "../../docs/src/components/RandomGenerator"
 
 The service specification uses literate programming in markdown format.
 
@@ -12,6 +14,7 @@ Examples in this document only use the leading spaces form.
 The bulk of the specification talks about packet formats.
 There are three main types of packets described: registers, commands, and events.
 
+The [Service Editor](/tools/service-editor) is an online editor for the specification.
 The [jdspectool](https://github.com/microsoft/jacdac/tree/master/spectool) takes a service specification in markdown format and converts it to JSON.
 
 It can then also generate template files for implementation in various languages.

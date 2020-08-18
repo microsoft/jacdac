@@ -1,3 +1,5 @@
+import RandomGenerator from "../../docs/src/components/RandomGenerator"
+
 # Control layer
 
 Every JACDAC device has a unique 64 bit identifier.
@@ -9,12 +11,13 @@ Another option is to flash a randomly generated 64 bit number during production.
 If that is difficult, generate 48 bit (or so) random number, and assign identifiers
 starting with that number with lowest bits incrementing.
 Make sure to machine-generate the number, do not just bang on the keyboard.
-You can use the line at the bottom of [CF2 patcher](https://microsoft.github.io/uf2/patcher/)
-to generate random numbers.
+You can use the widget below to generate a random device identifier.
+
+<RandomGenerator device={true} />
 
 If the device already has a 48 bit MAC address, the 64 bit device identifier is formed by prepending
 `0xff` and appending `0xfe`. For example, if the MAC address is `11:22:33:44:55:66`, the device
-identifier should be `0xFF112233445566FE`.
+identifier should be `0xff112233445566fw`.
 
 It's theoretically possible for a device ID collision to occur in a small network of say 200 devices.
 With evenly distributed (ie., random) device IDs and 1 trillion such networks 

@@ -831,6 +831,7 @@ function camelize(name: string) {
 
 function upperCamel(name: string) {
     name = camelize(name)
+    if (!name.length) return name
     return name[0].toUpperCase() + name.slice(1)
 }
 

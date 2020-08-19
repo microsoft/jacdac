@@ -2,8 +2,11 @@
 
     camel: base
 
-Service specification will always list explicitly registers and commands defined here.
-They can be listed with say `@ intensity` instead of `@ 0x01`.
+This file describes common register and command codes.
+These are defined in ranges separate from the per-service ones.
+No service actually derives from this file, but services can include packets
+defined here.
+Their code is listed as say `@ intensity` and not `@ 0x01` (the spectool enforces that).
 
 ## Commands
 

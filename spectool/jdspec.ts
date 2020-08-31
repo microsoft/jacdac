@@ -835,6 +835,10 @@ function upperCamel(name: string) {
     return name[0].toUpperCase() + name.slice(1)
 }
 
+function snakify(name: string) {
+    return name.replace(/([a-z])([A-Z])/g, (_, a, b) => a + "_" + b)
+}
+
 function addComment(pkt: jdspec.PacketInfo) {
     let comment = ""
 
@@ -890,6 +894,8 @@ function addComment(pkt: jdspec.PacketInfo) {
 
 function toTS(info: jdspec.ServiceSpec) {
     let r = "// Service: " + info.name + "\n"
+    if (info.shortId[0] != "_")
+        r += `export const SRV_${info.name.replace(/ /g, "_").toUpperCase()} = ${toHex(info.classIdentifier)}\n`
     const pref = upperCamel(info.camelName)
     for (let en of values(info.enums)) {
         const enPref = pref + upperCamel(en.name)
@@ -925,6 +931,7 @@ function toTS(info: jdspec.ServiceSpec) {
             .replace(/\n/g, "\n    ")
         r += `export enum ${pref}${k} {\n    ${inner}\n}\n\n`
     }
+
     return r
 }
 

@@ -99,7 +99,7 @@ Number of input samples collected so far.
 
 Size of a single sample.
 
-    rw stream_samples: u8 @ 0x82
+    rw stream_samples: u32 @ 0x82
 
 When set to `N`, will stream `N` samples as `current_sample` reading.
 

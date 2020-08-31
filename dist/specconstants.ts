@@ -61,6 +61,7 @@ export enum SensorReg {
 }
 
 // Service: Accelerometer
+export const SRV_ACCELEROMETER = 0x1f140409
 export enum AccelReg {
     /** Indicates the current forces acting on accelerometer. */
     Forces = 0x101,
@@ -105,6 +106,7 @@ export enum AccelEvent {
 }
 
 // Service: Bootloader
+export const SRV_BOOTLOADER = 0x1ffa9948
 
 export enum BootloaderError { // uint32_t
     NoError = 0x0,
@@ -134,6 +136,7 @@ export enum BootloaderCmd {
 }
 
 // Service: Button
+export const SRV_BUTTON = 0x1473a263
 export enum ButtonReg {
     /** Read-only bool (uint8_t). Indicates whether the button is currently active (pressed). */
     Pressed = 0x101,
@@ -154,6 +157,7 @@ export enum ButtonEvent {
 }
 
 // Service: Control
+export const SRV_CONTROL = 0x0
 export enum CtrlCmd {
     /** No args. Do nothing. Always ignored. Can be used to test ACKs. */
     Noop = 0x80,
@@ -186,6 +190,7 @@ export enum CtrlReg {
 }
 
 // Service: Rotary encoder
+export const SRV_ROTARY_ENCODER = 0x10fa29c9
 export enum RotaryEncoderReg {
     /**
      * Read-only int32_t. Upon device reset starts at `0` (regardless of the shaft position).
@@ -198,6 +203,7 @@ export enum RotaryEncoderReg {
 }
 
 // Service: Gamepad
+export const SRV_GAMEPAD = 0x1deaa06e
 
 export enum GamepadButton { // uint16_t
     Left = 0x1,
@@ -234,12 +240,14 @@ export enum GamepadEvent {
 }
 
 // Service: Humidity
+export const SRV_HUMIDITY = 0x16c810b8
 export enum HumidityReg {
     /** Read-only %RH u22.10 (uint32_t). The relative humidity in percentage of full water saturation. */
     Humidity = 0x101,
 }
 
 // Service: Light
+export const SRV_LIGHT = 0x126f00e0
 
 export enum LightLightType { // uint8_t
     WS2812B_GRB = 0x0,
@@ -286,6 +294,7 @@ export enum LightCmd {
 }
 
 // Service: Logger
+export const SRV_LOGGER = 0x12dc1fca
 
 export enum LoggerPriority { // uint8_t
     Debug = 0x0,
@@ -300,6 +309,7 @@ export enum LoggerReg {
 }
 
 // Service: Motor
+export const SRV_MOTOR = 0x17004cd8
 export enum MotorReg {
     /**
      * Read-write fraction int16_t. PWM duty cycle of the motor. Use negative/positive values to run the motor forwards and backwards.
@@ -312,6 +322,7 @@ export enum MotorReg {
 }
 
 // Service: Multitouch
+export const SRV_MULTITOUCH = 0x18d55e2b
 export enum MultitouchReg {
     /**
      * Read-only i32[] (bytes). Capacitance of channels. The capacitance is continuously calibrated, and a value of `0` indicates
@@ -342,6 +353,7 @@ export enum MultitouchEvent {
 }
 
 // Service: Music
+export const SRV_MUSIC = 0x1b57b1d7
 export enum MusicReg {
     /** Read-write fraction uint8_t. The volume (duty cycle) of the buzzer. */
     Volume = 0x1,
@@ -358,6 +370,7 @@ export enum MusicCmd {
 }
 
 // Service: Power
+export const SRV_POWER = 0x1fa4c95a
 export enum PowerReg {
     /** Read-write bool (uint8_t). Turn the power to the bus on/off. */
     Enabled = 0x1,
@@ -402,6 +415,7 @@ export enum PowerReg {
 }
 
 // Service: PWM Light
+export const SRV_PWM_LIGHT = 0x1fb57453
 export enum PwmLightReg {
     /**
      * Read-write fraction uint16_t. Set the luminosity of the strip. The value is used to scale `start_intensity` in `steps` register.
@@ -432,6 +446,7 @@ export enum PwmLightReg {
 }
 
 // Service: Servo
+export const SRV_SERVO = 0x12fc9103
 export enum ServoReg {
     /** Read-write μs uint32_t. Specifies length of the pulse in microseconds. The period is always 20ms. */
     Pulse = 0x2,
@@ -441,12 +456,14 @@ export enum ServoReg {
 }
 
 // Service: Slider
+export const SRV_SLIDER = 0x1f274746
 export enum SliderReg {
     /** Read-only fraction uint16_t. The relative position of the slider between `0x0000` and `0xffff`. */
     Position = 0x101,
 }
 
 // Service: TCP
+export const SRV_TCP = 0x1b43b70b
 
 export enum TCPTcpError { // int32_t
     InvalidCommand = 0x1,
@@ -475,12 +492,14 @@ export enum TCPCmd {
 }
 
 // Service: Temperature
+export const SRV_TEMPERATURE = 0x1421bac7
 export enum TemperatureReg {
     /** Read-only °C u22.10 (uint32_t). The temperature. */
     Temperature = 0x101,
 }
 
 // Service: TFLite
+export const SRV_TFLITE = 0x13fe118c
 
 export enum TFLiteSampleType { // uint8_t
     U8 = 0x8,
@@ -545,7 +564,7 @@ export enum TFLiteReg {
     /** Read-only bytes uint8_t. Size of a single sample. */
     SampleSize = 0x186,
     
-    /** Read-write uint8_t. When set to `N`, will stream `N` samples as `current_sample` reading. */
+    /** Read-write uint32_t. When set to `N`, will stream `N` samples as `current_sample` reading. */
     StreamSamples = 0x82,
     
     /** Read-only bytes. Last collected sample. */
@@ -556,6 +575,7 @@ export enum TFLiteReg {
 }
 
 // Service: WIFI
+export const SRV_WIFI = 0x18aae1fa
 
 export enum WifiAPFlags { // uint32_t
     HasPassword = 0x1,

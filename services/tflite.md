@@ -18,7 +18,7 @@ Open pipe for streaming in the model. The size of the model has to be declared u
 The model is streamed over regular pipe data packets, in the `.tflite` flatbuffer format.
 When the pipe is closed, the model is written all into flash, and the device running the service may reset.
 
-    command predict @ 0x80 {
+    command predict @ 0x81 {
         outputs: pipe
     }
     report {
@@ -54,7 +54,7 @@ and results are send over the `outputs` pipe.
 Set automatic input collection.
 These settings are stored in flash.
 
-    rw auto_invoke_every: u16 @ 0x80
+    rw auto_invoke_every: u16 @ 0x81
 
 When register contains `N > 0`, run the model automatically every time new `N` samples are collected.
 Model may be run less often if it takes longer to run than `N * sampling_interval`.
@@ -86,3 +86,27 @@ The time consumed in last model execution.
     ro allocated_arena_size: u32 bytes @ 0x183
 
 Number of RAM bytes allocated for model execution.
+
+    ro model_size: u32 bytes @ 0x184
+
+The size of `.tflite` model in bytes.
+
+    ro num_samples: u32 @ 0x185
+
+Number of input samples collected so far.
+
+    ro sample_size: u8 bytes @ 0x186
+
+Size of a single sample.
+
+    rw stream_samples: u8 @ 0x82
+
+When set to `N`, will stream `N` samples as `current_sample` reading.
+
+    ro current_sample: bytes @ 0x187
+
+Last collected sample.
+
+    ro last_error: string @ 0x188
+
+Textual description of last error when running or loading model (if any).

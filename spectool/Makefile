@@ -1,5 +1,5 @@
 all:
-	#rm -rf ../services/generated
+	rm -rf ../services/generated
 	tsc
 	node built/jdspectool ../services
 	cp ../services/generated/spec.json ../dist/

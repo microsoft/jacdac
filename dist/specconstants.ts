@@ -480,6 +480,81 @@ export enum TemperatureReg {
     Temperature = 0x101,
 }
 
+// Service: TFLite
+
+export enum TFLiteSampleType { // uint8_t
+    U8 = 0x8,
+    I8 = 0x88,
+    U16 = 0x10,
+    I16 = 0x90,
+    U32 = 0x20,
+    I32 = 0xa0,
+}
+
+export enum TFLiteCmd {
+    /**
+     * Argument: model_size bytes uint32_t. Open pipe for streaming in the model. The size of the model has to be declared upfront.
+     * The model is streamed over regular pipe data packets, in the `.tflite` flatbuffer format.
+     * When the pipe is closed, the model is written all into flash, and the device running the service may reset.
+     */
+    SetModel = 0x80,
+    
+    /**
+     * Argument: outputs pipe (bytes). Open channel that can be used to manually invoke the model. When enough data is sent over the `inputs` pipe, the model is invoked,
+     * and results are send over the `outputs` pipe.
+     */
+    Predict = 0x81,
+}
+
+export enum TFLiteReg {
+    /**
+     * Set automatic input collection.
+     * These settings are stored in flash.
+     */
+    Inputs = 0x80,
+    
+    /**
+     * Read-write uint16_t. When register contains `N > 0`, run the model automatically every time new `N` samples are collected.
+     * Model may be run less often if it takes longer to run than `N * sampling_interval`.
+     * The `outputs` register will stream its value after each run.
+     * This register is not stored in flash.
+     */
+    AutoInvokeEvery = 0x81,
+    
+    /** Read-only bytes. Results of last model invocation as `float32` array. */
+    Outputs = 0x101,
+    
+    /** Read-only dimension uint16_t. The shape of the input tensor. */
+    InputShape = 0x180,
+    
+    /** Read-only dimension uint16_t. The shape of the output tensor. */
+    OutputShape = 0x181,
+    
+    /** Read-only μs uint32_t. The time consumed in last model execution. */
+    LastRunTime = 0x182,
+    
+    /** Read-only bytes uint32_t. Number of RAM bytes allocated for model execution. */
+    AllocatedArenaSize = 0x183,
+    
+    /** Read-only bytes uint32_t. The size of `.tflite` model in bytes. */
+    ModelSize = 0x184,
+    
+    /** Read-only uint32_t. Number of input samples collected so far. */
+    NumSamples = 0x185,
+    
+    /** Read-only bytes uint8_t. Size of a single sample. */
+    SampleSize = 0x186,
+    
+    /** Read-write uint8_t. When set to `N`, will stream `N` samples as `current_sample` reading. */
+    StreamSamples = 0x82,
+    
+    /** Read-only bytes. Last collected sample. */
+    CurrentSample = 0x187,
+    
+    /** Read-only string (bytes). Textual description of last error when running or loading model (if any). */
+    LastError = 0x188,
+}
+
 // Service: WIFI
 
 export enum WifiAPFlags { // uint32_t

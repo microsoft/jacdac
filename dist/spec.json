@@ -6,7 +6,7 @@
     "shortName": "base",
     "extends": [],
     "notes": {
-      "short": "Service specification will always list explicitly registers and commands defined here.\nThey can be listed with say `@ intensity` instead of `@ 0x01`.",
+      "short": "This file describes common register and command codes.\nThese are defined in ranges separate from the per-service ones.\nNo service actually derives from this file, but services can include packets\ndefined here.\nTheir code is listed as say `@ intensity` and not `@ 0x01` (the spectool enforces that).",
       "commands": "Command codes are subdivided as follows:\n* Commands `0x000-0x07f` - common to all services\n* Commands `0x080-0xeff` - defined per-service\n* Commands `0xf00-0xfff` - reserved for implementation\n\nCommands follow.",
       "registers": "Register codes are subdivided as follows:\n* Registers `0x001-0x07f` - r/w common to all services\n* Registers `0x080-0x0ff` - r/w defined per-service\n* Registers `0x100-0x17f` - r/o common to all services\n* Registers `0x180-0x1ff` - r/o defined per-service\n* Registers `0x200-0xeff` - custom, defined per-service\n* Registers `0xf00-0xfff` - reserved for implementation, should not be seen on the wire\n\nThe types listed are typical. Check spec for particular service for exact type,\nand a service-specific name for a register (eg. `value` could be `pulse_length`).\nAll registers default to `0` unless otherwise indicated."
     },
@@ -229,7 +229,7 @@
         ]
       }
     ],
-    "source": "# Common registers and commands\n\n    camel: base\n\nService specification will always list explicitly registers and commands defined here.\nThey can be listed with say `@ intensity` instead of `@ 0x01`.\n\n## Commands\n\nCommand codes are subdivided as follows:\n* Commands `0x000-0x07f` - common to all services\n* Commands `0x080-0xeff` - defined per-service\n* Commands `0xf00-0xfff` - reserved for implementation\n\nCommands follow.\n\n    command announce @ 0x00 { }\n    report { ... }\n\nEnumeration data for control service; service-specific advertisement data otherwise.\nControl broadcasts it automatically every 500ms, but other service have to be queried to provide it.\n\n    command get_register @ 0x1000 {}\n    report { ... }\n\nRegisters number `N` is fetched by issuing command `0x1000 | N`.\nThe report format is the same as the format of the register.\n\n    command set_register @ 0x2000 { ... }\n\nRegisters number `N` is set by issuing command `0x2000 | N`, with the format\nthe same as the format of the register.\n\n    report event @ 0x01 {\n        event_id: u32\n        event_argument: u32\n    }\n\nEvent from sensor or a broadcast service. \n\n    command calibrate @ 0x02 { }\n    report { }\n\nRequest to calibrate a sensor. The report indicates the calibration is done.\n\n    command description @ 0x03 { }\n    report {\n        text: string\n    }\n\nRequest human-readable description of service.\n\n## Registers\n\nRegister codes are subdivided as follows:\n* Registers `0x001-0x07f` - r/w common to all services\n* Registers `0x080-0x0ff` - r/w defined per-service\n* Registers `0x100-0x17f` - r/o common to all services\n* Registers `0x180-0x1ff` - r/o defined per-service\n* Registers `0x200-0xeff` - custom, defined per-service\n* Registers `0xf00-0xfff` - reserved for implementation, should not be seen on the wire\n\nThe types listed are typical. Check spec for particular service for exact type,\nand a service-specific name for a register (eg. `value` could be `pulse_length`).\nAll registers default to `0` unless otherwise indicated.\n\n    rw intensity: u32 @ 0x01\n\nThis is either binary on/off (0 or non-zero), or can be gradual (eg. brightness of an RGB LED strip).\n\n    rw value: i32 @ 0x02\n\nThe primary value of actuator (eg. servo pulse length, or motor duty cycle).\n\n    rw max_power = 500: u16 mA {typical_max = 500} @ 0x07\n\nLimit the power drawn by the service, in mA.\n\n    rw is_streaming: bool @ 0x03\n\nEnables/disables broadcast streaming\n\n    rw streaming_interval = 100: u32 ms @ 0x04\n\nPeriod between packets of data when streaming in milliseconds.\n\n    ro reading: i32 @ 0x101\n\nRead-only value of the sensor, also reported in streaming.\n\n    rw low_threshold: i32 @ 0x05\n    rw high_threshold: i32 @ 0x06\n\nThresholds for event generation for event generation for analog sensors.\n\n"
+    "source": "# Common registers and commands\n\n    camel: base\n\nThis file describes common register and command codes.\nThese are defined in ranges separate from the per-service ones.\nNo service actually derives from this file, but services can include packets\ndefined here.\nTheir code is listed as say `@ intensity` and not `@ 0x01` (the spectool enforces that).\n\n## Commands\n\nCommand codes are subdivided as follows:\n* Commands `0x000-0x07f` - common to all services\n* Commands `0x080-0xeff` - defined per-service\n* Commands `0xf00-0xfff` - reserved for implementation\n\nCommands follow.\n\n    command announce @ 0x00 { }\n    report { ... }\n\nEnumeration data for control service; service-specific advertisement data otherwise.\nControl broadcasts it automatically every 500ms, but other service have to be queried to provide it.\n\n    command get_register @ 0x1000 {}\n    report { ... }\n\nRegisters number `N` is fetched by issuing command `0x1000 | N`.\nThe report format is the same as the format of the register.\n\n    command set_register @ 0x2000 { ... }\n\nRegisters number `N` is set by issuing command `0x2000 | N`, with the format\nthe same as the format of the register.\n\n    report event @ 0x01 {\n        event_id: u32\n        event_argument: u32\n    }\n\nEvent from sensor or a broadcast service. \n\n    command calibrate @ 0x02 { }\n    report { }\n\nRequest to calibrate a sensor. The report indicates the calibration is done.\n\n    command description @ 0x03 { }\n    report {\n        text: string\n    }\n\nRequest human-readable description of service.\n\n## Registers\n\nRegister codes are subdivided as follows:\n* Registers `0x001-0x07f` - r/w common to all services\n* Registers `0x080-0x0ff` - r/w defined per-service\n* Registers `0x100-0x17f` - r/o common to all services\n* Registers `0x180-0x1ff` - r/o defined per-service\n* Registers `0x200-0xeff` - custom, defined per-service\n* Registers `0xf00-0xfff` - reserved for implementation, should not be seen on the wire\n\nThe types listed are typical. Check spec for particular service for exact type,\nand a service-specific name for a register (eg. `value` could be `pulse_length`).\nAll registers default to `0` unless otherwise indicated.\n\n    rw intensity: u32 @ 0x01\n\nThis is either binary on/off (0 or non-zero), or can be gradual (eg. brightness of an RGB LED strip).\n\n    rw value: i32 @ 0x02\n\nThe primary value of actuator (eg. servo pulse length, or motor duty cycle).\n\n    rw max_power = 500: u16 mA {typical_max = 500} @ 0x07\n\nLimit the power drawn by the service, in mA.\n\n    rw is_streaming: bool @ 0x03\n\nEnables/disables broadcast streaming\n\n    rw streaming_interval = 100: u32 ms @ 0x04\n\nPeriod between packets of data when streaming in milliseconds.\n\n    ro reading: i32 @ 0x101\n\nRead-only value of the sensor, also reported in streaming.\n\n    rw low_threshold: i32 @ 0x05\n    rw high_threshold: i32 @ 0x06\n\nThresholds for event generation for event generation for analog sensors.\n\n"
   },
   {
     "name": "Sensor",
@@ -2284,6 +2284,347 @@
       }
     ],
     "source": "# Temperature\n\n    identifier: 0x1421bac7\n    extends: _sensor\n\nA thermometer measuring outside environment.\n\n## Registers\n\nDefault streaming interval is 1s.\n\n    ro temperature: u22.10 C @ reading\n\nThe temperature.\n"
+  },
+  {
+    "name": "TFLite",
+    "shortId": "tflite",
+    "camelName": "TFLite",
+    "shortName": "TFLite",
+    "extends": [],
+    "notes": {
+      "short": "Run TensorFlow Lite for Microcontrollers machine learning models.\nOnly models with a single input tensor and a single output tensor are supported at the moment."
+    },
+    "classIdentifier": 335417740,
+    "enums": {
+      "SampleType": {
+        "name": "SampleType",
+        "storage": 1,
+        "members": {
+          "U8": 8,
+          "I8": 136,
+          "U16": 16,
+          "I16": 144,
+          "U32": 32,
+          "I32": 160
+        }
+      }
+    },
+    "packets": [
+      {
+        "kind": "command",
+        "name": "set_model",
+        "identifier": 128,
+        "description": "Open pipe for streaming in the model. The size of the model has to be declared upfront.\nThe model is streamed over regular pipe data packets, in the `.tflite` flatbuffer format.\nWhen the pipe is closed, the model is written all into flash, and the device running the service may reset.",
+        "fields": [
+          {
+            "name": "model_size",
+            "unit": "bytes",
+            "type": "u32",
+            "storage": 4,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "report",
+        "name": "set_model",
+        "identifier": 128,
+        "description": "Open pipe for streaming in the model. The size of the model has to be declared upfront.\nThe model is streamed over regular pipe data packets, in the `.tflite` flatbuffer format.\nWhen the pipe is closed, the model is written all into flash, and the device running the service may reset.",
+        "fields": [
+          {
+            "name": "model_port",
+            "unit": "",
+            "type": "pipe_port",
+            "storage": 2
+          }
+        ],
+        "pipeType": "set_model"
+      },
+      {
+        "kind": "command",
+        "name": "predict",
+        "identifier": 129,
+        "description": "Open channel that can be used to manually invoke the model. When enough data is sent over the `inputs` pipe, the model is invoked,\nand results are send over the `outputs` pipe.",
+        "fields": [
+          {
+            "name": "outputs",
+            "unit": "",
+            "type": "pipe",
+            "storage": 12
+          }
+        ],
+        "pipeType": "predict"
+      },
+      {
+        "kind": "report",
+        "name": "predict",
+        "identifier": 129,
+        "description": "Open channel that can be used to manually invoke the model. When enough data is sent over the `inputs` pipe, the model is invoked,\nand results are send over the `outputs` pipe.",
+        "fields": [
+          {
+            "name": "inputs",
+            "unit": "",
+            "type": "pipe_port",
+            "storage": 2
+          }
+        ],
+        "pipeType": "predict"
+      },
+      {
+        "kind": "rw",
+        "name": "inputs",
+        "identifier": 128,
+        "description": "Set automatic input collection.\nThese settings are stored in flash.",
+        "fields": [
+          {
+            "name": "sampling_interval",
+            "unit": "ms",
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "samples_in_window",
+            "unit": "",
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "reserved",
+            "unit": "",
+            "type": "u32",
+            "storage": 4,
+            "isSimpleType": true
+          },
+          {
+            "name": "device_id",
+            "unit": "",
+            "type": "u64",
+            "storage": 8,
+            "isSimpleType": true,
+            "startRepeats": true
+          },
+          {
+            "name": "service_class",
+            "unit": "",
+            "type": "u32",
+            "storage": 4,
+            "isSimpleType": true
+          },
+          {
+            "name": "service_num",
+            "unit": "",
+            "type": "u8",
+            "storage": 1,
+            "isSimpleType": true
+          },
+          {
+            "name": "sample_size",
+            "unit": "bytes",
+            "type": "u8",
+            "storage": 1,
+            "isSimpleType": true
+          },
+          {
+            "name": "sample_type",
+            "unit": "",
+            "type": "SampleType",
+            "storage": 1
+          },
+          {
+            "name": "sample_shift",
+            "unit": "",
+            "type": "i8",
+            "storage": -1,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "rw",
+        "name": "auto_invoke_every",
+        "identifier": 129,
+        "description": "When register contains `N > 0`, run the model automatically every time new `N` samples are collected.\nModel may be run less often if it takes longer to run than `N * sampling_interval`.\nThe `outputs` register will stream its value after each run.\nThis register is not stored in flash.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "ro",
+        "name": "outputs",
+        "identifier": 257,
+        "description": "Results of last model invocation as `float32` array.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "type": "bytes",
+            "storage": 0,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "reading"
+      },
+      {
+        "kind": "ro",
+        "name": "input_shape",
+        "identifier": 384,
+        "description": "The shape of the input tensor.",
+        "fields": [
+          {
+            "name": "dimension",
+            "unit": "",
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true,
+            "startRepeats": true
+          }
+        ]
+      },
+      {
+        "kind": "ro",
+        "name": "output_shape",
+        "identifier": 385,
+        "description": "The shape of the output tensor.",
+        "fields": [
+          {
+            "name": "dimension",
+            "unit": "",
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true,
+            "startRepeats": true
+          }
+        ]
+      },
+      {
+        "kind": "ro",
+        "name": "last_run_time",
+        "identifier": 386,
+        "description": "The time consumed in last model execution.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "us",
+            "type": "u32",
+            "storage": 4,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "ro",
+        "name": "allocated_arena_size",
+        "identifier": 387,
+        "description": "Number of RAM bytes allocated for model execution.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "bytes",
+            "type": "u32",
+            "storage": 4,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "ro",
+        "name": "model_size",
+        "identifier": 388,
+        "description": "The size of `.tflite` model in bytes.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "bytes",
+            "type": "u32",
+            "storage": 4,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "ro",
+        "name": "num_samples",
+        "identifier": 389,
+        "description": "Number of input samples collected so far.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "type": "u32",
+            "storage": 4,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "ro",
+        "name": "sample_size",
+        "identifier": 390,
+        "description": "Size of a single sample.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "bytes",
+            "type": "u8",
+            "storage": 1,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "rw",
+        "name": "stream_samples",
+        "identifier": 130,
+        "description": "When set to `N`, will stream `N` samples as `current_sample` reading.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "type": "u32",
+            "storage": 4,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "ro",
+        "name": "current_sample",
+        "identifier": 391,
+        "description": "Last collected sample.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "type": "bytes",
+            "storage": 0,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "ro",
+        "name": "last_error",
+        "identifier": 392,
+        "description": "Textual description of last error when running or loading model (if any).",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "type": "string",
+            "storage": 0
+          }
+        ]
+      }
+    ],
+    "source": "# TFLite\n\n    identifier: 0x13fe118c\n\nRun TensorFlow Lite for Microcontrollers machine learning models.\nOnly models with a single input tensor and a single output tensor are supported at the moment.\n\n## Commands\n\n    command set_model @ 0x80 {\n        model_size: u32 bytes\n    }\n    report {\n        model_port: pipe_port\n    }\n\nOpen pipe for streaming in the model. The size of the model has to be declared upfront.\nThe model is streamed over regular pipe data packets, in the `.tflite` flatbuffer format.\nWhen the pipe is closed, the model is written all into flash, and the device running the service may reset.\n\n    command predict @ 0x81 {\n        outputs: pipe\n    }\n    report {\n        inputs: pipe_port\n    }\n\nOpen channel that can be used to manually invoke the model. When enough data is sent over the `inputs` pipe, the model is invoked,\nand results are send over the `outputs` pipe.\n\n## Registers\n\n    enum SampleType : u8 {\n        U8 = 0x08\n        I8 = 0x88\n        U16 = 0x10\n        I16 = 0x90\n        U32 = 0x20\n        I32 = 0xA0\n    }\n    rw inputs @ 0x80 {\n        sampling_interval: u16 ms\n        samples_in_window: u16\n        reserved: u32\n    repeats:\n        device_id: u64\n        service_class: u32\n        service_num: u8\n        sample_size: u8 bytes\n        sample_type: SampleType\n        sample_shift: i8\n    }\n\nSet automatic input collection.\nThese settings are stored in flash.\n\n    rw auto_invoke_every: u16 @ 0x81\n\nWhen register contains `N > 0`, run the model automatically every time new `N` samples are collected.\nModel may be run less often if it takes longer to run than `N * sampling_interval`.\nThe `outputs` register will stream its value after each run.\nThis register is not stored in flash.\n\n    ro outputs: bytes @ reading\n\nResults of last model invocation as `float32` array.\n\n    ro input_shape @ 0x180 {\n    repeats:\n        dimension: u16\n    }\n\nThe shape of the input tensor.\n\n    ro output_shape @ 0x181 {\n    repeats:\n        dimension: u16\n    }\n\nThe shape of the output tensor.\n\n    ro last_run_time: u32 us @ 0x182\n\nThe time consumed in last model execution.\n\n    ro allocated_arena_size: u32 bytes @ 0x183\n\nNumber of RAM bytes allocated for model execution.\n\n    ro model_size: u32 bytes @ 0x184\n\nThe size of `.tflite` model in bytes.\n\n    ro num_samples: u32 @ 0x185\n\nNumber of input samples collected so far.\n\n    ro sample_size: u8 bytes @ 0x186\n\nSize of a single sample.\n\n    rw stream_samples: u32 @ 0x82\n\nWhen set to `N`, will stream `N` samples as `current_sample` reading.\n\n    ro current_sample: bytes @ 0x187\n\nLast collected sample.\n\n    ro last_error: string @ 0x188\n\nTextual description of last error when running or loading model (if any)."
   },
   {
     "name": "WIFI",

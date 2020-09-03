@@ -96,7 +96,7 @@ The state machine below encapsulates how these timings should be used during fra
 ![An image depicting the state machine to be used when receiving a JACDAC packet. Whenever any timing is exceeded, the device should wait for the frame-to-frame gap to elapse before listening for another packet.](./images/jacdac-state-diagram.png)
 
 
-## Frame layout
+## Frames
 
 ![An image depicting a JACDAC transmission. A JACDAC transmission begins with a start pulse of 11-14 us, a inter lo data spacing of minimally 40 us before data commences. A JACDAC transmission ends with an end pulse of 11-14 us.](./images/jacdac-activity.png)
 
@@ -119,11 +119,28 @@ On the wire, the frame must be transmitted in little endian format (i.e. low byt
 
 | Memory offset | Field size (bytes) 	| Field name 	| Description  	|
 |--------|------------	|-------------	|----------	|
-| 0 | 2          	|frame_crc	| [16-bit CRC CCITT](https://en.wikipedia.org/wiki/Cyclic_redundancy_check) of all following fields. |
-| 2 | 1          	|frame_size	| Size of the data field.	|
-| 3 | 1          	|frame_flags	| Flags specific to this frame.	|
-| 4 | 8          	|device_identifier	| 64-bit device identifier.	|
-| 12 | 1 * frame_size   	|data	| The data payload of the frame.	|
+| 0 | 2          	|`frame_crc`	| [16-bit CRC CCITT](https://en.wikipedia.org/wiki/Cyclic_redundancy_check) of all following fields. |
+| 2 | 1          	|`frame_size`	| Size of the data field.	|
+| 3 | 1          	|`frame_flags`	| Flags specific to this frame.	|
+| 4 | 8          	|`device_identifier`	| 64-bit device identifier.	|
+| 12 | 1 * frame_size   	|`data`	| The data payload of the frame.	|
+
+### Frame flags
+
+The `frame_flags` field is used to indicate
+
+| Bit position | Bit name 	| Description 	|
+|--------|------------	|-------------
+| 0 | COMMAND	| Determines if the frame contains command or report packets. If set, the frame contains command packets, if not set, the frame contains report packets. 	|
+| 1 | ACK_REQUESTED	| Determines if the receiver should return an ACK to the sender. If set, the receiver should repsond with an ACK frame, if not set, no response is required. 	|
+| 2 | DEVICE_ID_ALT_MEANING	| Determines if the receiver should return an ACK to the sender. If set, the receiver should repsond with an ACK frame, if not set, no response is required. 	|
+| 3-7 | RESERVED	| Reserved for future use.	|
+
+### Device identifiers
+
+
+
+## Packets
 
 The data portion of a JACDAC frame is also structured and is internally divided into 1 or more packets. __Zero length frames are not supported__.
 
@@ -143,10 +160,10 @@ The following table defines the meaning and size of the fields in the structure 
 
 | Memory offset | Field size (bytes) 	| Field name 	| Description  	|
 |--------|------------	|-------------	|----------	|
-| 12 | 1	|packet_size	| The size of the payload field. Maximum size is 236 bytes. |
-| 13 | 1	|service_instance	| The instance number of the destination service.	|
-| 14 | 2	|service_command	| A number that specifies an operation and code combination.	|
-| 16 | 1 * packet_size	|payload	| The packet data payload destined for a particular service.	|
+| 12 | 1	|`packet_size`	| The size of the payload field. Maximum size is 236 bytes. |
+| 13 | 1	|`service_instance`	| The instance number of the destination service.	|
+| 14 | 2	|`service_command`	| A number that specifies an operation and code combination.	|
+| 16 | 1 * packet_size	|`payload`	| The packet data payload destined for a particular service.	|
 
 Packets are placed back-to-back inside the frame `data` field and must be padded so they start at a 4 byte boundary (i.e. `packet_size` is divisible by 4). Logically, packets placed in the same frame all share the same frame fields and thus the same `device_identifier`. This means only one device can be addressed in a single frame.
 

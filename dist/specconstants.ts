@@ -202,6 +202,25 @@ export enum RotaryEncoderReg {
     ClicksPerTurn = 0x180,
 }
 
+// Service: Device Name Service
+export const SRV_DEVICE_NAME_SERVICE = 0x119c3ad1
+export enum DNSCmd {
+    /** Argument: device_id uint64_t. Get the name corresponding to given device identifer. Returns empty string if unset. */
+    GetName = 0x80,
+    
+    /** Set name. Can set to empty to remove name binding. */
+    SetName = 0x81,
+    
+    /** No args. Remove all name bindings. */
+    ClearAllNames = 0x84,
+    
+    /** Argument: stored_names pipe (bytes). Return all names stored internally. */
+    ListStoredNames = 0x82,
+    
+    /** Argument: required_names pipe (bytes). List all names required by the current program. `device_id` is `0` if name is unbound. */
+    ListRequiredNames = 0x83,
+}
+
 // Service: Gamepad
 export const SRV_GAMEPAD = 0x1deaa06e
 
@@ -473,19 +492,15 @@ export enum TCPTcpError { // int32_t
 export enum TCPCmd {
     /** Argument: inbound pipe (bytes). Open pair of pipes between network peripheral and a controlling device. In/outbound refers to direction from/to internet. */
     Open = 0x80,
-    
+}
+
+export enum TCPPipeCmd {
     /**
      * Open an SSL connection to a given host:port pair. Can be issued only once on given pipe.
      * After the connection is established, an empty data report is sent.
      * Connection is closed by closing the pipe.
      */
     OpenSsl = 0x1,
-    
-    /** Argument: data bytes. Bytes to be sent directly over an established TCP or SSL connection. */
-    Outdata = 0x0,
-    
-    /** Argument: data bytes. Bytes read directly from directly over an established TCP or SSL connection. */
-    Indata = 0x0,
     
     /** Argument: error TcpError (int32_t). Reported when an error is encountered. Negative error codes come directly from the SSL implementation. */
     Error = 0x0,
@@ -594,9 +609,6 @@ export enum WifiAPFlags { // uint32_t
 export enum WifiCmd {
     /** Argument: results pipe (bytes). Initiate search for WiFi networks. Results are returned via pipe, one entry per packet. */
     Scan = 0x80,
-    
-    /** Initiate search for WiFi networks. Results are returned via pipe, one entry per packet. */
-    Results = 0x0,
     
     /** Argument: ssid string (bytes). Connect to named network. Password can be appended after ssid. Both strings have to be NUL-terminated. */
     Connect = 0x81,

@@ -967,6 +967,166 @@
     "source": "# Rotary encoder\n\n    identifier: 0x10fa29c9\n    extends: _sensor\n    short: crank\n\nAn incremental rotary encoder - converts angular motion of a shaft to digital signal.\n\n## Registers\n\n    ro position: i32 @ reading\n\nUpon device reset starts at `0` (regardless of the shaft position).\nIncreases by `1` for a clockwise \"click\", by `-1` for counter-clockwise.\n\n    const clicks_per_turn?: u16 @ 0x180\n\nThis specifies by how much `position` changes when the crank does 360 degree turn. Typically 12 or 24."
   },
   {
+    "name": "Device Name Service",
+    "shortId": "dns",
+    "camelName": "DNS",
+    "shortName": "DNS",
+    "extends": [],
+    "notes": {
+      "short": "Assign names and functions to devices on JACDAC bus."
+    },
+    "classIdentifier": 295451345,
+    "enums": {},
+    "packets": [
+      {
+        "kind": "command",
+        "name": "get_name",
+        "identifier": 128,
+        "description": "Get the name corresponding to given device identifer. Returns empty string if unset.",
+        "fields": [
+          {
+            "name": "device_id",
+            "unit": "",
+            "type": "u64",
+            "storage": 8,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "report",
+        "name": "get_name",
+        "identifier": 128,
+        "description": "Get the name corresponding to given device identifer. Returns empty string if unset.",
+        "fields": [
+          {
+            "name": "device_id",
+            "unit": "",
+            "type": "u64",
+            "storage": 8,
+            "isSimpleType": true
+          },
+          {
+            "name": "name",
+            "unit": "",
+            "type": "string",
+            "storage": 0
+          }
+        ]
+      },
+      {
+        "kind": "command",
+        "name": "set_name",
+        "identifier": 129,
+        "description": "Set name. Can set to empty to remove name binding.",
+        "fields": [
+          {
+            "name": "device_id",
+            "unit": "",
+            "type": "u64",
+            "storage": 8,
+            "isSimpleType": true
+          },
+          {
+            "name": "name",
+            "unit": "",
+            "type": "string",
+            "storage": 0
+          }
+        ]
+      },
+      {
+        "kind": "command",
+        "name": "clear_all_names",
+        "identifier": 132,
+        "description": "Remove all name bindings.",
+        "fields": []
+      },
+      {
+        "kind": "command",
+        "name": "list_stored_names",
+        "identifier": 130,
+        "description": "Return all names stored internally.",
+        "fields": [
+          {
+            "name": "stored_names",
+            "unit": "",
+            "type": "pipe",
+            "storage": 12
+          }
+        ],
+        "pipeType": "list_stored_names"
+      },
+      {
+        "kind": "pipe_report",
+        "name": "stored_names",
+        "identifier": 0,
+        "description": "Return all names stored internally.",
+        "fields": [
+          {
+            "name": "device_id",
+            "unit": "",
+            "type": "u64",
+            "storage": 8,
+            "isSimpleType": true
+          },
+          {
+            "name": "name",
+            "unit": "",
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "pipeType": "list_stored_names"
+      },
+      {
+        "kind": "command",
+        "name": "list_required_names",
+        "identifier": 131,
+        "description": "List all names required by the current program. `device_id` is `0` if name is unbound.",
+        "fields": [
+          {
+            "name": "required_names",
+            "unit": "",
+            "type": "pipe",
+            "storage": 12
+          }
+        ],
+        "pipeType": "list_required_names"
+      },
+      {
+        "kind": "pipe_report",
+        "name": "required_names",
+        "identifier": 0,
+        "description": "List all names required by the current program. `device_id` is `0` if name is unbound.",
+        "fields": [
+          {
+            "name": "device_id",
+            "unit": "",
+            "type": "u64",
+            "storage": 8,
+            "isSimpleType": true
+          },
+          {
+            "name": "service_class",
+            "unit": "",
+            "type": "u32",
+            "storage": 4,
+            "isSimpleType": true
+          },
+          {
+            "name": "name",
+            "unit": "",
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "pipeType": "list_required_names"
+      }
+    ],
+    "source": "# Device Name Service\n\n    camel: DNS\n    identifier: 0x119c3ad1\n\nAssign names and functions to devices on JACDAC bus.\n\n\n## Commands\n\n    command get_name @ 0x80 {\n        device_id: u64\n    }\n    report {\n        device_id: u64\n        name: string\n    }\n\nGet the name corresponding to given device identifer. Returns empty string if unset.\n\n    command set_name @ 0x81 {\n        device_id: u64\n        name: string\n    }\n\nSet name. Can set to empty to remove name binding.\n\n    command clear_all_names @ 0x84 {}\n\nRemove all name bindings.\n\n    command list_stored_names @ 0x82 {\n        stored_names: pipe\n    }\n    pipe report stored_names {\n        device_id: u64\n        name: string\n    }\n\nReturn all names stored internally.\n\n    command list_required_names @ 0x83 {\n        required_names: pipe\n    }\n    pipe report required_names {\n        device_id: u64\n        service_class: u32\n        name: string\n    }\n\nList all names required by the current program. `device_id` is `0` if name is unbound.\n"
+  },
+  {
     "name": "Gamepad",
     "shortId": "gamepad",
     "camelName": "Gamepad",

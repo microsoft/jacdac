@@ -1,6 +1,5 @@
-# Device Name Service
+# Device Namer
 
-    camel: DNS
     identifier: 0x119c3ad1
 
 Assign names and functions to devices on JACDAC bus.

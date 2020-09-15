@@ -202,25 +202,6 @@ export enum RotaryEncoderReg {
     ClicksPerTurn = 0x180,
 }
 
-// Service: Device Name Service
-export const SRV_DEVICE_NAME_SERVICE = 0x119c3ad1
-export enum DNSCmd {
-    /** Argument: device_id uint64_t. Get the name corresponding to given device identifer. Returns empty string if unset. */
-    GetName = 0x80,
-    
-    /** Set name. Can set to empty to remove name binding. */
-    SetName = 0x81,
-    
-    /** No args. Remove all name bindings. */
-    ClearAllNames = 0x84,
-    
-    /** Argument: stored_names pipe (bytes). Return all names stored internally. */
-    ListStoredNames = 0x82,
-    
-    /** Argument: required_names pipe (bytes). List all names required by the current program. `device_id` is `0` if name is unbound. */
-    ListRequiredNames = 0x83,
-}
-
 // Service: Gamepad
 export const SRV_GAMEPAD = 0x1deaa06e
 
@@ -386,6 +367,25 @@ export enum MusicCmd {
      * to send `P = 1000000 / F` and `D = P * V / 2`.
      */
     PlayTone = 0x80,
+}
+
+// Service: Device Namer
+export const SRV_DEVICE_NAMER = 0x119c3ad1
+export enum DeviceNamerCmd {
+    /** Argument: device_id uint64_t. Get the name corresponding to given device identifer. Returns empty string if unset. */
+    GetName = 0x80,
+    
+    /** Set name. Can set to empty to remove name binding. */
+    SetName = 0x81,
+    
+    /** No args. Remove all name bindings. */
+    ClearAllNames = 0x84,
+    
+    /** Argument: stored_names pipe (bytes). Return all names stored internally. */
+    ListStoredNames = 0x82,
+    
+    /** Argument: required_names pipe (bytes). List all names required by the current program. `device_id` is `0` if name is unbound. */
+    ListRequiredNames = 0x83,
 }
 
 // Service: Power

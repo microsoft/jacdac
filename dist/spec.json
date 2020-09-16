@@ -229,7 +229,7 @@
         ]
       }
     ],
-    "source": "# Common registers and commands\n\n    camel: base\n\nThis file describes common register and command codes.\nThese are defined in ranges separate from the per-service ones.\nNo service actually derives from this file, but services can include packets\ndefined here.\nTheir code is listed as say `@ intensity` and not `@ 0x01` (the spectool enforces that).\n\n## Commands\n\nCommand codes are subdivided as follows:\n* Commands `0x000-0x07f` - common to all services\n* Commands `0x080-0xeff` - defined per-service\n* Commands `0xf00-0xfff` - reserved for implementation\n\nCommands follow.\n\n    command announce @ 0x00 { }\n    report { ... }\n\nEnumeration data for control service; service-specific advertisement data otherwise.\nControl broadcasts it automatically every 500ms, but other service have to be queried to provide it.\n\n    command get_register @ 0x1000 {}\n    report { ... }\n\nRegisters number `N` is fetched by issuing command `0x1000 | N`.\nThe report format is the same as the format of the register.\n\n    command set_register @ 0x2000 { ... }\n\nRegisters number `N` is set by issuing command `0x2000 | N`, with the format\nthe same as the format of the register.\n\n    report event @ 0x01 {\n        event_id: u32\n        event_argument: u32\n    }\n\nEvent from sensor or a broadcast service. \n\n    command calibrate @ 0x02 { }\n    report { }\n\nRequest to calibrate a sensor. The report indicates the calibration is done.\n\n    command description @ 0x03 { }\n    report {\n        text: string\n    }\n\nRequest human-readable description of service.\n\n## Registers\n\nRegister codes are subdivided as follows:\n* Registers `0x001-0x07f` - r/w common to all services\n* Registers `0x080-0x0ff` - r/w defined per-service\n* Registers `0x100-0x17f` - r/o common to all services\n* Registers `0x180-0x1ff` - r/o defined per-service\n* Registers `0x200-0xeff` - custom, defined per-service\n* Registers `0xf00-0xfff` - reserved for implementation, should not be seen on the wire\n\nThe types listed are typical. Check spec for particular service for exact type,\nand a service-specific name for a register (eg. `value` could be `pulse_length`).\nAll registers default to `0` unless otherwise indicated.\n\n    rw intensity: u32 @ 0x01\n\nThis is either binary on/off (0 or non-zero), or can be gradual (eg. brightness of an RGB LED strip).\n\n    rw value: i32 @ 0x02\n\nThe primary value of actuator (eg. servo pulse length, or motor duty cycle).\n\n    rw max_power = 500: u16 mA {typical_max = 500} @ 0x07\n\nLimit the power drawn by the service, in mA.\n\n    rw is_streaming: bool @ 0x03\n\nEnables/disables broadcast streaming\n\n    rw streaming_interval = 100: u32 ms @ 0x04\n\nPeriod between packets of data when streaming in milliseconds.\n\n    ro reading: i32 @ 0x101\n\nRead-only value of the sensor, also reported in streaming.\n\n    rw low_threshold: i32 @ 0x05\n    rw high_threshold: i32 @ 0x06\n\nThresholds for event generation for event generation for analog sensors.\n\n"
+    "source": "# Common registers and commands\r\n\r\n    camel: base\r\n\r\nThis file describes common register and command codes.\r\nThese are defined in ranges separate from the per-service ones.\r\nNo service actually derives from this file, but services can include packets\r\ndefined here.\r\nTheir code is listed as say `@ intensity` and not `@ 0x01` (the spectool enforces that).\r\n\r\n## Commands\r\n\r\nCommand codes are subdivided as follows:\r\n* Commands `0x000-0x07f` - common to all services\r\n* Commands `0x080-0xeff` - defined per-service\r\n* Commands `0xf00-0xfff` - reserved for implementation\r\n\r\nCommands follow.\r\n\r\n    command announce @ 0x00 { }\r\n    report { ... }\r\n\r\nEnumeration data for control service; service-specific advertisement data otherwise.\r\nControl broadcasts it automatically every 500ms, but other service have to be queried to provide it.\r\n\r\n    command get_register @ 0x1000 {}\r\n    report { ... }\r\n\r\nRegisters number `N` is fetched by issuing command `0x1000 | N`.\r\nThe report format is the same as the format of the register.\r\n\r\n    command set_register @ 0x2000 { ... }\r\n\r\nRegisters number `N` is set by issuing command `0x2000 | N`, with the format\r\nthe same as the format of the register.\r\n\r\n    report event @ 0x01 {\r\n        event_id: u32\r\n        event_argument: u32\r\n    }\r\n\r\nEvent from sensor or a broadcast service. \r\n\r\n    command calibrate @ 0x02 { }\r\n    report { }\r\n\r\nRequest to calibrate a sensor. The report indicates the calibration is done.\r\n\r\n    command description @ 0x03 { }\r\n    report {\r\n        text: string\r\n    }\r\n\r\nRequest human-readable description of service.\r\n\r\n## Registers\r\n\r\nRegister codes are subdivided as follows:\r\n* Registers `0x001-0x07f` - r/w common to all services\r\n* Registers `0x080-0x0ff` - r/w defined per-service\r\n* Registers `0x100-0x17f` - r/o common to all services\r\n* Registers `0x180-0x1ff` - r/o defined per-service\r\n* Registers `0x200-0xeff` - custom, defined per-service\r\n* Registers `0xf00-0xfff` - reserved for implementation, should not be seen on the wire\r\n\r\nThe types listed are typical. Check spec for particular service for exact type,\r\nand a service-specific name for a register (eg. `value` could be `pulse_length`).\r\nAll registers default to `0` unless otherwise indicated.\r\n\r\n    rw intensity: u32 @ 0x01\r\n\r\nThis is either binary on/off (0 or non-zero), or can be gradual (eg. brightness of an RGB LED strip).\r\n\r\n    rw value: i32 @ 0x02\r\n\r\nThe primary value of actuator (eg. servo pulse length, or motor duty cycle).\r\n\r\n    rw max_power = 500: u16 mA {typical_max = 500} @ 0x07\r\n\r\nLimit the power drawn by the service, in mA.\r\n\r\n    rw is_streaming: bool @ 0x03\r\n\r\nEnables/disables broadcast streaming\r\n\r\n    rw streaming_interval = 100: u32 ms @ 0x04\r\n\r\nPeriod between packets of data when streaming in milliseconds.\r\n\r\n    ro reading: i32 @ 0x101\r\n\r\nRead-only value of the sensor, also reported in streaming.\r\n\r\n    rw low_threshold: i32 @ 0x05\r\n    rw high_threshold: i32 @ 0x06\r\n\r\nThresholds for event generation for event generation for analog sensors.\r\n\r\n"
   },
   {
     "name": "Sensor",
@@ -278,7 +278,7 @@
         "identifierName": "streaming_interval"
       }
     ],
-    "source": "# Sensor\n\n    camel: sensor\n\nBase class for sensors.\n\n## Registers\n\n    rw is_streaming: bool @ is_streaming\n\nEnables/disables broadcast streaming\n\n    rw streaming_interval = 100: u32 ms {typical_min = 1, typical_max = 60000} @ streaming_interval\n\nPeriod between packets of data when streaming in milliseconds.\n"
+    "source": "# Sensor\r\n\r\n    camel: sensor\r\n\r\nBase class for sensors.\r\n\r\n## Registers\r\n\r\n    rw is_streaming: bool @ is_streaming\r\n\r\nEnables/disables broadcast streaming\r\n\r\n    rw streaming_interval = 100: u32 ms {typical_min = 1, typical_max = 60000} @ streaming_interval\r\n\r\nPeriod between packets of data when streaming in milliseconds.\r\n"
   },
   {
     "name": "Accelerometer",
@@ -446,7 +446,7 @@
         "fields": []
       }
     ],
-    "source": "# Accelerometer\n\n    identifier: 0x1f140409\n    extends: _sensor\n    camel: accel\n\nA 3-axis accelerometer.\n\n## Registers\n\n    ro forces @ reading {\n        x: i6.10 g\n        y: i6.10 g\n        z: i6.10 g\n    }\n\nIndicates the current forces acting on accelerometer.\n\n## Events\n\nAll events are debounced.\n\n    event tilt_up @ 1\n    event tilt_down @ 2\n    event tilt_left @ 3\n    event tilt_right @ 4\n\nEmitted when accelerometer is tilted in the given direction.\n\n    event face_up @ 5\n    event face_down @ 6\n\nEmitted when accelerometer is laying flat in the given direction.\n\n    event freefall @ 7\n\nEmitted when total force acting on accelerometer is much less than 1g.\n\n    event shake @ 11\n\nEmitted when forces change violently a few times.\n\n    event force_2g @ 12\n    event force_3g @ 8\n    event force_6g @ 9\n    event force_8g @ 10\n\nEmitted when force in any direction exceeds given threshold.\n"
+    "source": "# Accelerometer\r\n\r\n    identifier: 0x1f140409\r\n    extends: _sensor\r\n    camel: accel\r\n\r\nA 3-axis accelerometer.\r\n\r\n## Registers\r\n\r\n    ro forces @ reading {\r\n        x: i6.10 g\r\n        y: i6.10 g\r\n        z: i6.10 g\r\n    }\r\n\r\nIndicates the current forces acting on accelerometer.\r\n\r\n## Events\r\n\r\nAll events are debounced.\r\n\r\n    event tilt_up @ 1\r\n    event tilt_down @ 2\r\n    event tilt_left @ 3\r\n    event tilt_right @ 4\r\n\r\nEmitted when accelerometer is tilted in the given direction.\r\n\r\n    event face_up @ 5\r\n    event face_down @ 6\r\n\r\nEmitted when accelerometer is laying flat in the given direction.\r\n\r\n    event freefall @ 7\r\n\r\nEmitted when total force acting on accelerometer is much less than 1g.\r\n\r\n    event shake @ 11\r\n\r\nEmitted when forces change violently a few times.\r\n\r\n    event force_2g @ 12\r\n    event force_3g @ 8\r\n    event force_6g @ 9\r\n    event force_8g @ 10\r\n\r\nEmitted when force in any direction exceeds given threshold.\r\n"
   },
   {
     "name": "Bootloader",
@@ -653,7 +653,7 @@
         ]
       }
     ],
-    "source": "# Bootloader\n\n    identifier: 0x1ffa9948\n\nAllows flashing (reprogramming) devices over JACDAC.\n\n## Commands\n\n    command info @ announce { }\n    report {\n        service_class: u32\n        page_size: u32 bytes\n        flashable_size: u32 bytes\n        device_class: u32\n    }\n\nThe `service_class` is always `0x1ffa9948`. The `device_class` identifies the kind of firmware\nthat \"fits\" this device.\n\n    command set_session @ 0x81 {\n        session_id: u32\n    }\n    report {\n        session_id: u32\n    }\n\nThe flashing host should generate a random id, and use this command to set it.\n\n    enum Error : u32 {\n        NoError = 0\n        PacketTooSmall = 1\n        OutOfFlashableRange = 2\n        InvalidPageOffset = 3\n        NotPageAligned = 4\n    }\n    command page_data @ 0x80 {\n        page_address: u32\n        page_offset: u16\n        chunk_no: u8\n        chunk_max: u8\n        session_id: u32\n        reserved0: u32\n        reserved1: u32\n        reserved2: u32\n        reserved3: u32\n        page_data: bytes\n    }\n    report {\n        session_id: u32\n        page_error: Error\n        page_address: u32\n    }\n\nUse to send flashing data. A physical page is split into `chunk_max + 1` chunks, where `chunk_no = 0 ... chunk_max`.\nEach chunk is stored at `page_address + page_offset`. `page_address` has to be equal in all chunks,\nand is included in response.\nOnly the last chunk causes writing to flash and elicits response.\n\nErrors not listed are also possible. Errors larger than `0xffff` indicate de-synchronization on chunk numbers.\n"
+    "source": "# Bootloader\r\n\r\n    identifier: 0x1ffa9948\r\n\r\nAllows flashing (reprogramming) devices over JACDAC.\r\n\r\n## Commands\r\n\r\n    command info @ announce { }\r\n    report {\r\n        service_class: u32\r\n        page_size: u32 bytes\r\n        flashable_size: u32 bytes\r\n        device_class: u32\r\n    }\r\n\r\nThe `service_class` is always `0x1ffa9948`. The `device_class` identifies the kind of firmware\r\nthat \"fits\" this device.\r\n\r\n    command set_session @ 0x81 {\r\n        session_id: u32\r\n    }\r\n    report {\r\n        session_id: u32\r\n    }\r\n\r\nThe flashing host should generate a random id, and use this command to set it.\r\n\r\n    enum Error : u32 {\r\n        NoError = 0\r\n        PacketTooSmall = 1\r\n        OutOfFlashableRange = 2\r\n        InvalidPageOffset = 3\r\n        NotPageAligned = 4\r\n    }\r\n    command page_data @ 0x80 {\r\n        page_address: u32\r\n        page_offset: u16\r\n        chunk_no: u8\r\n        chunk_max: u8\r\n        session_id: u32\r\n        reserved0: u32\r\n        reserved1: u32\r\n        reserved2: u32\r\n        reserved3: u32\r\n        page_data: bytes\r\n    }\r\n    report {\r\n        session_id: u32\r\n        page_error: Error\r\n        page_address: u32\r\n    }\r\n\r\nUse to send flashing data. A physical page is split into `chunk_max + 1` chunks, where `chunk_no = 0 ... chunk_max`.\r\nEach chunk is stored at `page_address + page_offset`. `page_address` has to be equal in all chunks,\r\nand is included in response.\r\nOnly the last chunk causes writing to flash and elicits response.\r\n\r\nErrors not listed are also possible. Errors larger than `0xffff` indicate de-synchronization on chunk numbers.\r\n"
   },
   {
     "name": "Button",
@@ -749,7 +749,7 @@
         "fields": []
       }
     ],
-    "source": "# Button\n\n    identifier: 0x1473a263\n    extends: _sensor\n\nA simple push-button.\n\nNote: this service will stream readings while the button is pressed and shortly after it's released, even\nwhen `is_streaming == 0`. TODO remove this?\n\n## Registers\n\n    ro pressed: bool @ reading\n\nIndicates whether the button is currently active (pressed).\n\n## Events\n\n    event down @ 0x01\n\nEmitted when button goes from inactive (`pressed == 0`) to active.\n\n    event up @ 0x02\n\nEmitted when button goes from active (`pressed == 1`) to inactive.\n\n    event click @ 0x03\n\nEmitted together with `up` when the press time was not longer than 500ms.\n\n    event long_click @ 0x04\n\nEmitted together with `up` when the press time was more than 500ms.\n"
+    "source": "# Button\r\n\r\n    identifier: 0x1473a263\r\n    extends: _sensor\r\n\r\nA simple push-button.\r\n\r\nNote: this service will stream readings while the button is pressed and shortly after it's released, even\r\nwhen `is_streaming == 0`. TODO remove this?\r\n\r\n## Registers\r\n\r\n    ro pressed: bool @ reading\r\n\r\nIndicates whether the button is currently active (pressed).\r\n\r\n## Events\r\n\r\n    event down @ 0x01\r\n\r\nEmitted when button goes from inactive (`pressed == 0`) to active.\r\n\r\n    event up @ 0x02\r\n\r\nEmitted when button goes from active (`pressed == 1`) to inactive.\r\n\r\n    event click @ 0x03\r\n\r\nEmitted together with `up` when the press time was not longer than 500ms.\r\n\r\n    event long_click @ 0x04\r\n\r\nEmitted together with `up` when the press time was more than 500ms.\r\n"
   },
   {
     "name": "Control",
@@ -879,7 +879,7 @@
         ]
       }
     ],
-    "source": "# Control\n\n    identifier: 0x00000000\n    camel: ctrl\n\nControl service is always service number `0`.\nIt handles actions common to all services on a device.\n\n\n\n## Commands\n\n    command noop @ 0x80 { }\n\nDo nothing. Always ignored. Can be used to test ACKs.\n\n    command identify @ 0x81 { }\n\nBlink an LED or otherwise draw user's attention.\n\n    command reset @ 0x82 { }\n\nReset device. ACK may or may not be sent.\n\n## Registers\n\n    const device_description: string @ 0x180\n\nIdentifies the type of hardware (eg., ACME Corp. Servo X-42 Rev C)\n\n    const device_class: u32 { absolute_min = 0x3000_0000, absolute_max = 0x3fff_ffff } @ 0x181\n\nA numeric code for the string above; used to identify firmware images.\n\n    const bootloader_device_class: u32 { absolute_min = 0x3000_0000, absolute_max = 0x3fff_ffff } @ 0x184\n\nTypically the same as `device_class` unless device was flashed by hand; the bootloader will respond to that code.\n\n    const firmware_version: string @ 0x185\n\nA string describing firmware version; typically semver.\n\n    ro temperature: i16 C { typical_min = -10, typical_max = 150 } @ 0x182\n\nMCU temperature in degrees Celsius (approximate).\n\n    ro uptime: u64 us @ 0x186\n\nNumber of microseconds since boot.\n\n"
+    "source": "# Control\r\n\r\n    identifier: 0x00000000\r\n    camel: ctrl\r\n\r\nControl service is always service number `0`.\r\nIt handles actions common to all services on a device.\r\n\r\n\r\n\r\n## Commands\r\n\r\n    command noop @ 0x80 { }\r\n\r\nDo nothing. Always ignored. Can be used to test ACKs.\r\n\r\n    command identify @ 0x81 { }\r\n\r\nBlink an LED or otherwise draw user's attention.\r\n\r\n    command reset @ 0x82 { }\r\n\r\nReset device. ACK may or may not be sent.\r\n\r\n## Registers\r\n\r\n    const device_description: string @ 0x180\r\n\r\nIdentifies the type of hardware (eg., ACME Corp. Servo X-42 Rev C)\r\n\r\n    const device_class: u32 { absolute_min = 0x3000_0000, absolute_max = 0x3fff_ffff } @ 0x181\r\n\r\nA numeric code for the string above; used to identify firmware images.\r\n\r\n    const bootloader_device_class: u32 { absolute_min = 0x3000_0000, absolute_max = 0x3fff_ffff } @ 0x184\r\n\r\nTypically the same as `device_class` unless device was flashed by hand; the bootloader will respond to that code.\r\n\r\n    const firmware_version: string @ 0x185\r\n\r\nA string describing firmware version; typically semver.\r\n\r\n    ro temperature: i16 C { typical_min = -10, typical_max = 150 } @ 0x182\r\n\r\nMCU temperature in degrees Celsius (approximate).\r\n\r\n    ro uptime: u64 us @ 0x186\r\n\r\nNumber of microseconds since boot.\r\n\r\n"
   },
   {
     "name": "Rotary encoder",
@@ -964,7 +964,167 @@
         "optional": true
       }
     ],
-    "source": "# Rotary encoder\n\n    identifier: 0x10fa29c9\n    extends: _sensor\n    short: crank\n\nAn incremental rotary encoder - converts angular motion of a shaft to digital signal.\n\n## Registers\n\n    ro position: i32 @ reading\n\nUpon device reset starts at `0` (regardless of the shaft position).\nIncreases by `1` for a clockwise \"click\", by `-1` for counter-clockwise.\n\n    const clicks_per_turn?: u16 @ 0x180\n\nThis specifies by how much `position` changes when the crank does 360 degree turn. Typically 12 or 24."
+    "source": "# Rotary encoder\r\n\r\n    identifier: 0x10fa29c9\r\n    extends: _sensor\r\n    short: crank\r\n\r\nAn incremental rotary encoder - converts angular motion of a shaft to digital signal.\r\n\r\n## Registers\r\n\r\n    ro position: i32 @ reading\r\n\r\nUpon device reset starts at `0` (regardless of the shaft position).\r\nIncreases by `1` for a clockwise \"click\", by `-1` for counter-clockwise.\r\n\r\n    const clicks_per_turn?: u16 @ 0x180\r\n\r\nThis specifies by how much `position` changes when the crank does 360 degree turn. Typically 12 or 24."
+  },
+  {
+    "name": "Device Name Service",
+    "shortId": "dns",
+    "camelName": "DNS",
+    "shortName": "DNS",
+    "extends": [],
+    "notes": {
+      "short": "Assign names and functions to devices on JACDAC bus."
+    },
+    "classIdentifier": 295451345,
+    "enums": {},
+    "packets": [
+      {
+        "kind": "command",
+        "name": "get_name",
+        "identifier": 128,
+        "description": "Get the name corresponding to given device identifer. Returns empty string if unset.",
+        "fields": [
+          {
+            "name": "device_id",
+            "unit": "",
+            "type": "u64",
+            "storage": 8,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "report",
+        "name": "get_name",
+        "identifier": 128,
+        "description": "Get the name corresponding to given device identifer. Returns empty string if unset.",
+        "fields": [
+          {
+            "name": "device_id",
+            "unit": "",
+            "type": "u64",
+            "storage": 8,
+            "isSimpleType": true
+          },
+          {
+            "name": "name",
+            "unit": "",
+            "type": "string",
+            "storage": 0
+          }
+        ]
+      },
+      {
+        "kind": "command",
+        "name": "set_name",
+        "identifier": 129,
+        "description": "Set name. Can set to empty to remove name binding.",
+        "fields": [
+          {
+            "name": "device_id",
+            "unit": "",
+            "type": "u64",
+            "storage": 8,
+            "isSimpleType": true
+          },
+          {
+            "name": "name",
+            "unit": "",
+            "type": "string",
+            "storage": 0
+          }
+        ]
+      },
+      {
+        "kind": "command",
+        "name": "clear_all_names",
+        "identifier": 132,
+        "description": "Remove all name bindings.",
+        "fields": []
+      },
+      {
+        "kind": "command",
+        "name": "list_stored_names",
+        "identifier": 130,
+        "description": "Return all names stored internally.",
+        "fields": [
+          {
+            "name": "stored_names",
+            "unit": "",
+            "type": "pipe",
+            "storage": 12
+          }
+        ],
+        "pipeType": "list_stored_names"
+      },
+      {
+        "kind": "pipe_report",
+        "name": "stored_names",
+        "identifier": 0,
+        "description": "Return all names stored internally.",
+        "fields": [
+          {
+            "name": "device_id",
+            "unit": "",
+            "type": "u64",
+            "storage": 8,
+            "isSimpleType": true
+          },
+          {
+            "name": "name",
+            "unit": "",
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "pipeType": "list_stored_names"
+      },
+      {
+        "kind": "command",
+        "name": "list_required_names",
+        "identifier": 131,
+        "description": "List all names required by the current program. `device_id` is `0` if name is unbound.",
+        "fields": [
+          {
+            "name": "required_names",
+            "unit": "",
+            "type": "pipe",
+            "storage": 12
+          }
+        ],
+        "pipeType": "list_required_names"
+      },
+      {
+        "kind": "pipe_report",
+        "name": "required_names",
+        "identifier": 0,
+        "description": "List all names required by the current program. `device_id` is `0` if name is unbound.",
+        "fields": [
+          {
+            "name": "device_id",
+            "unit": "",
+            "type": "u64",
+            "storage": 8,
+            "isSimpleType": true
+          },
+          {
+            "name": "service_class",
+            "unit": "",
+            "type": "u32",
+            "storage": 4,
+            "isSimpleType": true
+          },
+          {
+            "name": "name",
+            "unit": "",
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "pipeType": "list_required_names"
+      }
+    ],
+    "source": "# Device Name Service\r\n\r\n    camel: DNS\r\n    identifier: 0x119c3ad1\r\n\r\nAssign names and functions to devices on JACDAC bus.\r\n\r\n\r\n## Commands\r\n\r\n    command get_name @ 0x80 {\r\n        device_id: u64\r\n    }\r\n    report {\r\n        device_id: u64\r\n        name: string\r\n    }\r\n\r\nGet the name corresponding to given device identifer. Returns empty string if unset.\r\n\r\n    command set_name @ 0x81 {\r\n        device_id: u64\r\n        name: string\r\n    }\r\n\r\nSet name. Can set to empty to remove name binding.\r\n\r\n    command clear_all_names @ 0x84 {}\r\n\r\nRemove all name bindings.\r\n\r\n    command list_stored_names @ 0x82 {\r\n        stored_names: pipe\r\n    }\r\n    pipe report stored_names {\r\n        device_id: u64\r\n        name: string\r\n    }\r\n\r\nReturn all names stored internally.\r\n\r\n    command list_required_names @ 0x83 {\r\n        required_names: pipe\r\n    }\r\n    pipe report required_names {\r\n        device_id: u64\r\n        service_class: u32\r\n        name: string\r\n    }\r\n\r\nList all names required by the current program. `device_id` is `0` if name is unbound.\r\n"
   },
   {
     "name": "Gamepad",
@@ -1146,7 +1306,7 @@
         ]
       }
     ],
-    "source": "# Gamepad\n\n    identifier: 0x1deaa06e\n    extends: _sensor\n\nA gamepad with direction and action buttons for 1 or more players.\n\n## Commands\n\n    enum Button : u16 {\n        Left = 1\n        Up = 2\n        Right = 3\n        Down = 4\n        A = 5\n        B = 6\n        Menu = 7\n        MenuAlt = 8\n        Reset = 9\n        Exit = 10\n    }\n    command announce @ announce {}\n    report {\n        flags: u8\n        num_players: u8 {typical_max = 4}\n    repeats:\n        button_present: Button\n    }\n\nIndicates number of players supported and which buttons are present on the controller.\n\n## Registers\n\n    ro buttons @ reading {\n    repeats:\n        button: Button\n        player_index: u8\n        pressure: u8 frac\n    }\n\nIndicates which buttons are currently active (pressed).\n`pressure` should be `0xff` for digital buttons, and proportional for analog ones.\n\n## Events\n\n    event down @ 0x01 {\n        button: Button\n        player_index: u16\n    }\n\nEmitted when button goes from inactive to active.\n\n    event up @ 0x02 {\n        button: Button\n        player_index: u16\n    }\n\nEmitted when button goes from active to inactive.\n"
+    "source": "# Gamepad\r\n\r\n    identifier: 0x1deaa06e\r\n    extends: _sensor\r\n\r\nA gamepad with direction and action buttons for 1 or more players.\r\n\r\n## Commands\r\n\r\n    enum Button : u16 {\r\n        Left = 1\r\n        Up = 2\r\n        Right = 3\r\n        Down = 4\r\n        A = 5\r\n        B = 6\r\n        Menu = 7\r\n        MenuAlt = 8\r\n        Reset = 9\r\n        Exit = 10\r\n    }\r\n    command announce @ announce {}\r\n    report {\r\n        flags: u8\r\n        num_players: u8 {typical_max = 4}\r\n    repeats:\r\n        button_present: Button\r\n    }\r\n\r\nIndicates number of players supported and which buttons are present on the controller.\r\n\r\n## Registers\r\n\r\n    ro buttons @ reading {\r\n    repeats:\r\n        button: Button\r\n        player_index: u8\r\n        pressure: u8 frac\r\n    }\r\n\r\nIndicates which buttons are currently active (pressed).\r\n`pressure` should be `0xff` for digital buttons, and proportional for analog ones.\r\n\r\n## Events\r\n\r\n    event down @ 0x01 {\r\n        button: Button\r\n        player_index: u16\r\n    }\r\n\r\nEmitted when button goes from inactive to active.\r\n\r\n    event up @ 0x02 {\r\n        button: Button\r\n        player_index: u16\r\n    }\r\n\r\nEmitted when button goes from active to inactive.\r\n"
   },
   {
     "name": "Humidity",
@@ -1218,7 +1378,7 @@
         "identifierName": "reading"
       }
     ],
-    "source": "# Humidity\n\n    identifier: 0x16c810b8\n    extends: _sensor\n\nA sensor measuring humidity of outside environment.\n\n## Registers\n\nDefault streaming interval is 1s.\n\n    ro humidity: u22.10 %RH {typical_max = 100} @ reading\n\nThe relative humidity in percentage of full water saturation.\n"
+    "source": "# Humidity\r\n\r\n    identifier: 0x16c810b8\r\n    extends: _sensor\r\n\r\nA sensor measuring humidity of outside environment.\r\n\r\n## Registers\r\n\r\nDefault streaming interval is 1s.\r\n\r\n    ro humidity: u22.10 %RH {typical_max = 100} @ reading\r\n\r\nThe relative humidity in percentage of full water saturation.\r\n"
   },
   {
     "name": "Light",
@@ -1340,7 +1500,7 @@
         ]
       }
     ],
-    "source": "# Light\n\n    identifier: 0x126f00e0\n\nA controller for strips of RGB LEDs.\n\n## Light programs\n\nRealistically, with 1 mbit JACDAC, we can transmit under 2k of data per animation frame (at 20fps).\nIf transmitting raw data that would be around 500 pixels, which is not enough for many\ninstallations and it would completely clog the network.\n\nThus, light service defines a domain-specific language for describing light animations\nand efficiently transmitting them over wire.\n\nLight commands are not JACDAC commands.\nLight commands are efficiently encoded as sequences of bytes and typically sent as payload\nof `run` command.\n\nDefinitions:\n* `P` - position in the strip\n* `R` - number of repetitions of the command\n* `N` - number of pixels affected by the command\n* `C` - single color designation\n* `C+` - sequence of color designations\n\nUpdate modes:\n* `0` - replace\n* `1` - add RGB\n* `2` - subtract RGB\n* `3` - multiply RGB (by c/128); each pixel value will change by at least 1\n\nProgram commands:\n* `0xD0: set_all(C+)` - set all pixels in current range to given color pattern\n* `0xD1: fade(C+)` - set pixels in current range to colors between colors in sequence\n* `0xD2: fade_hsv(C+)` - similar to `fade()`, but colors are specified and faded in HSV\n* `0xD3: rotate_fwd(K)` - rotate (shift) pixels by `K` positions away from the connector\n* `0xD4: rotate_back(K)` - same, but towards the connector\n* `0xD5: show(M=50)` - send buffer to strip and wait `M` milliseconds\n* `0xD6: range(P=0, N=length, W=1, S=0)` - range from pixel `P`, `N` pixels long\n  (currently unsupported: every `W` pixels skip `S` pixels)\n* `0xD7: mode(K=0)` - set update mode\n* `0xD8: mode1(K=0)` - set update mode for next command only\n* `0xCF: set1(P, C)` - set one pixel at `P` (in current range) to given color\n\nA number `k` is encoded as follows:\n* `0 <= k < 128` -> `k`\n* `128 <= k < 16383` -> `0x80 | (k >> 8), k & 0xff`\n* bigger and negative numbers are not supported\n\nThus, bytes `0xC0-0xFF` are free to use for commands.\n\nFormats:\n* `0xC1, R, G, B` - single color parameter\n* `0xC2, R0, G0, B0, R1, G1, B1` - two color parameter\n* `0xC3, R0, G0, B0, R1, G1, B1, R2, G2, B2` - three color parameter\n* `0xC0, N, R0, G0, B0, ..., R(N-1), G(N-1), B(N-1)` - `N` color parameter\n* `0xCF, <number>, R, G, B` - `set1` special format\n\nCommands are encoded as command byte, followed by parameters in the order\nfrom the command definition.\n\nThe `set1()` command has irregular encoding to save space - it is byte `0xCF` followed by encoded\nnumber, and followed by 3 bytes of color.\n\n## Registers\n\n    rw brightness = 15: u8 frac @ intensity\n\nSet the luminosity of the strip.\nAt `0` the power to the strip is completely shut down.\n\n    ro actual_brightness: u8 frac @ 0x180\n\nThis is the luminosity actually applied to the strip.\nMay be lower than `brightness` if power-limited by the `max_power` register.\nIt will rise slowly (few seconds) back to `brightness` is limits are no longer required.\n \n    enum LightType : u8 {\n        WS2812B_GRB = 0x00\n        APA102 = 0x10\n        SK9822 = 0x11\n    }\n    rw light_type: LightType @ 0x80\n\nSpecifies the type of light strip connected to controller.\nControllers which are sold with lights should default to the correct type\nand could not allow change.\n\n    rw num_pixels = 15: u16 @ 0x81\n\nSpecifies the number of pixels in the strip.\nControllers which are sold with lights should default to the correct length\nand could not allow change.\nIncreasing length at runtime leads to ineffective use of memory and may lead to controller reboot.\n\n    rw max_power = 200: u16 mA @ max_power\n\nLimit the power drawn by the light-strip (and controller).\n\n## Commands\n\n    command run @ 0x81 {\n        program: bytes\n    }\n\nRun the given light \"program\". See service description for details.\n"
+    "source": "# Light\r\n\r\n    identifier: 0x126f00e0\r\n\r\nA controller for strips of RGB LEDs.\r\n\r\n## Light programs\r\n\r\nRealistically, with 1 mbit JACDAC, we can transmit under 2k of data per animation frame (at 20fps).\r\nIf transmitting raw data that would be around 500 pixels, which is not enough for many\r\ninstallations and it would completely clog the network.\r\n\r\nThus, light service defines a domain-specific language for describing light animations\r\nand efficiently transmitting them over wire.\r\n\r\nLight commands are not JACDAC commands.\r\nLight commands are efficiently encoded as sequences of bytes and typically sent as payload\r\nof `run` command.\r\n\r\nDefinitions:\r\n* `P` - position in the strip\r\n* `R` - number of repetitions of the command\r\n* `N` - number of pixels affected by the command\r\n* `C` - single color designation\r\n* `C+` - sequence of color designations\r\n\r\nUpdate modes:\r\n* `0` - replace\r\n* `1` - add RGB\r\n* `2` - subtract RGB\r\n* `3` - multiply RGB (by c/128); each pixel value will change by at least 1\r\n\r\nProgram commands:\r\n* `0xD0: set_all(C+)` - set all pixels in current range to given color pattern\r\n* `0xD1: fade(C+)` - set pixels in current range to colors between colors in sequence\r\n* `0xD2: fade_hsv(C+)` - similar to `fade()`, but colors are specified and faded in HSV\r\n* `0xD3: rotate_fwd(K)` - rotate (shift) pixels by `K` positions away from the connector\r\n* `0xD4: rotate_back(K)` - same, but towards the connector\r\n* `0xD5: show(M=50)` - send buffer to strip and wait `M` milliseconds\r\n* `0xD6: range(P=0, N=length, W=1, S=0)` - range from pixel `P`, `N` pixels long\r\n  (currently unsupported: every `W` pixels skip `S` pixels)\r\n* `0xD7: mode(K=0)` - set update mode\r\n* `0xD8: mode1(K=0)` - set update mode for next command only\r\n* `0xCF: set1(P, C)` - set one pixel at `P` (in current range) to given color\r\n\r\nA number `k` is encoded as follows:\r\n* `0 <= k < 128` -> `k`\r\n* `128 <= k < 16383` -> `0x80 | (k >> 8), k & 0xff`\r\n* bigger and negative numbers are not supported\r\n\r\nThus, bytes `0xC0-0xFF` are free to use for commands.\r\n\r\nFormats:\r\n* `0xC1, R, G, B` - single color parameter\r\n* `0xC2, R0, G0, B0, R1, G1, B1` - two color parameter\r\n* `0xC3, R0, G0, B0, R1, G1, B1, R2, G2, B2` - three color parameter\r\n* `0xC0, N, R0, G0, B0, ..., R(N-1), G(N-1), B(N-1)` - `N` color parameter\r\n* `0xCF, <number>, R, G, B` - `set1` special format\r\n\r\nCommands are encoded as command byte, followed by parameters in the order\r\nfrom the command definition.\r\n\r\nThe `set1()` command has irregular encoding to save space - it is byte `0xCF` followed by encoded\r\nnumber, and followed by 3 bytes of color.\r\n\r\n## Registers\r\n\r\n    rw brightness = 15: u8 frac @ intensity\r\n\r\nSet the luminosity of the strip.\r\nAt `0` the power to the strip is completely shut down.\r\n\r\n    ro actual_brightness: u8 frac @ 0x180\r\n\r\nThis is the luminosity actually applied to the strip.\r\nMay be lower than `brightness` if power-limited by the `max_power` register.\r\nIt will rise slowly (few seconds) back to `brightness` is limits are no longer required.\r\n \r\n    enum LightType : u8 {\r\n        WS2812B_GRB = 0x00\r\n        APA102 = 0x10\r\n        SK9822 = 0x11\r\n    }\r\n    rw light_type: LightType @ 0x80\r\n\r\nSpecifies the type of light strip connected to controller.\r\nControllers which are sold with lights should default to the correct type\r\nand could not allow change.\r\n\r\n    rw num_pixels = 15: u16 @ 0x81\r\n\r\nSpecifies the number of pixels in the strip.\r\nControllers which are sold with lights should default to the correct length\r\nand could not allow change.\r\nIncreasing length at runtime leads to ineffective use of memory and may lead to controller reboot.\r\n\r\n    rw max_power = 200: u16 mA @ max_power\r\n\r\nLimit the power drawn by the light-strip (and controller).\r\n\r\n## Commands\r\n\r\n    command run @ 0x81 {\r\n        program: bytes\r\n    }\r\n\r\nRun the given light \"program\". See service description for details.\r\n"
   },
   {
     "name": "Logger",
@@ -1437,7 +1597,7 @@
         ]
       }
     ],
-    "source": "# Logger\n\n    identifier: 0x12dc1fca\n\nA service which can report messages to the bus.\n\n## Registers\n\n    enum Priority : u8 {\n        Debug = 0,\n        Log = 1,\n        Warning = 2,\n        Error = 3\n    }\n    rw min_priority = 1: Priority @ 0x80\n\nMessages with level lower than this won't be emitted. The default setting may vary.\n\n## Commands\n\n    report debug @ 0x80 {\n        message: string\n    }\n    report log @ 0x81 {\n        message: string\n    }\n    report warn @ 0x82 {\n        message: string\n    }\n    report error @ 0x83 {\n        message: string\n    }\n\nReport a message.\n"
+    "source": "# Logger\r\n\r\n    identifier: 0x12dc1fca\r\n\r\nA service which can report messages to the bus.\r\n\r\n## Registers\r\n\r\n    enum Priority : u8 {\r\n        Debug = 0,\r\n        Log = 1,\r\n        Warning = 2,\r\n        Error = 3\r\n    }\r\n    rw min_priority = 1: Priority @ 0x80\r\n\r\nMessages with level lower than this won't be emitted. The default setting may vary.\r\n\r\n## Commands\r\n\r\n    report debug @ 0x80 {\r\n        message: string\r\n    }\r\n    report log @ 0x81 {\r\n        message: string\r\n    }\r\n    report warn @ 0x82 {\r\n        message: string\r\n    }\r\n    report error @ 0x83 {\r\n        message: string\r\n    }\r\n\r\nReport a message.\r\n"
   },
   {
     "name": "Motor",
@@ -1484,7 +1644,7 @@
         "identifierName": "intensity"
       }
     ],
-    "source": "# Motor\n\n    identifier: 0x17004cd8\n\nA bi-directional DC motor.\n\n## Registers\n\n    rw duty: i16 frac @ value\n\nPWM duty cycle of the motor. Use negative/positive values to run the motor forwards and backwards.\nPositive is recommended to be clockwise rotation and negative counterclockwise.\n\n    rw enabled: bool @ intensity\n\nTurn the power to the motor on/off.\n"
+    "source": "# Motor\r\n\r\n    identifier: 0x17004cd8\r\n\r\nA bi-directional DC motor.\r\n\r\n## Registers\r\n\r\n    rw duty: i16 frac @ value\r\n\r\nPWM duty cycle of the motor. Use negative/positive values to run the motor forwards and backwards.\r\nPositive is recommended to be clockwise rotation and negative counterclockwise.\r\n\r\n    rw enabled: bool @ intensity\r\n\r\nTurn the power to the motor on/off.\r\n"
   },
   {
     "name": "Multitouch",
@@ -1627,7 +1787,7 @@
         "fields": []
       }
     ],
-    "source": "# Multitouch\n\n    identifier: 0x18d55e2b\n    extends: _sensor\n\nA capacitive touch sensor with multiple inputs.\n\n## Registers\n\n    ro capacity: i32[] @ reading\n\nCapacitance of channels. The capacitance is continuously calibrated, and a value of `0` indicates\nno touch, wheres a value of around `100` or more indicates touch.\nIt's best to ignore this (unless debugging), and use events.\n\n## Events\n\nMost events include the channel number of the input.\n\n    event touch @ 0x01 {\n        channel: u32\n    }\n\nEmitted when an input is touched.\n\n    event release @ 0x02 {\n        channel: u32\n    }\n\nEmitted when an input is no longer touched.\n\n    event tap @ 0x03 {\n        channel: u32\n    }\n\nEmitted when an input is briefly touched. TODO Not implemented.\n\n    event long_press @ 0x04 {\n        channel: u32\n    }\n\nEmitted when an input is touched for longer than 500ms. TODO Not implemented.\n\n    event swipe_pos @ 0x10\n\nEmitted when input channels are successively touched in order of increasing channel numbers.\n\n    event swipe_neg @ 0x11\n\nEmitted when input channels are successively touched in order of decreasing channel numbers.\n"
+    "source": "# Multitouch\r\n\r\n    identifier: 0x18d55e2b\r\n    extends: _sensor\r\n\r\nA capacitive touch sensor with multiple inputs.\r\n\r\n## Registers\r\n\r\n    ro capacity: i32[] @ reading\r\n\r\nCapacitance of channels. The capacitance is continuously calibrated, and a value of `0` indicates\r\nno touch, wheres a value of around `100` or more indicates touch.\r\nIt's best to ignore this (unless debugging), and use events.\r\n\r\n## Events\r\n\r\nMost events include the channel number of the input.\r\n\r\n    event touch @ 0x01 {\r\n        channel: u32\r\n    }\r\n\r\nEmitted when an input is touched.\r\n\r\n    event release @ 0x02 {\r\n        channel: u32\r\n    }\r\n\r\nEmitted when an input is no longer touched.\r\n\r\n    event tap @ 0x03 {\r\n        channel: u32\r\n    }\r\n\r\nEmitted when an input is briefly touched. TODO Not implemented.\r\n\r\n    event long_press @ 0x04 {\r\n        channel: u32\r\n    }\r\n\r\nEmitted when an input is touched for longer than 500ms. TODO Not implemented.\r\n\r\n    event swipe_pos @ 0x10\r\n\r\nEmitted when input channels are successively touched in order of increasing channel numbers.\r\n\r\n    event swipe_neg @ 0x11\r\n\r\nEmitted when input channels are successively touched in order of decreasing channel numbers.\r\n"
   },
   {
     "name": "Music",
@@ -1689,7 +1849,7 @@
         ]
       }
     ],
-    "source": "# Music\n\n    identifier: 0x1b57b1d7\n\nA simple buzzer.\n\n## Registers\n\n    rw volume = 255: u8 frac @ intensity\n\nThe volume (duty cycle) of the buzzer.\n\n## Commands\n\n    command play_tone @ 0x80 {\n        period: u16 us\n        duty: u16 us\n        duration: u16 ms\n    }\n\nPlay a PWM tone with given period and duty for given duration.\nThe duty is scaled down with `volume` register.\nTo play tone at frequency `F` Hz and volume `V` (in `0..1`) you will want\nto send `P = 1000000 / F` and `D = P * V / 2`.\n"
+    "source": "# Music\r\n\r\n    identifier: 0x1b57b1d7\r\n\r\nA simple buzzer.\r\n\r\n## Registers\r\n\r\n    rw volume = 255: u8 frac @ intensity\r\n\r\nThe volume (duty cycle) of the buzzer.\r\n\r\n## Commands\r\n\r\n    command play_tone @ 0x80 {\r\n        period: u16 us\r\n        duty: u16 us\r\n        duration: u16 ms\r\n    }\r\n\r\nPlay a PWM tone with given period and duty for given duration.\r\nThe duty is scaled down with `volume` register.\r\nTo play tone at frequency `F` Hz and volume `V` (in `0..1`) you will want\r\nto send `P = 1000000 / F` and `D = P * V / 2`.\r\n"
   },
   {
     "name": "Power",
@@ -1851,7 +2011,7 @@
         ]
       }
     ],
-    "source": "# Power\n\n    identifier: 0x1fa4c95a\n\nA power-provider service.\n\n## Registers\n\n    rw enabled = 1: bool @ intensity\n\nTurn the power to the bus on/off.\n\n    rw max_power = 500: u16 mA {typical_max = 500} @ max_power\n\nLimit the power provided by the service. The actual maximum limit will depend on hardware.\nThis field may be read-only in some implementations - you should read it back after setting.\n\n    ro overload: bool @ 0x181\n\nIndicates whether the power has been shut down due to overdraw.\n\n    ro current_draw: u16 mA @ reading\n\nPresent current draw from the bus.\n\n    ro battery_voltage: u16 mV {typical_min = 4500, typical_max = 5500} @ 0x180\n\nVoltage on input.\n\n    ro battery_charge?: u16 frac @ 0x182\n\nFraction of charge in the battery.\n\n    const battery_capacity?: u32 mWh @ 0x183\n\nEnergy that can be delivered to the bus when battery is fully charged.\nThis excludes conversion overheads if any.\n\n    rw keep_on_pulse_duration = 600: u16 ms @ 0x80\n    rw keep_on_pulse_period = 20000: u16 ms @ 0x81\n\nMany USB power packs need current to be drawn from time to time to prevent shutdown.\nThis regulates how often and for how long such current is drawn.\nTypically a 1/8W 22 ohm resistor is used as load. This limits the duty cycle to 10%.\n"
+    "source": "# Power\r\n\r\n    identifier: 0x1fa4c95a\r\n\r\nA power-provider service.\r\n\r\n## Registers\r\n\r\n    rw enabled = 1: bool @ intensity\r\n\r\nTurn the power to the bus on/off.\r\n\r\n    rw max_power = 500: u16 mA {typical_max = 500} @ max_power\r\n\r\nLimit the power provided by the service. The actual maximum limit will depend on hardware.\r\nThis field may be read-only in some implementations - you should read it back after setting.\r\n\r\n    ro overload: bool @ 0x181\r\n\r\nIndicates whether the power has been shut down due to overdraw.\r\n\r\n    ro current_draw: u16 mA @ reading\r\n\r\nPresent current draw from the bus.\r\n\r\n    ro battery_voltage: u16 mV {typical_min = 4500, typical_max = 5500} @ 0x180\r\n\r\nVoltage on input.\r\n\r\n    ro battery_charge?: u16 frac @ 0x182\r\n\r\nFraction of charge in the battery.\r\n\r\n    const battery_capacity?: u32 mWh @ 0x183\r\n\r\nEnergy that can be delivered to the bus when battery is fully charged.\r\nThis excludes conversion overheads if any.\r\n\r\n    rw keep_on_pulse_duration = 600: u16 ms @ 0x80\r\n    rw keep_on_pulse_period = 20000: u16 ms @ 0x81\r\n\r\nMany USB power packs need current to be drawn from time to time to prevent shutdown.\r\nThis regulates how often and for how long such current is drawn.\r\nTypically a 1/8W 22 ohm resistor is used as load. This limits the duty cycle to 10%.\r\n"
   },
   {
     "name": "PWM Light",
@@ -1971,7 +2131,7 @@
         ]
       }
     ],
-    "source": "# PWM Light\n\n    identifier: 0x1fb57453\n    camel: PwmLight\n\nA controller for 1 or more LEDs connected in parallel.\n\n## Animation steps\n\nAnimations are described using pairs of intensity and duration.\nFor example, the following animation\n`(0, 10ms), (0.5, 5ms), (0.5, 10ms), (1, 5ms), (0, 7ms), (0, 0ms)`\nwill gradually rise the intensity `0 - 0.5` in 10ms,\nthen, it will keep it steady for at `0.5` for 5ms,\nthen it will rise it again `0.5 - 1` over 10ms,\ndrop `1 - 0` in 5ms,\nand keep it at 0 for 7ms more.\nAny entry with duration of 0ms is considered to be end-marker.\n\nTo get steady glow at `x`, use animation of `(x, 60000ms), (x, 0ms)` and keep `max_iterations` at `0xffff`.\n\n## Registers\n\n    rw brightness: u16 frac @ intensity\n\nSet the luminosity of the strip. The value is used to scale `start_intensity` in `steps` register.\nAt `0` the power to the strip is completely shut down.\n\n    rw max_power = 100: u16 mA @ max_power\n\nLimit the power drawn by the light-strip (and controller).\n\n    const max_steps: u8 @ 0x180\n\nMaximum number of steps allowed in animation definition. This determines the size of the `steps` register.\n\n    rw steps @ 0x82 {\n        repeats:\n            start_intensity: u16 frac\n            duration: u16 ms\n    }\n\nThe steps of current animation. Setting this also sets `current_iteration` to `0`.\nStep with `duration == 0` is treated as an end marker.\n\n    rw current_iteration: u16 @ 0x80\n\nCurrently excecuting iteration of animation. Can be set to `0` to restart current animation.\nIf `current_iteration > max_iterations`, then no animation is currently running.\n\n    rw max_iterations = 0xffff: u16 @ 0x81\n\nThe animation will be repeated `max_iterations + 1` times.\n"
+    "source": "# PWM Light\r\n\r\n    identifier: 0x1fb57453\r\n    camel: PwmLight\r\n\r\nA controller for 1 or more LEDs connected in parallel.\r\n\r\n## Animation steps\r\n\r\nAnimations are described using pairs of intensity and duration.\r\nFor example, the following animation\r\n`(0, 10ms), (0.5, 5ms), (0.5, 10ms), (1, 5ms), (0, 7ms), (0, 0ms)`\r\nwill gradually rise the intensity `0 - 0.5` in 10ms,\r\nthen, it will keep it steady for at `0.5` for 5ms,\r\nthen it will rise it again `0.5 - 1` over 10ms,\r\ndrop `1 - 0` in 5ms,\r\nand keep it at 0 for 7ms more.\r\nAny entry with duration of 0ms is considered to be end-marker.\r\n\r\nTo get steady glow at `x`, use animation of `(x, 60000ms), (x, 0ms)` and keep `max_iterations` at `0xffff`.\r\n\r\n## Registers\r\n\r\n    rw brightness: u16 frac @ intensity\r\n\r\nSet the luminosity of the strip. The value is used to scale `start_intensity` in `steps` register.\r\nAt `0` the power to the strip is completely shut down.\r\n\r\n    rw max_power = 100: u16 mA @ max_power\r\n\r\nLimit the power drawn by the light-strip (and controller).\r\n\r\n    const max_steps: u8 @ 0x180\r\n\r\nMaximum number of steps allowed in animation definition. This determines the size of the `steps` register.\r\n\r\n    rw steps @ 0x82 {\r\n        repeats:\r\n            start_intensity: u16 frac\r\n            duration: u16 ms\r\n    }\r\n\r\nThe steps of current animation. Setting this also sets `current_iteration` to `0`.\r\nStep with `duration == 0` is treated as an end marker.\r\n\r\n    rw current_iteration: u16 @ 0x80\r\n\r\nCurrently excecuting iteration of animation. Can be set to `0` to restart current animation.\r\nIf `current_iteration > max_iterations`, then no animation is currently running.\r\n\r\n    rw max_iterations = 0xffff: u16 @ 0x81\r\n\r\nThe animation will be repeated `max_iterations + 1` times.\r\n"
   },
   {
     "name": "Servo",
@@ -2019,7 +2179,7 @@
         "identifierName": "intensity"
       }
     ],
-    "source": "# Servo\n\n    identifier: 0x12fc9103\n\nServo is a small motor directed with a PWM signal.\nThis services fixes the servo period at 20ms, and the pulse can be regulated.\n\n## Registers\n\n    rw pulse: u32 us {typical_min = 500, typical_max = 2500} @ value\n\nSpecifies length of the pulse in microseconds. The period is always 20ms.\n\n    rw enabled: bool @ intensity\n\nTurn the power to the servo on/off."
+    "source": "# Servo\r\n\r\n    identifier: 0x12fc9103\r\n\r\nServo is a small motor directed with a PWM signal.\r\nThis services fixes the servo period at 20ms, and the pulse can be regulated.\r\n\r\n## Registers\r\n\r\n    rw pulse: u32 us {typical_min = 500, typical_max = 2500} @ value\r\n\r\nSpecifies length of the pulse in microseconds. The period is always 20ms.\r\n\r\n    rw enabled: bool @ intensity\r\n\r\nTurn the power to the servo on/off."
   },
   {
     "name": "Slider",
@@ -2089,7 +2249,7 @@
         "identifierName": "reading"
       }
     ],
-    "source": "# Slider\n\n    identifier: 0x1f274746\n    extends: _sensor\n\nA slider potentiometer.\n\n## Registers\n\n    ro position: u16 frac @ reading\n\nThe relative position of the slider between `0x0000` and `0xffff`.\n"
+    "source": "# Slider\r\n\r\n    identifier: 0x1f274746\r\n    extends: _sensor\r\n\r\nA slider potentiometer.\r\n\r\n## Registers\r\n\r\n    ro position: u16 frac @ reading\r\n\r\nThe relative position of the slider between `0x0000` and `0xffff`.\r\n"
   },
   {
     "name": "TCP",
@@ -2213,7 +2373,7 @@
         "pipeType": "open"
       }
     ],
-    "source": "# TCP\n\n    identifier: 0x1b43b70b\n\nData transfer over TCP/IP and TLS stream sockets.\n\n## Commands\n\n    command open @ 0x80 {\n        inbound: pipe\n    }\n    report {\n        outbound_port: pipe_port\n    }\n\nOpen pair of pipes between network peripheral and a controlling device. In/outbound refers to direction from/to internet.\n\n## Pipes\n\n    meta pipe command open_ssl @ 0x01 {\n        tcp_port: u16\n        hostname: string\n    }\n\nOpen an SSL connection to a given host:port pair. Can be issued only once on given pipe.\nAfter the connection is established, an empty data report is sent.\nConnection is closed by closing the pipe.\n\n    pipe command outdata {\n        data: bytes\n    }\n\nBytes to be sent directly over an established TCP or SSL connection.\n\n    pipe report indata {\n        data: bytes\n    }\n\nBytes read directly from directly over an established TCP or SSL connection.\n\n    enum TcpError : i32 {\n        InvalidCommand = 1\n        InvalidCommandPayload = 2\n    }\n    meta pipe report error @ 0x00 {\n        error: TcpError\n    }\n\nReported when an error is encountered. Negative error codes come directly from the SSL implementation.\n"
+    "source": "# TCP\r\n\r\n    identifier: 0x1b43b70b\r\n\r\nData transfer over TCP/IP and TLS stream sockets.\r\n\r\n## Commands\r\n\r\n    command open @ 0x80 {\r\n        inbound: pipe\r\n    }\r\n    report {\r\n        outbound_port: pipe_port\r\n    }\r\n\r\nOpen pair of pipes between network peripheral and a controlling device. In/outbound refers to direction from/to internet.\r\n\r\n## Pipes\r\n\r\n    meta pipe command open_ssl @ 0x01 {\r\n        tcp_port: u16\r\n        hostname: string\r\n    }\r\n\r\nOpen an SSL connection to a given host:port pair. Can be issued only once on given pipe.\r\nAfter the connection is established, an empty data report is sent.\r\nConnection is closed by closing the pipe.\r\n\r\n    pipe command outdata {\r\n        data: bytes\r\n    }\r\n\r\nBytes to be sent directly over an established TCP or SSL connection.\r\n\r\n    pipe report indata {\r\n        data: bytes\r\n    }\r\n\r\nBytes read directly from directly over an established TCP or SSL connection.\r\n\r\n    enum TcpError : i32 {\r\n        InvalidCommand = 1\r\n        InvalidCommandPayload = 2\r\n    }\r\n    meta pipe report error @ 0x00 {\r\n        error: TcpError\r\n    }\r\n\r\nReported when an error is encountered. Negative error codes come directly from the SSL implementation.\r\n"
   },
   {
     "name": "Temperature",
@@ -2283,7 +2443,7 @@
         "identifierName": "reading"
       }
     ],
-    "source": "# Temperature\n\n    identifier: 0x1421bac7\n    extends: _sensor\n\nA thermometer measuring outside environment.\n\n## Registers\n\nDefault streaming interval is 1s.\n\n    ro temperature: u22.10 C @ reading\n\nThe temperature.\n"
+    "source": "# Temperature\r\n\r\n    identifier: 0x1421bac7\r\n    extends: _sensor\r\n\r\nA thermometer measuring outside environment.\r\n\r\n## Registers\r\n\r\nDefault streaming interval is 1s.\r\n\r\n    ro temperature: u22.10 C @ reading\r\n\r\nThe temperature.\r\n"
   },
   {
     "name": "TFLite",
@@ -2624,7 +2784,7 @@
         ]
       }
     ],
-    "source": "# TFLite\n\n    identifier: 0x13fe118c\n\nRun TensorFlow Lite for Microcontrollers machine learning models.\nOnly models with a single input tensor and a single output tensor are supported at the moment.\n\n## Commands\n\n    command set_model @ 0x80 {\n        model_size: u32 bytes\n    }\n    report {\n        model_port: pipe_port\n    }\n\nOpen pipe for streaming in the model. The size of the model has to be declared upfront.\nThe model is streamed over regular pipe data packets, in the `.tflite` flatbuffer format.\nWhen the pipe is closed, the model is written all into flash, and the device running the service may reset.\n\n    command predict @ 0x81 {\n        outputs: pipe\n    }\n    report {\n        inputs: pipe_port\n    }\n\nOpen channel that can be used to manually invoke the model. When enough data is sent over the `inputs` pipe, the model is invoked,\nand results are send over the `outputs` pipe.\n\n## Registers\n\n    enum SampleType : u8 {\n        U8 = 0x08\n        I8 = 0x88\n        U16 = 0x10\n        I16 = 0x90\n        U32 = 0x20\n        I32 = 0xA0\n    }\n    rw inputs @ 0x80 {\n        sampling_interval: u16 ms\n        samples_in_window: u16\n        reserved: u32\n    repeats:\n        device_id: u64\n        service_class: u32\n        service_num: u8\n        sample_size: u8 bytes\n        sample_type: SampleType\n        sample_shift: i8\n    }\n\nSet automatic input collection.\nThese settings are stored in flash.\n\n    rw auto_invoke_every: u16 @ 0x81\n\nWhen register contains `N > 0`, run the model automatically every time new `N` samples are collected.\nModel may be run less often if it takes longer to run than `N * sampling_interval`.\nThe `outputs` register will stream its value after each run.\nThis register is not stored in flash.\n\n    ro outputs: bytes @ reading\n\nResults of last model invocation as `float32` array.\n\n    ro input_shape @ 0x180 {\n    repeats:\n        dimension: u16\n    }\n\nThe shape of the input tensor.\n\n    ro output_shape @ 0x181 {\n    repeats:\n        dimension: u16\n    }\n\nThe shape of the output tensor.\n\n    ro last_run_time: u32 us @ 0x182\n\nThe time consumed in last model execution.\n\n    ro allocated_arena_size: u32 bytes @ 0x183\n\nNumber of RAM bytes allocated for model execution.\n\n    ro model_size: u32 bytes @ 0x184\n\nThe size of `.tflite` model in bytes.\n\n    ro num_samples: u32 @ 0x185\n\nNumber of input samples collected so far.\n\n    ro sample_size: u8 bytes @ 0x186\n\nSize of a single sample.\n\n    rw stream_samples: u32 @ 0x82\n\nWhen set to `N`, will stream `N` samples as `current_sample` reading.\n\n    ro current_sample: bytes @ 0x187\n\nLast collected sample.\n\n    ro last_error: string @ 0x188\n\nTextual description of last error when running or loading model (if any)."
+    "source": "# TFLite\r\n\r\n    identifier: 0x13fe118c\r\n\r\nRun TensorFlow Lite for Microcontrollers machine learning models.\r\nOnly models with a single input tensor and a single output tensor are supported at the moment.\r\n\r\n## Commands\r\n\r\n    command set_model @ 0x80 {\r\n        model_size: u32 bytes\r\n    }\r\n    report {\r\n        model_port: pipe_port\r\n    }\r\n\r\nOpen pipe for streaming in the model. The size of the model has to be declared upfront.\r\nThe model is streamed over regular pipe data packets, in the `.tflite` flatbuffer format.\r\nWhen the pipe is closed, the model is written all into flash, and the device running the service may reset.\r\n\r\n    command predict @ 0x81 {\r\n        outputs: pipe\r\n    }\r\n    report {\r\n        inputs: pipe_port\r\n    }\r\n\r\nOpen channel that can be used to manually invoke the model. When enough data is sent over the `inputs` pipe, the model is invoked,\r\nand results are send over the `outputs` pipe.\r\n\r\n## Registers\r\n\r\n    enum SampleType : u8 {\r\n        U8 = 0x08\r\n        I8 = 0x88\r\n        U16 = 0x10\r\n        I16 = 0x90\r\n        U32 = 0x20\r\n        I32 = 0xA0\r\n    }\r\n    rw inputs @ 0x80 {\r\n        sampling_interval: u16 ms\r\n        samples_in_window: u16\r\n        reserved: u32\r\n    repeats:\r\n        device_id: u64\r\n        service_class: u32\r\n        service_num: u8\r\n        sample_size: u8 bytes\r\n        sample_type: SampleType\r\n        sample_shift: i8\r\n    }\r\n\r\nSet automatic input collection.\r\nThese settings are stored in flash.\r\n\r\n    rw auto_invoke_every: u16 @ 0x81\r\n\r\nWhen register contains `N > 0`, run the model automatically every time new `N` samples are collected.\r\nModel may be run less often if it takes longer to run than `N * sampling_interval`.\r\nThe `outputs` register will stream its value after each run.\r\nThis register is not stored in flash.\r\n\r\n    ro outputs: bytes @ reading\r\n\r\nResults of last model invocation as `float32` array.\r\n\r\n    ro input_shape @ 0x180 {\r\n    repeats:\r\n        dimension: u16\r\n    }\r\n\r\nThe shape of the input tensor.\r\n\r\n    ro output_shape @ 0x181 {\r\n    repeats:\r\n        dimension: u16\r\n    }\r\n\r\nThe shape of the output tensor.\r\n\r\n    ro last_run_time: u32 us @ 0x182\r\n\r\nThe time consumed in last model execution.\r\n\r\n    ro allocated_arena_size: u32 bytes @ 0x183\r\n\r\nNumber of RAM bytes allocated for model execution.\r\n\r\n    ro model_size: u32 bytes @ 0x184\r\n\r\nThe size of `.tflite` model in bytes.\r\n\r\n    ro num_samples: u32 @ 0x185\r\n\r\nNumber of input samples collected so far.\r\n\r\n    ro sample_size: u8 bytes @ 0x186\r\n\r\nSize of a single sample.\r\n\r\n    rw stream_samples: u32 @ 0x82\r\n\r\nWhen set to `N`, will stream `N` samples as `current_sample` reading.\r\n\r\n    ro current_sample: bytes @ 0x187\r\n\r\nLast collected sample.\r\n\r\n    ro last_error: string @ 0x188\r\n\r\nTextual description of last error when running or loading model (if any)."
   },
   {
     "name": "WIFI",
@@ -2761,6 +2921,6 @@
         "fields": []
       }
     ],
-    "source": "# WIFI\n\n    identifier: 0x18aae1fa\n    camel: wifi\n\nDiscovery and connection to WiFi networks. Separate TCP service is used for data transfer.\n\n## Commands\n\n    flags APFlags : u32 {\n        HasPassword = 0x0001\n        WPS = 0x0002\n        HasSecondaryChannelAbove = 0x0004\n        HasSecondaryChannelBelow = 0x0008\n        IEEE_802_11B = 0x0100\n        IEEE_802_11A = 0x0200\n        IEEE_802_11G = 0x0400\n        IEEE_802_11N = 0x0800\n        IEEE_802_11AC = 0x1000\n        IEEE_802_11AX = 0x2000\n        IEEE_802_LongRange = 0x8000\n    }\n    command scan @ 0x80 {\n        results: pipe\n    }\n    pipe report results {\n        flags: APFlags\n        reserved: u32\n        rssi: i8 {typical_min = -100, typical_max = -20}\n        channel: u8 {typical_min = 1, typical_max = 13}\n        bssid: u8[6]\n        ssid: string\n    }\n\nInitiate search for WiFi networks. Results are returned via pipe, one entry per packet.\n\n    command connect @ 0x81 {\n        ssid: string\n    }\n\nConnect to named network. Password can be appended after ssid. Both strings have to be NUL-terminated.\n\n    command disconnect @ 0x82 {}\n\nDisconnect from current WiFi network if any.\n\n## Event\n\n    event got_ip @ 0x01\n\nEmitted upon successful join and IP address assignment.\n\n    event lost_ip @ 0x02\n\nEmitted when disconnected from network.\n"
+    "source": "# WIFI\r\n\r\n    identifier: 0x18aae1fa\r\n    camel: wifi\r\n\r\nDiscovery and connection to WiFi networks. Separate TCP service is used for data transfer.\r\n\r\n## Commands\r\n\r\n    flags APFlags : u32 {\r\n        HasPassword = 0x0001\r\n        WPS = 0x0002\r\n        HasSecondaryChannelAbove = 0x0004\r\n        HasSecondaryChannelBelow = 0x0008\r\n        IEEE_802_11B = 0x0100\r\n        IEEE_802_11A = 0x0200\r\n        IEEE_802_11G = 0x0400\r\n        IEEE_802_11N = 0x0800\r\n        IEEE_802_11AC = 0x1000\r\n        IEEE_802_11AX = 0x2000\r\n        IEEE_802_LongRange = 0x8000\r\n    }\r\n    command scan @ 0x80 {\r\n        results: pipe\r\n    }\r\n    pipe report results {\r\n        flags: APFlags\r\n        reserved: u32\r\n        rssi: i8 {typical_min = -100, typical_max = -20}\r\n        channel: u8 {typical_min = 1, typical_max = 13}\r\n        bssid: u8[6]\r\n        ssid: string\r\n    }\r\n\r\nInitiate search for WiFi networks. Results are returned via pipe, one entry per packet.\r\n\r\n    command connect @ 0x81 {\r\n        ssid: string\r\n    }\r\n\r\nConnect to named network. Password can be appended after ssid. Both strings have to be NUL-terminated.\r\n\r\n    command disconnect @ 0x82 {}\r\n\r\nDisconnect from current WiFi network if any.\r\n\r\n## Event\r\n\r\n    event got_ip @ 0x01\r\n\r\nEmitted upon successful join and IP address assignment.\r\n\r\n    event lost_ip @ 0x02\r\n\r\nEmitted when disconnected from network.\r\n"
   }
 ]

@@ -15,6 +15,8 @@ A service which can report messages to the bus.
     rw min_priority = 1: Priority @ 0x80
 
 Messages with level lower than this won't be emitted. The default setting may vary.
+Loggers are free to revert this to their default setting if the register has not been
+updated in 1500ms, so this register needs to be continuously written to keep logging.
 
 ## Commands
 

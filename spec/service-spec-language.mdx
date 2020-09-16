@@ -229,14 +229,14 @@ Emitted when button goes from inactive (`pressed == 0`) to active.
 Emitted when button goes from active (`pressed == 1`) to inactive.
 ```
 
-All registers from the `_sensor.md` will be included (meaning `is_streaming` and `streaming_interval`).
+All registers from the `_sensor.md` will be included (meaning `stream_samples` and `streaming_interval`).
 Similarly, all commands and events would be included (but there are none).
 
 The address of `pressed` register is specified as `@ reading`, meaning the
 address of the `reading` register in `_base.md`.
 Services cannot extend `_base.md`, because it includes a large number of packets that are
 never all present at the same time in a regular service.
-However, the names of these packets can be used in places of addresses.
+However, the names of these packets can be used in place of addresses.
 In fact, this is the only way to refer to the addresses in the system range:
 if the example used `@ 0x101` instead of `@ reading`, the jdspectool would
 generate an error.

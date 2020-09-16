@@ -35,8 +35,11 @@ export enum BaseReg {
     /** Read-write mA uint16_t. Limit the power drawn by the service, in mA. */
     MaxPower = 0x7,
     
-    /** Read-write bool (uint8_t). Enables/disables broadcast streaming */
-    IsStreaming = 0x3,
+    /**
+     * Read-write uint8_t. Asks device to stream a given number of samples
+     * (clients will typically write `255` to this register every second or so, while streaming is required).
+     */
+    StreamSamples = 0x3,
     
     /** Read-write ms uint32_t. Period between packets of data when streaming in milliseconds. */
     StreamingInterval = 0x4,
@@ -53,8 +56,11 @@ export enum BaseReg {
 
 // Service: Sensor
 export enum SensorReg {
-    /** Read-write bool (uint8_t). Enables/disables broadcast streaming */
-    IsStreaming = 0x3,
+    /**
+     * Read-write uint8_t. Asks device to stream a given number of samples
+     * (clients will typically write `255` to this register every second or so, while streaming is required).
+     */
+    StreamSamples = 0x3,
     
     /** Read-write ms uint32_t. Period between packets of data when streaming in milliseconds. */
     StreamingInterval = 0x4,
@@ -232,25 +238,6 @@ export enum RotaryEncoderReg {
     
     /** Constant uint16_t. This specifies by how much `position` changes when the crank does 360 degree turn. Typically 12 or 24. */
     ClicksPerTurn = 0x180,
-}
-
-// Service: Device Name Service
-export const SRV_DEVICE_NAME_SERVICE = 0x119c3ad1
-export enum DNSCmd {
-    /** Argument: device_id uint64_t. Get the name corresponding to given device identifer. Returns empty string if unset. */
-    GetName = 0x80,
-    
-    /** Set name. Can set to empty to remove name binding. */
-    SetName = 0x81,
-    
-    /** No args. Remove all name bindings. */
-    ClearAllNames = 0x84,
-    
-    /** Argument: stored_names pipe (bytes). Return all names stored internally. */
-    ListStoredNames = 0x82,
-    
-    /** Argument: required_names pipe (bytes). List all names required by the current program. `device_id` is `0` if name is unbound. */
-    ListRequiredNames = 0x83,
 }
 
 // Service: Gamepad

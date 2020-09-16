@@ -449,6 +449,166 @@
     "source": "# Accelerometer\r\n\r\n    identifier: 0x1f140409\r\n    extends: _sensor\r\n    camel: accel\r\n\r\nA 3-axis accelerometer.\r\n\r\n## Registers\r\n\r\n    ro forces @ reading {\r\n        x: i6.10 g\r\n        y: i6.10 g\r\n        z: i6.10 g\r\n    }\r\n\r\nIndicates the current forces acting on accelerometer.\r\n\r\n## Events\r\n\r\nAll events are debounced.\r\n\r\n    event tilt_up @ 1\r\n    event tilt_down @ 2\r\n    event tilt_left @ 3\r\n    event tilt_right @ 4\r\n\r\nEmitted when accelerometer is tilted in the given direction.\r\n\r\n    event face_up @ 5\r\n    event face_down @ 6\r\n\r\nEmitted when accelerometer is laying flat in the given direction.\r\n\r\n    event freefall @ 7\r\n\r\nEmitted when total force acting on accelerometer is much less than 1g.\r\n\r\n    event shake @ 11\r\n\r\nEmitted when forces change violently a few times.\r\n\r\n    event force_2g @ 12\r\n    event force_3g @ 8\r\n    event force_6g @ 9\r\n    event force_8g @ 10\r\n\r\nEmitted when force in any direction exceeds given threshold.\r\n"
   },
   {
+    "name": "Sensor Aggregator",
+    "shortId": "aggregator",
+    "camelName": "SensorAggregator",
+    "shortName": "SensorAggregator",
+    "extends": [],
+    "notes": {
+      "short": "Aggregate data from multiple sensors into a single stream\n(often used as input to machine learning models on the same device, see tflite service)."
+    },
+    "classIdentifier": 496034245,
+    "enums": {
+      "SampleType": {
+        "name": "SampleType",
+        "storage": 1,
+        "members": {
+          "U8": 8,
+          "I8": 136,
+          "U16": 16,
+          "I16": 144,
+          "U32": 32,
+          "I32": 160
+        }
+      }
+    },
+    "packets": [
+      {
+        "kind": "rw",
+        "name": "inputs",
+        "identifier": 128,
+        "description": "Set automatic input collection.\nThese settings are stored in flash.",
+        "fields": [
+          {
+            "name": "sampling_interval",
+            "unit": "ms",
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "samples_in_window",
+            "unit": "",
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "reserved",
+            "unit": "",
+            "type": "u32",
+            "storage": 4,
+            "isSimpleType": true
+          },
+          {
+            "name": "device_id",
+            "unit": "",
+            "type": "u64",
+            "storage": 8,
+            "isSimpleType": true,
+            "startRepeats": true
+          },
+          {
+            "name": "service_class",
+            "unit": "",
+            "type": "u32",
+            "storage": 4,
+            "isSimpleType": true
+          },
+          {
+            "name": "service_num",
+            "unit": "",
+            "type": "u8",
+            "storage": 1,
+            "isSimpleType": true
+          },
+          {
+            "name": "sample_size",
+            "unit": "bytes",
+            "type": "u8",
+            "storage": 1,
+            "isSimpleType": true
+          },
+          {
+            "name": "sample_type",
+            "unit": "",
+            "type": "SampleType",
+            "storage": 1
+          },
+          {
+            "name": "sample_shift",
+            "unit": "",
+            "type": "i8",
+            "storage": -1,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "ro",
+        "name": "num_samples",
+        "identifier": 384,
+        "description": "Number of input samples collected so far.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "type": "u32",
+            "storage": 4,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "ro",
+        "name": "sample_size",
+        "identifier": 385,
+        "description": "Size of a single sample.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "bytes",
+            "type": "u8",
+            "storage": 1,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "rw",
+        "name": "stream_samples",
+        "identifier": 129,
+        "description": "When set to `N`, will stream `N` samples as `current_sample` reading.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "type": "u32",
+            "storage": 4,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "ro",
+        "name": "current_sample",
+        "identifier": 257,
+        "description": "Last collected sample.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "type": "bytes",
+            "storage": 0,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "reading"
+      }
+    ],
+    "source": "# Sensor Aggregator\n\n    identifier: 0x1d90e1c5\n\nAggregate data from multiple sensors into a single stream\n(often used as input to machine learning models on the same device, see tflite service).\n\n## Registers\n\n    enum SampleType : u8 {\n        U8 = 0x08\n        I8 = 0x88\n        U16 = 0x10\n        I16 = 0x90\n        U32 = 0x20\n        I32 = 0xA0\n    }\n    rw inputs @ 0x80 {\n        sampling_interval: u16 ms\n        samples_in_window: u16\n        reserved: u32\n    repeats:\n        device_id: u64\n        service_class: u32\n        service_num: u8\n        sample_size: u8 bytes\n        sample_type: SampleType\n        sample_shift: i8\n    }\n\nSet automatic input collection.\nThese settings are stored in flash.\n\n    ro num_samples: u32 @ 0x180\n\nNumber of input samples collected so far.\n\n    ro sample_size: u8 bytes @ 0x181\n\nSize of a single sample.\n\n    rw stream_samples: u32 @ 0x81\n\nWhen set to `N`, will stream `N` samples as `current_sample` reading.\n\n    ro current_sample: bytes @ reading\n\nLast collected sample.\n"
+  },
+  {
     "name": "Bootloader",
     "shortId": "bootloader",
     "camelName": "Bootloader",
@@ -1529,7 +1689,7 @@
         "kind": "rw",
         "name": "min_priority",
         "identifier": 128,
-        "description": "Messages with level lower than this won't be emitted. The default setting may vary.",
+        "description": "Messages with level lower than this won't be emitted. The default setting may vary.\nLoggers should revert this to their default setting if the register has not been\nupdated in 3000ms, and also keep the lowest setting they have seen in the last 1500ms.\nThus, clients should write this register every 1000ms and ignore messages which are\ntoo verbose for them.",
         "fields": [
           {
             "name": "_",
@@ -1597,7 +1757,7 @@
         ]
       }
     ],
-    "source": "# Logger\r\n\r\n    identifier: 0x12dc1fca\r\n\r\nA service which can report messages to the bus.\r\n\r\n## Registers\r\n\r\n    enum Priority : u8 {\r\n        Debug = 0,\r\n        Log = 1,\r\n        Warning = 2,\r\n        Error = 3\r\n    }\r\n    rw min_priority = 1: Priority @ 0x80\r\n\r\nMessages with level lower than this won't be emitted. The default setting may vary.\r\n\r\n## Commands\r\n\r\n    report debug @ 0x80 {\r\n        message: string\r\n    }\r\n    report log @ 0x81 {\r\n        message: string\r\n    }\r\n    report warn @ 0x82 {\r\n        message: string\r\n    }\r\n    report error @ 0x83 {\r\n        message: string\r\n    }\r\n\r\nReport a message.\r\n"
+    "source": "# Logger\n\n    identifier: 0x12dc1fca\n\nA service which can report messages to the bus.\n\n## Registers\n\n    enum Priority : u8 {\n        Debug = 0,\n        Log = 1,\n        Warning = 2,\n        Error = 3\n    }\n    rw min_priority = 1: Priority @ 0x80\n\nMessages with level lower than this won't be emitted. The default setting may vary.\nLoggers should revert this to their default setting if the register has not been\nupdated in 3000ms, and also keep the lowest setting they have seen in the last 1500ms.\nThus, clients should write this register every 1000ms and ignore messages which are\ntoo verbose for them.\n\n## Commands\n\n    report debug @ 0x80 {\n        message: string\n    }\n    report log @ 0x81 {\n        message: string\n    }\n    report warn @ 0x82 {\n        message: string\n    }\n    report error @ 0x83 {\n        message: string\n    }\n\nReport a message.\n"
   },
   {
     "name": "Motor",
@@ -1850,6 +2010,166 @@
       }
     ],
     "source": "# Music\r\n\r\n    identifier: 0x1b57b1d7\r\n\r\nA simple buzzer.\r\n\r\n## Registers\r\n\r\n    rw volume = 255: u8 frac @ intensity\r\n\r\nThe volume (duty cycle) of the buzzer.\r\n\r\n## Commands\r\n\r\n    command play_tone @ 0x80 {\r\n        period: u16 us\r\n        duty: u16 us\r\n        duration: u16 ms\r\n    }\r\n\r\nPlay a PWM tone with given period and duty for given duration.\r\nThe duty is scaled down with `volume` register.\r\nTo play tone at frequency `F` Hz and volume `V` (in `0..1`) you will want\r\nto send `P = 1000000 / F` and `D = P * V / 2`.\r\n"
+  },
+  {
+    "name": "Device Namer",
+    "shortId": "namer",
+    "camelName": "DeviceNamer",
+    "shortName": "DeviceNamer",
+    "extends": [],
+    "notes": {
+      "short": "Assign names and functions to devices on JACDAC bus."
+    },
+    "classIdentifier": 295451345,
+    "enums": {},
+    "packets": [
+      {
+        "kind": "command",
+        "name": "get_name",
+        "identifier": 128,
+        "description": "Get the name corresponding to given device identifer. Returns empty string if unset.",
+        "fields": [
+          {
+            "name": "device_id",
+            "unit": "",
+            "type": "u64",
+            "storage": 8,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "report",
+        "name": "get_name",
+        "identifier": 128,
+        "description": "Get the name corresponding to given device identifer. Returns empty string if unset.",
+        "fields": [
+          {
+            "name": "device_id",
+            "unit": "",
+            "type": "u64",
+            "storage": 8,
+            "isSimpleType": true
+          },
+          {
+            "name": "name",
+            "unit": "",
+            "type": "string",
+            "storage": 0
+          }
+        ]
+      },
+      {
+        "kind": "command",
+        "name": "set_name",
+        "identifier": 129,
+        "description": "Set name. Can set to empty to remove name binding.",
+        "fields": [
+          {
+            "name": "device_id",
+            "unit": "",
+            "type": "u64",
+            "storage": 8,
+            "isSimpleType": true
+          },
+          {
+            "name": "name",
+            "unit": "",
+            "type": "string",
+            "storage": 0
+          }
+        ]
+      },
+      {
+        "kind": "command",
+        "name": "clear_all_names",
+        "identifier": 132,
+        "description": "Remove all name bindings.",
+        "fields": []
+      },
+      {
+        "kind": "command",
+        "name": "list_stored_names",
+        "identifier": 130,
+        "description": "Return all names stored internally.",
+        "fields": [
+          {
+            "name": "stored_names",
+            "unit": "",
+            "type": "pipe",
+            "storage": 12
+          }
+        ],
+        "pipeType": "list_stored_names"
+      },
+      {
+        "kind": "pipe_report",
+        "name": "stored_names",
+        "identifier": 0,
+        "description": "Return all names stored internally.",
+        "fields": [
+          {
+            "name": "device_id",
+            "unit": "",
+            "type": "u64",
+            "storage": 8,
+            "isSimpleType": true
+          },
+          {
+            "name": "name",
+            "unit": "",
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "pipeType": "list_stored_names"
+      },
+      {
+        "kind": "command",
+        "name": "list_required_names",
+        "identifier": 131,
+        "description": "List all names required by the current program. `device_id` is `0` if name is unbound.",
+        "fields": [
+          {
+            "name": "required_names",
+            "unit": "",
+            "type": "pipe",
+            "storage": 12
+          }
+        ],
+        "pipeType": "list_required_names"
+      },
+      {
+        "kind": "pipe_report",
+        "name": "required_names",
+        "identifier": 0,
+        "description": "List all names required by the current program. `device_id` is `0` if name is unbound.",
+        "fields": [
+          {
+            "name": "device_id",
+            "unit": "",
+            "type": "u64",
+            "storage": 8,
+            "isSimpleType": true
+          },
+          {
+            "name": "service_class",
+            "unit": "",
+            "type": "u32",
+            "storage": 4,
+            "isSimpleType": true
+          },
+          {
+            "name": "name",
+            "unit": "",
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "pipeType": "list_required_names"
+      }
+    ],
+    "source": "# Device Namer\n\n    identifier: 0x119c3ad1\n\nAssign names and functions to devices on JACDAC bus.\n\n\n## Commands\n\n    command get_name @ 0x80 {\n        device_id: u64\n    }\n    report {\n        device_id: u64\n        name: string\n    }\n\nGet the name corresponding to given device identifer. Returns empty string if unset.\n\n    command set_name @ 0x81 {\n        device_id: u64\n        name: string\n    }\n\nSet name. Can set to empty to remove name binding.\n\n    command clear_all_names @ 0x84 {}\n\nRemove all name bindings.\n\n    command list_stored_names @ 0x82 {\n        stored_names: pipe\n    }\n    pipe report stored_names {\n        device_id: u64\n        name: string\n    }\n\nReturn all names stored internally.\n\n    command list_required_names @ 0x83 {\n        required_names: pipe\n    }\n    pipe report required_names {\n        device_id: u64\n        service_class: u32\n        name: string\n    }\n\nList all names required by the current program. `device_id` is `0` if name is unbound.\n"
   },
   {
     "name": "Power",
@@ -2452,23 +2772,10 @@
     "shortName": "TFLite",
     "extends": [],
     "notes": {
-      "short": "Run TensorFlow Lite for Microcontrollers machine learning models.\nOnly models with a single input tensor and a single output tensor are supported at the moment."
+      "short": "Run TensorFlow Lite for Microcontrollers machine learning models.\nOnly models with a single input tensor and a single output tensor are supported at the moment.\nInput is provided by Sensor Aggregator service on the same device."
     },
-    "classIdentifier": 335417740,
-    "enums": {
-      "SampleType": {
-        "name": "SampleType",
-        "storage": 1,
-        "members": {
-          "U8": 8,
-          "I8": 136,
-          "U16": 16,
-          "I16": 144,
-          "U32": 32,
-          "I32": 160
-        }
-      }
-    },
+    "classIdentifier": 336566904,
+    "enums": {},
     "packets": [
       {
         "kind": "command",
@@ -2532,79 +2839,8 @@
       },
       {
         "kind": "rw",
-        "name": "inputs",
-        "identifier": 128,
-        "description": "Set automatic input collection.\nThese settings are stored in flash.",
-        "fields": [
-          {
-            "name": "sampling_interval",
-            "unit": "ms",
-            "type": "u16",
-            "storage": 2,
-            "isSimpleType": true
-          },
-          {
-            "name": "samples_in_window",
-            "unit": "",
-            "type": "u16",
-            "storage": 2,
-            "isSimpleType": true
-          },
-          {
-            "name": "reserved",
-            "unit": "",
-            "type": "u32",
-            "storage": 4,
-            "isSimpleType": true
-          },
-          {
-            "name": "device_id",
-            "unit": "",
-            "type": "u64",
-            "storage": 8,
-            "isSimpleType": true,
-            "startRepeats": true
-          },
-          {
-            "name": "service_class",
-            "unit": "",
-            "type": "u32",
-            "storage": 4,
-            "isSimpleType": true
-          },
-          {
-            "name": "service_num",
-            "unit": "",
-            "type": "u8",
-            "storage": 1,
-            "isSimpleType": true
-          },
-          {
-            "name": "sample_size",
-            "unit": "bytes",
-            "type": "u8",
-            "storage": 1,
-            "isSimpleType": true
-          },
-          {
-            "name": "sample_type",
-            "unit": "",
-            "type": "SampleType",
-            "storage": 1
-          },
-          {
-            "name": "sample_shift",
-            "unit": "",
-            "type": "i8",
-            "storage": -1,
-            "isSimpleType": true
-          }
-        ]
-      },
-      {
-        "kind": "rw",
         "name": "auto_invoke_every",
-        "identifier": 129,
+        "identifier": 128,
         "description": "When register contains `N > 0`, run the model automatically every time new `N` samples are collected.\nModel may be run less often if it takes longer to run than `N * sampling_interval`.\nThe `outputs` register will stream its value after each run.\nThis register is not stored in flash.",
         "fields": [
           {
@@ -2711,68 +2947,8 @@
       },
       {
         "kind": "ro",
-        "name": "num_samples",
-        "identifier": 389,
-        "description": "Number of input samples collected so far.",
-        "fields": [
-          {
-            "name": "_",
-            "unit": "",
-            "type": "u32",
-            "storage": 4,
-            "isSimpleType": true
-          }
-        ]
-      },
-      {
-        "kind": "ro",
-        "name": "sample_size",
-        "identifier": 390,
-        "description": "Size of a single sample.",
-        "fields": [
-          {
-            "name": "_",
-            "unit": "bytes",
-            "type": "u8",
-            "storage": 1,
-            "isSimpleType": true
-          }
-        ]
-      },
-      {
-        "kind": "rw",
-        "name": "stream_samples",
-        "identifier": 130,
-        "description": "When set to `N`, will stream `N` samples as `current_sample` reading.",
-        "fields": [
-          {
-            "name": "_",
-            "unit": "",
-            "type": "u32",
-            "storage": 4,
-            "isSimpleType": true
-          }
-        ]
-      },
-      {
-        "kind": "ro",
-        "name": "current_sample",
-        "identifier": 391,
-        "description": "Last collected sample.",
-        "fields": [
-          {
-            "name": "_",
-            "unit": "",
-            "type": "bytes",
-            "storage": 0,
-            "isSimpleType": true
-          }
-        ]
-      },
-      {
-        "kind": "ro",
         "name": "last_error",
-        "identifier": 392,
+        "identifier": 389,
         "description": "Textual description of last error when running or loading model (if any).",
         "fields": [
           {
@@ -2784,7 +2960,7 @@
         ]
       }
     ],
-    "source": "# TFLite\r\n\r\n    identifier: 0x13fe118c\r\n\r\nRun TensorFlow Lite for Microcontrollers machine learning models.\r\nOnly models with a single input tensor and a single output tensor are supported at the moment.\r\n\r\n## Commands\r\n\r\n    command set_model @ 0x80 {\r\n        model_size: u32 bytes\r\n    }\r\n    report {\r\n        model_port: pipe_port\r\n    }\r\n\r\nOpen pipe for streaming in the model. The size of the model has to be declared upfront.\r\nThe model is streamed over regular pipe data packets, in the `.tflite` flatbuffer format.\r\nWhen the pipe is closed, the model is written all into flash, and the device running the service may reset.\r\n\r\n    command predict @ 0x81 {\r\n        outputs: pipe\r\n    }\r\n    report {\r\n        inputs: pipe_port\r\n    }\r\n\r\nOpen channel that can be used to manually invoke the model. When enough data is sent over the `inputs` pipe, the model is invoked,\r\nand results are send over the `outputs` pipe.\r\n\r\n## Registers\r\n\r\n    enum SampleType : u8 {\r\n        U8 = 0x08\r\n        I8 = 0x88\r\n        U16 = 0x10\r\n        I16 = 0x90\r\n        U32 = 0x20\r\n        I32 = 0xA0\r\n    }\r\n    rw inputs @ 0x80 {\r\n        sampling_interval: u16 ms\r\n        samples_in_window: u16\r\n        reserved: u32\r\n    repeats:\r\n        device_id: u64\r\n        service_class: u32\r\n        service_num: u8\r\n        sample_size: u8 bytes\r\n        sample_type: SampleType\r\n        sample_shift: i8\r\n    }\r\n\r\nSet automatic input collection.\r\nThese settings are stored in flash.\r\n\r\n    rw auto_invoke_every: u16 @ 0x81\r\n\r\nWhen register contains `N > 0`, run the model automatically every time new `N` samples are collected.\r\nModel may be run less often if it takes longer to run than `N * sampling_interval`.\r\nThe `outputs` register will stream its value after each run.\r\nThis register is not stored in flash.\r\n\r\n    ro outputs: bytes @ reading\r\n\r\nResults of last model invocation as `float32` array.\r\n\r\n    ro input_shape @ 0x180 {\r\n    repeats:\r\n        dimension: u16\r\n    }\r\n\r\nThe shape of the input tensor.\r\n\r\n    ro output_shape @ 0x181 {\r\n    repeats:\r\n        dimension: u16\r\n    }\r\n\r\nThe shape of the output tensor.\r\n\r\n    ro last_run_time: u32 us @ 0x182\r\n\r\nThe time consumed in last model execution.\r\n\r\n    ro allocated_arena_size: u32 bytes @ 0x183\r\n\r\nNumber of RAM bytes allocated for model execution.\r\n\r\n    ro model_size: u32 bytes @ 0x184\r\n\r\nThe size of `.tflite` model in bytes.\r\n\r\n    ro num_samples: u32 @ 0x185\r\n\r\nNumber of input samples collected so far.\r\n\r\n    ro sample_size: u8 bytes @ 0x186\r\n\r\nSize of a single sample.\r\n\r\n    rw stream_samples: u32 @ 0x82\r\n\r\nWhen set to `N`, will stream `N` samples as `current_sample` reading.\r\n\r\n    ro current_sample: bytes @ 0x187\r\n\r\nLast collected sample.\r\n\r\n    ro last_error: string @ 0x188\r\n\r\nTextual description of last error when running or loading model (if any)."
+    "source": "# TFLite\n\n    identifier: 0x140f9a78\n\nRun TensorFlow Lite for Microcontrollers machine learning models.\nOnly models with a single input tensor and a single output tensor are supported at the moment.\nInput is provided by Sensor Aggregator service on the same device.\n\n## Commands\n\n    command set_model @ 0x80 {\n        model_size: u32 bytes\n    }\n    report {\n        model_port: pipe_port\n    }\n\nOpen pipe for streaming in the model. The size of the model has to be declared upfront.\nThe model is streamed over regular pipe data packets, in the `.tflite` flatbuffer format.\nWhen the pipe is closed, the model is written all into flash, and the device running the service may reset.\n\n    command predict @ 0x81 {\n        outputs: pipe\n    }\n    report {\n        inputs: pipe_port\n    }\n\nOpen channel that can be used to manually invoke the model. When enough data is sent over the `inputs` pipe, the model is invoked,\nand results are send over the `outputs` pipe.\n\n## Registers\n\n    rw auto_invoke_every: u16 @ 0x80\n\nWhen register contains `N > 0`, run the model automatically every time new `N` samples are collected.\nModel may be run less often if it takes longer to run than `N * sampling_interval`.\nThe `outputs` register will stream its value after each run.\nThis register is not stored in flash.\n\n    ro outputs: bytes @ reading\n\nResults of last model invocation as `float32` array.\n\n    ro input_shape @ 0x180 {\n    repeats:\n        dimension: u16\n    }\n\nThe shape of the input tensor.\n\n    ro output_shape @ 0x181 {\n    repeats:\n        dimension: u16\n    }\n\nThe shape of the output tensor.\n\n    ro last_run_time: u32 us @ 0x182\n\nThe time consumed in last model execution.\n\n    ro allocated_arena_size: u32 bytes @ 0x183\n\nNumber of RAM bytes allocated for model execution.\n\n    ro model_size: u32 bytes @ 0x184\n\nThe size of `.tflite` model in bytes.\n\n    ro last_error: string @ 0x185\n\nTextual description of last error when running or loading model (if any).\n"
   },
   {
     "name": "WIFI",

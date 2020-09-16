@@ -1,9 +1,10 @@
 # TFLite
 
-    identifier: 0x13fe118c
+    identifier: 0x140f9a78
 
 Run TensorFlow Lite for Microcontrollers machine learning models.
 Only models with a single input tensor and a single output tensor are supported at the moment.
+Input is provided by Sensor Aggregator service on the same device.
 
 ## Commands
 
@@ -30,31 +31,7 @@ and results are send over the `outputs` pipe.
 
 ## Registers
 
-    enum SampleType : u8 {
-        U8 = 0x08
-        I8 = 0x88
-        U16 = 0x10
-        I16 = 0x90
-        U32 = 0x20
-        I32 = 0xA0
-    }
-    rw inputs @ 0x80 {
-        sampling_interval: u16 ms
-        samples_in_window: u16
-        reserved: u32
-    repeats:
-        device_id: u64
-        service_class: u32
-        service_num: u8
-        sample_size: u8 bytes
-        sample_type: SampleType
-        sample_shift: i8
-    }
-
-Set automatic input collection.
-These settings are stored in flash.
-
-    rw auto_invoke_every: u16 @ 0x81
+    rw auto_invoke_every: u16 @ 0x80
 
 When register contains `N > 0`, run the model automatically every time new `N` samples are collected.
 Model may be run less often if it takes longer to run than `N * sampling_interval`.
@@ -91,22 +68,6 @@ Number of RAM bytes allocated for model execution.
 
 The size of `.tflite` model in bytes.
 
-    ro num_samples: u32 @ 0x185
-
-Number of input samples collected so far.
-
-    ro sample_size: u8 bytes @ 0x186
-
-Size of a single sample.
-
-    rw stream_samples: u32 @ 0x82
-
-When set to `N`, will stream `N` samples as `current_sample` reading.
-
-    ro current_sample: bytes @ 0x187
-
-Last collected sample.
-
-    ro last_error: string @ 0x188
+    ro last_error: string @ 0x185
 
 Textual description of last error when running or loading model (if any).

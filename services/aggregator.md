@@ -31,15 +31,15 @@ Aggregate data from multiple sensors into a single stream
 Set automatic input collection.
 These settings are stored in flash.
 
-    ro num_samples: u32 @ 0x185
+    ro num_samples: u32 @ 0x180
 
 Number of input samples collected so far.
 
-    ro sample_size: u8 bytes @ 0x186
+    ro sample_size: u8 bytes @ 0x181
 
 Size of a single sample.
 
-    rw stream_samples: u32 @ 0x82
+    rw stream_samples: u32 @ 0x81
 
 When set to `N`, will stream `N` samples as `current_sample` reading.
 

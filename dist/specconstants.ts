@@ -105,6 +105,38 @@ export enum AccelEvent {
     Force_8g = 0xa,
 }
 
+// Service: Sensor Aggregator
+export const SRV_SENSOR_AGGREGATOR = 0x1d90e1c5
+
+export enum SensorAggregatorSampleType { // uint8_t
+    U8 = 0x8,
+    I8 = 0x88,
+    U16 = 0x10,
+    I16 = 0x90,
+    U32 = 0x20,
+    I32 = 0xa0,
+}
+
+export enum SensorAggregatorReg {
+    /**
+     * Set automatic input collection.
+     * These settings are stored in flash.
+     */
+    Inputs = 0x80,
+    
+    /** Read-only uint32_t. Number of input samples collected so far. */
+    NumSamples = 0x180,
+    
+    /** Read-only bytes uint8_t. Size of a single sample. */
+    SampleSize = 0x181,
+    
+    /** Read-write uint32_t. When set to `N`, will stream `N` samples as `current_sample` reading. */
+    StreamSamples = 0x81,
+    
+    /** Read-only bytes. Last collected sample. */
+    CurrentSample = 0x101,
+}
+
 // Service: Bootloader
 export const SRV_BOOTLOADER = 0x1ffa9948
 
@@ -520,17 +552,7 @@ export enum TemperatureReg {
 }
 
 // Service: TFLite
-export const SRV_TFLITE = 0x13fe118c
-
-export enum TFLiteSampleType { // uint8_t
-    U8 = 0x8,
-    I8 = 0x88,
-    U16 = 0x10,
-    I16 = 0x90,
-    U32 = 0x20,
-    I32 = 0xa0,
-}
-
+export const SRV_TFLITE = 0x140f9a78
 export enum TFLiteCmd {
     /**
      * Argument: model_size bytes uint32_t. Open pipe for streaming in the model. The size of the model has to be declared upfront.
@@ -548,18 +570,12 @@ export enum TFLiteCmd {
 
 export enum TFLiteReg {
     /**
-     * Set automatic input collection.
-     * These settings are stored in flash.
-     */
-    Inputs = 0x80,
-    
-    /**
      * Read-write uint16_t. When register contains `N > 0`, run the model automatically every time new `N` samples are collected.
      * Model may be run less often if it takes longer to run than `N * sampling_interval`.
      * The `outputs` register will stream its value after each run.
      * This register is not stored in flash.
      */
-    AutoInvokeEvery = 0x81,
+    AutoInvokeEvery = 0x80,
     
     /** Read-only bytes. Results of last model invocation as `float32` array. */
     Outputs = 0x101,
@@ -579,20 +595,8 @@ export enum TFLiteReg {
     /** Read-only bytes uint32_t. The size of `.tflite` model in bytes. */
     ModelSize = 0x184,
     
-    /** Read-only uint32_t. Number of input samples collected so far. */
-    NumSamples = 0x185,
-    
-    /** Read-only bytes uint8_t. Size of a single sample. */
-    SampleSize = 0x186,
-    
-    /** Read-write uint32_t. When set to `N`, will stream `N` samples as `current_sample` reading. */
-    StreamSamples = 0x82,
-    
-    /** Read-only bytes. Last collected sample. */
-    CurrentSample = 0x187,
-    
     /** Read-only string (bytes). Textual description of last error when running or loading model (if any). */
-    LastError = 0x188,
+    LastError = 0x185,
 }
 
 // Service: WIFI

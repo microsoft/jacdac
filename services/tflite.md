@@ -31,7 +31,7 @@ and results are send over the `outputs` pipe.
 
 ## Registers
 
-    rw auto_invoke_every: u16 @ 0x81
+    rw auto_invoke_every: u16 @ 0x80
 
 When register contains `N > 0`, run the model automatically every time new `N` samples are collected.
 Model may be run less often if it takes longer to run than `N * sampling_interval`.
@@ -68,6 +68,6 @@ Number of RAM bytes allocated for model execution.
 
 The size of `.tflite` model in bytes.
 
-    ro last_error: string @ 0x188
+    ro last_error: string @ 0x185
 
 Textual description of last error when running or loading model (if any).

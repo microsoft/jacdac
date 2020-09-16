@@ -6,7 +6,7 @@
 A simple push-button.
 
 Note: this service will stream readings while the button is pressed and shortly after it's released, even
-when `is_streaming == 0`. TODO remove this?
+when `stream_samples == 0`. TODO remove this?
 
 ## Registers
 

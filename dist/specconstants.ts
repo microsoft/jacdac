@@ -18,6 +18,9 @@ export enum BaseCmd {
      */
     SetRegister = 0x2000,
     
+    /** Event from sensor or a broadcast service. */
+    Event = 0x1,
+    
     /** No args. Request to calibrate a sensor. The report indicates the calibration is done. */
     Calibrate = 0x2,
     
@@ -350,6 +353,20 @@ export enum LoggerReg {
      * too verbose for them.
      */
     MinPriority = 0x80,
+}
+
+export enum LoggerCmd {
+    /** Argument: message string (bytes). Report a message. */
+    Debug = 0x80,
+    
+    /** Argument: message string (bytes). Report a message. */
+    Log = 0x81,
+    
+    /** Argument: message string (bytes). Report a message. */
+    Warn = 0x82,
+    
+    /** Argument: message string (bytes). Report a message. */
+    Error = 0x83,
 }
 
 // Service: Motor

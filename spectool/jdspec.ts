@@ -220,6 +220,8 @@ export function parseSpecificationMarkdownToJSON(filecontent: string, includes?:
             description: "",
             fields: []
         }
+        if (isReport && lastCmd && name == lastCmd.name)
+            packetInfo.secondary = true
         if (!packetsToDescribe)
             packetsToDescribe = []
         packetsToDescribe.push(packetInfo)
@@ -781,7 +783,7 @@ function toH(info: jdspec.ServiceSpec) {
         const cmt = addComment(pkt)
         r += cmt.comment
 
-        if (pkt.kind != "report") {
+        if (!pkt.secondary) {
             let inner = "CMD"
             if (isRegister(pkt.kind))
                 inner = "REG"
@@ -878,7 +880,7 @@ function addComment(pkt: jdspec.PacketInfo) {
         }
     }
 
-    if (pkt.kind == "report") {
+    if (pkt.kind == "report" && pkt.secondary) {
         comment += "// Report: " + typeInfo + "\n"
     } else {
         if (pkt.description) {
@@ -916,7 +918,7 @@ function toTS(info: jdspec.ServiceSpec) {
 
         const cmt = addComment(pkt)
 
-        if (pkt.kind != "report" && pkt.kind != "pipe_command" && pkt.kind != "pipe_report") {
+        if (!pkt.secondary && pkt.kind != "pipe_command" && pkt.kind != "pipe_report") {
             let inner = "Cmd"
             if (isRegister(pkt.kind))
                 inner = "Reg"

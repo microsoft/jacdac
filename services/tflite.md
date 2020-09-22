@@ -1,10 +1,11 @@
-# TFLite
+# Model Runner
 
     identifier: 0x140f9a78
 
-Run TensorFlow Lite for Microcontrollers machine learning models.
+Run machine learning models.
 Only models with a single input tensor and a single output tensor are supported at the moment.
 Input is provided by Sensor Aggregator service on the same device.
+Multiple instances of this service may be present, if more than one model format is supported by a device.
 
 ## Commands
 
@@ -16,7 +17,8 @@ Input is provided by Sensor Aggregator service on the same device.
     }
 
 Open pipe for streaming in the model. The size of the model has to be declared upfront.
-The model is streamed over regular pipe data packets, in the `.tflite` flatbuffer format.
+The model is streamed over regular pipe data packets.
+The format supported by this instance of the service is specified in `format` register.
 When the pipe is closed, the model is written all into flash, and the device running the service may reset.
 
     command predict @ 0x81 {
@@ -66,8 +68,28 @@ Number of RAM bytes allocated for model execution.
 
     ro model_size: u32 bytes @ 0x184
 
-The size of `.tflite` model in bytes.
+The size of the model in bytes.
 
     ro last_error: string @ 0x185
 
 Textual description of last error when running or loading model (if any).
+
+    enum ModelFormat: u32 {
+        TFLite = 0x24351f47,
+        ML4F = 0x3a3c8fc7,
+    }
+    const format: ModelFormat @ 0x186
+
+The type of ML models supported by this service.
+`TFLite` is flatbuffer `.tflite` file.
+`ML4F` is compiled assembly model for Cortex-M4F (and better).
+Other model formats should use random numbers as identifiers.
+
+    const format_version: u32 @ 0x187
+
+A version number for the format.
+
+    const parallel?: bool @ 0x188
+
+If present and true this service can run models independently of other
+instances of this service on the device.

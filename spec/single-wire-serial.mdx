@@ -133,11 +133,18 @@ The `frame_flags` field is used to indicate
 |--------|------------	|-------------
 | 0 | COMMAND	| Determines if the frame contains command or report packets. If set, the frame contains command packets, if not set, the frame contains report packets. 	|
 | 1 | ACK_REQUESTED	| Determines if the receiver should return an ACK to the sender. If set, the receiver should repsond with an ACK frame, if not set, no response is required. 	|
-| 2 | DEVICE_ID_ALT_MEANING	| Determines if the receiver should return an ACK to the sender. If set, the receiver should repsond with an ACK frame, if not set, no response is required. 	|
+| 2 | DEVICE_ID_ALT_MEANING	|  	|
 | 3-7 | RESERVED	| Reserved for future use.	|
 
 ### Device identifiers
 
+Each device is assigned a 64-bit device identifier that uniquely identifies it on the bus. This identifier is used in frames to determine the sending or receiving device, and for devices to remember one another on the bus. Device identifiers are generated, not allocated, and once generated a device's identifier must remain constant.
+
+Device identifiers are not guaranteed to be universally unique, but there is little chance of users encountering identifier colision so long as identifiers are generated with appropriate entropy. We recommend the following ways of generating a unique identifier:
+
+1. Use the random number generator embedded in this page to allocate an identifier for each device. The number generator could even be included into automated flashing processes to ensure appropriate entropy.
+
+2. Use the random number generator embedded in this page to seed a hardware random number generator. The hardware random number generator could use sensor values to create further entropy.
 
 
 ## Packets
@@ -170,7 +177,7 @@ Packets are placed back-to-back inside the frame `data` field and must be padded
 
 ## Services
 
-The way JACDAC devices share resources with other devices on the bus are through __services__. Services can represent physical hardware resources (e.g. an accelerometer) or pure virtual resources (e.g. distributed shared memory). Services act on __commands__ and optionally respond with or emit __reports__.
+The way JACDAC devices share resources with other devices on the bus are through __services__. Services can represent physical hardware resources (e.g. an accelerometer) or pure virtual resources (e.g. distributed shared memory). Services act on __commands__ and optionally respond with __reports__. Reports can also be emitted separately from a service without prompting from another device.
 
 Services themselves are specified in a custom markdown language. The specification lists the possible commands and reports a service can consume and emit. Specifications can also inherit from other specifications. A great example of this can be seen in the [sensor specification](../services/_sensor.md). JACDAC sensors inherit commands and reports from this specification, creating a set of base functionality for _all_ sensors.
 
@@ -232,6 +239,19 @@ Common register command codes are allocated to base specifications (e.g. the [se
 
 ### Reports
 
+Reports are packets sent by a service as a response to a command. They can also be used to independently broadcast important information such as events.
+
+Report packet layout of a report changes depending on its end purpose. __Register reports__ must always contain the register values requested in the original command packet, but for actions, the format is left up to the service creator to define. __Actions reports__ can either contain a pre-determined number of bytes as defined in the service specification or bear no operation.
+
+A third type of report is an __Event__. Events are emitted independently by a service without prompting by a device. Some services may offer an interface to configure which events are emitted. Unlike prior types of report, event reports have a fixed format:
+
+| Memory offset | Field size (bytes) 	| Field name 	| Description  	|
+|--------|------------	|-------------	|----------	|
+| 16 | 2	|`event_id`	| A number that uniquely identifies an event. |
+| 18 | 2	|`event_argument`	| An optional argument that can provide additional context.	|
+
+Event reports are sent in the same way as any other packet, and `device_identifier`, `service_instance`, and `service_command` differentiate it from other types of reports. These differentiators provide a unique namespace for each service. Multiple event reports can be placed back-to-back inside a single packet as long as their `event_id` pertains to the same service. For example, a button can emit `UP` and `HOLD` events in the same packet.
+
 ## The control service
 
 JACDAC devices that are providing services to the bus must implement the Control service.
@@ -244,6 +264,3 @@ JACDAC SWS provides an easy way for devices to spot devices of interest on the b
 ## Packet routing
 
 Packets are routed to __services__, which are discussed later on in this document. Each packet contains all the information required for a packet to reach its intended service.
-
-
-## Unique device identifiers

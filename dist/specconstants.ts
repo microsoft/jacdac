@@ -18,6 +18,9 @@ export enum BaseCmd {
      */
     SetRegister = 0x2000,
     
+    /** Event from sensor or a broadcast service. */
+    Event = 0x1,
+    
     /** No args. Request to calibrate a sensor. The report indicates the calibration is done. */
     Calibrate = 0x2,
     
@@ -35,8 +38,11 @@ export enum BaseReg {
     /** Read-write mA uint16_t. Limit the power drawn by the service, in mA. */
     MaxPower = 0x7,
     
-    /** Read-write bool (uint8_t). Enables/disables broadcast streaming */
-    IsStreaming = 0x3,
+    /**
+     * Read-write uint8_t. Asks device to stream a given number of samples
+     * (clients will typically write `255` to this register every second or so, while streaming is required).
+     */
+    StreamSamples = 0x3,
     
     /** Read-write ms uint32_t. Period between packets of data when streaming in milliseconds. */
     StreamingInterval = 0x4,
@@ -53,8 +59,11 @@ export enum BaseReg {
 
 // Service: Sensor
 export enum SensorReg {
-    /** Read-write bool (uint8_t). Enables/disables broadcast streaming */
-    IsStreaming = 0x3,
+    /**
+     * Read-write uint8_t. Asks device to stream a given number of samples
+     * (clients will typically write `255` to this register every second or so, while streaming is required).
+     */
+    StreamSamples = 0x3,
     
     /** Read-write ms uint32_t. Period between packets of data when streaming in milliseconds. */
     StreamingInterval = 0x4,
@@ -103,6 +112,38 @@ export enum AccelEvent {
     
     /** Emitted when force in any direction exceeds given threshold. */
     Force_8g = 0xa,
+}
+
+// Service: Sensor Aggregator
+export const SRV_SENSOR_AGGREGATOR = 0x1d90e1c5
+
+export enum SensorAggregatorSampleType { // uint8_t
+    U8 = 0x8,
+    I8 = 0x88,
+    U16 = 0x10,
+    I16 = 0x90,
+    U32 = 0x20,
+    I32 = 0xa0,
+}
+
+export enum SensorAggregatorReg {
+    /**
+     * Set automatic input collection.
+     * These settings are stored in flash.
+     */
+    Inputs = 0x80,
+    
+    /** Read-only uint32_t. Number of input samples collected so far. */
+    NumSamples = 0x180,
+    
+    /** Read-only bytes uint8_t. Size of a single sample. */
+    SampleSize = 0x181,
+    
+    /** Read-write uint32_t. When set to `N`, will stream `N` samples as `current_sample` reading. */
+    StreamSamples = 0x81,
+    
+    /** Read-only bytes. Last collected sample. */
+    CurrentSample = 0x101,
 }
 
 // Service: Bootloader
@@ -304,8 +345,28 @@ export enum LoggerPriority { // uint8_t
 }
 
 export enum LoggerReg {
-    /** Read-write Priority (uint8_t). Messages with level lower than this won't be emitted. The default setting may vary. */
+    /**
+     * Read-write Priority (uint8_t). Messages with level lower than this won't be emitted. The default setting may vary.
+     * Loggers should revert this to their default setting if the register has not been
+     * updated in 3000ms, and also keep the lowest setting they have seen in the last 1500ms.
+     * Thus, clients should write this register every 1000ms and ignore messages which are
+     * too verbose for them.
+     */
     MinPriority = 0x80,
+}
+
+export enum LoggerCmd {
+    /** Argument: message string (bytes). Report a message. */
+    Debug = 0x80,
+    
+    /** Argument: message string (bytes). Report a message. */
+    Log = 0x81,
+    
+    /** Argument: message string (bytes). Report a message. */
+    Warn = 0x82,
+    
+    /** Argument: message string (bytes). Report a message. */
+    Error = 0x83,
 }
 
 // Service: Motor
@@ -367,6 +428,25 @@ export enum MusicCmd {
      * to send `P = 1000000 / F` and `D = P * V / 2`.
      */
     PlayTone = 0x80,
+}
+
+// Service: Device Namer
+export const SRV_DEVICE_NAMER = 0x119c3ad1
+export enum DeviceNamerCmd {
+    /** Argument: device_id uint64_t. Get the name corresponding to given device identifer. Returns empty string if unset. */
+    GetName = 0x80,
+    
+    /** Set name. Can set to empty to remove name binding. */
+    SetName = 0x81,
+    
+    /** No args. Remove all name bindings. */
+    ClearAllNames = 0x84,
+    
+    /** Argument: stored_names pipe (bytes). Return all names stored internally. */
+    ListStoredNames = 0x82,
+    
+    /** Argument: required_names pipe (bytes). List all names required by the current program. `device_id` is `0` if name is unbound. */
+    ListRequiredNames = 0x83,
 }
 
 // Service: Power
@@ -473,19 +553,15 @@ export enum TCPTcpError { // int32_t
 export enum TCPCmd {
     /** Argument: inbound pipe (bytes). Open pair of pipes between network peripheral and a controlling device. In/outbound refers to direction from/to internet. */
     Open = 0x80,
-    
+}
+
+export enum TCPPipeCmd {
     /**
      * Open an SSL connection to a given host:port pair. Can be issued only once on given pipe.
      * After the connection is established, an empty data report is sent.
      * Connection is closed by closing the pipe.
      */
     OpenSsl = 0x1,
-    
-    /** Argument: data bytes. Bytes to be sent directly over an established TCP or SSL connection. */
-    Outdata = 0x0,
-    
-    /** Argument: data bytes. Bytes read directly from directly over an established TCP or SSL connection. */
-    Indata = 0x0,
     
     /** Argument: error TcpError (int32_t). Reported when an error is encountered. Negative error codes come directly from the SSL implementation. */
     Error = 0x0,
@@ -499,17 +575,7 @@ export enum TemperatureReg {
 }
 
 // Service: TFLite
-export const SRV_TFLITE = 0x13fe118c
-
-export enum TFLiteSampleType { // uint8_t
-    U8 = 0x8,
-    I8 = 0x88,
-    U16 = 0x10,
-    I16 = 0x90,
-    U32 = 0x20,
-    I32 = 0xa0,
-}
-
+export const SRV_TFLITE = 0x140f9a78
 export enum TFLiteCmd {
     /**
      * Argument: model_size bytes uint32_t. Open pipe for streaming in the model. The size of the model has to be declared upfront.
@@ -527,18 +593,12 @@ export enum TFLiteCmd {
 
 export enum TFLiteReg {
     /**
-     * Set automatic input collection.
-     * These settings are stored in flash.
-     */
-    Inputs = 0x80,
-    
-    /**
      * Read-write uint16_t. When register contains `N > 0`, run the model automatically every time new `N` samples are collected.
      * Model may be run less often if it takes longer to run than `N * sampling_interval`.
      * The `outputs` register will stream its value after each run.
      * This register is not stored in flash.
      */
-    AutoInvokeEvery = 0x81,
+    AutoInvokeEvery = 0x80,
     
     /** Read-only bytes. Results of last model invocation as `float32` array. */
     Outputs = 0x101,
@@ -558,20 +618,8 @@ export enum TFLiteReg {
     /** Read-only bytes uint32_t. The size of `.tflite` model in bytes. */
     ModelSize = 0x184,
     
-    /** Read-only uint32_t. Number of input samples collected so far. */
-    NumSamples = 0x185,
-    
-    /** Read-only bytes uint8_t. Size of a single sample. */
-    SampleSize = 0x186,
-    
-    /** Read-write uint32_t. When set to `N`, will stream `N` samples as `current_sample` reading. */
-    StreamSamples = 0x82,
-    
-    /** Read-only bytes. Last collected sample. */
-    CurrentSample = 0x187,
-    
     /** Read-only string (bytes). Textual description of last error when running or loading model (if any). */
-    LastError = 0x188,
+    LastError = 0x185,
 }
 
 // Service: WIFI
@@ -594,9 +642,6 @@ export enum WifiAPFlags { // uint32_t
 export enum WifiCmd {
     /** Argument: results pipe (bytes). Initiate search for WiFi networks. Results are returned via pipe, one entry per packet. */
     Scan = 0x80,
-    
-    /** Initiate search for WiFi networks. Results are returned via pipe, one entry per packet. */
-    Results = 0x0,
     
     /** Argument: ssid string (bytes). Connect to named network. Password can be appended after ssid. Both strings have to be NUL-terminated. */
     Connect = 0x81,

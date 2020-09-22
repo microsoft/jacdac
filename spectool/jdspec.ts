@@ -220,6 +220,8 @@ export function parseSpecificationMarkdownToJSON(filecontent: string, includes?:
             description: "",
             fields: []
         }
+        if (isReport && lastCmd && name == lastCmd.name)
+            packetInfo.secondary = true
         if (!packetsToDescribe)
             packetsToDescribe = []
         packetsToDescribe.push(packetInfo)
@@ -315,7 +317,11 @@ export function parseSpecificationMarkdownToJSON(filecontent: string, includes?:
                 error(`@ not found at ${packetInfo.name}`)
         }
 
-        if (info.packets.some(p => p.kind == packetInfo.kind && p.identifier == packetInfo.identifier)) {
+        if (info.packets.some(p =>
+            p.kind == packetInfo.kind &&
+            (!/pipe/.test(p.kind) || p.pipeType == packetInfo.pipeType) &&
+            p.identifier == packetInfo.identifier
+        )) {
             error("packet identifier already used")
         }
 
@@ -777,7 +783,7 @@ function toH(info: jdspec.ServiceSpec) {
         const cmt = addComment(pkt)
         r += cmt.comment
 
-        if (pkt.kind != "report") {
+        if (!pkt.secondary) {
             let inner = "CMD"
             if (isRegister(pkt.kind))
                 inner = "REG"
@@ -874,7 +880,7 @@ function addComment(pkt: jdspec.PacketInfo) {
         }
     }
 
-    if (pkt.kind == "report") {
+    if (pkt.kind == "report" && pkt.secondary) {
         comment += "// Report: " + typeInfo + "\n"
     } else {
         if (pkt.description) {
@@ -912,12 +918,14 @@ function toTS(info: jdspec.ServiceSpec) {
 
         const cmt = addComment(pkt)
 
-        if (pkt.kind != "report") {
+        if (!pkt.secondary && pkt.kind != "pipe_command" && pkt.kind != "pipe_report") {
             let inner = "Cmd"
             if (isRegister(pkt.kind))
                 inner = "Reg"
             else if (pkt.kind == "event")
                 inner = "Event"
+            else if (pkt.kind == "meta_pipe_command" || pkt.kind == "meta_pipe_report")
+                inner = "PipeCmd"
             let val = toHex(pkt.identifier)
             tsEnums[inner] = (tsEnums[inner] || "") +
                 `${cmt.comment}${upperCamel(pkt.name)} = ${val},\n`

@@ -6,9 +6,10 @@ Base class for sensors.
 
 ## Registers
 
-    rw is_streaming: bool @ is_streaming
+    rw stream_samples: u8 @ stream_samples
 
-Enables/disables broadcast streaming
+Asks device to stream a given number of samples
+(clients will typically write `255` to this register every second or so, while streaming is required).
 
     rw streaming_interval = 100: u32 ms {typical_min = 1, typical_max = 60000} @ streaming_interval
 

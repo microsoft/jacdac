@@ -194,6 +194,11 @@ declare namespace jdspec {
          * If present and true, this packet was derived from base class.
          */
         derived?: boolean;
+
+        /**
+         * If present and true, this is a report that has the same identifier as preceding command.
+         */
+        secondary?: boolean;
     }
 
     /**

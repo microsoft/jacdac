@@ -79,9 +79,10 @@ The primary value of actuator (eg. servo pulse length, or motor duty cycle).
 
 Limit the power drawn by the service, in mA.
 
-    rw is_streaming: bool @ 0x03
+    rw stream_samples: u8 @ 0x03
 
-Enables/disables broadcast streaming
+Asks device to stream a given number of samples
+(clients will typically write `255` to this register every second or so, while streaming is required).
 
     rw streaming_interval = 100: u32 ms @ 0x04
 

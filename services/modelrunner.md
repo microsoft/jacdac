@@ -75,15 +75,15 @@ The size of the model in bytes.
 Textual description of last error when running or loading model (if any).
 
     enum ModelFormat: u32 {
-        TFLite = 0x24351f47,
-        ML4F = 0x3a3c8fc7,
+        TFLite = 0x334c4654,
+        ML4F = 0x30470f62,
     }
     const format: ModelFormat @ 0x186
 
 The type of ML models supported by this service.
 `TFLite` is flatbuffer `.tflite` file.
-`ML4F` is compiled assembly model for Cortex-M4F (and better).
-Other model formats should use random numbers as identifiers.
+`ML4F` is compiled machine code model for Cortex-M4F.
+The format is typically present as first or second little endian word of model file.
 
     const format_version: u32 @ 0x187
 

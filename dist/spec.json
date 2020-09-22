@@ -1615,6 +1615,258 @@
     "source": "# Logger\n\n    identifier: 0x12dc1fca\n\nA service which can report messages to the bus.\n\n## Registers\n\n    enum Priority : u8 {\n        Debug = 0,\n        Log = 1,\n        Warning = 2,\n        Error = 3\n    }\n    rw min_priority = 1: Priority @ 0x80\n\nMessages with level lower than this won't be emitted. The default setting may vary.\nLoggers should revert this to their default setting if the register has not been\nupdated in 3000ms, and also keep the lowest setting they have seen in the last 1500ms.\nThus, clients should write this register every 1000ms and ignore messages which are\ntoo verbose for them.\n\n## Commands\n\n    report debug @ 0x80 {\n        message: string\n    }\n    report log @ 0x81 {\n        message: string\n    }\n    report warn @ 0x82 {\n        message: string\n    }\n    report error @ 0x83 {\n        message: string\n    }\n\nReport a message.\n"
   },
   {
+    "name": "Model Runner",
+    "shortId": "modelrunner",
+    "camelName": "ModelRunner",
+    "shortName": "ModelRunner",
+    "extends": [],
+    "notes": {
+      "short": "Run machine learning models.\nOnly models with a single input tensor and a single output tensor are supported at the moment.\nInput is provided by Sensor Aggregator service on the same device.\nMultiple instances of this service may be present, if more than one model format is supported by a device."
+    },
+    "classIdentifier": 336566904,
+    "enums": {
+      "ModelFormat": {
+        "name": "ModelFormat",
+        "storage": 4,
+        "members": {
+          "TFLite": 860636756,
+          "ML4F": 809963362
+        }
+      }
+    },
+    "packets": [
+      {
+        "kind": "command",
+        "name": "set_model",
+        "identifier": 128,
+        "description": "Open pipe for streaming in the model. The size of the model has to be declared upfront.\nThe model is streamed over regular pipe data packets.\nThe format supported by this instance of the service is specified in `format` register.\nWhen the pipe is closed, the model is written all into flash, and the device running the service may reset.",
+        "fields": [
+          {
+            "name": "model_size",
+            "unit": "bytes",
+            "type": "u32",
+            "storage": 4,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "report",
+        "name": "set_model",
+        "identifier": 128,
+        "description": "Open pipe for streaming in the model. The size of the model has to be declared upfront.\nThe model is streamed over regular pipe data packets.\nThe format supported by this instance of the service is specified in `format` register.\nWhen the pipe is closed, the model is written all into flash, and the device running the service may reset.",
+        "fields": [
+          {
+            "name": "model_port",
+            "unit": "",
+            "type": "pipe_port",
+            "storage": 2
+          }
+        ],
+        "secondary": true,
+        "pipeType": "set_model"
+      },
+      {
+        "kind": "command",
+        "name": "predict",
+        "identifier": 129,
+        "description": "Open channel that can be used to manually invoke the model. When enough data is sent over the `inputs` pipe, the model is invoked,\nand results are send over the `outputs` pipe.",
+        "fields": [
+          {
+            "name": "outputs",
+            "unit": "",
+            "type": "pipe",
+            "storage": 12
+          }
+        ],
+        "pipeType": "predict"
+      },
+      {
+        "kind": "report",
+        "name": "predict",
+        "identifier": 129,
+        "description": "Open channel that can be used to manually invoke the model. When enough data is sent over the `inputs` pipe, the model is invoked,\nand results are send over the `outputs` pipe.",
+        "fields": [
+          {
+            "name": "inputs",
+            "unit": "",
+            "type": "pipe_port",
+            "storage": 2
+          }
+        ],
+        "secondary": true,
+        "pipeType": "predict"
+      },
+      {
+        "kind": "rw",
+        "name": "auto_invoke_every",
+        "identifier": 128,
+        "description": "When register contains `N > 0`, run the model automatically every time new `N` samples are collected.\nModel may be run less often if it takes longer to run than `N * sampling_interval`.\nThe `outputs` register will stream its value after each run.\nThis register is not stored in flash.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "ro",
+        "name": "outputs",
+        "identifier": 257,
+        "description": "Results of last model invocation as `float32` array.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "type": "bytes",
+            "storage": 0,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "reading"
+      },
+      {
+        "kind": "ro",
+        "name": "input_shape",
+        "identifier": 384,
+        "description": "The shape of the input tensor.",
+        "fields": [
+          {
+            "name": "dimension",
+            "unit": "",
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true,
+            "startRepeats": true
+          }
+        ]
+      },
+      {
+        "kind": "ro",
+        "name": "output_shape",
+        "identifier": 385,
+        "description": "The shape of the output tensor.",
+        "fields": [
+          {
+            "name": "dimension",
+            "unit": "",
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true,
+            "startRepeats": true
+          }
+        ]
+      },
+      {
+        "kind": "ro",
+        "name": "last_run_time",
+        "identifier": 386,
+        "description": "The time consumed in last model execution.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "us",
+            "type": "u32",
+            "storage": 4,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "ro",
+        "name": "allocated_arena_size",
+        "identifier": 387,
+        "description": "Number of RAM bytes allocated for model execution.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "bytes",
+            "type": "u32",
+            "storage": 4,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "ro",
+        "name": "model_size",
+        "identifier": 388,
+        "description": "The size of the model in bytes.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "bytes",
+            "type": "u32",
+            "storage": 4,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "ro",
+        "name": "last_error",
+        "identifier": 389,
+        "description": "Textual description of last error when running or loading model (if any).",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "type": "string",
+            "storage": 0
+          }
+        ]
+      },
+      {
+        "kind": "const",
+        "name": "format",
+        "identifier": 390,
+        "description": "The type of ML models supported by this service.\n`TFLite` is flatbuffer `.tflite` file.\n`ML4F` is compiled machine code model for Cortex-M4F.\nThe format is typically present as first or second little endian word of model file.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "type": "ModelFormat",
+            "storage": 4
+          }
+        ]
+      },
+      {
+        "kind": "const",
+        "name": "format_version",
+        "identifier": 391,
+        "description": "A version number for the format.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "type": "u32",
+            "storage": 4,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "const",
+        "name": "parallel",
+        "identifier": 392,
+        "description": "If present and true this service can run models independently of other\ninstances of this service on the device.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "type": "bool",
+            "storage": 1
+          }
+        ],
+        "optional": true
+      }
+    ],
+    "source": "# Model Runner\n\n    identifier: 0x140f9a78\n\nRun machine learning models.\nOnly models with a single input tensor and a single output tensor are supported at the moment.\nInput is provided by Sensor Aggregator service on the same device.\nMultiple instances of this service may be present, if more than one model format is supported by a device.\n\n## Commands\n\n    command set_model @ 0x80 {\n        model_size: u32 bytes\n    }\n    report {\n        model_port: pipe_port\n    }\n\nOpen pipe for streaming in the model. The size of the model has to be declared upfront.\nThe model is streamed over regular pipe data packets.\nThe format supported by this instance of the service is specified in `format` register.\nWhen the pipe is closed, the model is written all into flash, and the device running the service may reset.\n\n    command predict @ 0x81 {\n        outputs: pipe\n    }\n    report {\n        inputs: pipe_port\n    }\n\nOpen channel that can be used to manually invoke the model. When enough data is sent over the `inputs` pipe, the model is invoked,\nand results are send over the `outputs` pipe.\n\n## Registers\n\n    rw auto_invoke_every: u16 @ 0x80\n\nWhen register contains `N > 0`, run the model automatically every time new `N` samples are collected.\nModel may be run less often if it takes longer to run than `N * sampling_interval`.\nThe `outputs` register will stream its value after each run.\nThis register is not stored in flash.\n\n    ro outputs: bytes @ reading\n\nResults of last model invocation as `float32` array.\n\n    ro input_shape @ 0x180 {\n    repeats:\n        dimension: u16\n    }\n\nThe shape of the input tensor.\n\n    ro output_shape @ 0x181 {\n    repeats:\n        dimension: u16\n    }\n\nThe shape of the output tensor.\n\n    ro last_run_time: u32 us @ 0x182\n\nThe time consumed in last model execution.\n\n    ro allocated_arena_size: u32 bytes @ 0x183\n\nNumber of RAM bytes allocated for model execution.\n\n    ro model_size: u32 bytes @ 0x184\n\nThe size of the model in bytes.\n\n    ro last_error: string @ 0x185\n\nTextual description of last error when running or loading model (if any).\n\n    enum ModelFormat: u32 {\n        TFLite = 0x334c4654,\n        ML4F = 0x30470f62,\n    }\n    const format: ModelFormat @ 0x186\n\nThe type of ML models supported by this service.\n`TFLite` is flatbuffer `.tflite` file.\n`ML4F` is compiled machine code model for Cortex-M4F.\nThe format is typically present as first or second little endian word of model file.\n\n    const format_version: u32 @ 0x187\n\nA version number for the format.\n\n    const parallel?: bool @ 0x188\n\nIf present and true this service can run models independently of other\ninstances of this service on the device.\n"
+  },
+  {
     "name": "Motor",
     "shortId": "motor",
     "camelName": "Motor",
@@ -2624,205 +2876,6 @@
       }
     ],
     "source": "# Temperature\n\n    identifier: 0x1421bac7\n    extends: _sensor\n\nA thermometer measuring outside environment.\n\n## Registers\n\nDefault streaming interval is 1s.\n\n    ro temperature: u22.10 C @ reading\n\nThe temperature.\n"
-  },
-  {
-    "name": "TFLite",
-    "shortId": "tflite",
-    "camelName": "TFLite",
-    "shortName": "TFLite",
-    "extends": [],
-    "notes": {
-      "short": "Run TensorFlow Lite for Microcontrollers machine learning models.\nOnly models with a single input tensor and a single output tensor are supported at the moment.\nInput is provided by Sensor Aggregator service on the same device."
-    },
-    "classIdentifier": 336566904,
-    "enums": {},
-    "packets": [
-      {
-        "kind": "command",
-        "name": "set_model",
-        "identifier": 128,
-        "description": "Open pipe for streaming in the model. The size of the model has to be declared upfront.\nThe model is streamed over regular pipe data packets, in the `.tflite` flatbuffer format.\nWhen the pipe is closed, the model is written all into flash, and the device running the service may reset.",
-        "fields": [
-          {
-            "name": "model_size",
-            "unit": "bytes",
-            "type": "u32",
-            "storage": 4,
-            "isSimpleType": true
-          }
-        ]
-      },
-      {
-        "kind": "report",
-        "name": "set_model",
-        "identifier": 128,
-        "description": "Open pipe for streaming in the model. The size of the model has to be declared upfront.\nThe model is streamed over regular pipe data packets, in the `.tflite` flatbuffer format.\nWhen the pipe is closed, the model is written all into flash, and the device running the service may reset.",
-        "fields": [
-          {
-            "name": "model_port",
-            "unit": "",
-            "type": "pipe_port",
-            "storage": 2
-          }
-        ],
-        "secondary": true,
-        "pipeType": "set_model"
-      },
-      {
-        "kind": "command",
-        "name": "predict",
-        "identifier": 129,
-        "description": "Open channel that can be used to manually invoke the model. When enough data is sent over the `inputs` pipe, the model is invoked,\nand results are send over the `outputs` pipe.",
-        "fields": [
-          {
-            "name": "outputs",
-            "unit": "",
-            "type": "pipe",
-            "storage": 12
-          }
-        ],
-        "pipeType": "predict"
-      },
-      {
-        "kind": "report",
-        "name": "predict",
-        "identifier": 129,
-        "description": "Open channel that can be used to manually invoke the model. When enough data is sent over the `inputs` pipe, the model is invoked,\nand results are send over the `outputs` pipe.",
-        "fields": [
-          {
-            "name": "inputs",
-            "unit": "",
-            "type": "pipe_port",
-            "storage": 2
-          }
-        ],
-        "secondary": true,
-        "pipeType": "predict"
-      },
-      {
-        "kind": "rw",
-        "name": "auto_invoke_every",
-        "identifier": 128,
-        "description": "When register contains `N > 0`, run the model automatically every time new `N` samples are collected.\nModel may be run less often if it takes longer to run than `N * sampling_interval`.\nThe `outputs` register will stream its value after each run.\nThis register is not stored in flash.",
-        "fields": [
-          {
-            "name": "_",
-            "unit": "",
-            "type": "u16",
-            "storage": 2,
-            "isSimpleType": true
-          }
-        ]
-      },
-      {
-        "kind": "ro",
-        "name": "outputs",
-        "identifier": 257,
-        "description": "Results of last model invocation as `float32` array.",
-        "fields": [
-          {
-            "name": "_",
-            "unit": "",
-            "type": "bytes",
-            "storage": 0,
-            "isSimpleType": true
-          }
-        ],
-        "identifierName": "reading"
-      },
-      {
-        "kind": "ro",
-        "name": "input_shape",
-        "identifier": 384,
-        "description": "The shape of the input tensor.",
-        "fields": [
-          {
-            "name": "dimension",
-            "unit": "",
-            "type": "u16",
-            "storage": 2,
-            "isSimpleType": true,
-            "startRepeats": true
-          }
-        ]
-      },
-      {
-        "kind": "ro",
-        "name": "output_shape",
-        "identifier": 385,
-        "description": "The shape of the output tensor.",
-        "fields": [
-          {
-            "name": "dimension",
-            "unit": "",
-            "type": "u16",
-            "storage": 2,
-            "isSimpleType": true,
-            "startRepeats": true
-          }
-        ]
-      },
-      {
-        "kind": "ro",
-        "name": "last_run_time",
-        "identifier": 386,
-        "description": "The time consumed in last model execution.",
-        "fields": [
-          {
-            "name": "_",
-            "unit": "us",
-            "type": "u32",
-            "storage": 4,
-            "isSimpleType": true
-          }
-        ]
-      },
-      {
-        "kind": "ro",
-        "name": "allocated_arena_size",
-        "identifier": 387,
-        "description": "Number of RAM bytes allocated for model execution.",
-        "fields": [
-          {
-            "name": "_",
-            "unit": "bytes",
-            "type": "u32",
-            "storage": 4,
-            "isSimpleType": true
-          }
-        ]
-      },
-      {
-        "kind": "ro",
-        "name": "model_size",
-        "identifier": 388,
-        "description": "The size of `.tflite` model in bytes.",
-        "fields": [
-          {
-            "name": "_",
-            "unit": "bytes",
-            "type": "u32",
-            "storage": 4,
-            "isSimpleType": true
-          }
-        ]
-      },
-      {
-        "kind": "ro",
-        "name": "last_error",
-        "identifier": 389,
-        "description": "Textual description of last error when running or loading model (if any).",
-        "fields": [
-          {
-            "name": "_",
-            "unit": "",
-            "type": "string",
-            "storage": 0
-          }
-        ]
-      }
-    ],
-    "source": "# TFLite\n\n    identifier: 0x140f9a78\n\nRun TensorFlow Lite for Microcontrollers machine learning models.\nOnly models with a single input tensor and a single output tensor are supported at the moment.\nInput is provided by Sensor Aggregator service on the same device.\n\n## Commands\n\n    command set_model @ 0x80 {\n        model_size: u32 bytes\n    }\n    report {\n        model_port: pipe_port\n    }\n\nOpen pipe for streaming in the model. The size of the model has to be declared upfront.\nThe model is streamed over regular pipe data packets, in the `.tflite` flatbuffer format.\nWhen the pipe is closed, the model is written all into flash, and the device running the service may reset.\n\n    command predict @ 0x81 {\n        outputs: pipe\n    }\n    report {\n        inputs: pipe_port\n    }\n\nOpen channel that can be used to manually invoke the model. When enough data is sent over the `inputs` pipe, the model is invoked,\nand results are send over the `outputs` pipe.\n\n## Registers\n\n    rw auto_invoke_every: u16 @ 0x80\n\nWhen register contains `N > 0`, run the model automatically every time new `N` samples are collected.\nModel may be run less often if it takes longer to run than `N * sampling_interval`.\nThe `outputs` register will stream its value after each run.\nThis register is not stored in flash.\n\n    ro outputs: bytes @ reading\n\nResults of last model invocation as `float32` array.\n\n    ro input_shape @ 0x180 {\n    repeats:\n        dimension: u16\n    }\n\nThe shape of the input tensor.\n\n    ro output_shape @ 0x181 {\n    repeats:\n        dimension: u16\n    }\n\nThe shape of the output tensor.\n\n    ro last_run_time: u32 us @ 0x182\n\nThe time consumed in last model execution.\n\n    ro allocated_arena_size: u32 bytes @ 0x183\n\nNumber of RAM bytes allocated for model execution.\n\n    ro model_size: u32 bytes @ 0x184\n\nThe size of `.tflite` model in bytes.\n\n    ro last_error: string @ 0x185\n\nTextual description of last error when running or loading model (if any).\n"
   },
   {
     "name": "WIFI",

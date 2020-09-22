@@ -177,9 +177,9 @@ Packets are placed back-to-back inside the frame `data` field and must be padded
 
 ## Services
 
-The way JACDAC devices share resources with other devices on the bus are through __services__. Services can represent physical hardware resources (e.g. an accelerometer) or pure virtual resources (e.g. distributed shared memory). Services act on __commands__ and optionally respond with __reports__. Reports can also be emitted separately from a service without prompting from another device.
+The way JACDAC devices share resources with other devices on the bus are through __services__. Services provide abstract, standardised interfaces that can be used to interact with physical hardware resources (e.g. an accelerometer) or pure virtual resources (e.g. distributed shared memory). This abstraction brings plug-and-play dynamicity to JACDAC so that devices with different hardware, but the same overall functionality, can replace one another without having to recompile user applications. For example, two different  models of accelerometer hardware can replace each other because they share the same software interface.
 
-Services themselves are specified in a custom markdown language. The specification lists the possible commands and reports a service can consume and emit. Specifications can also inherit from other specifications. A great example of this can be seen in the [sensor specification](../services/_sensor.md). JACDAC sensors inherit commands and reports from this specification, creating a set of base functionality for _all_ sensors.
+Services act on __commands__ and optionally respond with __reports__. Reports can also be emitted separately from a service without prompting from another device. This interface is specified in a custom markdown language that lists the possible commands and reports a service can consume and emit. Specifications can also inherit from other specifications. A great example of this can be seen in the [sensor specification](../services/_sensor.md). JACDAC sensors inherit commands and reports from this specification, creating a set of base functionality for _all_ sensors.
 
 ### Commands
 
@@ -254,13 +254,8 @@ Event reports are sent in the same way as any other packet, and `device_identifi
 
 ## The control service
 
-JACDAC devices that are providing services to the bus must implement the Control service.
+The design of the physical accomodates dynamic connectivity, services bring hardware abstraction, but the control service is responsible for dynamic device discovery. To achieve this, the control service emits advertisement packets roughly every 500 milliseconds. Each advertisement packet contains a list host services offered by a device; other devices on the bus can inspect these advertisements and subsequently communicate with them to incorporate them in user applications.
 
-The control service is responsible for advertising a device and maintaining a list of active devices on the bus. This list does not have to be an exhaustive list and can consist of only those devices of particular interest or no devices at all.
+The control service also offers a set of common commands that can be used to query/inspect each JACDAC device. For example, the `IDENTIFY` command causes a JACDAC device to perform an action that allows a user to locate a particular device, usually through blinking an LED. In addition to emiting an advertisement packet every 500 milliseconds, a device that hosts one or more services must respond to all commands listed in the [control service specification](../services/control.md).
 
-JACDAC SWS provides an easy way for devices to spot devices of interest on the bus. Roughly every 500 milliseconds, devices announce their presence in an advertisement report. The report contains a list of services for  to use on the bus. If a device has no services to offer it is not required to send an advertisement packet.
-
-
-## Packet routing
-
-Packets are routed to __services__, which are discussed later on in this document. Each packet contains all the information required for a packet to reach its intended service.
+Implementation complexity of the control service scales with respect to the number of services a device implements. For instance, it is very simple to process packets for a single user service (in addition to the control service), but complexity increases as more services are added. This flexibility is a benefit as it allows ultra low-cost microcontrollers to be used in simple devices.

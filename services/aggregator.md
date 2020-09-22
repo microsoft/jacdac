@@ -3,7 +3,7 @@
     identifier: 0x1d90e1c5
 
 Aggregate data from multiple sensors into a single stream
-(often used as input to machine learning models on the same device, see tflite service).
+(often used as input to machine learning models on the same device, see model runner service).
 
 ## Registers
 

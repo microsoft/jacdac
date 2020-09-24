@@ -18,7 +18,8 @@
         "name": "announce",
         "identifier": 0,
         "description": "Enumeration data for control service; service-specific advertisement data otherwise.\nControl broadcasts it automatically every 500ms, but other service have to be queried to provide it.",
-        "fields": []
+        "fields": [],
+        "hasReport": true
       },
       {
         "kind": "report",
@@ -33,7 +34,8 @@
         "name": "get_register",
         "identifier": 4096,
         "description": "Registers number `N` is fetched by issuing command `0x1000 | N`.\nThe report format is the same as the format of the register.",
-        "fields": []
+        "fields": [],
+        "hasReport": true
       },
       {
         "kind": "report",
@@ -77,7 +79,8 @@
         "name": "calibrate",
         "identifier": 2,
         "description": "Request to calibrate a sensor. The report indicates the calibration is done.",
-        "fields": []
+        "fields": [],
+        "hasReport": true
       },
       {
         "kind": "report",
@@ -92,7 +95,8 @@
         "name": "description",
         "identifier": 3,
         "description": "Request human-readable description of service.",
-        "fields": []
+        "fields": [],
+        "hasReport": true
       },
       {
         "kind": "report",
@@ -645,7 +649,8 @@
         "identifier": 0,
         "description": "The `service_class` is always `0x1ffa9948`. The `device_class` identifies the kind of firmware\nthat \"fits\" this device.",
         "fields": [],
-        "identifierName": "announce"
+        "identifierName": "announce",
+        "hasReport": true
       },
       {
         "kind": "report",
@@ -697,7 +702,8 @@
             "storage": 4,
             "isSimpleType": true
           }
-        ]
+        ],
+        "hasReport": true
       },
       {
         "kind": "report",
@@ -791,7 +797,8 @@
             "storage": 0,
             "isSimpleType": true
           }
-        ]
+        ],
+        "hasReport": true
       },
       {
         "kind": "report",
@@ -1212,7 +1219,8 @@
         "identifier": 0,
         "description": "Indicates number of players supported and which buttons are present on the controller.",
         "fields": [],
-        "identifierName": "announce"
+        "identifierName": "announce",
+        "hasReport": true
       },
       {
         "kind": "report",
@@ -1648,7 +1656,8 @@
             "storage": 4,
             "isSimpleType": true
           }
-        ]
+        ],
+        "hasReport": true
       },
       {
         "kind": "report",
@@ -1679,7 +1688,8 @@
             "storage": 12
           }
         ],
-        "pipeType": "predict"
+        "pipeType": "predict",
+        "hasReport": true
       },
       {
         "kind": "report",
@@ -2146,7 +2156,8 @@
             "storage": 8,
             "isSimpleType": true
           }
-        ]
+        ],
+        "hasReport": true
       },
       {
         "kind": "report",
@@ -2718,7 +2729,8 @@
             "storage": 12
           }
         ],
-        "pipeType": "open"
+        "pipeType": "open",
+        "hasReport": true
       },
       {
         "kind": "report",

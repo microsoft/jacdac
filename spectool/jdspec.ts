@@ -220,8 +220,10 @@ export function parseSpecificationMarkdownToJSON(filecontent: string, includes?:
             description: "",
             fields: []
         }
-        if (isReport && lastCmd && name == lastCmd.name)
+        if (isReport && lastCmd && name == lastCmd.name) {
             packetInfo.secondary = true
+            lastCmd.hasReport = true
+        }
         if (!packetsToDescribe)
             packetsToDescribe = []
         packetsToDescribe.push(packetInfo)

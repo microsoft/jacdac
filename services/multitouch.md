@@ -7,7 +7,10 @@ A capacitive touch sensor with multiple inputs.
 
 ## Registers
 
-    ro capacity: i32[] @ reading
+    ro capacity @ reading {
+    repeats:
+        capacitance: i32
+    }
 
 Capacitance of channels. The capacitance is continuously calibrated, and a value of `0` indicates
 no touch, wheres a value of around `100` or more indicates touch.

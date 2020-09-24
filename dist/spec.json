@@ -462,7 +462,7 @@
     "shortName": "SensorAggregator",
     "extends": [],
     "notes": {
-      "short": "Aggregate data from multiple sensors into a single stream\n(often used as input to machine learning models on the same device, see tflite service)."
+      "short": "Aggregate data from multiple sensors into a single stream\n(often used as input to machine learning models on the same device, see model runner service)."
     },
     "classIdentifier": 496034245,
     "enums": {
@@ -613,7 +613,7 @@
         "identifierName": "reading"
       }
     ],
-    "source": "# Sensor Aggregator\n\n    identifier: 0x1d90e1c5\n\nAggregate data from multiple sensors into a single stream\n(often used as input to machine learning models on the same device, see tflite service).\n\n## Registers\n\n    enum SampleType : u8 {\n        U8 = 0x08\n        I8 = 0x88\n        U16 = 0x10\n        I16 = 0x90\n        U32 = 0x20\n        I32 = 0xA0\n    }\n    rw inputs @ 0x80 {\n        sampling_interval: u16 ms\n        samples_in_window: u16\n        reserved: u32\n    repeats:\n        device_id: u64\n        service_class: u32\n        service_num: u8\n        sample_size: u8 bytes\n        sample_type: SampleType\n        sample_shift: i8\n    }\n\nSet automatic input collection.\nThese settings are stored in flash.\n\n    ro num_samples: u32 @ 0x180\n\nNumber of input samples collected so far.\n\n    ro sample_size: u8 bytes @ 0x181\n\nSize of a single sample.\n\n    rw stream_samples: u32 @ 0x81\n\nWhen set to `N`, will stream `N` samples as `current_sample` reading.\n\n    ro current_sample: bytes @ reading\n\nLast collected sample.\n"
+    "source": "# Sensor Aggregator\n\n    identifier: 0x1d90e1c5\n\nAggregate data from multiple sensors into a single stream\n(often used as input to machine learning models on the same device, see model runner service).\n\n## Registers\n\n    enum SampleType : u8 {\n        U8 = 0x08\n        I8 = 0x88\n        U16 = 0x10\n        I16 = 0x90\n        U32 = 0x20\n        I32 = 0xA0\n    }\n    rw inputs @ 0x80 {\n        sampling_interval: u16 ms\n        samples_in_window: u16\n        reserved: u32\n    repeats:\n        device_id: u64\n        service_class: u32\n        service_num: u8\n        sample_size: u8 bytes\n        sample_type: SampleType\n        sample_shift: i8\n    }\n\nSet automatic input collection.\nThese settings are stored in flash.\n\n    ro num_samples: u32 @ 0x180\n\nNumber of input samples collected so far.\n\n    ro sample_size: u8 bytes @ 0x181\n\nSize of a single sample.\n\n    rw stream_samples: u32 @ 0x81\n\nWhen set to `N`, will stream `N` samples as `current_sample` reading.\n\n    ro current_sample: bytes @ reading\n\nLast collected sample.\n"
   },
   {
     "name": "Bootloader",
@@ -1972,10 +1972,12 @@
         "description": "Capacitance of channels. The capacitance is continuously calibrated, and a value of `0` indicates\nno touch, wheres a value of around `100` or more indicates touch.\nIt's best to ignore this (unless debugging), and use events.",
         "fields": [
           {
-            "name": "_",
+            "name": "capacitance",
             "unit": "",
-            "type": "i32[]",
-            "storage": 0
+            "type": "i32",
+            "storage": -4,
+            "isSimpleType": true,
+            "startRepeats": true
           }
         ],
         "identifierName": "reading"
@@ -2055,7 +2057,7 @@
         "fields": []
       }
     ],
-    "source": "# Multitouch\n\n    identifier: 0x18d55e2b\n    extends: _sensor\n\nA capacitive touch sensor with multiple inputs.\n\n## Registers\n\n    ro capacity: i32[] @ reading\n\nCapacitance of channels. The capacitance is continuously calibrated, and a value of `0` indicates\nno touch, wheres a value of around `100` or more indicates touch.\nIt's best to ignore this (unless debugging), and use events.\n\n## Events\n\nMost events include the channel number of the input.\n\n    event touch @ 0x01 {\n        channel: u32\n    }\n\nEmitted when an input is touched.\n\n    event release @ 0x02 {\n        channel: u32\n    }\n\nEmitted when an input is no longer touched.\n\n    event tap @ 0x03 {\n        channel: u32\n    }\n\nEmitted when an input is briefly touched. TODO Not implemented.\n\n    event long_press @ 0x04 {\n        channel: u32\n    }\n\nEmitted when an input is touched for longer than 500ms. TODO Not implemented.\n\n    event swipe_pos @ 0x10\n\nEmitted when input channels are successively touched in order of increasing channel numbers.\n\n    event swipe_neg @ 0x11\n\nEmitted when input channels are successively touched in order of decreasing channel numbers.\n"
+    "source": "# Multitouch\n\n    identifier: 0x18d55e2b\n    extends: _sensor\n\nA capacitive touch sensor with multiple inputs.\n\n## Registers\n\n    ro capacity @ reading {\n    repeats:\n        capacitance: i32\n    }\n\nCapacitance of channels. The capacitance is continuously calibrated, and a value of `0` indicates\nno touch, wheres a value of around `100` or more indicates touch.\nIt's best to ignore this (unless debugging), and use events.\n\n## Events\n\nMost events include the channel number of the input.\n\n    event touch @ 0x01 {\n        channel: u32\n    }\n\nEmitted when an input is touched.\n\n    event release @ 0x02 {\n        channel: u32\n    }\n\nEmitted when an input is no longer touched.\n\n    event tap @ 0x03 {\n        channel: u32\n    }\n\nEmitted when an input is briefly touched. TODO Not implemented.\n\n    event long_press @ 0x04 {\n        channel: u32\n    }\n\nEmitted when an input is touched for longer than 500ms. TODO Not implemented.\n\n    event swipe_pos @ 0x10\n\nEmitted when input channels are successively touched in order of increasing channel numbers.\n\n    event swipe_neg @ 0x11\n\nEmitted when input channels are successively touched in order of decreasing channel numbers.\n"
   },
   {
     "name": "Music",

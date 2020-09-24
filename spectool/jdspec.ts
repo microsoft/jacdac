@@ -642,7 +642,6 @@ export function parseSpecificationMarkdownToJSON(filecontent: string, includes?:
                 return [2, tp2, 0]
             case "bytes":
             case "string":
-            case "i32[]":
                 return [0, tp2, 0]
             default:
                 const m = /^u8\[(\d+)\]$/.exec(tp2)

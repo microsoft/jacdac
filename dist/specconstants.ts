@@ -458,7 +458,7 @@ export enum MotorReg {
 export const SRV_MULTITOUCH = 0x18d55e2b
 export enum MultitouchReg {
     /**
-     * Read-only i32[] (bytes). Capacitance of channels. The capacitance is continuously calibrated, and a value of `0` indicates
+     * Read-only capacitance int32_t. Capacitance of channels. The capacitance is continuously calibrated, and a value of `0` indicates
      * no touch, wheres a value of around `100` or more indicates touch.
      * It's best to ignore this (unless debugging), and use events.
      */

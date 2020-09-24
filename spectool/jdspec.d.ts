@@ -217,7 +217,6 @@ declare namespace jdspec {
          *   - u8, u16, u32, u64, i8, i16, i32, i64, bytes
          *   - name of an enum defined in the current service
          *   - string - UTF-8 encoded string
-         *   - i32[] - an array of signed 32 bit values
          */
         type: string;
 

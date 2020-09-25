@@ -1,10 +1,10 @@
-## Services
+# Service layer
 
 The way JACDAC devices share resources with other devices on the bus are through __services__. Services provide abstract, standardised interfaces that can be used to interact with physical hardware resources (e.g. an accelerometer) or pure virtual resources (e.g. distributed shared memory). This abstraction brings plug-and-play dynamicity to JACDAC so that devices with different hardware, but the same overall functionality, can replace one another without having to recompile user applications. For example, two different  models of accelerometer hardware can replace each other because they share the same software interface.
 
 Services act on __commands__ and optionally respond with __reports__. Reports can also be emitted separately from a service without prompting from another device. This interface is specified in a custom markdown language that lists the possible commands and reports a service can consume and emit. Specifications can also inherit from other specifications. A great example of this can be seen in the [sensor specification](../services/_sensor.md). JACDAC sensors inherit commands and reports from this specification, creating a set of base functionality for _all_ sensors.
 
-### Commands
+## Commands
 
 Commands are 16-bit and specified in the `service_command` field of a JACDAC packet. A command is composed of a 4-bit operation and a 12-bit code.
 
@@ -17,7 +17,7 @@ The operation is stored in the top most nibble of the `service_command` field. T
 | `0x2XXX` | Register write	|
 | `0x3XXX`- `0xfXXX` | Reserved	|
 
-#### Actions
+### Actions
 
 Actions are a type of command that cause a service to begin to carry out a task. An example action might be to set the angle of a servo to 90 degrees.
 
@@ -36,7 +36,7 @@ However, services __must not__ allocate any of the common or reserved action com
 
 Common action command codes are allocated to base specifications (e.g. the [sensor specification](../services/_sensor.md)). Any service that inherits from a base specification is expected to respond to command codes it specifies.
 
-#### Registers
+### Registers
 
 Registers are properties that represent the state of a service.  Registers are variable length and are between 1 byte and 236 bytes (max payload) in size. Sequential register codes do not overlap with one another. For example, it is possible to have register `0x090` of size `12` and non-overlapping register `0x091` of size `4`.
 

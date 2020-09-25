@@ -1,3 +1,7 @@
+---
+order: 4
+---
+
 # Service layer
 
 The way JACDAC devices share resources with other devices on the bus are through __services__. Services provide abstract, standardised interfaces that can be used to interact with physical hardware resources (e.g. an accelerometer) or pure virtual resources (e.g. distributed shared memory). This abstraction brings plug-and-play dynamicity to JACDAC so that devices with different hardware, but the same overall functionality, can replace one another without having to recompile user applications. For example, two different  models of accelerometer hardware can replace each other because they share the same software interface.

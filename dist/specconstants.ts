@@ -502,25 +502,6 @@ export enum MusicCmd {
     PlayTone = 0x80,
 }
 
-// Service: Device Namer
-export const SRV_DEVICE_NAMER = 0x119c3ad1
-export enum DeviceNamerCmd {
-    /** Argument: device_id uint64_t. Get the name corresponding to given device identifer. Returns empty string if unset. */
-    GetName = 0x80,
-    
-    /** Set name. Can set to empty to remove name binding. */
-    SetName = 0x81,
-    
-    /** No args. Remove all name bindings. */
-    ClearAllNames = 0x84,
-    
-    /** Argument: stored_names pipe (bytes). Return all names stored internally. */
-    ListStoredNames = 0x82,
-    
-    /** Argument: required_names pipe (bytes). List all names required by the current program. `device_id` is `0` if name is unbound. */
-    ListRequiredNames = 0x83,
-}
-
 // Service: Power
 export const SRV_POWER = 0x1fa4c95a
 export enum PowerReg {
@@ -595,6 +576,25 @@ export enum PwmLightReg {
     
     /** Read-write uint16_t. The animation will be repeated `max_iterations + 1` times. */
     MaxIterations = 0x81,
+}
+
+// Service: Role Manager
+export const SRV_ROLE_MANAGER = 0x119c3ad1
+export enum RoleManagerCmd {
+    /** Argument: device_id uint64_t. Get the role corresponding to given device identifer. Returns empty string if unset. */
+    GetRole = 0x80,
+    
+    /** Set role. Can set to empty to remove role binding. */
+    SetRole = 0x81,
+    
+    /** No args. Remove all role bindings. */
+    ClearAllRoles = 0x84,
+    
+    /** Argument: stored_roles pipe (bytes). Return all roles stored internally. */
+    ListStoredRoles = 0x82,
+    
+    /** Argument: required_roles pipe (bytes). List all roles required by the current program. `device_id` is `0` if role is unbound. */
+    ListRequiredRoles = 0x83,
 }
 
 // Service: Servo

@@ -1,78 +1,82 @@
-# Physical layer
+## The Physical Layer
 
-Communication is done over a single line, using UART peripheral running at 1MHz,
-8 bit per byte, no parity, 1 stop bit, LSB first (standard).
-The line is held high when idle with either internal or external pull up of
-around 20-50kΩ per device.
+For communication JACDAC SWS reuses the often forgotten RS232 (UART) peripheral, common to many microcontrollers. Devices operate the UART peripheral in half-duplex mode and are connected together to form a single bus. This bus requires a common data and ground line to be shared between devices.
 
-## Reception
+Like with standard UART, a logical one is represented as 3.3V and a logical 0 as 0V. Data bytes are 10 bits long and are composed of 1 start bit, 8 data bits, and one stop bit. JACDAC devices must only communicate at 1 Mbaud and when no data is being transmitted, the bus must read as a logical one (3.3V).
 
-Normally, devices are set up to trigger an interrupt on line going low, with UART disabled.
-When the line goes low, the device performs the following steps:
-* zero-out header of the packet to be received
-* wait for line going high again
-* setup a UART in receive mode
-* start reception
-* setup a timer for 100us (TODO)
-* when the timer fires, if the header is still all zero, signal timeout and abort reception
-* otherwise, given that the header declares size to be `N`, setup timer for `(N + 16) * 12 + 60` (and don't touch reception)
-* if UART break is detected, abort reception, abort the timer and process incoming packet (see below)
-* if timer fires, signal timeout and abort reception
-* setup line as input with pull up and reception interrupt
-* possibly, start transmission timer (see below)
+In JACDAC SWS, any device can initiate a transmission at any time. Because of this, devices must assert control over the bus before sending any data. This is where JACDAC differs from half-duplex UART–––devices must assert control over the bus by pulsing the line low before transmitting any data. This low pulse is known as the start pulse and must be between 11 and 15 microseconds in duration. This duration is recognised as a break condition on most UART hardware.
 
-## Processing incoming packets
+When the start pulse is over, devices have minimally 40 microseconds to configure IO registers to receive UART data. If no data byte is received within 100 microseconds, an error condition must be triggered and devices must wait for the bus to return to an idle state. This means that the first data byte must commence at 89 microseconds after the completion of the start pulse in order to be specification compliant.
 
-We arrive here when a UART break was detected.
+After the transmitter has sent the data portion of a frame, it must then pulse the line low one final time to signal the end of a transmission. The duration of this end pulse is between 11 and 15 microseconds so to trigger another UART break condition. The end pulse can come immediately after the last data byte, but it must occur within 80 microseconds of the last data byte. If it does not, an error condition is generated.
 
-* optionally, check if at least `N + 16` bytes was received;
-  this may be difficult depending on DMA hardware, so can be skipped
-* compute CRC of bytes `2` until `N + 16` of data;
-  if it doesn't match the CRC in the first two bytes, signal error and stop processing this packet
-* do control layer processing of packet (next section)
+A small amount of time must pass before another transmission can begin. Devices must wait minimally 100 microseconds plus a randomly generated backoff value so that multiple devices do not initiate transmission at precisely the same time. It is therefore extremely important that all devices have some randomness in their transmission sequence to reduce the likelihood of data loss.
 
-## Transmission
+A complete JACDAC transmission and the beginning of another are captured in the image below.
 
-Devices should maintain a queue of packets to send.
-When either transmission or reception finishes, and the queue is non-empty
-the device should set up a timer for a random period roughly between 100us and 200us.
-If this timer fires before any reception starts, the device can start
-transmitting as described here.
+![An image depicting a JACDAC transmission. A JACDAC transmission begins with a start pulse of 11-14 us, a inter lo data spacing of minimally 40 us before data commences. A JACDAC transmission ends with an end pulse of 11-14 us.](./images/jacdac-activity.png)
 
-* disable reception interrupt
-* if we are already in reception abort transmission
-* as quickly as possible, probe the line and if it's high, pull it low
-* if the line was low, abort transmission and start reception as if the reception interrupt triggered
-* wait ~10us
-* pull the line high
-* wait ~40us
-* configure UART for transmission and start it
-* when transmission ends:
-* disable UART
-* pull the line high
-* pull it low
-* wait ~10us
-* pull the line high
-* setup line as input with pull up and reception interrupt
-* possibly, start transmission timer (see above)
+### Hardware requirements
 
-Wait times need to be determined experimentally, so that the following are observed:
-* initial low pulse is 11-15us
-* the gap between end of low pulse and start of UART transmission is 40-50us (TODO)
-* spacing between characters in UART transmission should be never more than 9us,
-  and on average less than 2us
-* the gap after UART transmission and before final break is less than 10us
-* the final break is 11-15us
+There is no silicon implementation of JACDAC SWS and a microcontroller is currently required to implement the behaviour above. The diversity of microcontrollers and the flexibility of UART hardware means that there are many pathways to reaching a specification compliant JACDAC SWS implementation.
 
-The probe-and-pull operation can typically be performed in a few cycles
-and is critical to do as quick as possible.
-The time difference between probe and set is the collision window of the protocol.
-This can be typically brought down to around 50-100ns depending on MCU speed and GPIO hardware.
-Typically, you'll want to add a function that is forced to be non-inline
-and takes all arguments it needs pre-computed (GPIO port address, pin mask etc.).
-It's good idea to look at disassembly of that function.
+To recap, JACDAC SWS requires the following basic functionality:
 
-Such collision window cause about 0.3% packet loss when two devices try to
-write on the bus as quickly as possible.
-The packet loss grows quadratically with number of devices, but typically
-devices do not flood the bus, which results in much lower packet losses.
+* Transmitting / receiving UART-style (10 bits: 1 byte, 1 stop bit, 1 start bit) bytes at 1Mbaud in half-duplex mode (implemented in hardware or in software via bit-banging).
+* A GPIO with an internal or external 300k pull up and support for interrupts (implemented in hardware or in software by spin waiting).
+* The ability to keep time (whether through instruction counting or a hardware timer).
+* The ability to generate random numbers (or at least seed a software random number generator).
+
+<!--
+We enumerate a few of the options we have explored below.
+
+#### 32-bit ARM processors
+
+Many ARM processors come with DMA-able (Direct Memory Access) UART peripherals. This means that no CPU intervention is required to send or receive UART data. Many of these processors also support half-duplex mode and internally tie RX to TX together when this mode is selected. For microcontrollers that do not support internal ties, these pins can usually be connected to each other externally for the same effect. Internal pull ups and timers often also come built into this class of microcontroller.
+
+JACDAC has been implemented on the following 32-bit ARM processors:
+
+* Atmel SAMD21, SAMD51
+* Nordic NRF52832, NRF52833, NRF52840
+* STM 32F0, 32F1, 32F4
+
+#### 8-bit processors
+
+8-bit processors are typically not as capable as 32-bit ARM processors, but they are often cheaper. Throughout the design of JACDAC we have considered this class of processor and have implemented JACDAC on 8-bit processors with and without UART support. Through a software UART implementation via the PADAUK PMS150C, JACDAC can be added to any sensor at the cost of 2.5 US cents.-->
+
+## Transmission sequence
+
+1. Place GPIO in high impedence input mode.
+2. Check to see if the line is low.
+   - If the line is already low, start the reception sequence instead.
+3. Place GPIO pin in output mode
+4. Pulse the line low for 11––15 microseconds.
+5. Configure the UART peripheral with the correct baud rate and begin transmitting data after (minimally) 40 microseconds.
+
+
+## Reception sequence
+
+1. Place GPIO in high impedence input mode with a PullUp.
+2. Enable GPIO edge interrupts, UART break interrupts, or spin wait until the line goes low.
+3. When the start pulse has finished, configure UART registers appropriately. It is better to wait until the start pulse is complete as in some cases UART hardware may incorrectly detect a data byte or trigger an error condition.
+4. Receive data until the end pulse is detected.
+
+## Error detection
+
+The image and table below captures key timings of JACDAC SWS.
+
+![An image depicting a JACDAC transmission with portions of the signal labelled, A-F.](./images/jacdac-proto-timings.png)
+
+| Identifier 	| Name 	| Duration min/max (us) 	|
+|------------	|-------------	|----------	|
+| A          	|Start pulse	|11/15	|
+| B          	|Start-data gap	|40/89	|
+| C          	|Data-byte gap	|0/80	|
+| D          	|Data-end gap	|0/80	|
+| E          	|End pulse	|11/15	|
+| F          	|Frame-to-frame gap	|100/	|
+
+The state machine below encapsulates how these timings should be used during frame reception:
+
+![An image depicting the state machine to be used when receiving a JACDAC packet. Whenever any timing is exceeded, the device should wait for the frame-to-frame gap to elapse before listening for another packet.](./images/jacdac-state-diagram.png)
+

@@ -1,4 +1,4 @@
-## The Physical Layer
+# The Physical Layer
 
 For communication JACDAC SWS reuses the often forgotten RS232 (UART) peripheral, common to many microcontrollers. Devices operate the UART peripheral in half-duplex mode and are connected together to form a single bus. This bus requires a common data and ground line to be shared between devices.
 
@@ -16,7 +16,7 @@ A complete JACDAC transmission and the beginning of another are captured in the 
 
 ![An image depicting a JACDAC transmission. A JACDAC transmission begins with a start pulse of 11-14 us, a inter lo data spacing of minimally 40 us before data commences. A JACDAC transmission ends with an end pulse of 11-14 us.](./images/jacdac-activity.png)
 
-### Hardware requirements
+## Hardware requirements
 
 There is no silicon implementation of JACDAC SWS and a microcontroller is currently required to implement the behaviour above. The diversity of microcontrollers and the flexibility of UART hardware means that there are many pathways to reaching a specification compliant JACDAC SWS implementation.
 

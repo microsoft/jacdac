@@ -1,4 +1,4 @@
-## Frames
+# Frames
 
 ![An image depicting a JACDAC transmission. A JACDAC transmission begins with a start pulse of 11-14 us, a inter lo data spacing of minimally 40 us before data commences. A JACDAC transmission ends with an end pulse of 11-14 us.](./images/jacdac-activity.png)
 
@@ -27,7 +27,7 @@ On the wire, the frame must be transmitted in little endian format (i.e. low byt
 | 4 | 8          	|`device_identifier`	| 64-bit device identifier.	|
 | 12 | 1 * frame_size   	|`data`	| The data payload of the frame.	|
 
-### Frame flags
+## Frame flags
 
 The `frame_flags` field is used to indicate
 
@@ -38,7 +38,7 @@ The `frame_flags` field is used to indicate
 | 2 | DEVICE_ID_ALT_MEANING	|  	|
 | 3-7 | RESERVED	| Reserved for future use.	|
 
-### Device identifiers
+## Device identifiers
 
 Each device is assigned a 64-bit device identifier that uniquely identifies it on the bus. This identifier is used in frames to determine the sending or receiving device, and for devices to remember one another on the bus. Device identifiers are generated, not allocated, and once generated a device's identifier must remain constant.
 
@@ -49,7 +49,7 @@ Device identifiers are not guaranteed to be universally unique, but there is lit
 2. Use the random number generator embedded in this page to seed a hardware random number generator. The hardware random number generator could use sensor values to create further entropy.
 
 
-## Packets
+# Packets
 
 The data portion of a JACDAC frame is also structured and is internally divided into 1 or more packets. __Zero length frames are not supported__.
 

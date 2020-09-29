@@ -1,5 +1,6 @@
 [
   {
+    "id": "microsoft-jm-acc",
     "name": "JM Acc v2",
     "description": "A 3-axis accelerometer. 16G range.",
     "repo": "https://github.com/microsoft/jacdac-stm32x0",
@@ -10,9 +11,23 @@
       521405449
     ],
     "link": "https://github.com/microsoft/jacdac-stm32x0",
-    "image": "microsoft-jm/jm-acc.jpg"
+    "image": "microsoft-jm/acc.jpg"
   },
   {
+    "id": "microsoft-jm-arcade-btn",
+    "name": "JM ArcadeBtn v2.0",
+    "description": "Lets you connect a single arcade button with an LED.",
+    "repo": "https://github.com/microsoft/jacdac-stm32x0",
+    "firmwares": [
+      886919574
+    ],
+    "services": [
+      343122531
+    ],
+    "link": "https://github.com/microsoft/jacdac-stm32x0"
+  },
+  {
+    "id": "microsoft-jm-arcade-ctrls",
     "name": "JM Arcade Controls v2",
     "description": "Lets you connect arcade buttons and joystick to a JacDac network.",
     "repo": "https://github.com/microsoft/jacdac-stm32x0",
@@ -23,23 +38,25 @@
       501915758
     ],
     "link": "https://github.com/microsoft/jacdac-stm32x0",
-    "image": "microsoft-jm/jm-arcade-ctrls.jpg"
+    "image": "microsoft-jm/arcade-ctrls.jpg"
   },
   {
+    "id": "microsoft-jm-crank-btn",
     "name": "JM Crank+Btn v2",
     "description": "A rotary encoder with a push button.",
     "repo": "https://github.com/microsoft/jacdac-stm32x0",
     "firmwares": [
-      284830153
+      813927310
     ],
     "services": [
       284830153,
       343122531
     ],
     "link": "https://github.com/microsoft/jacdac-stm32x0",
-    "image": "microsoft-jm/jm-crank-btn.jpg"
+    "image": "microsoft-jm/crank-btn.jpg"
   },
   {
+    "id": "microsoft-jm-crank",
     "name": "JM Crank v2",
     "description": "A rotary encoder without a push button.",
     "repo": "https://github.com/microsoft/jacdac-stm32x0",
@@ -50,9 +67,10 @@
       284830153
     ],
     "link": "https://github.com/microsoft/jacdac-stm32x0",
-    "image": "microsoft-jm/jm-crank.jpg"
+    "image": "microsoft-jm/crank.jpg"
   },
   {
+    "id": "microsoft-jm-gamepad",
     "name": "JM GamePad v2",
     "description": "Lets you convert a plastic d-pad controller, so that it can be connected to a JacDac network.",
     "repo": "https://github.com/microsoft/jacdac-stm32x0",
@@ -63,9 +81,10 @@
       501915758
     ],
     "link": "https://github.com/microsoft/jacdac-stm32x0",
-    "image": "microsoft-jm/jm-gamepad.jpg"
+    "image": "microsoft-jm/gamepad.jpg"
   },
   {
+    "id": "microsoft-jm-ml",
     "name": "JM Machine Learning",
     "description": "Lets you run machine learning models on data coming from JacDac network.",
     "repo": "https://github.com/microsoft/pxt-tensorflow",
@@ -75,9 +94,113 @@
       496034245
     ],
     "link": "https://github.com/microsoft/jacdac-stm32x0",
-    "image": "microsoft-jm/jm-ml.jpg"
+    "image": "microsoft-jm/ml.jpg"
   },
   {
+    "id": "microsoft-jm-motor",
+    "name": "JM Motor v2.1",
+    "description": "Lets you control a single DC motor (up to 5V; yellow plastic ones work well).",
+    "repo": "https://github.com/microsoft/jacdac-stm32x0",
+    "firmwares": [
+      809626198
+    ],
+    "services": [
+      385895640
+    ],
+    "link": "https://github.com/microsoft/jacdac-stm32x0"
+  },
+  {
+    "id": "microsoft-jm-npx-pwr",
+    "name": "JM PWM (npx) v2.1",
+    "description": "A light-strip controller with MicroUSB connector for power. Supports WS2812B, APA102, and SK9822.",
+    "repo": "https://github.com/microsoft/jacdac-stm32x0",
+    "firmwares": [
+      1013705700
+    ],
+    "services": [
+      309264608
+    ],
+    "link": "https://github.com/microsoft/jacdac-stm32x0"
+  },
+  {
+    "id": "microsoft-jm-npx",
+    "name": "JM PWM (npx) v2.0",
+    "description": "A light-strip controller. Supports WS2812B, APA102, and SK9822.",
+    "repo": "https://github.com/microsoft/jacdac-stm32x0",
+    "firmwares": [
+      895762065
+    ],
+    "services": [
+      309264608
+    ],
+    "link": "https://github.com/microsoft/jacdac-stm32x0",
+    "image": "microsoft-jm/npx.jpg"
+  },
+  {
+    "id": "microsoft-jm-proto-touch",
+    "name": "JM Touch-Proto v2.0",
+    "description": "A multi-touch sensor based on proto board.",
+    "repo": "https://github.com/microsoft/jacdac-stm32x0",
+    "firmwares": [
+      1067172458
+    ],
+    "services": [
+      416636459
+    ],
+    "link": "https://github.com/microsoft/jacdac-stm32x0"
+  },
+  {
+    "id": "microsoft-jm-proto",
+    "name": "JM Proto v2.0",
+    "description": "A prototype multi-function board.\n* ``0x3f9bc26a`` JM Touch-Proto v2.0",
+    "repo": "https://github.com/microsoft/jacdac-stm32x0",
+    "firmwares": [
+      1052138004
+    ],
+    "services": [],
+    "link": "https://github.com/microsoft/jacdac-stm32x0"
+  },
+  {
+    "id": "microsoft-jm-pwr",
+    "name": "JM Power",
+    "description": "Lets you supply power to JacDac network from a MicroUSB connection (eg. a USB battery pack).",
+    "repo": "https://github.com/microsoft/jacdac-stm32x0",
+    "firmwares": [
+      815885628
+    ],
+    "services": [
+      530893146
+    ],
+    "link": "https://github.com/microsoft/jacdac-stm32x0"
+  },
+  {
+    "id": "microsoft-jm-servo-pwr",
+    "name": "JM PWM (Servo) v2.1",
+    "description": "A controller for a 5V servo, with MicroUSB connector for power.",
+    "repo": "https://github.com/microsoft/jacdac-stm32x0",
+    "firmwares": [
+      986140247
+    ],
+    "services": [
+      318542083
+    ],
+    "link": "https://github.com/microsoft/jacdac-stm32x0"
+  },
+  {
+    "id": "microsoft-jm-servo",
+    "name": "JM PWM (Servo) v2.0",
+    "description": "A controller for a 5V servo.",
+    "repo": "https://github.com/microsoft/jacdac-stm32x0",
+    "firmwares": [
+      816890446
+    ],
+    "services": [
+      318542083
+    ],
+    "link": "https://github.com/microsoft/jacdac-stm32x0"
+  },
+  {
+    "id": "microsoft-jm-slider",
     "name": "JM Slider v2",
     "description": "A linear potentiometer (slider).",
     "repo": "https://github.com/microsoft/jacdac-stm32x0",
@@ -88,6 +211,19 @@
       522667846
     ],
     "link": "https://github.com/microsoft/jacdac-stm32x0",
-    "image": "microsoft-jm/jm-slider.jpg"
+    "image": "microsoft-jm/slider.jpg"
+  },
+  {
+    "id": "microsoft-jm-snd",
+    "name": "JM SND v2.0",
+    "description": "A simple buzzer.",
+    "repo": "https://github.com/microsoft/jacdac-stm32x0",
+    "firmwares": [
+      854957595
+    ],
+    "services": [
+      458731991
+    ],
+    "link": "https://github.com/microsoft/jacdac-stm32x0"
   }
 ]

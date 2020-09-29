@@ -4,6 +4,7 @@ export function parseDeviceMarkdownToJSON(filecontent: string, defl: jdspec.Devi
     filecontent = filecontent.replace(/\r/g, "")
 
     const info: jdspec.DeviceSpec = defl ? clone(defl) : {
+        id: "",
         name: "",
         description: "",
         repo: "",

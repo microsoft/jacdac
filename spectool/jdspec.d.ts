@@ -299,6 +299,11 @@ declare namespace jdspec {
 
     interface DeviceSpec {
         /**
+         * URL-friendly id.
+         */
+        id: string;
+
+        /**
          * Friendly name of the device
          */
         name: string;

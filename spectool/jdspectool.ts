@@ -1,5 +1,5 @@
-import { parseDeviceMarkdownToJSON } from "./devices";
 /// <reference path="jdspec.d.ts" />
+import { parseDeviceMarkdownToJSON } from "./devices";
 import { converters, parseSpecificationMarkdownToJSON } from "./jdspec"
 
 declare var process: any;
@@ -83,13 +83,16 @@ function processDevices(upperName: string) {
                     const image = fn.replace(/\.md$/, ".jpg")
                     if (fs.existsSync(image))
                         res.image = folderBaseName + "/" + dev.replace(/\.md$/, ".jpg")
+                    res.id = folderBaseName + "-" + dev.replace(/\.md$/, "")
                     allDevices.push(res)
                 }
             }
         }
     }
 
-    console.log(usedIds)
+    for (const dev of allDevices) {
+        console.log(`0x${(dev.firmwares[0] || 0).toString(16)} ${dev.name}`)
+    }
 
     fs.writeFileSync(path.join("../dist", "devices.json"), JSON.stringify(allDevices, null, 2))
 }

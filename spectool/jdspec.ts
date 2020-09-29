@@ -1,6 +1,7 @@
 /// <reference path="jdspec.d.ts" />
 
 export function parseSpecificationMarkdownToJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>, filename = ""): jdspec.ServiceSpec {
+    filecontent = filecontent.replace(/\r/g, "")
     let info: jdspec.ServiceSpec = {
         name: "",
         shortId: filename.replace(/\.md$/, "").replace(/.*\//, ""),
@@ -33,7 +34,7 @@ export function parseSpecificationMarkdownToJSON(filecontent: string, includes?:
     }
 
     try {
-        for (let line of filecontent.split(/\r?\n/)) {
+        for (let line of filecontent.split(/\n/)) {
             lineNo++
             processLine(line)
         }

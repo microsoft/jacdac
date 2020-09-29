@@ -296,4 +296,15 @@ declare namespace jdspec {
          */
         message: string;
     }
+
+    interface DeviceSpec {
+        /**
+         * Friendly name of the device
+         */
+        name: string;
+        /**
+         * Github repository containing the firmware releases
+         */
+        repo: string;
+    }
 }

@@ -57,7 +57,7 @@ function nodeMain() {
         }
     }
 
-    fs.writeFileSync(path.join(outp, "spec.json"), JSON.stringify(values(includes))
+    fs.writeFileSync(path.join(outp, "services.json"), JSON.stringify(values(includes))
     fs.writeFileSync(path.join(outp, "specconstants.ts"), concats["ts"])
 
     function mkdir(n: string) {

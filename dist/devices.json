@@ -62,5 +62,5 @@
     "3ac74e57": {
         "name": "JM PWM+SERVO",
         "repo": "microsoft/jacdac-stm32x0"
-    },
+    }
 }

@@ -1,66 +1,93 @@
-{
-    "38e3c25c": {
-        "name": "JM ArcadeCtrls",
-        "repo": "microsoft/jacdac-stm32x0"
-    },
-    "34dd5196": {
-        "name": "JM ArcadeBtn",
-        "repo": "microsoft/jacdac-stm32x0"
-    },
-    "30838b8e": {
-        "name": "JM Crank+Btn",
-        "repo": "microsoft/jacdac-stm32x0"
-    },
-    "33a8780b": {
-        "name": "JM Crank",
-        "repo": "microsoft/jacdac-stm32x0"
-    },
-    "36d257aa": {
-        "name": "JM D-Pad",
-        "repo": "microsoft/jacdac-stm32x0"
-    },
-    "35643e91": {
-        "name": "JM PWM (npx)",
-        "repo": "microsoft/jacdac-stm32x0"
-    },
-    "30a16d3c": {
-        "name": "JM Power",
-        "repo": "microsoft/jacdac-stm32x0"
-    },
-    "30b0c24e": {
-        "name": "JM PWM (Servo)",
-        "repo": "microsoft/jacdac-stm32x0"
-    },
-    "3e344e1d": {
-        "name": "JM Slider",
-        "repo": "microsoft/jacdac-stm32x0"
-    },
-    "32f59e1b": {
-        "name": "JM SND",
-        "repo": "microsoft/jacdac-stm32x0"
-    },
-    "3ccea1a9": {
-        "name": "JM Acc",
-        "repo": "microsoft/jacdac-stm32x0"
-    },
-    "3f9bc26a": {
-        "name": "JM Touch-Proto",
-        "repo": "microsoft/jacdac-stm32x0"
-    },
-    "3eb65a14": {
-        "name": "JM Proto",
-        "repo": "microsoft/jacdac-stm32x0"
-    },
-    "3041ea56": {
-        "name": "JM Motor",
-        "repo": "microsoft/jacdac-stm32x0"
-    },
-    "3c6bebe4": {
-        "name": "JM PWM+PWR (npx)",
-        "repo": "microsoft/jacdac-stm32x0"
-    },
-    "3ac74e57": {
-        "name": "JM PWM+SERVO",
-        "repo": "microsoft/jacdac-stm32x0"
-    }
-}
+[
+  {
+    "name": "JM Acc v2",
+    "description": "A 3-axis accelerometer. 16G range.",
+    "repo": "https://github.com/microsoft/jacdac-stm32x0",
+    "firmwares": [
+      1020174761
+    ],
+    "services": [
+      521405449
+    ],
+    "link": "https://github.com/microsoft/jacdac-stm32x0",
+    "image": "microsoft-jm/jm-acc.jpg"
+  },
+  {
+    "name": "JM Arcade Controls v2",
+    "description": "Lets you connect arcade buttons and joystick to a JacDac network.",
+    "repo": "https://github.com/microsoft/jacdac-stm32x0",
+    "firmwares": [
+      954450524
+    ],
+    "services": [
+      501915758
+    ],
+    "link": "https://github.com/microsoft/jacdac-stm32x0",
+    "image": "microsoft-jm/jm-arcade-ctrls.jpg"
+  },
+  {
+    "name": "JM Crank+Btn v2",
+    "description": "A rotary encoder with a push button.",
+    "repo": "https://github.com/microsoft/jacdac-stm32x0",
+    "firmwares": [
+      284830153
+    ],
+    "services": [
+      284830153,
+      343122531
+    ],
+    "link": "https://github.com/microsoft/jacdac-stm32x0",
+    "image": "microsoft-jm/jm-crank-btn.jpg"
+  },
+  {
+    "name": "JM Crank v2",
+    "description": "A rotary encoder without a push button.",
+    "repo": "https://github.com/microsoft/jacdac-stm32x0",
+    "firmwares": [
+      866678795
+    ],
+    "services": [
+      284830153
+    ],
+    "link": "https://github.com/microsoft/jacdac-stm32x0",
+    "image": "microsoft-jm/jm-crank.jpg"
+  },
+  {
+    "name": "JM GamePad v2",
+    "description": "Lets you convert a plastic d-pad controller, so that it can be connected to a JacDac network.",
+    "repo": "https://github.com/microsoft/jacdac-stm32x0",
+    "firmwares": [
+      919754666
+    ],
+    "services": [
+      501915758
+    ],
+    "link": "https://github.com/microsoft/jacdac-stm32x0",
+    "image": "microsoft-jm/jm-gamepad.jpg"
+  },
+  {
+    "name": "JM Machine Learning",
+    "description": "Lets you run machine learning models on data coming from JacDac network.",
+    "repo": "https://github.com/microsoft/pxt-tensorflow",
+    "firmwares": [],
+    "services": [
+      336566904,
+      496034245
+    ],
+    "link": "https://github.com/microsoft/jacdac-stm32x0",
+    "image": "microsoft-jm/jm-ml.jpg"
+  },
+  {
+    "name": "JM Slider v2",
+    "description": "A linear potentiometer (slider).",
+    "repo": "https://github.com/microsoft/jacdac-stm32x0",
+    "firmwares": [
+      1043615261
+    ],
+    "services": [
+      522667846
+    ],
+    "link": "https://github.com/microsoft/jacdac-stm32x0",
+    "image": "microsoft-jm/jm-slider.jpg"
+  }
+]

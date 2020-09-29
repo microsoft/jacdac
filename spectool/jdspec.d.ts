@@ -302,9 +302,40 @@ declare namespace jdspec {
          * Friendly name of the device
          */
         name: string;
+
+        /**
+         * A few sentences about the device
+         */
+        description: string;
+
+        /**
+         * Relative path to picture of the device.
+         */
+        image?: string;
+
+        /**
+         * A URL where the user can learn more about the device (and possibly buy it).
+         */
+        link?: string;
+
+        /**
+         * Firmware identifiers (device classes) associated with different versions of this device.
+         */
+        firmwares: number[];
+
+        /**
+         * Service class identifiers for services supported by this device.
+         */
+        services: number[];
+
         /**
          * Github repository containing the firmware releases
          */
         repo: string;
+
+        /**
+         * Hooks for parser.
+         */
+        errors?: Diagnostic[];
     }
 }

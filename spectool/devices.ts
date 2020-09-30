@@ -9,8 +9,9 @@ export function parseDeviceMarkdownToJSON(filecontent: string, defl: jdspec.Devi
         description: "",
         repo: "",
         firmwares: [],
-        services: []
+        services: [],
     }
+    info.source = filecontent
 
     info.description = "" // just in case it came from _default
 

@@ -26,7 +26,8 @@
       343122531
     ],
     "source": "# JM ArcadeBtn v2.0\n\nLets you connect a single arcade button with an LED.\n\n* services: 0x1473a263\n* firmware: 0x34dd5196\n",
-    "link": "https://github.com/microsoft/jacdac-stm32x0"
+    "link": "https://github.com/microsoft/jacdac-stm32x0",
+    "image": "microsoft-jm/arcade-btn.jpg"
   },
   {
     "id": "microsoft-jm-arcade-ctrls",
@@ -115,7 +116,8 @@
       385895640
     ],
     "source": "# JM Motor v2.1\n\nLets you control a single DC motor (up to 5V; yellow plastic ones work well).\n\n* services: 0x17004cd8\n* firmware: 0x3041ea56\n",
-    "link": "https://github.com/microsoft/jacdac-stm32x0"
+    "link": "https://github.com/microsoft/jacdac-stm32x0",
+    "image": "microsoft-jm/motor.jpg"
   },
   {
     "id": "microsoft-jm-npx-pwr",
@@ -129,7 +131,8 @@
       309264608
     ],
     "source": "# JM PWM (npx) v2.1\n\nA light-strip controller with MicroUSB connector for power. Supports WS2812B, APA102, and SK9822.\n\n* services: 0x126f00e0\n* firmware: 0x3c6bebe4\n",
-    "link": "https://github.com/microsoft/jacdac-stm32x0"
+    "link": "https://github.com/microsoft/jacdac-stm32x0",
+    "image": "microsoft-jm/npx-pwr.jpg"
   },
   {
     "id": "microsoft-jm-npx",
@@ -158,7 +161,8 @@
       416636459
     ],
     "source": "# JM Touch-Proto v2.0\n\nA multi-touch sensor based on proto board.\n\n* services: 0x18d55e2b\n* firmware: 0x3f9bc26a\n",
-    "link": "https://github.com/microsoft/jacdac-stm32x0"
+    "link": "https://github.com/microsoft/jacdac-stm32x0",
+    "image": "microsoft-jm/proto-touch.jpg"
   },
   {
     "id": "microsoft-jm-proto",
@@ -170,7 +174,8 @@
     ],
     "services": [],
     "source": "# JM Proto v2.0\n\nA prototype multi-function board.\n\n* firmware: 0x3eb65a14\n\n\n* ``0x3f9bc26a`` JM Touch-Proto v2.0",
-    "link": "https://github.com/microsoft/jacdac-stm32x0"
+    "link": "https://github.com/microsoft/jacdac-stm32x0",
+    "image": "microsoft-jm/proto.jpg"
   },
   {
     "id": "microsoft-jm-pwr",
@@ -184,7 +189,8 @@
       530893146
     ],
     "source": "# JM Power\n\nLets you supply power to JacDac network from a MicroUSB connection (eg. a USB battery pack).\n\n* services: 0x1fa4c95a\n* firmware: 0x30a16d3c\n",
-    "link": "https://github.com/microsoft/jacdac-stm32x0"
+    "link": "https://github.com/microsoft/jacdac-stm32x0",
+    "image": "microsoft-jm/pwr.jpg"
   },
   {
     "id": "microsoft-jm-servo-pwr",
@@ -198,7 +204,8 @@
       318542083
     ],
     "source": "# JM PWM (Servo) v2.1\n\nA controller for a 5V servo, with MicroUSB connector for power.\n\n* services: 0x12fc9103\n* firmware: 0x3ac74e57\n",
-    "link": "https://github.com/microsoft/jacdac-stm32x0"
+    "link": "https://github.com/microsoft/jacdac-stm32x0",
+    "image": "microsoft-jm/servo-pwr.jpg"
   },
   {
     "id": "microsoft-jm-servo",
@@ -212,7 +219,8 @@
       318542083
     ],
     "source": "# JM PWM (Servo) v2.0\n\nA controller for a 5V servo.\n\n* services: 0x12fc9103\n* firmware: 0x30b0c24e\n",
-    "link": "https://github.com/microsoft/jacdac-stm32x0"
+    "link": "https://github.com/microsoft/jacdac-stm32x0",
+    "image": "microsoft-jm/servo.jpg"
   },
   {
     "id": "microsoft-jm-slider",
@@ -241,6 +249,7 @@
       458731991
     ],
     "source": "# JM SND v2.0\n\nA simple buzzer.\n\n* services: 0x1b57b1d7\n* firmware: 0x32f59e1b\n",
-    "link": "https://github.com/microsoft/jacdac-stm32x0"
+    "link": "https://github.com/microsoft/jacdac-stm32x0",
+    "image": "microsoft-jm/snd.jpg"
   }
 ]

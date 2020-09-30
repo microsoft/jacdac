@@ -342,5 +342,10 @@ declare namespace jdspec {
          * Hooks for parser.
          */
         errors?: Diagnostic[];
+
+        /**
+         * Original markdown source
+         */
+        source?: string;
     }
 }

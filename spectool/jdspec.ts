@@ -378,6 +378,7 @@ export function parseSpecificationMarkdownToJSON(filecontent: string, includes?:
 
         let tp = words.shift()
         const [storage, type, typeShift] = normalizeStorageType(tp)
+        const isFloat = typeShift === null
 
         let tok = words.shift()
         let unit: jdspec.Unit = ""
@@ -397,6 +398,7 @@ export function parseSpecificationMarkdownToJSON(filecontent: string, includes?:
             name,
             unit,
             shift,
+            isFloat,
             type,
             storage,
             isSimpleType: canonicalType(storage) == type || undefined,
@@ -639,6 +641,12 @@ export function parseSpecificationMarkdownToJSON(filecontent: string, includes?:
                 let sz = parseIntCheck(tp2.replace(/^./, "")) >> 3
                 if (tp2[0] == "i") sz = -sz
                 return [sz, tp2, 0]
+            case "f16":
+                return [2, tp2, null]
+            case "f32":
+                return [4, tp2, null]
+            case "f64":
+                return [8, tp2, null]
             case "pipe":
                 return [12, tp2, 0]
             case "pipe_port":

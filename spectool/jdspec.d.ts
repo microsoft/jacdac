@@ -231,6 +231,11 @@ declare namespace jdspec {
         isSimpleType?: boolean;
 
         /**
+         * If present and set, indicates that the number is IEEE little endian float (16, 32 or 64 bit long).
+         */
+        isFloat?: boolean;
+
+        /**
          * If present, specifies the raw value should be divided by (1 << shift) before usage.
          * Always set when unit is 'frac'.
          */

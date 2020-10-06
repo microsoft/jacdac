@@ -402,7 +402,7 @@ export enum ModelRunnerReg {
      */
     AutoInvokeEvery = 0x80,
     
-    /** Read-only bytes. Results of last model invocation as `float32` array. */
+    /** Read-only output f32 (uint32_t). Results of last model invocation as `float32` array. */
     Outputs = 0x101,
     
     /** Read-only dimension uint16_t. The shape of the input tensor. */

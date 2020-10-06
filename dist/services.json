@@ -61,6 +61,7 @@
           {
             "name": "event_id",
             "unit": "",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true
@@ -68,6 +69,7 @@
           {
             "name": "event_argument",
             "unit": "",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true
@@ -107,6 +109,7 @@
           {
             "name": "text",
             "unit": "",
+            "isFloat": false,
             "type": "string",
             "storage": 0
           }
@@ -122,6 +125,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true
@@ -137,6 +141,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "i32",
             "storage": -4,
             "isSimpleType": true
@@ -152,6 +157,7 @@
           {
             "name": "_",
             "unit": "mA",
+            "isFloat": false,
             "type": "u16",
             "storage": 2,
             "isSimpleType": true,
@@ -170,6 +176,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "u8",
             "storage": 1,
             "isSimpleType": true
@@ -185,6 +192,7 @@
           {
             "name": "_",
             "unit": "ms",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true,
@@ -201,6 +209,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "i32",
             "storage": -4,
             "isSimpleType": true
@@ -216,6 +225,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "i32",
             "storage": -4,
             "isSimpleType": true
@@ -231,6 +241,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "i32",
             "storage": -4,
             "isSimpleType": true
@@ -261,6 +272,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "u8",
             "storage": 1,
             "isSimpleType": true
@@ -277,6 +289,7 @@
           {
             "name": "_",
             "unit": "ms",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true,
@@ -314,6 +327,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "u8",
             "storage": 1,
             "isSimpleType": true
@@ -331,6 +345,7 @@
           {
             "name": "_",
             "unit": "ms",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true,
@@ -352,6 +367,7 @@
             "name": "x",
             "unit": "g",
             "shift": 10,
+            "isFloat": false,
             "type": "i6.10",
             "storage": -2
           },
@@ -359,6 +375,7 @@
             "name": "y",
             "unit": "g",
             "shift": 10,
+            "isFloat": false,
             "type": "i6.10",
             "storage": -2
           },
@@ -366,6 +383,7 @@
             "name": "z",
             "unit": "g",
             "shift": 10,
+            "isFloat": false,
             "type": "i6.10",
             "storage": -2
           }
@@ -493,6 +511,7 @@
           {
             "name": "sampling_interval",
             "unit": "ms",
+            "isFloat": false,
             "type": "u16",
             "storage": 2,
             "isSimpleType": true
@@ -500,6 +519,7 @@
           {
             "name": "samples_in_window",
             "unit": "",
+            "isFloat": false,
             "type": "u16",
             "storage": 2,
             "isSimpleType": true
@@ -507,6 +527,7 @@
           {
             "name": "reserved",
             "unit": "",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true
@@ -514,6 +535,7 @@
           {
             "name": "device_id",
             "unit": "",
+            "isFloat": false,
             "type": "u64",
             "storage": 8,
             "isSimpleType": true,
@@ -522,6 +544,7 @@
           {
             "name": "service_class",
             "unit": "",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true
@@ -529,6 +552,7 @@
           {
             "name": "service_num",
             "unit": "",
+            "isFloat": false,
             "type": "u8",
             "storage": 1,
             "isSimpleType": true
@@ -536,6 +560,7 @@
           {
             "name": "sample_size",
             "unit": "bytes",
+            "isFloat": false,
             "type": "u8",
             "storage": 1,
             "isSimpleType": true
@@ -543,12 +568,14 @@
           {
             "name": "sample_type",
             "unit": "",
+            "isFloat": false,
             "type": "SampleType",
             "storage": 1
           },
           {
             "name": "sample_shift",
             "unit": "",
+            "isFloat": false,
             "type": "i8",
             "storage": -1,
             "isSimpleType": true
@@ -564,6 +591,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true
@@ -579,6 +607,7 @@
           {
             "name": "_",
             "unit": "bytes",
+            "isFloat": false,
             "type": "u8",
             "storage": 1,
             "isSimpleType": true
@@ -594,6 +623,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true
@@ -609,6 +639,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "bytes",
             "storage": 0,
             "isSimpleType": true
@@ -661,6 +692,7 @@
           {
             "name": "service_class",
             "unit": "",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true
@@ -668,6 +700,7 @@
           {
             "name": "page_size",
             "unit": "bytes",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true
@@ -675,6 +708,7 @@
           {
             "name": "flashable_size",
             "unit": "bytes",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true
@@ -682,6 +716,7 @@
           {
             "name": "device_class",
             "unit": "",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true
@@ -698,6 +733,7 @@
           {
             "name": "session_id",
             "unit": "",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true
@@ -714,6 +750,7 @@
           {
             "name": "session_id",
             "unit": "",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true
@@ -730,6 +767,7 @@
           {
             "name": "page_address",
             "unit": "",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true
@@ -737,6 +775,7 @@
           {
             "name": "page_offset",
             "unit": "",
+            "isFloat": false,
             "type": "u16",
             "storage": 2,
             "isSimpleType": true
@@ -744,6 +783,7 @@
           {
             "name": "chunk_no",
             "unit": "",
+            "isFloat": false,
             "type": "u8",
             "storage": 1,
             "isSimpleType": true
@@ -751,6 +791,7 @@
           {
             "name": "chunk_max",
             "unit": "",
+            "isFloat": false,
             "type": "u8",
             "storage": 1,
             "isSimpleType": true
@@ -758,6 +799,7 @@
           {
             "name": "session_id",
             "unit": "",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true
@@ -765,6 +807,7 @@
           {
             "name": "reserved0",
             "unit": "",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true
@@ -772,6 +815,7 @@
           {
             "name": "reserved1",
             "unit": "",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true
@@ -779,6 +823,7 @@
           {
             "name": "reserved2",
             "unit": "",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true
@@ -786,6 +831,7 @@
           {
             "name": "reserved3",
             "unit": "",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true
@@ -793,6 +839,7 @@
           {
             "name": "page_data",
             "unit": "",
+            "isFloat": false,
             "type": "bytes",
             "storage": 0,
             "isSimpleType": true
@@ -809,6 +856,7 @@
           {
             "name": "session_id",
             "unit": "",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true
@@ -816,12 +864,14 @@
           {
             "name": "page_error",
             "unit": "",
+            "isFloat": false,
             "type": "Error",
             "storage": 4
           },
           {
             "name": "page_address",
             "unit": "",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true
@@ -855,6 +905,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "u8",
             "storage": 1,
             "isSimpleType": true
@@ -872,6 +923,7 @@
           {
             "name": "_",
             "unit": "ms",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true,
@@ -892,6 +944,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "bool",
             "storage": 1
           }
@@ -971,6 +1024,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "string",
             "storage": 0
           }
@@ -985,6 +1039,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true,
@@ -1002,6 +1057,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true,
@@ -1019,6 +1075,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "string",
             "storage": 0
           }
@@ -1033,6 +1090,7 @@
           {
             "name": "_",
             "unit": "C",
+            "isFloat": false,
             "type": "i16",
             "storage": -2,
             "isSimpleType": true,
@@ -1050,6 +1108,7 @@
           {
             "name": "_",
             "unit": "us",
+            "isFloat": false,
             "type": "u64",
             "storage": 8,
             "isSimpleType": true
@@ -1082,6 +1141,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "u8",
             "storage": 1,
             "isSimpleType": true
@@ -1099,6 +1159,7 @@
           {
             "name": "_",
             "unit": "ms",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true,
@@ -1119,6 +1180,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "i32",
             "storage": -4,
             "isSimpleType": true
@@ -1135,6 +1197,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "u16",
             "storage": 2,
             "isSimpleType": true
@@ -1185,6 +1248,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "u8",
             "storage": 1,
             "isSimpleType": true
@@ -1202,6 +1266,7 @@
           {
             "name": "_",
             "unit": "ms",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true,
@@ -1231,6 +1296,7 @@
           {
             "name": "flags",
             "unit": "",
+            "isFloat": false,
             "type": "u8",
             "storage": 1,
             "isSimpleType": true
@@ -1238,6 +1304,7 @@
           {
             "name": "num_players",
             "unit": "",
+            "isFloat": false,
             "type": "u8",
             "storage": 1,
             "isSimpleType": true,
@@ -1247,6 +1314,7 @@
           {
             "name": "button_present",
             "unit": "",
+            "isFloat": false,
             "type": "Button",
             "storage": 2,
             "startRepeats": true
@@ -1263,6 +1331,7 @@
           {
             "name": "button",
             "unit": "",
+            "isFloat": false,
             "type": "Button",
             "storage": 2,
             "startRepeats": true
@@ -1270,6 +1339,7 @@
           {
             "name": "player_index",
             "unit": "",
+            "isFloat": false,
             "type": "u8",
             "storage": 1,
             "isSimpleType": true
@@ -1278,6 +1348,7 @@
             "name": "pressure",
             "unit": "frac",
             "shift": 8,
+            "isFloat": false,
             "type": "u8",
             "storage": 1,
             "isSimpleType": true
@@ -1294,12 +1365,14 @@
           {
             "name": "button",
             "unit": "",
+            "isFloat": false,
             "type": "Button",
             "storage": 2
           },
           {
             "name": "player_index",
             "unit": "",
+            "isFloat": false,
             "type": "u16",
             "storage": 2,
             "isSimpleType": true
@@ -1315,12 +1388,14 @@
           {
             "name": "button",
             "unit": "",
+            "isFloat": false,
             "type": "Button",
             "storage": 2
           },
           {
             "name": "player_index",
             "unit": "",
+            "isFloat": false,
             "type": "u16",
             "storage": 2,
             "isSimpleType": true
@@ -1354,6 +1429,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "u8",
             "storage": 1,
             "isSimpleType": true
@@ -1371,6 +1447,7 @@
           {
             "name": "_",
             "unit": "ms",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true,
@@ -1392,6 +1469,7 @@
             "name": "_",
             "unit": "%RH",
             "shift": 10,
+            "isFloat": false,
             "type": "u22.10",
             "storage": 4,
             "typicalMax": 100,
@@ -1436,6 +1514,7 @@
             "name": "_",
             "unit": "frac",
             "shift": 8,
+            "isFloat": false,
             "type": "u8",
             "storage": 1,
             "isSimpleType": true,
@@ -1454,6 +1533,7 @@
             "name": "_",
             "unit": "frac",
             "shift": 8,
+            "isFloat": false,
             "type": "u8",
             "storage": 1,
             "isSimpleType": true
@@ -1469,6 +1549,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "LightType",
             "storage": 1
           }
@@ -1483,6 +1564,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "u16",
             "storage": 2,
             "isSimpleType": true,
@@ -1499,6 +1581,7 @@
           {
             "name": "_",
             "unit": "mA",
+            "isFloat": false,
             "type": "u16",
             "storage": 2,
             "isSimpleType": true,
@@ -1516,6 +1599,7 @@
           {
             "name": "program",
             "unit": "",
+            "isFloat": false,
             "type": "bytes",
             "storage": 0,
             "isSimpleType": true
@@ -1557,6 +1641,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "Priority",
             "storage": 1,
             "defaultValue": 1
@@ -1572,6 +1657,7 @@
           {
             "name": "message",
             "unit": "",
+            "isFloat": false,
             "type": "string",
             "storage": 0
           }
@@ -1586,6 +1672,7 @@
           {
             "name": "message",
             "unit": "",
+            "isFloat": false,
             "type": "string",
             "storage": 0
           }
@@ -1600,6 +1687,7 @@
           {
             "name": "message",
             "unit": "",
+            "isFloat": false,
             "type": "string",
             "storage": 0
           }
@@ -1614,6 +1702,7 @@
           {
             "name": "message",
             "unit": "",
+            "isFloat": false,
             "type": "string",
             "storage": 0
           }
@@ -1652,6 +1741,7 @@
           {
             "name": "model_size",
             "unit": "bytes",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true
@@ -1668,6 +1758,7 @@
           {
             "name": "model_port",
             "unit": "",
+            "isFloat": false,
             "type": "pipe_port",
             "storage": 2
           }
@@ -1684,6 +1775,7 @@
           {
             "name": "outputs",
             "unit": "",
+            "isFloat": false,
             "type": "pipe",
             "storage": 12
           }
@@ -1700,6 +1792,7 @@
           {
             "name": "inputs",
             "unit": "",
+            "isFloat": false,
             "type": "pipe_port",
             "storage": 2
           }
@@ -1716,6 +1809,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "u16",
             "storage": 2,
             "isSimpleType": true
@@ -1729,11 +1823,12 @@
         "description": "Results of last model invocation as `float32` array.",
         "fields": [
           {
-            "name": "_",
+            "name": "output",
             "unit": "",
-            "type": "bytes",
-            "storage": 0,
-            "isSimpleType": true
+            "isFloat": true,
+            "type": "f32",
+            "storage": 4,
+            "startRepeats": true
           }
         ],
         "identifierName": "reading"
@@ -1747,6 +1842,7 @@
           {
             "name": "dimension",
             "unit": "",
+            "isFloat": false,
             "type": "u16",
             "storage": 2,
             "isSimpleType": true,
@@ -1763,6 +1859,7 @@
           {
             "name": "dimension",
             "unit": "",
+            "isFloat": false,
             "type": "u16",
             "storage": 2,
             "isSimpleType": true,
@@ -1779,6 +1876,7 @@
           {
             "name": "_",
             "unit": "us",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true
@@ -1794,6 +1892,7 @@
           {
             "name": "_",
             "unit": "bytes",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true
@@ -1809,6 +1908,7 @@
           {
             "name": "_",
             "unit": "bytes",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true
@@ -1824,6 +1924,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "string",
             "storage": 0
           }
@@ -1838,6 +1939,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "ModelFormat",
             "storage": 4
           }
@@ -1852,6 +1954,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true
@@ -1867,6 +1970,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "bool",
             "storage": 1
           }
@@ -1874,7 +1978,7 @@
         "optional": true
       }
     ],
-    "source": "# Model Runner\n\n    identifier: 0x140f9a78\n\nRun machine learning models.\nOnly models with a single input tensor and a single output tensor are supported at the moment.\nInput is provided by Sensor Aggregator service on the same device.\nMultiple instances of this service may be present, if more than one model format is supported by a device.\n\n## Commands\n\n    command set_model @ 0x80 {\n        model_size: u32 bytes\n    }\n    report {\n        model_port: pipe_port\n    }\n\nOpen pipe for streaming in the model. The size of the model has to be declared upfront.\nThe model is streamed over regular pipe data packets.\nThe format supported by this instance of the service is specified in `format` register.\nWhen the pipe is closed, the model is written all into flash, and the device running the service may reset.\n\n    command predict @ 0x81 {\n        outputs: pipe\n    }\n    report {\n        inputs: pipe_port\n    }\n\nOpen channel that can be used to manually invoke the model. When enough data is sent over the `inputs` pipe, the model is invoked,\nand results are send over the `outputs` pipe.\n\n## Registers\n\n    rw auto_invoke_every: u16 @ 0x80\n\nWhen register contains `N > 0`, run the model automatically every time new `N` samples are collected.\nModel may be run less often if it takes longer to run than `N * sampling_interval`.\nThe `outputs` register will stream its value after each run.\nThis register is not stored in flash.\n\n    ro outputs: bytes @ reading\n\nResults of last model invocation as `float32` array.\n\n    ro input_shape @ 0x180 {\n    repeats:\n        dimension: u16\n    }\n\nThe shape of the input tensor.\n\n    ro output_shape @ 0x181 {\n    repeats:\n        dimension: u16\n    }\n\nThe shape of the output tensor.\n\n    ro last_run_time: u32 us @ 0x182\n\nThe time consumed in last model execution.\n\n    ro allocated_arena_size: u32 bytes @ 0x183\n\nNumber of RAM bytes allocated for model execution.\n\n    ro model_size: u32 bytes @ 0x184\n\nThe size of the model in bytes.\n\n    ro last_error: string @ 0x185\n\nTextual description of last error when running or loading model (if any).\n\n    enum ModelFormat: u32 {\n        TFLite = 0x334c4654,\n        ML4F = 0x30470f62,\n    }\n    const format: ModelFormat @ 0x186\n\nThe type of ML models supported by this service.\n`TFLite` is flatbuffer `.tflite` file.\n`ML4F` is compiled machine code model for Cortex-M4F.\nThe format is typically present as first or second little endian word of model file.\n\n    const format_version: u32 @ 0x187\n\nA version number for the format.\n\n    const parallel?: bool @ 0x188\n\nIf present and true this service can run models independently of other\ninstances of this service on the device.\n"
+    "source": "# Model Runner\n\n    identifier: 0x140f9a78\n\nRun machine learning models.\nOnly models with a single input tensor and a single output tensor are supported at the moment.\nInput is provided by Sensor Aggregator service on the same device.\nMultiple instances of this service may be present, if more than one model format is supported by a device.\n\n## Commands\n\n    command set_model @ 0x80 {\n        model_size: u32 bytes\n    }\n    report {\n        model_port: pipe_port\n    }\n\nOpen pipe for streaming in the model. The size of the model has to be declared upfront.\nThe model is streamed over regular pipe data packets.\nThe format supported by this instance of the service is specified in `format` register.\nWhen the pipe is closed, the model is written all into flash, and the device running the service may reset.\n\n    command predict @ 0x81 {\n        outputs: pipe\n    }\n    report {\n        inputs: pipe_port\n    }\n\nOpen channel that can be used to manually invoke the model. When enough data is sent over the `inputs` pipe, the model is invoked,\nand results are send over the `outputs` pipe.\n\n## Registers\n\n    rw auto_invoke_every: u16 @ 0x80\n\nWhen register contains `N > 0`, run the model automatically every time new `N` samples are collected.\nModel may be run less often if it takes longer to run than `N * sampling_interval`.\nThe `outputs` register will stream its value after each run.\nThis register is not stored in flash.\n\n    ro outputs @ reading {\n    repeats:\n        output: f32\n    }\n\nResults of last model invocation as `float32` array.\n\n    ro input_shape @ 0x180 {\n    repeats:\n        dimension: u16\n    }\n\nThe shape of the input tensor.\n\n    ro output_shape @ 0x181 {\n    repeats:\n        dimension: u16\n    }\n\nThe shape of the output tensor.\n\n    ro last_run_time: u32 us @ 0x182\n\nThe time consumed in last model execution.\n\n    ro allocated_arena_size: u32 bytes @ 0x183\n\nNumber of RAM bytes allocated for model execution.\n\n    ro model_size: u32 bytes @ 0x184\n\nThe size of the model in bytes.\n\n    ro last_error: string @ 0x185\n\nTextual description of last error when running or loading model (if any).\n\n    enum ModelFormat: u32 {\n        TFLite = 0x334c4654,\n        ML4F = 0x30470f62,\n    }\n    const format: ModelFormat @ 0x186\n\nThe type of ML models supported by this service.\n`TFLite` is flatbuffer `.tflite` file.\n`ML4F` is compiled machine code model for Cortex-M4F.\nThe format is typically present as first or second little endian word of model file.\n\n    const format_version: u32 @ 0x187\n\nA version number for the format.\n\n    const parallel?: bool @ 0x188\n\nIf present and true this service can run models independently of other\ninstances of this service on the device.\n"
   },
   {
     "name": "Motor",
@@ -1898,6 +2002,7 @@
             "name": "_",
             "unit": "frac",
             "shift": 15,
+            "isFloat": false,
             "type": "i16",
             "storage": -2,
             "isSimpleType": true
@@ -1914,6 +2019,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "bool",
             "storage": 1
           }
@@ -1947,6 +2053,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "u8",
             "storage": 1,
             "isSimpleType": true
@@ -1964,6 +2071,7 @@
           {
             "name": "_",
             "unit": "ms",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true,
@@ -1984,6 +2092,7 @@
           {
             "name": "capacitance",
             "unit": "",
+            "isFloat": false,
             "type": "i32",
             "storage": -4,
             "isSimpleType": true,
@@ -2001,6 +2110,7 @@
           {
             "name": "channel",
             "unit": "",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true
@@ -2016,6 +2126,7 @@
           {
             "name": "channel",
             "unit": "",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true
@@ -2031,6 +2142,7 @@
           {
             "name": "channel",
             "unit": "",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true
@@ -2046,6 +2158,7 @@
           {
             "name": "channel",
             "unit": "",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true
@@ -2091,6 +2204,7 @@
             "name": "_",
             "unit": "frac",
             "shift": 8,
+            "isFloat": false,
             "type": "u8",
             "storage": 1,
             "isSimpleType": true,
@@ -2108,6 +2222,7 @@
           {
             "name": "period",
             "unit": "us",
+            "isFloat": false,
             "type": "u16",
             "storage": 2,
             "isSimpleType": true
@@ -2115,6 +2230,7 @@
           {
             "name": "duty",
             "unit": "us",
+            "isFloat": false,
             "type": "u16",
             "storage": 2,
             "isSimpleType": true
@@ -2122,6 +2238,7 @@
           {
             "name": "duration",
             "unit": "ms",
+            "isFloat": false,
             "type": "u16",
             "storage": 2,
             "isSimpleType": true
@@ -2152,6 +2269,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "bool",
             "storage": 1,
             "defaultValue": 1
@@ -2168,6 +2286,7 @@
           {
             "name": "_",
             "unit": "mA",
+            "isFloat": false,
             "type": "u16",
             "storage": 2,
             "isSimpleType": true,
@@ -2187,6 +2306,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "bool",
             "storage": 1
           }
@@ -2201,6 +2321,7 @@
           {
             "name": "_",
             "unit": "mA",
+            "isFloat": false,
             "type": "u16",
             "storage": 2,
             "isSimpleType": true
@@ -2217,6 +2338,7 @@
           {
             "name": "_",
             "unit": "mV",
+            "isFloat": false,
             "type": "u16",
             "storage": 2,
             "isSimpleType": true,
@@ -2235,6 +2357,7 @@
             "name": "_",
             "unit": "frac",
             "shift": 16,
+            "isFloat": false,
             "type": "u16",
             "storage": 2,
             "isSimpleType": true
@@ -2251,6 +2374,7 @@
           {
             "name": "_",
             "unit": "mWh",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true
@@ -2267,6 +2391,7 @@
           {
             "name": "_",
             "unit": "ms",
+            "isFloat": false,
             "type": "u16",
             "storage": 2,
             "isSimpleType": true,
@@ -2283,6 +2408,7 @@
           {
             "name": "_",
             "unit": "ms",
+            "isFloat": false,
             "type": "u16",
             "storage": 2,
             "isSimpleType": true,
@@ -2316,6 +2442,7 @@
             "name": "_",
             "unit": "frac",
             "shift": 16,
+            "isFloat": false,
             "type": "u16",
             "storage": 2,
             "isSimpleType": true
@@ -2332,6 +2459,7 @@
           {
             "name": "_",
             "unit": "mA",
+            "isFloat": false,
             "type": "u16",
             "storage": 2,
             "isSimpleType": true,
@@ -2349,6 +2477,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "u8",
             "storage": 1,
             "isSimpleType": true
@@ -2365,6 +2494,7 @@
             "name": "start_intensity",
             "unit": "frac",
             "shift": 16,
+            "isFloat": false,
             "type": "u16",
             "storage": 2,
             "isSimpleType": true,
@@ -2373,6 +2503,7 @@
           {
             "name": "duration",
             "unit": "ms",
+            "isFloat": false,
             "type": "u16",
             "storage": 2,
             "isSimpleType": true
@@ -2388,6 +2519,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "u16",
             "storage": 2,
             "isSimpleType": true
@@ -2403,6 +2535,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "u16",
             "storage": 2,
             "isSimpleType": true,
@@ -2434,6 +2567,7 @@
           {
             "name": "device_id",
             "unit": "",
+            "isFloat": false,
             "type": "u64",
             "storage": 8,
             "isSimpleType": true
@@ -2450,6 +2584,7 @@
           {
             "name": "device_id",
             "unit": "",
+            "isFloat": false,
             "type": "u64",
             "storage": 8,
             "isSimpleType": true
@@ -2457,6 +2592,7 @@
           {
             "name": "role",
             "unit": "",
+            "isFloat": false,
             "type": "string",
             "storage": 0
           }
@@ -2472,6 +2608,7 @@
           {
             "name": "device_id",
             "unit": "",
+            "isFloat": false,
             "type": "u64",
             "storage": 8,
             "isSimpleType": true
@@ -2479,6 +2616,7 @@
           {
             "name": "role",
             "unit": "",
+            "isFloat": false,
             "type": "string",
             "storage": 0
           }
@@ -2500,6 +2638,7 @@
           {
             "name": "stored_roles",
             "unit": "",
+            "isFloat": false,
             "type": "pipe",
             "storage": 12
           }
@@ -2515,6 +2654,7 @@
           {
             "name": "device_id",
             "unit": "",
+            "isFloat": false,
             "type": "u64",
             "storage": 8,
             "isSimpleType": true
@@ -2522,6 +2662,7 @@
           {
             "name": "role",
             "unit": "",
+            "isFloat": false,
             "type": "string",
             "storage": 0
           }
@@ -2537,6 +2678,7 @@
           {
             "name": "required_roles",
             "unit": "",
+            "isFloat": false,
             "type": "pipe",
             "storage": 12
           }
@@ -2552,6 +2694,7 @@
           {
             "name": "device_id",
             "unit": "",
+            "isFloat": false,
             "type": "u64",
             "storage": 8,
             "isSimpleType": true
@@ -2559,6 +2702,7 @@
           {
             "name": "service_class",
             "unit": "",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true
@@ -2566,6 +2710,7 @@
           {
             "name": "roles",
             "unit": "",
+            "isFloat": false,
             "type": "string",
             "storage": 0
           }
@@ -2596,6 +2741,7 @@
           {
             "name": "_",
             "unit": "us",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true,
@@ -2614,6 +2760,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "bool",
             "storage": 1
           }
@@ -2646,6 +2793,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "u8",
             "storage": 1,
             "isSimpleType": true
@@ -2663,6 +2811,7 @@
           {
             "name": "_",
             "unit": "ms",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true,
@@ -2684,6 +2833,7 @@
             "name": "_",
             "unit": "frac",
             "shift": 16,
+            "isFloat": false,
             "type": "u16",
             "storage": 2,
             "isSimpleType": true
@@ -2725,6 +2875,7 @@
           {
             "name": "inbound",
             "unit": "",
+            "isFloat": false,
             "type": "pipe",
             "storage": 12
           }
@@ -2741,6 +2892,7 @@
           {
             "name": "outbound_port",
             "unit": "",
+            "isFloat": false,
             "type": "pipe_port",
             "storage": 2
           }
@@ -2757,6 +2909,7 @@
           {
             "name": "tcp_port",
             "unit": "",
+            "isFloat": false,
             "type": "u16",
             "storage": 2,
             "isSimpleType": true
@@ -2764,6 +2917,7 @@
           {
             "name": "hostname",
             "unit": "",
+            "isFloat": false,
             "type": "string",
             "storage": 0
           }
@@ -2779,6 +2933,7 @@
           {
             "name": "data",
             "unit": "",
+            "isFloat": false,
             "type": "bytes",
             "storage": 0,
             "isSimpleType": true
@@ -2795,6 +2950,7 @@
           {
             "name": "data",
             "unit": "",
+            "isFloat": false,
             "type": "bytes",
             "storage": 0,
             "isSimpleType": true
@@ -2811,6 +2967,7 @@
           {
             "name": "error",
             "unit": "",
+            "isFloat": false,
             "type": "TcpError",
             "storage": -4
           }
@@ -2844,6 +3001,7 @@
           {
             "name": "_",
             "unit": "",
+            "isFloat": false,
             "type": "u8",
             "storage": 1,
             "isSimpleType": true
@@ -2861,6 +3019,7 @@
           {
             "name": "_",
             "unit": "ms",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true,
@@ -2882,6 +3041,7 @@
             "name": "_",
             "unit": "C",
             "shift": 10,
+            "isFloat": false,
             "type": "u22.10",
             "storage": 4
           }
@@ -2932,6 +3092,7 @@
           {
             "name": "results",
             "unit": "",
+            "isFloat": false,
             "type": "pipe",
             "storage": 12
           }
@@ -2947,12 +3108,14 @@
           {
             "name": "flags",
             "unit": "",
+            "isFloat": false,
             "type": "APFlags",
             "storage": 4
           },
           {
             "name": "reserved",
             "unit": "",
+            "isFloat": false,
             "type": "u32",
             "storage": 4,
             "isSimpleType": true
@@ -2960,6 +3123,7 @@
           {
             "name": "rssi",
             "unit": "",
+            "isFloat": false,
             "type": "i8",
             "storage": -1,
             "isSimpleType": true,
@@ -2969,6 +3133,7 @@
           {
             "name": "channel",
             "unit": "",
+            "isFloat": false,
             "type": "u8",
             "storage": 1,
             "isSimpleType": true,
@@ -2978,12 +3143,14 @@
           {
             "name": "bssid",
             "unit": "",
+            "isFloat": false,
             "type": "u8[6]",
             "storage": 6
           },
           {
             "name": "ssid",
             "unit": "",
+            "isFloat": false,
             "type": "string",
             "storage": 0
           }
@@ -2999,6 +3166,7 @@
           {
             "name": "ssid",
             "unit": "",
+            "isFloat": false,
             "type": "string",
             "storage": 0
           }

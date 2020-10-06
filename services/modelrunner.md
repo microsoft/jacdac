@@ -40,7 +40,10 @@ Model may be run less often if it takes longer to run than `N * sampling_interva
 The `outputs` register will stream its value after each run.
 This register is not stored in flash.
 
-    ro outputs: bytes @ reading
+    ro outputs @ reading {
+    repeats:
+        output: f32
+    }
 
 Results of last model invocation as `float32` array.
 

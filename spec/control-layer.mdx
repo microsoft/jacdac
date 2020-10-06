@@ -24,22 +24,23 @@ If the device already has a 48 bit MAC address, the 64 bit device identifier is 
 `0xff` and appending `0xfe`. For example, if the MAC address is `11:22:33:44:55:66`, the device
 identifier should be `0xff112233445566fw`.
 
-It's theoretically possible for a device ID collision to occur in a small network of say 200 devices.
+As for the length of identifiers,
+it's theoretically possible for a device ID collision to occur in a small network of say 200 devices.
 With evenly distributed (ie., random) device IDs and 1 trillion such networks 
-the probability of collision in any of them is 0.1%.
+the probability of collision in at least one of them is 0.1%.
 OTOH, were we to use 32 bit IDs, with 2000 networks the collision probability in any of them
 is already 1%, and with 200k networks it's more than 60%.
 
 ## Direction of packets
 
-The JACDAC frames contain only one device identifier.
+The JACDAC frames contain only one device identifier (a not source and destination, as in IP).
 * if lowest frame flag bit is set, we call all packets in that frame _command packets_ and the device identifier is the destination
 * otherwise, the packets in frame are _report packet_ and the device identifier is the source
 
 ## Multicast commands
 
-Additionally, is the third bit of frame flags is set (_multicast commands_),
-the low order 32 bits of device identifier contain service class.
+Additionally, if the third bit of frame flags is set (_multicast commands_),
+the low order 32 bits of device identifier are treated as service class.
 The command is then directed to all services with that service class.
 
 ## Services
@@ -80,7 +81,7 @@ The position in the array is the service number.
 For services that are missing or disabled use `0xffffffff`.
 
 The first word of advertisement data would logically contain the class of the control
-service, which is zero.
+service, which is always `0x00000000`.
 Instead, the first word is used to communicate critical information about the device
 advertising itself.
 

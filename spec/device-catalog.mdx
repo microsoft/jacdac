@@ -43,7 +43,7 @@ where
 * ``NAME`` is the name of the device
 * ``DESCRIPTION`` is a short 1 sentence description
 * ``SERVICE_CLASS*`` is a comma separated list of service class supported by this device (``0x...``)
-* ``FIRMWARE_ID*`` is the unique firmware identifer for the device. Sometimes there can be more than one for different hardware
+* ``FIRMWARE_ID*`` are the unique firmware identifers for the device. Sometimes there can be more than one for different hardware
    revisions. The JACDAC tool will detect duplicates.
 * ``REPO_URL`` is the URL to the GitHub repository hosting the firmware binaries.
 * ``HOME_URL`` is the device store/home page for users
@@ -57,12 +57,19 @@ such as repository url or link url.
 
 * example: [_default.md](https://github.com/microsoft/jacdac/blob/main/devices/microsoft-jm/_default.md)
 
+```
+* repo: REPO_URL
+* link: HOME_URL
+```
+
 ### Image
 
 Each device file, (e.g. ``mydevice.md``), should be accompanied by a JPEG picture of the device, (e.g. ``mydevice.jpg``).
 * 4:3 aspect ratio
 * 600 pixels wide
 * White background, picture from the top
+
+* example: [microsoft-jm](https://github.com/microsoft/jacdac/tree/main/devices/microsoft-jm)
 
 ## Firmware updates
 

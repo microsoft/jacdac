@@ -10,7 +10,7 @@ import RandomGenerator from "../../docs/src/components/RandomGenerator"
 
 The JACDAC project maintains a catalog of known [devices](/devices)
 in the https://github.com/microsoft/jacdac repository. 
-Any manufacturer of JACDAC device is encourage to add their devices 
+Any manufacturer of JACDAC device is encouraged to add their devices 
 to the catalog following the instructions below.
 
 <DeviceSpecificationList count={8} shuffle={true} />
@@ -34,7 +34,7 @@ You can start from this template:
 DESCRIPTION
 
 * services: SERVICE_CLASS*
-* firmware: FIRMARE_ID
+* firmware: FIRMARE_ID*
 * repo: REPO_URL
 * link: HOME_URL
 ```
@@ -43,7 +43,8 @@ where
 * ``NAME`` is the name of the device
 * ``DESCRIPTION`` is a short 1 sentence description
 * ``SERVICE_CLASS*`` is a comma separated list of service class supported by this device (``0x...``)
-* ``FIRMWARE_ID`` is the unique firmware identifer for the device. The JACDAC tool will detect duplicates.
+* ``FIRMWARE_ID*`` is the unique firmware identifer for the device. Sometimes there can be more than one for different hardware
+   revisions. The JACDAC tool will detect duplicates.
 * ``REPO_URL`` is the URL to the GitHub repository hosting the firmware binaries.
 * ``HOME_URL`` is the device store/home page for users
 
@@ -60,12 +61,13 @@ such as repository url or link url.
 
 Each device file, (e.g. ``mydevice.md``), should be accompanied by a JPEG picture of the device, (e.g. ``mydevice.jpg``).
 * 4:3 aspect ratio
-* Minimum 600 pixels wide
-* White background, top picture
+* 600 pixels wide
+* White background, picture from the top
 
 ## Firmware updates
 
-Firmware updates can be hosted as **assets** on **releases** of GitHub repositories. Upon detecting a device with the firmware identifier, 
+Firmware updates can be hosted as **assets** on **releases** of GitHub repositories.
+Upon detecting a device with the specified firmware identifier, 
 JACDAC will automatically query the device catalog for the firmware repository, and download the latest firmware.
 
 * example [jacdac-stm32x0 releases](https://github.com/microsoft/jacdac-stm32x0/releases)

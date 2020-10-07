@@ -375,6 +375,7 @@ export const SRV_MODEL_RUNNER = 0x140f9a78
 export enum ModelRunnerModelFormat { // uint32_t
     TFLite = 0x334c4654,
     ML4F = 0x30470f62,
+    EdgeImpulseCompiled = 0x30564945,
 }
 
 export enum ModelRunnerCmd {

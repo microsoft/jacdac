@@ -80,6 +80,7 @@ Textual description of last error when running or loading model (if any).
     enum ModelFormat: u32 {
         TFLite = 0x334c4654,
         ML4F = 0x30470f62,
+        EdgeImpulseCompiled = 0x30564945,
     }
     const format: ModelFormat @ 0x186
 

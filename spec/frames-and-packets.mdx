@@ -30,7 +30,7 @@ On the wire, the frame must be transmitted in little endian format (i.e. low byt
 | 2 | 1          	|`frame_size`	| Size of the data field.	|
 | 3 | 1          	|`frame_flags`	| Flags specific to this frame.	|
 | 4 | 8          	|`device_identifier`	| 64-bit device identifier.	|
-| 12 | 1 * frame_size   	|`data`	| The data payload of the frame.	|
+| 12 | 1 * `frame_size `  	|`data`	| The data payload of the frame.	|
 
 ## Frame flags
 
@@ -77,6 +77,6 @@ The following table defines the meaning and size of the fields in the structure 
 | 12 | 1	|`packet_size`	| The size of the payload field. Maximum size is 236 bytes. |
 | 13 | 1	|`service_instance`	| The instance number of the destination service.	|
 | 14 | 2	|`service_command`	| A number that specifies an operation and code combination.	|
-| 16 | 1 * packet_size	|`payload`	| The packet data payload destined for a particular service.	|
+| 16 | 1 * `packet_size`	|`payload`	| The packet data payload destined for a particular service.	|
 
 Packets are placed back-to-back inside the frame `data` field and must be padded so they start at a 4 byte boundary (i.e. `packet_size` is divisible by 4). Logically, packets placed in the same frame all share the same frame fields and thus the same `device_identifier`. This means only one device can be addressed in a single frame.

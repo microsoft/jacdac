@@ -755,6 +755,8 @@ function isRegister(k: jdspec.PacketKind) {
 }
 
 function toHex(n: number): string {
+    if (n === undefined)
+        return "";
     if (n < 0)
         return "-" + toHex(n)
     return "0x" + n.toString(16)

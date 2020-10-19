@@ -266,7 +266,7 @@ export function parseSpecificationMarkdownToJSON(filecontent: string, includes?:
                         v = basePacket.identifier
                         packetInfo.identifierName = w
                         if (basePacket.kind != kind)
-                            error(`kind mismatch on ${w}: ${basePacket} vs {kind}`)
+                            error(`kind mismatch on ${w}: ${basePacket.kind} vs ${kind}`)
                         else
                             isSet = true
                     } else

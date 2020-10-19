@@ -10,6 +10,25 @@ It handles actions common to all services on a device.
 
 ## Commands
 
+    flags AnnounceFlags : u8 {
+        SupportsACK = 0x01,
+    }
+    command services @ announce { }
+    report {
+        restart_counter: u8
+        flags: AnnounceFlags
+        reserved: u16
+    repeats:
+        service_class: u32
+    }
+
+The `restart_counter` starts at `0x1` and increments by one until it reaches `0xf`, then it stays at `0xf`.
+If this number ever goes down, it indicates that the device restarted.
+The upper 4 bits of `restart_counter` are reserved.
+`service_class` indicates class identifier for each service number (service number `0` is always control, so it's
+skipped in this enumeration).
+The command form can be used to induce report, which is otherwise broadcast every 500ms.
+
     command noop @ 0x80 { }
 
 Do nothing. Always ignored. Can be used to test ACKs.

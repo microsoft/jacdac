@@ -1,0 +1,627 @@
+JACDAC trace
+
+Moving 2 sliders back and forth on the same bus.
+
+time	data	description
+0	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+71	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+83	3ab70c00eee2af6c34eb8630080000000f0100000904141f	 ====== from acc1/CONTROL (0): announce; sz=8
+152	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+195	3e520c00f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+507	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+578	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+589	3ab70c00eee2af6c34eb8630080000000f0100000904141f	 ====== from acc1/CONTROL (0): announce; sz=8
+659	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+703	3e520c00f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+1013	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+1087	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+1169	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+1207	3e520c00f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+1218	3ab70c00eee2af6c34eb8630080000000f0100000904141f	 ====== from acc1/CONTROL (0): announce; sz=8
+1520	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+1592	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+1673	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+1715	3e520c00f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+2027	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+2101	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+2109	3ab70c00eee2af6c34eb8630080000000f0100000904141f	 ====== from acc1/CONTROL (0): announce; sz=8
+2180	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+2221	3e520c00f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+2534	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+2605	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+2671	238e0801f1fd2e7a5607122d04010320ff000000	to slider 2/SLIDER (1): SET[streamsamples]; sz=4; SET stream_samples: 255 (0xff)
+2718	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+2723	3ab70c00eee2af6c34eb8630080000000f0100000904141f	 ====== from acc1/CONTROL (0): announce; sz=8
+2739	3e520c00f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+2742	b0320800f1fd2e7a5607122d04010111a08e0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.557
+2840	fe050800f1fd2e7a5607122d04010111808e0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.557
+2941	fe050800f1fd2e7a5607122d04010111808e0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.557
+3043	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+3048	fe050800f1fd2e7a5607122d04010111808e0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.557
+3117	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+3146	fe050800f1fd2e7a5607122d04010111808e0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.557
+3196	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+3207	3ab70c00eee2af6c34eb8630080000000f0100000904141f	 ====== from acc1/CONTROL (0): announce; sz=8
+3239	45601400f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+3239	45601400f1fd2e7a5607122d04010111a08e0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.557
+3340	fe050800f1fd2e7a5607122d04010111808e0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.557
+3441	b39a0800f1fd2e7a5607122d04010111708e0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.556
+3542	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+3547	fe050800f1fd2e7a5607122d04010111808e0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.557
+3624	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+3645	fe050800f1fd2e7a5607122d04010111808e0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.557
+3696	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+3707	3ab70c00eee2af6c34eb8630080000000f0100000904141f	 ====== from acc1/CONTROL (0): announce; sz=8
+3739	ac4c1400f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+3739	ac4c1400f1fd2e7a5607122d04010111908e0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.557
+3843	b39a0800f1fd2e7a5607122d04010111708e0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.556
+3941	b39a0800f1fd2e7a5607122d04010111708e0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.556
+3975	c30b0401abe827640e45ab7900010410	to slider 1/SLIDER (1): GET[streaminginterval]; sz=0; GET streaming_interval
+3993	11e00801abe827640e45ab7904010320ff000000	to slider 1/SLIDER (1): SET[streamsamples]; sz=4; SET stream_samples: 255 (0xff)
+4004	ff7f0800abe827640e45ab790401041000000000	from slider 1/SLIDER (1): GET[streaminginterval]; sz=4; GET streaming_interval: 0ms
+4022	c30b0401abe827640e45ab7900010410	to slider 1/SLIDER (1): GET[streaminginterval]; sz=0; GET streaming_interval
+4034	c30b0401abe827640e45ab7900010410	to slider 1/SLIDER (1): GET[streaminginterval]; sz=0; GET streaming_interval
+4046	5c6b0800abe827640e45ab7904010111509b0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.607
+4070	dcec0800abe827640e45ab790401041064000000	from slider 1/SLIDER (1): GET[streaminginterval]; sz=4; GET streaming_interval: 100ms
+4100	dcec0800abe827640e45ab790401041064000000	from slider 1/SLIDER (1): GET[streaminginterval]; sz=4; GET streaming_interval: 100ms
+4128	5c6b0800abe827640e45ab7904010111509b0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.607
+4166	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+4201	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+4213	3ab70c00eee2af6c34eb8630080000000f0100000904141f	 ====== from acc1/CONTROL (0): announce; sz=8
+4224	fb700800abe827640e45ab7904010111409b0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.606
+4244	fe050800f1fd2e7a5607122d04010111808e0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.557
+4259	3e520c00f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+4327	fb700800abe827640e45ab7904010111409b0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.606
+4342	fe050800f1fd2e7a5607122d04010111808e0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.557
+4429	5c6b0800abe827640e45ab7904010111509b0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.607
+4490	14810800f1fd2e7a5607122d04010111608e0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.556
+4522	fb700800abe827640e45ab7904010111409b0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.606
+4543	5ab60800f1fd2e7a5607122d04010111408e0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.556
+4569	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+4625	5c6b0800abe827640e45ab7904010111509b0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.607
+4639	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+4706	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+4728	5c6b0800abe827640e45ab7904010111509b0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.607
+4777	b39a0800f1fd2e7a5607122d04010111708e0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.556
+4821	5c6b0800abe827640e45ab7904010111509b0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.607
+4843	fe050800f1fd2e7a5607122d04010111808e0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.557
+4924	5c6b0800abe827640e45ab7904010111509b0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.607
+4962	fe050800f1fd2e7a5607122d04010111808e0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.557
+5026	5c6b0800abe827640e45ab7904010111509b0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.607
+5070	14810800f1fd2e7a5607122d04010111608e0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.556
+5130	fb700800abe827640e45ab7904010111409b0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.606
+5148	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+5211	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+5224	fb700800abe827640e45ab7904010111409b0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.606
+5239	591e0800f1fd2e7a5607122d04010111908e0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.557
+5258	3e520c00f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+5265	3ab70c00eee2af6c34eb8630080000000f0100000904141f	 ====== from acc1/CONTROL (0): announce; sz=8
+5327	fb700800abe827640e45ab7904010111409b0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.606
+5365	36330800f1fd2e7a5607122d04010111008b0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.543
+5429	5c6b0800abe827640e45ab7904010111509b0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.607
+5489	d45d0800f1fd2e7a5607122d04010111608a0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.541
+5523	5fc30800abe827640e45ab7904010111809b0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.607
+5540	83ad0800f1fd2e7a5607122d04010111708f0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.56
+5569	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+5625	5fc30800abe827640e45ab7904010111809b0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.607
+5666	00330800f1fd2e7a5607122d04010111c0900000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.565
+5713	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+5725	ff1c0800abe827640e45ab790401011140a30000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.638
+5748	3d710800f1fd2e7a5607122d04010111508a0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.54
+5770	3e520c00f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+5828	c8070800abe827640e45ab790401011180b60000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.713
+5850	42630800f1fd2e7a5607122d04010111a0780000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.471
+5871	3ab70c00eee2af6c34eb8630080000000f0100000904141f	 ====== from acc1/CONTROL (0): announce; sz=8
+5921	a79d0800abe827640e45ab790401011140d00000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.813
+5982	40550800f1fd2e7a5607122d04010111a0640000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.393
+6023	31420800abe827640e45ab790401011140f30000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.95
+6042	ce560800f1fd2e7a5607122d04010111904c0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.299
+6066	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+6127	826e0800abe827640e45ab790401011120ff0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+6156	0a3c0800f1fd2e7a5607122d04010111002d0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.176
+6214	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+6225	f72c0800abe827640e45ab790401011150ff0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+6273	17970800f1fd2e7a5607122d0401011130100000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.063
+6319	25750800abe827640e45ab790401011130ff0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+6331	a5250800f1fd2e7a5607122d0401011180000000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+6351	3ab70c00eee2af6c34eb8630080000000f0100000904141f	 ====== from acc1/CONTROL (0): announce; sz=8
+6422	826e0800abe827640e45ab790401011120ff0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+6461	a5250800f1fd2e7a5607122d0401011180000000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+6524	826e0800abe827640e45ab790401011120ff0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+6556	023e0800f1fd2e7a5607122d0401011190000000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+6572	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+6628	826e0800abe827640e45ab790401011120ff0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+6652	a5250800f1fd2e7a5607122d0401011180000000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+6720	826e0800abe827640e45ab790401011120ff0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+6746	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+6752	a5250800f1fd2e7a5607122d0401011180000000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+6765	3e520c00f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+6824	826e0800abe827640e45ab790401011120ff0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+6863	1d4b0800f1fd2e7a5607122d04010111b00d0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.053
+6927	92dd0800abe827640e45ab790401011140e70000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.903
+6977	2f270800f1fd2e7a5607122d04010111702e0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.181
+7020	86300800abe827640e45ab7904010111a0b60000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.713
+7051	20560800f1fd2e7a5607122d0401011160580000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.345
+7075	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+7123	523a0800abe827640e45ab7904010111106f0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.434
+7162	a4050800f1fd2e7a5607122d04010111d0820000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.511
+7226	103c0800abe827640e45ab7904010111e0350000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.21
+7243	66820800f1fd2e7a5607122d0401011110a40000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.641
+7261	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+7271	3e520c00f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+7322	6e510800abe827640e45ab7904010111000a0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.039
+7338	f2b10800f1fd2e7a5607122d0401011180c60000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.775
+7425	974b0800abe827640e45ab790401011180000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+7476	94e80800f1fd2e7a5607122d0401011140de0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.868
+7521	974b0800abe827640e45ab790401011180000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+7572	1b750800f1fd2e7a5607122d04010111a0ea0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.917
+7624	974b0800abe827640e45ab790401011180000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+7637	36010800f1fd2e7a5607122d0401011180fa0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.979
+7668	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+7724	974b0800abe827640e45ab790401011180000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+7757	62590800f1fd2e7a5607122d0401011140ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+7776	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+7780	3e520c00f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+7818	30500800abe827640e45ab790401011190000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+7850	c5420800f1fd2e7a5607122d0401011150ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+7920	974b0800abe827640e45ab790401011180000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+7946	62590800f1fd2e7a5607122d0401011140ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+8023	dad40800abe827640e45ab790401011170000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+8086	62590800f1fd2e7a5607122d0401011140ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+8127	62590800f1fd2e7a5607122d0401011140ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+8148	974b0800abe827640e45ab790401011180000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+8179	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+8219	974b0800abe827640e45ab790401011180000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+8240	66dd0800f1fd2e7a5607122d0401011150eb0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.919
+8269	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+8275	3e520c00f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+8326	c39d0800f1fd2e7a5607122d0401011180c90000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.787
+8368	0f240800abe827640e45ab790401011100060000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.023
+8418	92b90800abe827640e45ab790401011150240000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.142
+8443	62830800f1fd2e7a5607122d04010111d0a20000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.636
+8521	d14c0800abe827640e45ab7904010111b05c0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.362
+8539	f14f0800f1fd2e7a5607122d04010111c0740000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.456
+8584	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+8594	3ab70c00eee2af6c34eb8630080000000f0100000904141f	 ====== from acc1/CONTROL (0): announce; sz=8
+8625	3c0e0800f1fd2e7a5607122d0401011140470000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.278
+8682	d5290800abe827640e45ab790401011160990000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.599
+8717	1f440800abe827640e45ab790401011120be0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.743
+8731	7e080800f1fd2e7a5607122d04010111b01d0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.116
+8769	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+8781	3e520c00f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+8822	c6e80800abe827640e45ab790401011140dc0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.86
+8838	44e30800f1fd2e7a5607122d0401011130010000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.005
+8924	a5250800f1fd2e7a5607122d0401011180000000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+9025	a5250800f1fd2e7a5607122d0401011180000000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+9035	826e0800abe827640e45ab790401011120ff0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+9087	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+9119	826e0800abe827640e45ab790401011120ff0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+9130	a5250800f1fd2e7a5607122d0401011180000000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+9142	3ab70c00eee2af6c34eb8630080000000f0100000904141f	 ====== from acc1/CONTROL (0): announce; sz=8
+9181	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+9222	a5250800f1fd2e7a5607122d0401011180000000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+9273	826e0800abe827640e45ab790401011120ff0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+9288	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+9319	826e0800abe827640e45ab790401011120ff0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+9332	a5250800f1fd2e7a5607122d0401011180000000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+9422	25750800abe827640e45ab790401011130ff0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+9465	023e0800f1fd2e7a5607122d0401011190000000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+9523	88510800f1fd2e7a5607122d04010111a0100000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.065
+9575	826e0800abe827640e45ab790401011120ff0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+9596	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+9617	a1420800abe827640e45ab790401011190e60000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.901
+9681	c1270800f1fd2e7a5607122d04010111803a0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.229
+9701	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+9727	93990800abe827640e45ab790401011100a60000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.648
+9748	863b0800f1fd2e7a5607122d04010111b0680000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.409
+9775	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+9785	3e520c00f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+9817	15fc0800abe827640e45ab7904010111b0600000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.378
+9878	1f460800f1fd2e7a5607122d04010111e09d0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.617
+9918	42530800abe827640e45ab7904010111e02a0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.167
+9950	66350800f1fd2e7a5607122d0401011140c70000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.778
+10021	12840800f1fd2e7a5607122d0401011120e50000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.895
+10103	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+10124	62590800f1fd2e7a5607122d0401011140ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+10168	974b0800abe827640e45ab790401011180000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+10207	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+10212	3ab70c00eee2af6c34eb8630080000000f0100000904141f	 ====== from acc1/CONTROL (0): announce; sz=8
+10217	974b0800abe827640e45ab790401011180000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+10230	62590800f1fd2e7a5607122d0401011140ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+10279	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+10290	3e520c00f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+10321	62590800f1fd2e7a5607122d0401011140ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+10336	974b0800abe827640e45ab790401011180000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+10423	b0000800f1fd2e7a5607122d0401011120ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+10489	dad40800abe827640e45ab790401011170000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+10515	974b0800abe827640e45ab790401011180000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+10527	6c010800f1fd2e7a5607122d04010111d0f60000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.964
+10607	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+10700	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+10726	d97c0800abe827640e45ab7904010111a0000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+10782	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+10793	3ab70c00eee2af6c34eb8630080000000f0100000904141f	 ====== from acc1/CONTROL (0): announce; sz=8
+10796	3e520c00f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+10815	974b0800abe827640e45ab790401011180000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+10828	9c0b0800f1fd2e7a5607122d0401011110220000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.133
+10917	dad40800abe827640e45ab790401011170000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+10934	023e0800f1fd2e7a5607122d0401011190000000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+11019	023e0800f1fd2e7a5607122d0401011190000000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+11071	974b0800abe827640e45ab790401011180000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+11111	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+11126	96ba0800f1fd2e7a5607122d0401011150010000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.005
+11149	974b0800abe827640e45ab790401011180000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+11204	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+11223	974b0800abe827640e45ab790401011180000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+11240	80530800f1fd2e7a5607122d04010111303d0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.239
+11288	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+11299	3e520c00f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+11310	3ab70c00eee2af6c34eb8630080000000f0100000904141f	 ====== from acc1/CONTROL (0): announce; sz=8
+11321	09470800f1fd2e7a5607122d04010111908d0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.553
+11385	974b0800abe827640e45ab790401011180000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+11423	d19d0800f1fd2e7a5607122d0401011130df0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.872
+11459	974b0800abe827640e45ab790401011180000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+11515	974b0800abe827640e45ab790401011180000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+11526	62590800f1fd2e7a5607122d0401011140ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+11617	62590800f1fd2e7a5607122d0401011140ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+11655	d28b1400abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+11655	d28b1400abe827640e45ab790401011180000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+11709	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+11741	974b0800abe827640e45ab790401011180000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+11790	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+11801	3e520c00f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+11822	0ce10800abe827640e45ab790401011110380000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.219
+11843	62590800f1fd2e7a5607122d0401011140ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+11914	6aee0800abe827640e45ab790401011140920000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.571
+11959	62590800f1fd2e7a5607122d0401011140ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+12016	62590800f1fd2e7a5607122d0401011140ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+12040	48030800abe827640e45ab790401011160d80000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.845
+12119	62590800f1fd2e7a5607122d0401011140ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+12142	b1441400abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+12142	b1441400abe827640e45ab790401011180ff0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.998
+12219	171b0800f1fd2e7a5607122d0401011130ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+12277	826e0800abe827640e45ab790401011120ff0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+12299	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+12309	3e520c00f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+12320	62590800f1fd2e7a5607122d0401011140ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+12336	25750800abe827640e45ab790401011130ff0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+12421	171b0800f1fd2e7a5607122d0401011130ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+12442	ff430800abe827640e45ab790401011100ec0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.922
+12513	e1f70800abe827640e45ab7904010111b0b20000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.698
+12561	c5420800f1fd2e7a5607122d0401011150ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+12615	62590800f1fd2e7a5607122d0401011140ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+12636	e2d30800abe827640e45ab7904010111605d0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.365
+12718	171b0800f1fd2e7a5607122d0401011130ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+12753	dd7d0800abe827640e45ab790401011160060000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.025
+12802	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+12813	974b0800abe827640e45ab790401011180000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+12854	7e271400f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+12854	7e271400f1fd2e7a5607122d0401011170ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.998
+12915	62590800f1fd2e7a5607122d0401011140ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+12938	974b0800abe827640e45ab790401011180000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+13018	171b0800f1fd2e7a5607122d0401011130ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+13058	974b0800abe827640e45ab790401011180000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+13119	62590800f1fd2e7a5607122d0401011140ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+13147	7e670800abe827640e45ab7904010111b0000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.003
+13221	171b0800f1fd2e7a5607122d0401011130ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+13242	7e8f0800abe827640e45ab7904010111a02c0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.174
+13271	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+13310	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+13321	3ab70c00eee2af6c34eb8630080000000f0100000904141f	 ====== from acc1/CONTROL (0): announce; sz=8
+13326	45521400f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+13326	45521400f1fd2e7a5607122d0401011120ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+13413	792d0800f1fd2e7a5607122d04010111a0f40000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.956
+13452	3d9b0800abe827640e45ab790401011180850000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.521
+13515	0cea0800f1fd2e7a5607122d0401011100e60000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.898
+13564	b5470800abe827640e45ab7904010111609b0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.607
+13618	b2de0800f1fd2e7a5607122d0401011130cf0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.809
+13655	25c20800abe827640e45ab7904010111609c0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.611
+13719	46830800f1fd2e7a5607122d04010111a0af0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.686
+13758	b9ac0800abe827640e45ab7904010111209c0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.61
+13851	05440800f1fd2e7a5607122d04010111c0a60000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.651
+13872	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+13912	99af0800f1fd2e7a5607122d0401011150b40000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.704
+13938	36d90800abe827640e45ab7904010111d0840000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.519
+14013	0eb10800f1fd2e7a5607122d04010111c0c40000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.769
+14069	abac0800abe827640e45ab7904010111908a0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.541
+14115	7e5e0800f1fd2e7a5607122d0401011120af0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.684
+14131	cb470800abe827640e45ab7904010111409a0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.603
+14153	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+14217	9e340800f1fd2e7a5607122d04010111c0c30000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.765
+14242	01470800abe827640e45ab7904010111c0830000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.515
+14281	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+14310	25f20800f1fd2e7a5607122d0401011120ce0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.805
+14363	5e5d0800abe827640e45ab790401011150870000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.529
+14384	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+14414	6aec0800f1fd2e7a5607122d0401011180b10000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.693
+14434	523a0800abe827640e45ab7904010111106f0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.434
+14517	9d190800f1fd2e7a5607122d04010111c0d10000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.819
+14608	8a860800f1fd2e7a5607122d0401011160dd0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.865
+14646	5ab40800abe827640e45ab790401011180ad0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.678
+14660	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+14711	fdc00800f1fd2e7a5607122d0401011190b00000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.69
+14730	625b0800abe827640e45ab790401011180dc0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.861
+14763	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+14814	fb160800f1fd2e7a5607122d04010111907b0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.483
+14838	c79e0800abe827640e45ab790401011180ec0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.924
+14868	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+14903	52550800f1fd2e7a5607122d0401011110720000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.446
+14946	c4ec0800abe827640e45ab7904010111c0b10000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.694
+15006	6a690800f1fd2e7a5607122d0401011150a30000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.638
+15033	5ba60800abe827640e45ab7904010111505e0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.368
+15107	c1ab0800f1fd2e7a5607122d0401011180d50000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.834
+15135	808b0800abe827640e45ab790401011160430000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.263
+15152	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+15210	56300800f1fd2e7a5607122d04010111c0b70000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.718
+15254	26ef0800abe827640e45ab7904010111608e0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.556
+15295	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+15303	72540800f1fd2e7a5607122d04010111a0790000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.475
+15334	92dd0800abe827640e45ab790401011140e70000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.903
+15367	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+15409	06880800f1fd2e7a5607122d0401011100650000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.395
+15456	238e0801f1fd2e7a5607122d04010320ff000000	to slider 2/SLIDER (1): SET[streamsamples]; sz=4; SET stream_samples: 255 (0xff)
+15491	c1710800f1fd2e7a5607122d0401011110880000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.531
+15529	3ab70c00eee2af6c34eb8630080000000f0100000904141f	 ====== from acc1/CONTROL (0): announce; sz=8
+15585	01f20800f1fd2e7a5607122d0401011150c30000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.763
+15630	fc380800abe827640e45ab7904010111904c0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.299
+15657	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+15688	bceb0800f1fd2e7a5607122d0401011160f80000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.97
+15712	2fa00800abe827640e45ab7904010111601f0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.123
+15770	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+15781	b0000800f1fd2e7a5607122d0401011120ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+15820	957d0800abe827640e45ab7904010111801c0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.111
+15901	3e520c00f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+15913	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+15984	b0000800f1fd2e7a5607122d0401011120ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+16005	aa8c0800abe827640e45ab7904010111c0080000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.034
+16031	3ab70c00eee2af6c34eb8630080000000f0100000904141f	 ====== from acc1/CONTROL (0): announce; sz=8
+16086	57740800f1fd2e7a5607122d0401011180f60000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.963
+16130	d4640800abe827640e45ab7904010111f0250000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.148
+16159	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+16189	85400800f1fd2e7a5607122d0401011120c80000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.782
+16217	05ca0800abe827640e45ab7904010111006a0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.414
+16272	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+16283	1fc30800f1fd2e7a5607122d04010111308f0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.559
+16330	63f70800abe827640e45ab7904010111d0b10000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.695
+16379	3e520c00f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+16387	67900800f1fd2e7a5607122d04010111c0570000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.343
+16413	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+16418	826e0800abe827640e45ab790401011120ff0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+16480	d6b80800f1fd2e7a5607122d0401011120360000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.211
+16515	826e0800abe827640e45ab790401011120ff0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+16526	3ab70c00eee2af6c34eb8630080000000f0100000904141f	 ====== from acc1/CONTROL (0): announce; sz=8
+16583	d23c0800f1fd2e7a5607122d0401011130220000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.134
+16636	826e0800abe827640e45ab790401011120ff0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+16665	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+16686	263e0800f1fd2e7a5607122d04010111e00d0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.054
+16720	25750800abe827640e45ab790401011130ff0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+16753	11e00801abe827640e45ab7904010320ff000000	to slider 1/SLIDER (1): SET[streamsamples]; sz=4; SET stream_samples: 255 (0xff)
+16794	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+16801	7f960800f1fd2e7a5607122d0401011160010000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.005
+16833	826e0800abe827640e45ab790401011120ff0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+16865	3e520c00f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+16885	a5250800f1fd2e7a5607122d0401011180000000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+16915	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+16927	826e0800abe827640e45ab790401011120ff0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+16979	a5250800f1fd2e7a5607122d0401011180000000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+17029	826e0800abe827640e45ab790401011120ff0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+17080	a5250800f1fd2e7a5607122d0401011180000000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+17105	3ab70c00eee2af6c34eb8630080000000f0100000904141f	 ====== from acc1/CONTROL (0): announce; sz=8
+17132	991a0800abe827640e45ab7904010111c0f40000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.956
+17174	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+17184	7f130800f1fd2e7a5607122d04010111b0130000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.077
+17226	d7400800abe827640e45ab790401011120ca0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.79
+17287	a9910800f1fd2e7a5607122d0401011180480000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.283
+17319	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+17337	7c6a0800abe827640e45ab7904010111e0900000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.566
+17359	3e520c00f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+17380	12330800f1fd2e7a5607122d0401011170860000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.525
+17421	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+17426	a00f0800abe827640e45ab7904010111005a0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.352
+17483	672e0800f1fd2e7a5607122d0401011140c90000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.786
+17524	097e0800abe827640e45ab790401011100220000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.133
+17585	f6dd0800f1fd2e7a5607122d0401011180fe0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.994
+17627	974b0800abe827640e45ab790401011180000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+17678	62590800f1fd2e7a5607122d0401011140ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+17706	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+17730	974b0800abe827640e45ab790401011180000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+17781	62590800f1fd2e7a5607122d0401011140ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+17801	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+17823	dad40800abe827640e45ab790401011170000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+17893	3e520c00f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+17926	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+17934	974b0800abe827640e45ab790401011180000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+17975	c0580800f1fd2e7a5607122d0401011190f70000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.967
+18026	497c0800abe827640e45ab790401011170150000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.084
+18077	4c6d0800f1fd2e7a5607122d04010111a0c30000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.764
+18128	9ffe0800abe827640e45ab7904010111404e0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.306
+18179	47700800f1fd2e7a5607122d04010111b08d0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.553
+18223	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+18232	3ab70c00eee2af6c34eb8630080000000f0100000904141f	 ====== from acc1/CONTROL (0): announce; sz=8
+18283	46620800f1fd2e7a5607122d04010111607e0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.494
+18327	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+18335	ac050800abe827640e45ab7904010111808c0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.549
+18366	3e520c00f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+18377	9d460800f1fd2e7a5607122d04010111809e0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.619
+18429	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+18436	c3210800abe827640e45ab7904010111c0740000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.456
+18478	52310800f1fd2e7a5607122d0401011100b10000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.691
+18529	76b60800abe827640e45ab7904010111608d0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.552
+18584	d5460800f1fd2e7a5607122d0401011160840000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.517
+18622	13c20800abe827640e45ab7904010111a0870000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.53
+18683	95ac0800f1fd2e7a5607122d04010111009f0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.621
+18714	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+18725	26630800abe827640e45ab790401011160610000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.38
+18776	b3c50800f1fd2e7a5607122d0401011130c10000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.755
+18820	3ab70c00eee2af6c34eb8630080000000f0100000904141f	 ====== from acc1/CONTROL (0): announce; sz=8
+18828	d31e0800abe827640e45ab7904010111a0830000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.514
+18859	3e520c00f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+18880	931e0800f1fd2e7a5607122d0401011110970000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.59
+18921	da350800abe827640e45ab7904010111b0d10000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.819
+18958	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+18976	7fc90800f1fd2e7a5607122d04010111204e0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.305
+19027	826e0800abe827640e45ab790401011120ff0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+19079	73f80800f1fd2e7a5607122d04010111f0140000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.082
+19130	826e0800abe827640e45ab790401011120ff0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+19181	023e0800f1fd2e7a5607122d0401011190000000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+19211	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+19223	826e0800abe827640e45ab790401011120ff0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+19274	a5250800f1fd2e7a5607122d0401011180000000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+19315	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+19322	3ab70c00eee2af6c34eb8630080000000f0100000904141f	 ====== from acc1/CONTROL (0): announce; sz=8
+19326	826e0800abe827640e45ab790401011120ff0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+19368	3e520c00f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+19379	75cf0800f1fd2e7a5607122d04010111300e0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.055
+19430	099f0800abe827640e45ab7904010111c0f30000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.952
+19460	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+19480	9e0f0800f1fd2e7a5607122d04010111904f0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.311
+19521	6cb40800abe827640e45ab790401011140b60000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.712
+19583	a5f60800f1fd2e7a5607122d04010111c0a00000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.628
+19624	ace40800abe827640e45ab7904010111405d0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.364
+19675	04000800f1fd2e7a5607122d0401011180e70000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.904
+19709	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+19727	53130800abe827640e45ab790401011190100000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.065
+19779	62590800f1fd2e7a5607122d0401011140ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+19820	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+19829	dad40800abe827640e45ab790401011170000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+19863	3ab70c00eee2af6c34eb8630080000000f0100000904141f	 ====== from acc1/CONTROL (0): announce; sz=8
+19872	7e271400f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+19872	7e271400f1fd2e7a5607122d0401011170ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.998
+19923	974b0800abe827640e45ab790401011180000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+19962	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+19980	ecb20800f1fd2e7a5607122d0401011160fb0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.982
+20021	ded50800abe827640e45ab7904010111b0060000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.026
+20072	1a030800f1fd2e7a5607122d0401011160da0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.853
+20123	0b480800abe827640e45ab7904010111003e0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.242
+20174	a25f0800f1fd2e7a5607122d04010111d0a60000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.652
+20205	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+20226	99210800abe827640e45ab790401011190780000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.471
+20277	66630800f1fd2e7a5607122d04010111d0750000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.46
+20318	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+20336	0b9b0800abe827640e45ab7904010111409e0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.618
+20370	03311400f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+20370	03311400f1fd2e7a5607122d0401011100600000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.375
+20399	3ab70c00eee2af6c34eb8630080000000f0100000904141f	 ====== from acc1/CONTROL (0): announce; sz=8
+20422	c7ac0800abe827640e45ab7904010111009d0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.613
+20453	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+20475	71fc0800f1fd2e7a5607122d0401011170790000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.474
+20526	f85d0800abe827640e45ab790401011140890000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.536
+20577	00330800f1fd2e7a5607122d04010111c0900000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.565
+20629	905c0800abe827640e45ab790401011110980000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.594
+20669	a6bf0800f1fd2e7a5607122d04010111d0710000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.445
+20710	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+20721	fa6b0800abe827640e45ab790401011140950000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.583
+20772	89780800f1fd2e7a5607122d04010111206f0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.434
+20823	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+20838	04d10800abe827640e45ab790401011100640000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.391
+20875	68791400f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+20875	68791400f1fd2e7a5607122d0401011140a00000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.626
+20927	620d0800abe827640e45ab7904010111106e0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.43
+20954	3ab70c00eee2af6c34eb8630080000000f0100000904141f	 ====== from acc1/CONTROL (0): announce; sz=8
+20959	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+20971	0a070800f1fd2e7a5607122d0401011150a10000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.63
+21022	0f9a0800abe827640e45ab790401011180980000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.596
+21073	e5fd0800f1fd2e7a5607122d04010111606a0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.416
+21125	c1f60800abe827640e45ab790401011100b90000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.723
+21175	d1110800f1fd2e7a5607122d0401011130300000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.188
+21217	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+21229	19410800abe827640e45ab790401011160d50000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.833
+21276	b1120800f1fd2e7a5607122d04010111f00c0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.051
+21320	9f2d0800abe827640e45ab790401011100ee0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.93
+21352	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+21372	023e0800f1fd2e7a5607122d0401011190000000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+21392	3e520c00f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+21424	50370800abe827640e45ab790401011140ff0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+21455	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+21467	3ab70c00eee2af6c34eb8630080000000f0100000904141f	 ====== from acc1/CONTROL (0): announce; sz=8
+21472	023e0800f1fd2e7a5607122d0401011190000000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+21528	826e0800abe827640e45ab790401011120ff0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+21569	023e0800f1fd2e7a5607122d0401011190000000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+21620	826e0800abe827640e45ab790401011120ff0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+21671	a5250800f1fd2e7a5607122d0401011180000000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+21727	ef451400abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+21727	ef451400abe827640e45ab790401011110f50000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.957
+21773	19a20800f1fd2e7a5607122d0401011160270000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.154
+21825	a6310800abe827640e45ab790401011110bd0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.739
+21883	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+21888	3e520c00f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+21918	96620800abe827640e45ab7904010111007f0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.496
+21959	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+21971	572b0800f1fd2e7a5607122d04010111c0b90000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.726
+21989	3ab70c00eee2af6c34eb8630080000000f0100000904141f	 ====== from acc1/CONTROL (0): announce; sz=8
+22023	e1cc0800abe827640e45ab7904010111e03e0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.246
+22074	e1420800f1fd2e7a5607122d0401011120f20000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.946
+22125	2e3e0800abe827640e45ab7904010111b0030000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.014
+22166	171b0800f1fd2e7a5607122d0401011130ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+22227	d28b1400abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+22227	d28b1400abe827640e45ab790401011180000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+22269	62590800f1fd2e7a5607122d0401011140ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+22320	dad40800abe827640e45ab790401011170000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+22352	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+22372	62590800f1fd2e7a5607122d0401011140ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+22393	3e520c00f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+22424	dad40800abe827640e45ab790401011170000000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.002
+22464	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+22469	62590800f1fd2e7a5607122d0401011140ff0000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.997
+22521	2b240800abe827640e45ab7904010111700b0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.045
+22551	3ab70c00eee2af6c34eb8630080000000f0100000904141f	 ====== from acc1/CONTROL (0): announce; sz=8
+22573	a4b20800f1fd2e7a5607122d0401011180e10000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.881
+22624	20390800abe827640e45ab790401011160450000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.271
+22665	01c00800f1fd2e7a5607122d04010111d0b20000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.698
+22727	7b7f1400abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+22727	7b7f1400abe827640e45ab7904010111506a0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.415
+22767	a8ee0800f1fd2e7a5607122d0401011190850000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.522
+22819	2f920800abe827640e45ab7904010111e06e0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.433
+22850	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+22871	e7cb0800f1fd2e7a5607122d0401011160760000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.462
+22901	3e520c00f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+22923	2f920800abe827640e45ab7904010111e06e0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.433
+22963	e7cb0800f1fd2e7a5607122d0401011160760000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.462
+22974	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+23026	b3fc0800abe827640e45ab7904010111a06e0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.432
+23079	0ee70800f1fd2e7a5607122d0401011150760000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.462
+23108	3ab70c00eee2af6c34eb8630080000000f0100000904141f	 ====== from acc1/CONTROL (0): announce; sz=8
+23119	2f920800abe827640e45ab7904010111e06e0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.433
+23170	e7cb0800f1fd2e7a5607122d0401011160760000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.462
+23222	2f920800abe827640e45ab7904010111e06e0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.433
+23245	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+23272	e7cb0800f1fd2e7a5607122d0401011160760000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.462
+23325	2f920800abe827640e45ab7904010111e06e0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.433
+23367	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+23373	0ee70800f1fd2e7a5607122d0401011150760000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.462
+23408	3e520c00f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+23418	2f920800abe827640e45ab7904010111e06e0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.433
+23470	a9fc0800f1fd2e7a5607122d0401011140760000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.462
+23513	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+23523	2f920800abe827640e45ab7904010111e06e0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.433
+23564	0ee70800f1fd2e7a5607122d0401011150760000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.462
+23625	2f920800abe827640e45ab7904010111e06e0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.433
+23666	3ab70c00eee2af6c34eb8630080000000f0100000904141f	 ====== from acc1/CONTROL (0): announce; sz=8
+23673	0d4f0800f1fd2e7a5607122d0401011180760000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.463
+23719	c6be0800abe827640e45ab7904010111d06e0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.433
+23754	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+23777	e7cb0800f1fd2e7a5607122d0401011160760000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.462
+23826	2f920800abe827640e45ab7904010111e06e0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.433
+23862	e7cb0800f1fd2e7a5607122d0401011160760000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.462
+23894	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+23914	3e520c00f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+23925	2f920800abe827640e45ab7904010111e06e0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.433
+23966	e7cb0800f1fd2e7a5607122d0401011160760000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.462
+23987	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+24018	2f920800abe827640e45ab7904010111e06e0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.433
+24069	e7cb0800f1fd2e7a5607122d0401011160760000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.462
+24121	c6be0800abe827640e45ab7904010111d06e0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.433
+24144	3ab70c00eee2af6c34eb8630080000000f0100000904141f	 ====== from acc1/CONTROL (0): announce; sz=8
+24164	e7cb0800f1fd2e7a5607122d0401011160760000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.462
+24224	2f920800abe827640e45ab7904010111e06e0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.433
+24245	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
+24268	0ee70800f1fd2e7a5607122d0401011150760000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.462
+24317	2f920800abe827640e45ab7904010111e06e0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.433
+24368	e7cb0800f1fd2e7a5607122d0401011160760000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.462
+24398	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
+24419	3e520c00f1fd2e7a5607122d080000000f0100004647271f	 ====== from slider 2/CONTROL (0): announce; sz=8
+24425	2f920800abe827640e45ab7904010111e06e0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.433
+24461	40d00800f1fd2e7a5607122d0401011170760000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.463
+24527	0f6c0c000651f2f9c1c04f00080000000f010000ca1fdc12	 ====== from brain/CONTROL (0): announce; sz=8
+24533	2f920800abe827640e45ab7904010111e06e0000	from slider 1/SLIDER (1): GET[reading]; sz=4; GET position: 0.433
+24565	e7cb0800f1fd2e7a5607122d0401011160760000	from slider 2/SLIDER (1): GET[reading]; sz=4; GET position: 0.462

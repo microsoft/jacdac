@@ -1,8 +1,5 @@
-JACDAC trace
-
 Moving 2 sliders back and forth on the same bus.
 
-time	data	description
 0	73020c00abe827640e45ab79080000000f0100004647271f	 ====== from slider 1/CONTROL (0): announce; sz=8
 71	5b2a0c00551cc29c1435c7f0080000000f0100000391fc12	 ====== from servo/CONTROL (0): announce; sz=8
 83	3ab70c00eee2af6c34eb8630080000000f0100000904141f	 ====== from acc1/CONTROL (0): announce; sz=8

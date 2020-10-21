@@ -955,11 +955,60 @@ function toTS(info: jdspec.ServiceSpec) {
     return r
 }
 
+function toStaticTypescript(info: jdspec.ServiceSpec) {
+    const indent = "    ";
+    let r = "namespace jacdac {\n";
+    r += indent + "// Service: " + info.name + "\n"
+    if (info.shortId[0] != "_")
+        r += indent + `export const SRV_${info.name.replace(/ /g, "_").toUpperCase()} = ${toHex(info.classIdentifier)}\n`
+    const pref = upperCamel(info.camelName)
+    for (let en of values(info.enums)) {
+        const enPref = pref + upperCamel(en.name)
+        r += `\n${indent}export const enum ${enPref} { // ${cStorage(en.storage)}\n`
+        for (let k of Object.keys(en.members))
+            r += indent + indent + k + " = " + toHex(en.members[k]) + ",\n"
+        r += indent + "}\n\n"
+    }
+    const tsEnums: jdspec.SMap<string> = {}
+
+    for (const pkt of info.packets) {
+        if (pkt.derived)
+            continue
+
+        const cmt = addComment(pkt)
+
+        if (!pkt.secondary && pkt.kind != "pipe_command" && pkt.kind != "pipe_report") {
+            let inner = "Cmd"
+            if (isRegister(pkt.kind))
+                inner = "Reg"
+            else if (pkt.kind == "event")
+                inner = "Event"
+            else if (pkt.kind == "meta_pipe_command" || pkt.kind == "meta_pipe_report")
+                inner = "PipeCmd"
+            let val = toHex(pkt.identifier)
+            tsEnums[inner] = (tsEnums[inner] || "") +
+                `${cmt.comment}${indent}${upperCamel(pkt.name)} = ${val},\n`
+        }
+    }
+
+    for (const k of Object.keys(tsEnums)) {
+        const inner = tsEnums[k]
+            .replace(/^\n+/, "")
+            .replace(/\n$/, "")
+            .replace(/\n/g, "\n    ")
+        r += indent + `export const enum ${pref}${k} {\n    ${inner}\n${indent}}\n\n`
+    }
+    r += "}\n"
+
+    return r
+}
+
 export function converters(): jdspec.SMap<(s: jdspec.ServiceSpec) => string> {
     return {
         "json": (j: jdspec.ServiceSpec) => JSON.stringify(j, null, 2),
         "c": toH,
         "ts": toTS,
+        "sts": toStaticTypescript,
         /*
         "cpp": toHPP,
         */

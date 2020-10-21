@@ -47,13 +47,13 @@ Reset device. ACK may or may not be sent.
 
 Identifies the type of hardware (eg., ACME Corp. Servo X-42 Rev C)
 
-    const device_class: u32 { absolute_min = 0x3000_0000, absolute_max = 0x3fff_ffff } @ 0x181
+    const firmware_identifier : u32 { absolute_min = 0x3000_0000, absolute_max = 0x3fff_ffff } @ 0x181
 
-A numeric code for the string above; used to identify firmware images.
+A numeric code for the string above; used to identify firmware images and devices.
 
-    const bootloader_device_class: u32 { absolute_min = 0x3000_0000, absolute_max = 0x3fff_ffff } @ 0x184
+    const bootloader_firmware_identifier: u32 { absolute_min = 0x3000_0000, absolute_max = 0x3fff_ffff } @ 0x184
 
-Typically the same as `device_class` unless device was flashed by hand; the bootloader will respond to that code.
+Typically the same as `firmware_identifier` unless device was flashed by hand; the bootloader will respond to that code.
 
     const firmware_version: string @ 0x185
 

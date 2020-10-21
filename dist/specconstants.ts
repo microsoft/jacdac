@@ -159,7 +159,7 @@ export enum BootloaderError { // uint32_t
 
 export enum BootloaderCmd {
     /**
-     * No args. The `service_class` is always `0x1ffa9948`. The `device_class` identifies the kind of firmware
+     * No args. The `service_class` is always `0x1ffa9948`. The `firmware_identifier` identifies the kind of firmware
      * that "fits" this device.
      */
     Info = 0x0,
@@ -229,11 +229,11 @@ export enum CtrlReg {
     /** Constant string (bytes). Identifies the type of hardware (eg., ACME Corp. Servo X-42 Rev C) */
     DeviceDescription = 0x180,
     
-    /** Constant uint32_t. A numeric code for the string above; used to identify firmware images. */
-    DeviceClass = 0x181,
+    /** Constant uint32_t. A numeric code for the string above; used to identify firmware images and devices. */
+    FirmwareIdentifier = 0x181,
     
-    /** Constant uint32_t. Typically the same as `device_class` unless device was flashed by hand; the bootloader will respond to that code. */
-    BootloaderDeviceClass = 0x184,
+    /** Constant uint32_t. Typically the same as `firmware_identifier` unless device was flashed by hand; the bootloader will respond to that code. */
+    BootloaderFirmwareIdentifier = 0x184,
     
     /** Constant string (bytes). A string describing firmware version; typically semver. */
     FirmwareVersion = 0x185,

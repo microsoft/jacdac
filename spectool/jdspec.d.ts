@@ -329,7 +329,7 @@ declare namespace jdspec {
         link?: string;
 
         /**
-         * Firmware identifiers (device classes) associated with different versions of this device.
+         * Firmware identifiers associated with different versions of this device.
          */
         firmwares: number[];
 

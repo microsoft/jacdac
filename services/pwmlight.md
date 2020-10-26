@@ -21,7 +21,7 @@ To get steady glow at `x`, use animation of `(x, 60000ms), (x, 0ms)` and keep `m
 
 ## Registers
 
-    rw brightness: u16 frac @ intensity
+    rw brightness: u16 / @ intensity
 
 Set the luminosity of the strip. The value is used to scale `start_intensity` in `steps` register.
 At `0` the power to the strip is completely shut down.
@@ -36,7 +36,7 @@ Maximum number of steps allowed in animation definition. This determines the siz
 
     rw steps @ 0x82 {
         repeats:
-            start_intensity: u16 frac
+            start_intensity: u16 /
             duration: u16 ms
     }
 

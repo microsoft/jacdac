@@ -27,13 +27,13 @@ After the connection is established, an empty data report is sent.
 Connection is closed by closing the pipe.
 
     pipe command outdata {
-        data: bytes
+        data: B
     }
 
 Bytes to be sent directly over an established TCP or SSL connection.
 
     pipe report indata {
-        data: bytes
+        data: B
     }
 
 Bytes read directly from directly over an established TCP or SSL connection.

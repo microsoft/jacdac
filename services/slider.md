@@ -7,6 +7,6 @@ A slider potentiometer.
 
 ## Registers
 
-    ro position: u16 frac @ reading
+    ro position: u16 / @ reading
 
 The relative position of the slider between `0x0000` and `0xffff`.

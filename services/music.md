@@ -6,7 +6,7 @@ A simple buzzer.
 
 ## Registers
 
-    rw volume = 255: u8 frac @ intensity
+    rw volume = 255: u8 / @ intensity
 
 The volume (duty cycle) of the buzzer.
 

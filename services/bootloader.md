@@ -9,8 +9,8 @@ Allows flashing (reprogramming) devices over JACDAC.
     command info @ announce { }
     report {
         service_class: u32
-        page_size: u32 bytes
-        flashable_size: u32 bytes
+        page_size: u32 B
+        flashable_size: u32 B
         firmware_identifier: u32
     }
 
@@ -43,7 +43,7 @@ The flashing host should generate a random id, and use this command to set it.
         reserved1: u32
         reserved2: u32
         reserved3: u32
-        page_data: bytes
+        page_data: B
     }
     report {
         session_id: u32

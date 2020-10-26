@@ -65,12 +65,12 @@ number, and followed by 3 bytes of color.
 
 ## Registers
 
-    rw brightness = 15: u8 frac @ intensity
+    rw brightness = 15: u8 / @ intensity
 
 Set the luminosity of the strip.
 At `0` the power to the strip is completely shut down.
 
-    ro actual_brightness: u8 frac @ 0x180
+    ro actual_brightness: u8 / @ 0x180
 
 This is the luminosity actually applied to the strip.
 May be lower than `brightness` if power-limited by the `max_power` register.
@@ -101,7 +101,7 @@ Limit the power drawn by the light-strip (and controller).
 ## Commands
 
     command run @ 0x81 {
-        program: bytes
+        program: B
     }
 
 Run the given light "program". See service description for details.

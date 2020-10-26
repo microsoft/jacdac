@@ -829,11 +829,12 @@ function byteSize(tp: jdspec.StorageType) {
 }
 
 function toUpper(name: string) {
-    return name.replace(/([a-z])([A-Z])/g, (x, a, b) => a + "_" + b).toUpperCase()
+    return name?.replace(/([a-z])([A-Z])/g, (x, a, b) => a + "_" + b).toUpperCase()
+
 }
 
 function toLower(name: string) {
-    return name.replace(/([a-z])([A-Z])/g, (x, a, b) => a + "_" + b).toLowerCase()
+    return name?.replace(/([a-z])([A-Z])/g, (x, a, b) => a + "_" + b).toLowerCase()
 }
 
 function packed(iface: jdspec.PacketInfo) {

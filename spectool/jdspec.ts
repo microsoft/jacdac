@@ -105,7 +105,7 @@ export const SenMLSecondaryUnitConverters: jdspec.SMap<{
     "frac": { name: "ratio", unit: "/", scale: 1, offset: 0 },
     "us": { name: "micro seconds", unit: "s", scale: 1e-6, offset: 0 },
     "mWh": { name: "micro watt-hour", unit: "J", scale: 3.6e-3, offset: 0 },
-    "gn": { name: "earth gravity", unit: "m/s2", scale: 9.80665, offset: 0 }
+    "g": { name: "earth gravity", unit: "m/s2", scale: 9.80665, offset: 0 }
 }
 
 export function resolveUnit(unit: string) {

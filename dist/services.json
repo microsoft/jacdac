@@ -1236,7 +1236,7 @@
         "fields": [
           {
             "name": "_",
-            "unit": "",
+            "unit": "#",
             "isFloat": false,
             "type": "i32",
             "storage": -4,
@@ -1253,7 +1253,7 @@
         "fields": [
           {
             "name": "_",
-            "unit": "",
+            "unit": "#",
             "isFloat": false,
             "type": "u16",
             "storage": 2,
@@ -1263,7 +1263,7 @@
         "optional": true
       }
     ],
-    "source": "# Rotary encoder\n\n    identifier: 0x10fa29c9\n    extends: _sensor\n    short: crank\n\nAn incremental rotary encoder - converts angular motion of a shaft to digital signal.\n\n## Registers\n\n    ro position: i32 @ reading\n\nUpon device reset starts at `0` (regardless of the shaft position).\nIncreases by `1` for a clockwise \"click\", by `-1` for counter-clockwise.\n\n    const clicks_per_turn?: u16 @ 0x180\n\nThis specifies by how much `position` changes when the crank does 360 degree turn. Typically 12 or 24."
+    "source": "# Rotary encoder\n\n    identifier: 0x10fa29c9\n    extends: _sensor\n    short: crank\n\nAn incremental rotary encoder - converts angular motion of a shaft to digital signal.\n\n## Registers\n\n    ro position: i32 # @ reading\n\nUpon device reset starts at `0` (regardless of the shaft position).\nIncreases by `1` for a clockwise \"click\", by `-1` for counter-clockwise.\n\n    const clicks_per_turn?: u16 # @ 0x180\n\nThis specifies by how much `position` changes when the crank does 360 degree turn. Typically 12 or 24."
   },
   {
     "name": "Gamepad",

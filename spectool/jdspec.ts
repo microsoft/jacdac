@@ -105,12 +105,12 @@ export const SenMLSecondaryUnitConverters: jdspec.SMap<{
     "us": { name: "micro seconds", unit: "s", scale: 1e-6, offset: 0 },
     "mWh": { name: "micro watt-hour", unit: "J", scale: 3.6e-3, offset: 0 },
     "g": { name: "earth gravity", unit: "m/s2", scale: 9.80665, offset: 0 },
-    "#": { name: "count", unit: "#", scale: 1, offset: 0 }
+    "#": { name: "count", unit: "#", scale: 1, offset: 0 },
 }
 
 export function resolveUnit(unit: string) {
     if (unit === "")
-        return ""; // indentifier
+        return { name: "", unit: "", scale: 1, offset: 1 }; // indentifier
 
     // seconary unit?
     const su = SenMLSecondaryUnitConverters[unit];

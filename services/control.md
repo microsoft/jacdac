@@ -43,27 +43,27 @@ Reset device. ACK may or may not be sent.
 
 ## Registers
 
-    const device_description: string @ 0x180
+    const device_description?: string @ 0x180
 
 Identifies the type of hardware (eg., ACME Corp. Servo X-42 Rev C)
 
-    const firmware_identifier : u32 { absolute_min = 0x3000_0000, absolute_max = 0x3fff_ffff } @ 0x181
+    const firmware_identifier? : u32 { absolute_min = 0x3000_0000, absolute_max = 0x3fff_ffff } @ 0x181
 
 A numeric code for the string above; used to identify firmware images and devices.
 
-    const bootloader_firmware_identifier: u32 { absolute_min = 0x3000_0000, absolute_max = 0x3fff_ffff } @ 0x184
+    const bootloader_firmware_identifier?: u32 { absolute_min = 0x3000_0000, absolute_max = 0x3fff_ffff } @ 0x184
 
 Typically the same as `firmware_identifier` unless device was flashed by hand; the bootloader will respond to that code.
 
-    const firmware_version: string @ 0x185
+    const firmware_version?: string @ 0x185
 
 A string describing firmware version; typically semver.
 
-    ro temperature: i16 C { typical_min = -10, typical_max = 150 } @ 0x182
+    ro temperature?: i16 C { typical_min = -10, typical_max = 150 } @ 0x182
 
 MCU temperature in degrees Celsius (approximate).
 
-    ro uptime: u64 us @ 0x186
+    ro uptime?: u64 us @ 0x186
 
 Number of microseconds since boot.
 

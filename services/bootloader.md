@@ -43,7 +43,7 @@ The flashing host should generate a random id, and use this command to set it.
         reserved1: u32
         reserved2: u32
         reserved3: u32
-        page_data: B
+        page_data: bytes
     }
     report {
         session_id: u32

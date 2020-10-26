@@ -43,6 +43,6 @@ Size of a single sample.
 
 When set to `N`, will stream `N` samples as `current_sample` reading.
 
-    ro current_sample: B @ reading
+    ro current_sample: bytes @ reading
 
 Last collected sample.

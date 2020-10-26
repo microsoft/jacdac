@@ -640,14 +640,15 @@
             "name": "_",
             "unit": "",
             "isFloat": false,
-            "type": "b",
-            "storage": 0
+            "type": "bytes",
+            "storage": 0,
+            "isSimpleType": true
           }
         ],
         "identifierName": "reading"
       }
     ],
-    "source": "# Sensor Aggregator\n\n    identifier: 0x1d90e1c5\n\nAggregate data from multiple sensors into a single stream\n(often used as input to machine learning models on the same device, see model runner service).\n\n## Registers\n\n    enum SampleType : u8 {\n        U8 = 0x08\n        I8 = 0x88\n        U16 = 0x10\n        I16 = 0x90\n        U32 = 0x20\n        I32 = 0xA0\n    }\n    rw inputs @ 0x80 {\n        sampling_interval: u16 ms\n        samples_in_window: u16\n        reserved: u32\n    repeats:\n        device_id: u64\n        service_class: u32\n        service_num: u8\n        sample_size: u8 B\n        sample_type: SampleType\n        sample_shift: i8\n    }\n\nSet automatic input collection.\nThese settings are stored in flash.\n\n    ro num_samples: u32 @ 0x180\n\nNumber of input samples collected so far.\n\n    ro sample_size: u8 B @ 0x181\n\nSize of a single sample.\n\n    rw stream_samples: u32 @ 0x81\n\nWhen set to `N`, will stream `N` samples as `current_sample` reading.\n\n    ro current_sample: B @ reading\n\nLast collected sample.\n"
+    "source": "# Sensor Aggregator\n\n    identifier: 0x1d90e1c5\n\nAggregate data from multiple sensors into a single stream\n(often used as input to machine learning models on the same device, see model runner service).\n\n## Registers\n\n    enum SampleType : u8 {\n        U8 = 0x08\n        I8 = 0x88\n        U16 = 0x10\n        I16 = 0x90\n        U32 = 0x20\n        I32 = 0xA0\n    }\n    rw inputs @ 0x80 {\n        sampling_interval: u16 ms\n        samples_in_window: u16\n        reserved: u32\n    repeats:\n        device_id: u64\n        service_class: u32\n        service_num: u8\n        sample_size: u8 B\n        sample_type: SampleType\n        sample_shift: i8\n    }\n\nSet automatic input collection.\nThese settings are stored in flash.\n\n    ro num_samples: u32 @ 0x180\n\nNumber of input samples collected so far.\n\n    ro sample_size: u8 B @ 0x181\n\nSize of a single sample.\n\n    rw stream_samples: u32 @ 0x81\n\nWhen set to `N`, will stream `N` samples as `current_sample` reading.\n\n    ro current_sample: bytes @ reading\n\nLast collected sample.\n"
   },
   {
     "name": "Bootloader",
@@ -839,8 +840,9 @@
             "name": "page_data",
             "unit": "",
             "isFloat": false,
-            "type": "b",
-            "storage": 0
+            "type": "bytes",
+            "storage": 0,
+            "isSimpleType": true
           }
         ],
         "hasReport": true
@@ -878,7 +880,7 @@
         "secondary": true
       }
     ],
-    "source": "# Bootloader\n\n    identifier: 0x1ffa9948\n\nAllows flashing (reprogramming) devices over JACDAC.\n\n## Commands\n\n    command info @ announce { }\n    report {\n        service_class: u32\n        page_size: u32 B\n        flashable_size: u32 B\n        firmware_identifier: u32\n    }\n\nThe `service_class` is always `0x1ffa9948`. The `firmware_identifier` identifies the kind of firmware\nthat \"fits\" this device.\n\n    command set_session @ 0x81 {\n        session_id: u32\n    }\n    report {\n        session_id: u32\n    }\n\nThe flashing host should generate a random id, and use this command to set it.\n\n    enum Error : u32 {\n        NoError = 0\n        PacketTooSmall = 1\n        OutOfFlashableRange = 2\n        InvalidPageOffset = 3\n        NotPageAligned = 4\n    }\n    command page_data @ 0x80 {\n        page_address: u32\n        page_offset: u16\n        chunk_no: u8\n        chunk_max: u8\n        session_id: u32\n        reserved0: u32\n        reserved1: u32\n        reserved2: u32\n        reserved3: u32\n        page_data: B\n    }\n    report {\n        session_id: u32\n        page_error: Error\n        page_address: u32\n    }\n\nUse to send flashing data. A physical page is split into `chunk_max + 1` chunks, where `chunk_no = 0 ... chunk_max`.\nEach chunk is stored at `page_address + page_offset`. `page_address` has to be equal in all chunks,\nand is included in response.\nOnly the last chunk causes writing to flash and elicits response.\n\nErrors not listed are also possible. Errors larger than `0xffff` indicate de-synchronization on chunk numbers.\n"
+    "source": "# Bootloader\n\n    identifier: 0x1ffa9948\n\nAllows flashing (reprogramming) devices over JACDAC.\n\n## Commands\n\n    command info @ announce { }\n    report {\n        service_class: u32\n        page_size: u32 B\n        flashable_size: u32 B\n        firmware_identifier: u32\n    }\n\nThe `service_class` is always `0x1ffa9948`. The `firmware_identifier` identifies the kind of firmware\nthat \"fits\" this device.\n\n    command set_session @ 0x81 {\n        session_id: u32\n    }\n    report {\n        session_id: u32\n    }\n\nThe flashing host should generate a random id, and use this command to set it.\n\n    enum Error : u32 {\n        NoError = 0\n        PacketTooSmall = 1\n        OutOfFlashableRange = 2\n        InvalidPageOffset = 3\n        NotPageAligned = 4\n    }\n    command page_data @ 0x80 {\n        page_address: u32\n        page_offset: u16\n        chunk_no: u8\n        chunk_max: u8\n        session_id: u32\n        reserved0: u32\n        reserved1: u32\n        reserved2: u32\n        reserved3: u32\n        page_data: bytes\n    }\n    report {\n        session_id: u32\n        page_error: Error\n        page_address: u32\n    }\n\nUse to send flashing data. A physical page is split into `chunk_max + 1` chunks, where `chunk_no = 0 ... chunk_max`.\nEach chunk is stored at `page_address + page_offset`. `page_address` has to be equal in all chunks,\nand is included in response.\nOnly the last chunk causes writing to flash and elicits response.\n\nErrors not listed are also possible. Errors larger than `0xffff` indicate de-synchronization on chunk numbers.\n"
   },
   {
     "name": "Button",
@@ -1663,13 +1665,14 @@
             "name": "program",
             "unit": "",
             "isFloat": false,
-            "type": "b",
-            "storage": 0
+            "type": "bytes",
+            "storage": 0,
+            "isSimpleType": true
           }
         ]
       }
     ],
-    "source": "# Light\n\n    identifier: 0x126f00e0\n\nA controller for strips of RGB LEDs.\n\n## Light programs\n\nRealistically, with 1 mbit JACDAC, we can transmit under 2k of data per animation frame (at 20fps).\nIf transmitting raw data that would be around 500 pixels, which is not enough for many\ninstallations and it would completely clog the network.\n\nThus, light service defines a domain-specific language for describing light animations\nand efficiently transmitting them over wire.\n\nLight commands are not JACDAC commands.\nLight commands are efficiently encoded as sequences of bytes and typically sent as payload\nof `run` command.\n\nDefinitions:\n* `P` - position in the strip\n* `R` - number of repetitions of the command\n* `N` - number of pixels affected by the command\n* `C` - single color designation\n* `C+` - sequence of color designations\n\nUpdate modes:\n* `0` - replace\n* `1` - add RGB\n* `2` - subtract RGB\n* `3` - multiply RGB (by c/128); each pixel value will change by at least 1\n\nProgram commands:\n* `0xD0: set_all(C+)` - set all pixels in current range to given color pattern\n* `0xD1: fade(C+)` - set pixels in current range to colors between colors in sequence\n* `0xD2: fade_hsv(C+)` - similar to `fade()`, but colors are specified and faded in HSV\n* `0xD3: rotate_fwd(K)` - rotate (shift) pixels by `K` positions away from the connector\n* `0xD4: rotate_back(K)` - same, but towards the connector\n* `0xD5: show(M=50)` - send buffer to strip and wait `M` milliseconds\n* `0xD6: range(P=0, N=length, W=1, S=0)` - range from pixel `P`, `N` pixels long\n  (currently unsupported: every `W` pixels skip `S` pixels)\n* `0xD7: mode(K=0)` - set update mode\n* `0xD8: mode1(K=0)` - set update mode for next command only\n* `0xCF: set1(P, C)` - set one pixel at `P` (in current range) to given color\n\nA number `k` is encoded as follows:\n* `0 <= k < 128` -> `k`\n* `128 <= k < 16383` -> `0x80 | (k >> 8), k & 0xff`\n* bigger and negative numbers are not supported\n\nThus, bytes `0xC0-0xFF` are free to use for commands.\n\nFormats:\n* `0xC1, R, G, B` - single color parameter\n* `0xC2, R0, G0, B0, R1, G1, B1` - two color parameter\n* `0xC3, R0, G0, B0, R1, G1, B1, R2, G2, B2` - three color parameter\n* `0xC0, N, R0, G0, B0, ..., R(N-1), G(N-1), B(N-1)` - `N` color parameter\n* `0xCF, <number>, R, G, B` - `set1` special format\n\nCommands are encoded as command byte, followed by parameters in the order\nfrom the command definition.\n\nThe `set1()` command has irregular encoding to save space - it is byte `0xCF` followed by encoded\nnumber, and followed by 3 bytes of color.\n\n## Registers\n\n    rw brightness = 15: u8 / @ intensity\n\nSet the luminosity of the strip.\nAt `0` the power to the strip is completely shut down.\n\n    ro actual_brightness: u8 / @ 0x180\n\nThis is the luminosity actually applied to the strip.\nMay be lower than `brightness` if power-limited by the `max_power` register.\nIt will rise slowly (few seconds) back to `brightness` is limits are no longer required.\n \n    enum LightType : u8 {\n        WS2812B_GRB = 0x00\n        APA102 = 0x10\n        SK9822 = 0x11\n    }\n    rw light_type: LightType @ 0x80\n\nSpecifies the type of light strip connected to controller.\nControllers which are sold with lights should default to the correct type\nand could not allow change.\n\n    rw num_pixels = 15: u16 @ 0x81\n\nSpecifies the number of pixels in the strip.\nControllers which are sold with lights should default to the correct length\nand could not allow change.\nIncreasing length at runtime leads to ineffective use of memory and may lead to controller reboot.\n\n    rw max_power = 200: u16 mA @ max_power\n\nLimit the power drawn by the light-strip (and controller).\n\n## Commands\n\n    command run @ 0x81 {\n        program: B\n    }\n\nRun the given light \"program\". See service description for details.\n"
+    "source": "# Light\n\n    identifier: 0x126f00e0\n\nA controller for strips of RGB LEDs.\n\n## Light programs\n\nRealistically, with 1 mbit JACDAC, we can transmit under 2k of data per animation frame (at 20fps).\nIf transmitting raw data that would be around 500 pixels, which is not enough for many\ninstallations and it would completely clog the network.\n\nThus, light service defines a domain-specific language for describing light animations\nand efficiently transmitting them over wire.\n\nLight commands are not JACDAC commands.\nLight commands are efficiently encoded as sequences of bytes and typically sent as payload\nof `run` command.\n\nDefinitions:\n* `P` - position in the strip\n* `R` - number of repetitions of the command\n* `N` - number of pixels affected by the command\n* `C` - single color designation\n* `C+` - sequence of color designations\n\nUpdate modes:\n* `0` - replace\n* `1` - add RGB\n* `2` - subtract RGB\n* `3` - multiply RGB (by c/128); each pixel value will change by at least 1\n\nProgram commands:\n* `0xD0: set_all(C+)` - set all pixels in current range to given color pattern\n* `0xD1: fade(C+)` - set pixels in current range to colors between colors in sequence\n* `0xD2: fade_hsv(C+)` - similar to `fade()`, but colors are specified and faded in HSV\n* `0xD3: rotate_fwd(K)` - rotate (shift) pixels by `K` positions away from the connector\n* `0xD4: rotate_back(K)` - same, but towards the connector\n* `0xD5: show(M=50)` - send buffer to strip and wait `M` milliseconds\n* `0xD6: range(P=0, N=length, W=1, S=0)` - range from pixel `P`, `N` pixels long\n  (currently unsupported: every `W` pixels skip `S` pixels)\n* `0xD7: mode(K=0)` - set update mode\n* `0xD8: mode1(K=0)` - set update mode for next command only\n* `0xCF: set1(P, C)` - set one pixel at `P` (in current range) to given color\n\nA number `k` is encoded as follows:\n* `0 <= k < 128` -> `k`\n* `128 <= k < 16383` -> `0x80 | (k >> 8), k & 0xff`\n* bigger and negative numbers are not supported\n\nThus, bytes `0xC0-0xFF` are free to use for commands.\n\nFormats:\n* `0xC1, R, G, B` - single color parameter\n* `0xC2, R0, G0, B0, R1, G1, B1` - two color parameter\n* `0xC3, R0, G0, B0, R1, G1, B1, R2, G2, B2` - three color parameter\n* `0xC0, N, R0, G0, B0, ..., R(N-1), G(N-1), B(N-1)` - `N` color parameter\n* `0xCF, <number>, R, G, B` - `set1` special format\n\nCommands are encoded as command byte, followed by parameters in the order\nfrom the command definition.\n\nThe `set1()` command has irregular encoding to save space - it is byte `0xCF` followed by encoded\nnumber, and followed by 3 bytes of color.\n\n## Registers\n\n    rw brightness = 15: u8 / @ intensity\n\nSet the luminosity of the strip.\nAt `0` the power to the strip is completely shut down.\n\n    ro actual_brightness: u8 / @ 0x180\n\nThis is the luminosity actually applied to the strip.\nMay be lower than `brightness` if power-limited by the `max_power` register.\nIt will rise slowly (few seconds) back to `brightness` is limits are no longer required.\n \n    enum LightType : u8 {\n        WS2812B_GRB = 0x00\n        APA102 = 0x10\n        SK9822 = 0x11\n    }\n    rw light_type: LightType @ 0x80\n\nSpecifies the type of light strip connected to controller.\nControllers which are sold with lights should default to the correct type\nand could not allow change.\n\n    rw num_pixels = 15: u16 @ 0x81\n\nSpecifies the number of pixels in the strip.\nControllers which are sold with lights should default to the correct length\nand could not allow change.\nIncreasing length at runtime leads to ineffective use of memory and may lead to controller reboot.\n\n    rw max_power = 200: u16 mA @ max_power\n\nLimit the power drawn by the light-strip (and controller).\n\n## Commands\n\n    command run @ 0x81 {\n        program: bytes\n    }\n\nRun the given light \"program\". See service description for details.\n"
   },
   {
     "name": "Logger",
@@ -2997,8 +3000,9 @@
             "name": "data",
             "unit": "",
             "isFloat": false,
-            "type": "b",
-            "storage": 0
+            "type": "bytes",
+            "storage": 0,
+            "isSimpleType": true
           }
         ],
         "pipeType": "open"
@@ -3013,8 +3017,9 @@
             "name": "data",
             "unit": "",
             "isFloat": false,
-            "type": "b",
-            "storage": 0
+            "type": "bytes",
+            "storage": 0,
+            "isSimpleType": true
           }
         ],
         "pipeType": "open"
@@ -3036,7 +3041,7 @@
         "pipeType": "open"
       }
     ],
-    "source": "# TCP\n\n    identifier: 0x1b43b70b\n\nData transfer over TCP/IP and TLS stream sockets.\n\n## Commands\n\n    command open @ 0x80 {\n        inbound: pipe\n    }\n    report {\n        outbound_port: pipe_port\n    }\n\nOpen pair of pipes between network peripheral and a controlling device. In/outbound refers to direction from/to internet.\n\n## Pipes\n\n    meta pipe command open_ssl @ 0x01 {\n        tcp_port: u16\n        hostname: string\n    }\n\nOpen an SSL connection to a given host:port pair. Can be issued only once on given pipe.\nAfter the connection is established, an empty data report is sent.\nConnection is closed by closing the pipe.\n\n    pipe command outdata {\n        data: B\n    }\n\nBytes to be sent directly over an established TCP or SSL connection.\n\n    pipe report indata {\n        data: B\n    }\n\nBytes read directly from directly over an established TCP or SSL connection.\n\n    enum TcpError : i32 {\n        InvalidCommand = 1\n        InvalidCommandPayload = 2\n    }\n    meta pipe report error @ 0x00 {\n        error: TcpError\n    }\n\nReported when an error is encountered. Negative error codes come directly from the SSL implementation.\n"
+    "source": "# TCP\n\n    identifier: 0x1b43b70b\n\nData transfer over TCP/IP and TLS stream sockets.\n\n## Commands\n\n    command open @ 0x80 {\n        inbound: pipe\n    }\n    report {\n        outbound_port: pipe_port\n    }\n\nOpen pair of pipes between network peripheral and a controlling device. In/outbound refers to direction from/to internet.\n\n## Pipes\n\n    meta pipe command open_ssl @ 0x01 {\n        tcp_port: u16\n        hostname: string\n    }\n\nOpen an SSL connection to a given host:port pair. Can be issued only once on given pipe.\nAfter the connection is established, an empty data report is sent.\nConnection is closed by closing the pipe.\n\n    pipe command outdata {\n        data: bytes\n    }\n\nBytes to be sent directly over an established TCP or SSL connection.\n\n    pipe report indata {\n        data: bytes\n    }\n\nBytes read directly from directly over an established TCP or SSL connection.\n\n    enum TcpError : i32 {\n        InvalidCommand = 1\n        InvalidCommandPayload = 2\n    }\n    meta pipe report error @ 0x00 {\n        error: TcpError\n    }\n\nReported when an error is encountered. Negative error codes come directly from the SSL implementation.\n"
   },
   {
     "name": "Temperature",

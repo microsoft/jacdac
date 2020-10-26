@@ -149,7 +149,7 @@ namespace jacdac {
     /** Read-write uint32_t. When set to `N`, will stream `N` samples as `current_sample` reading. */
         StreamSamples = 0x81,
     
-    /** Read-only b (B). Last collected sample. */
+    /** Read-only bytes. Last collected sample. */
         CurrentSample = 0x101,
     }
 
@@ -239,7 +239,7 @@ namespace jacdac {
     }
 
     export const enum CtrlReg {
-    /** Constant string (B). Identifies the type of hardware (eg., ACME Corp. Servo X-42 Rev C) */
+    /** Constant string (bytes). Identifies the type of hardware (eg., ACME Corp. Servo X-42 Rev C) */
         DeviceDescription = 0x180,
     
     /** Constant uint32_t. A numeric code for the string above; used to identify firmware images and devices. */
@@ -248,7 +248,7 @@ namespace jacdac {
     /** Constant uint32_t. Typically the same as `firmware_identifier` unless device was flashed by hand; the bootloader will respond to that code. */
         BootloaderFirmwareIdentifier = 0x184,
     
-    /** Constant string (B). A string describing firmware version; typically semver. */
+    /** Constant string (bytes). A string describing firmware version; typically semver. */
         FirmwareVersion = 0x185,
     
     /** Read-only °C int16_t. MCU temperature in degrees Celsius (approximate). */
@@ -366,7 +366,7 @@ namespace jacdac {
     }
 
     export const enum LightCmd {
-    /** Argument: program b (B). Run the given light "program". See service description for details. */
+    /** Argument: program bytes. Run the given light "program". See service description for details. */
         Run = 0x81,
     }
 
@@ -394,16 +394,16 @@ namespace jacdac {
     }
 
     export const enum LoggerCmd {
-    /** Argument: message string (B). Report a message. */
+    /** Argument: message string (bytes). Report a message. */
         Debug = 0x80,
     
-    /** Argument: message string (B). Report a message. */
+    /** Argument: message string (bytes). Report a message. */
         Log = 0x81,
     
-    /** Argument: message string (B). Report a message. */
+    /** Argument: message string (bytes). Report a message. */
         Warn = 0x82,
     
-    /** Argument: message string (B). Report a message. */
+    /** Argument: message string (bytes). Report a message. */
         Error = 0x83,
     }
 
@@ -428,7 +428,7 @@ namespace jacdac {
         SetModel = 0x80,
     
     /**
-     * Argument: outputs pipe (B). Open channel that can be used to manually invoke the model. When enough data is sent over the `inputs` pipe, the model is invoked,
+     * Argument: outputs pipe (bytes). Open channel that can be used to manually invoke the model. When enough data is sent over the `inputs` pipe, the model is invoked,
      * and results are send over the `outputs` pipe.
      */
         Predict = 0x81,
@@ -461,7 +461,7 @@ namespace jacdac {
     /** Read-only B uint32_t. The size of the model in bytes. */
         ModelSize = 0x184,
     
-    /** Read-only string (B). Textual description of last error when running or loading model (if any). */
+    /** Read-only string (bytes). Textual description of last error when running or loading model (if any). */
         LastError = 0x185,
     
     /**
@@ -643,10 +643,10 @@ namespace jacdac {
     /** No args. Remove all role bindings. */
         ClearAllRoles = 0x84,
     
-    /** Argument: stored_roles pipe (B). Return all roles stored internally. */
+    /** Argument: stored_roles pipe (bytes). Return all roles stored internally. */
         ListStoredRoles = 0x82,
     
-    /** Argument: required_roles pipe (B). List all roles required by the current program. `device_id` is `0` if role is unbound. */
+    /** Argument: required_roles pipe (bytes). List all roles required by the current program. `device_id` is `0` if role is unbound. */
         ListRequiredRoles = 0x83,
     }
 
@@ -682,7 +682,7 @@ namespace jacdac {
     }
 
     export const enum TCPCmd {
-    /** Argument: inbound pipe (B). Open pair of pipes between network peripheral and a controlling device. In/outbound refers to direction from/to internet. */
+    /** Argument: inbound pipe (bytes). Open pair of pipes between network peripheral and a controlling device. In/outbound refers to direction from/to internet. */
         Open = 0x80,
     }
 
@@ -727,10 +727,10 @@ namespace jacdac {
     }
 
     export const enum WifiCmd {
-    /** Argument: results pipe (B). Initiate search for WiFi networks. Results are returned via pipe, one entry per packet. */
+    /** Argument: results pipe (bytes). Initiate search for WiFi networks. Results are returned via pipe, one entry per packet. */
         Scan = 0x80,
     
-    /** Argument: ssid string (B). Connect to named network. Password can be appended after ssid. Both strings have to be NUL-terminated. */
+    /** Argument: ssid string (bytes). Connect to named network. Password can be appended after ssid. Both strings have to be NUL-terminated. */
         Connect = 0x81,
     
     /** No args. Disconnect from current WiFi network if any. */

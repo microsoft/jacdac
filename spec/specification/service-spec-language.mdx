@@ -104,6 +104,7 @@ It is also one that does not change, at least until the device resets
 The fourth register is current acceleration.
 The `i16.16` type is signed 32 bit integer, where the value is shifted by 16 bits.
 That is, the last 16 bits is the fractional part.
+Similarly, a `i22.10` would also be a 32 bit integers, where the value if shifted by 10 bits.
 
 The register also has three fields, instead of the usual one.
 In fact, the `core_temperature` could be also expressed using the more verbose syntax,

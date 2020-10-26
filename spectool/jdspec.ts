@@ -775,8 +775,7 @@ export function parseSpecificationMarkdownToJSON(filecontent: string, includes?:
                 return [12, tp2, 0]
             case "pipe_port":
                 return [2, tp2, 0]
-            case "B":
-            case "b":
+            case "bytes":
             case "string":
                 return [0, tp2, 0]
             default:
@@ -844,7 +843,7 @@ function packed(iface: jdspec.PacketInfo) {
 
 function cStorage(tp: jdspec.StorageType) {
     if (tp == 0 || [1, 2, 4, 8].indexOf(Math.abs(tp)) < 0)
-        return "B"
+        return "bytes"
     if (tp < 0)
         return `int${-tp * 8}_t`
     else
@@ -853,7 +852,7 @@ function cStorage(tp: jdspec.StorageType) {
 
 function canonicalType(tp: jdspec.StorageType): string {
     if (tp == 0)
-        return "B"
+        return "bytes"
     if (tp < 0)
         return `i${-tp * 8}`
     else

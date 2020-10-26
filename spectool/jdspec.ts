@@ -1,5 +1,129 @@
 /// <reference path="jdspec.d.ts" />
 
+export const SenMLUnitDescription: jdspec.SMap<string> = {
+    "m": "meter",
+    "kg": "kilogram",
+    "s": "second",
+    "A": "ampere",
+    "K": "kelvin",
+    "cd": "candela",
+    "mol": "mole",
+    "Hz": "hertz",
+    "rad": "radian",
+    "sr": "steradian",
+    "N": "newton",
+    "Pa": "pascal",
+    "J": "joule",
+    "W": "watt",
+    "C": "coulomb",
+    "V": "volt",
+    "F": "farad",
+    "Ohm": "ohm",
+    "S": "siemens",
+    "Wb": "weber",
+    "T": "tesla",
+    "H": "henry",
+    "Cel": "degrees Celsius",
+    "lm": "lumen",
+    "lx": "lux",
+    "Bq": "becquerel",
+    "Gy": "gray",
+    "Sv": "sievert",
+    "kat": "katal",
+    "m2": "square meter (area)",
+    "m3": "cubic meter (volume)",
+    "m/s": "meter per second (velocity)",
+    "m/s2": "meter per square second (acceleration)",
+    "m3/s": "cubic meter per second (flow rate)",
+    "W/m2": "watt per square meter (irradiance)",
+    "cd/m2": "candela per square meter (luminance)",
+    "bit": "bit (information content)",
+    "bit/s": "bit per second (data rate)",
+    "lat": "degrees latitude",
+    "lon": "degrees longitude",
+    "pH": "pH value (acidity; logarithmic quantity)",
+    "dB": "decibel (logarithmic quantity)",
+    "dBW": "decibel relative to 1 W (power level)",
+    "count": "1 (counter value)",
+    "/": "1 (ratio e.g., value of a switch)",
+    "%RH": "Percentage (Relative Humidity)",
+    "%EL": "Percentage (remaining battery energy level)",
+    "EL": "seconds (remaining battery energy level)",
+    "1/s": "1 per second (event rate)",
+    "S/m": "Siemens per meter (conductivity)",
+    "B": "Byte (information content)",
+    "VA": "volt-ampere (Apparent Power)",
+    "VAs": "volt-ampere second (Apparent Energy)",
+    "var": "volt-ampere reactive (Reactive Power)",
+    "vars": "volt-ampere-reactive second (Reactive Energy)",
+    "J/m": "joule per meter (Energy per distance)",
+    "kg/m3": "kilogram per cubic meter (mass density, mass concentration)"
+}
+
+export const SenMLSecondaryUnitConverters: jdspec.SMap<{
+    name: string;
+    unit: senml.Unit | "#";
+    scale: number;
+    offset: number;
+}> = {
+    "ms": { name: "millisecond", unit: "s", scale: 1 / 1000, offset: 0 },
+    "min": { name: "minute", unit: "s", scale: 60, offset: 0 },
+    "h": { name: "hour", unit: "s", scale: 3600, offset: 0 },
+    "MHz": { name: "megahertz", unit: "Hz", scale: 1000000, offset: 0 },
+    "kW": { name: "kilowatt", unit: "W", scale: 1000, offset: 0 },
+    "kVA": { name: "kilovolt-ampere", unit: "VA", scale: 1000, offset: 0 },
+    "kvar": { name: "kilovar", unit: "var", scale: 1000, offset: 0 },
+    "Ah": { name: "ampere-hour", unit: "C", scale: 3600, offset: 0 },
+    "Wh": { name: "watt-hour", unit: "J", scale: 3600, offset: 0 },
+    "kWh": { name: "kilowatt-hour", unit: "J", scale: 3600000, offset: 0 },
+    "varh": { name: "var-hour", unit: "vars", scale: 3600, offset: 0 },
+    "kvarh": { name: "kilovar-hour", unit: "vars", scale: 3600000, offset: 0 },
+    "kVAh": { name: "kilovolt-ampere-hour", unit: "VAs", scale: 3600000, offset: 0 },
+    "Wh/km": { name: "watt-hour per kilometer", unit: "J/m", scale: 3.6, offset: 0 },
+    "KiB": { name: "kibibyte", unit: "B", scale: 1024, offset: 0 },
+    "GB": { name: "gigabyte", unit: "B", scale: 1.00E+09, offset: 0 },
+    "Mbit/s": { name: "megabit per second", unit: "bit/s", scale: 1000000, offset: 0 },
+    "B/s": { name: "byte per second", unit: "bit/s", scale: 8, offset: 0 },
+    "MB/s": { name: "megabyte per second", unit: "bit/s", scale: 8000000, offset: 0 },
+    "mV": { name: "millivolt", unit: "V", scale: 1 / 1000, offset: 0 },
+    "mA": { name: "milliampere", unit: "A", scale: 1 / 1000, offset: 0 },
+    "dBm": { name: "decibel (milliwatt)", unit: "dBW", scale: 1, offset: -30 },
+    "ug/m3": { name: "microgram per cubic meter", unit: "kg/m3", scale: 1.00E-09, offset: 0 },
+    "mm/h": { name: "millimeter per hour", unit: "m/s", scale: 1 / 3600000, offset: 0 },
+    "m/h": { name: "meter per hour", unit: "m/s", scale: 1 / 3600, offset: 0 },
+    "ppm": { name: "parts per million", unit: "/", scale: 1.00E-06, offset: 0 },
+    "/100": { name: "percent", unit: "/", scale: 1 / 100, offset: 0 },
+    "/1000": { name: "permille", unit: "/", scale: 1 / 1000, offset: 0 },
+    "hPa": { name: "hectopascal", unit: "Pa", scale: 100, offset: 0 },
+    "mm": { name: "millimeter", unit: "m", scale: 1 / 1000, offset: 0 },
+    "cm": { name: "centimeter", unit: "m", scale: 1 / 100, offset: 0 },
+    "km": { name: "kilometer", unit: "m", scale: 1000, offset: 0 },
+    "km/h": { name: "kilometer per hour", unit: "m/s", scale: 1 / 3.6, offset: 0 },
+
+    // compat with previous JACDAC versions
+    "frac": { name: "ratio", unit: "/", scale: 1, offset: 0 },
+    "us": { name: "micro seconds", unit: "s", scale: 1e-6, offset: 0 },
+    "mWh": { name: "micro watt-hour", unit: "J", scale: 3.6e-3, offset: 0 },
+    "g": { name: "earth gravity", unit: "m/s2", scale: 9.80665, offset: 0 },
+    "#": { name: "count", unit: "#", scale: 1, offset: 0 },
+}
+
+export function resolveUnit(unit: string) {
+    if (unit === "")
+        return { name: "", unit: "", scale: 1, offset: 1 }; // indentifier
+
+    // seconary unit?
+    const su = SenMLSecondaryUnitConverters[unit];
+    if (su)
+        return su;
+
+    const name = SenMLUnitDescription[unit];
+    if (name)
+        return { name, unit, scale: 1, offset: 0 }
+
+    return undefined;
+}
+
 export function parseSpecificationMarkdownToJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>, filename = ""): jdspec.ServiceSpec {
     filecontent = (filecontent || "").replace(/\r/g, "")
     let info: jdspec.ServiceSpec = {
@@ -388,7 +512,7 @@ export function parseSpecificationMarkdownToJSON(filecontent: string, includes?:
         }
 
         let shift = typeShift || undefined
-        if (unit == "frac") {
+        if (unit == "/") {
             shift = Math.abs(storage) * 8
             if (storage < 0)
                 shift -= 1
@@ -651,41 +775,27 @@ export function parseSpecificationMarkdownToJSON(filecontent: string, includes?:
                 return [12, tp2, 0]
             case "pipe_port":
                 return [2, tp2, 0]
-            case "bytes":
+            case "B":
+            case "b":
             case "string":
                 return [0, tp2, 0]
             default:
                 const m = /^u8\[(\d+)\]$/.exec(tp2)
                 if (m)
                     return [parseIntCheck(m[1]), tp2, 0]
-                error("unknown type: " + tp)
+                error("unknown type: " + tp + " " + tp2)
                 return [4, tp2, 0]
         }
     }
 
     function normalizeUnit(unit: string): jdspec.Unit {
-        switch (unit) {
-            case undefined:
-            case null:
-                return ""
-            case "":
-            case "frac":
-            case "s":
-            case "ms":
-            case "us":
-            case "mV":
-            case "mA":
-            case "mWh":
-            case "K":
-            case "C":
-            case "g":
-            case "%RH":
-            case "bytes":
-                return unit
-            default:
-                error(`expecting unit, got '${unit}'`)
-                return ""
-        }
+        if (unit === undefined || unit === null)
+            return "";
+
+        if (SenMLUnitDescription[unit] || SenMLSecondaryUnitConverters[unit])
+            return unit as jdspec.Unit;
+        error(`expecting unit, got '${unit}'`)
+        return ""
     }
 
     function hasNaturalAlignment(iface: jdspec.PacketInfo) {
@@ -734,7 +844,7 @@ function packed(iface: jdspec.PacketInfo) {
 
 function cStorage(tp: jdspec.StorageType) {
     if (tp == 0 || [1, 2, 4, 8].indexOf(Math.abs(tp)) < 0)
-        return "bytes"
+        return "B"
     if (tp < 0)
         return `int${-tp * 8}_t`
     else
@@ -743,7 +853,7 @@ function cStorage(tp: jdspec.StorageType) {
 
 function canonicalType(tp: jdspec.StorageType): string {
     if (tp == 0)
-        return "bytes"
+        return "B"
     if (tp < 0)
         return `i${-tp * 8}`
     else
@@ -771,7 +881,7 @@ function prettyUnit(u: jdspec.Unit): string {
     switch (u) {
         case "us": return "μs"
         case "C": return "°C"
-        case "frac": return "fraction"
+        case "/": return "ratio"
         default: return u
     }
 }

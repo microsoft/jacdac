@@ -68,12 +68,16 @@ The temperature at engine core.
 The number of exhaust nozzles in this rocket.
 
     ro acceleration @ 0x182 {
-        x: i22.10 g
-        y: i22.10 g
-        z: i22.10 g
+        x: i16.16 m/s2
+        y: i16.16 m/s2
+        z: i16.16 m/s2
     }
 
-Current acceleration forces experienced by the rocket. Includes gravity.
+Current acceleration forces experienced by the rocket.
+
+    rw max_acceleration?: u16.16 @ 0x183
+
+Read or configure the sensitivity of the sensor. (optional).
 ```
 
 The first line of registers section goes in `notes["registers"]` in JSON,
@@ -91,14 +95,15 @@ and events).
 The next line specifies a read-only register, giving current temperature in degrees Kelvin.
 A 32 bit value is used to avoid overflows.
 
+JACDAC supports units specified in [SenML](https://www.iana.org/assignments/senml/senml.xhtml).
+
 The third register is unit-less.
 It is also one that does not change, at least until the device resets
 (in the case of this service, the reset is usually quite spectacular).
 
 The fourth register is current acceleration.
-The `i22.10` type is signed 32 bit integer, where the value is shifted by 10 bits.
-That is, the last 10 bits is the fractional part.
-The values are expressed in `g`, which is Earth-standard gravity.
+The `i16.16` type is signed 32 bit integer, where the value is shifted by 16 bits.
+That is, the last 16 bits is the fractional part.
 
 The register also has three fields, instead of the usual one.
 In fact, the `core_temperature` could be also expressed using the more verbose syntax,
@@ -109,6 +114,9 @@ ro core_temperature @ 0x180 {
     _: u32 K
 }
 ```
+
+The last register, to specify the sensivity of the sensor, is optional.
+This is denoted by adding a `?` after the register name.
 
 Now, let's move on to commands.
 
@@ -260,7 +268,7 @@ Such a format can be expressed using `repeats:` label, as in the following examp
         delay: u16 ms
     repeats:
         nozzle_id: u8
-        throttle: u8 frac
+        throttle: u8 /
     }
 
 Set throttle on specific nozzles, after specified delay.
@@ -278,3 +286,8 @@ A simple `u32` array can be expressed as:
 
 Set brightness level on side lamps. Number of lamps depends on the rocket.
 ```
+
+### Units
+
+The value of the register may have one of the unit or secondary defined in [SenML](https://tools.ietf.org/html/rfc8428),
+in addition to ``""`` (identifiers), ``"us"`` micro seconds, ``"mWh"`` milli watt-hours and ``"#"`` counts.

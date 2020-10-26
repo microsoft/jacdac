@@ -23,7 +23,7 @@ Aggregate data from multiple sensors into a single stream
         device_id: u64
         service_class: u32
         service_num: u8
-        sample_size: u8 bytes
+        sample_size: u8 B
         sample_type: SampleType
         sample_shift: i8
     }
@@ -35,7 +35,7 @@ These settings are stored in flash.
 
 Number of input samples collected so far.
 
-    ro sample_size: u8 bytes @ 0x181
+    ro sample_size: u8 B @ 0x181
 
 Size of a single sample.
 
@@ -43,6 +43,6 @@ Size of a single sample.
 
 When set to `N`, will stream `N` samples as `current_sample` reading.
 
-    ro current_sample: bytes @ reading
+    ro current_sample: B @ reading
 
 Last collected sample.

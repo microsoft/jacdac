@@ -35,7 +35,7 @@ Indicates number of players supported and which buttons are present on the contr
     repeats:
         button: Button
         player_index: u8
-        pressure: u8 frac
+        pressure: u8 /
     }
 
 Indicates which buttons are currently active (pressed).

@@ -10,7 +10,7 @@ Multiple instances of this service may be present, if more than one model format
 ## Commands
 
     command set_model @ 0x80 {
-        model_size: u32 bytes
+        model_size: u32 B
     }
     report {
         model_port: pipe_port
@@ -65,11 +65,11 @@ The shape of the output tensor.
 
 The time consumed in last model execution.
 
-    ro allocated_arena_size: u32 bytes @ 0x183
+    ro allocated_arena_size: u32 B @ 0x183
 
 Number of RAM bytes allocated for model execution.
 
-    ro model_size: u32 bytes @ 0x184
+    ro model_size: u32 B @ 0x184
 
 The size of the model in bytes.
 

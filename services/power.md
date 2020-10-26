@@ -27,7 +27,7 @@ Present current draw from the bus.
 
 Voltage on input.
 
-    ro battery_charge?: u16 frac @ 0x182
+    ro battery_charge?: u16 / @ 0x182
 
 Fraction of charge in the battery.
 

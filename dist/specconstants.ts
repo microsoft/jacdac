@@ -136,13 +136,13 @@ export enum SensorAggregatorReg {
     /** Read-only uint32_t. Number of input samples collected so far. */
     NumSamples = 0x180,
     
-    /** Read-only bytes uint8_t. Size of a single sample. */
+    /** Read-only B uint8_t. Size of a single sample. */
     SampleSize = 0x181,
     
     /** Read-write uint32_t. When set to `N`, will stream `N` samples as `current_sample` reading. */
     StreamSamples = 0x81,
     
-    /** Read-only bytes. Last collected sample. */
+    /** Read-only b (B). Last collected sample. */
     CurrentSample = 0x101,
 }
 
@@ -226,7 +226,7 @@ export enum CtrlCmd {
 }
 
 export enum CtrlReg {
-    /** Constant string (bytes). Identifies the type of hardware (eg., ACME Corp. Servo X-42 Rev C) */
+    /** Constant string (B). Identifies the type of hardware (eg., ACME Corp. Servo X-42 Rev C) */
     DeviceDescription = 0x180,
     
     /** Constant uint32_t. A numeric code for the string above; used to identify firmware images and devices. */
@@ -235,7 +235,7 @@ export enum CtrlReg {
     /** Constant uint32_t. Typically the same as `firmware_identifier` unless device was flashed by hand; the bootloader will respond to that code. */
     BootloaderFirmwareIdentifier = 0x184,
     
-    /** Constant string (bytes). A string describing firmware version; typically semver. */
+    /** Constant string (B). A string describing firmware version; typically semver. */
     FirmwareVersion = 0x185,
     
     /** Read-only °C int16_t. MCU temperature in degrees Celsius (approximate). */
@@ -249,12 +249,12 @@ export enum CtrlReg {
 export const SRV_ROTARY_ENCODER = 0x10fa29c9
 export enum RotaryEncoderReg {
     /**
-     * Read-only int32_t. Upon device reset starts at `0` (regardless of the shaft position).
+     * Read-only # int32_t. Upon device reset starts at `0` (regardless of the shaft position).
      * Increases by `1` for a clockwise "click", by `-1` for counter-clockwise.
      */
     Position = 0x101,
     
-    /** Constant uint16_t. This specifies by how much `position` changes when the crank does 360 degree turn. Typically 12 or 24. */
+    /** Constant # uint16_t. This specifies by how much `position` changes when the crank does 360 degree turn. Typically 12 or 24. */
     ClicksPerTurn = 0x180,
 }
 
@@ -313,13 +313,13 @@ export enum LightLightType { // uint8_t
 
 export enum LightReg {
     /**
-     * Read-write fraction uint8_t. Set the luminosity of the strip.
+     * Read-write ratio uint8_t. Set the luminosity of the strip.
      * At `0` the power to the strip is completely shut down.
      */
     Brightness = 0x1,
     
     /**
-     * Read-only fraction uint8_t. This is the luminosity actually applied to the strip.
+     * Read-only ratio uint8_t. This is the luminosity actually applied to the strip.
      * May be lower than `brightness` if power-limited by the `max_power` register.
      * It will rise slowly (few seconds) back to `brightness` is limits are no longer required.
      */
@@ -345,7 +345,7 @@ export enum LightReg {
 }
 
 export enum LightCmd {
-    /** Argument: program bytes. Run the given light "program". See service description for details. */
+    /** Argument: program b (B). Run the given light "program". See service description for details. */
     Run = 0x81,
 }
 
@@ -371,16 +371,16 @@ export enum LoggerReg {
 }
 
 export enum LoggerCmd {
-    /** Argument: message string (bytes). Report a message. */
+    /** Argument: message string (B). Report a message. */
     Debug = 0x80,
     
-    /** Argument: message string (bytes). Report a message. */
+    /** Argument: message string (B). Report a message. */
     Log = 0x81,
     
-    /** Argument: message string (bytes). Report a message. */
+    /** Argument: message string (B). Report a message. */
     Warn = 0x82,
     
-    /** Argument: message string (bytes). Report a message. */
+    /** Argument: message string (B). Report a message. */
     Error = 0x83,
 }
 
@@ -395,7 +395,7 @@ export enum ModelRunnerModelFormat { // uint32_t
 
 export enum ModelRunnerCmd {
     /**
-     * Argument: model_size bytes uint32_t. Open pipe for streaming in the model. The size of the model has to be declared upfront.
+     * Argument: model_size B uint32_t. Open pipe for streaming in the model. The size of the model has to be declared upfront.
      * The model is streamed over regular pipe data packets.
      * The format supported by this instance of the service is specified in `format` register.
      * When the pipe is closed, the model is written all into flash, and the device running the service may reset.
@@ -403,7 +403,7 @@ export enum ModelRunnerCmd {
     SetModel = 0x80,
     
     /**
-     * Argument: outputs pipe (bytes). Open channel that can be used to manually invoke the model. When enough data is sent over the `inputs` pipe, the model is invoked,
+     * Argument: outputs pipe (B). Open channel that can be used to manually invoke the model. When enough data is sent over the `inputs` pipe, the model is invoked,
      * and results are send over the `outputs` pipe.
      */
     Predict = 0x81,
@@ -430,13 +430,13 @@ export enum ModelRunnerReg {
     /** Read-only μs uint32_t. The time consumed in last model execution. */
     LastRunTime = 0x182,
     
-    /** Read-only bytes uint32_t. Number of RAM bytes allocated for model execution. */
+    /** Read-only B uint32_t. Number of RAM bytes allocated for model execution. */
     AllocatedArenaSize = 0x183,
     
-    /** Read-only bytes uint32_t. The size of the model in bytes. */
+    /** Read-only B uint32_t. The size of the model in bytes. */
     ModelSize = 0x184,
     
-    /** Read-only string (bytes). Textual description of last error when running or loading model (if any). */
+    /** Read-only string (B). Textual description of last error when running or loading model (if any). */
     LastError = 0x185,
     
     /**
@@ -461,7 +461,7 @@ export enum ModelRunnerReg {
 export const SRV_MOTOR = 0x17004cd8
 export enum MotorReg {
     /**
-     * Read-write fraction int16_t. PWM duty cycle of the motor. Use negative/positive values to run the motor forwards and backwards.
+     * Read-write ratio int16_t. PWM duty cycle of the motor. Use negative/positive values to run the motor forwards and backwards.
      * Positive is recommended to be clockwise rotation and negative counterclockwise.
      */
     Duty = 0x2,
@@ -504,7 +504,7 @@ export enum MultitouchEvent {
 // Service: Music
 export const SRV_MUSIC = 0x1b57b1d7
 export enum MusicReg {
-    /** Read-write fraction uint8_t. The volume (duty cycle) of the buzzer. */
+    /** Read-write ratio uint8_t. The volume (duty cycle) of the buzzer. */
     Volume = 0x1,
 }
 
@@ -539,7 +539,7 @@ export enum PowerReg {
     /** Read-only mV uint16_t. Voltage on input. */
     BatteryVoltage = 0x180,
     
-    /** Read-only fraction uint16_t. Fraction of charge in the battery. */
+    /** Read-only ratio uint16_t. Fraction of charge in the battery. */
     BatteryCharge = 0x182,
     
     /**
@@ -567,7 +567,7 @@ export enum PowerReg {
 export const SRV_PWM_LIGHT = 0x1fb57453
 export enum PwmLightReg {
     /**
-     * Read-write fraction uint16_t. Set the luminosity of the strip. The value is used to scale `start_intensity` in `steps` register.
+     * Read-write ratio uint16_t. Set the luminosity of the strip. The value is used to scale `start_intensity` in `steps` register.
      * At `0` the power to the strip is completely shut down.
      */
     Brightness = 0x1,
@@ -606,10 +606,10 @@ export enum RoleManagerCmd {
     /** No args. Remove all role bindings. */
     ClearAllRoles = 0x84,
     
-    /** Argument: stored_roles pipe (bytes). Return all roles stored internally. */
+    /** Argument: stored_roles pipe (B). Return all roles stored internally. */
     ListStoredRoles = 0x82,
     
-    /** Argument: required_roles pipe (bytes). List all roles required by the current program. `device_id` is `0` if role is unbound. */
+    /** Argument: required_roles pipe (B). List all roles required by the current program. `device_id` is `0` if role is unbound. */
     ListRequiredRoles = 0x83,
 }
 
@@ -626,7 +626,7 @@ export enum ServoReg {
 // Service: Slider
 export const SRV_SLIDER = 0x1f274746
 export enum SliderReg {
-    /** Read-only fraction uint16_t. The relative position of the slider between `0x0000` and `0xffff`. */
+    /** Read-only ratio uint16_t. The relative position of the slider between `0x0000` and `0xffff`. */
     Position = 0x101,
 }
 
@@ -639,7 +639,7 @@ export enum TCPTcpError { // int32_t
 }
 
 export enum TCPCmd {
-    /** Argument: inbound pipe (bytes). Open pair of pipes between network peripheral and a controlling device. In/outbound refers to direction from/to internet. */
+    /** Argument: inbound pipe (B). Open pair of pipes between network peripheral and a controlling device. In/outbound refers to direction from/to internet. */
     Open = 0x80,
 }
 
@@ -680,10 +680,10 @@ export enum WifiAPFlags { // uint32_t
 }
 
 export enum WifiCmd {
-    /** Argument: results pipe (bytes). Initiate search for WiFi networks. Results are returned via pipe, one entry per packet. */
+    /** Argument: results pipe (B). Initiate search for WiFi networks. Results are returned via pipe, one entry per packet. */
     Scan = 0x80,
     
-    /** Argument: ssid string (bytes). Connect to named network. Password can be appended after ssid. Both strings have to be NUL-terminated. */
+    /** Argument: ssid string (B). Connect to named network. Password can be appended after ssid. Both strings have to be NUL-terminated. */
     Connect = 0x81,
     
     /** No args. Disconnect from current WiFi network if any. */

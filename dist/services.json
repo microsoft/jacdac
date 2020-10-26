@@ -559,7 +559,7 @@
           },
           {
             "name": "sample_size",
-            "unit": "bytes",
+            "unit": "B",
             "isFloat": false,
             "type": "u8",
             "storage": 1,
@@ -606,7 +606,7 @@
         "fields": [
           {
             "name": "_",
-            "unit": "bytes",
+            "unit": "B",
             "isFloat": false,
             "type": "u8",
             "storage": 1,
@@ -640,15 +640,14 @@
             "name": "_",
             "unit": "",
             "isFloat": false,
-            "type": "bytes",
-            "storage": 0,
-            "isSimpleType": true
+            "type": "b",
+            "storage": 0
           }
         ],
         "identifierName": "reading"
       }
     ],
-    "source": "# Sensor Aggregator\n\n    identifier: 0x1d90e1c5\n\nAggregate data from multiple sensors into a single stream\n(often used as input to machine learning models on the same device, see model runner service).\n\n## Registers\n\n    enum SampleType : u8 {\n        U8 = 0x08\n        I8 = 0x88\n        U16 = 0x10\n        I16 = 0x90\n        U32 = 0x20\n        I32 = 0xA0\n    }\n    rw inputs @ 0x80 {\n        sampling_interval: u16 ms\n        samples_in_window: u16\n        reserved: u32\n    repeats:\n        device_id: u64\n        service_class: u32\n        service_num: u8\n        sample_size: u8 bytes\n        sample_type: SampleType\n        sample_shift: i8\n    }\n\nSet automatic input collection.\nThese settings are stored in flash.\n\n    ro num_samples: u32 @ 0x180\n\nNumber of input samples collected so far.\n\n    ro sample_size: u8 bytes @ 0x181\n\nSize of a single sample.\n\n    rw stream_samples: u32 @ 0x81\n\nWhen set to `N`, will stream `N` samples as `current_sample` reading.\n\n    ro current_sample: bytes @ reading\n\nLast collected sample.\n"
+    "source": "# Sensor Aggregator\n\n    identifier: 0x1d90e1c5\n\nAggregate data from multiple sensors into a single stream\n(often used as input to machine learning models on the same device, see model runner service).\n\n## Registers\n\n    enum SampleType : u8 {\n        U8 = 0x08\n        I8 = 0x88\n        U16 = 0x10\n        I16 = 0x90\n        U32 = 0x20\n        I32 = 0xA0\n    }\n    rw inputs @ 0x80 {\n        sampling_interval: u16 ms\n        samples_in_window: u16\n        reserved: u32\n    repeats:\n        device_id: u64\n        service_class: u32\n        service_num: u8\n        sample_size: u8 B\n        sample_type: SampleType\n        sample_shift: i8\n    }\n\nSet automatic input collection.\nThese settings are stored in flash.\n\n    ro num_samples: u32 @ 0x180\n\nNumber of input samples collected so far.\n\n    ro sample_size: u8 B @ 0x181\n\nSize of a single sample.\n\n    rw stream_samples: u32 @ 0x81\n\nWhen set to `N`, will stream `N` samples as `current_sample` reading.\n\n    ro current_sample: B @ reading\n\nLast collected sample.\n"
   },
   {
     "name": "Bootloader",
@@ -699,7 +698,7 @@
           },
           {
             "name": "page_size",
-            "unit": "bytes",
+            "unit": "B",
             "isFloat": false,
             "type": "u32",
             "storage": 4,
@@ -707,7 +706,7 @@
           },
           {
             "name": "flashable_size",
-            "unit": "bytes",
+            "unit": "B",
             "isFloat": false,
             "type": "u32",
             "storage": 4,
@@ -840,9 +839,8 @@
             "name": "page_data",
             "unit": "",
             "isFloat": false,
-            "type": "bytes",
-            "storage": 0,
-            "isSimpleType": true
+            "type": "b",
+            "storage": 0
           }
         ],
         "hasReport": true
@@ -880,7 +878,7 @@
         "secondary": true
       }
     ],
-    "source": "# Bootloader\n\n    identifier: 0x1ffa9948\n\nAllows flashing (reprogramming) devices over JACDAC.\n\n## Commands\n\n    command info @ announce { }\n    report {\n        service_class: u32\n        page_size: u32 bytes\n        flashable_size: u32 bytes\n        firmware_identifier: u32\n    }\n\nThe `service_class` is always `0x1ffa9948`. The `firmware_identifier` identifies the kind of firmware\nthat \"fits\" this device.\n\n    command set_session @ 0x81 {\n        session_id: u32\n    }\n    report {\n        session_id: u32\n    }\n\nThe flashing host should generate a random id, and use this command to set it.\n\n    enum Error : u32 {\n        NoError = 0\n        PacketTooSmall = 1\n        OutOfFlashableRange = 2\n        InvalidPageOffset = 3\n        NotPageAligned = 4\n    }\n    command page_data @ 0x80 {\n        page_address: u32\n        page_offset: u16\n        chunk_no: u8\n        chunk_max: u8\n        session_id: u32\n        reserved0: u32\n        reserved1: u32\n        reserved2: u32\n        reserved3: u32\n        page_data: bytes\n    }\n    report {\n        session_id: u32\n        page_error: Error\n        page_address: u32\n    }\n\nUse to send flashing data. A physical page is split into `chunk_max + 1` chunks, where `chunk_no = 0 ... chunk_max`.\nEach chunk is stored at `page_address + page_offset`. `page_address` has to be equal in all chunks,\nand is included in response.\nOnly the last chunk causes writing to flash and elicits response.\n\nErrors not listed are also possible. Errors larger than `0xffff` indicate de-synchronization on chunk numbers.\n"
+    "source": "# Bootloader\n\n    identifier: 0x1ffa9948\n\nAllows flashing (reprogramming) devices over JACDAC.\n\n## Commands\n\n    command info @ announce { }\n    report {\n        service_class: u32\n        page_size: u32 B\n        flashable_size: u32 B\n        firmware_identifier: u32\n    }\n\nThe `service_class` is always `0x1ffa9948`. The `firmware_identifier` identifies the kind of firmware\nthat \"fits\" this device.\n\n    command set_session @ 0x81 {\n        session_id: u32\n    }\n    report {\n        session_id: u32\n    }\n\nThe flashing host should generate a random id, and use this command to set it.\n\n    enum Error : u32 {\n        NoError = 0\n        PacketTooSmall = 1\n        OutOfFlashableRange = 2\n        InvalidPageOffset = 3\n        NotPageAligned = 4\n    }\n    command page_data @ 0x80 {\n        page_address: u32\n        page_offset: u16\n        chunk_no: u8\n        chunk_max: u8\n        session_id: u32\n        reserved0: u32\n        reserved1: u32\n        reserved2: u32\n        reserved3: u32\n        page_data: B\n    }\n    report {\n        session_id: u32\n        page_error: Error\n        page_address: u32\n    }\n\nUse to send flashing data. A physical page is split into `chunk_max + 1` chunks, where `chunk_no = 0 ... chunk_max`.\nEach chunk is stored at `page_address + page_offset`. `page_address` has to be equal in all chunks,\nand is included in response.\nOnly the last chunk causes writing to flash and elicits response.\n\nErrors not listed are also possible. Errors larger than `0xffff` indicate de-synchronization on chunk numbers.\n"
   },
   {
     "name": "Button",
@@ -1087,7 +1085,8 @@
             "type": "string",
             "storage": 0
           }
-        ]
+        ],
+        "optional": true
       },
       {
         "kind": "const",
@@ -1105,7 +1104,8 @@
             "absoluteMin": 805306368,
             "absoluteMax": 1073741823
           }
-        ]
+        ],
+        "optional": true
       },
       {
         "kind": "const",
@@ -1123,7 +1123,8 @@
             "absoluteMin": 805306368,
             "absoluteMax": 1073741823
           }
-        ]
+        ],
+        "optional": true
       },
       {
         "kind": "const",
@@ -1138,7 +1139,8 @@
             "type": "string",
             "storage": 0
           }
-        ]
+        ],
+        "optional": true
       },
       {
         "kind": "ro",
@@ -1156,7 +1158,8 @@
             "typicalMin": -10,
             "typicalMax": 150
           }
-        ]
+        ],
+        "optional": true
       },
       {
         "kind": "ro",
@@ -1172,10 +1175,11 @@
             "storage": 8,
             "isSimpleType": true
           }
-        ]
+        ],
+        "optional": true
       }
     ],
-    "source": "# Control\n\n    identifier: 0x00000000\n    camel: ctrl\n\nControl service is always service number `0`.\nIt handles actions common to all services on a device.\n\n\n\n## Commands\n\n    flags AnnounceFlags : u8 {\n        SupportsACK = 0x01,\n    }\n    command services @ announce { }\n    report {\n        restart_counter: u8\n        flags: AnnounceFlags\n        reserved: u16\n    repeats:\n        service_class: u32\n    }\n\nThe `restart_counter` starts at `0x1` and increments by one until it reaches `0xf`, then it stays at `0xf`.\nIf this number ever goes down, it indicates that the device restarted.\nThe upper 4 bits of `restart_counter` are reserved.\n`service_class` indicates class identifier for each service number (service number `0` is always control, so it's\nskipped in this enumeration).\nThe command form can be used to induce report, which is otherwise broadcast every 500ms.\n\n    command noop @ 0x80 { }\n\nDo nothing. Always ignored. Can be used to test ACKs.\n\n    command identify @ 0x81 { }\n\nBlink an LED or otherwise draw user's attention.\n\n    command reset @ 0x82 { }\n\nReset device. ACK may or may not be sent.\n\n## Registers\n\n    const device_description: string @ 0x180\n\nIdentifies the type of hardware (eg., ACME Corp. Servo X-42 Rev C)\n\n    const firmware_identifier : u32 { absolute_min = 0x3000_0000, absolute_max = 0x3fff_ffff } @ 0x181\n\nA numeric code for the string above; used to identify firmware images and devices.\n\n    const bootloader_firmware_identifier: u32 { absolute_min = 0x3000_0000, absolute_max = 0x3fff_ffff } @ 0x184\n\nTypically the same as `firmware_identifier` unless device was flashed by hand; the bootloader will respond to that code.\n\n    const firmware_version: string @ 0x185\n\nA string describing firmware version; typically semver.\n\n    ro temperature: i16 C { typical_min = -10, typical_max = 150 } @ 0x182\n\nMCU temperature in degrees Celsius (approximate).\n\n    ro uptime: u64 us @ 0x186\n\nNumber of microseconds since boot.\n\n"
+    "source": "# Control\n\n    identifier: 0x00000000\n    camel: ctrl\n\nControl service is always service number `0`.\nIt handles actions common to all services on a device.\n\n\n\n## Commands\n\n    flags AnnounceFlags : u8 {\n        SupportsACK = 0x01,\n    }\n    command services @ announce { }\n    report {\n        restart_counter: u8\n        flags: AnnounceFlags\n        reserved: u16\n    repeats:\n        service_class: u32\n    }\n\nThe `restart_counter` starts at `0x1` and increments by one until it reaches `0xf`, then it stays at `0xf`.\nIf this number ever goes down, it indicates that the device restarted.\nThe upper 4 bits of `restart_counter` are reserved.\n`service_class` indicates class identifier for each service number (service number `0` is always control, so it's\nskipped in this enumeration).\nThe command form can be used to induce report, which is otherwise broadcast every 500ms.\n\n    command noop @ 0x80 { }\n\nDo nothing. Always ignored. Can be used to test ACKs.\n\n    command identify @ 0x81 { }\n\nBlink an LED or otherwise draw user's attention.\n\n    command reset @ 0x82 { }\n\nReset device. ACK may or may not be sent.\n\n## Registers\n\n    const device_description?: string @ 0x180\n\nIdentifies the type of hardware (eg., ACME Corp. Servo X-42 Rev C)\n\n    const firmware_identifier? : u32 { absolute_min = 0x3000_0000, absolute_max = 0x3fff_ffff } @ 0x181\n\nA numeric code for the string above; used to identify firmware images and devices.\n\n    const bootloader_firmware_identifier?: u32 { absolute_min = 0x3000_0000, absolute_max = 0x3fff_ffff } @ 0x184\n\nTypically the same as `firmware_identifier` unless device was flashed by hand; the bootloader will respond to that code.\n\n    const firmware_version?: string @ 0x185\n\nA string describing firmware version; typically semver.\n\n    ro temperature?: i16 C { typical_min = -10, typical_max = 150 } @ 0x182\n\nMCU temperature in degrees Celsius (approximate).\n\n    ro uptime?: u64 us @ 0x186\n\nNumber of microseconds since boot.\n\n"
   },
   {
     "name": "Rotary encoder",
@@ -1238,7 +1242,7 @@
         "fields": [
           {
             "name": "_",
-            "unit": "",
+            "unit": "#",
             "isFloat": false,
             "type": "i32",
             "storage": -4,
@@ -1255,7 +1259,7 @@
         "fields": [
           {
             "name": "_",
-            "unit": "",
+            "unit": "#",
             "isFloat": false,
             "type": "u16",
             "storage": 2,
@@ -1265,7 +1269,7 @@
         "optional": true
       }
     ],
-    "source": "# Rotary encoder\n\n    identifier: 0x10fa29c9\n    extends: _sensor\n    short: crank\n\nAn incremental rotary encoder - converts angular motion of a shaft to digital signal.\n\n## Registers\n\n    ro position: i32 @ reading\n\nUpon device reset starts at `0` (regardless of the shaft position).\nIncreases by `1` for a clockwise \"click\", by `-1` for counter-clockwise.\n\n    const clicks_per_turn?: u16 @ 0x180\n\nThis specifies by how much `position` changes when the crank does 360 degree turn. Typically 12 or 24."
+    "source": "# Rotary encoder\n\n    identifier: 0x10fa29c9\n    extends: _sensor\n    short: crank\n\nAn incremental rotary encoder - converts angular motion of a shaft to digital signal.\n\n## Registers\n\n    ro position: i32 # @ reading\n\nUpon device reset starts at `0` (regardless of the shaft position).\nIncreases by `1` for a clockwise \"click\", by `-1` for counter-clockwise.\n\n    const clicks_per_turn?: u16 # @ 0x180\n\nThis specifies by how much `position` changes when the crank does 360 degree turn. Typically 12 or 24."
   },
   {
     "name": "Gamepad",
@@ -1405,7 +1409,7 @@
           },
           {
             "name": "pressure",
-            "unit": "frac",
+            "unit": "/",
             "shift": 8,
             "isFloat": false,
             "type": "u8",
@@ -1462,7 +1466,7 @@
         ]
       }
     ],
-    "source": "# Gamepad\n\n    identifier: 0x1deaa06e\n    extends: _sensor\n\nA gamepad with direction and action buttons for 1 or more players.\n\n## Commands\n\n    enum Button : u16 {\n        Left = 1\n        Up = 2\n        Right = 3\n        Down = 4\n        A = 5\n        B = 6\n        Menu = 7\n        MenuAlt = 8\n        Reset = 9\n        Exit = 10\n    }\n    command announce @ announce {}\n    report {\n        flags: u8\n        num_players: u8 {typical_max = 4}\n    repeats:\n        button_present: Button\n    }\n\nIndicates number of players supported and which buttons are present on the controller.\n\n## Registers\n\n    ro buttons @ reading {\n    repeats:\n        button: Button\n        player_index: u8\n        pressure: u8 frac\n    }\n\nIndicates which buttons are currently active (pressed).\n`pressure` should be `0xff` for digital buttons, and proportional for analog ones.\n\n## Events\n\n    event down @ 0x01 {\n        button: Button\n        player_index: u16\n    }\n\nEmitted when button goes from inactive to active.\n\n    event up @ 0x02 {\n        button: Button\n        player_index: u16\n    }\n\nEmitted when button goes from active to inactive.\n"
+    "source": "# Gamepad\n\n    identifier: 0x1deaa06e\n    extends: _sensor\n\nA gamepad with direction and action buttons for 1 or more players.\n\n## Commands\n\n    enum Button : u16 {\n        Left = 1\n        Up = 2\n        Right = 3\n        Down = 4\n        A = 5\n        B = 6\n        Menu = 7\n        MenuAlt = 8\n        Reset = 9\n        Exit = 10\n    }\n    command announce @ announce {}\n    report {\n        flags: u8\n        num_players: u8 {typical_max = 4}\n    repeats:\n        button_present: Button\n    }\n\nIndicates number of players supported and which buttons are present on the controller.\n\n## Registers\n\n    ro buttons @ reading {\n    repeats:\n        button: Button\n        player_index: u8\n        pressure: u8 /\n    }\n\nIndicates which buttons are currently active (pressed).\n`pressure` should be `0xff` for digital buttons, and proportional for analog ones.\n\n## Events\n\n    event down @ 0x01 {\n        button: Button\n        player_index: u16\n    }\n\nEmitted when button goes from inactive to active.\n\n    event up @ 0x02 {\n        button: Button\n        player_index: u16\n    }\n\nEmitted when button goes from active to inactive.\n"
   },
   {
     "name": "Humidity",
@@ -1571,7 +1575,7 @@
         "fields": [
           {
             "name": "_",
-            "unit": "frac",
+            "unit": "/",
             "shift": 8,
             "isFloat": false,
             "type": "u8",
@@ -1590,7 +1594,7 @@
         "fields": [
           {
             "name": "_",
-            "unit": "frac",
+            "unit": "/",
             "shift": 8,
             "isFloat": false,
             "type": "u8",
@@ -1659,14 +1663,13 @@
             "name": "program",
             "unit": "",
             "isFloat": false,
-            "type": "bytes",
-            "storage": 0,
-            "isSimpleType": true
+            "type": "b",
+            "storage": 0
           }
         ]
       }
     ],
-    "source": "# Light\n\n    identifier: 0x126f00e0\n\nA controller for strips of RGB LEDs.\n\n## Light programs\n\nRealistically, with 1 mbit JACDAC, we can transmit under 2k of data per animation frame (at 20fps).\nIf transmitting raw data that would be around 500 pixels, which is not enough for many\ninstallations and it would completely clog the network.\n\nThus, light service defines a domain-specific language for describing light animations\nand efficiently transmitting them over wire.\n\nLight commands are not JACDAC commands.\nLight commands are efficiently encoded as sequences of bytes and typically sent as payload\nof `run` command.\n\nDefinitions:\n* `P` - position in the strip\n* `R` - number of repetitions of the command\n* `N` - number of pixels affected by the command\n* `C` - single color designation\n* `C+` - sequence of color designations\n\nUpdate modes:\n* `0` - replace\n* `1` - add RGB\n* `2` - subtract RGB\n* `3` - multiply RGB (by c/128); each pixel value will change by at least 1\n\nProgram commands:\n* `0xD0: set_all(C+)` - set all pixels in current range to given color pattern\n* `0xD1: fade(C+)` - set pixels in current range to colors between colors in sequence\n* `0xD2: fade_hsv(C+)` - similar to `fade()`, but colors are specified and faded in HSV\n* `0xD3: rotate_fwd(K)` - rotate (shift) pixels by `K` positions away from the connector\n* `0xD4: rotate_back(K)` - same, but towards the connector\n* `0xD5: show(M=50)` - send buffer to strip and wait `M` milliseconds\n* `0xD6: range(P=0, N=length, W=1, S=0)` - range from pixel `P`, `N` pixels long\n  (currently unsupported: every `W` pixels skip `S` pixels)\n* `0xD7: mode(K=0)` - set update mode\n* `0xD8: mode1(K=0)` - set update mode for next command only\n* `0xCF: set1(P, C)` - set one pixel at `P` (in current range) to given color\n\nA number `k` is encoded as follows:\n* `0 <= k < 128` -> `k`\n* `128 <= k < 16383` -> `0x80 | (k >> 8), k & 0xff`\n* bigger and negative numbers are not supported\n\nThus, bytes `0xC0-0xFF` are free to use for commands.\n\nFormats:\n* `0xC1, R, G, B` - single color parameter\n* `0xC2, R0, G0, B0, R1, G1, B1` - two color parameter\n* `0xC3, R0, G0, B0, R1, G1, B1, R2, G2, B2` - three color parameter\n* `0xC0, N, R0, G0, B0, ..., R(N-1), G(N-1), B(N-1)` - `N` color parameter\n* `0xCF, <number>, R, G, B` - `set1` special format\n\nCommands are encoded as command byte, followed by parameters in the order\nfrom the command definition.\n\nThe `set1()` command has irregular encoding to save space - it is byte `0xCF` followed by encoded\nnumber, and followed by 3 bytes of color.\n\n## Registers\n\n    rw brightness = 15: u8 frac @ intensity\n\nSet the luminosity of the strip.\nAt `0` the power to the strip is completely shut down.\n\n    ro actual_brightness: u8 frac @ 0x180\n\nThis is the luminosity actually applied to the strip.\nMay be lower than `brightness` if power-limited by the `max_power` register.\nIt will rise slowly (few seconds) back to `brightness` is limits are no longer required.\n \n    enum LightType : u8 {\n        WS2812B_GRB = 0x00\n        APA102 = 0x10\n        SK9822 = 0x11\n    }\n    rw light_type: LightType @ 0x80\n\nSpecifies the type of light strip connected to controller.\nControllers which are sold with lights should default to the correct type\nand could not allow change.\n\n    rw num_pixels = 15: u16 @ 0x81\n\nSpecifies the number of pixels in the strip.\nControllers which are sold with lights should default to the correct length\nand could not allow change.\nIncreasing length at runtime leads to ineffective use of memory and may lead to controller reboot.\n\n    rw max_power = 200: u16 mA @ max_power\n\nLimit the power drawn by the light-strip (and controller).\n\n## Commands\n\n    command run @ 0x81 {\n        program: bytes\n    }\n\nRun the given light \"program\". See service description for details.\n"
+    "source": "# Light\n\n    identifier: 0x126f00e0\n\nA controller for strips of RGB LEDs.\n\n## Light programs\n\nRealistically, with 1 mbit JACDAC, we can transmit under 2k of data per animation frame (at 20fps).\nIf transmitting raw data that would be around 500 pixels, which is not enough for many\ninstallations and it would completely clog the network.\n\nThus, light service defines a domain-specific language for describing light animations\nand efficiently transmitting them over wire.\n\nLight commands are not JACDAC commands.\nLight commands are efficiently encoded as sequences of bytes and typically sent as payload\nof `run` command.\n\nDefinitions:\n* `P` - position in the strip\n* `R` - number of repetitions of the command\n* `N` - number of pixels affected by the command\n* `C` - single color designation\n* `C+` - sequence of color designations\n\nUpdate modes:\n* `0` - replace\n* `1` - add RGB\n* `2` - subtract RGB\n* `3` - multiply RGB (by c/128); each pixel value will change by at least 1\n\nProgram commands:\n* `0xD0: set_all(C+)` - set all pixels in current range to given color pattern\n* `0xD1: fade(C+)` - set pixels in current range to colors between colors in sequence\n* `0xD2: fade_hsv(C+)` - similar to `fade()`, but colors are specified and faded in HSV\n* `0xD3: rotate_fwd(K)` - rotate (shift) pixels by `K` positions away from the connector\n* `0xD4: rotate_back(K)` - same, but towards the connector\n* `0xD5: show(M=50)` - send buffer to strip and wait `M` milliseconds\n* `0xD6: range(P=0, N=length, W=1, S=0)` - range from pixel `P`, `N` pixels long\n  (currently unsupported: every `W` pixels skip `S` pixels)\n* `0xD7: mode(K=0)` - set update mode\n* `0xD8: mode1(K=0)` - set update mode for next command only\n* `0xCF: set1(P, C)` - set one pixel at `P` (in current range) to given color\n\nA number `k` is encoded as follows:\n* `0 <= k < 128` -> `k`\n* `128 <= k < 16383` -> `0x80 | (k >> 8), k & 0xff`\n* bigger and negative numbers are not supported\n\nThus, bytes `0xC0-0xFF` are free to use for commands.\n\nFormats:\n* `0xC1, R, G, B` - single color parameter\n* `0xC2, R0, G0, B0, R1, G1, B1` - two color parameter\n* `0xC3, R0, G0, B0, R1, G1, B1, R2, G2, B2` - three color parameter\n* `0xC0, N, R0, G0, B0, ..., R(N-1), G(N-1), B(N-1)` - `N` color parameter\n* `0xCF, <number>, R, G, B` - `set1` special format\n\nCommands are encoded as command byte, followed by parameters in the order\nfrom the command definition.\n\nThe `set1()` command has irregular encoding to save space - it is byte `0xCF` followed by encoded\nnumber, and followed by 3 bytes of color.\n\n## Registers\n\n    rw brightness = 15: u8 / @ intensity\n\nSet the luminosity of the strip.\nAt `0` the power to the strip is completely shut down.\n\n    ro actual_brightness: u8 / @ 0x180\n\nThis is the luminosity actually applied to the strip.\nMay be lower than `brightness` if power-limited by the `max_power` register.\nIt will rise slowly (few seconds) back to `brightness` is limits are no longer required.\n \n    enum LightType : u8 {\n        WS2812B_GRB = 0x00\n        APA102 = 0x10\n        SK9822 = 0x11\n    }\n    rw light_type: LightType @ 0x80\n\nSpecifies the type of light strip connected to controller.\nControllers which are sold with lights should default to the correct type\nand could not allow change.\n\n    rw num_pixels = 15: u16 @ 0x81\n\nSpecifies the number of pixels in the strip.\nControllers which are sold with lights should default to the correct length\nand could not allow change.\nIncreasing length at runtime leads to ineffective use of memory and may lead to controller reboot.\n\n    rw max_power = 200: u16 mA @ max_power\n\nLimit the power drawn by the light-strip (and controller).\n\n## Commands\n\n    command run @ 0x81 {\n        program: B\n    }\n\nRun the given light \"program\". See service description for details.\n"
   },
   {
     "name": "Logger",
@@ -1800,7 +1803,7 @@
         "fields": [
           {
             "name": "model_size",
-            "unit": "bytes",
+            "unit": "B",
             "isFloat": false,
             "type": "u32",
             "storage": 4,
@@ -1951,7 +1954,7 @@
         "fields": [
           {
             "name": "_",
-            "unit": "bytes",
+            "unit": "B",
             "isFloat": false,
             "type": "u32",
             "storage": 4,
@@ -1967,7 +1970,7 @@
         "fields": [
           {
             "name": "_",
-            "unit": "bytes",
+            "unit": "B",
             "isFloat": false,
             "type": "u32",
             "storage": 4,
@@ -2038,7 +2041,7 @@
         "optional": true
       }
     ],
-    "source": "# Model Runner\n\n    identifier: 0x140f9a78\n\nRun machine learning models.\nOnly models with a single input tensor and a single output tensor are supported at the moment.\nInput is provided by Sensor Aggregator service on the same device.\nMultiple instances of this service may be present, if more than one model format is supported by a device.\n\n## Commands\n\n    command set_model @ 0x80 {\n        model_size: u32 bytes\n    }\n    report {\n        model_port: pipe_port\n    }\n\nOpen pipe for streaming in the model. The size of the model has to be declared upfront.\nThe model is streamed over regular pipe data packets.\nThe format supported by this instance of the service is specified in `format` register.\nWhen the pipe is closed, the model is written all into flash, and the device running the service may reset.\n\n    command predict @ 0x81 {\n        outputs: pipe\n    }\n    report {\n        inputs: pipe_port\n    }\n\nOpen channel that can be used to manually invoke the model. When enough data is sent over the `inputs` pipe, the model is invoked,\nand results are send over the `outputs` pipe.\n\n## Registers\n\n    rw auto_invoke_every: u16 @ 0x80\n\nWhen register contains `N > 0`, run the model automatically every time new `N` samples are collected.\nModel may be run less often if it takes longer to run than `N * sampling_interval`.\nThe `outputs` register will stream its value after each run.\nThis register is not stored in flash.\n\n    ro outputs @ reading {\n    repeats:\n        output: f32\n    }\n\nResults of last model invocation as `float32` array.\n\n    ro input_shape @ 0x180 {\n    repeats:\n        dimension: u16\n    }\n\nThe shape of the input tensor.\n\n    ro output_shape @ 0x181 {\n    repeats:\n        dimension: u16\n    }\n\nThe shape of the output tensor.\n\n    ro last_run_time: u32 us @ 0x182\n\nThe time consumed in last model execution.\n\n    ro allocated_arena_size: u32 bytes @ 0x183\n\nNumber of RAM bytes allocated for model execution.\n\n    ro model_size: u32 bytes @ 0x184\n\nThe size of the model in bytes.\n\n    ro last_error: string @ 0x185\n\nTextual description of last error when running or loading model (if any).\n\n    enum ModelFormat: u32 {\n        TFLite = 0x334c4654,\n        ML4F = 0x30470f62,\n        EdgeImpulseCompiled = 0x30564945,\n    }\n    const format: ModelFormat @ 0x186\n\nThe type of ML models supported by this service.\n`TFLite` is flatbuffer `.tflite` file.\n`ML4F` is compiled machine code model for Cortex-M4F.\nThe format is typically present as first or second little endian word of model file.\n\n    const format_version: u32 @ 0x187\n\nA version number for the format.\n\n    const parallel?: bool @ 0x188\n\nIf present and true this service can run models independently of other\ninstances of this service on the device.\n"
+    "source": "# Model Runner\n\n    identifier: 0x140f9a78\n\nRun machine learning models.\nOnly models with a single input tensor and a single output tensor are supported at the moment.\nInput is provided by Sensor Aggregator service on the same device.\nMultiple instances of this service may be present, if more than one model format is supported by a device.\n\n## Commands\n\n    command set_model @ 0x80 {\n        model_size: u32 B\n    }\n    report {\n        model_port: pipe_port\n    }\n\nOpen pipe for streaming in the model. The size of the model has to be declared upfront.\nThe model is streamed over regular pipe data packets.\nThe format supported by this instance of the service is specified in `format` register.\nWhen the pipe is closed, the model is written all into flash, and the device running the service may reset.\n\n    command predict @ 0x81 {\n        outputs: pipe\n    }\n    report {\n        inputs: pipe_port\n    }\n\nOpen channel that can be used to manually invoke the model. When enough data is sent over the `inputs` pipe, the model is invoked,\nand results are send over the `outputs` pipe.\n\n## Registers\n\n    rw auto_invoke_every: u16 @ 0x80\n\nWhen register contains `N > 0`, run the model automatically every time new `N` samples are collected.\nModel may be run less often if it takes longer to run than `N * sampling_interval`.\nThe `outputs` register will stream its value after each run.\nThis register is not stored in flash.\n\n    ro outputs @ reading {\n    repeats:\n        output: f32\n    }\n\nResults of last model invocation as `float32` array.\n\n    ro input_shape @ 0x180 {\n    repeats:\n        dimension: u16\n    }\n\nThe shape of the input tensor.\n\n    ro output_shape @ 0x181 {\n    repeats:\n        dimension: u16\n    }\n\nThe shape of the output tensor.\n\n    ro last_run_time: u32 us @ 0x182\n\nThe time consumed in last model execution.\n\n    ro allocated_arena_size: u32 B @ 0x183\n\nNumber of RAM bytes allocated for model execution.\n\n    ro model_size: u32 B @ 0x184\n\nThe size of the model in bytes.\n\n    ro last_error: string @ 0x185\n\nTextual description of last error when running or loading model (if any).\n\n    enum ModelFormat: u32 {\n        TFLite = 0x334c4654,\n        ML4F = 0x30470f62,\n        EdgeImpulseCompiled = 0x30564945,\n    }\n    const format: ModelFormat @ 0x186\n\nThe type of ML models supported by this service.\n`TFLite` is flatbuffer `.tflite` file.\n`ML4F` is compiled machine code model for Cortex-M4F.\nThe format is typically present as first or second little endian word of model file.\n\n    const format_version: u32 @ 0x187\n\nA version number for the format.\n\n    const parallel?: bool @ 0x188\n\nIf present and true this service can run models independently of other\ninstances of this service on the device.\n"
   },
   {
     "name": "Motor",
@@ -2060,7 +2063,7 @@
         "fields": [
           {
             "name": "_",
-            "unit": "frac",
+            "unit": "/",
             "shift": 15,
             "isFloat": false,
             "type": "i16",
@@ -2087,7 +2090,7 @@
         "identifierName": "intensity"
       }
     ],
-    "source": "# Motor\n\n    identifier: 0x17004cd8\n\nA bi-directional DC motor.\n\n## Registers\n\n    rw duty: i16 frac @ value\n\nPWM duty cycle of the motor. Use negative/positive values to run the motor forwards and backwards.\nPositive is recommended to be clockwise rotation and negative counterclockwise.\n\n    rw enabled: bool @ intensity\n\nTurn the power to the motor on/off.\n"
+    "source": "# Motor\n\n    identifier: 0x17004cd8\n\nA bi-directional DC motor.\n\n## Registers\n\n    rw duty: i16 / @ value\n\nPWM duty cycle of the motor. Use negative/positive values to run the motor forwards and backwards.\nPositive is recommended to be clockwise rotation and negative counterclockwise.\n\n    rw enabled: bool @ intensity\n\nTurn the power to the motor on/off.\n"
   },
   {
     "name": "Multitouch",
@@ -2262,7 +2265,7 @@
         "fields": [
           {
             "name": "_",
-            "unit": "frac",
+            "unit": "/",
             "shift": 8,
             "isFloat": false,
             "type": "u8",
@@ -2306,7 +2309,7 @@
         ]
       }
     ],
-    "source": "# Music\n\n    identifier: 0x1b57b1d7\n\nA simple buzzer.\n\n## Registers\n\n    rw volume = 255: u8 frac @ intensity\n\nThe volume (duty cycle) of the buzzer.\n\n## Commands\n\n    command play_tone @ 0x80 {\n        period: u16 us\n        duty: u16 us\n        duration: u16 ms\n    }\n\nPlay a PWM tone with given period and duty for given duration.\nThe duty is scaled down with `volume` register.\nTo play tone at frequency `F` Hz and volume `V` (in `0..1`) you will want\nto send `P = 1000000 / F` and `D = P * V / 2`.\n"
+    "source": "# Music\n\n    identifier: 0x1b57b1d7\n\nA simple buzzer.\n\n## Registers\n\n    rw volume = 255: u8 / @ intensity\n\nThe volume (duty cycle) of the buzzer.\n\n## Commands\n\n    command play_tone @ 0x80 {\n        period: u16 us\n        duty: u16 us\n        duration: u16 ms\n    }\n\nPlay a PWM tone with given period and duty for given duration.\nThe duty is scaled down with `volume` register.\nTo play tone at frequency `F` Hz and volume `V` (in `0..1`) you will want\nto send `P = 1000000 / F` and `D = P * V / 2`.\n"
   },
   {
     "name": "Power",
@@ -2415,7 +2418,7 @@
         "fields": [
           {
             "name": "_",
-            "unit": "frac",
+            "unit": "/",
             "shift": 16,
             "isFloat": false,
             "type": "u16",
@@ -2477,7 +2480,7 @@
         ]
       }
     ],
-    "source": "# Power\n\n    identifier: 0x1fa4c95a\n\nA power-provider service.\n\n## Registers\n\n    rw enabled = 1: bool @ intensity\n\nTurn the power to the bus on/off.\n\n    rw max_power = 500: u16 mA {typical_max = 500} @ max_power\n\nLimit the power provided by the service. The actual maximum limit will depend on hardware.\nThis field may be read-only in some implementations - you should read it back after setting.\n\n    ro overload: bool @ 0x181\n\nIndicates whether the power has been shut down due to overdraw.\n\n    ro current_draw: u16 mA @ reading\n\nPresent current draw from the bus.\n\n    ro battery_voltage: u16 mV {typical_min = 4500, typical_max = 5500} @ 0x180\n\nVoltage on input.\n\n    ro battery_charge?: u16 frac @ 0x182\n\nFraction of charge in the battery.\n\n    const battery_capacity?: u32 mWh @ 0x183\n\nEnergy that can be delivered to the bus when battery is fully charged.\nThis excludes conversion overheads if any.\n\n    rw keep_on_pulse_duration = 600: u16 ms @ 0x80\n    rw keep_on_pulse_period = 20000: u16 ms @ 0x81\n\nMany USB power packs need current to be drawn from time to time to prevent shutdown.\nThis regulates how often and for how long such current is drawn.\nTypically a 1/8W 22 ohm resistor is used as load. This limits the duty cycle to 10%.\n"
+    "source": "# Power\n\n    identifier: 0x1fa4c95a\n\nA power-provider service.\n\n## Registers\n\n    rw enabled = 1: bool @ intensity\n\nTurn the power to the bus on/off.\n\n    rw max_power = 500: u16 mA {typical_max = 500} @ max_power\n\nLimit the power provided by the service. The actual maximum limit will depend on hardware.\nThis field may be read-only in some implementations - you should read it back after setting.\n\n    ro overload: bool @ 0x181\n\nIndicates whether the power has been shut down due to overdraw.\n\n    ro current_draw: u16 mA @ reading\n\nPresent current draw from the bus.\n\n    ro battery_voltage: u16 mV {typical_min = 4500, typical_max = 5500} @ 0x180\n\nVoltage on input.\n\n    ro battery_charge?: u16 / @ 0x182\n\nFraction of charge in the battery.\n\n    const battery_capacity?: u32 mWh @ 0x183\n\nEnergy that can be delivered to the bus when battery is fully charged.\nThis excludes conversion overheads if any.\n\n    rw keep_on_pulse_duration = 600: u16 ms @ 0x80\n    rw keep_on_pulse_period = 20000: u16 ms @ 0x81\n\nMany USB power packs need current to be drawn from time to time to prevent shutdown.\nThis regulates how often and for how long such current is drawn.\nTypically a 1/8W 22 ohm resistor is used as load. This limits the duty cycle to 10%.\n"
   },
   {
     "name": "PWM Light",
@@ -2500,7 +2503,7 @@
         "fields": [
           {
             "name": "_",
-            "unit": "frac",
+            "unit": "/",
             "shift": 16,
             "isFloat": false,
             "type": "u16",
@@ -2552,7 +2555,7 @@
         "fields": [
           {
             "name": "start_intensity",
-            "unit": "frac",
+            "unit": "/",
             "shift": 16,
             "isFloat": false,
             "type": "u16",
@@ -2604,7 +2607,7 @@
         ]
       }
     ],
-    "source": "# PWM Light\n\n    identifier: 0x1fb57453\n    camel: PwmLight\n\nA controller for 1 or more LEDs connected in parallel.\n\n## Animation steps\n\nAnimations are described using pairs of intensity and duration.\nFor example, the following animation\n`(0, 10ms), (0.5, 5ms), (0.5, 10ms), (1, 5ms), (0, 7ms), (0, 0ms)`\nwill gradually rise the intensity `0 - 0.5` in 10ms,\nthen, it will keep it steady for at `0.5` for 5ms,\nthen it will rise it again `0.5 - 1` over 10ms,\ndrop `1 - 0` in 5ms,\nand keep it at 0 for 7ms more.\nAny entry with duration of 0ms is considered to be end-marker.\n\nTo get steady glow at `x`, use animation of `(x, 60000ms), (x, 0ms)` and keep `max_iterations` at `0xffff`.\n\n## Registers\n\n    rw brightness: u16 frac @ intensity\n\nSet the luminosity of the strip. The value is used to scale `start_intensity` in `steps` register.\nAt `0` the power to the strip is completely shut down.\n\n    rw max_power = 100: u16 mA @ max_power\n\nLimit the power drawn by the light-strip (and controller).\n\n    const max_steps: u8 @ 0x180\n\nMaximum number of steps allowed in animation definition. This determines the size of the `steps` register.\n\n    rw steps @ 0x82 {\n        repeats:\n            start_intensity: u16 frac\n            duration: u16 ms\n    }\n\nThe steps of current animation. Setting this also sets `current_iteration` to `0`.\nStep with `duration == 0` is treated as an end marker.\n\n    rw current_iteration: u16 @ 0x80\n\nCurrently excecuting iteration of animation. Can be set to `0` to restart current animation.\nIf `current_iteration > max_iterations`, then no animation is currently running.\n\n    rw max_iterations = 0xffff: u16 @ 0x81\n\nThe animation will be repeated `max_iterations + 1` times.\n"
+    "source": "# PWM Light\n\n    identifier: 0x1fb57453\n    camel: PwmLight\n\nA controller for 1 or more LEDs connected in parallel.\n\n## Animation steps\n\nAnimations are described using pairs of intensity and duration.\nFor example, the following animation\n`(0, 10ms), (0.5, 5ms), (0.5, 10ms), (1, 5ms), (0, 7ms), (0, 0ms)`\nwill gradually rise the intensity `0 - 0.5` in 10ms,\nthen, it will keep it steady for at `0.5` for 5ms,\nthen it will rise it again `0.5 - 1` over 10ms,\ndrop `1 - 0` in 5ms,\nand keep it at 0 for 7ms more.\nAny entry with duration of 0ms is considered to be end-marker.\n\nTo get steady glow at `x`, use animation of `(x, 60000ms), (x, 0ms)` and keep `max_iterations` at `0xffff`.\n\n## Registers\n\n    rw brightness: u16 / @ intensity\n\nSet the luminosity of the strip. The value is used to scale `start_intensity` in `steps` register.\nAt `0` the power to the strip is completely shut down.\n\n    rw max_power = 100: u16 mA @ max_power\n\nLimit the power drawn by the light-strip (and controller).\n\n    const max_steps: u8 @ 0x180\n\nMaximum number of steps allowed in animation definition. This determines the size of the `steps` register.\n\n    rw steps @ 0x82 {\n        repeats:\n            start_intensity: u16 /\n            duration: u16 ms\n    }\n\nThe steps of current animation. Setting this also sets `current_iteration` to `0`.\nStep with `duration == 0` is treated as an end marker.\n\n    rw current_iteration: u16 @ 0x80\n\nCurrently excecuting iteration of animation. Can be set to `0` to restart current animation.\nIf `current_iteration > max_iterations`, then no animation is currently running.\n\n    rw max_iterations = 0xffff: u16 @ 0x81\n\nThe animation will be repeated `max_iterations + 1` times.\n"
   },
   {
     "name": "Role Manager",
@@ -2891,7 +2894,7 @@
         "fields": [
           {
             "name": "_",
-            "unit": "frac",
+            "unit": "/",
             "shift": 16,
             "isFloat": false,
             "type": "u16",
@@ -2902,7 +2905,7 @@
         "identifierName": "reading"
       }
     ],
-    "source": "# Slider\n\n    identifier: 0x1f274746\n    extends: _sensor\n\nA slider potentiometer.\n\n## Registers\n\n    ro position: u16 frac @ reading\n\nThe relative position of the slider between `0x0000` and `0xffff`.\n"
+    "source": "# Slider\n\n    identifier: 0x1f274746\n    extends: _sensor\n\nA slider potentiometer.\n\n## Registers\n\n    ro position: u16 / @ reading\n\nThe relative position of the slider between `0x0000` and `0xffff`.\n"
   },
   {
     "name": "TCP",
@@ -2994,9 +2997,8 @@
             "name": "data",
             "unit": "",
             "isFloat": false,
-            "type": "bytes",
-            "storage": 0,
-            "isSimpleType": true
+            "type": "b",
+            "storage": 0
           }
         ],
         "pipeType": "open"
@@ -3011,9 +3013,8 @@
             "name": "data",
             "unit": "",
             "isFloat": false,
-            "type": "bytes",
-            "storage": 0,
-            "isSimpleType": true
+            "type": "b",
+            "storage": 0
           }
         ],
         "pipeType": "open"
@@ -3035,7 +3036,7 @@
         "pipeType": "open"
       }
     ],
-    "source": "# TCP\n\n    identifier: 0x1b43b70b\n\nData transfer over TCP/IP and TLS stream sockets.\n\n## Commands\n\n    command open @ 0x80 {\n        inbound: pipe\n    }\n    report {\n        outbound_port: pipe_port\n    }\n\nOpen pair of pipes between network peripheral and a controlling device. In/outbound refers to direction from/to internet.\n\n## Pipes\n\n    meta pipe command open_ssl @ 0x01 {\n        tcp_port: u16\n        hostname: string\n    }\n\nOpen an SSL connection to a given host:port pair. Can be issued only once on given pipe.\nAfter the connection is established, an empty data report is sent.\nConnection is closed by closing the pipe.\n\n    pipe command outdata {\n        data: bytes\n    }\n\nBytes to be sent directly over an established TCP or SSL connection.\n\n    pipe report indata {\n        data: bytes\n    }\n\nBytes read directly from directly over an established TCP or SSL connection.\n\n    enum TcpError : i32 {\n        InvalidCommand = 1\n        InvalidCommandPayload = 2\n    }\n    meta pipe report error @ 0x00 {\n        error: TcpError\n    }\n\nReported when an error is encountered. Negative error codes come directly from the SSL implementation.\n"
+    "source": "# TCP\n\n    identifier: 0x1b43b70b\n\nData transfer over TCP/IP and TLS stream sockets.\n\n## Commands\n\n    command open @ 0x80 {\n        inbound: pipe\n    }\n    report {\n        outbound_port: pipe_port\n    }\n\nOpen pair of pipes between network peripheral and a controlling device. In/outbound refers to direction from/to internet.\n\n## Pipes\n\n    meta pipe command open_ssl @ 0x01 {\n        tcp_port: u16\n        hostname: string\n    }\n\nOpen an SSL connection to a given host:port pair. Can be issued only once on given pipe.\nAfter the connection is established, an empty data report is sent.\nConnection is closed by closing the pipe.\n\n    pipe command outdata {\n        data: B\n    }\n\nBytes to be sent directly over an established TCP or SSL connection.\n\n    pipe report indata {\n        data: B\n    }\n\nBytes read directly from directly over an established TCP or SSL connection.\n\n    enum TcpError : i32 {\n        InvalidCommand = 1\n        InvalidCommandPayload = 2\n    }\n    meta pipe report error @ 0x00 {\n        error: TcpError\n    }\n\nReported when an error is encountered. Negative error codes come directly from the SSL implementation.\n"
   },
   {
     "name": "Temperature",

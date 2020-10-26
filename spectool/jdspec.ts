@@ -953,17 +953,17 @@ const tsNumFmt: jdspec.SMap<string> = {
 
 
 function camelize(name: string) {
-    return name.replace(/_([a-z])/g, (_, l) => l.toUpperCase())
+    return name?.replace(/_([a-z])/g, (_, l) => l.toUpperCase())
 }
 
 function upperCamel(name: string) {
     name = camelize(name)
-    if (!name.length) return name
+    if (!name?.length) return name
     return name[0].toUpperCase() + name.slice(1)
 }
 
 function snakify(name: string) {
-    return name.replace(/([a-z])([A-Z])/g, (_, a, b) => a + "_" + b)
+    return name?.replace(/([a-z])([A-Z])/g, (_, a, b) => a + "_" + b)
 }
 
 function addComment(pkt: jdspec.PacketInfo) {

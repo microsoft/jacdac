@@ -68,12 +68,12 @@ The temperature at engine core.
 The number of exhaust nozzles in this rocket.
 
     ro acceleration @ 0x182 {
-        x: i22.10 g
-        y: i22.10 g
-        z: i22.10 g
+        x: i16.16 m/s2
+        y: i16.16 m/s2
+        z: i16.16 m/s2
     }
 
-Current acceleration forces experienced by the rocket. Includes gravity.
+Current acceleration forces experienced by the rocket.
 ```
 
 The first line of registers section goes in `notes["registers"]` in JSON,
@@ -98,9 +98,8 @@ It is also one that does not change, at least until the device resets
 (in the case of this service, the reset is usually quite spectacular).
 
 The fourth register is current acceleration.
-The `i22.10` type is signed 32 bit integer, where the value is shifted by 10 bits.
-That is, the last 10 bits is the fractional part.
-The values are expressed in `g`, which is Earth-standard gravity.
+The `i16.16` type is signed 32 bit integer, where the value is shifted by 16 bits.
+That is, the last 16 bits is the fractional part.
 
 The register also has three fields, instead of the usual one.
 In fact, the `core_temperature` could be also expressed using the more verbose syntax,

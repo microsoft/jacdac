@@ -3,7 +3,6 @@
 export const SenMLUnitDescription: jdspec.SMap<string> = {
     "m": "meter",
     "kg": "kilogram",
-    "g": "gram*",
     "s": "second",
     "A": "ampere",
     "K": "kelvin",
@@ -33,31 +32,24 @@ export const SenMLUnitDescription: jdspec.SMap<string> = {
     "kat": "katal",
     "m2": "square meter (area)",
     "m3": "cubic meter (volume)",
-    "l": "liter (volume)*",
     "m/s": "meter per second (velocity)",
     "m/s2": "meter per square second (acceleration)",
     "m3/s": "cubic meter per second (flow rate)",
-    "l/s": "liter per second (flow rate)*",
     "W/m2": "watt per square meter (irradiance)",
     "cd/m2": "candela per square meter (luminance)",
     "bit": "bit (information content)",
     "bit/s": "bit per second (data rate)",
-    "lat": "degrees latitude[1]",
-    "lon": "degrees longitude[1]",
+    "lat": "degrees latitude",
+    "lon": "degrees longitude",
     "pH": "pH value (acidity; logarithmic quantity)",
     "dB": "decibel (logarithmic quantity)",
     "dBW": "decibel relative to 1 W (power level)",
-    "Bspl": "bel (sound pressure level; logarithmic quantity)*",
     "count": "1 (counter value)",
-    "/": "1 (ratio e.g., value of a switch; [2])",
-    "%": "1 (ratio e.g., value of a switch; [2])*",
+    "/": "1 (ratio e.g., value of a switch)",
     "%RH": "Percentage (Relative Humidity)",
     "%EL": "Percentage (remaining battery energy level)",
     "EL": "seconds (remaining battery energy level)",
     "1/s": "1 per second (event rate)",
-    "1/min": "1 per minute (event rate, 'rpm')*",
-    "beat/min": "1 per minute (heart rate in beats per minute)*",
-    "beats": "1 (Cumulative number of heart beats)*",
     "S/m": "Siemens per meter (conductivity)",
     "B": "Byte (information content)",
     "VA": "volt-ampere (Apparent Power)",
@@ -65,8 +57,7 @@ export const SenMLUnitDescription: jdspec.SMap<string> = {
     "var": "volt-ampere reactive (Reactive Power)",
     "vars": "volt-ampere-reactive second (Reactive Energy)",
     "J/m": "joule per meter (Energy per distance)",
-    "kg/m3": "kilogram per cubic meter (mass density, mass concentration)",
-    "deg": "degree (angle)*"
+    "kg/m3": "kilogram per cubic meter (mass density, mass concentration)"
 }
 
 export const SenMLSecondaryUnitConverters: jdspec.SMap<{
@@ -114,29 +105,20 @@ export const SenMLSecondaryUnitConverters: jdspec.SMap<{
     "frac": { name: "ratio", unit: "/", scale: 1, offset: 0 },
     "us": { name: "micro seconds", unit: "s", scale: 1e-6, offset: 0 },
     "mWh": { name: "micro watt-hour", unit: "J", scale: 3.6e-3, offset: 0 },
-    "grav": { name: "earth gravity", unit: "m/s2", scale: 9.80665, offset: 0 }
+    "gn": { name: "earth gravity", unit: "m/s2", scale: 9.80665, offset: 0 }
 }
 
-/**
- * Rescales secondary unit to primary unit
- * @param value 
- * @param unit 
- */
-export function normalizeValue(value: number, unit: string) {
+export function resolveUnit(unit: string) {
     // seconary unit?
-    const su = unit && SenMLSecondaryUnitConverters[unit];
+    const su = SenMLSecondaryUnitConverters[unit];
     if (su)
-        return {
-            value: (value * su.scale) + su.offset,
-            name: su.name,
-            unit: su.unit,
-        }
+        return su;
 
-    // primary?
-    const name = unit && SenMLUnitDescription[unit];
+    const name = SenMLUnitDescription[unit];
+    if (name)
+        return { name, unit, scale: 1, offset: 0 }
 
-    // no scaling
-    return { value, unit, name };
+    return undefined;
 }
 
 export function parseSpecificationMarkdownToJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>, filename = ""): jdspec.ServiceSpec {

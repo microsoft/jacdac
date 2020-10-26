@@ -62,7 +62,7 @@ export const SenMLUnitDescription: jdspec.SMap<string> = {
 
 export const SenMLSecondaryUnitConverters: jdspec.SMap<{
     name: string;
-    unit: senml.Unit | "";
+    unit: senml.Unit | "#";
     scale: number;
     offset: number;
 }> = {
@@ -101,14 +101,17 @@ export const SenMLSecondaryUnitConverters: jdspec.SMap<{
     "km/h": { name: "kilometer per hour", unit: "m/s", scale: 1 / 3.6, offset: 0 },
 
     // compat with previous JACDAC versions
-    "": { name: "count", unit: "", scale: 1, offset: 0 },
     "frac": { name: "ratio", unit: "/", scale: 1, offset: 0 },
     "us": { name: "micro seconds", unit: "s", scale: 1e-6, offset: 0 },
     "mWh": { name: "micro watt-hour", unit: "J", scale: 3.6e-3, offset: 0 },
-    "g": { name: "earth gravity", unit: "m/s2", scale: 9.80665, offset: 0 }
+    "g": { name: "earth gravity", unit: "m/s2", scale: 9.80665, offset: 0 },
+    "#": { name: "count", unit: "#", scale: 1, offset: 0 }
 }
 
 export function resolveUnit(unit: string) {
+    if (unit === "")
+        return ""; // indentifier
+
     // seconary unit?
     const su = SenMLSecondaryUnitConverters[unit];
     if (su)

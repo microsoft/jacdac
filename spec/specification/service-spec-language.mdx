@@ -91,6 +91,8 @@ and events).
 The next line specifies a read-only register, giving current temperature in degrees Kelvin.
 A 32 bit value is used to avoid overflows.
 
+JACDAC supports units specified in [SenML](https://www.iana.org/assignments/senml/senml.xhtml).
+
 The third register is unit-less.
 It is also one that does not change, at least until the device resets
 (in the case of this service, the reset is usually quite spectacular).

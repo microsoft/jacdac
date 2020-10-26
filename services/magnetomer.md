@@ -15,3 +15,10 @@ A 3-axis magnetometer.
     }
 
 Indicates the current magnetic field on magnetometer.
+
+## Commands
+
+    command calibrate @ calibrate
+
+Forces a calibration sequence where the user/device
+might have to rotate to be calibrated.

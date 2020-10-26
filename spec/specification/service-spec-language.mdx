@@ -74,6 +74,10 @@ The number of exhaust nozzles in this rocket.
     }
 
 Current acceleration forces experienced by the rocket.
+
+    rw max_acceleration?: u16.16 @ 0x183
+
+Read or configure the sensitivity of the sensor. (optional).
 ```
 
 The first line of registers section goes in `notes["registers"]` in JSON,
@@ -110,6 +114,9 @@ ro core_temperature @ 0x180 {
     _: u32 K
 }
 ```
+
+The last register, to specify the sensivity of the sensor, is optional.
+This is denoted by adding a `?` after the register name.
 
 Now, let's move on to commands.
 

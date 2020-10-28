@@ -17,7 +17,7 @@ Control a device that acts as a mouse.
         Click = 0x03
         DoubleClick = 0x04
     }
-    command set @ 0x80 {
+    command set_button @ 0x80 {
         buttons: Button
         event: ButtonEvent
     }

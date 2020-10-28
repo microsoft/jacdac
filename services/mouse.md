@@ -25,17 +25,17 @@ Control a device that acts as a mouse.
 Sets the up/down state of one or more buttons.
 
     command move @ 0x81 {
-      dx: i16
-      dy: i16
-      time: u16
+      dx: i16 #
+      dy: i16 #
+      time: u16 ms
     }
 
 Moves the mouse by the distance specified.
 If the time is positive, it specifies how long to make the move.
 
     command wheel @ 0x82 {
-        dy: i16
-        time: u16
+        dy: i16 #
+        time: u16 ms
     }
 
 Turns the wheel up or down. Positive if scrolling up.

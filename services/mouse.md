@@ -12,9 +12,9 @@ Control a device that acts as a mouse.
         left = 0x02
     }
     enum ButtonEvent : u8 {
-        up = 0x01,
-        down = 0x02,
-        click = 0x03,
+        up = 0x01
+        down = 0x02
+        click = 0x03
         double_click = 0x04
     }
     command set @ 0x80 {

@@ -3,20 +3,18 @@
     identifier: 0x17feef9b
     
 A lightweight event bus that allows to broadcast
-short messages.
+short messages, similar to the Scratch message APIs.
 
 ## Commands
 
-    command send @ 1 {
-        id: u16;
-        name: u16;
+    command send @ 0x80 {
+        msg: u32
     }
 
 ## Events
 
-    event message @ 2 {
-        id: u16;
-        name: u16;
+    event message @ 1 {
+        msg: u32
     }
 
 A message event was raised on the message bus 

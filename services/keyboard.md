@@ -19,15 +19,21 @@ specification](https://usb.org/sites/default/files/hut1_21.pdf), chapter 10 Keyb
         RightAlt = 0xe2
         RightGUID = 0xe3
     }
+    enum Action : u8 {
+        Press = 0
+        Up = 1
+        Down = 2
+    }
     command key @ 0x80 {
     repeats:
         selector: u8
         modifiers: Modifiers
-        
+        action: Action
     }
     
 Presses a key or a sequence of keys down.
 
-    command clear @ 0x82
+    command clear @ 0x82 {
+    }
     
 Clears all pressed keys.

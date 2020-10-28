@@ -6,16 +6,16 @@ Control a device that acts as a mouse.
 
 ## Commands
 
-    enum Button : u8 {
-        right = 0x01
-        middle = 0x04
-        left = 0x02
+    flags Button : u8 {
+        Right = 0x01
+        Middle = 0x04
+        Left = 0x02
     }
     enum ButtonEvent : u8 {
-        up = 0x01
-        down = 0x02
-        click = 0x03
-        double_click = 0x04
+        Up = 0x01
+        Down = 0x02
+        Click = 0x03
+        DoubleClick = 0x04
     }
     command set @ 0x80 {
         buttons: Button
@@ -25,13 +25,18 @@ Control a device that acts as a mouse.
 Sets the up/down state of one or more buttons.
 
     command move @ 0x81 {
-      x: i8
-      y: i8
+      dx: i16
+      dy: i16
+      time: u16
     }
 
-
 Moves the mouse by the distance specified.
+If the time is positive, it specifies how long to make the move.
 
-    command wheel: i8 @ 0x82
+    command wheel @ 0x82 {
+        dy: i16
+        time: u16
+    }
 
-Turns the wheel up or down.
+Turns the wheel up or down. Positive if scrolling up.
+If the time is positive, it specifies how long to make the move.

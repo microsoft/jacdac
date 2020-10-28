@@ -22,7 +22,7 @@ specification](https://usb.org/sites/default/files/hut1_21.pdf), chapter 10 Keyb
     command key @ 0x80 {
     repeats:
         selector: u8
-        modifiers: u8
+        modifiers: Modifiers
         
     }
     

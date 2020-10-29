@@ -302,6 +302,35 @@ export enum HumidityReg {
     Humidity = 0x101,
 }
 
+// Service: Keyboard
+export const SRV_KEYBOARD = 0x18b05b6a
+
+export enum KeyboardModifiers { // uint8_t
+    LeftControl = 0xe0,
+    LeftShift = 0xe1,
+    LeftAlt = 0xe2,
+    LeftGUID = 0xe3,
+    RightControl = 0xe4,
+    RightShift = 0xe5,
+    RightAlt = 0xe6,
+    RightGUID = 0xe7,
+}
+
+
+export enum KeyboardAction { // uint8_t
+    Press = 0x0,
+    Up = 0x1,
+    Down = 0x2,
+}
+
+export enum KeyboardCmd {
+    /** Presses a key or a sequence of keys down. */
+    Key = 0x80,
+    
+    /** No args. Clears all pressed keys. */
+    Clear = 0x81,
+}
+
 // Service: Light
 export const SRV_LIGHT = 0x126f00e0
 

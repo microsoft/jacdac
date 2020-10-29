@@ -302,6 +302,42 @@ export enum HumidityReg {
     Humidity = 0x101,
 }
 
+// Service: LED Matrix Controller
+export const SRV_LED_MATRIX_CONTROLLER = 0x1d35e393
+export enum LEDMatrixControllerReg {
+    /**
+     * Read-write bytes. Read or writes the state of the screen where pixel on/off state is 
+     * stored as a bit, column by column. The column should be byte aligned.
+     */
+    Leds = 0x80,
+    
+    /** Read-write bool (uint8_t). Disables or enables the whole screen. */
+    Enabled = 0x81,
+    
+    /** Read-write uint8_t. Sets the general brightness of the LEDs. */
+    Brightness = 0x82,
+    
+    /** Constant # uint16_t. Number of rows on the screen */
+    Rows = 0x83,
+    
+    /** Constant # uint16_t. Number of columns on the screen */
+    Columns = 0x84,
+}
+
+export enum LEDMatrixControllerCmd {
+    Clear = 0x80,
+}
+
+// Service: LED Matrix Display
+export const SRV_LED_MATRIX_DISPLAY = 0x1161590c
+export enum LEDMatrixDisplayReg {
+    /**
+     * Read-only bytes. Streams the state of the screen where pixel on/off state is 
+     * stored as a bit, column by column. The column should be byte aligned.
+     */
+    Leds = 0x101,
+}
+
 // Service: Light
 export const SRV_LIGHT = 0x126f00e0
 

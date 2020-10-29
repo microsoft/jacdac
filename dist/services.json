@@ -1547,6 +1547,182 @@
     "source": "# Humidity\n\n    identifier: 0x16c810b8\n    extends: _sensor\n\nA sensor measuring humidity of outside environment.\n\n## Registers\n\nDefault streaming interval is 1s.\n\n    ro humidity: u22.10 %RH {typical_max = 100} @ reading\n\nThe relative humidity in percentage of full water saturation.\n"
   },
   {
+    "name": "LED Matrix Controller",
+    "shortId": "ledmatrixcontroller",
+    "camelName": "LEDMatrixController",
+    "shortName": "LEDMatrixController",
+    "extends": [],
+    "notes": {
+      "short": "A service that allows to control a rectangular matrix of monochrome LEDs.\nTo stream the state of the screen, use [LED Matrix display](/services/led-matrix-display) instead."
+    },
+    "classIdentifier": 490070931,
+    "enums": {},
+    "packets": [
+      {
+        "kind": "rw",
+        "name": "leds",
+        "identifier": 128,
+        "description": "Read or writes the state of the screen where pixel on/off state is \nstored as a bit, column by column. The column should be byte aligned.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "isFloat": false,
+            "type": "bytes",
+            "storage": 0,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "rw",
+        "name": "enabled",
+        "identifier": 129,
+        "description": "Disables or enables the whole screen.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "isFloat": false,
+            "type": "bool",
+            "storage": 1
+          }
+        ]
+      },
+      {
+        "kind": "rw",
+        "name": "brightness",
+        "identifier": 130,
+        "description": "Sets the general brightness of the LEDs.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "isFloat": false,
+            "type": "u8",
+            "storage": 1,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "const",
+        "name": "rows",
+        "identifier": 131,
+        "description": "Number of rows on the screen",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "#",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "const",
+        "name": "columns",
+        "identifier": 132,
+        "description": "Number of columns on the screen",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "#",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "command",
+        "name": "clear",
+        "identifier": 128,
+        "description": "",
+        "fields": []
+      }
+    ],
+    "source": "# LED Matrix Controller\n\n    identifier: 0x1d35e393\n    status: experimental\n\nA service that allows to control a rectangular matrix of monochrome LEDs.\nTo stream the state of the screen, use [LED Matrix display](/services/led-matrix-display) instead.\n\n## Registers\n\n    rw leds: bytes @ 0x80\n\nRead or writes the state of the screen where pixel on/off state is \nstored as a bit, column by column. The column should be byte aligned.\n\n    rw enabled: bool @ 0x81\n \n Disables or enables the whole screen.\n \n    rw brightness: u8 @ 0x82\n    \nSets the general brightness of the LEDs.\n \n    const rows: u16 # @ 0x83\n    \nNumber of rows on the screen\n\n    const columns: u16 # @ 0x84\n    \nNumber of columns on the screen\n\n## Commands\n\n    command clear @ 0x80 {}\n",
+    "status": "experimental"
+  },
+  {
+    "name": "LED Matrix Display",
+    "shortId": "ledmatrixdisplay",
+    "camelName": "LEDMatrixDisplay",
+    "shortName": "LEDMatrixDisplay",
+    "extends": [
+      "_sensor"
+    ],
+    "notes": {
+      "short": "A sensor that streams the state of a rectangular LED matrix.\nTo control the state of the screen, use [LED Matrix Controller](/services/led-matrix-controller) instead."
+    },
+    "classIdentifier": 291592460,
+    "enums": {},
+    "packets": [
+      {
+        "kind": "rw",
+        "name": "stream_samples",
+        "identifier": 3,
+        "description": "Asks device to stream a given number of samples\n(clients will typically write `255` to this register every second or so, while streaming is required).",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "isFloat": false,
+            "type": "u8",
+            "storage": 1,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "stream_samples",
+        "derived": true
+      },
+      {
+        "kind": "rw",
+        "name": "streaming_interval",
+        "identifier": 4,
+        "description": "Period between packets of data when streaming in milliseconds.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "ms",
+            "isFloat": false,
+            "type": "u32",
+            "storage": 4,
+            "isSimpleType": true,
+            "defaultValue": 100,
+            "typicalMin": 1,
+            "typicalMax": 60000
+          }
+        ],
+        "identifierName": "streaming_interval",
+        "derived": true
+      },
+      {
+        "kind": "ro",
+        "name": "leds",
+        "identifier": 257,
+        "description": "Streams the state of the screen where pixel on/off state is \nstored as a bit, column by column. The column should be byte aligned.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "isFloat": false,
+            "type": "bytes",
+            "storage": 0,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "reading"
+      }
+    ],
+    "source": "# LED Matrix Display\n\n    identifier: 0x1161590c\n    extends: _sensor\n    status: experimental\n\nA sensor that streams the state of a rectangular LED matrix.\nTo control the state of the screen, use [LED Matrix Controller](/services/led-matrix-controller) instead.\n\n\n## Registers\n\n    ro leds : bytes @ reading\n    \nStreams the state of the screen where pixel on/off state is \nstored as a bit, column by column. The column should be byte aligned.\n",
+    "status": "experimental"
+  },
+  {
     "name": "Light",
     "shortId": "light",
     "camelName": "Light",

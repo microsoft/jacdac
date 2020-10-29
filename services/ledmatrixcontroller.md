@@ -13,7 +13,7 @@ To stream the state of the screen, use [LED Matrix display](/services/led-matrix
 Read or writes the state of the screen where pixel on/off state is 
 stored as a bit, column by column. The column should be byte aligned.
 
-    rw enabled: boolean @ 0x81
+    rw enabled: bool @ 0x81
  
  Disables or enables the whole screen.
  

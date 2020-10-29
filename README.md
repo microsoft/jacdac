@@ -1,6 +1,6 @@
 # JACDAC Device and Service Catalogs
 
-Experience JACDAC at https://microsoft.github.io/jacdac-ts .
+Experience JACDAC at https://microsoft.github.io/jacdac-ts, where you will find tools for contributing to the catalogs of JACDAC devices and services.
 
 ## Contributing
 

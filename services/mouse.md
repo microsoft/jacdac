@@ -1,6 +1,7 @@
 # Mouse
 
     identifier: 0x1885dc1c
+    status: experimental
 
 Control a device that acts as a mouse.
 

@@ -1,6 +1,6 @@
-# JACDAC specification
+# JACDAC Device and Service Catalogs
 
-Read the interactive specification at https://microsoft.github.io/jacdac-ts .
+Experience JACDAC at https://microsoft.github.io/jacdac-ts .
 
 ## Contributing
 

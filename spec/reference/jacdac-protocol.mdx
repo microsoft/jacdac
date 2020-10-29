@@ -1,0 +1,315 @@
+---
+title: Protocol Specification
+order: 3
+---
+
+## Frames
+
+JACDAC devices communicate over the JACDAC bus via frames. A frame
+contains a device identifier and one or more packets and has the following structure:
+
+```c
+struct _jd_frame_t {
+    uint16_t frame_crc;
+    uint8_t frame_size;
+    uint8_t frame_flags;
+    uint64_t device_identifier;
+    uint8_t data[240]; // maximum
+} __attribute__((__packed__, aligned(4)));
+typedef struct _jd_frame_t jd_frame_t;
+```
+
+On the wire, the frame must be transmitted in little endian format (i.e. low byte of `frame_crc` first). The total maximum frame size is 252 bytes, selected to keep the total size of packet under `255` (the DMA limit on some hardware) and aligned to 4. The following table defines the meaning and size of the fields in the structure above.
+
+| Memory offset | Field size (bytes) 	| Field name 	| Description  	|
+|--------|------------	|-------------	|----------	|
+| 0 | 2          	|`frame_crc`	| [16-bit CRC CCITT](https://en.wikipedia.org/wiki/Cyclic_redundancy_check) of all following fields. |
+| 2 | 1          	|`frame_size`	| Size of the data field.	|
+| 3 | 1          	|`frame_flags`	| Flags specific to this frame.	|
+| 4 | 8          	|`device_identifier`	| 64-bit device identifier.	|
+| 12 | 1 * `frame_size `  	|`data`	| The data payload of the frame.	|
+
+### Frame flags
+
+The `frame_flags` field is used to indicate
+
+| Bit position | Bit name 	| Description 	|
+|--------|------------	|-------------
+| 0 | COMMAND	| If set, the frame contains command packets, if not set, the frame contains report packets. 	|
+| 1 | ACK_REQUESTED	| If set, the receiver should respond to sender with an ACK frame, if not set, no response is required. 	|
+| 2 | DEVICE_ID_ALT_MEANING	|  	|
+| 3-7 | RESERVED	| Reserved for future use.	|
+
+### Device identifiers
+
+Each device is assigned a 64-bit device identifier that uniquely identifies it on the bus. This identifier is used in frames to determine the sending or receiving device, and for devices to remember one another on the bus. Device identifiers are generated, not allocated, and once generated a device's identifier must remain constant.
+
+Device identifiers are not guaranteed to be universally unique, but there is little chance of users encountering identifier colision so long as identifiers are generated with appropriate entropy. We recommend the following ways of generating a unique identifier:
+
+1. Use our [random number generator]() to allocate an identifier for each device. The number generator could even be included into automated flashing processes to ensure appropriate entropy.
+
+2. Use our [random number generator]() to seed a hardware random number generator. The hardware random number generator could use sensor values to create further entropy.
+
+## Packets
+
+The data portion of a JACDAC frame is also structured and is internally divided into one or more packets. __Zero length frames are not supported__.
+
+Each packet has the following layout in memory:
+
+```c
+struct _jd_packet_t {
+    uint8_t service_size;
+    uint8_t service_number;
+    uint16_t service_command;
+    uint8_t payload[236];
+} __attribute__((__packed__, aligned(4)));
+typedef struct _jd_packet_t jd_packet_t;
+```
+
+The following table defines the meaning and size of the fields in the structure above. The meaning of these fields will become clearer later on in this document.
+
+| Memory offset | Field size (bytes) 	| Field name 	| Description  	|
+|--------|------------	|-------------	|----------	|
+| 12 | 1	|`service_size`	| The size of the payload field. Maximum size is 236 bytes. |
+| 13 | 1	|`service_number`	| The instance number of the destination service.	|
+| 14 | 2	|`service_command`	| A number that specifies an operation and code combination.	|
+| 16 | 1 * `service_size`	|`payload`	| The packet data payload destined for a particular service.	|
+
+Packets are placed back-to-back inside the frame `data` field and must be padded so they start at a 4 byte boundary (i.e. `service_size` is divisible by 4). Logically, packets placed in the same frame share the same frame fields and thus the same `device_identifier`. This means that only one device can be addressed in a single frame.
+
+## Service layer
+
+The way JACDAC devices share resources with other devices on the bus are through __services__. Services provide abstract, standardized interfaces that can be used to interact with physical hardware resources (e.g. an accelerometer) or pure virtual resources (e.g. the state of a video game). This abstraction brings plug-and-play dynamism to JACDAC so that devices with different hardware, but the same overall functionality, can replace one another without having to recompile user applications. For example, two different models of accelerometer hardware can replace each other because they share the same software interface.
+
+Services act on __commands__ and optionally respond with __reports__. Reports can also be emitted separately from a service without prompting from another device. This interface is specified in a [custom markdown language](../service-spec-language) that lists the possible commands and reports that a service can consume and emit. Specifications can also inherit from other specifications. An example of this can be seen in the [sensor specification](../../services/_sensor). JACDAC sensors inherit commands and reports from this specification, creating a set of base functionality for _all_ sensors.
+
+### Commands
+
+Commands are 16-bit and specified in the `service_command` field of a JACDAC packet. A command is composed of a 4-bit operation and a 12-bit code.
+
+The operation is stored in the top most nibble of the `service_command` field. The following table below outlines all possible operations; XXX represents any 12-bit command code:
+
+| Operation number | Command 	|
+|--------|------------	|
+| `0x0XXX` | Action	|
+| `0x1XXX` | Register read	|
+| `0x2XXX` | Register write	|
+| `0x3XXX`- `0xfXXX` | Reserved	|
+
+#### Actions
+
+Actions are a type of command that cause a service to begin to carry out a task. An example action might be to calibrate a magnetometer.
+
+Services can freely allocate their own action command codes in the following range:
+
+| Action code range | Purpose 	|
+|--------|------------	|
+| `0x080-0xeff` | Service defined action command codes 	|
+
+However, services __must not__ allocate any of the common or reserved action command codes specified in the table below:
+
+| Action code range | Purpose 	|
+|--------|------------	|
+| `0x000-0x07f` | Common action command codes	|
+| `0xf00-0xfff` | Reserved action command codes	|
+
+Common action command codes are allocated in the [base specification](../../services/_base).
+
+#### Registers
+
+Registers are properties that represent the state of a service.  Registers are variable length and are between 1 byte and 236 bytes (max payload) in size. Sequential register codes do not overlap with one another. For example, it is possible to have register `0x090` of size `12` and non-overlapping register `0x091` of size `4`.
+
+Registers can be accessed and modified by register read (`0x1XXX`) and register write (`0x2XXX`) operations. Registers can be specified to be read-only or read-write capable. Trying to write to a read-only register will result in a nop (no operation). Because registers can have different access attributes they are segmented into different command code ranges.
+
+Register command codes can be freely allocated in the following ranges:
+
+| Register code range | Purpose 	|
+|--------|------------	|
+| `0x080-0x0ff` | Read-write register codes specific to a service	|
+| `0x180-0x1ff` | Read-only register codes specific to a service	|
+| `0x280-0x2ff` | Additional register codes specific to a service. Should generally be avoided.	|
+
+However, services __must not__ allocate any of the common or reserved register command codes specified in the table below:
+
+| Register code range | Purpose 	|
+|--------|------------	|
+| `0x001-0x07f` | Read-write registers common to all services	|
+| `0x100-0x17f` | Read-only registers common to all services	|
+| `0xf00-0xfff` | Reserved for future use.	|
+
+Common register command codes are allocated in the [base specification](../../services/_base).
+
+
+#### Reports
+
+Reports are packets sent by a service as a response to a command. They can also be used to independently broadcast important information such as events.
+
+The layout of a report depends on its purpose:
+*  __Register reports__ must always contain the register values requested in the original command packet, but for actions, the format is left up to the service creator to define. 
+* __Actions reports__ can either contain a pre-determined number of bytes as defined in the service specification or bear no operation.
+
+A third type of report is an __Event__. Events are emitted independently by a service without prompting. Some services may offer an interface to configure which events are emitted. Event reports have the following format:
+
+| Memory offset | Field size (bytes) 	| Field name 	| Description  	|
+|--------|------------	|-------------	|----------	|
+| 16 | 4	|`event_id`	| A number that uniquely identifies an event. |
+| 18 | 4	|`event_argument`	| An optional argument that can provide additional context.	|
+
+Event reports are sent in the same way as any other packet, and `device_identifier`, `service_number`, and `service_command` differentiate it from other types of reports. These differentiators provide a unique namespace for each service. Multiple event reports can
+be sent by using multiple packets in the same frame.
+
+### The control service
+
+Each device runs its own control service, which emits advertisement packets roughly every 500 milliseconds. Each advertisement contains the device's identifier (as usual) as well a list of host services offered by the device; other devices on the bus can inspect these advertisements and subsequently communicate with the advertised services to incorporate them in user applications.
+
+The control service also offers a set of common commands that can be used to query/inspect each JACDAC device. For example, the `IDENTIFY` command causes a JACDAC device to perform an action that allows a user to locate a particular device, usually through blinking an LED. In addition to emiting an advertisement packet every 500 milliseconds, a device that hosts one or more services must respond to all commands listed in the [control service specification](../../services/control).
+
+The implementation complexity of the control service scales with respect to the number of services a device implements. For instance, it is very simple to process packets for a single user service (in addition to the control service), but complexity increases as more services are added. This flexibility is a benefit as it allows ultra low-cost microcontrollers to be used in simple devices.
+
+# TODO beyond this point.
+## Control layer
+
+Every JACDAC device has a unique 64 bit identifier.
+It may be generated from hardware unique ID (through hashing if needed;
+we recommend [FNV1A](https://tools.ietf.org/html/draft-eastlake-fnv-14#section-3)).
+Alternatively, it may be generated at first run using randomness and stored in flash or EPROM.
+
+Another option is to flash a randomly generated 64 bit number during production.
+If that is difficult, generate 48 bit (or so) random number, and assign identifiers
+starting with that number with lowest bits incrementing.
+Make sure to machine-generate the number, do not just bang on the keyboard.
+You can use the widget below to generate a random device identifier.
+
+<RandomGenerator device={true} />
+
+If the device already has a 48 bit MAC address, the 64 bit device identifier is formed by prepending
+`0xff` and appending `0xfe`. For example, if the MAC address is `11:22:33:44:55:66`, the device
+identifier should be `0xff112233445566fw`.
+
+As for the length of identifiers,
+it's theoretically possible for a device ID collision to occur in a small network of say 200 devices.
+With evenly distributed (ie., random) device IDs and 1 trillion such networks 
+the probability of collision in at least one of them is 0.1%.
+OTOH, were we to use 32 bit IDs, with 2000 networks the collision probability in any of them
+is already 1%, and with 200k networks it's more than 60%.
+
+### Direction of packets
+
+The JACDAC frames contain only one device identifier (rather than both source and destination identifiers, as in IP).
+* if lowest frame flag bit is set, we call all packets in that frame _command packets_ and the device identifier is the destination
+* otherwise, the packets in frame are _report packets_ and the device identifier is the source
+
+### Multicast commands
+
+Additionally, if the third bit of frame flags is set (_multicast commands_), the low order 32 bits of device identifier are treated as service class.
+The command is then directed to all services with that service class.
+
+### ACKs
+
+If a frame is received by the control layer, and is then routed correctly,
+an ACK may need to be sent.
+This only applies when frame contains command packets,
+device identifier equals our device identifier,
+and the second bit of frame flags is set.
+
+ACK packet uses our device identifier, service number of `0x3f`,
+and uses the CRC of the packet being acknowledged as the service command.
+The payload is zero-sized.
+
+All devices, except for the most resource-constrained bootloaders,
+should be able to send ACKs.
+They should indicate that in their advertisement packet.
+
+### Pipes
+
+Pipes are application-level mechanism for establishing reliable one- and two-way 
+point-to-point data links.
+
+Typical packet loss in JACDAC networks is well under 1%.
+Anything that can withstand such packet loss **should not** be done over a pipe,
+as pipes have quite big overhead.
+
+Typical applications where pipes should be used:
+* a WiFi service, where the pipe represents a TCP connection
+* when a response to a command doesn't fit in one packet (eg. WiFi scan results)
+* when events need to be delivered reliably (eg., RFID reader)
+
+Pipes should generally not be used for:
+* streaming sensor data (sensor events are OK)
+* video data
+* audio data
+
+The way to initially establish a pipe depends on service, but typically
+device A would send a command to device B to establish a pipe.
+Device A would include its device identifier and _port_
+(a 9 bit number of A's choosing; there would normally be one port per pipe) in the command.
+If a two-way communication is desired, device B could then state the port on its side.
+
+Both devices can then start sending commands to their respective ports.
+The pipe commands use a fixed service number of `0x3e` and set the require-ACK
+flag on frames.
+The service command is split as follows:
+
+| Bits  | Description
+|------:| ------------------------------------
+|   4:0 | Wrap around packet counter
+|   6:5 | Content type
+|  15:7 | Port number
+
+The packet counter starts at `0x0` goes up to `0x1f`, and then back to `0x0`.
+Rationale: there can be up to 30 non-empty packets in a frame.
+
+Content type is:
+* `0` for regular pipe data
+* `1` for regular pipe data after which the pipe is to be closed
+* `2` for service-specific out-of-band meta-data
+* `3` is reserved
+
+The sending protocol is:
+* wait for any data that needs to be sent over the pipe
+* send it as a command; wait for ACK
+* if we timeout waiting for ACK, repeat previous step
+* if we repeated 10 times already, close the pipe
+* increment the pipe counter
+* go back to the first step
+
+The wait for ACK should follow exponential back-off, starting with 1ms up to 1024ms.
+
+The receiving protocol keeps a counter for each pipe. This counter starts at 0.
+* when a pipe command is received, ACK it (this is usually done generically, not only for pipes)
+* if stored counter for pipe doesn't match the counter in the packet, drop the packet
+* increment stored counter
+* process data in packet
+* repeat
+
+The protocol above has an effective window of 1.
+The counter allows increasing that up to 31, but this would require dealing with 
+multiple packets per frame and is currently out of scope.
+
+Pipes should be considered closed when the device at the other end resets.
+
+TODO: Zero-length pipe commands can be sent as keep-alive packets.
+Is this needed? 
+
+Note that pipes are transmit streams of JACDAC packets, not streams of bytes.
+They should not be recombined at any layer in the implementation.
+For example, a command that returns a list of things can send each thing in a separate
+pipe packet, without any additional info about how to chunk the data
+(provided each thing fits in a packet).
+Multiple packets can be grouped in a frame, but are still handled separately at the
+destination.
+
+### Event subscriptions
+
+A device like accelerometer can send events eg. when a 2g shock is detected,
+when it's moved face-down, etc.
+These events a normally just broadcast on the bus, using standard command `0x001`.
+
+For reliable event delivery, a pipe can be established, and events delivered
+over that pipe.
+
+## See also
+
+* [Glossary](./reference/glossary)
+* [Device Catalog Specification](./reference/device-catalog)
+* [Service Specification Language](./reference/service-spec-language)

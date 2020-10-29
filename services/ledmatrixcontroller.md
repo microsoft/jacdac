@@ -32,3 +32,5 @@ Number of columns on the screen
 ## Commands
 
     command clear @ 0x80 {}
+
+Shorthand command to clear all the LEDs on the screen.

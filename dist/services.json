@@ -983,6 +983,45 @@
     "source": "# Button\n\n    identifier: 0x1473a263\n    extends: _sensor\n\nA simple push-button.\n\nNote: this service will stream readings while the button is pressed and shortly after it's released, even\nwhen `stream_samples == 0`. TODO remove this?\n\n## Registers\n\n    ro pressed: bool @ reading\n\nIndicates whether the button is currently active (pressed).\n\n## Events\n\n    event down @ 0x01\n\nEmitted when button goes from inactive (`pressed == 0`) to active.\n\n    event up @ 0x02\n\nEmitted when button goes from active (`pressed == 1`) to inactive.\n\n    event click @ 0x03\n\nEmitted together with `up` when the press time was not longer than 500ms.\n\n    event long_click @ 0x04\n\nEmitted together with `up` when the press time was more than 500ms.\n"
   },
   {
+    "name": "CODAL Message Bus",
+    "shortId": "codalmessagebus",
+    "camelName": "CODALMessageBus",
+    "shortName": "CODALMessageBus",
+    "extends": [],
+    "notes": {
+      "short": "A service that allows passing events through the [CODAL Message Bus](https://lancaster-university.github.io/microbit-docs/ubit/messageBus/)"
+    },
+    "classIdentifier": 291592460,
+    "enums": {},
+    "packets": [
+      {
+        "kind": "command",
+        "name": "send",
+        "identifier": 128,
+        "description": "Sends a new event on the message bus.",
+        "fields": [
+          {
+            "name": "source",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "value",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ]
+      }
+    ],
+    "source": "# CODAL Message Bus\n\n    identifier: 0x1161590c\n    \nA service that allows passing events through the [CODAL Message Bus](https://lancaster-university.github.io/microbit-docs/ubit/messageBus/)\n\n## Commands\n\n    command send @ 0x80 {\n        source: u16\n        value: u16\n    }\n    \nSends a new event on the message bus.\n"
+  },
+  {
     "name": "Control",
     "shortId": "control",
     "camelName": "ctrl",

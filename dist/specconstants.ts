@@ -197,6 +197,13 @@ export enum ButtonEvent {
     LongClick = 0x4,
 }
 
+// Service: CODAL Message Bus
+export const SRV_CODAL_MESSAGE_BUS = 0x1161590c
+export enum CODALMessageBusCmd {
+    /** Sends a new event on the message bus. */
+    Send = 0x80,
+}
+
 // Service: Control
 export const SRV_CONTROL = 0x0
 

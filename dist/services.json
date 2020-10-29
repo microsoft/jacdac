@@ -2096,6 +2096,121 @@
     "source": "# Motor\n\n    identifier: 0x17004cd8\n\nA bi-directional DC motor.\n\n## Registers\n\n    rw duty: i16 / @ value\n\nPWM duty cycle of the motor. Use negative/positive values to run the motor forwards and backwards.\nPositive is recommended to be clockwise rotation and negative counterclockwise.\n\n    rw enabled: bool @ intensity\n\nTurn the power to the motor on/off.\n"
   },
   {
+    "name": "Mouse",
+    "shortId": "mouse",
+    "camelName": "Mouse",
+    "shortName": "Mouse",
+    "extends": [],
+    "notes": {
+      "short": "Control a device that acts as a mouse."
+    },
+    "classIdentifier": 411425820,
+    "enums": {
+      "Button": {
+        "name": "Button",
+        "storage": 2,
+        "isFlags": true,
+        "members": {
+          "Right": 1,
+          "Middle": 4,
+          "Left": 2
+        }
+      },
+      "ButtonEvent": {
+        "name": "ButtonEvent",
+        "storage": 1,
+        "members": {
+          "Up": 1,
+          "Down": 2,
+          "Click": 3,
+          "DoubleClick": 4
+        }
+      }
+    },
+    "packets": [
+      {
+        "kind": "command",
+        "name": "set_button",
+        "identifier": 128,
+        "description": "Sets the up/down state of one or more buttons.\nA ``Click`` is the same as ``Down`` followed by ``Up`` after 100ms.\nA ``DoubleClick`` is two clicks with ``150ms`` gap between them (that is, ``100ms`` first click, ``150ms`` gap, ``100ms`` second click).",
+        "fields": [
+          {
+            "name": "buttons",
+            "unit": "",
+            "isFloat": false,
+            "type": "Button",
+            "storage": 2
+          },
+          {
+            "name": "event",
+            "unit": "",
+            "isFloat": false,
+            "type": "ButtonEvent",
+            "storage": 1
+          }
+        ]
+      },
+      {
+        "kind": "command",
+        "name": "move",
+        "identifier": 129,
+        "description": "Moves the mouse by the distance specified.\nIf the time is positive, it specifies how long to make the move.",
+        "fields": [
+          {
+            "name": "dx",
+            "unit": "#",
+            "isFloat": false,
+            "type": "i16",
+            "storage": -2,
+            "isSimpleType": true
+          },
+          {
+            "name": "dy",
+            "unit": "#",
+            "isFloat": false,
+            "type": "i16",
+            "storage": -2,
+            "isSimpleType": true
+          },
+          {
+            "name": "time",
+            "unit": "ms",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "command",
+        "name": "wheel",
+        "identifier": 130,
+        "description": "Turns the wheel up or down. Positive if scrolling up.\nIf the time is positive, it specifies how long to make the move.",
+        "fields": [
+          {
+            "name": "dy",
+            "unit": "#",
+            "isFloat": false,
+            "type": "i16",
+            "storage": -2,
+            "isSimpleType": true
+          },
+          {
+            "name": "time",
+            "unit": "ms",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ]
+      }
+    ],
+    "source": "# Mouse\n\n    identifier: 0x1885dc1c\n    status: experimental\n\nControl a device that acts as a mouse.\n\n## Commands\n\n    flags Button : u16 {\n        Right = 0x01\n        Middle = 0x04\n        Left = 0x02\n    }\n    enum ButtonEvent : u8 {\n        Up = 0x01\n        Down = 0x02\n        Click = 0x03\n        DoubleClick = 0x04\n    }\n    command set_button @ 0x80 {\n        buttons: Button\n        event: ButtonEvent\n    }\n\nSets the up/down state of one or more buttons.\nA ``Click`` is the same as ``Down`` followed by ``Up`` after 100ms.\nA ``DoubleClick`` is two clicks with ``150ms`` gap between them (that is, ``100ms`` first click, ``150ms`` gap, ``100ms`` second click).\n\n    command move @ 0x81 {\n      dx: i16 #\n      dy: i16 #\n      time: u16 ms\n    }\n\nMoves the mouse by the distance specified.\nIf the time is positive, it specifies how long to make the move.\n\n    command wheel @ 0x82 {\n        dy: i16 #\n        time: u16 ms\n    }\n\nTurns the wheel up or down. Positive if scrolling up.\nIf the time is positive, it specifies how long to make the move.\n",
+    "status": "experimental"
+  },
+  {
     "name": "Multitouch",
     "shortId": "multitouch",
     "camelName": "Multitouch",

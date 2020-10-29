@@ -14,7 +14,7 @@ to the catalog following the instructions below.
 
 ## Catalog format
 
-The device catalog is stored as Markdown text files and JPEG images, organized under the [jacdac devices](https://github.com/microsoft/jacdac/tree/main/devices) folder.
+The device catalog is stored as markdown text files and JPEG images, organized under the [JACDAC devices](https://github.com/microsoft/jacdac/tree/main/devices) folder.
 Each company may create a new folder for their devices (or multiple folders for product families).
 
 ### Specification format
@@ -39,9 +39,9 @@ DESCRIPTION
 where 
 * ``NAME`` is the name of the device
 * ``DESCRIPTION`` is a short 1 sentence description
-* ``SERVICE_CLASS*`` is a comma separated list of service class supported by this device (``0x...``)
+* ``SERVICE_CLASS*`` is a comma separated list of [service classes](/services) supported by this device (``0x...``)
 * ``FIRMWARE_ID*`` are the unique firmware identifers for the device. Sometimes there can be more than one for different hardware
-   revisions. The JACDAC tool will detect duplicates.
+   revisions. The JACDAC tool will detect duplicates. Use the widget below to generate a *Random Firmware Identifier*.
 * ``REPO_URL`` is the URL to the GitHub repository hosting the firmware binaries.
 * ``HOME_URL`` is the device store/home page for users
 

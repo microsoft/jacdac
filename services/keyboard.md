@@ -1,6 +1,7 @@
 # Keyboard
 
     identifier: 0x18b05b6a
+    status: experimental
     
 A keyboard that can send keystrokes.
 
@@ -14,10 +15,10 @@ specification](https://usb.org/sites/default/files/hut1_21.pdf), chapter 10 Keyb
         LeftShift = 0xe1
         LeftAlt = 0xe2
         LeftGUID = 0xe3
-        RightControl = 0xe0
-        RightShift = 0xe1
-        RightAlt = 0xe2
-        RightGUID = 0xe3
+        RightControl = 0xe4
+        RightShift = 0xe5
+        RightAlt = 0xe6
+        RightGUID = 0xe7
     }
     enum Action : u8 {
         Press = 0
@@ -26,7 +27,7 @@ specification](https://usb.org/sites/default/files/hut1_21.pdf), chapter 10 Keyb
     }
     command key @ 0x80 {
     repeats:
-        selector: u8
+        selector: u16
         modifiers: Modifiers
         action: Action
     }

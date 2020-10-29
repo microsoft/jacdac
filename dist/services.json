@@ -983,6 +983,45 @@
     "source": "# Button\n\n    identifier: 0x1473a263\n    extends: _sensor\n\nA simple push-button.\n\nNote: this service will stream readings while the button is pressed and shortly after it's released, even\nwhen `stream_samples == 0`. TODO remove this?\n\n## Registers\n\n    ro pressed: bool @ reading\n\nIndicates whether the button is currently active (pressed).\n\n## Events\n\n    event down @ 0x01\n\nEmitted when button goes from inactive (`pressed == 0`) to active.\n\n    event up @ 0x02\n\nEmitted when button goes from active (`pressed == 1`) to inactive.\n\n    event click @ 0x03\n\nEmitted together with `up` when the press time was not longer than 500ms.\n\n    event long_click @ 0x04\n\nEmitted together with `up` when the press time was more than 500ms.\n"
   },
   {
+    "name": "CODAL Message Bus",
+    "shortId": "codalmessagebus",
+    "camelName": "CODALMessageBus",
+    "shortName": "CODALMessageBus",
+    "extends": [],
+    "notes": {
+      "short": "A service that allows passing events through the [CODAL Message Bus](https://lancaster-university.github.io/microbit-docs/ubit/messageBus/)"
+    },
+    "classIdentifier": 291592460,
+    "enums": {},
+    "packets": [
+      {
+        "kind": "command",
+        "name": "send",
+        "identifier": 128,
+        "description": "Sends a new event on the message bus.",
+        "fields": [
+          {
+            "name": "source",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "value",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ]
+      }
+    ],
+    "source": "# CODAL Message Bus\n\n    identifier: 0x1161590c\n    \nA service that allows passing events through the [CODAL Message Bus](https://lancaster-university.github.io/microbit-docs/ubit/messageBus/)\n\n## Commands\n\n    command send @ 0x80 {\n        source: u16\n        value: u16\n    }\n    \nSends a new event on the message bus.\n"
+  },
+  {
     "name": "Control",
     "shortId": "control",
     "camelName": "ctrl",
@@ -1547,6 +1586,85 @@
     "source": "# Humidity\n\n    identifier: 0x16c810b8\n    extends: _sensor\n\nA sensor measuring humidity of outside environment.\n\n## Registers\n\nDefault streaming interval is 1s.\n\n    ro humidity: u22.10 %RH {typical_max = 100} @ reading\n\nThe relative humidity in percentage of full water saturation.\n"
   },
   {
+    "name": "Keyboard",
+    "shortId": "keyboard",
+    "camelName": "Keyboard",
+    "shortName": "Keyboard",
+    "extends": [],
+    "notes": {
+      "short": "A keyboard that can send keystrokes.\n\nThe codes for the key (selectors) is defined in the [HID Keyboard\nspecification](https://usb.org/sites/default/files/hut1_21.pdf), chapter 10 Keyboard/Keypad Page, page 81.\n\nThe device keeps tracks of the key state and is able to clear it all with the clear command."
+    },
+    "classIdentifier": 414210922,
+    "enums": {
+      "Modifiers": {
+        "name": "Modifiers",
+        "storage": 1,
+        "isFlags": true,
+        "members": {
+          "LeftControl": 224,
+          "LeftShift": 225,
+          "LeftAlt": 226,
+          "LeftGUID": 227,
+          "RightControl": 228,
+          "RightShift": 229,
+          "RightAlt": 230,
+          "RightGUID": 231
+        }
+      },
+      "Action": {
+        "name": "Action",
+        "storage": 1,
+        "members": {
+          "Press": 0,
+          "Up": 1,
+          "Down": 2
+        }
+      }
+    },
+    "packets": [
+      {
+        "kind": "command",
+        "name": "key",
+        "identifier": 128,
+        "description": "Presses a key or a sequence of keys down.",
+        "fields": [
+          {
+            "name": "selector",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true,
+            "startRepeats": true
+          },
+          {
+            "name": "modifiers",
+            "unit": "",
+            "isFloat": false,
+            "type": "Modifiers",
+            "storage": 1
+          },
+          {
+            "name": "action",
+            "unit": "",
+            "isFloat": false,
+            "type": "Action",
+            "storage": 1
+          }
+        ]
+      },
+      {
+        "kind": "command",
+        "name": "clear",
+        "identifier": 129,
+        "description": "Clears all pressed keys.",
+        "fields": []
+      }
+    ],
+    "source": "# Keyboard\n\n    identifier: 0x18b05b6a\n    status: experimental\n    \nA keyboard that can send keystrokes.\n\nThe codes for the key (selectors) is defined in the [HID Keyboard\nspecification](https://usb.org/sites/default/files/hut1_21.pdf), chapter 10 Keyboard/Keypad Page, page 81.\n\nThe device keeps tracks of the key state and is able to clear it all with the clear command.\n\n## Commands\n\n    flags Modifiers : u8 {\n        LeftControl = 0xe0\n        LeftShift = 0xe1\n        LeftAlt = 0xe2\n        LeftGUID = 0xe3\n        RightControl = 0xe4\n        RightShift = 0xe5\n        RightAlt = 0xe6\n        RightGUID = 0xe7\n    }\n    enum Action : u8 {\n        Press = 0\n        Up = 1\n        Down = 2\n    }\n    command key @ 0x80 {\n    repeats:\n        selector: u16\n        modifiers: Modifiers\n        action: Action\n    }\n    \nPresses a key or a sequence of keys down.\n\n    command clear @ 0x81 {}\n    \nClears all pressed keys.\n",
+    "status": "experimental"
+  },
+  {
     "name": "Light",
     "shortId": "light",
     "camelName": "Light",
@@ -2094,6 +2212,121 @@
       }
     ],
     "source": "# Motor\n\n    identifier: 0x17004cd8\n\nA bi-directional DC motor.\n\n## Registers\n\n    rw duty: i16 / @ value\n\nPWM duty cycle of the motor. Use negative/positive values to run the motor forwards and backwards.\nPositive is recommended to be clockwise rotation and negative counterclockwise.\n\n    rw enabled: bool @ intensity\n\nTurn the power to the motor on/off.\n"
+  },
+  {
+    "name": "Mouse",
+    "shortId": "mouse",
+    "camelName": "Mouse",
+    "shortName": "Mouse",
+    "extends": [],
+    "notes": {
+      "short": "Control a device that acts as a mouse."
+    },
+    "classIdentifier": 411425820,
+    "enums": {
+      "Button": {
+        "name": "Button",
+        "storage": 2,
+        "isFlags": true,
+        "members": {
+          "Right": 1,
+          "Middle": 4,
+          "Left": 2
+        }
+      },
+      "ButtonEvent": {
+        "name": "ButtonEvent",
+        "storage": 1,
+        "members": {
+          "Up": 1,
+          "Down": 2,
+          "Click": 3,
+          "DoubleClick": 4
+        }
+      }
+    },
+    "packets": [
+      {
+        "kind": "command",
+        "name": "set_button",
+        "identifier": 128,
+        "description": "Sets the up/down state of one or more buttons.\nA ``Click`` is the same as ``Down`` followed by ``Up`` after 100ms.\nA ``DoubleClick`` is two clicks with ``150ms`` gap between them (that is, ``100ms`` first click, ``150ms`` gap, ``100ms`` second click).",
+        "fields": [
+          {
+            "name": "buttons",
+            "unit": "",
+            "isFloat": false,
+            "type": "Button",
+            "storage": 2
+          },
+          {
+            "name": "event",
+            "unit": "",
+            "isFloat": false,
+            "type": "ButtonEvent",
+            "storage": 1
+          }
+        ]
+      },
+      {
+        "kind": "command",
+        "name": "move",
+        "identifier": 129,
+        "description": "Moves the mouse by the distance specified.\nIf the time is positive, it specifies how long to make the move.",
+        "fields": [
+          {
+            "name": "dx",
+            "unit": "#",
+            "isFloat": false,
+            "type": "i16",
+            "storage": -2,
+            "isSimpleType": true
+          },
+          {
+            "name": "dy",
+            "unit": "#",
+            "isFloat": false,
+            "type": "i16",
+            "storage": -2,
+            "isSimpleType": true
+          },
+          {
+            "name": "time",
+            "unit": "ms",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "command",
+        "name": "wheel",
+        "identifier": 130,
+        "description": "Turns the wheel up or down. Positive if scrolling up.\nIf the time is positive, it specifies how long to make the move.",
+        "fields": [
+          {
+            "name": "dy",
+            "unit": "#",
+            "isFloat": false,
+            "type": "i16",
+            "storage": -2,
+            "isSimpleType": true
+          },
+          {
+            "name": "time",
+            "unit": "ms",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ]
+      }
+    ],
+    "source": "# Mouse\n\n    identifier: 0x1885dc1c\n    status: experimental\n\nControl a device that acts as a mouse.\n\n## Commands\n\n    flags Button : u16 {\n        Right = 0x01\n        Middle = 0x04\n        Left = 0x02\n    }\n    enum ButtonEvent : u8 {\n        Up = 0x01\n        Down = 0x02\n        Click = 0x03\n        DoubleClick = 0x04\n    }\n    command set_button @ 0x80 {\n        buttons: Button\n        event: ButtonEvent\n    }\n\nSets the up/down state of one or more buttons.\nA ``Click`` is the same as ``Down`` followed by ``Up`` after 100ms.\nA ``DoubleClick`` is two clicks with ``150ms`` gap between them (that is, ``100ms`` first click, ``150ms`` gap, ``100ms`` second click).\n\n    command move @ 0x81 {\n      dx: i16 #\n      dy: i16 #\n      time: u16 ms\n    }\n\nMoves the mouse by the distance specified.\nIf the time is positive, it specifies how long to make the move.\n\n    command wheel @ 0x82 {\n        dy: i16 #\n        time: u16 ms\n    }\n\nTurns the wheel up or down. Positive if scrolling up.\nIf the time is positive, it specifies how long to make the move.\n",
+    "status": "experimental"
   },
   {
     "name": "Multitouch",

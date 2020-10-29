@@ -197,6 +197,13 @@ export enum ButtonEvent {
     LongClick = 0x4,
 }
 
+// Service: CODAL Message Bus
+export const SRV_CODAL_MESSAGE_BUS = 0x1161590c
+export enum CODALMessageBusCmd {
+    /** Sends a new event on the message bus. */
+    Send = 0x80,
+}
+
 // Service: Control
 export const SRV_CONTROL = 0x0
 
@@ -300,6 +307,35 @@ export const SRV_HUMIDITY = 0x16c810b8
 export enum HumidityReg {
     /** Read-only %RH u22.10 (uint32_t). The relative humidity in percentage of full water saturation. */
     Humidity = 0x101,
+}
+
+// Service: Keyboard
+export const SRV_KEYBOARD = 0x18b05b6a
+
+export enum KeyboardModifiers { // uint8_t
+    LeftControl = 0xe0,
+    LeftShift = 0xe1,
+    LeftAlt = 0xe2,
+    LeftGUID = 0xe3,
+    RightControl = 0xe4,
+    RightShift = 0xe5,
+    RightAlt = 0xe6,
+    RightGUID = 0xe7,
+}
+
+
+export enum KeyboardAction { // uint8_t
+    Press = 0x0,
+    Up = 0x1,
+    Down = 0x2,
+}
+
+export enum KeyboardCmd {
+    /** Presses a key or a sequence of keys down. */
+    Key = 0x80,
+    
+    /** No args. Clears all pressed keys. */
+    Clear = 0x81,
 }
 
 // Service: Light
@@ -468,6 +504,44 @@ export enum MotorReg {
     
     /** Read-write bool (uint8_t). Turn the power to the motor on/off. */
     Enabled = 0x1,
+}
+
+// Service: Mouse
+export const SRV_MOUSE = 0x1885dc1c
+
+export enum MouseButton { // uint16_t
+    Right = 0x1,
+    Middle = 0x4,
+    Left = 0x2,
+}
+
+
+export enum MouseButtonEvent { // uint8_t
+    Up = 0x1,
+    Down = 0x2,
+    Click = 0x3,
+    DoubleClick = 0x4,
+}
+
+export enum MouseCmd {
+    /**
+     * Sets the up/down state of one or more buttons.
+     * A ``Click`` is the same as ``Down`` followed by ``Up`` after 100ms.
+     * A ``DoubleClick`` is two clicks with ``150ms`` gap between them (that is, ``100ms`` first click, ``150ms`` gap, ``100ms`` second click).
+     */
+    SetButton = 0x80,
+    
+    /**
+     * Moves the mouse by the distance specified.
+     * If the time is positive, it specifies how long to make the move.
+     */
+    Move = 0x81,
+    
+    /**
+     * Turns the wheel up or down. Positive if scrolling up.
+     * If the time is positive, it specifies how long to make the move.
+     */
+    Wheel = 0x82,
 }
 
 // Service: Multitouch

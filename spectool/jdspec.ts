@@ -684,6 +684,12 @@ export function parseSpecificationMarkdownToJSON(filecontent: string, includes?:
             case "high":
                 info.highCommands = !!parseIntCheck(words[2])
                 break
+            case "status":
+                if (["stable", "experimental", "deprecated"].indexOf(words[2]) > -1)
+                    info.status = <any>words[2];
+                else 
+                    error("unknown status");
+                break;
             default:
                 error("unknown metadata field: " + words[0])
                 break

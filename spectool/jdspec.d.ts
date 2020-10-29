@@ -141,6 +141,11 @@ declare namespace jdspec {
          * If parsing of markdown fails, this includes the parse errors. Set to null/undefined when no errors.
          */
         errors?: Diagnostic[];
+
+        /**
+         * Specifies the stability status of this service.
+         */
+        status?: "stable" | "experimental" | "deprecated";
     }
 
     /**

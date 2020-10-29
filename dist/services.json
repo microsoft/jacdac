@@ -1547,6 +1547,85 @@
     "source": "# Humidity\n\n    identifier: 0x16c810b8\n    extends: _sensor\n\nA sensor measuring humidity of outside environment.\n\n## Registers\n\nDefault streaming interval is 1s.\n\n    ro humidity: u22.10 %RH {typical_max = 100} @ reading\n\nThe relative humidity in percentage of full water saturation.\n"
   },
   {
+    "name": "Keyboard",
+    "shortId": "keyboard",
+    "camelName": "Keyboard",
+    "shortName": "Keyboard",
+    "extends": [],
+    "notes": {
+      "short": "A keyboard that can send keystrokes.\n\nThe codes for the key (selectors) is defined in the [HID Keyboard\nspecification](https://usb.org/sites/default/files/hut1_21.pdf), chapter 10 Keyboard/Keypad Page, page 81.\n\nThe device keeps tracks of the key state and is able to clear it all with the clear command."
+    },
+    "classIdentifier": 414210922,
+    "enums": {
+      "Modifiers": {
+        "name": "Modifiers",
+        "storage": 1,
+        "isFlags": true,
+        "members": {
+          "LeftControl": 224,
+          "LeftShift": 225,
+          "LeftAlt": 226,
+          "LeftGUID": 227,
+          "RightControl": 228,
+          "RightShift": 229,
+          "RightAlt": 230,
+          "RightGUID": 231
+        }
+      },
+      "Action": {
+        "name": "Action",
+        "storage": 1,
+        "members": {
+          "Press": 0,
+          "Up": 1,
+          "Down": 2
+        }
+      }
+    },
+    "packets": [
+      {
+        "kind": "command",
+        "name": "key",
+        "identifier": 128,
+        "description": "Presses a key or a sequence of keys down.",
+        "fields": [
+          {
+            "name": "selector",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true,
+            "startRepeats": true
+          },
+          {
+            "name": "modifiers",
+            "unit": "",
+            "isFloat": false,
+            "type": "Modifiers",
+            "storage": 1
+          },
+          {
+            "name": "action",
+            "unit": "",
+            "isFloat": false,
+            "type": "Action",
+            "storage": 1
+          }
+        ]
+      },
+      {
+        "kind": "command",
+        "name": "clear",
+        "identifier": 129,
+        "description": "Clears all pressed keys.",
+        "fields": []
+      }
+    ],
+    "source": "# Keyboard\n\n    identifier: 0x18b05b6a\n    status: experimental\n    \nA keyboard that can send keystrokes.\n\nThe codes for the key (selectors) is defined in the [HID Keyboard\nspecification](https://usb.org/sites/default/files/hut1_21.pdf), chapter 10 Keyboard/Keypad Page, page 81.\n\nThe device keeps tracks of the key state and is able to clear it all with the clear command.\n\n## Commands\n\n    flags Modifiers : u8 {\n        LeftControl = 0xe0\n        LeftShift = 0xe1\n        LeftAlt = 0xe2\n        LeftGUID = 0xe3\n        RightControl = 0xe4\n        RightShift = 0xe5\n        RightAlt = 0xe6\n        RightGUID = 0xe7\n    }\n    enum Action : u8 {\n        Press = 0\n        Up = 1\n        Down = 2\n    }\n    command key @ 0x80 {\n    repeats:\n        selector: u16\n        modifiers: Modifiers\n        action: Action\n    }\n    \nPresses a key or a sequence of keys down.\n\n    command clear @ 0x81 {}\n    \nClears all pressed keys.\n",
+    "status": "experimental"
+  },
+  {
     "name": "Light",
     "shortId": "light",
     "camelName": "Light",

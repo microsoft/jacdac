@@ -1641,11 +1641,11 @@
         "kind": "command",
         "name": "clear",
         "identifier": 128,
-        "description": "",
+        "description": "Shorthand command to clear all the LEDs on the screen.",
         "fields": []
       }
     ],
-    "source": "# LED Matrix Controller\n\n    identifier: 0x1d35e393\n    status: experimental\n\nA service that allows to control a rectangular matrix of monochrome LEDs.\nTo stream the state of the screen, use [LED Matrix display](/services/led-matrix-display) instead.\n\n## Registers\n\n    rw leds: bytes @ 0x80\n\nRead or writes the state of the screen where pixel on/off state is \nstored as a bit, column by column. The column should be byte aligned.\n\n    rw enabled: bool @ 0x81\n \n Disables or enables the whole screen.\n \n    rw brightness: u8 @ 0x82\n    \nSets the general brightness of the LEDs.\n \n    const rows: u16 # @ 0x83\n    \nNumber of rows on the screen\n\n    const columns: u16 # @ 0x84\n    \nNumber of columns on the screen\n\n## Commands\n\n    command clear @ 0x80 {}\n",
+    "source": "# LED Matrix Controller\n\n    identifier: 0x1d35e393\n    status: experimental\n\nA service that allows to control a rectangular matrix of monochrome LEDs.\nTo stream the state of the screen, use [LED Matrix display](/services/led-matrix-display) instead.\n\n## Registers\n\n    rw leds: bytes @ 0x80\n\nRead or writes the state of the screen where pixel on/off state is \nstored as a bit, column by column. The column should be byte aligned.\n\n    rw enabled: bool @ 0x81\n \n Disables or enables the whole screen.\n \n    rw brightness: u8 @ 0x82\n    \nSets the general brightness of the LEDs.\n \n    const rows: u16 # @ 0x83\n    \nNumber of rows on the screen\n\n    const columns: u16 # @ 0x84\n    \nNumber of columns on the screen\n\n## Commands\n\n    command clear @ 0x80 {}\n\nShorthand command to clear all the LEDs on the screen.",
     "status": "experimental"
   },
   {

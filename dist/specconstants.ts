@@ -325,6 +325,7 @@ export enum LEDMatrixControllerReg {
 }
 
 export enum LEDMatrixControllerCmd {
+    /** No args. Shorthand command to clear all the LEDs on the screen. */
     Clear = 0x80,
 }
 

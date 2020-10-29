@@ -1,6 +1,7 @@
 # LED Matrix
 
     identifier: 0x1d35e393
+    status: experimental
 
 A rectangular matrix of monochrome LEDs
 
@@ -8,8 +9,8 @@ A rectangular matrix of monochrome LEDs
 
     rw leds: bytes @ 0x80
 
-Read or writes the state of the screen where pixel information is 
-stored as bits, row by row.
+Read or writes the state of the screen where pixel on/off state is 
+stored as a bit, column by column. The column should be byte aligned.
 
     rw enabled: boolean @ 0x81
  
@@ -19,11 +20,11 @@ stored as bits, row by row.
     
 Sets the general brightness of the LEDs.
  
-    const rows: u8 # @ 0x83
+    const rows: u16 # @ 0x83
     
 Number of rows on the screen
 
-    const columns: u8 # @ 0x84
+    const columns: u16 # @ 0x84
     
 Number of columns on the screen
 

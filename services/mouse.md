@@ -7,7 +7,7 @@ Control a device that acts as a mouse.
 
 ## Commands
 
-    flags Button : u8 {
+    flags Button : u16 {
         Right = 0x01
         Middle = 0x04
         Left = 0x02

@@ -983,6 +983,45 @@
     "source": "# Button\n\n    identifier: 0x1473a263\n    extends: _sensor\n\nA simple push-button.\n\nNote: this service will stream readings while the button is pressed and shortly after it's released, even\nwhen `stream_samples == 0`. TODO remove this?\n\n## Registers\n\n    ro pressed: bool @ reading\n\nIndicates whether the button is currently active (pressed).\n\n## Events\n\n    event down @ 0x01\n\nEmitted when button goes from inactive (`pressed == 0`) to active.\n\n    event up @ 0x02\n\nEmitted when button goes from active (`pressed == 1`) to inactive.\n\n    event click @ 0x03\n\nEmitted together with `up` when the press time was not longer than 500ms.\n\n    event long_click @ 0x04\n\nEmitted together with `up` when the press time was more than 500ms.\n"
   },
   {
+    "name": "CODAL Message Bus",
+    "shortId": "codalmessagebus",
+    "camelName": "CODALMessageBus",
+    "shortName": "CODALMessageBus",
+    "extends": [],
+    "notes": {
+      "short": "A service that allows passing events through the [CODAL Message Bus](https://lancaster-university.github.io/microbit-docs/ubit/messageBus/)"
+    },
+    "classIdentifier": 291592460,
+    "enums": {},
+    "packets": [
+      {
+        "kind": "command",
+        "name": "send",
+        "identifier": 128,
+        "description": "Sends a new event on the message bus.",
+        "fields": [
+          {
+            "name": "source",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "value",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ]
+      }
+    ],
+    "source": "# CODAL Message Bus\n\n    identifier: 0x1161590c\n    \nA service that allows passing events through the [CODAL Message Bus](https://lancaster-university.github.io/microbit-docs/ubit/messageBus/)\n\n## Commands\n\n    command send @ 0x80 {\n        source: u16\n        value: u16\n    }\n    \nSends a new event on the message bus.\n"
+  },
+  {
     "name": "Control",
     "shortId": "control",
     "camelName": "ctrl",
@@ -1547,179 +1586,82 @@
     "source": "# Humidity\n\n    identifier: 0x16c810b8\n    extends: _sensor\n\nA sensor measuring humidity of outside environment.\n\n## Registers\n\nDefault streaming interval is 1s.\n\n    ro humidity: u22.10 %RH {typical_max = 100} @ reading\n\nThe relative humidity in percentage of full water saturation.\n"
   },
   {
-    "name": "LED Matrix Controller",
-    "shortId": "ledmatrixcontroller",
-    "camelName": "LEDMatrixController",
-    "shortName": "LEDMatrixController",
+    "name": "Keyboard",
+    "shortId": "keyboard",
+    "camelName": "Keyboard",
+    "shortName": "Keyboard",
     "extends": [],
     "notes": {
-      "short": "A service that allows to control a rectangular matrix of monochrome LEDs.\nTo stream the state of the screen, use [LED Matrix display](/services/led-matrix-display) instead."
+      "short": "A keyboard that can send keystrokes.\n\nThe codes for the key (selectors) is defined in the [HID Keyboard\nspecification](https://usb.org/sites/default/files/hut1_21.pdf), chapter 10 Keyboard/Keypad Page, page 81.\n\nThe device keeps tracks of the key state and is able to clear it all with the clear command."
     },
-    "classIdentifier": 490070931,
-    "enums": {},
+    "classIdentifier": 414210922,
+    "enums": {
+      "Modifiers": {
+        "name": "Modifiers",
+        "storage": 1,
+        "isFlags": true,
+        "members": {
+          "LeftControl": 224,
+          "LeftShift": 225,
+          "LeftAlt": 226,
+          "LeftGUID": 227,
+          "RightControl": 228,
+          "RightShift": 229,
+          "RightAlt": 230,
+          "RightGUID": 231
+        }
+      },
+      "Action": {
+        "name": "Action",
+        "storage": 1,
+        "members": {
+          "Press": 0,
+          "Up": 1,
+          "Down": 2
+        }
+      }
+    },
     "packets": [
       {
-        "kind": "rw",
-        "name": "leds",
+        "kind": "command",
+        "name": "key",
         "identifier": 128,
-        "description": "Read or writes the state of the screen where pixel on/off state is \nstored as a bit, column by column. The column should be byte aligned.",
+        "description": "Presses a key or a sequence of keys down.",
         "fields": [
           {
-            "name": "_",
+            "name": "selector",
             "unit": "",
             "isFloat": false,
-            "type": "bytes",
-            "storage": 0,
-            "isSimpleType": true
-          }
-        ]
-      },
-      {
-        "kind": "rw",
-        "name": "enabled",
-        "identifier": 129,
-        "description": "Disables or enables the whole screen.",
-        "fields": [
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true,
+            "startRepeats": true
+          },
           {
-            "name": "_",
+            "name": "modifiers",
             "unit": "",
             "isFloat": false,
-            "type": "bool",
+            "type": "Modifiers",
             "storage": 1
-          }
-        ]
-      },
-      {
-        "kind": "rw",
-        "name": "brightness",
-        "identifier": 130,
-        "description": "Sets the general brightness of the LEDs.",
-        "fields": [
+          },
           {
-            "name": "_",
+            "name": "action",
             "unit": "",
             "isFloat": false,
-            "type": "u8",
-            "storage": 1,
-            "isSimpleType": true
-          }
-        ]
-      },
-      {
-        "kind": "const",
-        "name": "rows",
-        "identifier": 131,
-        "description": "Number of rows on the screen",
-        "fields": [
-          {
-            "name": "_",
-            "unit": "#",
-            "isFloat": false,
-            "type": "u16",
-            "storage": 2,
-            "isSimpleType": true
-          }
-        ]
-      },
-      {
-        "kind": "const",
-        "name": "columns",
-        "identifier": 132,
-        "description": "Number of columns on the screen",
-        "fields": [
-          {
-            "name": "_",
-            "unit": "#",
-            "isFloat": false,
-            "type": "u16",
-            "storage": 2,
-            "isSimpleType": true
+            "type": "Action",
+            "storage": 1
           }
         ]
       },
       {
         "kind": "command",
         "name": "clear",
-        "identifier": 128,
-        "description": "Shorthand command to clear all the LEDs on the screen.",
+        "identifier": 129,
+        "description": "Clears all pressed keys.",
         "fields": []
       }
     ],
-    "source": "# LED Matrix Controller\n\n    identifier: 0x1d35e393\n    status: experimental\n\nA service that allows to control a rectangular matrix of monochrome LEDs.\nTo stream the state of the screen, use [LED Matrix display](/services/led-matrix-display) instead.\n\n## Registers\n\n    rw leds: bytes @ 0x80\n\nRead or writes the state of the screen where pixel on/off state is \nstored as a bit, column by column. The column should be byte aligned.\n\n    rw enabled: bool @ 0x81\n \n Disables or enables the whole screen.\n \n    rw brightness: u8 @ 0x82\n    \nSets the general brightness of the LEDs.\n \n    const rows: u16 # @ 0x83\n    \nNumber of rows on the screen\n\n    const columns: u16 # @ 0x84\n    \nNumber of columns on the screen\n\n## Commands\n\n    command clear @ 0x80 {}\n\nShorthand command to clear all the LEDs on the screen.",
-    "status": "experimental"
-  },
-  {
-    "name": "LED Matrix Display",
-    "shortId": "ledmatrixdisplay",
-    "camelName": "LEDMatrixDisplay",
-    "shortName": "LEDMatrixDisplay",
-    "extends": [
-      "_sensor"
-    ],
-    "notes": {
-      "short": "A sensor that streams the state of a rectangular LED matrix.\nTo control the state of the screen, use [LED Matrix Controller](/services/led-matrix-controller) instead."
-    },
-    "classIdentifier": 291592460,
-    "enums": {},
-    "packets": [
-      {
-        "kind": "rw",
-        "name": "stream_samples",
-        "identifier": 3,
-        "description": "Asks device to stream a given number of samples\n(clients will typically write `255` to this register every second or so, while streaming is required).",
-        "fields": [
-          {
-            "name": "_",
-            "unit": "",
-            "isFloat": false,
-            "type": "u8",
-            "storage": 1,
-            "isSimpleType": true
-          }
-        ],
-        "identifierName": "stream_samples",
-        "derived": true
-      },
-      {
-        "kind": "rw",
-        "name": "streaming_interval",
-        "identifier": 4,
-        "description": "Period between packets of data when streaming in milliseconds.",
-        "fields": [
-          {
-            "name": "_",
-            "unit": "ms",
-            "isFloat": false,
-            "type": "u32",
-            "storage": 4,
-            "isSimpleType": true,
-            "defaultValue": 100,
-            "typicalMin": 1,
-            "typicalMax": 60000
-          }
-        ],
-        "identifierName": "streaming_interval",
-        "derived": true
-      },
-      {
-        "kind": "ro",
-        "name": "leds",
-        "identifier": 257,
-        "description": "Streams the state of the screen where pixel on/off state is \nstored as a bit, column by column. The column should be byte aligned.",
-        "fields": [
-          {
-            "name": "_",
-            "unit": "",
-            "isFloat": false,
-            "type": "bytes",
-            "storage": 0,
-            "isSimpleType": true
-          }
-        ],
-        "identifierName": "reading"
-      }
-    ],
-    "source": "# LED Matrix Display\n\n    identifier: 0x1161590c\n    extends: _sensor\n    status: experimental\n\nA sensor that streams the state of a rectangular LED matrix.\nTo control the state of the screen, use [LED Matrix Controller](/services/led-matrix-controller) instead.\n\n\n## Registers\n\n    ro leds : bytes @ reading\n    \nStreams the state of the screen where pixel on/off state is \nstored as a bit, column by column. The column should be byte aligned.\n",
+    "source": "# Keyboard\n\n    identifier: 0x18b05b6a\n    status: experimental\n    \nA keyboard that can send keystrokes.\n\nThe codes for the key (selectors) is defined in the [HID Keyboard\nspecification](https://usb.org/sites/default/files/hut1_21.pdf), chapter 10 Keyboard/Keypad Page, page 81.\n\nThe device keeps tracks of the key state and is able to clear it all with the clear command.\n\n## Commands\n\n    flags Modifiers : u8 {\n        LeftControl = 0xe0\n        LeftShift = 0xe1\n        LeftAlt = 0xe2\n        LeftGUID = 0xe3\n        RightControl = 0xe4\n        RightShift = 0xe5\n        RightAlt = 0xe6\n        RightGUID = 0xe7\n    }\n    enum Action : u8 {\n        Press = 0\n        Up = 1\n        Down = 2\n    }\n    command key @ 0x80 {\n    repeats:\n        selector: u16\n        modifiers: Modifiers\n        action: Action\n    }\n    \nPresses a key or a sequence of keys down.\n\n    command clear @ 0x81 {}\n    \nClears all pressed keys.\n",
     "status": "experimental"
   },
   {

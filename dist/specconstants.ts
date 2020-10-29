@@ -197,6 +197,13 @@ export enum ButtonEvent {
     LongClick = 0x4,
 }
 
+// Service: CODAL Message Bus
+export const SRV_CODAL_MESSAGE_BUS = 0x1161590c
+export enum CODALMessageBusCmd {
+    /** Sends a new event on the message bus. */
+    Send = 0x80,
+}
+
 // Service: Control
 export const SRV_CONTROL = 0x0
 
@@ -302,41 +309,33 @@ export enum HumidityReg {
     Humidity = 0x101,
 }
 
-// Service: LED Matrix Controller
-export const SRV_LED_MATRIX_CONTROLLER = 0x1d35e393
-export enum LEDMatrixControllerReg {
-    /**
-     * Read-write bytes. Read or writes the state of the screen where pixel on/off state is 
-     * stored as a bit, column by column. The column should be byte aligned.
-     */
-    Leds = 0x80,
-    
-    /** Read-write bool (uint8_t). Disables or enables the whole screen. */
-    Enabled = 0x81,
-    
-    /** Read-write uint8_t. Sets the general brightness of the LEDs. */
-    Brightness = 0x82,
-    
-    /** Constant # uint16_t. Number of rows on the screen */
-    Rows = 0x83,
-    
-    /** Constant # uint16_t. Number of columns on the screen */
-    Columns = 0x84,
+// Service: Keyboard
+export const SRV_KEYBOARD = 0x18b05b6a
+
+export enum KeyboardModifiers { // uint8_t
+    LeftControl = 0xe0,
+    LeftShift = 0xe1,
+    LeftAlt = 0xe2,
+    LeftGUID = 0xe3,
+    RightControl = 0xe4,
+    RightShift = 0xe5,
+    RightAlt = 0xe6,
+    RightGUID = 0xe7,
 }
 
-export enum LEDMatrixControllerCmd {
-    /** No args. Shorthand command to clear all the LEDs on the screen. */
-    Clear = 0x80,
+
+export enum KeyboardAction { // uint8_t
+    Press = 0x0,
+    Up = 0x1,
+    Down = 0x2,
 }
 
-// Service: LED Matrix Display
-export const SRV_LED_MATRIX_DISPLAY = 0x1161590c
-export enum LEDMatrixDisplayReg {
-    /**
-     * Read-only bytes. Streams the state of the screen where pixel on/off state is 
-     * stored as a bit, column by column. The column should be byte aligned.
-     */
-    Leds = 0x101,
+export enum KeyboardCmd {
+    /** Presses a key or a sequence of keys down. */
+    Key = 0x80,
+    
+    /** No args. Clears all pressed keys. */
+    Clear = 0x81,
 }
 
 // Service: Light

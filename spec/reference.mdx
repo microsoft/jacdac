@@ -1,13 +1,16 @@
 ---
 order: 1
-title: JACDAC Reference Material
+title: JACDAC Reference Documents
 ---
 
-The following documents specify
+For a definition of JACDACterms, see the [glossary](./glossary).
 
-* [Device Entry](./device-catalog)
-* [Service Specification](./service-spec-language)
-* [JACDAC Protocol](./jacdac-protocol)
-* [Single Wire Serial Protocol](./serial-protocol)
-* [Glossary](./glossary)
+### For JACDAC users
+
+JACDAC has support for the C, CircuitPython, and TypeScript languages, as well as for Microsoft MakeCode. To get familiar with the JACDAC abstractions, we suggest browsing the TypeScript [JACDAC Object Model](../clients/web/dom), which is used to make this web site a JACDAC endpoint (over WebUSB), as well as the [tools](../tools/) built using the model.
+
+### For JACDAC device manufacturers and firmware engineers
+
+You will want to read about adding a [device entry](./device-entry) to the [device catalog](../devices) and the role of [service specifications](./service-specification), found in the [service catalog](../services). Please read the [JACDAC protocol](./jacdac-protocol) to learn about the JACDAC packet structure and state machine. To port the JACDAC protocol to a new microcontroller requires implementing the [single wire serial (SWS) protocol](./sws-protocol), which requires that the microcontroller have UART, Timer, and GPIO interrupt capabilities.
+
 

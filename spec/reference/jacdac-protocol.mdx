@@ -81,7 +81,7 @@ Packets are placed back-to-back inside the frame `data` field and must be padded
 
 The way JACDAC devices share resources with other devices on the bus are through __services__. Services provide abstract, standardized interfaces that can be used to interact with physical hardware resources (e.g. an accelerometer) or pure virtual resources (e.g. the state of a video game). This abstraction brings plug-and-play dynamism to JACDAC so that devices with different hardware, but the same overall functionality, can replace one another without having to recompile user applications. For example, two different models of accelerometer hardware can replace each other because they share the same software interface.
 
-Services act on __commands__ and optionally respond with __reports__. Reports can also be emitted separately from a service without prompting from another device. This interface is specified in a [custom markdown language](../service-spec-language) that lists the possible commands and reports that a service can consume and emit. Specifications can also inherit from other specifications. An example of this can be seen in the [sensor specification](../../services/_sensor). JACDAC sensors inherit commands and reports from this specification, creating a set of base functionality for _all_ sensors.
+Services act on __commands__ and optionally respond with __reports__. Reports can also be emitted separately from a service without prompting from another device. This interface is specified in a [custom markdown language](../service-specification) that lists the possible commands and reports that a service can consume and emit. Specifications can also inherit from other specifications. An example of this can be seen in the [sensor specification](../../services/_sensor). JACDAC sensors inherit commands and reports from this specification, creating a set of base functionality for _all_ sensors.
 
 ### Commands
 
@@ -311,5 +311,5 @@ over that pipe.
 ## See also
 
 * [Glossary](./reference/glossary)
-* [Device Catalog Specification](./reference/device-catalog)
-* [Service Specification Language](./reference/service-spec-language)
+* [Device Entry](./reference/device-entry)
+* [Service Specification](./reference/service-specification)

@@ -128,6 +128,7 @@ export function parseSpecificationMarkdownToJSON(filecontent: string, includes?:
     filecontent = (filecontent || "").replace(/\r/g, "")
     let info: jdspec.ServiceSpec = {
         name: "",
+        status: "experimental",
         shortId: filename.replace(/\.md$/, "").replace(/.*\//, ""),
         camelName: "",
         shortName: "",

@@ -145,7 +145,7 @@ declare namespace jdspec {
         /**
          * Specifies the stability status of this service.
          */
-        status?: "stable" | "experimental" | "deprecated";
+        status: "stable" | "experimental" | "deprecated";
     }
 
     /**

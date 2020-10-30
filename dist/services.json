@@ -1,6 +1,7 @@
 [
   {
     "name": "Common registers and commands",
+    "status": "experimental",
     "shortId": "_base",
     "camelName": "base",
     "shortName": "base",
@@ -253,6 +254,7 @@
   },
   {
     "name": "Sensor",
+    "status": "experimental",
     "shortId": "_sensor",
     "camelName": "sensor",
     "shortName": "sensor",
@@ -305,6 +307,7 @@
   },
   {
     "name": "Accelerometer",
+    "status": "experimental",
     "shortId": "accelerometer",
     "camelName": "accel",
     "shortName": "accel",
@@ -479,6 +482,7 @@
   },
   {
     "name": "Sensor Aggregator",
+    "status": "experimental",
     "shortId": "aggregator",
     "camelName": "SensorAggregator",
     "shortName": "SensorAggregator",
@@ -652,6 +656,7 @@
   },
   {
     "name": "Bootloader",
+    "status": "experimental",
     "shortId": "bootloader",
     "camelName": "Bootloader",
     "shortName": "Bootloader",
@@ -884,6 +889,7 @@
   },
   {
     "name": "Button",
+    "status": "experimental",
     "shortId": "button",
     "camelName": "Button",
     "shortName": "Button",
@@ -984,12 +990,13 @@
   },
   {
     "name": "CODAL Message Bus",
+    "status": "experimental",
     "shortId": "codalmessagebus",
     "camelName": "CODALMessageBus",
     "shortName": "CODALMessageBus",
     "extends": [],
     "notes": {
-      "short": "A service that allows passing events through the [CODAL Message Bus](https://lancaster-university.github.io/microbit-docs/ubit/messageBus/)"
+      "short": "A service that allows passing events through the [CODAL Message Bus](https://lancaster-university.github.io/microbit-docs/ubit/messageBus/)\n* ``id`` is a unique identifier that identifies a component in the device. Use ``0`` to address all sources. The value of other identifiers is typically hardware dependent.\n* ``event`` is an identifier that determines the event type. Use ``0`` as a wildcard."
     },
     "classIdentifier": 291592460,
     "enums": {},
@@ -1001,7 +1008,7 @@
         "description": "Sends a new event on the message bus.",
         "fields": [
           {
-            "name": "source",
+            "name": "id",
             "unit": "",
             "isFloat": false,
             "type": "u16",
@@ -1009,7 +1016,7 @@
             "isSimpleType": true
           },
           {
-            "name": "value",
+            "name": "event",
             "unit": "",
             "isFloat": false,
             "type": "u16",
@@ -1019,10 +1026,11 @@
         ]
       }
     ],
-    "source": "# CODAL Message Bus\n\n    identifier: 0x1161590c\n    \nA service that allows passing events through the [CODAL Message Bus](https://lancaster-university.github.io/microbit-docs/ubit/messageBus/)\n\n## Commands\n\n    command send @ 0x80 {\n        source: u16\n        value: u16\n    }\n    \nSends a new event on the message bus.\n"
+    "source": "# CODAL Message Bus\n\n    identifier: 0x1161590c\n    \nA service that allows passing events through the [CODAL Message Bus](https://lancaster-university.github.io/microbit-docs/ubit/messageBus/)\n* ``id`` is a unique identifier that identifies a component in the device. Use ``0`` to address all sources. The value of other identifiers is typically hardware dependent.\n* ``event`` is an identifier that determines the event type. Use ``0`` as a wildcard.\n\n## Commands\n\n    command send @ 0x80 {\n        id: u16\n        event: u16\n    }\n    \nSends a new event on the message bus.\n"
   },
   {
     "name": "Control",
+    "status": "experimental",
     "shortId": "control",
     "camelName": "ctrl",
     "shortName": "ctrl",
@@ -1224,6 +1232,7 @@
   },
   {
     "name": "Rotary encoder",
+    "status": "experimental",
     "shortId": "crank",
     "camelName": "RotaryEncoder",
     "shortName": "crank",
@@ -1314,6 +1323,7 @@
   },
   {
     "name": "Gamepad",
+    "status": "experimental",
     "shortId": "gamepad",
     "camelName": "Gamepad",
     "shortName": "Gamepad",
@@ -1511,6 +1521,7 @@
   },
   {
     "name": "Humidity",
+    "status": "experimental",
     "shortId": "humidity",
     "camelName": "Humidity",
     "shortName": "Humidity",
@@ -1587,6 +1598,7 @@
   },
   {
     "name": "Keyboard",
+    "status": "experimental",
     "shortId": "keyboard",
     "camelName": "Keyboard",
     "shortName": "Keyboard",
@@ -1661,11 +1673,11 @@
         "fields": []
       }
     ],
-    "source": "# Keyboard\n\n    identifier: 0x18b05b6a\n    status: experimental\n    \nA keyboard that can send keystrokes.\n\nThe codes for the key (selectors) is defined in the [HID Keyboard\nspecification](https://usb.org/sites/default/files/hut1_21.pdf), chapter 10 Keyboard/Keypad Page, page 81.\n\nThe device keeps tracks of the key state and is able to clear it all with the clear command.\n\n## Commands\n\n    flags Modifiers : u8 {\n        LeftControl = 0xe0\n        LeftShift = 0xe1\n        LeftAlt = 0xe2\n        LeftGUID = 0xe3\n        RightControl = 0xe4\n        RightShift = 0xe5\n        RightAlt = 0xe6\n        RightGUID = 0xe7\n    }\n    enum Action : u8 {\n        Press = 0\n        Up = 1\n        Down = 2\n    }\n    command key @ 0x80 {\n    repeats:\n        selector: u16\n        modifiers: Modifiers\n        action: Action\n    }\n    \nPresses a key or a sequence of keys down.\n\n    command clear @ 0x81 {}\n    \nClears all pressed keys.\n",
-    "status": "experimental"
+    "source": "# Keyboard\n\n    identifier: 0x18b05b6a\n    status: experimental\n    \nA keyboard that can send keystrokes.\n\nThe codes for the key (selectors) is defined in the [HID Keyboard\nspecification](https://usb.org/sites/default/files/hut1_21.pdf), chapter 10 Keyboard/Keypad Page, page 81.\n\nThe device keeps tracks of the key state and is able to clear it all with the clear command.\n\n## Commands\n\n    flags Modifiers : u8 {\n        LeftControl = 0xe0\n        LeftShift = 0xe1\n        LeftAlt = 0xe2\n        LeftGUID = 0xe3\n        RightControl = 0xe4\n        RightShift = 0xe5\n        RightAlt = 0xe6\n        RightGUID = 0xe7\n    }\n    enum Action : u8 {\n        Press = 0\n        Up = 1\n        Down = 2\n    }\n    command key @ 0x80 {\n    repeats:\n        selector: u16\n        modifiers: Modifiers\n        action: Action\n    }\n    \nPresses a key or a sequence of keys down.\n\n    command clear @ 0x81 {}\n    \nClears all pressed keys.\n"
   },
   {
     "name": "Light",
+    "status": "experimental",
     "shortId": "light",
     "camelName": "Light",
     "shortName": "Light",
@@ -1794,6 +1806,7 @@
   },
   {
     "name": "Logger",
+    "status": "experimental",
     "shortId": "logger",
     "camelName": "Logger",
     "shortName": "Logger",
@@ -1896,6 +1909,7 @@
   },
   {
     "name": "Model Runner",
+    "status": "experimental",
     "shortId": "modelrunner",
     "camelName": "ModelRunner",
     "shortName": "ModelRunner",
@@ -2166,6 +2180,7 @@
   },
   {
     "name": "Motor",
+    "status": "experimental",
     "shortId": "motor",
     "camelName": "Motor",
     "shortName": "Motor",
@@ -2215,6 +2230,7 @@
   },
   {
     "name": "Mouse",
+    "status": "experimental",
     "shortId": "mouse",
     "camelName": "Mouse",
     "shortName": "Mouse",
@@ -2325,11 +2341,11 @@
         ]
       }
     ],
-    "source": "# Mouse\n\n    identifier: 0x1885dc1c\n    status: experimental\n\nControl a device that acts as a mouse.\n\n## Commands\n\n    flags Button : u16 {\n        Right = 0x01\n        Middle = 0x04\n        Left = 0x02\n    }\n    enum ButtonEvent : u8 {\n        Up = 0x01\n        Down = 0x02\n        Click = 0x03\n        DoubleClick = 0x04\n    }\n    command set_button @ 0x80 {\n        buttons: Button\n        event: ButtonEvent\n    }\n\nSets the up/down state of one or more buttons.\nA ``Click`` is the same as ``Down`` followed by ``Up`` after 100ms.\nA ``DoubleClick`` is two clicks with ``150ms`` gap between them (that is, ``100ms`` first click, ``150ms`` gap, ``100ms`` second click).\n\n    command move @ 0x81 {\n      dx: i16 #\n      dy: i16 #\n      time: u16 ms\n    }\n\nMoves the mouse by the distance specified.\nIf the time is positive, it specifies how long to make the move.\n\n    command wheel @ 0x82 {\n        dy: i16 #\n        time: u16 ms\n    }\n\nTurns the wheel up or down. Positive if scrolling up.\nIf the time is positive, it specifies how long to make the move.\n",
-    "status": "experimental"
+    "source": "# Mouse\n\n    identifier: 0x1885dc1c\n    status: experimental\n\nControl a device that acts as a mouse.\n\n## Commands\n\n    flags Button : u16 {\n        Right = 0x01\n        Middle = 0x04\n        Left = 0x02\n    }\n    enum ButtonEvent : u8 {\n        Up = 0x01\n        Down = 0x02\n        Click = 0x03\n        DoubleClick = 0x04\n    }\n    command set_button @ 0x80 {\n        buttons: Button\n        event: ButtonEvent\n    }\n\nSets the up/down state of one or more buttons.\nA ``Click`` is the same as ``Down`` followed by ``Up`` after 100ms.\nA ``DoubleClick`` is two clicks with ``150ms`` gap between them (that is, ``100ms`` first click, ``150ms`` gap, ``100ms`` second click).\n\n    command move @ 0x81 {\n      dx: i16 #\n      dy: i16 #\n      time: u16 ms\n    }\n\nMoves the mouse by the distance specified.\nIf the time is positive, it specifies how long to make the move.\n\n    command wheel @ 0x82 {\n        dy: i16 #\n        time: u16 ms\n    }\n\nTurns the wheel up or down. Positive if scrolling up.\nIf the time is positive, it specifies how long to make the move.\n"
   },
   {
     "name": "Multitouch",
+    "status": "experimental",
     "shortId": "multitouch",
     "camelName": "Multitouch",
     "shortName": "Multitouch",
@@ -2483,6 +2499,7 @@
   },
   {
     "name": "Music",
+    "status": "experimental",
     "shortId": "music",
     "camelName": "Music",
     "shortName": "Music",
@@ -2549,6 +2566,7 @@
   },
   {
     "name": "Power",
+    "status": "experimental",
     "shortId": "power",
     "camelName": "Power",
     "shortName": "Power",
@@ -2720,6 +2738,7 @@
   },
   {
     "name": "PWM Light",
+    "status": "experimental",
     "shortId": "pwmlight",
     "camelName": "PwmLight",
     "shortName": "PwmLight",
@@ -2847,6 +2866,7 @@
   },
   {
     "name": "Role Manager",
+    "status": "experimental",
     "shortId": "rolemanager",
     "camelName": "RoleManager",
     "shortName": "RoleManager",
@@ -3021,6 +3041,7 @@
   },
   {
     "name": "Servo",
+    "status": "experimental",
     "shortId": "servo",
     "camelName": "Servo",
     "shortName": "Servo",
@@ -3071,6 +3092,7 @@
   },
   {
     "name": "Slider",
+    "status": "experimental",
     "shortId": "slider",
     "camelName": "Slider",
     "shortName": "Slider",
@@ -3145,6 +3167,7 @@
   },
   {
     "name": "TCP",
+    "status": "experimental",
     "shortId": "tcp",
     "camelName": "TCP",
     "shortName": "TCP",
@@ -3278,6 +3301,7 @@
   },
   {
     "name": "Temperature",
+    "status": "experimental",
     "shortId": "temperature",
     "camelName": "Temperature",
     "shortName": "Temperature",
@@ -3352,6 +3376,7 @@
   },
   {
     "name": "WIFI",
+    "status": "experimental",
     "shortId": "wifi",
     "camelName": "wifi",
     "shortName": "wifi",

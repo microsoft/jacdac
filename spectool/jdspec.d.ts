@@ -66,6 +66,11 @@ declare namespace jdspec {
     type Unit = "" | "us" | "mWh" | "#" | senml.Unit | senml.SecondaryUnit
 
     /**
+     * Stability status of a feature
+     */
+    type StabilityStatus = "stable" | "experimental" | "deprecated";
+
+    /**
      * Service specification.
      */
     interface ServiceSpec {
@@ -145,7 +150,7 @@ declare namespace jdspec {
         /**
          * Specifies the stability status of this service.
          */
-        status: "stable" | "experimental" | "deprecated";
+        status: StabilityStatus;
     }
 
     /**

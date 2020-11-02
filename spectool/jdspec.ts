@@ -291,6 +291,8 @@ export function parseSpecificationMarkdownToJSON(filecontent: string, includes?:
 
     function finishPacket() {
         packetInfo.packed = hasNaturalAlignment(packetInfo) ? undefined : true
+        if (packetInfo.packed)
+            warn(`you may want to use explicit padding in ${packetInfo.name}`)
         packetInfo = null
     }
 
@@ -688,7 +690,7 @@ export function parseSpecificationMarkdownToJSON(filecontent: string, includes?:
             case "status":
                 if (["stable", "experimental", "deprecated"].indexOf(words[2]) > -1)
                     info.status = <any>words[2];
-                else 
+                else
                     error("unknown status");
                 break;
             default:
@@ -811,7 +813,8 @@ export function parseSpecificationMarkdownToJSON(filecontent: string, includes?:
             let sz = byteSize(m.storage)
             if (sz == 0)
                 continue
-            if (!/^u8\[/.test(m.type) && byteOffset % sz != 0)
+            const pad = sz > 4 ? 4 : sz
+            if (!/^u8\[/.test(m.type) && byteOffset % pad != 0)
                 return false
             byteOffset += sz
         }

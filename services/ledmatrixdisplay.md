@@ -1,8 +1,7 @@
 # LED Matrix Display
 
-    identifier: 0x1161590c
+    identifier: 0x110d154b
     extends: _sensor
-    status: experimental
 
 A sensor that streams the state of a rectangular LED matrix.
 To control the state of the screen, use [LED Matrix Controller](/services/led-matrix-controller) instead.

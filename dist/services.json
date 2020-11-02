@@ -998,7 +998,7 @@
     "notes": {
       "short": "A service that allows passing events through the [CODAL Message Bus](https://lancaster-university.github.io/microbit-docs/ubit/messageBus/)\n* ``id`` is a unique identifier that identifies a component in the device. Use ``0`` to address all sources. The value of other identifiers is typically hardware dependent.\n* ``event`` is an identifier that determines the event type. Use ``0`` as a wildcard."
     },
-    "classIdentifier": 291592460,
+    "classIdentifier": 380468437,
     "enums": {},
     "packets": [
       {
@@ -1026,7 +1026,7 @@
         ]
       }
     ],
-    "source": "# CODAL Message Bus\n\n    identifier: 0x1161590c\n    \nA service that allows passing events through the [CODAL Message Bus](https://lancaster-university.github.io/microbit-docs/ubit/messageBus/)\n* ``id`` is a unique identifier that identifies a component in the device. Use ``0`` to address all sources. The value of other identifiers is typically hardware dependent.\n* ``event`` is an identifier that determines the event type. Use ``0`` as a wildcard.\n\n## Commands\n\n    command send @ 0x80 {\n        id: u16\n        event: u16\n    }\n    \nSends a new event on the message bus.\n"
+    "source": "# CODAL Message Bus\n\n    identifier: 0x16ad7cd5\n    \nA service that allows passing events through the [CODAL Message Bus](https://lancaster-university.github.io/microbit-docs/ubit/messageBus/)\n* ``id`` is a unique identifier that identifies a component in the device. Use ``0`` to address all sources. The value of other identifiers is typically hardware dependent.\n* ``event`` is an identifier that determines the event type. Use ``0`` as a wildcard.\n\n## Commands\n\n    command send @ 0x80 {\n        id: u16\n        event: u16\n    }\n    \nSends a new event on the message bus.\n"
   },
   {
     "name": "Control",
@@ -1676,6 +1676,182 @@
     "source": "# Keyboard\n\n    identifier: 0x18b05b6a\n    status: experimental\n    \nA keyboard that can send keystrokes.\n\nThe codes for the key (selectors) is defined in the [HID Keyboard\nspecification](https://usb.org/sites/default/files/hut1_21.pdf), chapter 10 Keyboard/Keypad Page, page 81.\n\nThe device keeps tracks of the key state and is able to clear it all with the clear command.\n\n## Commands\n\n    flags Modifiers : u8 {\n        LeftControl = 0xe0\n        LeftShift = 0xe1\n        LeftAlt = 0xe2\n        LeftGUID = 0xe3\n        RightControl = 0xe4\n        RightShift = 0xe5\n        RightAlt = 0xe6\n        RightGUID = 0xe7\n    }\n    enum Action : u8 {\n        Press = 0\n        Up = 1\n        Down = 2\n    }\n    command key @ 0x80 {\n    repeats:\n        selector: u16\n        modifiers: Modifiers\n        action: Action\n    }\n    \nPresses a key or a sequence of keys down.\n\n    command clear @ 0x81 {}\n    \nClears all pressed keys.\n"
   },
   {
+    "name": "LED Matrix Controller",
+    "status": "experimental",
+    "shortId": "ledmatrixcontroller",
+    "camelName": "LEDMatrixController",
+    "shortName": "LEDMatrixController",
+    "extends": [],
+    "notes": {
+      "short": "A service that allows to control a rectangular matrix of monochrome LEDs.\nTo stream the state of the screen, use [LED Matrix display](/services/led-matrix-display) instead."
+    },
+    "classIdentifier": 490070931,
+    "enums": {},
+    "packets": [
+      {
+        "kind": "rw",
+        "name": "leds",
+        "identifier": 128,
+        "description": "Read or writes the state of the screen where pixel on/off state is \nstored as a bit, column by column. The column should be byte aligned.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "isFloat": false,
+            "type": "bytes",
+            "storage": 0,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "rw",
+        "name": "enabled",
+        "identifier": 129,
+        "description": "Disables or enables the whole screen.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "isFloat": false,
+            "type": "bool",
+            "storage": 1
+          }
+        ]
+      },
+      {
+        "kind": "rw",
+        "name": "brightness",
+        "identifier": 130,
+        "description": "Sets the general brightness of the LEDs.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "isFloat": false,
+            "type": "u8",
+            "storage": 1,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "const",
+        "name": "rows",
+        "identifier": 131,
+        "description": "Number of rows on the screen",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "#",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "const",
+        "name": "columns",
+        "identifier": 132,
+        "description": "Number of columns on the screen",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "#",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "command",
+        "name": "clear",
+        "identifier": 128,
+        "description": "Shorthand command to clear all the LEDs on the screen.",
+        "fields": []
+      }
+    ],
+    "source": "# LED Matrix Controller\n\n    identifier: 0x1d35e393\n    status: experimental\n\nA service that allows to control a rectangular matrix of monochrome LEDs.\nTo stream the state of the screen, use [LED Matrix display](/services/led-matrix-display) instead.\n\n## Registers\n\n    rw leds: bytes @ 0x80\n\nRead or writes the state of the screen where pixel on/off state is \nstored as a bit, column by column. The column should be byte aligned.\n\n    rw enabled: bool @ 0x81\n \n Disables or enables the whole screen.\n \n    rw brightness: u8 @ 0x82\n    \nSets the general brightness of the LEDs.\n \n    const rows: u16 # @ 0x83\n    \nNumber of rows on the screen\n\n    const columns: u16 # @ 0x84\n    \nNumber of columns on the screen\n\n## Commands\n\n    command clear @ 0x80 {}\n\nShorthand command to clear all the LEDs on the screen."
+  },
+  {
+    "name": "LED Matrix Display",
+    "status": "experimental",
+    "shortId": "ledmatrixdisplay",
+    "camelName": "LEDMatrixDisplay",
+    "shortName": "LEDMatrixDisplay",
+    "extends": [
+      "_sensor"
+    ],
+    "notes": {
+      "short": "A sensor that streams the state of a rectangular LED matrix.\nTo control the state of the screen, use [LED Matrix Controller](/services/led-matrix-controller) instead."
+    },
+    "classIdentifier": 286070091,
+    "enums": {},
+    "packets": [
+      {
+        "kind": "rw",
+        "name": "stream_samples",
+        "identifier": 3,
+        "description": "Asks device to stream a given number of samples\n(clients will typically write `255` to this register every second or so, while streaming is required).",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "isFloat": false,
+            "type": "u8",
+            "storage": 1,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "stream_samples",
+        "derived": true
+      },
+      {
+        "kind": "rw",
+        "name": "streaming_interval",
+        "identifier": 4,
+        "description": "Period between packets of data when streaming in milliseconds.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "ms",
+            "isFloat": false,
+            "type": "u32",
+            "storage": 4,
+            "isSimpleType": true,
+            "defaultValue": 100,
+            "typicalMin": 1,
+            "typicalMax": 60000
+          }
+        ],
+        "identifierName": "streaming_interval",
+        "derived": true
+      },
+      {
+        "kind": "ro",
+        "name": "leds",
+        "identifier": 257,
+        "description": "Streams the state of the screen where pixel on/off state is \nstored as a bit, column by column. The column should be byte aligned.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "isFloat": false,
+            "type": "bytes",
+            "storage": 0,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "reading"
+      }
+    ],
+    "source": "# LED Matrix Display\n\n    identifier: 0x110d154b\n    extends: _sensor\n\nA sensor that streams the state of a rectangular LED matrix.\nTo control the state of the screen, use [LED Matrix Controller](/services/led-matrix-controller) instead.\n\n\n## Registers\n\n    ro leds : bytes @ reading\n    \nStreams the state of the screen where pixel on/off state is \nstored as a bit, column by column. The column should be byte aligned.\n"
+  },
+  {
     "name": "Light",
     "status": "experimental",
     "shortId": "light",
@@ -1906,6 +2082,62 @@
       }
     ],
     "source": "# Logger\n\n    identifier: 0x12dc1fca\n\nA service which can report messages to the bus.\n\n## Registers\n\n    enum Priority : u8 {\n        Debug = 0,\n        Log = 1,\n        Warning = 2,\n        Error = 3\n    }\n    rw min_priority = 1: Priority @ 0x80\n\nMessages with level lower than this won't be emitted. The default setting may vary.\nLoggers should revert this to their default setting if the register has not been\nupdated in 3000ms, and also keep the lowest setting they have seen in the last 1500ms.\nThus, clients should write this register every 1000ms and ignore messages which are\ntoo verbose for them.\n\n## Commands\n\n    report debug @ 0x80 {\n        message: string\n    }\n    report log @ 0x81 {\n        message: string\n    }\n    report warn @ 0x82 {\n        message: string\n    }\n    report error @ 0x83 {\n        message: string\n    }\n\nReport a message.\n"
+  },
+  {
+    "name": "Microphone",
+    "status": "experimental",
+    "shortId": "microphone",
+    "camelName": "Microphone",
+    "shortName": "Microphone",
+    "extends": [],
+    "notes": {
+      "short": "A single-channel microphone."
+    },
+    "classIdentifier": 289254534,
+    "enums": {},
+    "packets": [
+      {
+        "kind": "command",
+        "name": "sample",
+        "identifier": 129,
+        "description": "The samples will be streamed back over the `samples` pipe.\nIf `num_samples` is `0`, streaming will only stop when the pipe is closed.\nOtherwise the specified number of samples is streamed.\nSamples are sent as `i16`.",
+        "fields": [
+          {
+            "name": "samples",
+            "unit": "",
+            "isFloat": false,
+            "type": "pipe",
+            "storage": 12
+          },
+          {
+            "name": "num_samples",
+            "unit": "",
+            "isFloat": false,
+            "type": "u32",
+            "storage": 4,
+            "isSimpleType": true
+          }
+        ],
+        "pipeType": "sample"
+      },
+      {
+        "kind": "rw",
+        "name": "sampling_period",
+        "identifier": 128,
+        "description": "Get or set microphone sampling period.\nSampling rate is `1_000_000 / sampling_period Hz`.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "us",
+            "isFloat": false,
+            "type": "u32",
+            "storage": 4,
+            "isSimpleType": true
+          }
+        ]
+      }
+    ],
+    "source": "# Microphone\n\n    identifier: 0x113dac86\n\nA single-channel microphone.\n\n## Commands\n\n    command sample @ 0x81 {\n        samples: pipe\n        num_samples: u32\n    }\n\nThe samples will be streamed back over the `samples` pipe.\nIf `num_samples` is `0`, streaming will only stop when the pipe is closed.\nOtherwise the specified number of samples is streamed.\nSamples are sent as `i16`.\n\n## Registers\n\n    rw sampling_period: u32 us @ 0x80\n\nGet or set microphone sampling period.\nSampling rate is `1_000_000 / sampling_period Hz`.\n\n"
   },
   {
     "name": "Model Runner",

@@ -211,7 +211,7 @@ namespace jacdac {
 }
 namespace jacdac {
     // Service: CODAL Message Bus
-    export const SRV_CODAL_MESSAGE_BUS = 0x1161590c
+    export const SRV_CODAL_MESSAGE_BUS = 0x16ad7cd5
     export const enum CODALMessageBusCmd {
     /** Sends a new event on the message bus. */
         Send = 0x80,
@@ -363,6 +363,47 @@ namespace jacdac {
 
 }
 namespace jacdac {
+    // Service: LED Matrix Controller
+    export const SRV_LED_MATRIX_CONTROLLER = 0x1d35e393
+    export const enum LEDMatrixControllerReg {
+    /**
+     * Read-write bytes. Read or writes the state of the screen where pixel on/off state is 
+     * stored as a bit, column by column. The column should be byte aligned.
+     */
+        Leds = 0x80,
+    
+    /** Read-write bool (uint8_t). Disables or enables the whole screen. */
+        Enabled = 0x81,
+    
+    /** Read-write uint8_t. Sets the general brightness of the LEDs. */
+        Brightness = 0x82,
+    
+    /** Constant # uint16_t. Number of rows on the screen */
+        Rows = 0x83,
+    
+    /** Constant # uint16_t. Number of columns on the screen */
+        Columns = 0x84,
+    }
+
+    export const enum LEDMatrixControllerCmd {
+    /** No args. Shorthand command to clear all the LEDs on the screen. */
+        Clear = 0x80,
+    }
+
+}
+namespace jacdac {
+    // Service: LED Matrix Display
+    export const SRV_LED_MATRIX_DISPLAY = 0x110d154b
+    export const enum LEDMatrixDisplayReg {
+    /**
+     * Read-only bytes. Streams the state of the screen where pixel on/off state is 
+     * stored as a bit, column by column. The column should be byte aligned.
+     */
+        Leds = 0x101,
+    }
+
+}
+namespace jacdac {
     // Service: Light
     export const SRV_LIGHT = 0x126f00e0
 
@@ -445,6 +486,28 @@ namespace jacdac {
     
     /** Argument: message string (bytes). Report a message. */
         Error = 0x83,
+    }
+
+}
+namespace jacdac {
+    // Service: Microphone
+    export const SRV_MICROPHONE = 0x113dac86
+    export const enum MicrophoneCmd {
+    /**
+     * The samples will be streamed back over the `samples` pipe.
+     * If `num_samples` is `0`, streaming will only stop when the pipe is closed.
+     * Otherwise the specified number of samples is streamed.
+     * Samples are sent as `i16`.
+     */
+        Sample = 0x81,
+    }
+
+    export const enum MicrophoneReg {
+    /**
+     * Read-write μs uint32_t. Get or set microphone sampling period.
+     * Sampling rate is `1_000_000 / sampling_period Hz`.
+     */
+        SamplingPeriod = 0x80,
     }
 
 }

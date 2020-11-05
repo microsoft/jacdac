@@ -44,7 +44,13 @@ Connect to named network. Password can be appended after ssid. Both strings have
 
 Disconnect from current WiFi network if any.
 
-## Event
+## Registers
+
+    ro connected: bool @ 0x180
+
+Indicates whether or not we currently have an IP address assigned.
+
+## Events
 
     event got_ip @ 0x01
 

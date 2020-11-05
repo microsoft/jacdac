@@ -18,6 +18,7 @@ export enum BaseCmd {
      */
     SetRegister = 0x2000,
     
+    // const [eventId, eventArgument] = unpack(buf, "LL")
     /** Event from sensor or a broadcast service. */
     Event = 0x1,
     
@@ -72,6 +73,7 @@ export enum SensorReg {
 // Service: Accelerometer
 export const SRV_ACCELEROMETER = 0x1f140409
 export enum AccelReg {
+    // const [x, y, z] = unpack(buf, "hhh")
     /** Indicates the current forces acting on accelerometer. */
     Forces = 0x101,
 }
@@ -127,6 +129,8 @@ export enum SensorAggregatorSampleType { // uint8_t
 }
 
 export enum SensorAggregatorReg {
+    // const [samplingInterval, samplesInWindow, reserved, serviceClass, serviceNum, sampleSize, sampleType, sampleShift] = unpack(buf, "HHL8xLBBBb")
+    // const deviceId = buf.slice(8, 16)
     /**
      * Set automatic input collection.
      * These settings are stored in flash.
@@ -167,6 +171,8 @@ export enum BootloaderCmd {
     /** Argument: session_id uint32_t. The flashing host should generate a random id, and use this command to set it. */
     SetSession = 0x81,
     
+    // const [pageAddress, pageOffset, chunkNo, chunkMax, sessionId, reserved0, reserved1, reserved2, reserved3] = unpack(buf, "LHBBLLLLL")
+    // const pageData = buf.slice(28)
     /**
      * Use to send flashing data. A physical page is split into `chunk_max + 1` chunks, where `chunk_no = 0 ... chunk_max`.
      * Each chunk is stored at `page_address + page_offset`. `page_address` has to be equal in all chunks,
@@ -200,6 +206,7 @@ export enum ButtonEvent {
 // Service: CODAL Message Bus
 export const SRV_CODAL_MESSAGE_BUS = 0x16ad7cd5
 export enum CODALMessageBusCmd {
+    // const [id, event] = unpack(buf, "HH")
     /** Sends a new event on the message bus. */
     Send = 0x80,
 }
@@ -287,6 +294,7 @@ export enum GamepadCmd {
 }
 
 export enum GamepadReg {
+    // const [button, playerIndex, pressure] = unpack(buf, "HBB")
     /**
      * Indicates which buttons are currently active (pressed).
      * `pressure` should be `0xff` for digital buttons, and proportional for analog ones.
@@ -295,9 +303,11 @@ export enum GamepadReg {
 }
 
 export enum GamepadEvent {
+    // const [button, playerIndex] = unpack(buf, "HH")
     /** Emitted when button goes from inactive to active. */
     Down = 0x1,
     
+    // const [button, playerIndex] = unpack(buf, "HH")
     /** Emitted when button goes from active to inactive. */
     Up = 0x2,
 }
@@ -331,6 +341,7 @@ export enum KeyboardAction { // uint8_t
 }
 
 export enum KeyboardCmd {
+    // const [selector, modifiers, action] = unpack(buf, "HBB")
     /** Presses a key or a sequence of keys down. */
     Key = 0x80,
     
@@ -460,6 +471,8 @@ export enum LoggerCmd {
 // Service: Microphone
 export const SRV_MICROPHONE = 0x113dac86
 export enum MicrophoneCmd {
+    // const [numSamples] = unpack(buf, "12xL")
+    // const samples = buf.slice(0, 12)
     /**
      * The samples will be streamed back over the `samples` pipe.
      * If `num_samples` is `0`, streaming will only stop when the pipe is closed.
@@ -581,6 +594,7 @@ export enum MouseButtonEvent { // uint8_t
 }
 
 export enum MouseCmd {
+    // const [buttons, event] = unpack(buf, "HB")
     /**
      * Sets the up/down state of one or more buttons.
      * A ``Click`` is the same as ``Down`` followed by ``Up`` after 100ms.
@@ -588,12 +602,14 @@ export enum MouseCmd {
      */
     SetButton = 0x80,
     
+    // const [dx, dy, time] = unpack(buf, "hhH")
     /**
      * Moves the mouse by the distance specified.
      * If the time is positive, it specifies how long to make the move.
      */
     Move = 0x81,
     
+    // const [dy, time] = unpack(buf, "hH")
     /**
      * Turns the wheel up or down. Positive if scrolling up.
      * If the time is positive, it specifies how long to make the move.
@@ -640,6 +656,7 @@ export enum MusicReg {
 }
 
 export enum MusicCmd {
+    // const [period, duty, duration] = unpack(buf, "HHH")
     /**
      * Play a PWM tone with given period and duty for given duration.
      * The duty is scaled down with `volume` register.
@@ -709,6 +726,7 @@ export enum PwmLightReg {
     /** Constant uint8_t. Maximum number of steps allowed in animation definition. This determines the size of the `steps` register. */
     MaxSteps = 0x180,
     
+    // const [startIntensity, duration] = unpack(buf, "HH")
     /**
      * The steps of current animation. Setting this also sets `current_iteration` to `0`.
      * Step with `duration == 0` is treated as an end marker.
@@ -731,6 +749,8 @@ export enum RoleManagerCmd {
     /** Argument: device_id uint64_t. Get the role corresponding to given device identifer. Returns empty string if unset. */
     GetRole = 0x80,
     
+    // const deviceId = buf.slice(0, 8)
+    // const role = buf.slice(8).toString()
     /** Set role. Can set to empty to remove role binding. */
     SetRole = 0x81,
     
@@ -775,6 +795,8 @@ export enum TCPCmd {
 }
 
 export enum TCPPipeCmd {
+    // const [tcpPort] = unpack(buf, "H")
+    // const hostname = buf.slice(2).toString()
     /**
      * Open an SSL connection to a given host:port pair. Can be issued only once on given pipe.
      * After the connection is established, an empty data report is sent.
@@ -819,6 +841,11 @@ export enum WifiCmd {
     
     /** No args. Disconnect from current WiFi network if any. */
     Disconnect = 0x82,
+}
+
+export enum WifiReg {
+    /** Read-only bool (uint8_t). Indicates whether or not we currently have an IP address assigned. */
+    Connected = 0x180,
 }
 
 export enum WifiEvent {

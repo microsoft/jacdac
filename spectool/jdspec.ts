@@ -962,7 +962,6 @@ const tsNumFmt: jdspec.SMap<string> = {
     "-4": "Int32LE:l",
 }
 
-
 function camelize(name: string) {
     return name?.replace(/_([a-z])/g, (_, l) => l.toUpperCase())
 }
@@ -1030,6 +1029,55 @@ function addComment(pkt: jdspec.PacketInfo) {
 
 }
 
+function packInfo(pkt: jdspec.PacketInfo, isStatic: boolean) {
+    let vars = ""
+    let fmt = ""
+    let buffers = ""
+
+    if (pkt.packed)
+        return ""
+
+    const sizes = pkt.fields.map(f => f.storage)
+    while (sizes.length > 0 && !tsNumFmt[sizes[sizes.length - 1]]) {
+        sizes.pop()
+    }
+
+    let i = 0
+    let off = 0
+    for (const fld of pkt.fields) {
+        const varname = camelize(fld.name)
+        const info = tsNumFmt[fld.storage]
+        const sz = Math.abs(fld.storage)
+        if (i < sizes.length && info) {
+            fmt += info.replace(/.*:/, "")
+            if (vars) vars += ", "
+            vars += varname
+        } else {
+            const endmark = fld.storage == 0 ? "" :
+                isStatic ? `, ${sz}` : `, ${off + sz}`
+            const toStr = fld.type == "string" ? ".toString()" : ""
+            buffers += `const ${varname} = buf.slice(${off}${endmark})${toStr}\n`
+        }
+        if (i < sizes.length && !info && sz)
+            fmt += `${sz}x`
+        i++
+        off += sz
+    }
+
+    if (fmt) {
+        if (isStatic)
+            buffers = `const [${vars}] = buf.unpack("${fmt}")\n` + buffers
+        else
+            buffers = `const [${vars}] = unpack(buf, "${fmt}")\n` + buffers
+    }
+
+    buffers = buffers.replace(/\n*$/, "")
+    if (buffers)
+        buffers = "\n" + buffers.replace(/^/mg, "// ")
+
+    return buffers
+}
+
 function toTypescript(info: jdspec.ServiceSpec, isStatic: boolean) {
     const indent = isStatic ? "    " : "";
     const indent2 = indent + "    "
@@ -1053,7 +1101,7 @@ function toTypescript(info: jdspec.ServiceSpec, isStatic: boolean) {
             continue
 
         const cmt = addComment(pkt)
-
+        let pack = cmt.needsStruct ? packInfo(pkt, isStatic) : ""
         if (!pkt.secondary && pkt.kind != "pipe_command" && pkt.kind != "pipe_report") {
             let inner = "Cmd"
             if (isRegister(pkt.kind))
@@ -1064,7 +1112,7 @@ function toTypescript(info: jdspec.ServiceSpec, isStatic: boolean) {
                 inner = "PipeCmd"
             let val = toHex(pkt.identifier)
             tsEnums[inner] = (tsEnums[inner] || "") +
-                `${cmt.comment}${indent}${upperCamel(pkt.name)} = ${val},\n`
+                `${pack}${cmt.comment}${upperCamel(pkt.name)} = ${val},\n`
         }
     }
 
@@ -1072,8 +1120,8 @@ function toTypescript(info: jdspec.ServiceSpec, isStatic: boolean) {
         const inner = tsEnums[k]
             .replace(/^\n+/, "")
             .replace(/\n$/, "")
-            .replace(/\n/g, "\n    ")
-        r += `${enumkw} ${pref}${k} {\n    ${inner}\n${indent}}\n\n`
+            .replace(/\n/g, "\n    " + indent)
+        r += `${enumkw} ${pref}${k} {\n    ${indent}${inner}\n${indent}}\n\n`
     }
 
     if (isStatic)

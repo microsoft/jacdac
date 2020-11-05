@@ -337,6 +337,11 @@ declare namespace jdspec {
         absoluteMax?: number;
 
         /**
+         * Maximum number of bytes in a given field (typically a string at the end of a packet).
+         */
+        maxBytes?: number;
+
+        /**
          * If set, this and following fields repeat in order, to fill the packet.
          */
         startRepeats?: boolean;

@@ -3707,7 +3707,8 @@
             "unit": "",
             "isFloat": false,
             "type": "string",
-            "storage": 0
+            "storage": 0,
+            "maxBytes": 33
           }
         ],
         "pipeType": "scan"
@@ -3764,6 +3765,6 @@
         "fields": []
       }
     ],
-    "source": "# WIFI\n\n    identifier: 0x18aae1fa\n    camel: wifi\n\nDiscovery and connection to WiFi networks. Separate TCP service is used for data transfer.\n\n## Commands\n\n    flags APFlags : u32 {\n        HasPassword = 0x0001\n        WPS = 0x0002\n        HasSecondaryChannelAbove = 0x0004\n        HasSecondaryChannelBelow = 0x0008\n        IEEE_802_11B = 0x0100\n        IEEE_802_11A = 0x0200\n        IEEE_802_11G = 0x0400\n        IEEE_802_11N = 0x0800\n        IEEE_802_11AC = 0x1000\n        IEEE_802_11AX = 0x2000\n        IEEE_802_LongRange = 0x8000\n    }\n    command scan @ 0x80 {\n        results: pipe\n    }\n    pipe report results {\n        flags: APFlags\n        reserved: u32\n        rssi: i8 {typical_min = -100, typical_max = -20}\n        channel: u8 {typical_min = 1, typical_max = 13}\n        bssid: u8[6]\n        ssid: string\n    }\n\nInitiate search for WiFi networks. Results are returned via pipe, one entry per packet.\n\n    command connect @ 0x81 {\n        ssid: string\n    }\n\nConnect to named network. Password can be appended after ssid. Both strings have to be NUL-terminated.\n\n    command disconnect @ 0x82 {}\n\nDisconnect from current WiFi network if any.\n\n## Registers\n\n    ro connected: bool @ 0x180\n\nIndicates whether or not we currently have an IP address assigned.\n\n## Events\n\n    event got_ip @ 0x01\n\nEmitted upon successful join and IP address assignment.\n\n    event lost_ip @ 0x02\n\nEmitted when disconnected from network.\n"
+    "source": "# WIFI\n\n    identifier: 0x18aae1fa\n    camel: wifi\n\nDiscovery and connection to WiFi networks. Separate TCP service is used for data transfer.\n\n## Commands\n\n    flags APFlags : u32 {\n        HasPassword = 0x0001\n        WPS = 0x0002\n        HasSecondaryChannelAbove = 0x0004\n        HasSecondaryChannelBelow = 0x0008\n        IEEE_802_11B = 0x0100\n        IEEE_802_11A = 0x0200\n        IEEE_802_11G = 0x0400\n        IEEE_802_11N = 0x0800\n        IEEE_802_11AC = 0x1000\n        IEEE_802_11AX = 0x2000\n        IEEE_802_LongRange = 0x8000\n    }\n    command scan @ 0x80 {\n        results: pipe\n    }\n    pipe report results {\n        flags: APFlags\n        reserved: u32\n        rssi: i8 {typical_min = -100, typical_max = -20}\n        channel: u8 {typical_min = 1, typical_max = 13}\n        bssid: u8[6]\n        ssid: string {maxBytes = 33}\n    }\n\nInitiate search for WiFi networks. Results are returned via pipe, one entry per packet.\n\n    command connect @ 0x81 {\n        ssid: string\n    }\n\nConnect to named network. Password can be appended after ssid. Both strings have to be NUL-terminated.\n\n    command disconnect @ 0x82 {}\n\nDisconnect from current WiFi network if any.\n\n## Registers\n\n    ro connected: bool @ 0x180\n\nIndicates whether or not we currently have an IP address assigned.\n\n## Events\n\n    event got_ip @ 0x01\n\nEmitted upon successful join and IP address assignment.\n\n    event lost_ip @ 0x02\n\nEmitted when disconnected from network.\n"
   }
 ]

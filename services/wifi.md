@@ -29,7 +29,7 @@ Discovery and connection to WiFi networks. Separate TCP service is used for data
         rssi: i8 {typical_min = -100, typical_max = -20}
         channel: u8 {typical_min = 1, typical_max = 13}
         bssid: u8[6]
-        ssid: string
+        ssid: string {maxBytes = 33}
     }
 
 Initiate search for WiFi networks. Results are returned via pipe, one entry per packet.

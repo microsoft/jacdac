@@ -1141,8 +1141,7 @@ function toTypescript(info: jdspec.ServiceSpec, isStatic: boolean) {
     if (isStatic)
         r += "}\n"
 
-    return r
-    //.replace(/\s*$/mg, "")
+    return r.replace(/ *$/mg, "")
 }
 
 export function converters(): jdspec.SMap<(s: jdspec.ServiceSpec) => string> {

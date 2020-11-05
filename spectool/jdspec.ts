@@ -1030,63 +1030,20 @@ function addComment(pkt: jdspec.PacketInfo) {
 
 }
 
-function toTS(info: jdspec.ServiceSpec) {
-    let r = "// Service: " + info.name + "\n"
-    if (info.shortId[0] != "_")
-        r += `export const SRV_${info.name.replace(/ /g, "_").toUpperCase()} = ${toHex(info.classIdentifier)}\n`
-    const pref = upperCamel(info.camelName)
-    for (let en of values(info.enums)) {
-        const enPref = pref + upperCamel(en.name)
-        r += `\nexport enum ${enPref} { // ${cStorage(en.storage)}\n`
-        for (let k of Object.keys(en.members))
-            r += "    " + k + " = " + toHex(en.members[k]) + ",\n"
-        r += "}\n\n"
-    }
-    const tsEnums: jdspec.SMap<string> = {}
-
-    for (const pkt of info.packets) {
-        if (pkt.derived)
-            continue
-
-        const cmt = addComment(pkt)
-
-        if (!pkt.secondary && pkt.kind != "pipe_command" && pkt.kind != "pipe_report") {
-            let inner = "Cmd"
-            if (isRegister(pkt.kind))
-                inner = "Reg"
-            else if (pkt.kind == "event")
-                inner = "Event"
-            else if (pkt.kind == "meta_pipe_command" || pkt.kind == "meta_pipe_report")
-                inner = "PipeCmd"
-            let val = toHex(pkt.identifier)
-            tsEnums[inner] = (tsEnums[inner] || "") +
-                `${cmt.comment}${upperCamel(pkt.name)} = ${val},\n`
-        }
-    }
-
-    for (const k of Object.keys(tsEnums)) {
-        const inner = tsEnums[k]
-            .replace(/^\n+/, "")
-            .replace(/\n$/, "")
-            .replace(/\n/g, "\n    ")
-        r += `export enum ${pref}${k} {\n    ${inner}\n}\n\n`
-    }
-
-    return r
-}
-
-function toStaticTypescript(info: jdspec.ServiceSpec) {
-    const indent = "    ";
-    let r = "namespace jacdac {\n";
+function toTypescript(info: jdspec.ServiceSpec, isStatic: boolean) {
+    const indent = isStatic ? "    " : "";
+    const indent2 = indent + "    "
+    const enumkw = isStatic ? indent + "export const enum" : "export enum"
+    let r = isStatic ? "namespace jacdac {\n" : "";
     r += indent + "// Service: " + info.name + "\n"
     if (info.shortId[0] != "_")
         r += indent + `export const SRV_${info.name.replace(/ /g, "_").toUpperCase()} = ${toHex(info.classIdentifier)}\n`
     const pref = upperCamel(info.camelName)
     for (let en of values(info.enums)) {
         const enPref = pref + upperCamel(en.name)
-        r += `\n${indent}export const enum ${enPref} { // ${cStorage(en.storage)}\n`
+        r += `\n${enumkw} ${enPref} { // ${cStorage(en.storage)}\n`
         for (let k of Object.keys(en.members))
-            r += indent + indent + k + " = " + toHex(en.members[k]) + ",\n"
+            r += indent2 + k + " = " + toHex(en.members[k]) + ",\n"
         r += indent + "}\n\n"
     }
     const tsEnums: jdspec.SMap<string> = {}
@@ -1116,9 +1073,11 @@ function toStaticTypescript(info: jdspec.ServiceSpec) {
             .replace(/^\n+/, "")
             .replace(/\n$/, "")
             .replace(/\n/g, "\n    ")
-        r += indent + `export const enum ${pref}${k} {\n    ${inner}\n${indent}}\n\n`
+        r += `${enumkw} ${pref}${k} {\n    ${inner}\n${indent}}\n\n`
     }
-    r += "}\n"
+
+    if (isStatic)
+        r += "}\n"
 
     return r
 }
@@ -1127,8 +1086,8 @@ export function converters(): jdspec.SMap<(s: jdspec.ServiceSpec) => string> {
     return {
         "json": (j: jdspec.ServiceSpec) => JSON.stringify(j, null, 2),
         "c": toH,
-        "ts": toTS,
-        "sts": toStaticTypescript,
+        "ts": j => toTypescript(j, false),
+        "sts": j => toTypescript(j, true),
         /*
         "cpp": toHPP,
         */

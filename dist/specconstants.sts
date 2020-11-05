@@ -176,6 +176,8 @@ namespace jacdac {
          * that "fits" this device.
          */
         Info = 0x0,
+        // report Info
+        // const [serviceClass, pageSize, flashableSize, firmwareIdentifier] = buf.unpack("LLLL")
         
         /** Argument: session_id uint32_t. The flashing host should generate a random id, and use this command to set it. */
         SetSession = 0x81,
@@ -189,6 +191,8 @@ namespace jacdac {
          * Only the last chunk causes writing to flash and elicits response.
          */
         PageData = 0x80,
+        // report PageData
+        // const [sessionId, pageError, pageAddress] = buf.unpack("LLL")
     }
 
 }
@@ -243,6 +247,8 @@ namespace jacdac {
          * The command form can be used to induce report, which is otherwise broadcast every 500ms.
          */
         Services = 0x0,
+        // report Services
+        // const [restartCounter, flags, reserved, serviceClass] = buf.unpack("BBHL")
         
         /** No args. Do nothing. Always ignored. Can be used to test ACKs. */
         Noop = 0x80,
@@ -310,6 +316,8 @@ namespace jacdac {
     export const enum GamepadCmd {
         /** No args. Indicates number of players supported and which buttons are present on the controller. */
         Announce = 0x0,
+        // report Announce
+        // const [flags, numPlayers, buttonPresent] = buf.unpack("BBH")
     }
 
     export const enum GamepadReg {
@@ -797,6 +805,9 @@ namespace jacdac {
     export const enum RoleManagerCmd {
         /** Argument: device_id uint64_t. Get the role corresponding to given device identifer. Returns empty string if unset. */
         GetRole = 0x80,
+        // report GetRole
+        // const deviceId = buf.slice(0, 8)
+        // const role = buf.slice(8).toString()
         
         // const deviceId = buf.slice(0, 8)
         // const role = buf.slice(8).toString()
@@ -812,6 +823,15 @@ namespace jacdac {
         /** Argument: required_roles pipe (bytes). List all roles required by the current program. `device_id` is `0` if role is unbound. */
         ListRequiredRoles = 0x83,
     }
+
+    // pipe_report StoredRoles
+    // const deviceId = buf.slice(0, 8)
+    // const role = buf.slice(8).toString()
+    // pipe_report RequiredRoles
+    // const [serviceClass] = buf.unpack("8xL")
+    // const deviceId = buf.slice(0, 8)
+    // const roles = buf.slice(12).toString()
+    
 
 }
 namespace jacdac {
@@ -901,6 +921,12 @@ namespace jacdac {
         /** No args. Disconnect from current WiFi network if any. */
         Disconnect = 0x82,
     }
+
+    // pipe_report Results
+    // const [flags, reserved, rssi, channel] = buf.unpack("LLbB")
+    // const bssid = buf.slice(10, 6)
+    // const ssid = buf.slice(16).toString()
+    
 
     export const enum WifiReg {
         /** Read-only bool (uint8_t). Indicates whether or not we currently have an IP address assigned. */

@@ -167,6 +167,8 @@ export enum BootloaderCmd {
      * that "fits" this device.
      */
     Info = 0x0,
+    // report Info
+    // const [serviceClass, pageSize, flashableSize, firmwareIdentifier] = unpack(buf, "LLLL")
     
     /** Argument: session_id uint32_t. The flashing host should generate a random id, and use this command to set it. */
     SetSession = 0x81,
@@ -180,6 +182,8 @@ export enum BootloaderCmd {
      * Only the last chunk causes writing to flash and elicits response.
      */
     PageData = 0x80,
+    // report PageData
+    // const [sessionId, pageError, pageAddress] = unpack(buf, "LLL")
 }
 
 // Service: Button
@@ -228,6 +232,8 @@ export enum CtrlCmd {
      * The command form can be used to induce report, which is otherwise broadcast every 500ms.
      */
     Services = 0x0,
+    // report Services
+    // const [restartCounter, flags, reserved, serviceClass] = unpack(buf, "BBHL")
     
     /** No args. Do nothing. Always ignored. Can be used to test ACKs. */
     Noop = 0x80,
@@ -291,6 +297,8 @@ export enum GamepadButton { // uint16_t
 export enum GamepadCmd {
     /** No args. Indicates number of players supported and which buttons are present on the controller. */
     Announce = 0x0,
+    // report Announce
+    // const [flags, numPlayers, buttonPresent] = unpack(buf, "BBH")
 }
 
 export enum GamepadReg {
@@ -748,6 +756,9 @@ export const SRV_ROLE_MANAGER = 0x119c3ad1
 export enum RoleManagerCmd {
     /** Argument: device_id uint64_t. Get the role corresponding to given device identifer. Returns empty string if unset. */
     GetRole = 0x80,
+    // report GetRole
+    // const deviceId = buf.slice(0, 8)
+    // const role = buf.slice(8).toString()
     
     // const deviceId = buf.slice(0, 8)
     // const role = buf.slice(8).toString()
@@ -763,6 +774,15 @@ export enum RoleManagerCmd {
     /** Argument: required_roles pipe (bytes). List all roles required by the current program. `device_id` is `0` if role is unbound. */
     ListRequiredRoles = 0x83,
 }
+
+// pipe_report StoredRoles
+// const deviceId = buf.slice(0, 8)
+// const role = buf.slice(8).toString()
+// pipe_report RequiredRoles
+// const [serviceClass] = unpack(buf, "8xL")
+// const deviceId = buf.slice(0, 8)
+// const roles = buf.slice(12).toString()
+
 
 // Service: Servo
 export const SRV_SERVO = 0x12fc9103
@@ -842,6 +862,12 @@ export enum WifiCmd {
     /** No args. Disconnect from current WiFi network if any. */
     Disconnect = 0x82,
 }
+
+// pipe_report Results
+// const [flags, reserved, rssi, channel] = unpack(buf, "LLbB")
+// const bssid = buf.slice(10, 16)
+// const ssid = buf.slice(16).toString()
+
 
 export enum WifiReg {
     /** Read-only bool (uint8_t). Indicates whether or not we currently have an IP address assigned. */

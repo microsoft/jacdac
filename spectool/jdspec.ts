@@ -1102,32 +1102,47 @@ function toTypescript(info: jdspec.ServiceSpec, isStatic: boolean) {
 
         const cmt = addComment(pkt)
         let pack = cmt.needsStruct ? packInfo(pkt, isStatic) : ""
-        if (!pkt.secondary && pkt.kind != "pipe_command" && pkt.kind != "pipe_report") {
-            let inner = "Cmd"
-            if (isRegister(pkt.kind))
-                inner = "Reg"
-            else if (pkt.kind == "event")
-                inner = "Event"
-            else if (pkt.kind == "meta_pipe_command" || pkt.kind == "meta_pipe_report")
-                inner = "PipeCmd"
+
+        let inner = "Cmd"
+        if (isRegister(pkt.kind))
+            inner = "Reg"
+        else if (pkt.kind == "event")
+            inner = "Event"
+        else if (pkt.kind == "meta_pipe_command" || pkt.kind == "meta_pipe_report")
+            inner = "PipeCmd"
+        else if (pkt.kind == "pipe_command" || pkt.kind == "pipe_report")
+            inner = "info"
+
+        let text = ""
+        if (pkt.secondary || inner == "info") {
+            if (pack)
+                text = `// ${pkt.kind} ${upperCamel(pkt.name)}${pack}\n`
+        } else {
             let val = toHex(pkt.identifier)
-            tsEnums[inner] = (tsEnums[inner] || "") +
-                `${pack}${cmt.comment}${upperCamel(pkt.name)} = ${val},\n`
+            text = `${pack}${cmt.comment}${upperCamel(pkt.name)} = ${val},\n`
         }
+
+        if (text)
+            tsEnums[inner] = (tsEnums[inner] || "") + text
     }
 
     for (const k of Object.keys(tsEnums)) {
-        const inner = tsEnums[k]
-            .replace(/^\n+/, "")
-            .replace(/\n$/, "")
-            .replace(/\n/g, "\n    " + indent)
-        r += `${enumkw} ${pref}${k} {\n    ${indent}${inner}\n${indent}}\n\n`
+        if (k == "info")
+            r += tsEnums[k].replace(/^/mg, indent) + "\n\n"
+        else {
+            const inner = tsEnums[k]
+                .replace(/^\n+/, "")
+                .replace(/\n$/, "")
+                .replace(/\n/g, "\n    " + indent)
+            r += `${enumkw} ${pref}${k} {\n    ${indent}${inner}\n${indent}}\n\n`
+        }
     }
 
     if (isStatic)
         r += "}\n"
 
     return r
+    //.replace(/\s*$/mg, "")
 }
 
 export function converters(): jdspec.SMap<(s: jdspec.ServiceSpec) => string> {

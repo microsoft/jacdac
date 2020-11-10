@@ -66,6 +66,11 @@ declare namespace jdspec {
     type Unit = "" | "us" | "mWh" | "#" | senml.Unit | senml.SecondaryUnit
 
     /**
+     * Stability status of a feature
+     */
+    type StabilityStatus = "stable" | "experimental" | "deprecated";
+
+    /**
      * Service specification.
      */
     interface ServiceSpec {
@@ -145,7 +150,7 @@ declare namespace jdspec {
         /**
          * Specifies the stability status of this service.
          */
-        status: "stable" | "experimental" | "deprecated";
+        status: StabilityStatus;
     }
 
     /**
@@ -236,6 +241,7 @@ declare namespace jdspec {
         /**
          * If present and true, the binary layout of fields does not follow natural alignment
          * and need to have PACKED C attribute or similar applied.
+         * The spec tool warns of such packets (and currently doesn't allow them).
          */
         packed?: boolean;
 
@@ -329,6 +335,11 @@ declare namespace jdspec {
          * Maximum absolute scaled (shifted) value when specified.
          */
         absoluteMax?: number;
+
+        /**
+         * Maximum number of bytes in a given field (typically a string at the end of a packet).
+         */
+        maxBytes?: number;
 
         /**
          * If set, this and following fields repeat in order, to fill the packet.

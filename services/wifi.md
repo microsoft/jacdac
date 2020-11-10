@@ -29,7 +29,7 @@ Discovery and connection to WiFi networks. Separate TCP service is used for data
         rssi: i8 {typical_min = -100, typical_max = -20}
         channel: u8 {typical_min = 1, typical_max = 13}
         bssid: u8[6]
-        ssid: string
+        ssid: string {maxBytes = 33}
     }
 
 Initiate search for WiFi networks. Results are returned via pipe, one entry per packet.
@@ -44,7 +44,13 @@ Connect to named network. Password can be appended after ssid. Both strings have
 
 Disconnect from current WiFi network if any.
 
-## Event
+## Registers
+
+    ro connected: bool @ 0x180
+
+Indicates whether or not we currently have an IP address assigned.
+
+## Events
 
     event got_ip @ 0x01
 

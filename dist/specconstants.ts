@@ -5,25 +5,26 @@ export enum BaseCmd {
      * Control broadcasts it automatically every 500ms, but other service have to be queried to provide it.
      */
     Announce = 0x0,
-    
+
     /**
      * No args. Registers number `N` is fetched by issuing command `0x1000 | N`.
      * The report format is the same as the format of the register.
      */
     GetRegister = 0x1000,
-    
+
     /**
      * No args. Registers number `N` is set by issuing command `0x2000 | N`, with the format
      * the same as the format of the register.
      */
     SetRegister = 0x2000,
-    
+
+    // const [eventId, eventArgument] = unpack(buf, "LL")
     /** Event from sensor or a broadcast service. */
     Event = 0x1,
-    
+
     /** No args. Request to calibrate a sensor. The report indicates the calibration is done. */
     Calibrate = 0x2,
-    
+
     /** No args. Request human-readable description of service. */
     Description = 0x3,
 }
@@ -31,28 +32,28 @@ export enum BaseCmd {
 export enum BaseReg {
     /** Read-write uint32_t. This is either binary on/off (0 or non-zero), or can be gradual (eg. brightness of an RGB LED strip). */
     Intensity = 0x1,
-    
+
     /** Read-write int32_t. The primary value of actuator (eg. servo pulse length, or motor duty cycle). */
     Value = 0x2,
-    
+
     /** Read-write mA uint16_t. Limit the power drawn by the service, in mA. */
     MaxPower = 0x7,
-    
+
     /**
      * Read-write uint8_t. Asks device to stream a given number of samples
      * (clients will typically write `255` to this register every second or so, while streaming is required).
      */
     StreamSamples = 0x3,
-    
+
     /** Read-write ms uint32_t. Period between packets of data when streaming in milliseconds. */
     StreamingInterval = 0x4,
-    
+
     /** Read-only int32_t. Read-only value of the sensor, also reported in streaming. */
     Reading = 0x101,
-    
+
     /** Read-write int32_t. Thresholds for event generation for event generation for analog sensors. */
     LowThreshold = 0x5,
-    
+
     /** Read-write int32_t. Thresholds for event generation for event generation for analog sensors. */
     HighThreshold = 0x6,
 }
@@ -64,7 +65,7 @@ export enum SensorReg {
      * (clients will typically write `255` to this register every second or so, while streaming is required).
      */
     StreamSamples = 0x3,
-    
+
     /** Read-write ms uint32_t. Period between packets of data when streaming in milliseconds. */
     StreamingInterval = 0x4,
 }
@@ -72,6 +73,7 @@ export enum SensorReg {
 // Service: Accelerometer
 export const SRV_ACCELEROMETER = 0x1f140409
 export enum AccelReg {
+    // const [x, y, z] = unpack(buf, "hhh")
     /** Indicates the current forces acting on accelerometer. */
     Forces = 0x101,
 }
@@ -79,37 +81,37 @@ export enum AccelReg {
 export enum AccelEvent {
     /** Emitted when accelerometer is tilted in the given direction. */
     TiltUp = 0x1,
-    
+
     /** Emitted when accelerometer is tilted in the given direction. */
     TiltDown = 0x2,
-    
+
     /** Emitted when accelerometer is tilted in the given direction. */
     TiltLeft = 0x3,
-    
+
     /** Emitted when accelerometer is tilted in the given direction. */
     TiltRight = 0x4,
-    
+
     /** Emitted when accelerometer is laying flat in the given direction. */
     FaceUp = 0x5,
-    
+
     /** Emitted when accelerometer is laying flat in the given direction. */
     FaceDown = 0x6,
-    
+
     /** Emitted when total force acting on accelerometer is much less than 1g. */
     Freefall = 0x7,
-    
+
     /** Emitted when forces change violently a few times. */
     Shake = 0xb,
-    
+
     /** Emitted when force in any direction exceeds given threshold. */
     Force_2g = 0xc,
-    
+
     /** Emitted when force in any direction exceeds given threshold. */
     Force_3g = 0x8,
-    
+
     /** Emitted when force in any direction exceeds given threshold. */
     Force_6g = 0x9,
-    
+
     /** Emitted when force in any direction exceeds given threshold. */
     Force_8g = 0xa,
 }
@@ -127,21 +129,23 @@ export enum SensorAggregatorSampleType { // uint8_t
 }
 
 export enum SensorAggregatorReg {
+    // const [samplingInterval, samplesInWindow, reserved, serviceClass, serviceNum, sampleSize, sampleType, sampleShift] = unpack(buf, "HHL8xLBBBb")
+    // const deviceId = buf.slice(8, 16)
     /**
      * Set automatic input collection.
      * These settings are stored in flash.
      */
     Inputs = 0x80,
-    
+
     /** Read-only uint32_t. Number of input samples collected so far. */
     NumSamples = 0x180,
-    
+
     /** Read-only B uint8_t. Size of a single sample. */
     SampleSize = 0x181,
-    
+
     /** Read-write uint32_t. When set to `N`, will stream `N` samples as `current_sample` reading. */
     StreamSamples = 0x81,
-    
+
     /** Read-only bytes. Last collected sample. */
     CurrentSample = 0x101,
 }
@@ -163,10 +167,14 @@ export enum BootloaderCmd {
      * that "fits" this device.
      */
     Info = 0x0,
-    
+    // report Info
+    // const [serviceClass, pageSize, flashableSize, firmwareIdentifier] = unpack(buf, "LLLL")
+
     /** Argument: session_id uint32_t. The flashing host should generate a random id, and use this command to set it. */
     SetSession = 0x81,
-    
+
+    // const [pageAddress, pageOffset, chunkNo, chunkMax, sessionId, reserved0, reserved1, reserved2, reserved3] = unpack(buf, "LHBBLLLLL")
+    // const pageData = buf.slice(28)
     /**
      * Use to send flashing data. A physical page is split into `chunk_max + 1` chunks, where `chunk_no = 0 ... chunk_max`.
      * Each chunk is stored at `page_address + page_offset`. `page_address` has to be equal in all chunks,
@@ -174,6 +182,8 @@ export enum BootloaderCmd {
      * Only the last chunk causes writing to flash and elicits response.
      */
     PageData = 0x80,
+    // report PageData
+    // const [sessionId, pageError, pageAddress] = unpack(buf, "LLL")
 }
 
 // Service: Button
@@ -186,20 +196,21 @@ export enum ButtonReg {
 export enum ButtonEvent {
     /** Emitted when button goes from inactive (`pressed == 0`) to active. */
     Down = 0x1,
-    
+
     /** Emitted when button goes from active (`pressed == 1`) to inactive. */
     Up = 0x2,
-    
+
     /** Emitted together with `up` when the press time was not longer than 500ms. */
     Click = 0x3,
-    
+
     /** Emitted together with `up` when the press time was more than 500ms. */
     LongClick = 0x4,
 }
 
 // Service: CODAL Message Bus
-export const SRV_CODAL_MESSAGE_BUS = 0x1161590c
+export const SRV_CODAL_MESSAGE_BUS = 0x16ad7cd5
 export enum CODALMessageBusCmd {
+    // const [id, event] = unpack(buf, "HH")
     /** Sends a new event on the message bus. */
     Send = 0x80,
 }
@@ -221,13 +232,15 @@ export enum CtrlCmd {
      * The command form can be used to induce report, which is otherwise broadcast every 500ms.
      */
     Services = 0x0,
-    
+    // report Services
+    // const [restartCounter, flags, reserved, serviceClass] = unpack(buf, "BBHL")
+
     /** No args. Do nothing. Always ignored. Can be used to test ACKs. */
     Noop = 0x80,
-    
+
     /** No args. Blink an LED or otherwise draw user's attention. */
     Identify = 0x81,
-    
+
     /** No args. Reset device. ACK may or may not be sent. */
     Reset = 0x82,
 }
@@ -235,19 +248,19 @@ export enum CtrlCmd {
 export enum CtrlReg {
     /** Constant string (bytes). Identifies the type of hardware (eg., ACME Corp. Servo X-42 Rev C) */
     DeviceDescription = 0x180,
-    
+
     /** Constant uint32_t. A numeric code for the string above; used to identify firmware images and devices. */
     FirmwareIdentifier = 0x181,
-    
+
     /** Constant uint32_t. Typically the same as `firmware_identifier` unless device was flashed by hand; the bootloader will respond to that code. */
     BootloaderFirmwareIdentifier = 0x184,
-    
+
     /** Constant string (bytes). A string describing firmware version; typically semver. */
     FirmwareVersion = 0x185,
-    
+
     /** Read-only °C int16_t. MCU temperature in degrees Celsius (approximate). */
     Temperature = 0x182,
-    
+
     /** Read-only μs uint64_t. Number of microseconds since boot. */
     Uptime = 0x186,
 }
@@ -260,7 +273,7 @@ export enum RotaryEncoderReg {
      * Increases by `1` for a clockwise "click", by `-1` for counter-clockwise.
      */
     Position = 0x101,
-    
+
     /** Constant # uint16_t. This specifies by how much `position` changes when the crank does 360 degree turn. Typically 12 or 24. */
     ClicksPerTurn = 0x180,
 }
@@ -284,9 +297,12 @@ export enum GamepadButton { // uint16_t
 export enum GamepadCmd {
     /** No args. Indicates number of players supported and which buttons are present on the controller. */
     Announce = 0x0,
+    // report Announce
+    // const [flags, numPlayers, buttonPresent] = unpack(buf, "BBH")
 }
 
 export enum GamepadReg {
+    // const [button, playerIndex, pressure] = unpack(buf, "HBB")
     /**
      * Indicates which buttons are currently active (pressed).
      * `pressure` should be `0xff` for digital buttons, and proportional for analog ones.
@@ -295,9 +311,11 @@ export enum GamepadReg {
 }
 
 export enum GamepadEvent {
+    // const [button, playerIndex] = unpack(buf, "HH")
     /** Emitted when button goes from inactive to active. */
     Down = 0x1,
-    
+
+    // const [button, playerIndex] = unpack(buf, "HH")
     /** Emitted when button goes from active to inactive. */
     Up = 0x2,
 }
@@ -331,11 +349,49 @@ export enum KeyboardAction { // uint8_t
 }
 
 export enum KeyboardCmd {
+    // const [selector, modifiers, action] = unpack(buf, "HBB")
     /** Presses a key or a sequence of keys down. */
     Key = 0x80,
-    
+
     /** No args. Clears all pressed keys. */
     Clear = 0x81,
+}
+
+// Service: LED Matrix Controller
+export const SRV_LED_MATRIX_CONTROLLER = 0x1d35e393
+export enum LEDMatrixControllerReg {
+    /**
+     * Read-write bytes. Read or writes the state of the screen where pixel on/off state is
+     * stored as a bit, column by column. The column should be byte aligned.
+     */
+    Leds = 0x80,
+
+    /** Read-write bool (uint8_t). Disables or enables the whole screen. */
+    Enabled = 0x81,
+
+    /** Read-write uint8_t. Sets the general brightness of the LEDs. */
+    Brightness = 0x82,
+
+    /** Constant # uint16_t. Number of rows on the screen */
+    Rows = 0x83,
+
+    /** Constant # uint16_t. Number of columns on the screen */
+    Columns = 0x84,
+}
+
+export enum LEDMatrixControllerCmd {
+    /** No args. Shorthand command to clear all the LEDs on the screen. */
+    Clear = 0x80,
+}
+
+// Service: LED Matrix Display
+export const SRV_LED_MATRIX_DISPLAY = 0x110d154b
+export enum LEDMatrixDisplayReg {
+    /**
+     * Read-only bytes. Streams the state of the screen where pixel on/off state is
+     * stored as a bit, column by column. The column should be byte aligned.
+     */
+    Leds = 0x101,
 }
 
 // Service: Light
@@ -353,21 +409,21 @@ export enum LightReg {
      * At `0` the power to the strip is completely shut down.
      */
     Brightness = 0x1,
-    
+
     /**
      * Read-only ratio uint8_t. This is the luminosity actually applied to the strip.
      * May be lower than `brightness` if power-limited by the `max_power` register.
      * It will rise slowly (few seconds) back to `brightness` is limits are no longer required.
      */
     ActualBrightness = 0x180,
-    
+
     /**
      * Read-write LightType (uint8_t). Specifies the type of light strip connected to controller.
      * Controllers which are sold with lights should default to the correct type
      * and could not allow change.
      */
     LightType = 0x80,
-    
+
     /**
      * Read-write uint16_t. Specifies the number of pixels in the strip.
      * Controllers which are sold with lights should default to the correct length
@@ -375,7 +431,7 @@ export enum LightReg {
      * Increasing length at runtime leads to ineffective use of memory and may lead to controller reboot.
      */
     NumPixels = 0x81,
-    
+
     /** Read-write mA uint16_t. Limit the power drawn by the light-strip (and controller). */
     MaxPower = 0x7,
 }
@@ -409,15 +465,37 @@ export enum LoggerReg {
 export enum LoggerCmd {
     /** Argument: message string (bytes). Report a message. */
     Debug = 0x80,
-    
+
     /** Argument: message string (bytes). Report a message. */
     Log = 0x81,
-    
+
     /** Argument: message string (bytes). Report a message. */
     Warn = 0x82,
-    
+
     /** Argument: message string (bytes). Report a message. */
     Error = 0x83,
+}
+
+// Service: Microphone
+export const SRV_MICROPHONE = 0x113dac86
+export enum MicrophoneCmd {
+    // const [numSamples] = unpack(buf, "12xL")
+    // const samples = buf.slice(0, 12)
+    /**
+     * The samples will be streamed back over the `samples` pipe.
+     * If `num_samples` is `0`, streaming will only stop when the pipe is closed.
+     * Otherwise the specified number of samples is streamed.
+     * Samples are sent as `i16`.
+     */
+    Sample = 0x81,
+}
+
+export enum MicrophoneReg {
+    /**
+     * Read-write μs uint32_t. Get or set microphone sampling period.
+     * Sampling rate is `1_000_000 / sampling_period Hz`.
+     */
+    SamplingPeriod = 0x80,
 }
 
 // Service: Model Runner
@@ -437,7 +515,7 @@ export enum ModelRunnerCmd {
      * When the pipe is closed, the model is written all into flash, and the device running the service may reset.
      */
     SetModel = 0x80,
-    
+
     /**
      * Argument: outputs pipe (bytes). Open channel that can be used to manually invoke the model. When enough data is sent over the `inputs` pipe, the model is invoked,
      * and results are send over the `outputs` pipe.
@@ -453,28 +531,28 @@ export enum ModelRunnerReg {
      * This register is not stored in flash.
      */
     AutoInvokeEvery = 0x80,
-    
+
     /** Read-only output f32 (uint32_t). Results of last model invocation as `float32` array. */
     Outputs = 0x101,
-    
+
     /** Read-only dimension uint16_t. The shape of the input tensor. */
     InputShape = 0x180,
-    
+
     /** Read-only dimension uint16_t. The shape of the output tensor. */
     OutputShape = 0x181,
-    
+
     /** Read-only μs uint32_t. The time consumed in last model execution. */
     LastRunTime = 0x182,
-    
+
     /** Read-only B uint32_t. Number of RAM bytes allocated for model execution. */
     AllocatedArenaSize = 0x183,
-    
+
     /** Read-only B uint32_t. The size of the model in bytes. */
     ModelSize = 0x184,
-    
+
     /** Read-only string (bytes). Textual description of last error when running or loading model (if any). */
     LastError = 0x185,
-    
+
     /**
      * Constant ModelFormat (uint32_t). The type of ML models supported by this service.
      * `TFLite` is flatbuffer `.tflite` file.
@@ -482,10 +560,10 @@ export enum ModelRunnerReg {
      * The format is typically present as first or second little endian word of model file.
      */
     Format = 0x186,
-    
+
     /** Constant uint32_t. A version number for the format. */
     FormatVersion = 0x187,
-    
+
     /**
      * Constant bool (uint8_t). If present and true this service can run models independently of other
      * instances of this service on the device.
@@ -501,7 +579,7 @@ export enum MotorReg {
      * Positive is recommended to be clockwise rotation and negative counterclockwise.
      */
     Duty = 0x2,
-    
+
     /** Read-write bool (uint8_t). Turn the power to the motor on/off. */
     Enabled = 0x1,
 }
@@ -524,19 +602,22 @@ export enum MouseButtonEvent { // uint8_t
 }
 
 export enum MouseCmd {
+    // const [buttons, event] = unpack(buf, "HB")
     /**
      * Sets the up/down state of one or more buttons.
      * A ``Click`` is the same as ``Down`` followed by ``Up`` after 100ms.
      * A ``DoubleClick`` is two clicks with ``150ms`` gap between them (that is, ``100ms`` first click, ``150ms`` gap, ``100ms`` second click).
      */
     SetButton = 0x80,
-    
+
+    // const [dx, dy, time] = unpack(buf, "hhH")
     /**
      * Moves the mouse by the distance specified.
      * If the time is positive, it specifies how long to make the move.
      */
     Move = 0x81,
-    
+
+    // const [dy, time] = unpack(buf, "hH")
     /**
      * Turns the wheel up or down. Positive if scrolling up.
      * If the time is positive, it specifies how long to make the move.
@@ -558,19 +639,19 @@ export enum MultitouchReg {
 export enum MultitouchEvent {
     /** Argument: channel uint32_t. Emitted when an input is touched. */
     Touch = 0x1,
-    
+
     /** Argument: channel uint32_t. Emitted when an input is no longer touched. */
     Release = 0x2,
-    
+
     /** Argument: channel uint32_t. Emitted when an input is briefly touched. TODO Not implemented. */
     Tap = 0x3,
-    
+
     /** Argument: channel uint32_t. Emitted when an input is touched for longer than 500ms. TODO Not implemented. */
     LongPress = 0x4,
-    
+
     /** Emitted when input channels are successively touched in order of increasing channel numbers. */
     SwipePos = 0x10,
-    
+
     /** Emitted when input channels are successively touched in order of decreasing channel numbers. */
     SwipeNeg = 0x11,
 }
@@ -583,6 +664,7 @@ export enum MusicReg {
 }
 
 export enum MusicCmd {
+    // const [period, duty, duration] = unpack(buf, "HHH")
     /**
      * Play a PWM tone with given period and duty for given duration.
      * The duty is scaled down with `volume` register.
@@ -597,38 +679,38 @@ export const SRV_POWER = 0x1fa4c95a
 export enum PowerReg {
     /** Read-write bool (uint8_t). Turn the power to the bus on/off. */
     Enabled = 0x1,
-    
+
     /**
      * Read-write mA uint16_t. Limit the power provided by the service. The actual maximum limit will depend on hardware.
      * This field may be read-only in some implementations - you should read it back after setting.
      */
     MaxPower = 0x7,
-    
+
     /** Read-only bool (uint8_t). Indicates whether the power has been shut down due to overdraw. */
     Overload = 0x181,
-    
+
     /** Read-only mA uint16_t. Present current draw from the bus. */
     CurrentDraw = 0x101,
-    
+
     /** Read-only mV uint16_t. Voltage on input. */
     BatteryVoltage = 0x180,
-    
+
     /** Read-only ratio uint16_t. Fraction of charge in the battery. */
     BatteryCharge = 0x182,
-    
+
     /**
      * Constant mWh uint32_t. Energy that can be delivered to the bus when battery is fully charged.
      * This excludes conversion overheads if any.
      */
     BatteryCapacity = 0x183,
-    
+
     /**
      * Read-write ms uint16_t. Many USB power packs need current to be drawn from time to time to prevent shutdown.
      * This regulates how often and for how long such current is drawn.
      * Typically a 1/8W 22 ohm resistor is used as load. This limits the duty cycle to 10%.
      */
     KeepOnPulseDuration = 0x80,
-    
+
     /**
      * Read-write ms uint16_t. Many USB power packs need current to be drawn from time to time to prevent shutdown.
      * This regulates how often and for how long such current is drawn.
@@ -645,25 +727,26 @@ export enum PwmLightReg {
      * At `0` the power to the strip is completely shut down.
      */
     Brightness = 0x1,
-    
+
     /** Read-write mA uint16_t. Limit the power drawn by the light-strip (and controller). */
     MaxPower = 0x7,
-    
+
     /** Constant uint8_t. Maximum number of steps allowed in animation definition. This determines the size of the `steps` register. */
     MaxSteps = 0x180,
-    
+
+    // const [startIntensity, duration] = unpack(buf, "HH")
     /**
      * The steps of current animation. Setting this also sets `current_iteration` to `0`.
      * Step with `duration == 0` is treated as an end marker.
      */
     Steps = 0x82,
-    
+
     /**
      * Read-write uint16_t. Currently excecuting iteration of animation. Can be set to `0` to restart current animation.
      * If `current_iteration > max_iterations`, then no animation is currently running.
      */
     CurrentIteration = 0x80,
-    
+
     /** Read-write uint16_t. The animation will be repeated `max_iterations + 1` times. */
     MaxIterations = 0x81,
 }
@@ -673,26 +756,40 @@ export const SRV_ROLE_MANAGER = 0x119c3ad1
 export enum RoleManagerCmd {
     /** Argument: device_id uint64_t. Get the role corresponding to given device identifer. Returns empty string if unset. */
     GetRole = 0x80,
-    
+    // report GetRole
+    // const deviceId = buf.slice(0, 8)
+    // const role = buf.slice(8).toString()
+
+    // const deviceId = buf.slice(0, 8)
+    // const role = buf.slice(8).toString()
     /** Set role. Can set to empty to remove role binding. */
     SetRole = 0x81,
-    
+
     /** No args. Remove all role bindings. */
     ClearAllRoles = 0x84,
-    
+
     /** Argument: stored_roles pipe (bytes). Return all roles stored internally. */
     ListStoredRoles = 0x82,
-    
+
     /** Argument: required_roles pipe (bytes). List all roles required by the current program. `device_id` is `0` if role is unbound. */
     ListRequiredRoles = 0x83,
 }
+
+// pipe_report StoredRoles
+// const deviceId = buf.slice(0, 8)
+// const role = buf.slice(8).toString()
+// pipe_report RequiredRoles
+// const [serviceClass] = unpack(buf, "8xL")
+// const deviceId = buf.slice(0, 8)
+// const roles = buf.slice(12).toString()
+
 
 // Service: Servo
 export const SRV_SERVO = 0x12fc9103
 export enum ServoReg {
     /** Read-write μs uint32_t. Specifies length of the pulse in microseconds. The period is always 20ms. */
     Pulse = 0x2,
-    
+
     /** Read-write bool (uint8_t). Turn the power to the servo on/off. */
     Enabled = 0x1,
 }
@@ -718,13 +815,15 @@ export enum TCPCmd {
 }
 
 export enum TCPPipeCmd {
+    // const [tcpPort] = unpack(buf, "H")
+    // const hostname = buf.slice(2).toString()
     /**
      * Open an SSL connection to a given host:port pair. Can be issued only once on given pipe.
      * After the connection is established, an empty data report is sent.
      * Connection is closed by closing the pipe.
      */
     OpenSsl = 0x1,
-    
+
     /** Argument: error TcpError (int32_t). Reported when an error is encountered. Negative error codes come directly from the SSL implementation. */
     Error = 0x0,
 }
@@ -756,18 +855,29 @@ export enum WifiAPFlags { // uint32_t
 export enum WifiCmd {
     /** Argument: results pipe (bytes). Initiate search for WiFi networks. Results are returned via pipe, one entry per packet. */
     Scan = 0x80,
-    
+
     /** Argument: ssid string (bytes). Connect to named network. Password can be appended after ssid. Both strings have to be NUL-terminated. */
     Connect = 0x81,
-    
+
     /** No args. Disconnect from current WiFi network if any. */
     Disconnect = 0x82,
+}
+
+// pipe_report Results
+// const [flags, reserved, rssi, channel] = unpack(buf, "LLbB")
+// const bssid = buf.slice(10, 16)
+// const ssid = buf.slice(16).toString()
+
+
+export enum WifiReg {
+    /** Read-only bool (uint8_t). Indicates whether or not we currently have an IP address assigned. */
+    Connected = 0x180,
 }
 
 export enum WifiEvent {
     /** Emitted upon successful join and IP address assignment. */
     GotIp = 0x1,
-    
+
     /** Emitted when disconnected from network. */
     LostIp = 0x2,
 }

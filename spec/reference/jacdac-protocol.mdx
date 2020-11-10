@@ -3,99 +3,6 @@ title: JACDAC Protocol
 order: 3
 ---
 
-## Device identifiers
-
-[this is really a meta-protocol issue that is most relevant to adding a device entry]
-
-Each device is assigned a 64-bit device identifier that uniquely identifies it on the bus. This identifier is used in frames to determine the sending or receiving device, and for devices to remember one another on the bus. Device identifiers are generated, not allocated, and once generated a device's identifier must remain constant.
-
-Device identifiers are not guaranteed to be universally unique, but there is little chance of users encountering identifier colision so long as identifiers are generated with appropriate entropy (see analysis below). We recommend the following ways of generating a unique identifier:
-
-1. Use the random number generator (found below) to allocate an identifier for each device. The number generator could even be included into automated flashing processes to ensure appropriate entropy.
-
-2. Use the generator below to seed a hardware random number generator. The hardware random number generator could use sensor values to create further entropy.
-
-<RandomGenerator device={true} />
-
-If we consider 1 trillion JACDAC networks size of 200 devices with randomly chosen 64 bit JDIDs, 
-the probability of a JDID collision in at least one of the networks is 0.1%. On the other hand, 
-with 32 bit IDs and 2000 networks, the collision probability in any of them is already 1%, and 
-with 200k networks it's more than 60%.
-
-If the device already has a 48 bit MAC address, the 64 bit JDID can be formed by prepending
-`0xff` and appending `0xfe`. For example, if the MAC address is `11:22:33:44:55:66`, the device
-identifier should be `0xff112233445566fw`.
-
-Each JACDAC device has a unique 64 bit identifier (JDID) that may be generated from a hardware unique identifier 
-(through hashing if needed; we recommend [FNV1A](https://tools.ietf.org/html/draft-eastlake-fnv-14#section-3)).
-Alternatively, the JDID  may be generated at first run using randomness and stored in the device's flash or EPROM.
-Another option is to flash a randomly generated 64 bit number during production.
-
-## Frames
-
-JACDAC devices communicate over the JACDAC bus via frames. A frame
-contains a device identifier and one or more packets and has the following structure:
-
-```c
-struct _jd_frame_t {
-    uint16_t frame_crc;
-    uint8_t frame_size;
-    uint8_t frame_flags;
-    uint64_t device_identifier;
-    uint8_t data[240]; // maximum
-} __attribute__((__packed__, aligned(4)));
-typedef struct _jd_frame_t jd_frame_t;
-```
-
-On the wire, the frame must be transmitted in little endian format (i.e. low byte of `frame_crc` first). 
-The total maximum frame size is 252 bytes, selected to keep the total size of packet under `255` (the DMA limit on some hardware) and aligned to 4. The following table defines the meaning and size of the fields in the structure above.
-
-| Memory offset | Field size (bytes) 	| Field name 	| Description  	|
-|--------|------------	|-------------	|----------	|
-| 0 | 2          	|`frame_crc`	| [16-bit CRC CCITT](https://en.wikipedia.org/wiki/Cyclic_redundancy_check) of all following fields. |
-| 2 | 1          	|`frame_size`	| Size of the data field.	|
-| 3 | 1          	|`frame_flags`	| Flags specific to this frame.	|
-| 4 | 8          	|`device_identifier`	| 64-bit device identifier.	|
-| 12 | 1 * `frame_size `  	|`data`	| The data payload of the frame.	|
-
-### Frame flags
-
-The `frame_flags` field is used to indicate
-
-| Bit position | Bit name 	| Description 	|
-|--------|------------	|-------------
-| 0 | COMMAND	| If set, the frame contains command packets, if not set, the frame contains report packets. 	|
-| 1 | ACK_REQUESTED	| If set, the receiver should respond to sender with an ACK frame, if not set, no response is required. 	|
-| 2 | DEVICE_ID_ALT_MEANING	|  	|
-| 3-7 | RESERVED	| Reserved for future use.	|
-
-## Packets
-
-The data portion of a JACDAC frame is also structured and is internally divided into one or more packets. __Zero length frames are not supported__.
-
-Each packet has the following layout in memory:
-
-```c
-struct _jd_packet_t {
-    uint8_t service_size;
-    uint8_t service_number;
-    uint16_t service_command;
-    uint8_t payload[236];
-} __attribute__((__packed__, aligned(4)));
-typedef struct _jd_packet_t jd_packet_t;
-```
-
-The following table defines the meaning and size of the fields in the structure above. The meaning of these fields will become clearer later on in this document.
-
-| Memory offset | Field size (bytes) 	| Field name 	| Description  	|
-|--------|------------	|-------------	|----------	|
-| 12 | 1	|`service_size`	| The size of the payload field. Maximum size is 236 bytes. |
-| 13 | 1	|`service_number`	| The instance number of the destination service.	|
-| 14 | 2	|`service_command`	| A number that specifies an operation and code combination.	|
-| 16 | 1 * `service_size`	|`payload`	| The packet data payload destined for a particular service.	|
-
-Packets are placed back-to-back inside the frame `data` field and must be padded so they start at a 4 byte boundary (i.e. `service_size` is divisible by 4). Logically, packets placed in the same frame share the same frame fields and thus the same `device_identifier`. This means that only one device can be addressed in a single frame.
-
 ## Service layer
 
 The way JACDAC devices share resources with other devices on the bus are through __services__. Services provide abstract, standardized interfaces that can be used to interact with physical hardware resources (e.g. an accelerometer) or pure virtual resources (e.g. the state of a video game). This abstraction brings plug-and-play dynamism to JACDAC so that devices with different hardware, but the same overall functionality, can replace one another without having to recompile user applications. For example, two different models of accelerometer hardware can replace each other because they share the same software interface.
@@ -163,7 +70,7 @@ Common register command codes are allocated in the [base specification](../../se
 Reports are packets sent by a service as a response to a command. They can also be used to independently broadcast important information such as events.
 
 The layout of a report depends on its purpose:
-*  __Register reports__ must always contain the register values requested in the original command packet, but for actions, the format is left up to the service creator to define. 
+*  __Register reports__ must always contain the register values requested in the original command packet, but for actions, the format is left up to the service creator to define.
 * __Actions reports__ can either contain a pre-determined number of bytes as defined in the service specification or bear no operation.
 
 A third type of report is an __Event__. Events are emitted independently by a service without prompting. Some services may offer an interface to configure which events are emitted. Event reports have the following format:
@@ -186,6 +93,30 @@ The implementation complexity of the control service scales with respect to the 
 
 # TODO beyond this point.
 ## Control layer
+
+Every JACDAC device has a unique 64 bit identifier.
+It may be generated from hardware unique ID (through hashing if needed;
+we recommend [FNV1A](https://tools.ietf.org/html/draft-eastlake-fnv-14#section-3)).
+Alternatively, it may be generated at first run using randomness and stored in flash or EPROM.
+
+Another option is to flash a randomly generated 64 bit number during production.
+If that is difficult, generate 48 bit (or so) random number, and assign identifiers
+starting with that number with lowest bits incrementing.
+Make sure to machine-generate the number, do not just bang on the keyboard.
+You can use the widget below to generate a random device identifier.
+
+<RandomGenerator device={true} />
+
+If the device already has a 48 bit MAC address, the 64 bit device identifier is formed by prepending
+`0xff` and appending `0xfe`. For example, if the MAC address is `11:22:33:44:55:66`, the device
+identifier should be `0xff112233445566fw`.
+
+As for the length of identifiers,
+it's theoretically possible for a device ID collision to occur in a small network of say 200 devices.
+With evenly distributed (ie., random) device IDs and 1 trillion such networks
+the probability of collision in at least one of them is 0.1%.
+OTOH, were we to use 32 bit IDs, with 2000 networks the collision probability in any of them
+is already 1%, and with 200k networks it's more than 60%.
 
 ### Direction of packets
 
@@ -216,7 +147,7 @@ They should indicate that in their advertisement packet.
 
 ### Pipes
 
-Pipes are application-level mechanism for establishing reliable one- and two-way 
+Pipes are application-level mechanism for establishing reliable one- and two-way
 point-to-point data links.
 
 Typical packet loss in JACDAC networks is well under 1%.
@@ -277,13 +208,13 @@ The receiving protocol keeps a counter for each pipe. This counter starts at 0.
 * repeat
 
 The protocol above has an effective window of 1.
-The counter allows increasing that up to 31, but this would require dealing with 
+The counter allows increasing that up to 31, but this would require dealing with
 multiple packets per frame and is currently out of scope.
 
 Pipes should be considered closed when the device at the other end resets.
 
 TODO: Zero-length pipe commands can be sent as keep-alive packets.
-Is this needed? 
+Is this needed?
 
 Note that pipes are transmit streams of JACDAC packets, not streams of bytes.
 They should not be recombined at any layer in the implementation.

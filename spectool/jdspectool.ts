@@ -40,7 +40,11 @@ function processSpec(dn: string) {
         const cnv = converters()
         for (let n of Object.keys(cnv)) {
             const convResult = cnv[n](json)
-            fs.writeFileSync(path.join(outp, n, fn.slice(0, -3) + "." + n), convResult)
+            const ext =
+                n == "sts" ? "ts" :
+                    n == "c" ? "h" :
+                        n
+            fs.writeFileSync(path.join(outp, n, fn.slice(0, -3) + "." + ext), convResult)
             if (!concats[n]) concats[n] = ""
             concats[n] += convResult
         }

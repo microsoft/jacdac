@@ -3,6 +3,28 @@ title: JACDAC Protocol
 order: 3
 ---
 
+Three key concepts to understand: 
+* device identifiers;
+* the service abstraction;
+* the control service.
+
+## Device identifiers
+
+Each device is assigned a 64-bit device identifier that uniquely identifies it on the bus. This identifier is used to determine the sending or receiving device, and for devices to remember one another on the bus. Device identifiers are generated, not allocated; once generated, a device's identifier must remain constant.
+
+Device identifiers are not guaranteed to be universally unique, but there is little chance of users encountering identifier colision so long as identifiers are generated with appropriate entropy (see analysis below). We recommend the following ways of generating a unique identifier:
+
+1. Use the random number generator (found below) to allocate an identifier for each device. The number generator could even be included into automated flashing processes to ensure appropriate entropy.
+
+2. Use the generator below to seed a hardware random number generator. The hardware random number generator could use sensor values to create further entropy.
+
+<RandomGenerator device={true} />
+
+If we consider 1 trillion JACDAC networks size of 200 devices with randomly chosen 64 bit JDIDs, 
+the probability of a JDID collision in at least one of the networks is 0.1%. On the other hand, 
+with 32 bit IDs and 2000 networks, the collision probability in any of them is already 1%, and 
+with 200k networks it's more than 60%.
+
 ## Service layer
 
 The way JACDAC devices share resources with other devices on the bus are through __services__. Services provide abstract, standardized interfaces that can be used to interact with physical hardware resources (e.g. an accelerometer) or pure virtual resources (e.g. the state of a video game). This abstraction brings plug-and-play dynamism to JACDAC so that devices with different hardware, but the same overall functionality, can replace one another without having to recompile user applications. For example, two different models of accelerometer hardware can replace each other because they share the same software interface.
@@ -80,8 +102,7 @@ A third type of report is an __Event__. Events are emitted independently by a se
 | 16 | 4	|`event_id`	| A number that uniquely identifies an event. |
 | 18 | 4	|`event_argument`	| An optional argument that can provide additional context.	|
 
-Event reports are sent in the same way as any other packet, and `device_identifier`, `service_number`, and `service_command` differentiate it from other types of reports. These differentiators provide a unique namespace for each service. Multiple event reports can
-be sent by using multiple packets in the same frame.
+Event reports are sent in the same way as any other packet, and `device_identifier`, `service_number`, and `service_command` differentiate it from other types of reports. These differentiators provide a unique namespace for each service. Multiple event reports can be sent by using multiple packets in the same frame.
 
 ### The control service
 
@@ -93,30 +114,6 @@ The implementation complexity of the control service scales with respect to the 
 
 # TODO beyond this point.
 ## Control layer
-
-Every JACDAC device has a unique 64 bit identifier.
-It may be generated from hardware unique ID (through hashing if needed;
-we recommend [FNV1A](https://tools.ietf.org/html/draft-eastlake-fnv-14#section-3)).
-Alternatively, it may be generated at first run using randomness and stored in flash or EPROM.
-
-Another option is to flash a randomly generated 64 bit number during production.
-If that is difficult, generate 48 bit (or so) random number, and assign identifiers
-starting with that number with lowest bits incrementing.
-Make sure to machine-generate the number, do not just bang on the keyboard.
-You can use the widget below to generate a random device identifier.
-
-<RandomGenerator device={true} />
-
-If the device already has a 48 bit MAC address, the 64 bit device identifier is formed by prepending
-`0xff` and appending `0xfe`. For example, if the MAC address is `11:22:33:44:55:66`, the device
-identifier should be `0xff112233445566fw`.
-
-As for the length of identifiers,
-it's theoretically possible for a device ID collision to occur in a small network of say 200 devices.
-With evenly distributed (ie., random) device IDs and 1 trillion such networks
-the probability of collision in at least one of them is 0.1%.
-OTOH, were we to use 32 bit IDs, with 2000 networks the collision probability in any of them
-is already 1%, and with 200k networks it's more than 60%.
 
 ### Direction of packets
 

@@ -4,4 +4,4 @@ The jdspectool takes a service specification in markdown format and converts it 
 
 It can then also generate template files for implementation in various languages.
 
-The format is documented [here](../reference/service-specification)
+The format is documented [here](../spec/reference/service-specification)

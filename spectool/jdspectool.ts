@@ -43,15 +43,17 @@ function processSpec(dn: string) {
             const ext =
                 n == "sts" ? "ts" :
                     n == "c" ? "h" :
-                        n
-            fs.writeFileSync(path.join(outp, n, fn.slice(0, -3) + "." + ext), convResult)
+                        n;
+
+            const cfn = path.join(outp, n, fn.slice(0, -3) + "." + ext);
+            fs.writeFileSync(cfn, convResult)
+            console.log(`written ${cfn}`)
             if (!concats[n]) concats[n] = ""
             concats[n] += convResult
         }
     }
 
     fs.writeFileSync(path.join(outp, "services.json"), JSON.stringify(values(includes), null, 2))
-    fs.writeFileSync(path.join(outp, "specconstants.h"), concats["c"])
     fs.writeFileSync(path.join(outp, "specconstants.ts"), concats["ts"])
     fs.writeFileSync(path.join(outp, "specconstants.sts"), concats["sts"])
 }

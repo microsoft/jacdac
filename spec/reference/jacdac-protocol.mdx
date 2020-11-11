@@ -3,17 +3,17 @@ title: JACDAC Protocol
 order: 3
 ---
 
+## Overview
+
 Four key concepts of the JACDAC protocol are: 
 * **64 bit device identifiers** and their random generation (at device production time or on first run of a device's bootloader);
-* **logical JACDAC packets** and their structure; 
+* **JACDAC packets** and their logical structure; 
 * **the service abstraction**: the way JACDAC devices share resources with other devices on the bus are through __services__, which are identified by their 32 bit __service class__, as found in the [service catalog](..\services). Services provide abstract, standardized interfaces that can be used to interact with physical hardware resources (e.g. an accelerometer) or pure virtual resources (e.g. the state of a video game). This abstraction brings plug-and-play dynamism to JACDAC so that devices with different hardware, but the same overall functionality, can replace one another without having to recompile user applications. For example, two different models of accelerometer hardware can replace each other because they implement the same service.
 * **the control service**: each device runs its own control service, which emits advertisement packets roughly every 500 milliseconds. Each advertisement contains the device's identifier, as well a list of host services (identified by their service class) offered by the device; other devices on the bus can inspect these advertisements and subsequently communicate with the advertised services to incorporate them in user applications.
 
 ## Device identifiers
 
-Each device must assign itself a 64-bit device identifier that uniquely identifies it on the bus. This identifier is used to determine the sending or receiving device, and for devices to remember one another on the bus. Device identifiers are generated, not allocated; once generated, a device's identifier must remain constant. 
-
-*The JACDAC protocol has no provision for no negotiation of unique device identifiers*; as long identifiers are generated with appropriate entropy (see analysis below), there is little chance of users encountering identifier collision. We recommend the following ways of generating a unique identifier:
+**By design, the JACDAC protocol does not support allocation of unique device identifiers.** Instead, each device must assign itself a 64-bit device identifier that uniquely identifies it on the bus. This identifier is used to determine the sending or receiving device, and for devices to remember one another on the bus. Once generated, a device's identifier must remain constant. As long identifiers are generated with appropriate entropy (see analysis below), there is little chance of users encountering identifier collision. We recommend the following ways of generating a unique identifier:
 
 1. Use the random number generator (found below) to allocate an identifier for each device. The number generator could even be included into automated flashing processes to ensure appropriate entropy.
 
@@ -23,12 +23,12 @@ Most often, the device identifier will be assigned by the device's bootloader an
 
 <RandomGenerator device={true} />
 
-If we consider 1 trillion JACDAC networks size of 200 devices with randomly chosen 64 bit JDIDs, 
+If we consider one trillion JACDAC networks size of 200 devices with randomly chosen 64 bit JDIDs, 
 the probability of a JDID collision in at least one of the networks is 0.1%. On the other hand, 
 with 32 bit IDs and 2000 networks, the collision probability in any of them is already 1%, and 
 with 200k networks it's more than 60%.
 
-## Logical JACDAC packets
+## JACDAC packets
 
 A JACDAC packet is described by the following structure:
 
@@ -37,7 +37,7 @@ struct _jd_packet_t {
     uint8_t flags;
     uint64_t device_identifier;
     uint8_t service_size;         // size of the data payload
-    uint8_t service_number;       // the index into the device's service class list
+    uint8_t service_number;       // the index into the device's advertised list of services
     uint16_t service_command;
     uint8_t data[0];
 }
@@ -48,10 +48,10 @@ The above structure omits the details about physical transmission of JACDAC pack
 
 A packet contains only one device identifier (rather than both source and destination identifiers, as in IP). 
 * if the lowest bit of `flags` is set, the packet is a _command packet_ and `device_identifier` is the destination device receiving the packet;
-* otherwise, the packet is a _report packet_ and `device_identifier` is the source device broadcasting information on the bus;
-This means that the interpretation of the `service_number` field is relative to XYZ.
+* otherwise, the packet is a _report packet_ and `device_identifier` is the source device broadcasting information on the bus.
 
-Read more about command and report packets in the next section.
+This means that the interpretation of the `service_number` field is relative to the destination device for command packets
+and is relative to the source device for report packets. Read more about command and report packets in the next section.
 
 ## The service abstraction
 
@@ -62,6 +62,8 @@ Services act on __commands__ and optionally respond with __reports__. Reports ca
 A service is globally and uniquely identified by its service class, which should be found in the 
 [service catalog](..\services). For example, the service class of the [button service](https://microsoft.github.io/jacdac-ts/services/button)
 is `0x1473a263`, as specified in the button's [service specification](https://github.com/microsoft/jacdac/blob/main/services/button.md) in the GitHub repository that contains the registered services.  
+
+In constrast, a service number (`service_number` field in the JACDAC packet) is an index into the list of services advertised by a device. The control service has both service class 0 and service number 0.
 
 ### Commands
 
@@ -138,14 +140,20 @@ Event reports are sent in the same way as any other packet, and `device_identifi
 
 ## The control service
 
-The control service is the heart of the JACDAC protocol, with each device running its own copy of the service.
+The control service is the heart of the JACDAC protocol, with each device running its own copy of the service. The service class of the control service is reserved to be zero (0).
+
 In addition to advertising a device's services, the control service also offers a set of common commands that can be used to query/inspect each JACDAC device. For example, the `IDENTIFY` command causes a JACDAC device to perform an action that allows a user to locate a particular device, usually through blinking an LED. In addition to emitting an advertisement packet every 500 milliseconds, a device that hosts one or more services must respond to all commands listed in the [control service specification](../../services/control).
 
 The implementation complexity of the control service scales with respect to the number of services a device implements. For instance, it is very simple to process packets for a single user service (in addition to the control service), but complexity increases as more services are added. This flexibility is a benefit as it allows ultra low-cost microcontrollers to be used in simple devices.
 
-### Device state
+- `void jd_ctrl_init(void);`
+- `void jd_ctrl_process(srv_t *_state);`
+- `void jd_ctrl_handle_packet(srv_t *_state, jd_packet_t *pkt);`
 
-In addition to maintaining the list of its own services, a device may need to record XYZ.
+### Device state and service numbers
+
+A device will generally maintain device-specific state for each of the services that it supports. This state should be kept in a list, where each list entry contains the service class and the device-specific state for that service. When a device advertises its services they are ordered in the same sequence as in the list.  This allows clients of the device to refer to one of its services by list index (`service_number`, an 8 bit quantity) instead of service class (a 32 bit quantity).
+
 
 - `static srv_t **services;`
 - `static uint8_t num_services, reset_counter;`
@@ -154,11 +162,26 @@ In addition to maintaining the list of its own services, a device may need to re
 - `struct srv_state { SRV_COMMON; };`
 - `static uint8_t id_counter;`
 - `static uint32_t nextblink;`
+- maximum number of services
 
-### Device status
+### Device presence/absence and advertisement updates
 
-A device's presence/absence on the bus is signified by the presence/absence of advertising packets containing its device identifier.
-A JACDAC device that has not received an advertisement from a different device for two seconds should assume that it has left the bus.
+A device's presence/absence on the bus is signified by the presence/absence of advertising packets containing its device identifier, which should be sent every 500 milliseconds. If a client of a JACDAC device does not receive an advertisement from the device for several advertisement periods (1-2 seconds), it should assume the device has left the bus. If the device rejoins the bus, it may present a different list of services. In fact, devices are free to change the list of services they advertise at any time. 
+
+### flags
+
+```c
+// the COMMAND flag signifies that the device_identifier is the recipient
+// (i.e., it's a command for the peripheral); the bit clear means device_identifier is the source
+// (i.e., it's a report from peripheral or a broadcast message)
+#define JD_FRAME_FLAG_COMMAND 0x01
+// an ACK should be issued with CRC of this frame upon reception
+#define JD_FRAME_FLAG_ACK_REQUESTED 0x02
+// the device_identifier contains target service class number
+#define JD_FRAME_FLAG_IDENTIFIER_IS_SERVICE_CLASS 0x04
+// set on frames not received from the JD-wire
+#define JD_FRAME_FLAG_LOOPBACK 0x80
+```
 
 ### Multicast commands
 

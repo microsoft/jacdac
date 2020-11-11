@@ -51,6 +51,7 @@ function processSpec(dn: string) {
     }
 
     fs.writeFileSync(path.join(outp, "services.json"), JSON.stringify(values(includes), null, 2))
+    fs.writeFileSync(path.join(outp, "specconstants.h"), concats["c"])
     fs.writeFileSync(path.join(outp, "specconstants.ts"), concats["ts"])
     fs.writeFileSync(path.join(outp, "specconstants.sts"), concats["sts"])
 }

@@ -2,7 +2,7 @@
 #ifndef _JACDAC_SPEC_ROLE_MANAGER_H
 #define _JACDAC_SPEC_ROLE_MANAGER_H 1
 
-#define JD_ROLE_MANAGER_SERVICE_CLASS 0x119c3ad1
+#define JD_SERVICE_CLASS_ROLE_MANAGER  0x119c3ad1
 
 /** Argument: device_id uint64_t. Get the role corresponding to given device identifer. Returns empty string if unset. */
 #define JD_ROLE_MANAGER_CMD_GET_ROLE 0x80

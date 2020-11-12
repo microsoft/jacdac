@@ -2,7 +2,7 @@
 #ifndef _JACDAC_SPEC_HUMIDITY_H
 #define _JACDAC_SPEC_HUMIDITY_H 1
 
-#define JD_HUMIDITY_SERVICE_CLASS 0x16c810b8
+#define JD_SERVICE_CLASS_HUMIDITY  0x16c810b8
 
 /** Read-only %RH u22.10 (uint32_t). The relative humidity in percentage of full water saturation. */
 #define JD_HUMIDITY_REG_HUMIDITY JD_REG_READING

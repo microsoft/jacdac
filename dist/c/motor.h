@@ -2,7 +2,7 @@
 #ifndef _JACDAC_SPEC_MOTOR_H
 #define _JACDAC_SPEC_MOTOR_H 1
 
-#define JD_MOTOR_SERVICE_CLASS 0x17004cd8
+#define JD_SERVICE_CLASS_MOTOR  0x17004cd8
 
 /**
  * Read-write ratio int16_t. PWM duty cycle of the motor. Use negative/positive values to run the motor forwards and backwards.

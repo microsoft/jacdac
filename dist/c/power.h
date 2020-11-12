@@ -2,7 +2,7 @@
 #ifndef _JACDAC_SPEC_POWER_H
 #define _JACDAC_SPEC_POWER_H 1
 
-#define JD_POWER_SERVICE_CLASS 0x1fa4c95a
+#define JD_SERVICE_CLASS_POWER  0x1fa4c95a
 
 /** Read-write bool (uint8_t). Turn the power to the bus on/off. */
 #define JD_POWER_REG_ENABLED JD_REG_INTENSITY

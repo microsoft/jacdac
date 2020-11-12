@@ -2,7 +2,7 @@
 #ifndef _JACDAC_SPEC_MULTITOUCH_H
 #define _JACDAC_SPEC_MULTITOUCH_H 1
 
-#define JD_MULTITOUCH_SERVICE_CLASS 0x18d55e2b
+#define JD_SERVICE_CLASS_MULTITOUCH  0x18d55e2b
 
 /**
  * Read-only capacitance int32_t. Capacitance of channels. The capacitance is continuously calibrated, and a value of `0` indicates

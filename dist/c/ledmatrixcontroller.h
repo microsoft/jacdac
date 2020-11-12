@@ -2,7 +2,7 @@
 #ifndef _JACDAC_SPEC_LEDMATRIX_CONTROLLER_H
 #define _JACDAC_SPEC_LEDMATRIX_CONTROLLER_H 1
 
-#define JD_LEDMATRIX_CONTROLLER_SERVICE_CLASS 0x1d35e393
+#define JD_SERVICE_CLASS_LEDMATRIX_CONTROLLER  0x1d35e393
 
 /**
  * Read-write bytes. Read or writes the state of the screen where pixel on/off state is 

@@ -2,7 +2,7 @@
 #ifndef _JACDAC_SPEC_BUTTON_H
 #define _JACDAC_SPEC_BUTTON_H 1
 
-#define JD_BUTTON_SERVICE_CLASS 0x1473a263
+#define JD_SERVICE_CLASS_BUTTON  0x1473a263
 
 /** Read-only bool (uint8_t). Indicates whether the button is currently active (pressed). */
 #define JD_BUTTON_REG_PRESSED JD_REG_READING

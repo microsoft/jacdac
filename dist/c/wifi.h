@@ -2,7 +2,7 @@
 #ifndef _JACDAC_SPEC_WIFI_H
 #define _JACDAC_SPEC_WIFI_H 1
 
-#define JD_WIFI_SERVICE_CLASS 0x18aae1fa
+#define JD_SERVICE_CLASS_WIFI  0x18aae1fa
 
 // enum APFlags (uint32_t)
 #define JD_WIFI_APFLAGS_HAS_PASSWORD 0x1

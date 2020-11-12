@@ -2,7 +2,7 @@
 #ifndef _JACDAC_SPEC_CTRL_H
 #define _JACDAC_SPEC_CTRL_H 1
 
-#define JD_CTRL_SERVICE_CLASS 0x0
+#define JD_SERVICE_CLASS_CTRL  0x0
 
 // enum AnnounceFlags (uint8_t)
 #define JD_CTRL_ANNOUNCE_FLAGS_SUPPORTS_ACK 0x1

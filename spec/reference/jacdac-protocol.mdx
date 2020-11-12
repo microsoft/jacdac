@@ -102,7 +102,7 @@ A third type of report is an __Event__. Events are emitted independently by a se
 | 16 | 4	|`event_id`	| A number that uniquely identifies an event. |
 | 18 | 4	|`event_argument`	| An optional argument that can provide additional context.	|
 
-Event reports are sent in the same way as any other packet, and `device_identifier`, `service_number`, and `service_command` differentiate it from other types of reports. These differentiators provide a unique namespace for each service. Multiple event reports can be sent by using multiple packets in the same frame.
+Event reports are sent in the same way as any other packet, and `device_identifier`, `service_index`, and `service_command` differentiate it from other types of reports. These differentiators provide a unique namespace for each service. Multiple event reports can be sent by using multiple packets in the same frame.
 
 ### The control service
 

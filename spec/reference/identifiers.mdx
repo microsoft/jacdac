@@ -1,0 +1,13 @@
+## Device identifiers
+
+Each device is assigned a 64-bit device identifier that uniquely identifies it on the bus. This identifier is used to determine the sending or receiving device, and for devices to remember one another on the bus. Device identifiers are generated, not allocated; once generated, a device's identifier must remain constant.
+
+Device identifiers are not guaranteed to be universally unique, but there is little chance of users encountering identifier colision so long as identifiers are generated with appropriate entropy (see analysis below). We recommend the following ways of generating a unique identifier:
+
+1. Use the random number generator (found below) to allocate an identifier for each device. The number generator could even be included into automated flashing processes to ensure appropriate entropy.
+
+2. Use the generator below to seed a hardware random number generator. The hardware random number generator could use sensor values to create further entropy.
+
+<RandomGenerator device={true} />
+
+If we consider 1 trillion JACDAC networks size of 200 devices with randomly chosen 64 bit JDIDs, the probability of a JDID collision in at least one of the networks is 0.1%. On the other hand, with 32 bit IDs and 2000 networks, the collision probability in any of them is already 1%, and with 200k networks it's more than 60%.

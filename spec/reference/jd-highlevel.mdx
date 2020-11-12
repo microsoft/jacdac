@@ -22,7 +22,7 @@ A JACDAC device is any device that implements the JACDAC protocol. The protocol 
 
 ### Services
 
-The way JACDAC devices share resources with other devices on the bus are through __services__. Services provide abstract, standardized interfaces that can be used to interact with physical hardware resources (e.g. an accelerometer) or pure virtual resources (e.g. the state of a video game). This abstraction brings plug-and-play dynamism to JACDAC so that devices with different hardware, but the same overall functionality, can replace one another without having to recompile user applications. For example, two different models of accelerometer hardware can replace each other because they share the same software interface. [Read more about Services](./jacdac-protocol#Services)
+The way JACDAC devices share resources with other devices on the bus are through __services__. Services provide abstract, standardized interfaces that can be used to interact with physical hardware resources (e.g. an accelerometer) or pure virtual resources (e.g. the state of a video game). This abstraction brings plug-and-play dynamism to JACDAC so that devices with different hardware, but the same overall functionality, can replace one another without having to recompile user applications. For example, two different models of accelerometer hardware can replace each other because they share the same software interface. [Read more about Services](./services)
 
 Any device that hosts a service must also run the control service. The control service is responsible for advertising any services a device is running every 500 milliseconds. Like any other service, the packets emitted by the control service are standardized. There also a set of common commands that must be implemented by JACDAC devices that operate services, including functionality like `reset` and `time since boot`.
 
@@ -30,7 +30,14 @@ No JACDAC device is required to operate a service. In fact, the major use case i
 
 ### Transport
 
-The transport layer ensures data packets are sent to the correct services and applications. Supporting the transport layer are also mechanisms to ensure packets are sent reliably to their destinations.
+Whenever a frame is received by the physical layer, the transport layer divides that frame into data packets and forwards them to the appropriate service or user application. At this point, services and applications can use packets to perform actions based on new data.
+
+In many cases it is important that data is received by a specific device. JACDAC supports this mechanism using acknowledgements and pipes. Acknowledgements are incredibly simple and require receiving devices to recognise that a frame has successfully been received. Pipes on the other hand set up a point to point connection between devices, and every packet is acknowledge and received using a sliding window approach. Only the most capable devices are expected to support pipes.
+
+[Read more about the transport layer.](./transport)
 
 ### Physical
 
+In the future there will be many physical layer implementations responsible for sending frames across a wired or wireless communication medium. Frames contain one or more packets, and packets contain a service command or report. Frames also have addressing metadata embedded inside them that the transport layer uses to route packets correctly.
+
+For communicating across a single wire, devices should observe the Single Wire Serial (SWS) communication standard. [Read more about the SWS standard here.](./sws-protocol)

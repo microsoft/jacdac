@@ -3,28 +3,6 @@ title: JACDAC Protocol
 order: 3
 ---
 
-Three key concepts to understand: 
-* device identifiers;
-* the service abstraction;
-* the control service.
-
-## Device identifiers
-
-Each device is assigned a 64-bit device identifier that uniquely identifies it on the bus. This identifier is used to determine the sending or receiving device, and for devices to remember one another on the bus. Device identifiers are generated, not allocated; once generated, a device's identifier must remain constant.
-
-Device identifiers are not guaranteed to be universally unique, but there is little chance of users encountering identifier colision so long as identifiers are generated with appropriate entropy (see analysis below). We recommend the following ways of generating a unique identifier:
-
-1. Use the random number generator (found below) to allocate an identifier for each device. The number generator could even be included into automated flashing processes to ensure appropriate entropy.
-
-2. Use the generator below to seed a hardware random number generator. The hardware random number generator could use sensor values to create further entropy.
-
-<RandomGenerator device={true} />
-
-If we consider 1 trillion JACDAC networks size of 200 devices with randomly chosen 64 bit JDIDs, 
-the probability of a JDID collision in at least one of the networks is 0.1%. On the other hand, 
-with 32 bit IDs and 2000 networks, the collision probability in any of them is already 1%, and 
-with 200k networks it's more than 60%.
-
 ## Service layer
 
 The way JACDAC devices share resources with other devices on the bus are through __services__. Services provide abstract, standardized interfaces that can be used to interact with physical hardware resources (e.g. an accelerometer) or pure virtual resources (e.g. the state of a video game). This abstraction brings plug-and-play dynamism to JACDAC so that devices with different hardware, but the same overall functionality, can replace one another without having to recompile user applications. For example, two different models of accelerometer hardware can replace each other because they share the same software interface.
@@ -112,7 +90,7 @@ The control service also offers a set of common commands that can be used to que
 
 The implementation complexity of the control service scales with respect to the number of services a device implements. For instance, it is very simple to process packets for a single user service (in addition to the control service), but complexity increases as more services are added. This flexibility is a benefit as it allows ultra low-cost microcontrollers to be used in simple devices.
 
-# TODO beyond this point.
+<!-- # TODO beyond this point.
 ## Control layer
 
 ### Direction of packets
@@ -124,114 +102,5 @@ The JACDAC frames contain only one device identifier (rather than both source an
 ### Multicast commands
 
 Additionally, if the third bit of frame flags is set (_multicast commands_), the low order 32 bits of device identifier are treated as service class.
-The command is then directed to all services with that service class.
+The command is then directed to all services with that service class. -->
 
-### ACKs
-
-If a frame is received by the control layer, and is then routed correctly,
-an ACK may need to be sent.
-This only applies when frame contains command packets,
-device identifier equals our device identifier,
-and the second bit of frame flags is set.
-
-ACK packet uses our device identifier, service number of `0x3f`,
-and uses the CRC of the packet being acknowledged as the service command.
-The payload is zero-sized.
-
-All devices, except for the most resource-constrained bootloaders,
-should be able to send ACKs.
-They should indicate that in their advertisement packet.
-
-### Pipes
-
-Pipes are application-level mechanism for establishing reliable one- and two-way
-point-to-point data links.
-
-Typical packet loss in JACDAC networks is well under 1%.
-Anything that can withstand such packet loss **should not** be done over a pipe,
-as pipes have quite big overhead.
-
-Typical applications where pipes should be used:
-* a WiFi service, where the pipe represents a TCP connection
-* when a response to a command doesn't fit in one packet (eg. WiFi scan results)
-* when events need to be delivered reliably (eg., RFID reader)
-
-Pipes should generally not be used for:
-* streaming sensor data (sensor events are OK)
-* video data
-* audio data
-
-The way to initially establish a pipe depends on service, but typically
-device A would send a command to device B to establish a pipe.
-Device A would include its device identifier and _port_
-(a 9 bit number of A's choosing; there would normally be one port per pipe) in the command.
-If a two-way communication is desired, device B could then state the port on its side.
-
-Both devices can then start sending commands to their respective ports.
-The pipe commands use a fixed service number of `0x3e` and set the require-ACK
-flag on frames.
-The service command is split as follows:
-
-| Bits  | Description
-|------:| ------------------------------------
-|   4:0 | Wrap around packet counter
-|   6:5 | Content type
-|  15:7 | Port number
-
-The packet counter starts at `0x0` goes up to `0x1f`, and then back to `0x0`.
-Rationale: there can be up to 30 non-empty packets in a frame.
-
-Content type is:
-* `0` for regular pipe data
-* `1` for regular pipe data after which the pipe is to be closed
-* `2` for service-specific out-of-band meta-data
-* `3` is reserved
-
-The sending protocol is:
-* wait for any data that needs to be sent over the pipe
-* send it as a command; wait for ACK
-* if we timeout waiting for ACK, repeat previous step
-* if we repeated 10 times already, close the pipe
-* increment the pipe counter
-* go back to the first step
-
-The wait for ACK should follow exponential back-off, starting with 1ms up to 1024ms.
-
-The receiving protocol keeps a counter for each pipe. This counter starts at 0.
-* when a pipe command is received, ACK it (this is usually done generically, not only for pipes)
-* if stored counter for pipe doesn't match the counter in the packet, drop the packet
-* increment stored counter
-* process data in packet
-* repeat
-
-The protocol above has an effective window of 1.
-The counter allows increasing that up to 31, but this would require dealing with
-multiple packets per frame and is currently out of scope.
-
-Pipes should be considered closed when the device at the other end resets.
-
-TODO: Zero-length pipe commands can be sent as keep-alive packets.
-Is this needed?
-
-Note that pipes are transmit streams of JACDAC packets, not streams of bytes.
-They should not be recombined at any layer in the implementation.
-For example, a command that returns a list of things can send each thing in a separate
-pipe packet, without any additional info about how to chunk the data
-(provided each thing fits in a packet).
-Multiple packets can be grouped in a frame, but are still handled separately at the
-destination.
-
-### Event subscriptions
-
-A device like accelerometer can send events eg. when a 2g shock is detected,
-when it's moved face-down, etc.
-These events a normally just broadcast on the bus, using standard command `0x001`.
-
-For reliable event delivery, a pipe can be established, and events delivered
-over that pipe.
-
-## See also
-
-* [Glossary](./reference/glossary)
-* [Device Entry](./reference/device-entry)
-* [Service Specification](./reference/service-specification)

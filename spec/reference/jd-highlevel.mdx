@@ -20,6 +20,9 @@ A JACDAC device is any device that implements the JACDAC protocol. The protocol 
 2. The transport layer––Responsible for reliably routing packets to and from services and applications.
 3. The physical layer––Transmits and receives packets from other JACDAC devices.
 
+By design, the JACDAC protocol does not support allocation of unique device identifiers, which
+must be [generated](./identifiers)
+
 ### Services
 
 The way JACDAC devices share resources with other devices on the bus are through __services__. Services provide abstract, standardized interfaces that can be used to interact with physical hardware resources (e.g. an accelerometer) or pure virtual resources (e.g. the state of a video game). This abstraction brings plug-and-play dynamism to JACDAC so that devices with different hardware, but the same overall functionality, can replace one another without having to recompile user applications. For example, two different models of accelerometer hardware can replace each other because they share the same software interface. [Read more about Services](./services)

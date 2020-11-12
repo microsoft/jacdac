@@ -1,5 +1,42 @@
 # The Transport Layer
 
+A device's presence/absence on the bus is signified by the presence/absence of advertising packets containing its device identifier, which should be sent every 500 milliseconds. If a client of a JACDAC device does not receive an advertisement from the device for several advertisement periods (1-2 seconds), it should assume the device has left the bus. If the device rejoins the bus, it may present a different list of services. In fact, devices are free to change the list of services they advertise at any time.
+
+## JACDAC frames, packets and service indices
+
+A JACDAC frame contains a list of JACDAC packets (of length at least one), which all share the same device identifier and flags (see the logical description of a JACDAC packet below). The frame also contains a cyclic redundancy code (CRC). If the device identifier of the frame matches the device's identifier, then the device sends an acknowledgement containing the frame's CRC (JD_SERVICE_NUMBER_CRC_ACK).
+
+A JACDAC packet is described by the following structure:
+
+```c
+struct {
+    uint8_t flags;
+    uint64_t device_identifier;
+    uint8_t service_size;         // size of the data payload
+    uint8_t service_index;        // the index into the device's advertised list of services
+    uint16_t service_command;
+    uint8_t data[0];
+}
+```
+
+The above structure omits the details about physical transmission of JACDAC packets over the wire and the packing of multiple packets within frames. For more information, see [the single wire serial protocol](./sws-protocol).
+
+A device will generally maintain device-specific state for each of the services that it supports. This state should be kept in an array, where each array entry contains the service class and (a pointer to) the device-specific state for that service. When a device advertises its service classes they are presented in the same order as in the list.  This allows clients of the device to refer to one of its services by list index (`service_index`, an 8 bit quantity) instead of service class (a 32 bit quantity). The zero index (service number) is reserved for the control service. 
+
+### flags
+
+A packet contains only one device identifier (rather than both source and destination identifiers, as in IP). If the lowest bit of `flags` is set, the packet is a _command packet_ and `device_identifier` is the destination device receiving the packet; otherwise, the packet is a _report packet_ and `device_identifier` is the source device broadcasting information on the bus. Read more about command and report packets in the next section.
+
+If the second bit of `flags` is set
+
+If the third bit of `flags` is set (_multicast commands_), then the low order 32 bits of the `device_identifier` field are treated as a service class. The command is then directed to all services with that service class.
+
+| Flag bit | Interpretation 	|
+|--------|------------	|
+| `0x01` | if set, the `device_identifier` is the recipient of command; if clear, the `device_identifier` is the sender of a report;
+| `0x02` | if set, an ACK should be issued with CRC |
+| `0x04` | if set, the device_identifier contains target service class number (multicast) |
+
 ## Acks
 
 If a frame is received by the control layer, and is then routed correctly,

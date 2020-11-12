@@ -1,4 +1,9 @@
-## Device identifiers
+---
+title: Device Identification
+order: 9
+---
+
+# Device identification
 
 **By design, the JACDAC protocol does not support allocation of unique device identifiers.** Instead, each device must assign itself a 64-bit device identifier that uniquely identifies it on the bus. This identifier is used to determine the sending or receiving device, and for devices to remember one another on the bus. Once generated, a device's identifier must remain constant. As long identifiers are generated with appropriate entropy (see analysis below), there is little chance of identifier collision. We recommend the following ways of generating a unique identifier:
 

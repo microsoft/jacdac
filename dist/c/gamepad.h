@@ -22,7 +22,7 @@
 typedef struct jd_gamepad_announce_report {
     uint8_t flags;
     uint8_t num_players;
-    uint16_t button_present;  // Button
+    uint16_t button_present[0];  // Button
 } jd_gamepad_announce_report_t;
 
 

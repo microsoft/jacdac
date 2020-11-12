@@ -950,7 +950,8 @@ function toH(info: jdspec.ServiceSpec) {
             if (isMetaPipe) {
                 r += `    uint32_t identifier; // ${toHex(pkt.identifier)}\n`
             }
-            for (let f of pkt.fields) {
+            for (let i = 0; i < pkt.fields.length; ++i) {
+                const f = pkt.fields[i]
                 let def = ""
                 const cst = cStorage(f.storage)
                 let sz = Math.abs(f.storage)
@@ -962,6 +963,9 @@ function toH(info: jdspec.ServiceSpec) {
                     def = `uint8_t ${f.name}[${sz}]`
                 else
                     def = `${cst} ${f.name}`
+                // if it's the last field and it start repeats, treat it as an array
+                if (f.startRepeats && i == pkt.fields.length - 1)
+                    def += "[0]";
                 def += ";"
                 if (!f.isSimpleType)
                     def += "  // " + unitPref(f) + f.type

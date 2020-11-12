@@ -847,7 +847,8 @@
             "isFloat": false,
             "type": "bytes",
             "storage": 0,
-            "isSimpleType": true
+            "isSimpleType": true,
+            "maxBytes": 208
           }
         ],
         "hasReport": true
@@ -885,7 +886,7 @@
         "secondary": true
       }
     ],
-    "source": "# Bootloader\n\n    identifier: 0x1ffa9948\n\nAllows flashing (reprogramming) devices over JACDAC.\n\n## Commands\n\n    command info @ announce { }\n    report {\n        service_class: u32\n        page_size: u32 B\n        flashable_size: u32 B\n        firmware_identifier: u32\n    }\n\nThe `service_class` is always `0x1ffa9948`. The `firmware_identifier` identifies the kind of firmware\nthat \"fits\" this device.\n\n    command set_session @ 0x81 {\n        session_id: u32\n    }\n    report {\n        session_id: u32\n    }\n\nThe flashing host should generate a random id, and use this command to set it.\n\n    enum Error : u32 {\n        NoError = 0\n        PacketTooSmall = 1\n        OutOfFlashableRange = 2\n        InvalidPageOffset = 3\n        NotPageAligned = 4\n    }\n    command page_data @ 0x80 {\n        page_address: u32\n        page_offset: u16\n        chunk_no: u8\n        chunk_max: u8\n        session_id: u32\n        reserved0: u32\n        reserved1: u32\n        reserved2: u32\n        reserved3: u32\n        page_data: bytes\n    }\n    report {\n        session_id: u32\n        page_error: Error\n        page_address: u32\n    }\n\nUse to send flashing data. A physical page is split into `chunk_max + 1` chunks, where `chunk_no = 0 ... chunk_max`.\nEach chunk is stored at `page_address + page_offset`. `page_address` has to be equal in all chunks,\nand is included in response.\nOnly the last chunk causes writing to flash and elicits response.\n\nErrors not listed are also possible. Errors larger than `0xffff` indicate de-synchronization on chunk numbers.\n"
+    "source": "# Bootloader\n\n    identifier: 0x1ffa9948\n\nAllows flashing (reprogramming) devices over JACDAC.\n\n## Commands\n\n    command info @ announce { }\n    report {\n        service_class: u32\n        page_size: u32 B\n        flashable_size: u32 B\n        firmware_identifier: u32\n    }\n\nThe `service_class` is always `0x1ffa9948`. The `firmware_identifier` identifies the kind of firmware\nthat \"fits\" this device.\n\n    command set_session @ 0x81 {\n        session_id: u32\n    }\n    report {\n        session_id: u32\n    }\n\nThe flashing host should generate a random id, and use this command to set it.\n\n    enum Error : u32 {\n        NoError = 0\n        PacketTooSmall = 1\n        OutOfFlashableRange = 2\n        InvalidPageOffset = 3\n        NotPageAligned = 4\n    }\n    command page_data @ 0x80 {\n        page_address: u32\n        page_offset: u16\n        chunk_no: u8\n        chunk_max: u8\n        session_id: u32\n        reserved0: u32\n        reserved1: u32\n        reserved2: u32\n        reserved3: u32\n        page_data: bytes {maxBytes = 208}\n    }\n    report {\n        session_id: u32\n        page_error: Error\n        page_address: u32\n    }\n\nUse to send flashing data. A physical page is split into `chunk_max + 1` chunks, where `chunk_no = 0 ... chunk_max`.\nEach chunk is stored at `page_address + page_offset`. `page_address` has to be equal in all chunks,\nand is included in response.\nOnly the last chunk causes writing to flash and elicits response.\n\nErrors not listed are also possible. Errors larger than `0xffff` indicate de-synchronization on chunk numbers.\n"
   },
   {
     "name": "Button",

@@ -21,7 +21,7 @@ typedef struct jd_ctrl_services_report {
     uint8_t restart_counter;
     uint8_t flags;  // AnnounceFlags
     uint16_t reserved;
-    uint32_t service_class;
+    uint32_t service_class[0];
 } jd_ctrl_services_report_t;
 
 

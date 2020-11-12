@@ -46,7 +46,7 @@ typedef struct jd_bootloader_page_data {
     uint32_t reserved1;
     uint32_t reserved2;
     uint32_t reserved3;
-    uint8_t page_data[0];
+    uint8_t page_data[208];
 } jd_bootloader_page_data_t;
 
 // Report: 

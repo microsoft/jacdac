@@ -7,9 +7,11 @@ order: 3
 
 Four key concepts of the JACDAC protocol are: 
 * **64 bit device identifiers** and their random generation (at device production time or on first run of a device's bootloader);
-* **JACDAC packets** and their logical structure; 
-* **the service abstraction**: the way JACDAC devices share resources with other devices on the bus are through __services__, which are identified by their 32 bit __service class__, as found in the [service catalog](..\services). Services provide abstract, standardized interfaces that can be used to interact with physical hardware resources (e.g. an accelerometer) or pure virtual resources (e.g. the state of a video game). This abstraction brings plug-and-play dynamism to JACDAC so that devices with different hardware, but the same overall functionality, can replace one another without having to recompile user applications. For example, two different models of accelerometer hardware can replace each other because they implement the same service.
+* **JACDAC frames and packets** and their interpretation;
+* **the service abstraction**: the way JACDAC devices share resources with other devices on the bus are through __services__, which are identified by their 32 bit __service class__, as found in the [service catalog](..\services). Services provide abstract, standardized interfaces that can be used to interact with physical hardware resources (e.g. an accelerometer) or pure virtual resources (e.g. the state of a video game). This abstraction allows devices with different hardware, but the same functionality, to replace one another without having to recompile user applications. For example, two different models of accelerometer hardware can replace each other because they implement the same service.
 * **the control service**: each device runs its own control service, which emits advertisement packets roughly every 500 milliseconds. Each advertisement contains the device's identifier, as well a list of host services (identified by their service class) offered by the device; other devices on the bus can inspect these advertisements and subsequently communicate with the advertised services to incorporate them in user applications.
+
+A device's presence/absence on the bus is signified by the presence/absence of advertising packets containing its device identifier, which should be sent every 500 milliseconds. If a client of a JACDAC device does not receive an advertisement from the device for several advertisement periods (1-2 seconds), it should assume the device has left the bus. If the device rejoins the bus, it may present a different list of services. In fact, devices are free to change the list of services they advertise at any time.
 
 ## Device identifiers
 
@@ -23,171 +25,42 @@ Most often, the device identifier will be assigned by the device's bootloader an
 
 <RandomGenerator device={true} />
 
-If we consider one trillion JACDAC networks size of 200 devices with randomly chosen 64 bit JDIDs, 
-the probability of a JDID collision in at least one of the networks is 0.1%. On the other hand, 
-with 32 bit IDs and 2000 networks, the collision probability in any of them is already 1%, and 
-with 200k networks it's more than 60%.
+If we consider one trillion JACDAC networks size of 200 devices with randomly chosen 64 bit JDIDs, the probability of a JDID collision in at least one of the networks is 0.1%. On the other hand, with 32 bit IDs and 2000 networks, the collision probability in any of them is already 1%, and with 200k networks it's more than 60%.
 
-## JACDAC packets
+## JACDAC frames and packets
+
+A JACDAC frame contains a list of JACDAC packets (of length at least one), which all share the same device identifier and flags (see the logical description of a JACDAC packet below). The frame also contains a cyclic redundancy code (CRC). If the device identifier of the frame matches the device's identifier, then the device sends an acknowledgement containing the frame's CRC (JD_SERVICE_NUMBER_CRC_ACK).
 
 A JACDAC packet is described by the following structure:
 
 ```c
-struct _jd_packet_t {
+struct {
     uint8_t flags;
     uint64_t device_identifier;
     uint8_t service_size;         // size of the data payload
-    uint8_t service_number;       // the index into the device's advertised list of services
+    uint8_t service_index;        // the index into the device's advertised list of services
     uint16_t service_command;
     uint8_t data[0];
 }
-typedef struct _jd_packet_t jd_packet_t;
 ```
 
 The above structure omits the details about physical transmission of JACDAC packets over the wire and the packing of multiple packets within frames. For more information, see [the single wire serial protocol](./sws-protocol).
 
-A packet contains only one device identifier (rather than both source and destination identifiers, as in IP). 
-* if the lowest bit of `flags` is set, the packet is a _command packet_ and `device_identifier` is the destination device receiving the packet;
-* otherwise, the packet is a _report packet_ and `device_identifier` is the source device broadcasting information on the bus.
-
-This means that the interpretation of the `service_number` field is relative to the destination device for command packets
-and is relative to the source device for report packets. Read more about command and report packets in the next section.
-
-## The service abstraction
-
-Services act on __commands__ and optionally respond with __reports__. Reports can also be emitted separately from a service without prompting from another device. This interface is specified in a [custom markdown language](../service-specification) that lists the possible commands and reports that a service can consume and emit. Specifications can also inherit from other specifications. An example of this can be seen in the [sensor specification](../../services/_sensor). JACDAC sensors inherit commands and reports from this specification, creating a set of base functionality for _all_ sensors.
-
-### Service classes and service numbers
-
-A service is globally and uniquely identified by its service class, which should be found in the 
-[service catalog](..\services). For example, the service class of the [button service](https://microsoft.github.io/jacdac-ts/services/button)
-is `0x1473a263`, as specified in the button's [service specification](https://github.com/microsoft/jacdac/blob/main/services/button.md) in the GitHub repository that contains the registered services.  
-
-In constrast, a service number (`service_number` field in the JACDAC packet) is an index into the list of services advertised by a device. The control service has both service class 0 and service number 0.
-
-### Commands
-
-Commands are 16-bit and specified in the `service_command` field of the JACDAC packet. A command is composed of a 4-bit operation and a 12-bit code.
-
-The operation is stored in the top most nibble of the `service_command` field. The following table below outlines all possible operations; XXX represents any 12-bit command code:
-
-| Operation number | Command 	|
-|--------|------------	|
-| `0x0XXX` | Action	|
-| `0x1XXX` | Register read	|
-| `0x2XXX` | Register write	|
-| `0x3XXX`- `0xfXXX` | Reserved	|
-
-#### Actions
-
-Actions are a type of command that cause a service to begin to carry out a task. An example action might be to calibrate a magnetometer.
-
-Services can freely allocate their own action command codes in the following range:
-
-| Action code range | Purpose 	|
-|--------|------------	|
-| `0x080-0xeff` | Service defined action command codes 	|
-
-However, services __must not__ allocate any of the common or reserved action command codes specified in the table below:
-
-| Action code range | Purpose 	|
-|--------|------------	|
-| `0x000-0x07f` | Common action command codes	|
-| `0xf00-0xfff` | Reserved action command codes	|
-
-Common action command codes are allocated in the [base specification](../../services/_base).
-
-#### Registers
-
-Registers are properties that represent the state of a service.  Registers are variable length and are between 1 byte and 236 bytes (max payload) in size. Sequential register codes do not overlap with one another. For example, it is possible to have register `0x090` of size `12` and non-overlapping register `0x091` of size `4`.
-
-Registers can be accessed and modified by register read (`0x1XXX`) and register write (`0x2XXX`) operations. Registers can be specified to be read-only or read-write capable. Trying to write to a read-only register will result in a nop (no operation). Because registers can have different access attributes they are segmented into different command code ranges.
-
-Register command codes can be freely allocated in the following ranges:
-
-| Register code range | Purpose 	|
-|--------|------------	|
-| `0x080-0x0ff` | Read-write register codes specific to a service	|
-| `0x180-0x1ff` | Read-only register codes specific to a service	|
-| `0x280-0x2ff` | Additional register codes specific to a service. Should generally be avoided.	|
-
-However, services __must not__ allocate any of the common or reserved register command codes specified in the table below:
-
-| Register code range | Purpose 	|
-|--------|------------	|
-| `0x001-0x07f` | Read-write registers common to all services	|
-| `0x100-0x17f` | Read-only registers common to all services	|
-| `0xf00-0xfff` | Reserved for future use.	|
-
-Common register command codes are allocated in the [base specification](../../services/_base).
-
-#### Reports
-
-Reports are packets sent by a service as a response to a command. They can also be used to independently broadcast important information such as events.
-
-The layout of a report depends on its purpose:
-*  __Register reports__ must always contain the register values requested in the original command packet, but for actions, the format is left up to the service creator to define.
-* __Actions reports__ can either contain a pre-determined number of bytes as defined in the service specification or bear no operation.
-
-A third type of report is an __Event__. Events are emitted independently by a service without prompting. Some services may offer an interface to configure which events are emitted. Event reports have the following format:
-
-| Memory offset | Field size (bytes) 	| Field name 	| Description  	|
-|--------|------------	|-------------	|----------	|
-| 16 | 4	|`event_id`	| A number that uniquely identifies an event. |
-| 18 | 4	|`event_argument`	| An optional argument that can provide additional context.	|
-
-Event reports are sent in the same way as any other packet, and `device_identifier`, `service_number`, and `service_command` differentiate it from other types of reports. These differentiators provide a unique namespace for each service. Multiple event reports can be sent by using multiple packets in the same frame.
-
-## The control service
-
-The control service is the heart of the JACDAC protocol, with each device running its own copy of the service. The service class of the control service is reserved to be zero (0).
-
-In addition to advertising a device's services, the control service also offers a set of common commands that can be used to query/inspect each JACDAC device. For example, the `IDENTIFY` command causes a JACDAC device to perform an action that allows a user to locate a particular device, usually through blinking an LED. In addition to emitting an advertisement packet every 500 milliseconds, a device that hosts one or more services must respond to all commands listed in the [control service specification](../../services/control).
-
-The implementation complexity of the control service scales with respect to the number of services a device implements. For instance, it is very simple to process packets for a single user service (in addition to the control service), but complexity increases as more services are added. This flexibility is a benefit as it allows ultra low-cost microcontrollers to be used in simple devices.
-
-- `void jd_ctrl_init(void);`
-- `void jd_ctrl_process(srv_t *_state);`
-- `void jd_ctrl_handle_packet(srv_t *_state, jd_packet_t *pkt);`
-
-### Device state and service numbers
-
-A device will generally maintain device-specific state for each of the services that it supports. This state should be kept in a list, where each list entry contains the service class and the device-specific state for that service. When a device advertises its services they are ordered in the same sequence as in the list.  This allows clients of the device to refer to one of its services by list index (`service_number`, an 8 bit quantity) instead of service class (a 32 bit quantity).
-
-
-- `static srv_t **services;`
-- `static uint8_t num_services, reset_counter;`
-- `static uint64_t maxId;`
-- `static uint32_t lastMax, lastDisconnectBlink;`
-- `struct srv_state { SRV_COMMON; };`
-- `static uint8_t id_counter;`
-- `static uint32_t nextblink;`
-- maximum number of services
-
-### Device presence/absence and advertisement updates
-
-A device's presence/absence on the bus is signified by the presence/absence of advertising packets containing its device identifier, which should be sent every 500 milliseconds. If a client of a JACDAC device does not receive an advertisement from the device for several advertisement periods (1-2 seconds), it should assume the device has left the bus. If the device rejoins the bus, it may present a different list of services. In fact, devices are free to change the list of services they advertise at any time. 
-
 ### flags
 
-```c
-// the COMMAND flag signifies that the device_identifier is the recipient
-// (i.e., it's a command for the peripheral); the bit clear means device_identifier is the source
-// (i.e., it's a report from peripheral or a broadcast message)
-#define JD_FRAME_FLAG_COMMAND 0x01
-// an ACK should be issued with CRC of this frame upon reception
-#define JD_FRAME_FLAG_ACK_REQUESTED 0x02
-// the device_identifier contains target service class number
-#define JD_FRAME_FLAG_IDENTIFIER_IS_SERVICE_CLASS 0x04
-// set on frames not received from the JD-wire
-#define JD_FRAME_FLAG_LOOPBACK 0x80
-```
+A packet contains only one device identifier (rather than both source and destination identifiers, as in IP). If the lowest bit of `flags` is set, the packet is a _command packet_ and `device_identifier` is the destination device receiving the packet; otherwise, the packet is a _report packet_ and `device_identifier` is the source device broadcasting information on the bus. Read more about command and report packets in the next section.
 
-### Multicast commands
+If the second bit of `flags` is set
 
-Additionally, if the third bit of frame flags is set (_multicast commands_), the low order 32 bits of device identifier are treated as service class. The command is then directed to all services with that service class.
+If the third bit of `flags` is set (_multicast commands_), then the low order 32 bits of the `device_identifier` field are treated as a service class. The command is then directed to all services with that service class.
 
-### ACKs
+| Flag bit | Interpretation 	|
+|--------|------------	|
+| `0x01` | if set, the `device_identifier` is the recipient of command; if clear, the `device_identifier` is the sender of a report;
+| `0x02` | if set, an ACK should be issued with CRC |
+| `0x04` | if set, the device_identifier contains target service class number (multicast) |
+
+### ACK packets
 
 If a frame is received by the control layer, and is then routed correctly,
 an ACK may need to be sent.
@@ -290,6 +163,119 @@ These events a normally just broadcast on the bus, using standard command `0x001
 
 For reliable event delivery, a pipe can be established, and events delivered
 over that pipe.
+
+
+
+## The service abstraction
+
+Services act on __commands__ and optionally respond with __reports__. Reports can also be emitted separately from a service without prompting from another device. This interface is specified in a [custom markdown language](../service-specification) that lists the possible commands and reports that a service can consume and emit. Specifications can also inherit from other specifications. An example of this can be seen in the [sensor specification](../../services/_sensor). JACDAC sensors inherit commands and reports from this specification, creating a set of base functionality for _all_ sensors.
+
+### Service classes and service numbers
+
+A service is globally and uniquely identified by its service class, which should be found in the [service catalog](..\services). For example, the service class of the [button service](https://microsoft.github.io/jacdac-ts/services/button) is `0x1473a263`, as specified in the button's [service specification](https://github.com/microsoft/jacdac/blob/main/services/button.md) in the GitHub repository that contains the registered services.  In contrast, the `service_index` field in the JACDAC packet is an index into the list of services advertised by a device. The control service has both service class 0 and service number 0.
+
+### Commands
+
+Commands are 16-bit and specified in the `service_command` field of the JACDAC packet. A command is composed of a 4-bit operation and a 12-bit code. The operation is stored in the top most nibble of the `service_command` field. The following table below outlines all possible operations; XXX represents any 12-bit command code:
+
+| Operation number | Command 	|
+|--------|------------	|
+| `0x0XXX` | Action	|
+| `0x1XXX` | Register read	|
+| `0x2XXX` | Register write	|
+| `0x3XXX`- `0xfXXX` | Reserved	|
+
+#### Actions
+
+Actions are a type of command that cause a service to begin to carry out a task. An example action might be to calibrate a magnetometer. Services can freely allocate their own action command codes in the following range:
+
+| Action code range | Purpose 	|
+|--------|------------	|
+| `0x080-0xeff` | Service defined action command codes 	|
+
+However, services __must not__ allocate any of the common or reserved action command codes specified in the table below:
+
+| Action code range | Purpose 	|
+|--------|------------	|
+| `0x000-0x07f` | Common action command codes	|
+| `0xf00-0xfff` | Reserved action command codes	|
+
+Common action command codes are allocated in the [base specification](../../services/_base).
+
+#### Registers
+
+Registers are properties that represent the state of a service.  Registers are variable length and are between 1 byte and 236 bytes (max packet payload) in size. Sequential register codes do not overlap with one another. For example, it is possible to have register `0x090` of size `12` and non-overlapping register `0x091` of size `4`.
+
+Registers can be accessed and modified by register read (`0x1XXX`) and register write (`0x2XXX`) operations. Registers can be specified to be read-only or read-write capable. Trying to write to a read-only register will result in a nop (no operation). Because registers can have different access attributes they are segmented into different command code ranges.
+
+Register command codes can be freely allocated in the following ranges:
+
+| Register code range | Purpose 	|
+|--------|------------	|
+| `0x080-0x0ff` | Read-write register codes specific to a service	|
+| `0x180-0x1ff` | Read-only register codes specific to a service	|
+| `0x280-0x2ff` | Additional register codes specific to a service. Should generally be avoided.	|
+
+However, services __must not__ allocate any of the common or reserved register command codes specified in the table below:
+
+| Register code range | Purpose 	|
+|--------|------------	|
+| `0x001-0x07f` | Read-write registers common to all services	|
+| `0x100-0x17f` | Read-only registers common to all services	|
+| `0xf00-0xfff` | Reserved for future use.	|
+
+Common register command codes are allocated in the [base specification](../../services/_base).
+
+#### Reports
+
+Reports are packets sent by a service as a response to a command. They can also be used to independently broadcast important information such as events.
+
+The layout of a report depends on its purpose:
+*  __Register reports__ must always contain the register values requested in the original command packet; for actions, the format is left up to the service creator to define.
+* __Actions reports__ can either contain a pre-determined number of bytes as defined in the service specification or bear no operation.
+
+A third type of report is an __Event__. Events are emitted independently by a service without prompting. Some services may offer an interface to configure which events are emitted. Event reports have the following format:
+
+| Memory offset | Field size (bytes) 	| Field name 	| Description  	|
+|--------|------------	|-------------	|----------	|
+| 16 | 4	|`event_id`	| A number that uniquely identifies an event. |
+| 18 | 4	|`event_argument`	| An optional argument that can provide additional context.	|
+
+Event reports are sent in the same way as any other packet, and `device_identifier`, `service_index`, and `service_command` differentiate it from other types of reports. These differentiators provide a unique namespace for each service. Multiple event reports can be sent by using multiple packets in the same frame.
+
+
+## The control service
+
+Each devices runs its own copy of the control service. The service class of the control service is reserved to be zero (0).
+In addition to advertising a device's services, the control service also offers a set of common commands that can be used to query/inspect each JACDAC device. For example, the `IDENTIFY` command causes a JACDAC device to perform an action that allows a user to locate a particular device, usually through blinking an LED. In addition to emitting an advertisement packet every 500 milliseconds, a device that hosts one or more services must respond to all commands listed in the [control service specification](../../services/control).
+
+The implementation complexity of the control service scales with respect to the number of services a device implements. For instance, it is very simple to process packets for a single user service (in addition to the control service), but complexity increases as more services are added. This flexibility is a benefit as it allows ultra low-cost microcontrollers to be used in simple devices.
+
+### Device state, advertising, and service numbers
+
+A device will generally maintain device-specific state for each of the services that it supports. This state should be kept in an array, where each array entry contains the service class and (a pointer to) the device-specific state for that service. When a device advertises its service classes they are presented in the same order as in the list.  This allows clients of the device to refer to one of its services by list index (`service_index`, an 8 bit quantity) instead of service class (a 32 bit quantity). The zero index (service number) is reserved for the control service. 
+
+The following control service function sends an advertisement command on the JACDAC bus:
+```c
+void jd_services_announce() {
+    uint32_t dst[num_services];
+    for (int i = 0; i < num_services; ++i)
+        dst[i] = services[i]->vt->service_class;
+    jd_send(JD_service_index_CTRL, JD_CMD_ADVERTISEMENT_DATA, dst, num_services * 4);
+}
+```
+
+### Commands
+
+- `JD_CMD_ADVERTISEMENT_DATA`:
+- `JD_CMD_CTRL_IDENTIFY`:
+- `JD_CMD_CTRL_RESET`:
+- `JD_CMD_GET_REG |` 
+   - `JD_REG_CTRL_DEVICE_DESCRIPTION`:
+   - `JD_REG_CTRL_FIRMWARE_VERSION`:
+   - `JD_REG_CTRL_DEVICE_CLASS`:
+   - `JD_REG_CTRL_BL_DEVICE_CLASS`:
+   - `JD_REG_CTRL_MICROS_SINCE_BOOT`:
 
 ## See also
 

@@ -134,7 +134,7 @@ This only applies when frame contains command packets,
 device identifier equals our device identifier,
 and the second bit of frame flags is set.
 
-ACK packet uses our device identifier, service number of `0x3f`,
+ACK packet uses our device identifier, service index of `0x3f`,
 and uses the CRC of the packet being acknowledged as the service command.
 The payload is zero-sized.
 
@@ -168,7 +168,7 @@ Device A would include its device identifier and _port_
 If a two-way communication is desired, device B could then state the port on its side.
 
 Both devices can then start sending commands to their respective ports.
-The pipe commands use a fixed service number of `0x3e` and set the require-ACK
+The pipe commands use a fixed service index of `0x3e` and set the require-ACK
 flag on frames.
 The service command is split as follows:
 

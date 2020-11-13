@@ -1,10 +1,3 @@
----
-title: Motivation
-order: 5
----
-
-## Motivation
-
 For the longest time, microcontroller programming remained out of reach for the majority. Traditionally, embedded developers, with comprehensive knowledge of toolchains and software development practices, have been required to write programs for microcontrollers. But over the past decade, this has changed. Now all it takes to program a microcontroller is to load up a web-based environment like [Microsoft MakeCode](https://makecode.com), build your program using colourful visual blocks, and download the resulting program to your microcontroller. It is so easy _[everyone is doing it](https://cacm.acm.org/magazines/2020/3/243028-the-bbc-microbit-from-the-u-k-to-the-world/fulltext)_.
 
 Though microcontroller programming has become easier, compared to the easy experience of connecting a device to a personal computer, it still remains a challenge to connect additional peripherals and sensors to microcontrollers. Here, an understanding of electronics and low level communications protocols are required, which means that again, only embedded developers can successfully do it. Of course, there are many instances of ecosystems and special connectors that have emerged to solve the complexity of connecting electronics. Arduino Shields, Raspberry Pi HATs, and the micro:bit edge connector, all make it easier for non-experts to connect additional hardware to microcontrollers. This style of connector however is often non-compositional and impractical where specific form factors are required. To give more physical flexibility, wired connectors and modular ecosystems are used instead. Grove, Stemma QT, and Gadgeteer all use easy to connect cables to make it easier to compose hardware. But there are additional constraints that only become apparent when communicating with newly connected hardware.

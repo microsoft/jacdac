@@ -2,7 +2,7 @@
 #ifndef _JACDAC_SPEC_GAMEPAD_H
 #define _JACDAC_SPEC_GAMEPAD_H 1
 
-#define JD_GAMEPAD_SERVICE_CLASS 0x1deaa06e
+#define JD_SERVICE_CLASS_GAMEPAD  0x1deaa06e
 
 // enum Button (uint16_t)
 #define JD_GAMEPAD_BUTTON_LEFT 0x1
@@ -22,7 +22,7 @@
 typedef struct jd_gamepad_announce_report {
     uint8_t flags;
     uint8_t num_players;
-    uint16_t button_present;  // Button
+    uint16_t button_present[0];  // Button
 } jd_gamepad_announce_report_t;
 
 

@@ -2,7 +2,7 @@
 #ifndef _JACDAC_SPEC_CTRL_H
 #define _JACDAC_SPEC_CTRL_H 1
 
-#define JD_CTRL_SERVICE_CLASS 0x0
+#define JD_SERVICE_CLASS_CTRL  0x0
 
 // enum AnnounceFlags (uint8_t)
 #define JD_CTRL_ANNOUNCE_FLAGS_SUPPORTS_ACK 0x1
@@ -11,7 +11,7 @@
  * No args. The `restart_counter` starts at `0x1` and increments by one until it reaches `0xf`, then it stays at `0xf`.
  * If this number ever goes down, it indicates that the device restarted.
  * The upper 4 bits of `restart_counter` are reserved.
- * `service_class` indicates class identifier for each service number (service number `0` is always control, so it's
+ * `service_class` indicates class identifier for each service index (service index `0` is always control, so it's
  * skipped in this enumeration).
  * The command form can be used to induce report, which is otherwise broadcast every 500ms.
  */
@@ -21,7 +21,7 @@ typedef struct jd_ctrl_services_report {
     uint8_t restart_counter;
     uint8_t flags;  // AnnounceFlags
     uint16_t reserved;
-    uint32_t service_class;
+    uint32_t service_class[0];
 } jd_ctrl_services_report_t;
 
 

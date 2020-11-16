@@ -2,7 +2,7 @@
 #ifndef _JACDAC_SPEC_LIGHT_H
 #define _JACDAC_SPEC_LIGHT_H 1
 
-#define JD_LIGHT_SERVICE_CLASS 0x126f00e0
+#define JD_SERVICE_CLASS_LIGHT  0x126f00e0
 
 // enum LightType (uint8_t)
 #define JD_LIGHT_LIGHT_TYPE_WS2812B_GRB 0x0

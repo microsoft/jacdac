@@ -82,7 +82,7 @@ A third type of report is an __Event__. Events are emitted independently by a se
 | 16 | 4	|`event_id`	| A number that uniquely identifies an event. |
 | 18 | 4	|`event_argument`	| An optional argument that can provide additional context.	|
 
-Event reports are sent in the same way as any other packet, and `device_identifier`, `service_number`, and `service_command` differentiate it from other types of reports. These differentiators provide a unique namespace for each service. Multiple event reports can be sent by using multiple packets in the same frame.
+Event reports are sent in the same way as any other packet, and `device_identifier`, `service_index`, and `service_command` differentiate it from other types of reports. These differentiators provide a unique namespace for each service. Multiple event reports can be sent by using multiple packets in the same frame.
 
 ### The control service
 
@@ -103,19 +103,4 @@ The implementation complexity of the control service scales with respect to the 
    - `JD_REG_CTRL_DEVICE_CLASS`:
    - `JD_REG_CTRL_BL_DEVICE_CLASS`:
    - `JD_REG_CTRL_MICROS_SINCE_BOOT`:
-
-
-<!-- # TODO beyond this point.
-## Control layer
-
-### Direction of packets
-
-The JACDAC frames contain only one device identifier (rather than both source and destination identifiers, as in IP).
-* if lowest frame flag bit is set, we call all packets in that frame _command packets_ and the device identifier is the destination
-* otherwise, the packets in frame are _report packets_ and the device identifier is the source
-
-### Multicast commands
-
-Additionally, if the third bit of frame flags is set (_multicast commands_), the low order 32 bits of device identifier are treated as service class.
-The command is then directed to all services with that service class. -->
 

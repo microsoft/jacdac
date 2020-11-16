@@ -2,7 +2,7 @@
 #ifndef _JACDAC_SPEC_ACCEL_H
 #define _JACDAC_SPEC_ACCEL_H 1
 
-#define JD_ACCEL_SERVICE_CLASS 0x1f140409
+#define JD_SERVICE_CLASS_ACCEL  0x1f140409
 
 /** Indicates the current forces acting on accelerometer. */
 #define JD_ACCEL_REG_FORCES JD_REG_READING

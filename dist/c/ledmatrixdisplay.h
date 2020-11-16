@@ -2,7 +2,7 @@
 #ifndef _JACDAC_SPEC_LEDMATRIX_DISPLAY_H
 #define _JACDAC_SPEC_LEDMATRIX_DISPLAY_H 1
 
-#define JD_LEDMATRIX_DISPLAY_SERVICE_CLASS 0x110d154b
+#define JD_SERVICE_CLASS_LEDMATRIX_DISPLAY  0x110d154b
 
 /**
  * Read-only bytes. Streams the state of the screen where pixel on/off state is 

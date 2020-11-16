@@ -2,7 +2,7 @@
 #ifndef _JACDAC_SPEC_MUSIC_H
 #define _JACDAC_SPEC_MUSIC_H 1
 
-#define JD_MUSIC_SERVICE_CLASS 0x1b57b1d7
+#define JD_SERVICE_CLASS_MUSIC  0x1b57b1d7
 
 /** Read-write ratio uint8_t. The volume (duty cycle) of the buzzer. */
 #define JD_MUSIC_REG_VOLUME JD_REG_INTENSITY

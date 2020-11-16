@@ -903,9 +903,13 @@ function toH(info: jdspec.ServiceSpec) {
     r += `#ifndef ${hdDef}\n`
     r += `#define ${hdDef} 1\n`
 
-    const pref = "JD_" + toUpper(info.shortName) + "_"
+    let pref = "JD_" + toUpper(info.shortName) + "_"
 
-    r += "\n#define " + pref + "SERVICE_CLASS " + toHex(info.classIdentifier) + "\n"
+    if (info.shortId[0] == "_")
+        pref = "JD_"
+
+    if (info.shortId[0] != "_")
+        r += `\n#define JD_SERVICE_CLASS_${toUpper(info.shortName)}  ${toHex(info.classIdentifier)}\n`
 
     for (let en of values(info.enums)) {
         const enPref = pref + toUpper(en.name)
@@ -931,7 +935,9 @@ function toH(info: jdspec.ServiceSpec) {
             let val = toHex(pkt.identifier)
             if (pkt.identifierName)
                 val = "JD_" + inner + "_" + toUpper(pkt.identifierName)
-            r += `#define ${pref}${inner}_${toUpper(pkt.name)} ${val}\n`
+            let name = pref + inner + "_" + toUpper(pkt.name)
+            if (name != val)
+                r += `#define ${name} ${val}\n`
         }
 
         const isMetaPipe = pkt.kind == "meta_pipe_report" || pkt.kind == "meta_pipe_command"
@@ -944,7 +950,8 @@ function toH(info: jdspec.ServiceSpec) {
             if (isMetaPipe) {
                 r += `    uint32_t identifier; // ${toHex(pkt.identifier)}\n`
             }
-            for (let f of pkt.fields) {
+            for (let i = 0; i < pkt.fields.length; ++i) {
+                const f = pkt.fields[i]
                 let def = ""
                 const cst = cStorage(f.storage)
                 let sz = Math.abs(f.storage)
@@ -956,6 +963,9 @@ function toH(info: jdspec.ServiceSpec) {
                     def = `uint8_t ${f.name}[${sz}]`
                 else
                     def = `${cst} ${f.name}`
+                // if it's the last field and it start repeats, treat it as an array
+                if (f.startRepeats && i == pkt.fields.length - 1)
+                    def += "[0]";
                 def += ";"
                 if (!f.isSimpleType)
                     def += "  // " + unitPref(f) + f.type

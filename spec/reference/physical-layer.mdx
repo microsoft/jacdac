@@ -136,7 +136,7 @@ Each packet has the following layout in memory:
 ```c
 struct _jd_packet_t {
     uint8_t service_size;
-    uint8_t service_number;
+    uint8_t service_index;
     uint16_t service_command;
     uint8_t payload[236];
 } __attribute__((__packed__, aligned(4)));
@@ -148,7 +148,7 @@ The following table defines the meaning and size of the fields in the structure 
 | Memory offset | Field size (bytes) 	| Field name 	| Description  	|
 |--------|------------	|-------------	|----------	|
 | 12 | 1	|`service_size`	| The size of the payload field. Maximum size is 236 bytes. |
-| 13 | 1	|`service_number`	| The instance number of the destination service.	|
+| 13 | 1	|`service_index`	| The instance number of the destination service.	|
 | 14 | 2	|`service_command`	| A number that specifies an operation and code combination.	|
 | 16 | 1 * `service_size`	|`payload`	| The packet data payload destined for a particular service.	|
 

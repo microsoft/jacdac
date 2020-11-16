@@ -2,7 +2,7 @@
 #ifndef _JACDAC_SPEC_PWM_LIGHT_H
 #define _JACDAC_SPEC_PWM_LIGHT_H 1
 
-#define JD_PWM_LIGHT_SERVICE_CLASS 0x1fb57453
+#define JD_SERVICE_CLASS_PWM_LIGHT  0x1fb57453
 
 /**
  * Read-write ratio uint16_t. Set the luminosity of the strip. The value is used to scale `start_intensity` in `steps` register.

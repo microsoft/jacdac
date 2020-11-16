@@ -2,7 +2,7 @@
 #ifndef _JACDAC_SPEC_TCP_H
 #define _JACDAC_SPEC_TCP_H 1
 
-#define JD_TCP_SERVICE_CLASS 0x1b43b70b
+#define JD_SERVICE_CLASS_TCP  0x1b43b70b
 
 // enum TcpError (int32_t)
 #define JD_TCP_TCP_ERROR_INVALID_COMMAND 0x1

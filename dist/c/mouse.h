@@ -2,7 +2,7 @@
 #ifndef _JACDAC_SPEC_MOUSE_H
 #define _JACDAC_SPEC_MOUSE_H 1
 
-#define JD_MOUSE_SERVICE_CLASS 0x1885dc1c
+#define JD_SERVICE_CLASS_MOUSE  0x1885dc1c
 
 // enum Button (uint16_t)
 #define JD_MOUSE_BUTTON_RIGHT 0x1

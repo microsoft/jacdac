@@ -2,7 +2,7 @@
 #ifndef _JACDAC_SPEC_ROTARY_ENCODER_H
 #define _JACDAC_SPEC_ROTARY_ENCODER_H 1
 
-#define JD_CRANK_SERVICE_CLASS 0x10fa29c9
+#define JD_SERVICE_CLASS_CRANK  0x10fa29c9
 
 /**
  * Read-only # int32_t. Upon device reset starts at `0` (regardless of the shaft position).

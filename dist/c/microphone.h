@@ -2,7 +2,7 @@
 #ifndef _JACDAC_SPEC_MICROPHONE_H
 #define _JACDAC_SPEC_MICROPHONE_H 1
 
-#define JD_MICROPHONE_SERVICE_CLASS 0x113dac86
+#define JD_SERVICE_CLASS_MICROPHONE  0x113dac86
 
 /**
  * The samples will be streamed back over the `samples` pipe.

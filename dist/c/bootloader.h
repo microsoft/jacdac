@@ -2,7 +2,7 @@
 #ifndef _JACDAC_SPEC_BOOTLOADER_H
 #define _JACDAC_SPEC_BOOTLOADER_H 1
 
-#define JD_BOOTLOADER_SERVICE_CLASS 0x1ffa9948
+#define JD_SERVICE_CLASS_BOOTLOADER  0x1ffa9948
 
 // enum Error (uint32_t)
 #define JD_BOOTLOADER_ERROR_NO_ERROR 0x0
@@ -46,7 +46,7 @@ typedef struct jd_bootloader_page_data {
     uint32_t reserved1;
     uint32_t reserved2;
     uint32_t reserved3;
-    uint8_t page_data[0];
+    uint8_t page_data[208];
 } jd_bootloader_page_data_t;
 
 // Report: 

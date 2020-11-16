@@ -2,7 +2,7 @@
 #ifndef _JACDAC_SPEC_LOGGER_H
 #define _JACDAC_SPEC_LOGGER_H 1
 
-#define JD_LOGGER_SERVICE_CLASS 0x12dc1fca
+#define JD_SERVICE_CLASS_LOGGER  0x12dc1fca
 
 // enum Priority (uint8_t)
 #define JD_LOGGER_PRIORITY_DEBUG 0x0

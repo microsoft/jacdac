@@ -2,7 +2,7 @@
 
 JACDAC requires devices have a microcontroller with UART, Timer, and GPIO interrupt capabilities.
 
-![An image depicting a JACDAC transmission. A JACDAC transmission begins with a start pulse of 11-14 us, a inter lo data spacing of minimally 40 us before data commences. A JACDAC transmission ends with an end pulse of 11-14 us.](../images/jacdac-activity.png)
+![An image depicting a JACDAC transmission. A JACDAC transmission begins with a start pulse of 11-14 us, a inter lo data spacing of minimally 40 us before data commences. A JACDAC transmission ends with an end pulse of 11-14 us.](../../images/jacdac-activity.png)
 
 For communication JACDAC SWS reuses the often forgotten RS232 (UART) peripheral, common to many microcontrollers. Devices operate the UART peripheral in half-duplex mode and are connected together to form a single bus. This bus requires a common data and ground line to be shared between devices.
 
@@ -18,7 +18,7 @@ A small amount of time must pass before another transmission can begin. Devices 
 
 A complete JACDAC transmission and the beginning of another are captured in the image below.
 
-![An image depicting a JACDAC transmission. A JACDAC transmission begins with a start pulse of 11-14 us, a inter lo data spacing of minimally 40 us before data commences. A JACDAC transmission ends with an end pulse of 11-14 us.](../images/jacdac-activity.png)
+![An image depicting a JACDAC transmission. A JACDAC transmission begins with a start pulse of 11-14 us, a inter lo data spacing of minimally 40 us before data commences. A JACDAC transmission ends with an end pulse of 11-14 us.](../../images/jacdac-activity.png)
 
 ## Hardware requirements
 
@@ -69,7 +69,7 @@ JACDAC has been implemented on the following 32-bit ARM processors:
 
 The image and table below captures key timings of JACDAC SWS.
 
-![An image depicting a JACDAC transmission with portions of the signal labelled, A-F.](../images/jacdac-proto-timings.png)
+![An image depicting a JACDAC transmission with portions of the signal labelled, A-F.](../../images/jacdac-proto-timings.png)
 
 | Identifier 	| Name 	| Duration min/max (us) 	|
 |------------	|-------------	|----------	|
@@ -82,7 +82,7 @@ The image and table below captures key timings of JACDAC SWS.
 
 The state machine below encapsulates how these timings should be used during frame reception:
 
-![An image depicting the state machine to be used when receiving a JACDAC packet. Whenever any timing is exceeded, the device should wait for the frame-to-frame gap to elapse before listening for another packet.](../images/jacdac-state-diagram.png)
+![An image depicting the state machine to be used when receiving a JACDAC packet. Whenever any timing is exceeded, the device should wait for the frame-to-frame gap to elapse before listening for another packet.](../../images/jacdac-state-diagram.png)
 
 
 ## Frames

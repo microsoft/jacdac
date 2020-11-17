@@ -5,17 +5,17 @@ order: 4
 
 ## Protocol Specification
 
-JACDAC (Joint Asynchronous Communication; Device Agnostic Control) is a new protocol designed to make it easier to connect low cost microcontrollers and sensors together. JACDAC is not only designed for easier physical connectivity, it is an entire hardware and software stack that bridges the world of the low cost microcontroller to the web browser and beyond.  Read more about the [motivation for JACDAC](../motivation).
+JACDAC (Joint Asynchronous Communication; Device Agnostic Control) is a new protocol designed to make it easier to connect low cost microcontrollers and sensors together. JACDAC is not only designed for easier physical connectivity, it is an entire hardware and software stack that bridges the world of the low cost microcontroller to the web browser and beyond.  Read more about the [motivation for JACDAC](./motivation).
 
-A JACDAC device is any device that  generates its own unique [device identifier](./device-identity) and implements the JACDAC protocol. The protocol consists of three core layers:
+A JACDAC device is any device that  generates its own unique [device identifier](./protocol/device-identity) and implements the JACDAC protocol. The protocol consists of three core layers:
 
-1. The [service layer](./service-layer)––How JACDAC devices share hardware or software resources with one another.
-2. The [transport layer](./transport-layer)––Responsible for reliably routing packets to and from services and applications.
-3. The [physical layer](./physical-layer)––Transmits and receives packets from other JACDAC devices.
+1. The [service layer](./protocol/service-layer)––How JACDAC devices share hardware or software resources with one another.
+2. The [transport layer](./protocol/transport-layer)––Responsible for reliably routing packets to and from services and applications.
+3. The [physical layer](./protocol/physical-layer)––Transmits and receives packets from other JACDAC devices.
 
 ### Service Layer
 
-The way JACDAC devices share resources with other devices on the bus are through __services__. Services provide abstract, standardized interfaces that can be used to interact with physical hardware resources (e.g. an accelerometer) or pure virtual resources (e.g. the state of a video game). This abstraction brings plug-and-play dynamism to JACDAC so that devices with different hardware, but the same overall functionality, can replace one another without having to recompile user applications. For example, two different models of accelerometer hardware can replace each other because they share the same software interface. [Read more about the service layer](./service-layer)
+The way JACDAC devices share resources with other devices on the bus are through __services__. Services provide abstract, standardized interfaces that can be used to interact with physical hardware resources (e.g. an accelerometer) or pure virtual resources (e.g. the state of a video game). This abstraction brings plug-and-play dynamism to JACDAC so that devices with different hardware, but the same overall functionality, can replace one another without having to recompile user applications. For example, two different models of accelerometer hardware can replace each other because they share the same software interface. [Read more about the service layer](./protocol/service-layer)
 
 Any device that hosts a service must also run the control service. The control service is responsible for advertising any services a device is running every 500 milliseconds. Like any other service, the packets emitted by the control service are standardized. There also a set of common commands that must be implemented by JACDAC devices that operate services, including functionality like `reset` and `time since boot`.
 
@@ -29,10 +29,10 @@ Whenever a frame is received by the physical layer, the transport layer divides 
 
 In many cases it is important that data is received by a specific device. JACDAC supports this mechanism using acknowledgements and pipes. Acknowledgements are incredibly simple and require receiving devices to recognise that a frame has successfully been received. Pipes on the other hand set up a point to point connection between devices, and every packet is acknowledged and received using a sliding window approach. Only the most capable devices are expected to support pipes.
 
-[Read more about the transport layer.](./transport-layer)
+[Read more about the transport layer.](./protocol/transport-layer)
 
 ### Physical Layer
 
 In the future there will be many physical layer implementations responsible for sending frames across a wired or wireless communication medium. Frames contain one or more packets, and packets contain a service command or report. Frames also have addressing metadata embedded inside them that the transport layer uses to route packets correctly.
 
-For communicating across a single wire, devices should observe the Single Wire Serial (SWS) communication standard. [Read more about the SWS standard here.](./physical-layer)
+For communicating across a single wire, devices should observe the Single Wire Serial (SWS) communication standard. [Read more about the SWS standard here.](./protocol/physical-layer)

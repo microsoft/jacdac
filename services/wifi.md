@@ -35,10 +35,11 @@ Discovery and connection to WiFi networks. Separate TCP service is used for data
 Initiate search for WiFi networks. Results are returned via pipe, one entry per packet.
 
     command connect @ 0x81 {
-        ssid: string
+        ssid: string0
+        password?: string0
     }
 
-Connect to named network. Password can be appended after ssid. Both strings have to be NUL-terminated.
+Connect to named network.
 
     command disconnect @ 0x82 {}
 

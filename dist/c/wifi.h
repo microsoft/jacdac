@@ -31,8 +31,13 @@ typedef struct jd_wifi_results {
 } jd_wifi_results_t;
 
 
-/** Argument: ssid string (bytes). Connect to named network. Password can be appended after ssid. Both strings have to be NUL-terminated. */
+/** Connect to named network. */
 #define JD_WIFI_CMD_CONNECT 0x81
+typedef struct jd_wifi_connect {
+    char ssid[0];  // string0
+    // char password[0];  // string0
+} jd_wifi_connect_t;
+
 
 /** No args. Disconnect from current WiFi network if any. */
 #define JD_WIFI_CMD_DISCONNECT 0x82

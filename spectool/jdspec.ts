@@ -494,7 +494,12 @@ export function parseSpecificationMarkdownToJSON(filecontent: string, includes?:
         }
         const name = normalizeName(words.shift())
         let defaultValue: number = undefined
+        let isOptional: boolean = undefined
         let op = words.shift()
+        if (op == "?") {
+            isOptional = true
+            op = words.shift()
+        }
         if (op == "=") {
             defaultValue = parseIntCheck(words.shift())
             op = words.shift()
@@ -530,6 +535,7 @@ export function parseSpecificationMarkdownToJSON(filecontent: string, includes?:
             storage,
             isSimpleType: canonicalType(storage) == type || undefined,
             defaultValue,
+            isOptional,
             startRepeats: nextRepeats
         }
 
@@ -580,6 +586,10 @@ export function parseSpecificationMarkdownToJSON(filecontent: string, includes?:
             } else {
                 pipePacket = packetInfo
             }
+        }
+
+        if (!field.isOptional && packetInfo.fields[packetInfo.fields.length - 1]?.isOptional) {
+            error(`all fields after an optional field have to optional`)
         }
 
         packetInfo.fields.push(field)
@@ -787,6 +797,7 @@ export function parseSpecificationMarkdownToJSON(filecontent: string, includes?:
                 return [2, tp2, 0]
             case "bytes":
             case "string":
+            case "string0":
                 return [0, tp2, 0]
             default:
                 const m = /^u8\[(\d+)\]$/.exec(tp2)
@@ -950,6 +961,7 @@ function toH(info: jdspec.ServiceSpec) {
             if (isMetaPipe) {
                 r += `    uint32_t identifier; // ${toHex(pkt.identifier)}\n`
             }
+            let unaligned = ""
             for (let i = 0; i < pkt.fields.length; ++i) {
                 const f = pkt.fields[i]
                 let def = ""
@@ -957,7 +969,7 @@ function toH(info: jdspec.ServiceSpec) {
                 let sz = Math.abs(f.storage)
                 if (!sz && f.maxBytes)
                     sz = f.maxBytes
-                if (f.type == "string")
+                if (f.type == "string" || f.type == "string0")
                     def = `char ${f.name}[${sz}]`
                 else if (cst == "bytes")
                     def = `uint8_t ${f.name}[${sz}]`
@@ -971,7 +983,9 @@ function toH(info: jdspec.ServiceSpec) {
                     def += "  // " + unitPref(f) + f.type
                 else if (f.unit)
                     def += " // " + prettyUnit(f.unit)
-                r += "    " + def + "\n"
+                r += "    " + unaligned + def + "\n"
+                if (f.type == "string0")
+                    unaligned = "// "
             }
             r += `}${packed(pkt)} ${tname}_t;\n\n`
         }
@@ -1071,6 +1085,7 @@ function packInfo(pkt: jdspec.PacketInfo, isStatic: boolean) {
 
     let i = 0
     let off = 0
+    let numstr0 = 0
     for (const fld of pkt.fields) {
         const varname = camelize(fld.name)
         const info = tsNumFmt[fld.storage]
@@ -1082,8 +1097,13 @@ function packInfo(pkt: jdspec.PacketInfo, isStatic: boolean) {
         } else {
             const endmark = fld.storage == 0 ? "" :
                 isStatic ? `, ${sz}` : `, ${off + sz}`
-            const toStr = fld.type == "string" ? ".toString()" : ""
-            buffers += `const ${varname} = buf.slice(${off}${endmark})${toStr}\n`
+            if (fld.type == "string0") {
+                buffers += `const ${varname} = string0(buf, ${off}, ${numstr0})\n`
+                numstr0++
+            } else {
+                const toStr = fld.type == "string" ? ".toString()" : ""
+                buffers += `const ${varname} = buf.slice(${off}${endmark})${toStr}\n`
+            }
         }
         if (i < sizes.length && !info && sz)
             fmt += `${sz}x`

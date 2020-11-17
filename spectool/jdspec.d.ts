@@ -282,6 +282,7 @@ declare namespace jdspec {
          *   - u8, u16, u32, u64, i8, i16, i32, i64, bytes
          *   - name of an enum defined in the current service
          *   - string - UTF-8 encoded string
+         *   - string0 - NUL-terminated UTF-8 encoded string
          */
         type: string;
 
@@ -294,6 +295,11 @@ declare namespace jdspec {
          * If present and set, indicates that the number is IEEE little endian float (16, 32 or 64 bit long).
          */
         isFloat?: boolean;
+
+        /**
+         * If present and set, indicates that the number field can be skipped.
+         */
+        isOptional?: boolean;
 
         /**
          * If present, specifies the raw value should be divided by (1 << shift) before usage.

@@ -327,6 +327,98 @@ export enum HumidityReg {
     Humidity = 0x101,
 }
 
+// Service: Azure IoT Hub
+export const SRV_AZURE_IOT_HUB = 0x19ed364c
+export enum IotHubCmd {
+    /**
+     * Argument: connection_string string (bytes). Connection string typically looks something like
+     * `HostName=my-iot-hub.azure-devices.net;DeviceId=my-dev-007;SharedAccessKey=xyz+base64key`.
+     * You can get it in `Shared access policies -> iothubowner -> Connection string-primary key` in the Azure Portal.
+     */
+    Connect = 0x80,
+
+    /** No args. Disconnect from current Hub if any. */
+    Disconnect = 0x81,
+
+    // const msg = string0(buf, 0, 0)
+    // const propertyName = string0(buf, 0, 1)
+    // const propertyValue = string0(buf, 0, 2)
+    /** Sends a short message in string format (it's typically JSON-encoded). Multiple properties can be attached. */
+    SendStringMsg = 0x82,
+
+    /** No args. Sends an arbitrary, possibly binary, message. The size is only limited by RAM on the module. */
+    SendMsgExt = 0x83,
+
+    /** Argument: devicebound pipe (bytes). Subscribes for cloud to device messages, which will be sent over the specified pipe. */
+    Subscribe = 0x84,
+
+    /** Argument: twin_result pipe (bytes). Ask for current device digital twin. */
+    GetTwin = 0x85,
+
+    /** No args. Start twin update. */
+    PatchTwin = 0x86,
+
+    /** Argument: twin_updates pipe (bytes). Subscribe to updates to our twin. */
+    SubscribeTwin = 0x87,
+
+    /** Argument: method_call pipe (bytes). Subscribe to direct method calls. */
+    SubscribeMethod = 0x88,
+
+    // const [status] = unpack(buf, "L")
+    // const requestId = string0(buf, 4, 0)
+    /** Respond to a direct method call (`request_id` comes from `subscribe_method` pipe). */
+    RespondToMethod = 0x89,
+}
+
+export enum IotHubPipeCmd {
+    // const propertyName = string0(buf, 0, 0)
+    // const propertyValue = string0(buf, 0, 1)
+    /** Set properties on the message. Can be repeated multiple times. */
+    Properties = 0x1,
+
+    // const propertyName = string0(buf, 0, 0)
+    // const propertyValue = string0(buf, 0, 1)
+    /**
+     * If there are any properties, this meta-report is send one or more times.
+     * All properties of a given message are always sent before the body.
+     */
+    SubProperties = 0x1,
+
+    /** Argument: status_code uint32_t. This emitted if status is not 200. */
+    TwinError = 0x1,
+
+    /** No args. This is send after last `twin_update_json` packet for a given update. */
+    TwinUpdateEnd = 0x1,
+
+    // const methodName = string0(buf, 0, 0)
+    // const requestId = string0(buf, 0, 1)
+    /** This is sent after the last part of the `method_call_body`. */
+    MethodCall = 0x1,
+}
+
+export enum IotHubReg {
+    /** Read-only bool (uint8_t). Indicates whether or not we are currently connected to an IoT hub. */
+    IsConnected = 0x180,
+}
+
+export enum IotHubEvent {
+    /** Emitted upon successful connection. */
+    Connected = 0x1,
+
+    /** Argument: reason string (bytes). Emitted when connection was lost. */
+    ConnectionError = 0x2,
+
+    // const msg = string0(buf, 0, 0)
+    // const propertyName = string0(buf, 0, 1)
+    // const propertyValue = string0(buf, 0, 2)
+    /**
+     * This event is emitted upon reception of a cloud to device message, that is a string
+     * and fits in a single event packet.
+     * For reliable reception, use the `subscribe` command above.
+     */
+    DeviceboundStr = 0x3,
+}
+
 // Service: Keyboard
 export const SRV_KEYBOARD = 0x18b05b6a
 
@@ -856,7 +948,9 @@ export enum WifiCmd {
     /** Argument: results pipe (bytes). Initiate search for WiFi networks. Results are returned via pipe, one entry per packet. */
     Scan = 0x80,
 
-    /** Argument: ssid string (bytes). Connect to named network. Password can be appended after ssid. Both strings have to be NUL-terminated. */
+    // const ssid = string0(buf, 0, 0)
+    // const password = string0(buf, 0, 1)
+    /** Connect to named network. */
     Connect = 0x81,
 
     /** No args. Disconnect from current WiFi network if any. */

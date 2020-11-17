@@ -24,7 +24,7 @@ struct {
 }
 ```
 
-The above structure omits the details about physical transmission of JACDAC packets over the wire and the packing of multiple packets within frames. For more information, see [the single wire serial protocol](./physical-layer/sws).
+The above structure omits the details about physical transmission of JACDAC packets over the wire and the packing of multiple packets within frames. For more information, see [the single wire serial protocol](../physical-layer/sws).
 
 A device will generally maintain device-specific state for each of the services that it supports. This state should be kept in an array, where each array entry contains the service class and (a pointer to) the device-specific state for that service. When a device advertises its service classes they are presented in the same order as in the list.  This allows clients of the device to refer to one of its services by list index (`service_index`, an 8 bit quantity) instead of service class (a 32 bit quantity). The zero index (service number) is reserved for the control service. 
 

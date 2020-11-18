@@ -14,7 +14,10 @@
             "writable": true
         },
         {
-            "@type": "Property",
+            "@type": [
+                "Property",
+                "TimeSpan"
+            ],
             "name": "streaming_interval",
             "@id": "dtmi:jacdac:temperature:rw:streaming_interval;1",
             "description": "Period between packets of data when streaming in milliseconds.",
@@ -23,7 +26,10 @@
             "writable": true
         },
         {
-            "@type": "Telemetry",
+            "@type": [
+                "Telemetry",
+                "Temperature"
+            ],
             "name": "temperature",
             "@id": "dtmi:jacdac:temperature:ro:temperature;1",
             "description": "The temperature.",

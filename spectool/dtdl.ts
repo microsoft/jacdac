@@ -11,7 +11,7 @@ function toDTMI(segments: (string | number)[], version?: number) {
     return `dtmi:jacdac:${segments.map(seg => typeof seg === "string" ? seg : `x${seg.toString(16)}`).join(':')};${version !== undefined ? version : 1}`;
 }
 
-function toUnit(pkt: jdspec.PacketInfo): string {
+function toUnit(pkt: jdspec.PacketInfo) {
     if (pkt.fields.length !== 1)
         return undefined;
     const field = pkt.fields[0];
@@ -28,19 +28,55 @@ function toUnit(pkt: jdspec.PacketInfo): string {
         | "varh" | "kvarh" | "kVAh" | "Wh/km" | "KiB" | "GB" | "Mbit/s" | "B/s" | "MB/s" | "mV" | "mA" | "dBm" | "ug/m3"
         | "mm/h" | "m/h" | "ppm" | "/100" | "/1000" | "hPa" | "mm" | "cm" | "km" | "km/h";
      */
-    const units: jdspec.SMap<string> = {
-        "m/s2": "metrePerSecondSquared",
-        "rad": "radian",
-        "rad/s": "radianPerSecond",
-        "rad/s2": "radianPerSecondSquared",
-        "m": "metre",
-        "m2": "squareMetre",
-        "s": "second",
-        "ms": "millisecond",
-        "us": "microsecond",
-        "K": "kelvin",
-        "C": "degreeCelsius",
-        "F": "degreeFahrenheit",
+    const units: jdspec.SMap<{ semantic: string; unit: string; }> = {
+        "m/s2": {
+            semantic: "Acceleration",
+            unit: "metrePerSecondSquared"
+        },
+        "rad": {
+            semantic: "Angle",
+            unit: "radian"
+        },
+        "rad/s": {
+            semantic: "AngularVelocity",
+            unit: "radianPerSecond"
+        },
+        "rad/s2": {
+            semantic: "AngularAcceleration",
+            unit: "radianPerSecondSquared"
+        },
+        "m": {
+            semantic: "Length",
+            unit: "metre"
+        },
+        "m2": {
+            semantic: "Area",
+            unit: "squareMetre"
+        },
+        "s": {
+            semantic: "TimeSpan",
+            unit: "second"
+        },
+        "ms": {
+            semantic: "TimeSpan",
+            unit: "millisecond"
+        },
+        "us": {
+            semantic: "TimeSpan",
+            unit: "microsecond"
+        },
+        "K": {
+            semantic: "Temperature",
+            unit: "kelvin"
+        },
+        "C": {
+            semantic: "Temperature",
+            unit: "degreeCelsius"
+        },
+        "F": {
+            semantic: "Temperature",
+            unit: "degreeFahrenheit"
+        },
     };
     const unit = units[field.unit];
     if (unit)
@@ -302,7 +338,10 @@ function packetToDTDL(srv: jdspec.ServiceSpec, pkt: jdspec.PacketInfo): DTDLCont
         case "rw":
         case "ro":
         case "event":
-            dtdl.unit = toUnit(pkt)
+            const unit = toUnit(pkt);
+            if (unit) {
+                dtdl.unit = unit.unit;
+            }
             dtdl.schema = toSchema(srv, pkt)
             if (pkt.kind === "rw")
                 dtdl.writable = true;
@@ -314,6 +353,8 @@ function packetToDTDL(srv: jdspec.ServiceSpec, pkt: jdspec.PacketInfo): DTDLCont
                 dtdl["@type"] = [dtdl["@type"], "Event"]
                 dtdl.schema = toDTMI([srv.shortId, "event"]);
             }
+            else if (unit && unit.semantic)
+                dtdl["@type"] = [dtdl["@type"], unit.semantic]
             break;
         default:
             console.log(`unknown packet kind ${pkt.kind}`)

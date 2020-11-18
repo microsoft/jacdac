@@ -59,7 +59,10 @@
             "schema": "integer"
         },
         {
-            "@type": "Property",
+            "@type": [
+                "Property",
+                "TimeSpan"
+            ],
             "name": "last_run_time",
             "@id": "dtmi:jacdac:modelrunner:ro:last_run_time;1",
             "description": "The time consumed in last model execution.",

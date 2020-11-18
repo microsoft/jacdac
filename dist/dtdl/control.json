@@ -64,7 +64,10 @@
             "schema": "string"
         },
         {
-            "@type": "Property",
+            "@type": [
+                "Property",
+                "Temperature"
+            ],
             "name": "temperature",
             "@id": "dtmi:jacdac:control:ro:temperature;1",
             "description": "MCU temperature in degrees Celsius (approximate).",
@@ -72,7 +75,10 @@
             "schema": "integer"
         },
         {
-            "@type": "Property",
+            "@type": [
+                "Property",
+                "TimeSpan"
+            ],
             "name": "uptime",
             "@id": "dtmi:jacdac:control:ro:uptime;1",
             "description": "Number of microseconds since boot.",

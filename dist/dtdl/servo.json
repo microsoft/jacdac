@@ -6,7 +6,10 @@
     "description": "Servo is a small motor directed with a PWM signal.\nThis services fixes the servo period at 20ms, and the pulse can be regulated.",
     "contents": [
         {
-            "@type": "Property",
+            "@type": [
+                "Property",
+                "TimeSpan"
+            ],
             "name": "pulse",
             "@id": "dtmi:jacdac:servo:rw:pulse;1",
             "description": "Specifies length of the pulse in microseconds. The period is always 20ms.",

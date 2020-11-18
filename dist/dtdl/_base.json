@@ -98,7 +98,10 @@
             "writable": true
         },
         {
-            "@type": "Property",
+            "@type": [
+                "Property",
+                "TimeSpan"
+            ],
             "name": "streaming_interval",
             "@id": "dtmi:jacdac:_base:rw:streaming_interval;1",
             "description": "Period between packets of data when streaming in milliseconds.",

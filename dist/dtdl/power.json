@@ -57,7 +57,10 @@
             "schema": "integer"
         },
         {
-            "@type": "Property",
+            "@type": [
+                "Property",
+                "TimeSpan"
+            ],
             "name": "keep_on_pulse_duration",
             "@id": "dtmi:jacdac:power:rw:keep_on_pulse_duration;1",
             "description": "Many USB power packs need current to be drawn from time to time to prevent shutdown.\nThis regulates how often and for how long such current is drawn.\nTypically a 1/8W 22 ohm resistor is used as load. This limits the duty cycle to 10%.",
@@ -66,7 +69,10 @@
             "writable": true
         },
         {
-            "@type": "Property",
+            "@type": [
+                "Property",
+                "TimeSpan"
+            ],
             "name": "keep_on_pulse_period",
             "@id": "dtmi:jacdac:power:rw:keep_on_pulse_period;1",
             "description": "Many USB power packs need current to be drawn from time to time to prevent shutdown.\nThis regulates how often and for how long such current is drawn.\nTypically a 1/8W 22 ohm resistor is used as load. This limits the duty cycle to 10%.",

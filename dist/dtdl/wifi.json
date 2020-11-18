@@ -59,31 +59,31 @@
         {
             "@type": "Command",
             "name": "scan",
-            "@id": "dtmi:jacdac:wifi:80;1",
+            "@id": "dtmi:jacdac:wifi:x80;1",
             "description": "Initiate search for WiFi networks. Results are returned via pipe, one entry per packet."
         },
         {
             "@type": "Unsupportedpipe_report",
             "name": "results",
-            "@id": "dtmi:jacdac:wifi:0;1",
+            "@id": "dtmi:jacdac:wifi:x0;1",
             "description": "Initiate search for WiFi networks. Results are returned via pipe, one entry per packet."
         },
         {
             "@type": "Command",
             "name": "connect",
-            "@id": "dtmi:jacdac:wifi:81;1",
+            "@id": "dtmi:jacdac:wifi:x81;1",
             "description": "Connect to named network."
         },
         {
             "@type": "Command",
             "name": "disconnect",
-            "@id": "dtmi:jacdac:wifi:82;1",
+            "@id": "dtmi:jacdac:wifi:x82;1",
             "description": "Disconnect from current WiFi network if any."
         },
         {
             "@type": "Property",
             "name": "connected",
-            "@id": "dtmi:jacdac:wifi:180;1",
+            "@id": "dtmi:jacdac:wifi:x180;1",
             "description": "Indicates whether or not we currently have an IP address assigned.",
             "schema": "bool"
         }

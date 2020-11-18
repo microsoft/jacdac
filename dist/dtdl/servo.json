@@ -8,7 +8,7 @@
         {
             "@type": "Property",
             "name": "pulse",
-            "@id": "dtmi:jacdac:servo:2;1",
+            "@id": "dtmi:jacdac:servo:x2;1",
             "description": "Specifies length of the pulse in microseconds. The period is always 20ms.",
             "unit": "microsecond",
             "schema": "integer",
@@ -17,7 +17,7 @@
         {
             "@type": "Property",
             "name": "enabled",
-            "@id": "dtmi:jacdac:servo:1;1",
+            "@id": "dtmi:jacdac:servo:x1;1",
             "description": "Turn the power to the servo on/off.",
             "schema": "bool",
             "writeable": true

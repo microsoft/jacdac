@@ -66,13 +66,13 @@
         {
             "@type": "Command",
             "name": "key",
-            "@id": "dtmi:jacdac:keyboard:80;1",
+            "@id": "dtmi:jacdac:keyboard:x80;1",
             "description": "Presses a key or a sequence of keys down."
         },
         {
             "@type": "Command",
             "name": "clear",
-            "@id": "dtmi:jacdac:keyboard:81;1",
+            "@id": "dtmi:jacdac:keyboard:x81;1",
             "description": "Clears all pressed keys."
         }
     ],

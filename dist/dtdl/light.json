@@ -28,7 +28,7 @@
         {
             "@type": "Property",
             "name": "brightness",
-            "@id": "dtmi:jacdac:light:1;1",
+            "@id": "dtmi:jacdac:light:x1;1",
             "description": "Set the luminosity of the strip.\nAt `0` the power to the strip is completely shut down.",
             "schema": "integer",
             "writeable": true
@@ -36,21 +36,21 @@
         {
             "@type": "Property",
             "name": "actual_brightness",
-            "@id": "dtmi:jacdac:light:180;1",
+            "@id": "dtmi:jacdac:light:x180;1",
             "description": "This is the luminosity actually applied to the strip.\nMay be lower than `brightness` if power-limited by the `max_power` register.\nIt will rise slowly (few seconds) back to `brightness` is limits are no longer required.",
             "schema": "integer"
         },
         {
             "@type": "Property",
             "name": "light_type",
-            "@id": "dtmi:jacdac:light:80;1",
+            "@id": "dtmi:jacdac:light:x80;1",
             "description": "Specifies the type of light strip connected to controller.\nControllers which are sold with lights should default to the correct type\nand could not allow change.",
             "writeable": true
         },
         {
             "@type": "Property",
             "name": "num_pixels",
-            "@id": "dtmi:jacdac:light:81;1",
+            "@id": "dtmi:jacdac:light:x81;1",
             "description": "Specifies the number of pixels in the strip.\nControllers which are sold with lights should default to the correct length\nand could not allow change.\nIncreasing length at runtime leads to ineffective use of memory and may lead to controller reboot.",
             "schema": "integer",
             "writeable": true
@@ -58,7 +58,7 @@
         {
             "@type": "Property",
             "name": "max_power",
-            "@id": "dtmi:jacdac:light:7;1",
+            "@id": "dtmi:jacdac:light:x7;1",
             "description": "Limit the power drawn by the light-strip (and controller).",
             "schema": "integer",
             "writeable": true
@@ -66,7 +66,7 @@
         {
             "@type": "Command",
             "name": "run",
-            "@id": "dtmi:jacdac:light:81;1",
+            "@id": "dtmi:jacdac:light:x81;1",
             "description": "Run the given light \"program\". See service description for details."
         }
     ],

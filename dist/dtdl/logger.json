@@ -31,32 +31,32 @@
         {
             "@type": "Property",
             "name": "min_priority",
-            "@id": "dtmi:jacdac:logger:80;1",
+            "@id": "dtmi:jacdac:logger:x80;1",
             "description": "Messages with level lower than this won't be emitted. The default setting may vary.\nLoggers should revert this to their default setting if the register has not been\nupdated in 3000ms, and also keep the lowest setting they have seen in the last 1500ms.\nThus, clients should write this register every 1000ms and ignore messages which are\ntoo verbose for them.",
             "writeable": true
         },
         {
             "@type": "Unsupportedreport",
             "name": "debug",
-            "@id": "dtmi:jacdac:logger:80;1",
+            "@id": "dtmi:jacdac:logger:x80;1",
             "description": "Report a message."
         },
         {
             "@type": "Unsupportedreport",
             "name": "log",
-            "@id": "dtmi:jacdac:logger:81;1",
+            "@id": "dtmi:jacdac:logger:x81;1",
             "description": "Report a message."
         },
         {
             "@type": "Unsupportedreport",
             "name": "warn",
-            "@id": "dtmi:jacdac:logger:82;1",
+            "@id": "dtmi:jacdac:logger:x82;1",
             "description": "Report a message."
         },
         {
             "@type": "Unsupportedreport",
             "name": "error",
-            "@id": "dtmi:jacdac:logger:83;1",
+            "@id": "dtmi:jacdac:logger:x83;1",
             "description": "Report a message."
         }
     ],

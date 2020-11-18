@@ -39,28 +39,28 @@
         {
             "@type": "Property",
             "name": "inputs",
-            "@id": "dtmi:jacdac:aggregator:80;1",
+            "@id": "dtmi:jacdac:aggregator:x80;1",
             "description": "Set automatic input collection.\nThese settings are stored in flash.",
             "writeable": true
         },
         {
             "@type": "Property",
             "name": "num_samples",
-            "@id": "dtmi:jacdac:aggregator:180;1",
+            "@id": "dtmi:jacdac:aggregator:x180;1",
             "description": "Number of input samples collected so far.",
             "schema": "integer"
         },
         {
             "@type": "Property",
             "name": "sample_size",
-            "@id": "dtmi:jacdac:aggregator:181;1",
+            "@id": "dtmi:jacdac:aggregator:x181;1",
             "description": "Size of a single sample.",
             "schema": "integer"
         },
         {
             "@type": "Property",
             "name": "stream_samples",
-            "@id": "dtmi:jacdac:aggregator:81;1",
+            "@id": "dtmi:jacdac:aggregator:x81;1",
             "description": "When set to `N`, will stream `N` samples as `current_sample` reading.",
             "schema": "integer",
             "writeable": true
@@ -68,7 +68,7 @@
         {
             "@type": "Telemery",
             "name": "current_sample",
-            "@id": "dtmi:jacdac:aggregator:101;1",
+            "@id": "dtmi:jacdac:aggregator:x101;1",
             "description": "Last collected sample."
         }
     ],

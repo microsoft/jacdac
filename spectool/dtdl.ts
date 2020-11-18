@@ -7,8 +7,8 @@
 
 // https://github.com/Azure/digital-twin-model-identifier
 // ^dtmi:(?:_+[A-Za-z0-9]|[A-Za-z])(?:[A-Za-z0-9_]*[A-Za-z0-9])?(?::(?:_+[A-Za-z0-9]|[A-Za-z])(?:[A-Za-z0-9_]*[A-Za-z0-9])?)*;[1-9][0-9]{0,8}$
-export function toDTMI(segments: string[], version?: number) {
-    return `dtmi:jacdac:${segments.join(':')};${version !== undefined ? version : 1}`;
+export function toDTMI(segments: (string | number)[], version?: number) {
+    return `dtmi:jacdac:${segments.map(seg => typeof seg === "string" ? seg : `x${seg.toString(16)}`).join(':')};${version !== undefined ? version : 1}`;
 }
 
 export function toDTDLComponent(spec: jdspec.ServiceSpec): any {
@@ -280,7 +280,7 @@ export function toDTDLContent(srv: jdspec.ServiceSpec, pkt: jdspec.PacketInfo): 
     const dtdl: any = {
         "@type": types[pkt.kind] || `Unsupported${pkt.kind}`,
         name: pkt.name,
-        "@id": toDTMI([srv.shortId, pkt.identifier.toString(16)]),
+        "@id": toDTMI([srv.shortId, pkt.identifier]),
         description: pkt.description,
     }
     switch (pkt.kind) {

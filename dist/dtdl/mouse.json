@@ -50,19 +50,19 @@
         {
             "@type": "Command",
             "name": "set_button",
-            "@id": "dtmi:jacdac:mouse:80;1",
+            "@id": "dtmi:jacdac:mouse:x80;1",
             "description": "Sets the up/down state of one or more buttons.\nA ``Click`` is the same as ``Down`` followed by ``Up`` after 100ms.\nA ``DoubleClick`` is two clicks with ``150ms`` gap between them (that is, ``100ms`` first click, ``150ms`` gap, ``100ms`` second click)."
         },
         {
             "@type": "Command",
             "name": "move",
-            "@id": "dtmi:jacdac:mouse:81;1",
+            "@id": "dtmi:jacdac:mouse:x81;1",
             "description": "Moves the mouse by the distance specified.\nIf the time is positive, it specifies how long to make the move."
         },
         {
             "@type": "Command",
             "name": "wheel",
-            "@id": "dtmi:jacdac:mouse:82;1",
+            "@id": "dtmi:jacdac:mouse:x82;1",
             "description": "Turns the wheel up or down. Positive if scrolling up.\nIf the time is positive, it specifies how long to make the move."
         }
     ],

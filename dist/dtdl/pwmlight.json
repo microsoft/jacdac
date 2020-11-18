@@ -9,7 +9,7 @@
         {
             "@type": "Property",
             "name": "brightness",
-            "@id": "dtmi:jacdac:pwmlight:1;1",
+            "@id": "dtmi:jacdac:pwmlight:x1;1",
             "description": "Set the luminosity of the strip. The value is used to scale `start_intensity` in `steps` register.\nAt `0` the power to the strip is completely shut down.",
             "schema": "integer",
             "writeable": true
@@ -17,7 +17,7 @@
         {
             "@type": "Property",
             "name": "max_power",
-            "@id": "dtmi:jacdac:pwmlight:7;1",
+            "@id": "dtmi:jacdac:pwmlight:x7;1",
             "description": "Limit the power drawn by the light-strip (and controller).",
             "schema": "integer",
             "writeable": true
@@ -25,21 +25,21 @@
         {
             "@type": "Property",
             "name": "max_steps",
-            "@id": "dtmi:jacdac:pwmlight:180;1",
+            "@id": "dtmi:jacdac:pwmlight:x180;1",
             "description": "Maximum number of steps allowed in animation definition. This determines the size of the `steps` register.",
             "schema": "integer"
         },
         {
             "@type": "Property",
             "name": "steps",
-            "@id": "dtmi:jacdac:pwmlight:82;1",
+            "@id": "dtmi:jacdac:pwmlight:x82;1",
             "description": "The steps of current animation. Setting this also sets `current_iteration` to `0`.\nStep with `duration == 0` is treated as an end marker.",
             "writeable": true
         },
         {
             "@type": "Property",
             "name": "current_iteration",
-            "@id": "dtmi:jacdac:pwmlight:80;1",
+            "@id": "dtmi:jacdac:pwmlight:x80;1",
             "description": "Currently excecuting iteration of animation. Can be set to `0` to restart current animation.\nIf `current_iteration > max_iterations`, then no animation is currently running.",
             "schema": "integer",
             "writeable": true
@@ -47,7 +47,7 @@
         {
             "@type": "Property",
             "name": "max_iterations",
-            "@id": "dtmi:jacdac:pwmlight:81;1",
+            "@id": "dtmi:jacdac:pwmlight:x81;1",
             "description": "The animation will be repeated `max_iterations + 1` times.",
             "schema": "integer",
             "writeable": true

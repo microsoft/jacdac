@@ -8,7 +8,7 @@
         {
             "@type": "Command",
             "name": "send",
-            "@id": "dtmi:jacdac:codalmessagebus:80;1",
+            "@id": "dtmi:jacdac:codalmessagebus:x80;1",
             "description": "Sends a new event on the message bus."
         }
     ],

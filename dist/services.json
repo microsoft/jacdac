@@ -3847,6 +3847,158 @@
     "source": "# Servo\n\n    identifier: 0x12fc9103\n\nServo is a small motor directed with a PWM signal.\nThis services fixes the servo period at 20ms, and the pulse can be regulated.\n\n## Registers\n\n    rw pulse: u32 us {typical_min = 500, typical_max = 2500} @ value\n\nSpecifies length of the pulse in microseconds. The period is always 20ms.\n\n    rw enabled: bool @ intensity\n\nTurn the power to the servo on/off."
   },
   {
+    "name": "Settings Storage",
+    "status": "experimental",
+    "shortId": "settings",
+    "camelName": "settings",
+    "shortName": "settings",
+    "extends": [],
+    "notes": {
+      "short": "Non-volatile key-value storage interface for storing settings.",
+      "long": "## Secrets\n\nEntries with keys starting with `$` are considered secret.\nThey can be written normally, but they always read as a single `0` byte.\nThese are typically used by other services on the same device."
+    },
+    "classIdentifier": 285727818,
+    "enums": {},
+    "packets": [
+      {
+        "kind": "command",
+        "name": "get",
+        "identifier": 128,
+        "description": "Get the value of given setting. If no such entry exists, the value returned is empty.",
+        "fields": [
+          {
+            "name": "key",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "hasReport": true
+      },
+      {
+        "kind": "report",
+        "name": "get",
+        "identifier": 128,
+        "description": "Get the value of given setting. If no such entry exists, the value returned is empty.",
+        "fields": [
+          {
+            "name": "key",
+            "unit": "",
+            "isFloat": false,
+            "type": "string0",
+            "storage": 0
+          },
+          {
+            "name": "value",
+            "unit": "",
+            "isFloat": false,
+            "type": "bytes",
+            "storage": 0,
+            "isSimpleType": true
+          }
+        ],
+        "secondary": true
+      },
+      {
+        "kind": "command",
+        "name": "set",
+        "identifier": 129,
+        "description": "Set the value of a given setting. Empty value indicates that the setting should be deleted.",
+        "fields": [
+          {
+            "name": "key",
+            "unit": "",
+            "isFloat": false,
+            "type": "string0",
+            "storage": 0
+          },
+          {
+            "name": "value",
+            "unit": "",
+            "isFloat": false,
+            "type": "bytes",
+            "storage": 0,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "command",
+        "name": "list_keys",
+        "identifier": 130,
+        "description": "Return keys of all settings.",
+        "fields": [
+          {
+            "name": "results",
+            "unit": "",
+            "isFloat": false,
+            "type": "pipe",
+            "storage": 12
+          }
+        ],
+        "pipeType": "list_keys"
+      },
+      {
+        "kind": "pipe_report",
+        "name": "listed_key",
+        "identifier": 0,
+        "description": "Return keys of all settings.",
+        "fields": [
+          {
+            "name": "key",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "pipeType": "list_keys"
+      },
+      {
+        "kind": "command",
+        "name": "list",
+        "identifier": 131,
+        "description": "Return keys and values of all settings.",
+        "fields": [
+          {
+            "name": "results",
+            "unit": "",
+            "isFloat": false,
+            "type": "pipe",
+            "storage": 12
+          }
+        ],
+        "pipeType": "list"
+      },
+      {
+        "kind": "pipe_report",
+        "name": "listed_entry",
+        "identifier": 0,
+        "description": "Return keys and values of all settings.",
+        "fields": [
+          {
+            "name": "key",
+            "unit": "",
+            "isFloat": false,
+            "type": "string0",
+            "storage": 0
+          },
+          {
+            "name": "value",
+            "unit": "",
+            "isFloat": false,
+            "type": "bytes",
+            "storage": 0,
+            "isSimpleType": true
+          }
+        ],
+        "pipeType": "list"
+      }
+    ],
+    "source": "# Settings Storage\n\n    identifier: 0x1107dc4a\n    camel: settings\n\nNon-volatile key-value storage interface for storing settings.\n\n## Secrets\n\nEntries with keys starting with `$` are considered secret.\nThey can be written normally, but they always read as a single `0` byte.\nThese are typically used by other services on the same device.\n\n## Commands\n\n    command get @ 0x80 {\n        key: string\n    }\n    report {\n        key: string0\n        value: bytes\n    }\n\nGet the value of given setting. If no such entry exists, the value returned is empty.\n\n    command set @ 0x81 {\n        key: string0\n        value: bytes\n    }\n\nSet the value of a given setting. Empty value indicates that the setting should be deleted.\n\n    command list_keys @ 0x82 {\n        results: pipe\n    }\n    pipe report listed_key {\n        key: string\n    }\n\nReturn keys of all settings.\n\n    command list @ 0x83 {\n        results: pipe\n    }\n    pipe report listed_entry {\n        key: string0\n        value: bytes\n    }\n\nReturn keys and values of all settings.\n"
+  },
+  {
     "name": "Slider",
     "status": "experimental",
     "shortId": "slider",

@@ -1,0 +1,80 @@
+{
+    "@type": "Interface",
+    "@id": "dtmi:jacdac:keyboard;1",
+    "name": "Keyboard",
+    "displayName": "Keyboard",
+    "description": "A keyboard that can send keystrokes.\n\nThe codes for the key (selectors) is defined in the [HID Keyboard\nspecification](https://usb.org/sites/default/files/hut1_21.pdf), chapter 10 Keyboard/Keypad Page, page 81.\n\nThe device keeps tracks of the key state and is able to clear it all with the clear command.",
+    "contents": [
+        {
+            "@type": "Enum",
+            "name": "Modifiers",
+            "valueSchema": "integer",
+            "enumValues": [
+                {
+                    "name": "LeftControl",
+                    "enumValue": 224
+                },
+                {
+                    "name": "LeftShift",
+                    "enumValue": 225
+                },
+                {
+                    "name": "LeftAlt",
+                    "enumValue": 226
+                },
+                {
+                    "name": "LeftGUID",
+                    "enumValue": 227
+                },
+                {
+                    "name": "RightControl",
+                    "enumValue": 228
+                },
+                {
+                    "name": "RightShift",
+                    "enumValue": 229
+                },
+                {
+                    "name": "RightAlt",
+                    "enumValue": 230
+                },
+                {
+                    "name": "RightGUID",
+                    "enumValue": 231
+                }
+            ]
+        },
+        {
+            "@type": "Enum",
+            "name": "Action",
+            "valueSchema": "integer",
+            "enumValues": [
+                {
+                    "name": "Press",
+                    "enumValue": 0
+                },
+                {
+                    "name": "Up",
+                    "enumValue": 1
+                },
+                {
+                    "name": "Down",
+                    "enumValue": 2
+                }
+            ]
+        },
+        {
+            "@type": "Command",
+            "name": "key",
+            "@id": "dtmi:jacdac:keyboard:80;1",
+            "description": "Presses a key or a sequence of keys down."
+        },
+        {
+            "@type": "Command",
+            "name": "clear",
+            "@id": "dtmi:jacdac:keyboard:81;1",
+            "description": "Clears all pressed keys."
+        }
+    ],
+    "@context": "dtmi:dtdl:context;2"
+}

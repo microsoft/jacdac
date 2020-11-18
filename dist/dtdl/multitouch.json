@@ -1,0 +1,34 @@
+{
+    "@type": "Interface",
+    "@id": "dtmi:jacdac:multitouch;1",
+    "name": "Multitouch",
+    "displayName": "Multitouch",
+    "description": "A capacitive touch sensor with multiple inputs.",
+    "contents": [
+        {
+            "@type": "Property",
+            "name": "stream_samples",
+            "@id": "dtmi:jacdac:multitouch:3;1",
+            "description": "Asks device to stream a given number of samples\n(clients will typically write `255` to this register every second or so, while streaming is required).",
+            "schema": "integer",
+            "writeable": true
+        },
+        {
+            "@type": "Property",
+            "name": "streaming_interval",
+            "@id": "dtmi:jacdac:multitouch:4;1",
+            "description": "Period between packets of data when streaming in milliseconds.",
+            "unit": "millisecond",
+            "schema": "integer",
+            "writeable": true
+        },
+        {
+            "@type": "Telemery",
+            "name": "capacity",
+            "@id": "dtmi:jacdac:multitouch:101;1",
+            "description": "Capacitance of channels. The capacitance is continuously calibrated, and a value of `0` indicates\nno touch, wheres a value of around `100` or more indicates touch.\nIt's best to ignore this (unless debugging), and use events.",
+            "schema": "integer"
+        }
+    ],
+    "@context": "dtmi:dtdl:context;2"
+}

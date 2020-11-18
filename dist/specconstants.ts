@@ -886,6 +886,32 @@ export enum ServoReg {
     Enabled = 0x1,
 }
 
+// Service: Settings Storage
+export const SRV_SETTINGS_STORAGE = 0x1107dc4a
+export enum SettingsCmd {
+    /** Argument: key string (bytes). Get the value of given setting. If no such entry exists, the value returned is empty. */
+    Get = 0x80,
+    // report Get
+    // const key = string0(buf, 0, 0)
+    // const value = buf.slice(0)
+
+    // const key = string0(buf, 0, 0)
+    // const value = buf.slice(0)
+    /** Set the value of a given setting. Empty value indicates that the setting should be deleted. */
+    Set = 0x81,
+
+    /** Argument: results pipe (bytes). Return keys of all settings. */
+    ListKeys = 0x82,
+
+    /** Argument: results pipe (bytes). Return keys and values of all settings. */
+    List = 0x83,
+}
+
+// pipe_report ListedEntry
+// const key = string0(buf, 0, 0)
+// const value = buf.slice(0)
+
+
 // Service: Slider
 export const SRV_SLIDER = 0x1f274746
 export enum SliderReg {

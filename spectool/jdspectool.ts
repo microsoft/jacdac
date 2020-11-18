@@ -43,7 +43,8 @@ function processSpec(dn: string) {
             const ext =
                 n == "sts" ? "ts" :
                     n == "c" ? "h" :
-                        n;
+                        n == "dtdl" ? "json" :
+                            n;
 
             const cfn = path.join(outp, n, fn.slice(0, -3) + "." + ext);
             fs.writeFileSync(cfn, convResult)

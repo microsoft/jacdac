@@ -1,0 +1,179 @@
+{
+    "@type": "Interface",
+    "@id": "dtmi:jacdac:iothub;1",
+    "name": "iotHub",
+    "displayName": "Azure IoT Hub",
+    "description": "Send messages, receive commands, and work with device twins in Azure IoT Hub.",
+    "contents": [
+        {
+            "@type": "Command",
+            "name": "connect",
+            "@id": "dtmi:jacdac:iothub:80;1",
+            "description": "Connection string typically looks something like \n`HostName=my-iot-hub.azure-devices.net;DeviceId=my-dev-007;SharedAccessKey=xyz+base64key`.\nYou can get it in `Shared access policies -> iothubowner -> Connection string-primary key` in the Azure Portal."
+        },
+        {
+            "@type": "Unsupportedreport",
+            "name": "connect",
+            "@id": "dtmi:jacdac:iothub:80;1",
+            "description": "Connection string typically looks something like \n`HostName=my-iot-hub.azure-devices.net;DeviceId=my-dev-007;SharedAccessKey=xyz+base64key`.\nYou can get it in `Shared access policies -> iothubowner -> Connection string-primary key` in the Azure Portal."
+        },
+        {
+            "@type": "Command",
+            "name": "disconnect",
+            "@id": "dtmi:jacdac:iothub:81;1",
+            "description": "Disconnect from current Hub if any."
+        },
+        {
+            "@type": "Command",
+            "name": "send_string_msg",
+            "@id": "dtmi:jacdac:iothub:82;1",
+            "description": "Sends a short message in string format (it's typically JSON-encoded). Multiple properties can be attached."
+        },
+        {
+            "@type": "Unsupportedreport",
+            "name": "send_string_msg",
+            "@id": "dtmi:jacdac:iothub:82;1",
+            "description": "Sends a short message in string format (it's typically JSON-encoded). Multiple properties can be attached."
+        },
+        {
+            "@type": "Command",
+            "name": "send_msg_ext",
+            "@id": "dtmi:jacdac:iothub:83;1",
+            "description": "Sends an arbitrary, possibly binary, message. The size is only limited by RAM on the module."
+        },
+        {
+            "@type": "Unsupportedreport",
+            "name": "send_msg_ext",
+            "@id": "dtmi:jacdac:iothub:83;1",
+            "description": "Sends an arbitrary, possibly binary, message. The size is only limited by RAM on the module."
+        },
+        {
+            "@type": "Unsupportedpipe_command",
+            "name": "message",
+            "@id": "dtmi:jacdac:iothub:0;1",
+            "description": "Part of the body of the message."
+        },
+        {
+            "@type": "Unsupportedmeta_pipe_command",
+            "name": "properties",
+            "@id": "dtmi:jacdac:iothub:1;1",
+            "description": "Set properties on the message. Can be repeated multiple times."
+        },
+        {
+            "@type": "Command",
+            "name": "subscribe",
+            "@id": "dtmi:jacdac:iothub:84;1",
+            "description": "Subscribes for cloud to device messages, which will be sent over the specified pipe."
+        },
+        {
+            "@type": "Unsupportedmeta_pipe_report",
+            "name": "sub_properties",
+            "@id": "dtmi:jacdac:iothub:1;1",
+            "description": "If there are any properties, this meta-report is send one or more times.\nAll properties of a given message are always sent before the body."
+        },
+        {
+            "@type": "Unsupportedpipe_report",
+            "name": "devicebound",
+            "@id": "dtmi:jacdac:iothub:0;1",
+            "description": "For every message, the body is sent once, using this report."
+        },
+        {
+            "@type": "Command",
+            "name": "get_twin",
+            "@id": "dtmi:jacdac:iothub:85;1",
+            "description": "Ask for current device digital twin."
+        },
+        {
+            "@type": "Unsupportedpipe_report",
+            "name": "twin_json",
+            "@id": "dtmi:jacdac:iothub:0;1",
+            "description": "The JSON-encoded twin; note that there can be several packets that need to be concatenated.\nThe pipe is closed when the last packet is sent.\nThis is typically something like:\n`{ \"desired\": { \"foo\": 1, \"$version\": 12 }, \"reported\": { \"foo\": 1, \"bar\" 2, \"$version\": 123 } }`"
+        },
+        {
+            "@type": "Unsupportedmeta_pipe_report",
+            "name": "twin_error",
+            "@id": "dtmi:jacdac:iothub:1;1",
+            "description": "This emitted if status is not 200."
+        },
+        {
+            "@type": "Command",
+            "name": "patch_twin",
+            "@id": "dtmi:jacdac:iothub:86;1",
+            "description": "Start twin update."
+        },
+        {
+            "@type": "Unsupportedreport",
+            "name": "patch_twin",
+            "@id": "dtmi:jacdac:iothub:86;1",
+            "description": "Start twin update."
+        },
+        {
+            "@type": "Unsupportedpipe_command",
+            "name": "twin_patch_json",
+            "@id": "dtmi:jacdac:iothub:0;1",
+            "description": "The JSON-encoded twin update. The pipe should be closed when the last packet is sent.\nYou just send updates for `reported` field, like this:\n`{ \"bar\": 3, \"baz\": null }` (skip `\"$version\"` and no `\"reported\": { ... }`)."
+        },
+        {
+            "@type": "Command",
+            "name": "subscribe_twin",
+            "@id": "dtmi:jacdac:iothub:87;1",
+            "description": "Subscribe to updates to our twin."
+        },
+        {
+            "@type": "Unsupportedpipe_report",
+            "name": "twin_update_json",
+            "@id": "dtmi:jacdac:iothub:0;1",
+            "description": "Every back-end change is sent as one or more reports like this."
+        },
+        {
+            "@type": "Unsupportedmeta_pipe_report",
+            "name": "twin_update_end",
+            "@id": "dtmi:jacdac:iothub:1;1",
+            "description": "This is send after last `twin_update_json` packet for a given update."
+        },
+        {
+            "@type": "Command",
+            "name": "subscribe_method",
+            "@id": "dtmi:jacdac:iothub:88;1",
+            "description": "Subscribe to direct method calls."
+        },
+        {
+            "@type": "Unsupportedpipe_report",
+            "name": "method_call_body",
+            "@id": "dtmi:jacdac:iothub:0;1",
+            "description": "The method call body is sent using these packets.\nIf the body is empty, a single empty `method_call_body` is sent."
+        },
+        {
+            "@type": "Unsupportedmeta_pipe_report",
+            "name": "method_call",
+            "@id": "dtmi:jacdac:iothub:1;1",
+            "description": "This is sent after the last part of the `method_call_body`."
+        },
+        {
+            "@type": "Command",
+            "name": "respond_to_method",
+            "@id": "dtmi:jacdac:iothub:89;1",
+            "description": "Respond to a direct method call (`request_id` comes from `subscribe_method` pipe)."
+        },
+        {
+            "@type": "Unsupportedreport",
+            "name": "respond_to_method",
+            "@id": "dtmi:jacdac:iothub:89;1",
+            "description": "Respond to a direct method call (`request_id` comes from `subscribe_method` pipe)."
+        },
+        {
+            "@type": "Unsupportedpipe_command",
+            "name": "method_response",
+            "@id": "dtmi:jacdac:iothub:0;1",
+            "description": "The pipe should be closed when the last packet of response body is sent."
+        },
+        {
+            "@type": "Property",
+            "name": "is_connected",
+            "@id": "dtmi:jacdac:iothub:180;1",
+            "description": "Indicates whether or not we are currently connected to an IoT hub.",
+            "schema": "bool"
+        }
+    ],
+    "@context": "dtmi:dtdl:context;2"
+}

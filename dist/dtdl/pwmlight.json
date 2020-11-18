@@ -1,0 +1,57 @@
+{
+    "@type": "Interface",
+    "@id": "dtmi:jacdac:pwmlight;1",
+    "name": "PwmLight",
+    "displayName": "PWM Light",
+    "description": "A controller for 1 or more LEDs connected in parallel.",
+    "comment": "## Animation steps\n\nAnimations are described using pairs of intensity and duration.\nFor example, the following animation\n`(0, 10ms), (0.5, 5ms), (0.5, 10ms), (1, 5ms), (0, 7ms), (0, 0ms)`\nwill gradually rise the intensity `0 - 0.5` in 10ms,\nthen, it will keep it steady for at `0.5` for 5ms,\nthen it will rise it again `0.5 - 1` over 10ms,\ndrop `1 - 0` in 5ms,\nand keep it at 0 for 7ms more.\nAny entry with duration of 0ms is considered to be end-marker.\n\nTo get steady glow at `x`, use animation of `(x, 60000ms), (x, 0ms)` and keep `max_iterations` at `0xffff`.",
+    "contents": [
+        {
+            "@type": "Property",
+            "name": "brightness",
+            "@id": "dtmi:jacdac:pwmlight:1;1",
+            "description": "Set the luminosity of the strip. The value is used to scale `start_intensity` in `steps` register.\nAt `0` the power to the strip is completely shut down.",
+            "schema": "integer",
+            "writeable": true
+        },
+        {
+            "@type": "Property",
+            "name": "max_power",
+            "@id": "dtmi:jacdac:pwmlight:7;1",
+            "description": "Limit the power drawn by the light-strip (and controller).",
+            "schema": "integer",
+            "writeable": true
+        },
+        {
+            "@type": "Property",
+            "name": "max_steps",
+            "@id": "dtmi:jacdac:pwmlight:180;1",
+            "description": "Maximum number of steps allowed in animation definition. This determines the size of the `steps` register.",
+            "schema": "integer"
+        },
+        {
+            "@type": "Property",
+            "name": "steps",
+            "@id": "dtmi:jacdac:pwmlight:82;1",
+            "description": "The steps of current animation. Setting this also sets `current_iteration` to `0`.\nStep with `duration == 0` is treated as an end marker.",
+            "writeable": true
+        },
+        {
+            "@type": "Property",
+            "name": "current_iteration",
+            "@id": "dtmi:jacdac:pwmlight:80;1",
+            "description": "Currently excecuting iteration of animation. Can be set to `0` to restart current animation.\nIf `current_iteration > max_iterations`, then no animation is currently running.",
+            "schema": "integer",
+            "writeable": true
+        },
+        {
+            "@type": "Property",
+            "name": "max_iterations",
+            "@id": "dtmi:jacdac:pwmlight:81;1",
+            "description": "The animation will be repeated `max_iterations + 1` times.",
+            "schema": "integer",
+            "writeable": true
+        }
+    ],
+    "@context": "dtmi:dtdl:context;2"
+}

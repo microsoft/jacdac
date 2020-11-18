@@ -2,60 +2,15 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:gamepad;1",
     "name": "Gamepad",
-    "displayName": "Gamepad",
+    "displayName": {
+        "en": "Gamepad"
+    },
     "description": "A gamepad with direction and action buttons for 1 or more players.",
     "contents": [
         {
-            "@type": "Enum",
-            "name": "Button",
-            "valueSchema": "integer",
-            "enumValues": [
-                {
-                    "name": "Left",
-                    "enumValue": 1
-                },
-                {
-                    "name": "Up",
-                    "enumValue": 2
-                },
-                {
-                    "name": "Right",
-                    "enumValue": 3
-                },
-                {
-                    "name": "Down",
-                    "enumValue": 4
-                },
-                {
-                    "name": "A",
-                    "enumValue": 5
-                },
-                {
-                    "name": "B",
-                    "enumValue": 6
-                },
-                {
-                    "name": "Menu",
-                    "enumValue": 7
-                },
-                {
-                    "name": "MenuAlt",
-                    "enumValue": 8
-                },
-                {
-                    "name": "Reset",
-                    "enumValue": 9
-                },
-                {
-                    "name": "Exit",
-                    "enumValue": 10
-                }
-            ]
-        },
-        {
             "@type": "Property",
             "name": "stream_samples",
-            "@id": "dtmi:jacdac:gamepad:x3;1",
+            "@id": "dtmi:jacdac:gamepad:stream_samples;1",
             "description": "Asks device to stream a given number of samples\n(clients will typically write `255` to this register every second or so, while streaming is required).",
             "schema": "integer",
             "writeable": true
@@ -63,7 +18,7 @@
         {
             "@type": "Property",
             "name": "streaming_interval",
-            "@id": "dtmi:jacdac:gamepad:x4;1",
+            "@id": "dtmi:jacdac:gamepad:streaming_interval;1",
             "description": "Period between packets of data when streaming in milliseconds.",
             "unit": "millisecond",
             "schema": "integer",
@@ -72,20 +27,40 @@
         {
             "@type": "Command",
             "name": "announce",
-            "@id": "dtmi:jacdac:gamepad:x0;1",
+            "@id": "dtmi:jacdac:gamepad:announce;1",
             "description": "Indicates number of players supported and which buttons are present on the controller."
         },
         {
             "@type": "Unsupportedreport",
             "name": "announce",
-            "@id": "dtmi:jacdac:gamepad:x0;1",
+            "@id": "dtmi:jacdac:gamepad:announce;1",
             "description": "Indicates number of players supported and which buttons are present on the controller."
         },
         {
             "@type": "Telemery",
             "name": "buttons",
-            "@id": "dtmi:jacdac:gamepad:x101;1",
+            "@id": "dtmi:jacdac:gamepad:buttons;1",
             "description": "Indicates which buttons are currently active (pressed).\n`pressure` should be `0xff` for digital buttons, and proportional for analog ones."
+        },
+        {
+            "@type": "Telemetry",
+            "name": "down",
+            "@id": "dtmi:jacdac:gamepad:down;1",
+            "description": "Emitted when button goes from inactive to active.",
+            "schema": {
+                "name": "count",
+                "schema": "integer"
+            }
+        },
+        {
+            "@type": "Telemetry",
+            "name": "up",
+            "@id": "dtmi:jacdac:gamepad:up;1",
+            "description": "Emitted when button goes from active to inactive.",
+            "schema": {
+                "name": "count",
+                "schema": "integer"
+            }
         }
     ],
     "@context": "dtmi:dtdl:context;2"

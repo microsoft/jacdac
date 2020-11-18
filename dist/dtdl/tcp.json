@@ -2,58 +2,45 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:tcp;1",
     "name": "TCP",
-    "displayName": "TCP",
+    "displayName": {
+        "en": "TCP"
+    },
     "description": "Data transfer over TCP/IP and TLS stream sockets.",
     "contents": [
         {
-            "@type": "Enum",
-            "name": "TcpError",
-            "valueSchema": "integer",
-            "enumValues": [
-                {
-                    "name": "InvalidCommand",
-                    "enumValue": 1
-                },
-                {
-                    "name": "InvalidCommandPayload",
-                    "enumValue": 2
-                }
-            ]
-        },
-        {
             "@type": "Command",
             "name": "open",
-            "@id": "dtmi:jacdac:tcp:x80;1",
+            "@id": "dtmi:jacdac:tcp:open;1",
             "description": "Open pair of pipes between network peripheral and a controlling device. In/outbound refers to direction from/to internet."
         },
         {
             "@type": "Unsupportedreport",
             "name": "open",
-            "@id": "dtmi:jacdac:tcp:x80;1",
+            "@id": "dtmi:jacdac:tcp:open;1",
             "description": "Open pair of pipes between network peripheral and a controlling device. In/outbound refers to direction from/to internet."
         },
         {
             "@type": "Unsupportedmeta_pipe_command",
             "name": "open_ssl",
-            "@id": "dtmi:jacdac:tcp:x1;1",
+            "@id": "dtmi:jacdac:tcp:open_ssl;1",
             "description": "Open an SSL connection to a given host:port pair. Can be issued only once on given pipe.\nAfter the connection is established, an empty data report is sent.\nConnection is closed by closing the pipe."
         },
         {
             "@type": "Unsupportedpipe_command",
             "name": "outdata",
-            "@id": "dtmi:jacdac:tcp:x0;1",
+            "@id": "dtmi:jacdac:tcp:outdata;1",
             "description": "Bytes to be sent directly over an established TCP or SSL connection."
         },
         {
             "@type": "Unsupportedpipe_report",
             "name": "indata",
-            "@id": "dtmi:jacdac:tcp:x0;1",
+            "@id": "dtmi:jacdac:tcp:indata;1",
             "description": "Bytes read directly from directly over an established TCP or SSL connection."
         },
         {
             "@type": "Unsupportedmeta_pipe_report",
             "name": "error",
-            "@id": "dtmi:jacdac:tcp:x0;1",
+            "@id": "dtmi:jacdac:tcp:error;1",
             "description": "Reported when an error is encountered. Negative error codes come directly from the SSL implementation."
         }
     ],

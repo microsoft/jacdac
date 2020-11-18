@@ -2,13 +2,15 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:slider;1",
     "name": "Slider",
-    "displayName": "Slider",
+    "displayName": {
+        "en": "Slider"
+    },
     "description": "A slider potentiometer.",
     "contents": [
         {
             "@type": "Property",
             "name": "stream_samples",
-            "@id": "dtmi:jacdac:slider:x3;1",
+            "@id": "dtmi:jacdac:slider:stream_samples;1",
             "description": "Asks device to stream a given number of samples\n(clients will typically write `255` to this register every second or so, while streaming is required).",
             "schema": "integer",
             "writeable": true
@@ -16,7 +18,7 @@
         {
             "@type": "Property",
             "name": "streaming_interval",
-            "@id": "dtmi:jacdac:slider:x4;1",
+            "@id": "dtmi:jacdac:slider:streaming_interval;1",
             "description": "Period between packets of data when streaming in milliseconds.",
             "unit": "millisecond",
             "schema": "integer",
@@ -25,7 +27,7 @@
         {
             "@type": "Telemery",
             "name": "position",
-            "@id": "dtmi:jacdac:slider:x101;1",
+            "@id": "dtmi:jacdac:slider:position;1",
             "description": "The relative position of the slider between `0x0000` and `0xffff`.",
             "schema": "integer"
         }

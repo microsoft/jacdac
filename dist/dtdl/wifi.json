@@ -2,90 +2,61 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:wifi;1",
     "name": "wifi",
-    "displayName": "WIFI",
+    "displayName": {
+        "en": "WIFI"
+    },
     "description": "Discovery and connection to WiFi networks. Separate TCP service is used for data transfer.",
     "contents": [
         {
-            "@type": "Enum",
-            "name": "APFlags",
-            "valueSchema": "integer",
-            "enumValues": [
-                {
-                    "name": "HasPassword",
-                    "enumValue": 1
-                },
-                {
-                    "name": "WPS",
-                    "enumValue": 2
-                },
-                {
-                    "name": "HasSecondaryChannelAbove",
-                    "enumValue": 4
-                },
-                {
-                    "name": "HasSecondaryChannelBelow",
-                    "enumValue": 8
-                },
-                {
-                    "name": "IEEE_802_11B",
-                    "enumValue": 256
-                },
-                {
-                    "name": "IEEE_802_11A",
-                    "enumValue": 512
-                },
-                {
-                    "name": "IEEE_802_11G",
-                    "enumValue": 1024
-                },
-                {
-                    "name": "IEEE_802_11N",
-                    "enumValue": 2048
-                },
-                {
-                    "name": "IEEE_802_11AC",
-                    "enumValue": 4096
-                },
-                {
-                    "name": "IEEE_802_11AX",
-                    "enumValue": 8192
-                },
-                {
-                    "name": "IEEE_802_LongRange",
-                    "enumValue": 32768
-                }
-            ]
-        },
-        {
             "@type": "Command",
             "name": "scan",
-            "@id": "dtmi:jacdac:wifi:x80;1",
+            "@id": "dtmi:jacdac:wifi:scan;1",
             "description": "Initiate search for WiFi networks. Results are returned via pipe, one entry per packet."
         },
         {
             "@type": "Unsupportedpipe_report",
             "name": "results",
-            "@id": "dtmi:jacdac:wifi:x0;1",
+            "@id": "dtmi:jacdac:wifi:results;1",
             "description": "Initiate search for WiFi networks. Results are returned via pipe, one entry per packet."
         },
         {
             "@type": "Command",
             "name": "connect",
-            "@id": "dtmi:jacdac:wifi:x81;1",
+            "@id": "dtmi:jacdac:wifi:connect;1",
             "description": "Connect to named network."
         },
         {
             "@type": "Command",
             "name": "disconnect",
-            "@id": "dtmi:jacdac:wifi:x82;1",
+            "@id": "dtmi:jacdac:wifi:disconnect;1",
             "description": "Disconnect from current WiFi network if any."
         },
         {
             "@type": "Property",
             "name": "connected",
-            "@id": "dtmi:jacdac:wifi:x180;1",
+            "@id": "dtmi:jacdac:wifi:connected;1",
             "description": "Indicates whether or not we currently have an IP address assigned.",
             "schema": "bool"
+        },
+        {
+            "@type": "Telemetry",
+            "name": "got_ip",
+            "@id": "dtmi:jacdac:wifi:got_ip;1",
+            "description": "Emitted upon successful join and IP address assignment.",
+            "schema": {
+                "name": "count",
+                "schema": "integer"
+            }
+        },
+        {
+            "@type": "Telemetry",
+            "name": "lost_ip",
+            "@id": "dtmi:jacdac:wifi:lost_ip;1",
+            "description": "Emitted when disconnected from network.",
+            "schema": {
+                "name": "count",
+                "schema": "integer"
+            }
         }
     ],
     "@context": "dtmi:dtdl:context;2"

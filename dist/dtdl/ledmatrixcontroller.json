@@ -2,20 +2,22 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:ledmatrixcontroller;1",
     "name": "LEDMatrixController",
-    "displayName": "LED Matrix Controller",
+    "displayName": {
+        "en": "LED Matrix Controller"
+    },
     "description": "A service that allows to control a rectangular matrix of monochrome LEDs.\nTo stream the state of the screen, use [LED Matrix display](/services/led-matrix-display) instead.",
     "contents": [
         {
             "@type": "Property",
             "name": "leds",
-            "@id": "dtmi:jacdac:ledmatrixcontroller:x80;1",
+            "@id": "dtmi:jacdac:ledmatrixcontroller:leds;1",
             "description": "Read or writes the state of the screen where pixel on/off state is \nstored as a bit, column by column. The column should be byte aligned.",
             "writeable": true
         },
         {
             "@type": "Property",
             "name": "enabled",
-            "@id": "dtmi:jacdac:ledmatrixcontroller:x81;1",
+            "@id": "dtmi:jacdac:ledmatrixcontroller:enabled;1",
             "description": "Disables or enables the whole screen.",
             "schema": "bool",
             "writeable": true
@@ -23,7 +25,7 @@
         {
             "@type": "Property",
             "name": "brightness",
-            "@id": "dtmi:jacdac:ledmatrixcontroller:x82;1",
+            "@id": "dtmi:jacdac:ledmatrixcontroller:brightness;1",
             "description": "Sets the general brightness of the LEDs.",
             "schema": "integer",
             "writeable": true
@@ -31,21 +33,21 @@
         {
             "@type": "Property",
             "name": "rows",
-            "@id": "dtmi:jacdac:ledmatrixcontroller:x83;1",
+            "@id": "dtmi:jacdac:ledmatrixcontroller:rows;1",
             "description": "Number of rows on the screen",
             "schema": "integer"
         },
         {
             "@type": "Property",
             "name": "columns",
-            "@id": "dtmi:jacdac:ledmatrixcontroller:x84;1",
+            "@id": "dtmi:jacdac:ledmatrixcontroller:columns;1",
             "description": "Number of columns on the screen",
             "schema": "integer"
         },
         {
             "@type": "Command",
             "name": "clear",
-            "@id": "dtmi:jacdac:ledmatrixcontroller:x80;1",
+            "@id": "dtmi:jacdac:ledmatrixcontroller:clear;1",
             "description": "Shorthand command to clear all the LEDs on the screen."
         }
     ],

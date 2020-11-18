@@ -2,56 +2,39 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:modelrunner;1",
     "name": "ModelRunner",
-    "displayName": "Model Runner",
+    "displayName": {
+        "en": "Model Runner"
+    },
     "description": "Run machine learning models.\nOnly models with a single input tensor and a single output tensor are supported at the moment.\nInput is provided by Sensor Aggregator service on the same device.\nMultiple instances of this service may be present, if more than one model format is supported by a device.",
     "contents": [
         {
-            "@type": "Enum",
-            "name": "ModelFormat",
-            "valueSchema": "integer",
-            "enumValues": [
-                {
-                    "name": "TFLite",
-                    "enumValue": 860636756
-                },
-                {
-                    "name": "ML4F",
-                    "enumValue": 809963362
-                },
-                {
-                    "name": "EdgeImpulseCompiled",
-                    "enumValue": 810961221
-                }
-            ]
-        },
-        {
             "@type": "Command",
             "name": "set_model",
-            "@id": "dtmi:jacdac:modelrunner:x80;1",
+            "@id": "dtmi:jacdac:modelrunner:set_model;1",
             "description": "Open pipe for streaming in the model. The size of the model has to be declared upfront.\nThe model is streamed over regular pipe data packets.\nThe format supported by this instance of the service is specified in `format` register.\nWhen the pipe is closed, the model is written all into flash, and the device running the service may reset."
         },
         {
             "@type": "Unsupportedreport",
             "name": "set_model",
-            "@id": "dtmi:jacdac:modelrunner:x80;1",
+            "@id": "dtmi:jacdac:modelrunner:set_model;1",
             "description": "Open pipe for streaming in the model. The size of the model has to be declared upfront.\nThe model is streamed over regular pipe data packets.\nThe format supported by this instance of the service is specified in `format` register.\nWhen the pipe is closed, the model is written all into flash, and the device running the service may reset."
         },
         {
             "@type": "Command",
             "name": "predict",
-            "@id": "dtmi:jacdac:modelrunner:x81;1",
+            "@id": "dtmi:jacdac:modelrunner:predict;1",
             "description": "Open channel that can be used to manually invoke the model. When enough data is sent over the `inputs` pipe, the model is invoked,\nand results are send over the `outputs` pipe."
         },
         {
             "@type": "Unsupportedreport",
             "name": "predict",
-            "@id": "dtmi:jacdac:modelrunner:x81;1",
+            "@id": "dtmi:jacdac:modelrunner:predict;1",
             "description": "Open channel that can be used to manually invoke the model. When enough data is sent over the `inputs` pipe, the model is invoked,\nand results are send over the `outputs` pipe."
         },
         {
             "@type": "Property",
             "name": "auto_invoke_every",
-            "@id": "dtmi:jacdac:modelrunner:x80;1",
+            "@id": "dtmi:jacdac:modelrunner:auto_invoke_every;1",
             "description": "When register contains `N > 0`, run the model automatically every time new `N` samples are collected.\nModel may be run less often if it takes longer to run than `N * sampling_interval`.\nThe `outputs` register will stream its value after each run.\nThis register is not stored in flash.",
             "schema": "integer",
             "writeable": true
@@ -59,28 +42,28 @@
         {
             "@type": "Telemery",
             "name": "outputs",
-            "@id": "dtmi:jacdac:modelrunner:x101;1",
+            "@id": "dtmi:jacdac:modelrunner:outputs;1",
             "description": "Results of last model invocation as `float32` array.",
             "schema": "float"
         },
         {
             "@type": "Property",
             "name": "input_shape",
-            "@id": "dtmi:jacdac:modelrunner:x180;1",
+            "@id": "dtmi:jacdac:modelrunner:input_shape;1",
             "description": "The shape of the input tensor.",
             "schema": "integer"
         },
         {
             "@type": "Property",
             "name": "output_shape",
-            "@id": "dtmi:jacdac:modelrunner:x181;1",
+            "@id": "dtmi:jacdac:modelrunner:output_shape;1",
             "description": "The shape of the output tensor.",
             "schema": "integer"
         },
         {
             "@type": "Property",
             "name": "last_run_time",
-            "@id": "dtmi:jacdac:modelrunner:x182;1",
+            "@id": "dtmi:jacdac:modelrunner:last_run_time;1",
             "description": "The time consumed in last model execution.",
             "unit": "microsecond",
             "schema": "integer"
@@ -88,41 +71,60 @@
         {
             "@type": "Property",
             "name": "allocated_arena_size",
-            "@id": "dtmi:jacdac:modelrunner:x183;1",
+            "@id": "dtmi:jacdac:modelrunner:allocated_arena_size;1",
             "description": "Number of RAM bytes allocated for model execution.",
             "schema": "integer"
         },
         {
             "@type": "Property",
             "name": "model_size",
-            "@id": "dtmi:jacdac:modelrunner:x184;1",
+            "@id": "dtmi:jacdac:modelrunner:model_size;1",
             "description": "The size of the model in bytes.",
             "schema": "integer"
         },
         {
             "@type": "Property",
             "name": "last_error",
-            "@id": "dtmi:jacdac:modelrunner:x185;1",
+            "@id": "dtmi:jacdac:modelrunner:last_error;1",
             "description": "Textual description of last error when running or loading model (if any).",
             "schema": "string"
         },
         {
             "@type": "Property",
             "name": "format",
-            "@id": "dtmi:jacdac:modelrunner:x186;1",
-            "description": "The type of ML models supported by this service.\n`TFLite` is flatbuffer `.tflite` file.\n`ML4F` is compiled machine code model for Cortex-M4F.\nThe format is typically present as first or second little endian word of model file."
+            "@id": "dtmi:jacdac:modelrunner:format;1",
+            "description": "The type of ML models supported by this service.\n`TFLite` is flatbuffer `.tflite` file.\n`ML4F` is compiled machine code model for Cortex-M4F.\nThe format is typically present as first or second little endian word of model file.",
+            "schema": {
+                "@type": "Enum",
+                "name": "ModelFormat",
+                "valueSchema": "integer",
+                "enumValues": [
+                    {
+                        "name": "TFLite",
+                        "enumValue": 860636756
+                    },
+                    {
+                        "name": "ML4F",
+                        "enumValue": 809963362
+                    },
+                    {
+                        "name": "EdgeImpulseCompiled",
+                        "enumValue": 810961221
+                    }
+                ]
+            }
         },
         {
             "@type": "Property",
             "name": "format_version",
-            "@id": "dtmi:jacdac:modelrunner:x187;1",
+            "@id": "dtmi:jacdac:modelrunner:format_version;1",
             "description": "A version number for the format.",
             "schema": "integer"
         },
         {
             "@type": "Property",
             "name": "parallel",
-            "@id": "dtmi:jacdac:modelrunner:x188;1",
+            "@id": "dtmi:jacdac:modelrunner:parallel;1",
             "description": "If present and true this service can run models independently of other\ninstances of this service on the device.",
             "schema": "bool"
         }

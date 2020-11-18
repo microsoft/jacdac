@@ -2,13 +2,15 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:accelerometer;1",
     "name": "accel",
-    "displayName": "Accelerometer",
+    "displayName": {
+        "en": "Accelerometer"
+    },
     "description": "A 3-axis accelerometer.",
     "contents": [
         {
             "@type": "Property",
             "name": "stream_samples",
-            "@id": "dtmi:jacdac:accelerometer:x3;1",
+            "@id": "dtmi:jacdac:accelerometer:stream_samples;1",
             "description": "Asks device to stream a given number of samples\n(clients will typically write `255` to this register every second or so, while streaming is required).",
             "schema": "integer",
             "writeable": true
@@ -16,7 +18,7 @@
         {
             "@type": "Property",
             "name": "streaming_interval",
-            "@id": "dtmi:jacdac:accelerometer:x4;1",
+            "@id": "dtmi:jacdac:accelerometer:streaming_interval;1",
             "description": "Period between packets of data when streaming in milliseconds.",
             "unit": "millisecond",
             "schema": "integer",
@@ -25,8 +27,128 @@
         {
             "@type": "Telemery",
             "name": "forces",
-            "@id": "dtmi:jacdac:accelerometer:x101;1",
+            "@id": "dtmi:jacdac:accelerometer:forces;1",
             "description": "Indicates the current forces acting on accelerometer."
+        },
+        {
+            "@type": "Telemetry",
+            "name": "tilt_up",
+            "@id": "dtmi:jacdac:accelerometer:tilt_up;1",
+            "description": "Emitted when accelerometer is tilted in the given direction.",
+            "schema": {
+                "name": "count",
+                "schema": "integer"
+            }
+        },
+        {
+            "@type": "Telemetry",
+            "name": "tilt_down",
+            "@id": "dtmi:jacdac:accelerometer:tilt_down;1",
+            "description": "Emitted when accelerometer is tilted in the given direction.",
+            "schema": {
+                "name": "count",
+                "schema": "integer"
+            }
+        },
+        {
+            "@type": "Telemetry",
+            "name": "tilt_left",
+            "@id": "dtmi:jacdac:accelerometer:tilt_left;1",
+            "description": "Emitted when accelerometer is tilted in the given direction.",
+            "schema": {
+                "name": "count",
+                "schema": "integer"
+            }
+        },
+        {
+            "@type": "Telemetry",
+            "name": "tilt_right",
+            "@id": "dtmi:jacdac:accelerometer:tilt_right;1",
+            "description": "Emitted when accelerometer is tilted in the given direction.",
+            "schema": {
+                "name": "count",
+                "schema": "integer"
+            }
+        },
+        {
+            "@type": "Telemetry",
+            "name": "face_up",
+            "@id": "dtmi:jacdac:accelerometer:face_up;1",
+            "description": "Emitted when accelerometer is laying flat in the given direction.",
+            "schema": {
+                "name": "count",
+                "schema": "integer"
+            }
+        },
+        {
+            "@type": "Telemetry",
+            "name": "face_down",
+            "@id": "dtmi:jacdac:accelerometer:face_down;1",
+            "description": "Emitted when accelerometer is laying flat in the given direction.",
+            "schema": {
+                "name": "count",
+                "schema": "integer"
+            }
+        },
+        {
+            "@type": "Telemetry",
+            "name": "freefall",
+            "@id": "dtmi:jacdac:accelerometer:freefall;1",
+            "description": "Emitted when total force acting on accelerometer is much less than 1g.",
+            "schema": {
+                "name": "count",
+                "schema": "integer"
+            }
+        },
+        {
+            "@type": "Telemetry",
+            "name": "shake",
+            "@id": "dtmi:jacdac:accelerometer:shake;1",
+            "description": "Emitted when forces change violently a few times.",
+            "schema": {
+                "name": "count",
+                "schema": "integer"
+            }
+        },
+        {
+            "@type": "Telemetry",
+            "name": "force_2g",
+            "@id": "dtmi:jacdac:accelerometer:force_2g;1",
+            "description": "Emitted when force in any direction exceeds given threshold.",
+            "schema": {
+                "name": "count",
+                "schema": "integer"
+            }
+        },
+        {
+            "@type": "Telemetry",
+            "name": "force_3g",
+            "@id": "dtmi:jacdac:accelerometer:force_3g;1",
+            "description": "Emitted when force in any direction exceeds given threshold.",
+            "schema": {
+                "name": "count",
+                "schema": "integer"
+            }
+        },
+        {
+            "@type": "Telemetry",
+            "name": "force_6g",
+            "@id": "dtmi:jacdac:accelerometer:force_6g;1",
+            "description": "Emitted when force in any direction exceeds given threshold.",
+            "schema": {
+                "name": "count",
+                "schema": "integer"
+            }
+        },
+        {
+            "@type": "Telemetry",
+            "name": "force_8g",
+            "@id": "dtmi:jacdac:accelerometer:force_8g;1",
+            "description": "Emitted when force in any direction exceeds given threshold.",
+            "schema": {
+                "name": "count",
+                "schema": "integer"
+            }
         }
     ],
     "@context": "dtmi:dtdl:context;2"

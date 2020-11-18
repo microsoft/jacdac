@@ -2,70 +2,45 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:bootloader;1",
     "name": "Bootloader",
-    "displayName": "Bootloader",
+    "displayName": {
+        "en": "Bootloader"
+    },
     "description": "Allows flashing (reprogramming) devices over JACDAC.",
     "contents": [
         {
-            "@type": "Enum",
-            "name": "Error",
-            "valueSchema": "integer",
-            "enumValues": [
-                {
-                    "name": "NoError",
-                    "enumValue": 0
-                },
-                {
-                    "name": "PacketTooSmall",
-                    "enumValue": 1
-                },
-                {
-                    "name": "OutOfFlashableRange",
-                    "enumValue": 2
-                },
-                {
-                    "name": "InvalidPageOffset",
-                    "enumValue": 3
-                },
-                {
-                    "name": "NotPageAligned",
-                    "enumValue": 4
-                }
-            ]
-        },
-        {
             "@type": "Command",
             "name": "info",
-            "@id": "dtmi:jacdac:bootloader:x0;1",
+            "@id": "dtmi:jacdac:bootloader:info;1",
             "description": "The `service_class` is always `0x1ffa9948`. The `firmware_identifier` identifies the kind of firmware\nthat \"fits\" this device."
         },
         {
             "@type": "Unsupportedreport",
             "name": "info",
-            "@id": "dtmi:jacdac:bootloader:x0;1",
+            "@id": "dtmi:jacdac:bootloader:info;1",
             "description": "The `service_class` is always `0x1ffa9948`. The `firmware_identifier` identifies the kind of firmware\nthat \"fits\" this device."
         },
         {
             "@type": "Command",
             "name": "set_session",
-            "@id": "dtmi:jacdac:bootloader:x81;1",
+            "@id": "dtmi:jacdac:bootloader:set_session;1",
             "description": "The flashing host should generate a random id, and use this command to set it."
         },
         {
             "@type": "Unsupportedreport",
             "name": "set_session",
-            "@id": "dtmi:jacdac:bootloader:x81;1",
+            "@id": "dtmi:jacdac:bootloader:set_session;1",
             "description": "The flashing host should generate a random id, and use this command to set it."
         },
         {
             "@type": "Command",
             "name": "page_data",
-            "@id": "dtmi:jacdac:bootloader:x80;1",
+            "@id": "dtmi:jacdac:bootloader:page_data;1",
             "description": "Use to send flashing data. A physical page is split into `chunk_max + 1` chunks, where `chunk_no = 0 ... chunk_max`.\nEach chunk is stored at `page_address + page_offset`. `page_address` has to be equal in all chunks,\nand is included in response.\nOnly the last chunk causes writing to flash and elicits response.\n\nErrors not listed are also possible. Errors larger than `0xffff` indicate de-synchronization on chunk numbers."
         },
         {
             "@type": "Unsupportedreport",
             "name": "page_data",
-            "@id": "dtmi:jacdac:bootloader:x80;1",
+            "@id": "dtmi:jacdac:bootloader:page_data;1",
             "description": "Use to send flashing data. A physical page is split into `chunk_max + 1` chunks, where `chunk_no = 0 ... chunk_max`.\nEach chunk is stored at `page_address + page_offset`. `page_address` has to be equal in all chunks,\nand is included in response.\nOnly the last chunk causes writing to flash and elicits response.\n\nErrors not listed are also possible. Errors larger than `0xffff` indicate de-synchronization on chunk numbers."
         }
     ],

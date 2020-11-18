@@ -2,19 +2,21 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:microphone;1",
     "name": "Microphone",
-    "displayName": "Microphone",
+    "displayName": {
+        "en": "Microphone"
+    },
     "description": "A single-channel microphone.",
     "contents": [
         {
             "@type": "Command",
             "name": "sample",
-            "@id": "dtmi:jacdac:microphone:x81;1",
+            "@id": "dtmi:jacdac:microphone:sample;1",
             "description": "The samples will be streamed back over the `samples` pipe.\nIf `num_samples` is `0`, streaming will only stop when the pipe is closed.\nOtherwise the specified number of samples is streamed.\nSamples are sent as `i16`."
         },
         {
             "@type": "Property",
             "name": "sampling_period",
-            "@id": "dtmi:jacdac:microphone:x80;1",
+            "@id": "dtmi:jacdac:microphone:sampling_period;1",
             "description": "Get or set microphone sampling period.\nSampling rate is `1_000_000 / sampling_period Hz`.",
             "unit": "microsecond",
             "schema": "integer",

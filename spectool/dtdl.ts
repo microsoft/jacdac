@@ -243,7 +243,22 @@ export function toUnit(pkt: jdspec.PacketInfo): string {
 */
 
 // https://github.com/Azure/opendigitaltwins-dtdl/blob/master/DTDL/v2/dtdlv2.md#primitive-schemas
-export function toSchema(pkt: jdspec.PacketInfo): string {
+
+function enumSchema(en: jdspec.EnumInfo): any {
+    const members = Object.keys(en.members).map(k => en.members[k])
+    const dtdl = {
+        "@type": "Enum",
+        "name": en.name,
+        "valueSchema": "integer",
+        "enumValues": Object.keys(en.members).map(k => ({
+            name: k,
+            enumValue: en.members[k]
+        }))
+    }
+    return dtdl;
+}
+
+export function toSchema(srv: jdspec.ServiceSpec, pkt: jdspec.PacketInfo): string {
     // todo: startsRepeats
     if (pkt.fields.length !== 1)
         return undefined;
@@ -263,24 +278,25 @@ export function toSchema(pkt: jdspec.PacketInfo): string {
         return "string";
     if (field.shift && field.storage === 4 && /^(u|i)/.test(field.type))
         return "float"; // decimal type
+    const en = srv.enums[field.type];
+    if (en)
+        return enumSchema(en);
     console.warn(`unsupported schema`, { fields: pkt.fields })
     return undefined;
 }
 
 export function toDTDLContent(srv: jdspec.ServiceSpec, pkt: jdspec.PacketInfo): any {
-    if (pkt.kind === "event")
-        return undefined;
-
     const types: jdspec.SMap<string> = {
         "command": "Command",
         "const": "Property",
         "rw": "Property",
         "ro": "Property",
+        "event": "Telemetry"
     }
     const dtdl: any = {
         "@type": types[pkt.kind] || `Unsupported${pkt.kind}`,
         name: pkt.name,
-        "@id": toDTMI([srv.shortId, pkt.identifier]),
+        "@id": toDTMI([srv.shortId, pkt.name]),
         description: pkt.description,
     }
     switch (pkt.kind) {
@@ -289,30 +305,25 @@ export function toDTDLContent(srv: jdspec.ServiceSpec, pkt: jdspec.PacketInfo): 
         case "const":
         case "rw":
         case "ro":
+        case "event":
             dtdl.unit = toUnit(pkt)
-            dtdl.schema = toSchema(pkt)
+            dtdl.schema = toSchema(srv, pkt)
             if (pkt.kind === "rw")
                 dtdl.writeable = true;
             if (pkt.kind == "ro" && pkt.identifier == 0x101) // isReading
                 dtdl["@type"] = "Telemery"
+
+            if (!dtdl.schema && pkt.kind === "event") {
+                // keep a count of the events
+                dtdl.schema = {
+                    "name": "count",
+                    "schema": "integer"
+                }
+            }
             break;
         default:
             console.log(`unknown packet kind ${pkt.kind}`)
             break;
-    }
-    return dtdl;
-}
-
-export function toDTDLEnum(en: jdspec.EnumInfo): any {
-    const members = Object.keys(en.members).map(k => en.members[k])
-    const dtdl = {
-        "@type": "Enum",
-        "name": en.name,
-        "valueSchema": "integer",
-        "enumValues": Object.keys(en.members).map(k => ({
-            name: k,
-            enumValue: en.members[k]
-        }))
     }
     return dtdl;
 }
@@ -328,8 +339,7 @@ export function toDTDLInterface(srv: jdspec.ServiceSpec): string {
         },
         "description": srv.notes["short"],
         "comment": srv.notes["long"],
-        "contents":
-            [...ens.map(en => toDTDLEnum(en)), ...srv.packets.map(pkt => toDTDLContent(srv, pkt))].filter(c => !!c)
+        "contents": srv.packets.map(pkt => toDTDLContent(srv, pkt)).filter(c => !!c)
     }
     //if (srv.extends?.length)
     //    dtdl.extends = srv.extends.map(id => toDTMI([id]))

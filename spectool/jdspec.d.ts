@@ -351,6 +351,16 @@ declare namespace jdspec {
          * If set, this and following fields repeat in order, to fill the packet.
          */
         startRepeats?: boolean;
+
+        /**
+         * If set, the payload of multiple consecutive packets should be concatenated together.
+         */
+        segmented?: boolean;
+
+        /**
+         * If set, the segmented packets are separated with a zero-length packets.
+         */
+        multiSegmented?: boolean;
     }
 
     /**

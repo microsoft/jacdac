@@ -2,9 +2,7 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:aggregator;1",
     "name": "SensorAggregator",
-    "displayName": {
-        "en": "Sensor Aggregator"
-    },
+    "displayName": "Sensor Aggregator",
     "description": "Aggregate data from multiple sensors into a single stream\n(often used as input to machine learning models on the same device, see model runner service).",
     "contents": [
         {

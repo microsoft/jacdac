@@ -7,20 +7,11 @@
 
 // https://github.com/Azure/digital-twin-model-identifier
 // ^dtmi:(?:_+[A-Za-z0-9]|[A-Za-z])(?:[A-Za-z0-9_]*[A-Za-z0-9])?(?::(?:_+[A-Za-z0-9]|[A-Za-z])(?:[A-Za-z0-9_]*[A-Za-z0-9])?)*;[1-9][0-9]{0,8}$
-export function toDTMI(segments: (string | number)[], version?: number) {
+function toDTMI(segments: (string | number)[], version?: number) {
     return `dtmi:jacdac:${segments.map(seg => typeof seg === "string" ? seg : `x${seg.toString(16)}`).join(':')};${version !== undefined ? version : 1}`;
 }
 
-export function toDTDLComponent(spec: jdspec.ServiceSpec): any {
-    const dtdl = {
-        "@type": "Component",
-        "name": spec.shortName,
-        "schema": toDTMI([spec.shortId])
-    }
-    return dtdl;
-}
-
-export function toUnit(pkt: jdspec.PacketInfo): string {
+function toUnit(pkt: jdspec.PacketInfo): string {
     if (pkt.fields.length !== 1)
         return undefined;
     const field = pkt.fields[0];
@@ -258,7 +249,7 @@ function enumSchema(en: jdspec.EnumInfo): any {
     return dtdl;
 }
 
-export function toSchema(srv: jdspec.ServiceSpec, pkt: jdspec.PacketInfo): string {
+function toSchema(srv: jdspec.ServiceSpec, pkt: jdspec.PacketInfo): string {
     // todo: startsRepeats
     if (pkt.fields.length !== 1)
         return undefined;
@@ -285,7 +276,7 @@ export function toSchema(srv: jdspec.ServiceSpec, pkt: jdspec.PacketInfo): strin
     return undefined;
 }
 
-export function toDTDLContent(srv: jdspec.ServiceSpec, pkt: jdspec.PacketInfo): any {
+function packetToDTDL(srv: jdspec.ServiceSpec, pkt: jdspec.PacketInfo): DTDLContent {
     const types: jdspec.SMap<string> = {
         "command": "Command",
         "const": "Property",
@@ -328,25 +319,69 @@ export function toDTDLContent(srv: jdspec.ServiceSpec, pkt: jdspec.PacketInfo): 
     return dtdl;
 }
 
-export function toDTDLInterface(srv: jdspec.ServiceSpec): string {
-    const ens = Object.keys(srv.enums).map(k => srv.enums[k]) || [];
-    const dtdl: any = {
+
+export interface DTDLNode {
+    '@type': string;
+    '@id'?: string;
+    name: string;
+    displayName?: string,
+    description?: string;
+}
+
+export interface DTDLSchema {
+
+}
+
+export interface DTDLContent extends DTDLNode {
+    '@type': "Property" | "Command" | "Component";
+    unit?: string;
+    schema?: string | DTDLSchema;
+}
+
+export interface DTDLInterface extends DTDLNode {
+    contents: DTDLContent[];
+    '@context'?: "dtmi:dtdl:context;2";
+}
+
+export function serviceToInterface(srv: jdspec.ServiceSpec): DTDLInterface {
+    const dtdl: DTDLInterface = {
         "@type": "Interface",
         "@id": toDTMI([srv.shortId]),
         "name": srv.shortName,
-        "displayName": {
-            "en": srv.name
-        },
+        "displayName": srv.name,
         "description": srv.notes["short"],
-        "comment": srv.notes["long"],
-        "contents": srv.packets.map(pkt => toDTDLContent(srv, pkt)).filter(c => !!c)
+        "contents": srv.packets.map(pkt => packetToDTDL(srv, pkt)).filter(c => !!c)
     }
     //if (srv.extends?.length)
     //    dtdl.extends = srv.extends.map(id => toDTMI([id]))
-    return DTDLtoString(dtdl);
+    return dtdl;
 }
 
-export function DTDLtoString(dtdl: any) {
+function serviceToComponent(spec: jdspec.ServiceSpec): any {
+    const dtdl = {
+        "@type": "Component",
+        "name": spec.shortName,
+        "schema": toDTMI([spec.shortId])
+    }
+    return dtdl;
+}
+
+export function deviceToInterface(dev: jdspec.DeviceSpec): DTDLInterface {
+    const dtdl: DTDLInterface = {
+        "@type": "Interface",
+        "@id": toDTMI([dev.id]),
+        "name": dev.name,
+        "description": dev.description,
+        "contents": dev.services.map((srv, i) => ({
+            "@type": "Component",
+            "name": `srv${i}`,
+            "schema": toDTMI([srv])
+        }))
+    }
+    return dtdl;
+}
+
+export function DTDLtoString(dtdl: DTDLInterface) {
     dtdl["@context"] = "dtmi:dtdl:context;2";
     return JSON.stringify(dtdl, undefined, 4);
 }

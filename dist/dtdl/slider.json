@@ -2,9 +2,7 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:slider;1",
     "name": "Slider",
-    "displayName": {
-        "en": "Slider"
-    },
+    "displayName": "Slider",
     "description": "A slider potentiometer.",
     "contents": [
         {

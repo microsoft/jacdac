@@ -2,9 +2,7 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:multitouch;1",
     "name": "Multitouch",
-    "displayName": {
-        "en": "Multitouch"
-    },
+    "displayName": "Multitouch",
     "description": "A capacitive touch sensor with multiple inputs.",
     "contents": [
         {

@@ -97,10 +97,6 @@ function processDevices(upperName: string) {
             }
         }
     }
-
-    //for (const dev of allDevices)
-    //    console.log(`0x${(dev.firmwares[0] || 0).toString(16)} ${dev.name}`)
-
     fs.writeFileSync(path.join("../dist", "devices.json"), JSON.stringify(allDevices, null, 2))
 }
 

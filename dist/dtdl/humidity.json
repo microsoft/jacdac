@@ -2,9 +2,7 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:humidity;1",
     "name": "Humidity",
-    "displayName": {
-        "en": "Humidity"
-    },
+    "displayName": "Humidity",
     "description": "A sensor measuring humidity of outside environment.",
     "contents": [
         {

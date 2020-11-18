@@ -2,9 +2,7 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:logger;1",
     "name": "Logger",
-    "displayName": {
-        "en": "Logger"
-    },
+    "displayName": "Logger",
     "description": "A service which can report messages to the bus.",
     "contents": [
         {

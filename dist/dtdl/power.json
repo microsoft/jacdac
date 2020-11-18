@@ -2,9 +2,7 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:power;1",
     "name": "Power",
-    "displayName": {
-        "en": "Power"
-    },
+    "displayName": "Power",
     "description": "A power-provider service.",
     "contents": [
         {

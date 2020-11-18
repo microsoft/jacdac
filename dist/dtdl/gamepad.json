@@ -2,9 +2,7 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:gamepad;1",
     "name": "Gamepad",
-    "displayName": {
-        "en": "Gamepad"
-    },
+    "displayName": "Gamepad",
     "description": "A gamepad with direction and action buttons for 1 or more players.",
     "contents": [
         {

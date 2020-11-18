@@ -2,9 +2,7 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:temperature;1",
     "name": "Temperature",
-    "displayName": {
-        "en": "Temperature"
-    },
+    "displayName": "Temperature",
     "description": "A thermometer measuring outside environment.",
     "contents": [
         {

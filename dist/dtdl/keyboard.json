@@ -2,9 +2,7 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:keyboard;1",
     "name": "Keyboard",
-    "displayName": {
-        "en": "Keyboard"
-    },
+    "displayName": "Keyboard",
     "description": "A keyboard that can send keystrokes.\n\nThe codes for the key (selectors) is defined in the [HID Keyboard\nspecification](https://usb.org/sites/default/files/hut1_21.pdf), chapter 10 Keyboard/Keypad Page, page 81.\n\nThe device keeps tracks of the key state and is able to clear it all with the clear command.",
     "contents": [
         {

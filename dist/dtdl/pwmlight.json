@@ -2,11 +2,8 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:pwmlight;1",
     "name": "PwmLight",
-    "displayName": {
-        "en": "PWM Light"
-    },
+    "displayName": "PWM Light",
     "description": "A controller for 1 or more LEDs connected in parallel.",
-    "comment": "## Animation steps\n\nAnimations are described using pairs of intensity and duration.\nFor example, the following animation\n`(0, 10ms), (0.5, 5ms), (0.5, 10ms), (1, 5ms), (0, 7ms), (0, 0ms)`\nwill gradually rise the intensity `0 - 0.5` in 10ms,\nthen, it will keep it steady for at `0.5` for 5ms,\nthen it will rise it again `0.5 - 1` over 10ms,\ndrop `1 - 0` in 5ms,\nand keep it at 0 for 7ms more.\nAny entry with duration of 0ms is considered to be end-marker.\n\nTo get steady glow at `x`, use animation of `(x, 60000ms), (x, 0ms)` and keep `max_iterations` at `0xffff`.",
     "contents": [
         {
             "@type": "Property",

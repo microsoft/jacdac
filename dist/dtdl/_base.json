@@ -2,9 +2,7 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:_base;1",
     "name": "base",
-    "displayName": {
-        "en": "Common registers and commands"
-    },
+    "displayName": "Common registers and commands",
     "description": "This file describes common register and command codes.\nThese are defined in ranges separate from the per-service ones.\nNo service actually derives from this file, but services can include packets\ndefined here.\nTheir code is listed as say `@ intensity` and not `@ 0x01` (the spectool enforces that).",
     "contents": [
         {

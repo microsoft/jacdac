@@ -2,9 +2,7 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:tcp;1",
     "name": "TCP",
-    "displayName": {
-        "en": "TCP"
-    },
+    "displayName": "TCP",
     "description": "Data transfer over TCP/IP and TLS stream sockets.",
     "contents": [
         {

@@ -2,9 +2,7 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:rolemanager;1",
     "name": "RoleManager",
-    "displayName": {
-        "en": "Role Manager"
-    },
+    "displayName": "Role Manager",
     "description": "Assign roles to devices on JACDAC bus.",
     "contents": [
         {

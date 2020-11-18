@@ -2,9 +2,7 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:control;1",
     "name": "ctrl",
-    "displayName": {
-        "en": "Control"
-    },
+    "displayName": "Control",
     "description": "Control service is always service index `0`.\nIt handles actions common to all services on a device.",
     "contents": [
         {

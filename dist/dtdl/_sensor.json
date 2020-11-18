@@ -2,9 +2,7 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:_sensor;1",
     "name": "sensor",
-    "displayName": {
-        "en": "Sensor"
-    },
+    "displayName": "Sensor",
     "description": "Base class for sensors.",
     "contents": [
         {

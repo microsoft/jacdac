@@ -2,9 +2,7 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:microphone;1",
     "name": "Microphone",
-    "displayName": {
-        "en": "Microphone"
-    },
+    "displayName": "Microphone",
     "description": "A single-channel microphone.",
     "contents": [
         {

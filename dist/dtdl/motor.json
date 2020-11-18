@@ -2,9 +2,7 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:motor;1",
     "name": "Motor",
-    "displayName": {
-        "en": "Motor"
-    },
+    "displayName": "Motor",
     "description": "A bi-directional DC motor.",
     "contents": [
         {

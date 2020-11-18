@@ -2,9 +2,7 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:ledmatrixdisplay;1",
     "name": "LEDMatrixDisplay",
-    "displayName": {
-        "en": "LED Matrix Display"
-    },
+    "displayName": "LED Matrix Display",
     "description": "A sensor that streams the state of a rectangular LED matrix.\nTo control the state of the screen, use [LED Matrix Controller](/services/led-matrix-controller) instead.",
     "contents": [
         {

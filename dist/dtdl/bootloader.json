@@ -2,9 +2,7 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:bootloader;1",
     "name": "Bootloader",
-    "displayName": {
-        "en": "Bootloader"
-    },
+    "displayName": "Bootloader",
     "description": "Allows flashing (reprogramming) devices over JACDAC.",
     "contents": [
         {

@@ -2,9 +2,7 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:crank;1",
     "name": "crank",
-    "displayName": {
-        "en": "Rotary encoder"
-    },
+    "displayName": "Rotary encoder",
     "description": "An incremental rotary encoder - converts angular motion of a shaft to digital signal.",
     "contents": [
         {

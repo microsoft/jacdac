@@ -2,9 +2,7 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:servo;1",
     "name": "Servo",
-    "displayName": {
-        "en": "Servo"
-    },
+    "displayName": "Servo",
     "description": "Servo is a small motor directed with a PWM signal.\nThis services fixes the servo period at 20ms, and the pulse can be regulated.",
     "contents": [
         {

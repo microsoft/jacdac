@@ -2,9 +2,7 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:accelerometer;1",
     "name": "accel",
-    "displayName": {
-        "en": "Accelerometer"
-    },
+    "displayName": "Accelerometer",
     "description": "A 3-axis accelerometer.",
     "contents": [
         {

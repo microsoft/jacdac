@@ -2,9 +2,7 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:iothub;1",
     "name": "iotHub",
-    "displayName": {
-        "en": "Azure IoT Hub"
-    },
+    "displayName": "Azure IoT Hub",
     "description": "Send messages, receive commands, and work with device twins in Azure IoT Hub.",
     "contents": [
         {

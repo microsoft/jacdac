@@ -2,9 +2,7 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:modelrunner;1",
     "name": "ModelRunner",
-    "displayName": {
-        "en": "Model Runner"
-    },
+    "displayName": "Model Runner",
     "description": "Run machine learning models.\nOnly models with a single input tensor and a single output tensor are supported at the moment.\nInput is provided by Sensor Aggregator service on the same device.\nMultiple instances of this service may be present, if more than one model format is supported by a device.",
     "contents": [
         {

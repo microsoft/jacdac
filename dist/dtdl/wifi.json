@@ -2,9 +2,7 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:wifi;1",
     "name": "wifi",
-    "displayName": {
-        "en": "WIFI"
-    },
+    "displayName": "WIFI",
     "description": "Discovery and connection to WiFi networks. Separate TCP service is used for data transfer.",
     "contents": [
         {

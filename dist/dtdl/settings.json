@@ -2,11 +2,8 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:settings;1",
     "name": "settings",
-    "displayName": {
-        "en": "Settings Storage"
-    },
+    "displayName": "Settings Storage",
     "description": "Non-volatile key-value storage interface for storing settings.",
-    "comment": "## Secrets\n\nEntries with keys starting with `$` are considered secret.\nThey can be written normally, but they always read as a single `0` byte.\nThese are typically used by other services on the same device.",
     "contents": [
         {
             "@type": "Command",

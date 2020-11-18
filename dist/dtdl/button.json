@@ -2,9 +2,7 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:button;1",
     "name": "Button",
-    "displayName": {
-        "en": "Button"
-    },
+    "displayName": "Button",
     "description": "A simple push-button.\n\nNote: this service will stream readings while the button is pressed and shortly after it's released, even\nwhen `stream_samples == 0`. TODO remove this?",
     "contents": [
         {

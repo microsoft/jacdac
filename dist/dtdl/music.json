@@ -2,9 +2,7 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:music;1",
     "name": "Music",
-    "displayName": {
-        "en": "Music"
-    },
+    "displayName": "Music",
     "description": "A simple buzzer.",
     "contents": [
         {

@@ -2,9 +2,7 @@
     "@type": "Interface",
     "@id": "dtmi:jacdac:ledmatrixcontroller;1",
     "name": "LEDMatrixController",
-    "displayName": {
-        "en": "LED Matrix Controller"
-    },
+    "displayName": "LED Matrix Controller",
     "description": "A service that allows to control a rectangular matrix of monochrome LEDs.\nTo stream the state of the screen, use [LED Matrix display](/services/led-matrix-display) instead.",
     "contents": [
         {

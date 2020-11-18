@@ -8,56 +8,60 @@
         {
             "@type": "Property",
             "name": "min_priority",
-            "@id": "dtmi:jacdac:logger:min_priority;1",
+            "@id": "dtmi:jacdac:logger:rw:min_priority;1",
             "description": "Messages with level lower than this won't be emitted. The default setting may vary.\nLoggers should revert this to their default setting if the register has not been\nupdated in 3000ms, and also keep the lowest setting they have seen in the last 1500ms.\nThus, clients should write this register every 1000ms and ignore messages which are\ntoo verbose for them.",
-            "schema": {
-                "@type": "Enum",
-                "name": "Priority",
-                "valueSchema": "integer",
-                "enumValues": [
-                    {
-                        "name": "Debug",
-                        "enumValue": 0
-                    },
-                    {
-                        "name": "Log",
-                        "enumValue": 1
-                    },
-                    {
-                        "name": "Warning",
-                        "enumValue": 2
-                    },
-                    {
-                        "name": "Error",
-                        "enumValue": 3
-                    }
-                ]
-            },
+            "schema": "dtmi:jacdac:x12dc1fca:Priority;1",
             "writeable": true
         },
         {
             "@type": "Unsupportedreport",
             "name": "debug",
-            "@id": "dtmi:jacdac:logger:debug;1",
+            "@id": "dtmi:jacdac:logger:report:debug;1",
             "description": "Report a message."
         },
         {
             "@type": "Unsupportedreport",
             "name": "log",
-            "@id": "dtmi:jacdac:logger:log;1",
+            "@id": "dtmi:jacdac:logger:report:log;1",
             "description": "Report a message."
         },
         {
             "@type": "Unsupportedreport",
             "name": "warn",
-            "@id": "dtmi:jacdac:logger:warn;1",
+            "@id": "dtmi:jacdac:logger:report:warn;1",
             "description": "Report a message."
         },
         {
             "@type": "Unsupportedreport",
             "name": "error",
-            "@id": "dtmi:jacdac:logger:error;1",
+            "@id": "dtmi:jacdac:logger:report:error;1",
             "description": "Report a message."
+        }
+    ],
+    "schemas": [
+        {
+            "@type": "Enum",
+            "@id": "dtmi:jacdac:x12dc1fca:Priority;1",
+            "name": "Priority",
+            "valueSchema": "integer",
+            "enumValues": [
+                {
+                    "name": "Debug",
+                    "enumValue": 0
+                },
+                {
+                    "name": "Log",
+                    "enumValue": 1
+                },
+                {
+                    "name": "Warning",
+                    "enumValue": 2
+                },
+                {
+                    "name": "Error",
+                    "enumValue": 3
+                }
+            ]
         }
     ],
     "@context": "dtmi:dtdl:context;2"

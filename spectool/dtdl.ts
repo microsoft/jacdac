@@ -235,10 +235,15 @@ function toUnit(pkt: jdspec.PacketInfo): string {
 
 // https://github.com/Azure/opendigitaltwins-dtdl/blob/master/DTDL/v2/dtdlv2.md#primitive-schemas
 
-function enumSchema(en: jdspec.EnumInfo): any {
+function enumDTDI(srv: jdspec.ServiceSpec, en: jdspec.EnumInfo): string {
+    return toDTMI([srv.classIdentifier, en.name])
+}
+
+function enumSchema(srv: jdspec.ServiceSpec, en: jdspec.EnumInfo): DTDLSchema {
     const members = Object.keys(en.members).map(k => en.members[k])
     const dtdl = {
         "@type": "Enum",
+        "@id": enumDTDI(srv, en),
         "name": en.name,
         "valueSchema": "integer",
         "enumValues": Object.keys(en.members).map(k => ({
@@ -255,7 +260,7 @@ function toSchema(srv: jdspec.ServiceSpec, pkt: jdspec.PacketInfo): string {
         return undefined;
     const field = pkt.fields[0];
     if (field.type == "bool")
-        return "bool";
+        return "boolean";
     if (field.isFloat)
         return "float";
     if (field.isSimpleType) {
@@ -271,7 +276,7 @@ function toSchema(srv: jdspec.ServiceSpec, pkt: jdspec.PacketInfo): string {
         return "float"; // decimal type
     const en = srv.enums[field.type];
     if (en)
-        return enumSchema(en);
+        return enumDTDI(srv, en);
     console.warn(`unsupported schema`, { fields: pkt.fields })
     return undefined;
 }
@@ -287,7 +292,7 @@ function packetToDTDL(srv: jdspec.ServiceSpec, pkt: jdspec.PacketInfo): DTDLCont
     const dtdl: any = {
         "@type": types[pkt.kind] || `Unsupported${pkt.kind}`,
         name: pkt.name,
-        "@id": toDTMI([srv.shortId, pkt.name]),
+        "@id": toDTMI([srv.shortId, pkt.kind, pkt.name]),
         description: pkt.description,
     }
     switch (pkt.kind) {
@@ -306,10 +311,8 @@ function packetToDTDL(srv: jdspec.ServiceSpec, pkt: jdspec.PacketInfo): DTDLCont
 
             if (!dtdl.schema && pkt.kind === "event") {
                 // keep a count of the events
-                dtdl.schema = {
-                    "name": "count",
-                    "schema": "integer"
-                }
+                dtdl["@type"] = [dtdl["@type"], "Event"]
+                dtdl.schema = toDTMI([srv.shortId, "event"]);
             }
             break;
         default:
@@ -321,15 +324,16 @@ function packetToDTDL(srv: jdspec.ServiceSpec, pkt: jdspec.PacketInfo): DTDLCont
 
 
 export interface DTDLNode {
-    '@type': string;
+    '@type'?: string;
     '@id'?: string;
-    name: string;
+    name?: string;
     displayName?: string,
     description?: string;
 }
 
-export interface DTDLSchema {
-
+export interface DTDLSchema extends DTDLNode {
+    fields?: DTDLSchema[];
+    schema?: string | DTDLSchema;
 }
 
 export interface DTDLContent extends DTDLNode {
@@ -340,6 +344,7 @@ export interface DTDLContent extends DTDLNode {
 
 export interface DTDLInterface extends DTDLNode {
     contents: DTDLContent[];
+    schemas?: DTDLSchema[];
     '@context'?: "dtmi:dtdl:context;2";
 }
 
@@ -351,6 +356,22 @@ export function serviceToInterface(srv: jdspec.ServiceSpec): DTDLInterface {
         "displayName": srv.name,
         "description": srv.notes["short"],
         "contents": srv.packets.map(pkt => packetToDTDL(srv, pkt)).filter(c => !!c)
+    }
+    const hasEvents = srv.packets.find(pkt => pkt.kind === "event");
+    const hasEnums = Object.keys(srv.enums).length;
+    if (hasEvents || hasEnums) {
+        dtdl.schemas = [];
+        if (hasEvents)
+            dtdl.schemas.push({
+                "@id": toDTMI([srv.shortId, "event"]),
+                "@type": "Object",
+                "fields": [{
+                    "name": "count",
+                    "schema": "integer"
+                }]
+            });
+        if (hasEnums)
+            dtdl.schemas = dtdl.schemas.concat(Object.keys(srv.enums).map(en => enumSchema(srv, srv.enums[en])));
     }
     //if (srv.extends?.length)
     //    dtdl.extends = srv.extends.map(id => toDTMI([id]))

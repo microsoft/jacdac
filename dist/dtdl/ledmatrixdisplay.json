@@ -8,7 +8,7 @@
         {
             "@type": "Property",
             "name": "stream_samples",
-            "@id": "dtmi:jacdac:ledmatrixdisplay:stream_samples;1",
+            "@id": "dtmi:jacdac:ledmatrixdisplay:rw:stream_samples;1",
             "description": "Asks device to stream a given number of samples\n(clients will typically write `255` to this register every second or so, while streaming is required).",
             "schema": "integer",
             "writeable": true
@@ -16,7 +16,7 @@
         {
             "@type": "Property",
             "name": "streaming_interval",
-            "@id": "dtmi:jacdac:ledmatrixdisplay:streaming_interval;1",
+            "@id": "dtmi:jacdac:ledmatrixdisplay:rw:streaming_interval;1",
             "description": "Period between packets of data when streaming in milliseconds.",
             "unit": "millisecond",
             "schema": "integer",
@@ -25,7 +25,7 @@
         {
             "@type": "Telemery",
             "name": "leds",
-            "@id": "dtmi:jacdac:ledmatrixdisplay:leds;1",
+            "@id": "dtmi:jacdac:ledmatrixdisplay:ro:leds;1",
             "description": "Streams the state of the screen where pixel on/off state is \nstored as a bit, column by column. The column should be byte aligned."
         }
     ],

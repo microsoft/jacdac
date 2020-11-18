@@ -8,7 +8,7 @@
         {
             "@type": "Property",
             "name": "stream_samples",
-            "@id": "dtmi:jacdac:multitouch:stream_samples;1",
+            "@id": "dtmi:jacdac:multitouch:rw:stream_samples;1",
             "description": "Asks device to stream a given number of samples\n(clients will typically write `255` to this register every second or so, while streaming is required).",
             "schema": "integer",
             "writeable": true
@@ -16,7 +16,7 @@
         {
             "@type": "Property",
             "name": "streaming_interval",
-            "@id": "dtmi:jacdac:multitouch:streaming_interval;1",
+            "@id": "dtmi:jacdac:multitouch:rw:streaming_interval;1",
             "description": "Period between packets of data when streaming in milliseconds.",
             "unit": "millisecond",
             "schema": "integer",
@@ -25,57 +25,69 @@
         {
             "@type": "Telemery",
             "name": "capacity",
-            "@id": "dtmi:jacdac:multitouch:capacity;1",
+            "@id": "dtmi:jacdac:multitouch:ro:capacity;1",
             "description": "Capacitance of channels. The capacitance is continuously calibrated, and a value of `0` indicates\nno touch, wheres a value of around `100` or more indicates touch.\nIt's best to ignore this (unless debugging), and use events.",
             "schema": "integer"
         },
         {
             "@type": "Telemetry",
             "name": "touch",
-            "@id": "dtmi:jacdac:multitouch:touch;1",
+            "@id": "dtmi:jacdac:multitouch:event:touch;1",
             "description": "Emitted when an input is touched.",
             "schema": "integer"
         },
         {
             "@type": "Telemetry",
             "name": "release",
-            "@id": "dtmi:jacdac:multitouch:release;1",
+            "@id": "dtmi:jacdac:multitouch:event:release;1",
             "description": "Emitted when an input is no longer touched.",
             "schema": "integer"
         },
         {
             "@type": "Telemetry",
             "name": "tap",
-            "@id": "dtmi:jacdac:multitouch:tap;1",
+            "@id": "dtmi:jacdac:multitouch:event:tap;1",
             "description": "Emitted when an input is briefly touched. TODO Not implemented.",
             "schema": "integer"
         },
         {
             "@type": "Telemetry",
             "name": "long_press",
-            "@id": "dtmi:jacdac:multitouch:long_press;1",
+            "@id": "dtmi:jacdac:multitouch:event:long_press;1",
             "description": "Emitted when an input is touched for longer than 500ms. TODO Not implemented.",
             "schema": "integer"
         },
         {
-            "@type": "Telemetry",
+            "@type": [
+                "Telemetry",
+                "Event"
+            ],
             "name": "swipe_pos",
-            "@id": "dtmi:jacdac:multitouch:swipe_pos;1",
+            "@id": "dtmi:jacdac:multitouch:event:swipe_pos;1",
             "description": "Emitted when input channels are successively touched in order of increasing channel numbers.",
-            "schema": {
-                "name": "count",
-                "schema": "integer"
-            }
+            "schema": "dtmi:jacdac:multitouch:event;1"
         },
         {
-            "@type": "Telemetry",
+            "@type": [
+                "Telemetry",
+                "Event"
+            ],
             "name": "swipe_neg",
-            "@id": "dtmi:jacdac:multitouch:swipe_neg;1",
+            "@id": "dtmi:jacdac:multitouch:event:swipe_neg;1",
             "description": "Emitted when input channels are successively touched in order of decreasing channel numbers.",
-            "schema": {
-                "name": "count",
-                "schema": "integer"
-            }
+            "schema": "dtmi:jacdac:multitouch:event;1"
+        }
+    ],
+    "schemas": [
+        {
+            "@id": "dtmi:jacdac:multitouch:event;1",
+            "@type": "Object",
+            "fields": [
+                {
+                    "name": "count",
+                    "schema": "integer"
+                }
+            ]
         }
     ],
     "@context": "dtmi:dtdl:context;2"

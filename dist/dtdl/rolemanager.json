@@ -8,49 +8,49 @@
         {
             "@type": "Command",
             "name": "get_role",
-            "@id": "dtmi:jacdac:rolemanager:get_role;1",
+            "@id": "dtmi:jacdac:rolemanager:command:get_role;1",
             "description": "Get the role corresponding to given device identifer. Returns empty string if unset."
         },
         {
             "@type": "Unsupportedreport",
             "name": "get_role",
-            "@id": "dtmi:jacdac:rolemanager:get_role;1",
+            "@id": "dtmi:jacdac:rolemanager:report:get_role;1",
             "description": "Get the role corresponding to given device identifer. Returns empty string if unset."
         },
         {
             "@type": "Command",
             "name": "set_role",
-            "@id": "dtmi:jacdac:rolemanager:set_role;1",
+            "@id": "dtmi:jacdac:rolemanager:command:set_role;1",
             "description": "Set role. Can set to empty to remove role binding."
         },
         {
             "@type": "Command",
             "name": "clear_all_roles",
-            "@id": "dtmi:jacdac:rolemanager:clear_all_roles;1",
+            "@id": "dtmi:jacdac:rolemanager:command:clear_all_roles;1",
             "description": "Remove all role bindings."
         },
         {
             "@type": "Command",
             "name": "list_stored_roles",
-            "@id": "dtmi:jacdac:rolemanager:list_stored_roles;1",
+            "@id": "dtmi:jacdac:rolemanager:command:list_stored_roles;1",
             "description": "Return all roles stored internally."
         },
         {
             "@type": "Unsupportedpipe_report",
             "name": "stored_roles",
-            "@id": "dtmi:jacdac:rolemanager:stored_roles;1",
+            "@id": "dtmi:jacdac:rolemanager:pipe_report:stored_roles;1",
             "description": "Return all roles stored internally."
         },
         {
             "@type": "Command",
             "name": "list_required_roles",
-            "@id": "dtmi:jacdac:rolemanager:list_required_roles;1",
+            "@id": "dtmi:jacdac:rolemanager:command:list_required_roles;1",
             "description": "List all roles required by the current program. `device_id` is `0` if role is unbound."
         },
         {
             "@type": "Unsupportedpipe_report",
             "name": "required_roles",
-            "@id": "dtmi:jacdac:rolemanager:required_roles;1",
+            "@id": "dtmi:jacdac:rolemanager:pipe_report:required_roles;1",
             "description": "List all roles required by the current program. `device_id` is `0` if role is unbound."
         }
     ],

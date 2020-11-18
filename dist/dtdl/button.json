@@ -8,7 +8,7 @@
         {
             "@type": "Property",
             "name": "stream_samples",
-            "@id": "dtmi:jacdac:button:stream_samples;1",
+            "@id": "dtmi:jacdac:button:rw:stream_samples;1",
             "description": "Asks device to stream a given number of samples\n(clients will typically write `255` to this register every second or so, while streaming is required).",
             "schema": "integer",
             "writeable": true
@@ -16,58 +16,63 @@
         {
             "@type": "Property",
             "name": "streaming_interval",
-            "@id": "dtmi:jacdac:button:streaming_interval;1",
+            "@id": "dtmi:jacdac:button:rw:streaming_interval;1",
             "description": "Period between packets of data when streaming in milliseconds.",
             "unit": "millisecond",
             "schema": "integer",
             "writeable": true
         },
         {
-            "@type": "Telemery",
-            "name": "pressed",
-            "@id": "dtmi:jacdac:button:pressed;1",
-            "description": "Indicates whether the button is currently active (pressed).",
-            "schema": "bool"
-        },
-        {
-            "@type": "Telemetry",
+            "@type": [
+                "Telemetry",
+                "Event"
+            ],
             "name": "down",
-            "@id": "dtmi:jacdac:button:down;1",
+            "@id": "dtmi:jacdac:button:event:down;1",
             "description": "Emitted when button goes from inactive (`pressed == 0`) to active.",
-            "schema": {
-                "name": "count",
-                "schema": "integer"
-            }
+            "schema": "dtmi:jacdac:button:event;1"
         },
         {
-            "@type": "Telemetry",
+            "@type": [
+                "Telemetry",
+                "Event"
+            ],
             "name": "up",
-            "@id": "dtmi:jacdac:button:up;1",
+            "@id": "dtmi:jacdac:button:event:up;1",
             "description": "Emitted when button goes from active (`pressed == 1`) to inactive.",
-            "schema": {
-                "name": "count",
-                "schema": "integer"
-            }
+            "schema": "dtmi:jacdac:button:event;1"
         },
         {
-            "@type": "Telemetry",
+            "@type": [
+                "Telemetry",
+                "Event"
+            ],
             "name": "click",
-            "@id": "dtmi:jacdac:button:click;1",
+            "@id": "dtmi:jacdac:button:event:click;1",
             "description": "Emitted together with `up` when the press time was not longer than 500ms.",
-            "schema": {
-                "name": "count",
-                "schema": "integer"
-            }
+            "schema": "dtmi:jacdac:button:event;1"
         },
         {
-            "@type": "Telemetry",
+            "@type": [
+                "Telemetry",
+                "Event"
+            ],
             "name": "long_click",
-            "@id": "dtmi:jacdac:button:long_click;1",
+            "@id": "dtmi:jacdac:button:event:long_click;1",
             "description": "Emitted together with `up` when the press time was more than 500ms.",
-            "schema": {
-                "name": "count",
-                "schema": "integer"
-            }
+            "schema": "dtmi:jacdac:button:event;1"
+        }
+    ],
+    "schemas": [
+        {
+            "@id": "dtmi:jacdac:button:event;1",
+            "@type": "Object",
+            "fields": [
+                {
+                    "name": "count",
+                    "schema": "integer"
+                }
+            ]
         }
     ],
     "@context": "dtmi:dtdl:context;2"

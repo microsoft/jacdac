@@ -8,22 +8,22 @@
         {
             "@type": "Property",
             "name": "leds",
-            "@id": "dtmi:jacdac:ledmatrixcontroller:leds;1",
+            "@id": "dtmi:jacdac:ledmatrixcontroller:rw:leds;1",
             "description": "Read or writes the state of the screen where pixel on/off state is \nstored as a bit, column by column. The column should be byte aligned.",
             "writeable": true
         },
         {
             "@type": "Property",
             "name": "enabled",
-            "@id": "dtmi:jacdac:ledmatrixcontroller:enabled;1",
+            "@id": "dtmi:jacdac:ledmatrixcontroller:rw:enabled;1",
             "description": "Disables or enables the whole screen.",
-            "schema": "bool",
+            "schema": "boolean",
             "writeable": true
         },
         {
             "@type": "Property",
             "name": "brightness",
-            "@id": "dtmi:jacdac:ledmatrixcontroller:brightness;1",
+            "@id": "dtmi:jacdac:ledmatrixcontroller:rw:brightness;1",
             "description": "Sets the general brightness of the LEDs.",
             "schema": "integer",
             "writeable": true
@@ -31,21 +31,21 @@
         {
             "@type": "Property",
             "name": "rows",
-            "@id": "dtmi:jacdac:ledmatrixcontroller:rows;1",
+            "@id": "dtmi:jacdac:ledmatrixcontroller:const:rows;1",
             "description": "Number of rows on the screen",
             "schema": "integer"
         },
         {
             "@type": "Property",
             "name": "columns",
-            "@id": "dtmi:jacdac:ledmatrixcontroller:columns;1",
+            "@id": "dtmi:jacdac:ledmatrixcontroller:const:columns;1",
             "description": "Number of columns on the screen",
             "schema": "integer"
         },
         {
             "@type": "Command",
             "name": "clear",
-            "@id": "dtmi:jacdac:ledmatrixcontroller:clear;1",
+            "@id": "dtmi:jacdac:ledmatrixcontroller:command:clear;1",
             "description": "Shorthand command to clear all the LEDs on the screen."
         }
     ],

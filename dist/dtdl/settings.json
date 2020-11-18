@@ -8,43 +8,43 @@
         {
             "@type": "Command",
             "name": "get",
-            "@id": "dtmi:jacdac:settings:get;1",
+            "@id": "dtmi:jacdac:settings:command:get;1",
             "description": "Get the value of given setting. If no such entry exists, the value returned is empty."
         },
         {
             "@type": "Unsupportedreport",
             "name": "get",
-            "@id": "dtmi:jacdac:settings:get;1",
+            "@id": "dtmi:jacdac:settings:report:get;1",
             "description": "Get the value of given setting. If no such entry exists, the value returned is empty."
         },
         {
             "@type": "Command",
             "name": "set",
-            "@id": "dtmi:jacdac:settings:set;1",
+            "@id": "dtmi:jacdac:settings:command:set;1",
             "description": "Set the value of a given setting. Empty value indicates that the setting should be deleted."
         },
         {
             "@type": "Command",
             "name": "list_keys",
-            "@id": "dtmi:jacdac:settings:list_keys;1",
+            "@id": "dtmi:jacdac:settings:command:list_keys;1",
             "description": "Return keys of all settings."
         },
         {
             "@type": "Unsupportedpipe_report",
             "name": "listed_key",
-            "@id": "dtmi:jacdac:settings:listed_key;1",
+            "@id": "dtmi:jacdac:settings:pipe_report:listed_key;1",
             "description": "Return keys of all settings."
         },
         {
             "@type": "Command",
             "name": "list",
-            "@id": "dtmi:jacdac:settings:list;1",
+            "@id": "dtmi:jacdac:settings:command:list;1",
             "description": "Return keys and values of all settings."
         },
         {
             "@type": "Unsupportedpipe_report",
             "name": "listed_entry",
-            "@id": "dtmi:jacdac:settings:listed_entry;1",
+            "@id": "dtmi:jacdac:settings:pipe_report:listed_entry;1",
             "description": "Return keys and values of all settings."
         }
     ],

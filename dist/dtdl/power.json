@@ -8,15 +8,15 @@
         {
             "@type": "Property",
             "name": "enabled",
-            "@id": "dtmi:jacdac:power:enabled;1",
+            "@id": "dtmi:jacdac:power:rw:enabled;1",
             "description": "Turn the power to the bus on/off.",
-            "schema": "bool",
+            "schema": "boolean",
             "writeable": true
         },
         {
             "@type": "Property",
             "name": "max_power",
-            "@id": "dtmi:jacdac:power:max_power;1",
+            "@id": "dtmi:jacdac:power:rw:max_power;1",
             "description": "Limit the power provided by the service. The actual maximum limit will depend on hardware.\nThis field may be read-only in some implementations - you should read it back after setting.",
             "schema": "integer",
             "writeable": true
@@ -24,42 +24,42 @@
         {
             "@type": "Property",
             "name": "overload",
-            "@id": "dtmi:jacdac:power:overload;1",
+            "@id": "dtmi:jacdac:power:ro:overload;1",
             "description": "Indicates whether the power has been shut down due to overdraw.",
-            "schema": "bool"
+            "schema": "boolean"
         },
         {
             "@type": "Telemery",
             "name": "current_draw",
-            "@id": "dtmi:jacdac:power:current_draw;1",
+            "@id": "dtmi:jacdac:power:ro:current_draw;1",
             "description": "Present current draw from the bus.",
             "schema": "integer"
         },
         {
             "@type": "Property",
             "name": "battery_voltage",
-            "@id": "dtmi:jacdac:power:battery_voltage;1",
+            "@id": "dtmi:jacdac:power:ro:battery_voltage;1",
             "description": "Voltage on input.",
             "schema": "integer"
         },
         {
             "@type": "Property",
             "name": "battery_charge",
-            "@id": "dtmi:jacdac:power:battery_charge;1",
+            "@id": "dtmi:jacdac:power:ro:battery_charge;1",
             "description": "Fraction of charge in the battery.",
             "schema": "integer"
         },
         {
             "@type": "Property",
             "name": "battery_capacity",
-            "@id": "dtmi:jacdac:power:battery_capacity;1",
+            "@id": "dtmi:jacdac:power:const:battery_capacity;1",
             "description": "Energy that can be delivered to the bus when battery is fully charged.\nThis excludes conversion overheads if any.",
             "schema": "integer"
         },
         {
             "@type": "Property",
             "name": "keep_on_pulse_duration",
-            "@id": "dtmi:jacdac:power:keep_on_pulse_duration;1",
+            "@id": "dtmi:jacdac:power:rw:keep_on_pulse_duration;1",
             "description": "Many USB power packs need current to be drawn from time to time to prevent shutdown.\nThis regulates how often and for how long such current is drawn.\nTypically a 1/8W 22 ohm resistor is used as load. This limits the duty cycle to 10%.",
             "unit": "millisecond",
             "schema": "integer",
@@ -68,7 +68,7 @@
         {
             "@type": "Property",
             "name": "keep_on_pulse_period",
-            "@id": "dtmi:jacdac:power:keep_on_pulse_period;1",
+            "@id": "dtmi:jacdac:power:rw:keep_on_pulse_period;1",
             "description": "Many USB power packs need current to be drawn from time to time to prevent shutdown.\nThis regulates how often and for how long such current is drawn.\nTypically a 1/8W 22 ohm resistor is used as load. This limits the duty cycle to 10%.",
             "unit": "millisecond",
             "schema": "integer",

@@ -8,53 +8,117 @@
         {
             "@type": "Command",
             "name": "scan",
-            "@id": "dtmi:jacdac:wifi:scan;1",
+            "@id": "dtmi:jacdac:wifi:command:scan;1",
             "description": "Initiate search for WiFi networks. Results are returned via pipe, one entry per packet."
         },
         {
             "@type": "Unsupportedpipe_report",
             "name": "results",
-            "@id": "dtmi:jacdac:wifi:results;1",
+            "@id": "dtmi:jacdac:wifi:pipe_report:results;1",
             "description": "Initiate search for WiFi networks. Results are returned via pipe, one entry per packet."
         },
         {
             "@type": "Command",
             "name": "connect",
-            "@id": "dtmi:jacdac:wifi:connect;1",
+            "@id": "dtmi:jacdac:wifi:command:connect;1",
             "description": "Connect to named network."
         },
         {
             "@type": "Command",
             "name": "disconnect",
-            "@id": "dtmi:jacdac:wifi:disconnect;1",
+            "@id": "dtmi:jacdac:wifi:command:disconnect;1",
             "description": "Disconnect from current WiFi network if any."
         },
         {
             "@type": "Property",
             "name": "connected",
-            "@id": "dtmi:jacdac:wifi:connected;1",
+            "@id": "dtmi:jacdac:wifi:ro:connected;1",
             "description": "Indicates whether or not we currently have an IP address assigned.",
-            "schema": "bool"
+            "schema": "boolean"
         },
         {
-            "@type": "Telemetry",
+            "@type": [
+                "Telemetry",
+                "Event"
+            ],
             "name": "got_ip",
-            "@id": "dtmi:jacdac:wifi:got_ip;1",
+            "@id": "dtmi:jacdac:wifi:event:got_ip;1",
             "description": "Emitted upon successful join and IP address assignment.",
-            "schema": {
-                "name": "count",
-                "schema": "integer"
-            }
+            "schema": "dtmi:jacdac:wifi:event;1"
         },
         {
-            "@type": "Telemetry",
+            "@type": [
+                "Telemetry",
+                "Event"
+            ],
             "name": "lost_ip",
-            "@id": "dtmi:jacdac:wifi:lost_ip;1",
+            "@id": "dtmi:jacdac:wifi:event:lost_ip;1",
             "description": "Emitted when disconnected from network.",
-            "schema": {
-                "name": "count",
-                "schema": "integer"
-            }
+            "schema": "dtmi:jacdac:wifi:event;1"
+        }
+    ],
+    "schemas": [
+        {
+            "@id": "dtmi:jacdac:wifi:event;1",
+            "@type": "Object",
+            "fields": [
+                {
+                    "name": "count",
+                    "schema": "integer"
+                }
+            ]
+        },
+        {
+            "@type": "Enum",
+            "@id": "dtmi:jacdac:x18aae1fa:APFlags;1",
+            "name": "APFlags",
+            "valueSchema": "integer",
+            "enumValues": [
+                {
+                    "name": "HasPassword",
+                    "enumValue": 1
+                },
+                {
+                    "name": "WPS",
+                    "enumValue": 2
+                },
+                {
+                    "name": "HasSecondaryChannelAbove",
+                    "enumValue": 4
+                },
+                {
+                    "name": "HasSecondaryChannelBelow",
+                    "enumValue": 8
+                },
+                {
+                    "name": "IEEE_802_11B",
+                    "enumValue": 256
+                },
+                {
+                    "name": "IEEE_802_11A",
+                    "enumValue": 512
+                },
+                {
+                    "name": "IEEE_802_11G",
+                    "enumValue": 1024
+                },
+                {
+                    "name": "IEEE_802_11N",
+                    "enumValue": 2048
+                },
+                {
+                    "name": "IEEE_802_11AC",
+                    "enumValue": 4096
+                },
+                {
+                    "name": "IEEE_802_11AX",
+                    "enumValue": 8192
+                },
+                {
+                    "name": "IEEE_802_LongRange",
+                    "enumValue": 32768
+                }
+            ]
         }
     ],
     "@context": "dtmi:dtdl:context;2"

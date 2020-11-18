@@ -8,28 +8,28 @@
         {
             "@type": "Property",
             "name": "inputs",
-            "@id": "dtmi:jacdac:aggregator:inputs;1",
+            "@id": "dtmi:jacdac:aggregator:rw:inputs;1",
             "description": "Set automatic input collection.\nThese settings are stored in flash.",
             "writeable": true
         },
         {
             "@type": "Property",
             "name": "num_samples",
-            "@id": "dtmi:jacdac:aggregator:num_samples;1",
+            "@id": "dtmi:jacdac:aggregator:ro:num_samples;1",
             "description": "Number of input samples collected so far.",
             "schema": "integer"
         },
         {
             "@type": "Property",
             "name": "sample_size",
-            "@id": "dtmi:jacdac:aggregator:sample_size;1",
+            "@id": "dtmi:jacdac:aggregator:ro:sample_size;1",
             "description": "Size of a single sample.",
             "schema": "integer"
         },
         {
             "@type": "Property",
             "name": "stream_samples",
-            "@id": "dtmi:jacdac:aggregator:stream_samples;1",
+            "@id": "dtmi:jacdac:aggregator:rw:stream_samples;1",
             "description": "When set to `N`, will stream `N` samples as `current_sample` reading.",
             "schema": "integer",
             "writeable": true
@@ -37,8 +37,42 @@
         {
             "@type": "Telemery",
             "name": "current_sample",
-            "@id": "dtmi:jacdac:aggregator:current_sample;1",
+            "@id": "dtmi:jacdac:aggregator:ro:current_sample;1",
             "description": "Last collected sample."
+        }
+    ],
+    "schemas": [
+        {
+            "@type": "Enum",
+            "@id": "dtmi:jacdac:x1d90e1c5:SampleType;1",
+            "name": "SampleType",
+            "valueSchema": "integer",
+            "enumValues": [
+                {
+                    "name": "U8",
+                    "enumValue": 8
+                },
+                {
+                    "name": "I8",
+                    "enumValue": 136
+                },
+                {
+                    "name": "U16",
+                    "enumValue": 16
+                },
+                {
+                    "name": "I16",
+                    "enumValue": 144
+                },
+                {
+                    "name": "U32",
+                    "enumValue": 32
+                },
+                {
+                    "name": "I32",
+                    "enumValue": 160
+                }
+            ]
         }
     ],
     "@context": "dtmi:dtdl:context;2"

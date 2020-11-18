@@ -8,7 +8,7 @@
         {
             "@type": "Property",
             "name": "stream_samples",
-            "@id": "dtmi:jacdac:accelerometer:stream_samples;1",
+            "@id": "dtmi:jacdac:accelerometer:rw:stream_samples;1",
             "description": "Asks device to stream a given number of samples\n(clients will typically write `255` to this register every second or so, while streaming is required).",
             "schema": "integer",
             "writeable": true
@@ -16,7 +16,7 @@
         {
             "@type": "Property",
             "name": "streaming_interval",
-            "@id": "dtmi:jacdac:accelerometer:streaming_interval;1",
+            "@id": "dtmi:jacdac:accelerometer:rw:streaming_interval;1",
             "description": "Period between packets of data when streaming in milliseconds.",
             "unit": "millisecond",
             "schema": "integer",
@@ -25,128 +25,140 @@
         {
             "@type": "Telemery",
             "name": "forces",
-            "@id": "dtmi:jacdac:accelerometer:forces;1",
+            "@id": "dtmi:jacdac:accelerometer:ro:forces;1",
             "description": "Indicates the current forces acting on accelerometer."
         },
         {
-            "@type": "Telemetry",
+            "@type": [
+                "Telemetry",
+                "Event"
+            ],
             "name": "tilt_up",
-            "@id": "dtmi:jacdac:accelerometer:tilt_up;1",
+            "@id": "dtmi:jacdac:accelerometer:event:tilt_up;1",
             "description": "Emitted when accelerometer is tilted in the given direction.",
-            "schema": {
-                "name": "count",
-                "schema": "integer"
-            }
+            "schema": "dtmi:jacdac:accelerometer:event;1"
         },
         {
-            "@type": "Telemetry",
+            "@type": [
+                "Telemetry",
+                "Event"
+            ],
             "name": "tilt_down",
-            "@id": "dtmi:jacdac:accelerometer:tilt_down;1",
+            "@id": "dtmi:jacdac:accelerometer:event:tilt_down;1",
             "description": "Emitted when accelerometer is tilted in the given direction.",
-            "schema": {
-                "name": "count",
-                "schema": "integer"
-            }
+            "schema": "dtmi:jacdac:accelerometer:event;1"
         },
         {
-            "@type": "Telemetry",
+            "@type": [
+                "Telemetry",
+                "Event"
+            ],
             "name": "tilt_left",
-            "@id": "dtmi:jacdac:accelerometer:tilt_left;1",
+            "@id": "dtmi:jacdac:accelerometer:event:tilt_left;1",
             "description": "Emitted when accelerometer is tilted in the given direction.",
-            "schema": {
-                "name": "count",
-                "schema": "integer"
-            }
+            "schema": "dtmi:jacdac:accelerometer:event;1"
         },
         {
-            "@type": "Telemetry",
+            "@type": [
+                "Telemetry",
+                "Event"
+            ],
             "name": "tilt_right",
-            "@id": "dtmi:jacdac:accelerometer:tilt_right;1",
+            "@id": "dtmi:jacdac:accelerometer:event:tilt_right;1",
             "description": "Emitted when accelerometer is tilted in the given direction.",
-            "schema": {
-                "name": "count",
-                "schema": "integer"
-            }
+            "schema": "dtmi:jacdac:accelerometer:event;1"
         },
         {
-            "@type": "Telemetry",
+            "@type": [
+                "Telemetry",
+                "Event"
+            ],
             "name": "face_up",
-            "@id": "dtmi:jacdac:accelerometer:face_up;1",
+            "@id": "dtmi:jacdac:accelerometer:event:face_up;1",
             "description": "Emitted when accelerometer is laying flat in the given direction.",
-            "schema": {
-                "name": "count",
-                "schema": "integer"
-            }
+            "schema": "dtmi:jacdac:accelerometer:event;1"
         },
         {
-            "@type": "Telemetry",
+            "@type": [
+                "Telemetry",
+                "Event"
+            ],
             "name": "face_down",
-            "@id": "dtmi:jacdac:accelerometer:face_down;1",
+            "@id": "dtmi:jacdac:accelerometer:event:face_down;1",
             "description": "Emitted when accelerometer is laying flat in the given direction.",
-            "schema": {
-                "name": "count",
-                "schema": "integer"
-            }
+            "schema": "dtmi:jacdac:accelerometer:event;1"
         },
         {
-            "@type": "Telemetry",
+            "@type": [
+                "Telemetry",
+                "Event"
+            ],
             "name": "freefall",
-            "@id": "dtmi:jacdac:accelerometer:freefall;1",
+            "@id": "dtmi:jacdac:accelerometer:event:freefall;1",
             "description": "Emitted when total force acting on accelerometer is much less than 1g.",
-            "schema": {
-                "name": "count",
-                "schema": "integer"
-            }
+            "schema": "dtmi:jacdac:accelerometer:event;1"
         },
         {
-            "@type": "Telemetry",
+            "@type": [
+                "Telemetry",
+                "Event"
+            ],
             "name": "shake",
-            "@id": "dtmi:jacdac:accelerometer:shake;1",
+            "@id": "dtmi:jacdac:accelerometer:event:shake;1",
             "description": "Emitted when forces change violently a few times.",
-            "schema": {
-                "name": "count",
-                "schema": "integer"
-            }
+            "schema": "dtmi:jacdac:accelerometer:event;1"
         },
         {
-            "@type": "Telemetry",
+            "@type": [
+                "Telemetry",
+                "Event"
+            ],
             "name": "force_2g",
-            "@id": "dtmi:jacdac:accelerometer:force_2g;1",
+            "@id": "dtmi:jacdac:accelerometer:event:force_2g;1",
             "description": "Emitted when force in any direction exceeds given threshold.",
-            "schema": {
-                "name": "count",
-                "schema": "integer"
-            }
+            "schema": "dtmi:jacdac:accelerometer:event;1"
         },
         {
-            "@type": "Telemetry",
+            "@type": [
+                "Telemetry",
+                "Event"
+            ],
             "name": "force_3g",
-            "@id": "dtmi:jacdac:accelerometer:force_3g;1",
+            "@id": "dtmi:jacdac:accelerometer:event:force_3g;1",
             "description": "Emitted when force in any direction exceeds given threshold.",
-            "schema": {
-                "name": "count",
-                "schema": "integer"
-            }
+            "schema": "dtmi:jacdac:accelerometer:event;1"
         },
         {
-            "@type": "Telemetry",
+            "@type": [
+                "Telemetry",
+                "Event"
+            ],
             "name": "force_6g",
-            "@id": "dtmi:jacdac:accelerometer:force_6g;1",
+            "@id": "dtmi:jacdac:accelerometer:event:force_6g;1",
             "description": "Emitted when force in any direction exceeds given threshold.",
-            "schema": {
-                "name": "count",
-                "schema": "integer"
-            }
+            "schema": "dtmi:jacdac:accelerometer:event;1"
         },
         {
-            "@type": "Telemetry",
+            "@type": [
+                "Telemetry",
+                "Event"
+            ],
             "name": "force_8g",
-            "@id": "dtmi:jacdac:accelerometer:force_8g;1",
+            "@id": "dtmi:jacdac:accelerometer:event:force_8g;1",
             "description": "Emitted when force in any direction exceeds given threshold.",
-            "schema": {
-                "name": "count",
-                "schema": "integer"
-            }
+            "schema": "dtmi:jacdac:accelerometer:event;1"
+        }
+    ],
+    "schemas": [
+        {
+            "@id": "dtmi:jacdac:accelerometer:event;1",
+            "@type": "Object",
+            "fields": [
+                {
+                    "name": "count",
+                    "schema": "integer"
+                }
+            ]
         }
     ],
     "@context": "dtmi:dtdl:context;2"

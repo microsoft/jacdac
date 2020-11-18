@@ -8,14 +8,76 @@
         {
             "@type": "Command",
             "name": "key",
-            "@id": "dtmi:jacdac:keyboard:key;1",
+            "@id": "dtmi:jacdac:keyboard:command:key;1",
             "description": "Presses a key or a sequence of keys down."
         },
         {
             "@type": "Command",
             "name": "clear",
-            "@id": "dtmi:jacdac:keyboard:clear;1",
+            "@id": "dtmi:jacdac:keyboard:command:clear;1",
             "description": "Clears all pressed keys."
+        }
+    ],
+    "schemas": [
+        {
+            "@type": "Enum",
+            "@id": "dtmi:jacdac:x18b05b6a:Modifiers;1",
+            "name": "Modifiers",
+            "valueSchema": "integer",
+            "enumValues": [
+                {
+                    "name": "LeftControl",
+                    "enumValue": 224
+                },
+                {
+                    "name": "LeftShift",
+                    "enumValue": 225
+                },
+                {
+                    "name": "LeftAlt",
+                    "enumValue": 226
+                },
+                {
+                    "name": "LeftGUID",
+                    "enumValue": 227
+                },
+                {
+                    "name": "RightControl",
+                    "enumValue": 228
+                },
+                {
+                    "name": "RightShift",
+                    "enumValue": 229
+                },
+                {
+                    "name": "RightAlt",
+                    "enumValue": 230
+                },
+                {
+                    "name": "RightGUID",
+                    "enumValue": 231
+                }
+            ]
+        },
+        {
+            "@type": "Enum",
+            "@id": "dtmi:jacdac:x18b05b6a:Action;1",
+            "name": "Action",
+            "valueSchema": "integer",
+            "enumValues": [
+                {
+                    "name": "Press",
+                    "enumValue": 0
+                },
+                {
+                    "name": "Up",
+                    "enumValue": 1
+                },
+                {
+                    "name": "Down",
+                    "enumValue": 2
+                }
+            ]
         }
     ],
     "@context": "dtmi:dtdl:context;2"

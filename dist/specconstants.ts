@@ -331,13 +331,15 @@ export enum HumidityReg {
 export const SRV_AZURE_IOT_HUB = 0x19ed364c
 export enum IotHubCmd {
     /**
-     * Argument: connection_string string (bytes). Connection string typically looks something like
-     * `HostName=my-iot-hub.azure-devices.net;DeviceId=my-dev-007;SharedAccessKey=xyz+base64key`.
-     * You can get it in `Shared access policies -> iothubowner -> Connection string-primary key` in the Azure Portal.
+     * No args. Try connecting using currently set `connection_string`.
+     * The service normally preiodically tries to connect automatically.
      */
     Connect = 0x80,
 
-    /** No args. Disconnect from current Hub if any. */
+    /**
+     * No args. Disconnect from current Hub if any.
+     * This disables auto-connect behavior, until a `connect` command is issued.
+     */
     Disconnect = 0x81,
 
     // const msg = string0(buf, 0, 0)
@@ -355,11 +357,11 @@ export enum IotHubCmd {
     /** Argument: twin_result pipe (bytes). Ask for current device digital twin. */
     GetTwin = 0x85,
 
-    /** No args. Start twin update. */
-    PatchTwin = 0x86,
-
     /** Argument: twin_updates pipe (bytes). Subscribe to updates to our twin. */
     SubscribeTwin = 0x87,
+
+    /** No args. Start twin update. */
+    PatchTwin = 0x86,
 
     /** Argument: method_call pipe (bytes). Subscribe to direct method calls. */
     SubscribeMethod = 0x88,
@@ -382,13 +384,10 @@ export enum IotHubPipeCmd {
      * If there are any properties, this meta-report is send one or more times.
      * All properties of a given message are always sent before the body.
      */
-    SubProperties = 0x1,
+    DeviceboundProperties = 0x1,
 
     /** Argument: status_code uint32_t. This emitted if status is not 200. */
     TwinError = 0x1,
-
-    /** No args. This is send after last `twin_update_json` packet for a given update. */
-    TwinUpdateEnd = 0x1,
 
     // const methodName = string0(buf, 0, 0)
     // const requestId = string0(buf, 0, 1)
@@ -397,8 +396,23 @@ export enum IotHubPipeCmd {
 }
 
 export enum IotHubReg {
-    /** Read-only bool (uint8_t). Indicates whether or not we are currently connected to an IoT hub. */
-    IsConnected = 0x180,
+    /** Read-only string (bytes). Returns `"ok"` when connected, and an error description otherwise. */
+    ConnectionStatus = 0x180,
+
+    /**
+     * Read-write string (bytes). Connection string typically looks something like
+     * `HostName=my-iot-hub.azure-devices.net;DeviceId=my-dev-007;SharedAccessKey=xyz+base64key`.
+     * You can get it in `Shared access policies -> iothubowner -> Connection string-primary key` in the Azure Portal.
+     * This register is write-only.
+     * You can use `hub_name` and `device_id` to check if connection string is set, but you cannot get the shared access key.
+     */
+    ConnectionString = 0x80,
+
+    /** Read-only string (bytes). Something like `my-iot-hub.azure-devices.net`; empty string when `connection_string` is not set. */
+    HubName = 0x181,
+
+    /** Read-only string (bytes). Something like `my-dev-007`; empty string when `connection_string` is not set. */
+    DeviceId = 0x182,
 }
 
 export enum IotHubEvent {
@@ -413,7 +427,7 @@ export enum IotHubEvent {
     // const propertyValue = string0(buf, 0, 2)
     /**
      * This event is emitted upon reception of a cloud to device message, that is a string
-     * and fits in a single event packet.
+     * (doesn't contain NUL bytes) and fits in a single event packet.
      * For reliable reception, use the `subscribe` command above.
      */
     DeviceboundStr = 0x3,
@@ -885,6 +899,32 @@ export enum ServoReg {
     /** Read-write bool (uint8_t). Turn the power to the servo on/off. */
     Enabled = 0x1,
 }
+
+// Service: Settings Storage
+export const SRV_SETTINGS_STORAGE = 0x1107dc4a
+export enum SettingsCmd {
+    /** Argument: key string (bytes). Get the value of given setting. If no such entry exists, the value returned is empty. */
+    Get = 0x80,
+    // report Get
+    // const key = string0(buf, 0, 0)
+    // const value = buf.slice(0)
+
+    // const key = string0(buf, 0, 0)
+    // const value = buf.slice(0)
+    /** Set the value of a given setting. Empty value indicates that the setting should be deleted. */
+    Set = 0x81,
+
+    /** Argument: results pipe (bytes). Return keys of all settings. */
+    ListKeys = 0x82,
+
+    /** Argument: results pipe (bytes). Return keys and values of all settings. */
+    List = 0x83,
+}
+
+// pipe_report ListedEntry
+// const key = string0(buf, 0, 0)
+// const value = buf.slice(0)
+
 
 // Service: Slider
 export const SRV_SLIDER = 0x1f274746

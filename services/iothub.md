@@ -7,18 +7,15 @@ Send messages, receive commands, and work with device twins in Azure IoT Hub.
 
 ## Commands
 
-    command connect @ 0x80 {
-        connection_string: string
-    }
-    report {}
+    command connect @ 0x80 {}
 
-Connection string typically looks something like 
-`HostName=my-iot-hub.azure-devices.net;DeviceId=my-dev-007;SharedAccessKey=xyz+base64key`.
-You can get it in `Shared access policies -> iothubowner -> Connection string-primary key` in the Azure Portal.
+Try connecting using currently set `connection_string`.
+The service normally preiodically tries to connect automatically.
 
     command disconnect @ 0x81 {}
 
 Disconnect from current Hub if any.
+This disables auto-connect behavior, until a `connect` command is issued.
 
     command send_string_msg @ 0x82 {
         msg: string0
@@ -38,6 +35,7 @@ Sends a short message in string format (it's typically JSON-encoded). Multiple p
 Sends an arbitrary, possibly binary, message. The size is only limited by RAM on the module.
 
     pipe command message {
+    segmented:
         body: bytes
     }
 
@@ -57,7 +55,7 @@ Set properties on the message. Can be repeated multiple times.
 
 Subscribes for cloud to device messages, which will be sent over the specified pipe.
 
-    meta pipe report sub_properties @ 0x01 {
+    meta pipe report devicebound_properties @ 0x01 {
     repeats:
         property_name: string0
         property_value: string0
@@ -67,10 +65,11 @@ If there are any properties, this meta-report is send one or more times.
 All properties of a given message are always sent before the body.
 
     pipe report devicebound {
+    multi-segmented:
         body: bytes
     }
 
-For every message, the body is sent once, using this report.
+For every message, the body is sent in one or more reports like this.
 
     command get_twin @ 0x85 {
         twin_result: pipe
@@ -79,12 +78,11 @@ For every message, the body is sent once, using this report.
 Ask for current device digital twin.
 
     pipe report twin_json {
+    segmented:
         json: bytes
     }
 
-The JSON-encoded twin; note that there can be several packets that need to be concatenated.
-The pipe is closed when the last packet is sent.
-This is typically something like:
+The JSON-encoded twin. This is typically something like:
 `{ "desired": { "foo": 1, "$version": 12 }, "reported": { "foo": 1, "bar" 2, "$version": 123 } }`
 
     meta pipe report twin_error @ 0x01 {
@@ -92,6 +90,20 @@ This is typically something like:
     }
 
 This emitted if status is not 200.
+
+    command subscribe_twin @ 0x87 {
+        twin_updates: pipe
+    }
+
+Subscribe to updates to our twin.
+
+    pipe report twin_update_json {
+    multi-segmented:
+        json: bytes
+    }
+
+First, the current value of the twin is sent (this includes desired and reported properties).
+Next updates done by the back-end are streamed as they arrive (they only include the desired properties).
 
     command patch_twin @ 0x86 {}
     report {
@@ -101,28 +113,13 @@ This emitted if status is not 200.
 Start twin update.
 
     pipe command twin_patch_json {
+    segmented:
         json: bytes
     }
 
 The JSON-encoded twin update. The pipe should be closed when the last packet is sent.
 You just send updates for `reported` field, like this:
 `{ "bar": 3, "baz": null }` (skip `"$version"` and no `"reported": { ... }`).
-
-    command subscribe_twin @ 0x87 {
-        twin_updates: pipe
-    }
-
-Subscribe to updates to our twin.
-
-    pipe report twin_update_json {
-        json: bytes
-    }
-
-Every back-end change is sent as one or more reports like this.
-
-    meta pipe report twin_update_end @ 0x01 {}
-
-This is send after last `twin_update_json` packet for a given update.
 
     command subscribe_method @ 0x88 {
         method_call: pipe
@@ -131,6 +128,7 @@ This is send after last `twin_update_json` packet for a given update.
 Subscribe to direct method calls.
 
     pipe report method_call_body {
+    multi-segmented:
         json: bytes
     }
 
@@ -155,6 +153,7 @@ This is sent after the last part of the `method_call_body`.
 Respond to a direct method call (`request_id` comes from `subscribe_method` pipe).
 
     pipe command method_response {
+    segmented:
         json: bytes
     }
 
@@ -162,9 +161,26 @@ The pipe should be closed when the last packet of response body is sent.
 
 ## Registers
 
-    ro is_connected: bool @ 0x180
+    ro connection_status: string @ 0x180
 
-Indicates whether or not we are currently connected to an IoT hub.
+Returns `"ok"` when connected, and an error description otherwise.
+
+    rw connection_string: string @ 0x80
+
+Connection string typically looks something like 
+`HostName=my-iot-hub.azure-devices.net;DeviceId=my-dev-007;SharedAccessKey=xyz+base64key`.
+You can get it in `Shared access policies -> iothubowner -> Connection string-primary key` in the Azure Portal.
+This register is write-only.
+You can use `hub_name` and `device_id` to check if connection string is set, but you cannot get the shared access key.
+
+    ro hub_name: string @ 0x181
+
+Something like `my-iot-hub.azure-devices.net`; empty string when `connection_string` is not set.
+
+    ro device_id: string @ 0x182
+
+Something like `my-dev-007`; empty string when `connection_string` is not set.
+
 
 ## Events
 
@@ -186,5 +202,5 @@ Emitted when connection was lost.
     }
 
 This event is emitted upon reception of a cloud to device message, that is a string
-and fits in a single event packet.
+(doesn't contain NUL bytes) and fits in a single event packet.
 For reliable reception, use the `subscribe` command above.

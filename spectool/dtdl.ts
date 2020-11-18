@@ -323,7 +323,9 @@ export function toDTDLInterface(srv: jdspec.ServiceSpec): string {
         "@type": "Interface",
         "@id": toDTMI([srv.shortId]),
         "name": srv.shortName,
-        "displayName": srv.name,
+        "displayName": {
+            "en": srv.name
+        },
         "description": srv.notes["short"],
         "comment": srv.notes["long"],
         "contents":

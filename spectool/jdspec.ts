@@ -1,7 +1,5 @@
 /// <reference path="jdspec.d.ts" />
 
-import { DTDLtoString, serviceToInterface } from "./dtdl";
-
 export const SenMLUnitDescription: jdspec.SMap<string> = {
     "m": "meter",
     "kg": "kilogram",
@@ -1199,7 +1197,6 @@ export function converters(): jdspec.SMap<(s: jdspec.ServiceSpec) => string> {
         "c": toH,
         "ts": j => toTypescript(j, false),
         "sts": j => toTypescript(j, true),
-        "dtdl": j => DTDLtoString(serviceToInterface(j))
         /*
         "cpp": toHPP,
         */

@@ -107,7 +107,7 @@
             "writeable": true
         },
         {
-            "@type": "Telemery",
+            "@type": "Telemetry",
             "name": "reading",
             "@id": "dtmi:jacdac:_base:ro:reading;1",
             "description": "Read-only value of the sensor, also reported in streaming.",

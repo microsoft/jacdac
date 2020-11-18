@@ -23,7 +23,7 @@
             "writeable": true
         },
         {
-            "@type": "Telemery",
+            "@type": "Telemetry",
             "name": "position",
             "@id": "dtmi:jacdac:slider:ro:position;1",
             "description": "The relative position of the slider between `0x0000` and `0xffff`.",

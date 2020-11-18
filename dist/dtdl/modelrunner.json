@@ -38,7 +38,7 @@
             "writeable": true
         },
         {
-            "@type": "Telemery",
+            "@type": "Telemetry",
             "name": "outputs",
             "@id": "dtmi:jacdac:modelrunner:ro:outputs;1",
             "description": "Results of last model invocation as `float32` array.",

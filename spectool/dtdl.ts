@@ -307,7 +307,7 @@ function packetToDTDL(srv: jdspec.ServiceSpec, pkt: jdspec.PacketInfo): DTDLCont
             if (pkt.kind === "rw")
                 dtdl.writeable = true;
             if (pkt.kind == "ro" && pkt.identifier == 0x101) // isReading
-                dtdl["@type"] = "Telemery"
+                dtdl["@type"] = "Telemetry"
 
             if (!dtdl.schema && pkt.kind === "event") {
                 // keep a count of the events

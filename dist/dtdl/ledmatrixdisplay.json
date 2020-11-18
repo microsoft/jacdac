@@ -23,7 +23,7 @@
             "writeable": true
         },
         {
-            "@type": "Telemery",
+            "@type": "Telemetry",
             "name": "leds",
             "@id": "dtmi:jacdac:ledmatrixdisplay:ro:leds;1",
             "description": "Streams the state of the screen where pixel on/off state is \nstored as a bit, column by column. The column should be byte aligned."

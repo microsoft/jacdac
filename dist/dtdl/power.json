@@ -29,7 +29,7 @@
             "schema": "boolean"
         },
         {
-            "@type": "Telemery",
+            "@type": "Telemetry",
             "name": "current_draw",
             "@id": "dtmi:jacdac:power:ro:current_draw;1",
             "description": "Present current draw from the bus.",

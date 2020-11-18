@@ -23,7 +23,7 @@
             "writeable": true
         },
         {
-            "@type": "Telemery",
+            "@type": "Telemetry",
             "name": "humidity",
             "@id": "dtmi:jacdac:humidity:ro:humidity;1",
             "description": "The relative humidity in percentage of full water saturation.",

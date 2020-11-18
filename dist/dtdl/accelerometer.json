@@ -23,7 +23,7 @@
             "writeable": true
         },
         {
-            "@type": "Telemery",
+            "@type": "Telemetry",
             "name": "forces",
             "@id": "dtmi:jacdac:accelerometer:ro:forces;1",
             "description": "Indicates the current forces acting on accelerometer."

@@ -35,7 +35,7 @@
             "description": "Indicates number of players supported and which buttons are present on the controller."
         },
         {
-            "@type": "Telemery",
+            "@type": "Telemetry",
             "name": "buttons",
             "@id": "dtmi:jacdac:gamepad:ro:buttons;1",
             "description": "Indicates which buttons are currently active (pressed).\n`pressure` should be `0xff` for digital buttons, and proportional for analog ones."

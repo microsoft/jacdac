@@ -23,7 +23,7 @@
             "writeable": true
         },
         {
-            "@type": "Telemery",
+            "@type": "Telemetry",
             "name": "temperature",
             "@id": "dtmi:jacdac:temperature:ro:temperature;1",
             "description": "The temperature.",

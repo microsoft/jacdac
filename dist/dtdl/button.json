@@ -23,6 +23,13 @@
             "writeable": true
         },
         {
+            "@type": "Telemetry",
+            "name": "pressed",
+            "@id": "dtmi:jacdac:button:ro:pressed;1",
+            "description": "Indicates whether the button is currently active (pressed).",
+            "schema": "boolean"
+        },
+        {
             "@type": [
                 "Telemetry",
                 "Event"

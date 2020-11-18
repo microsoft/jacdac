@@ -35,7 +35,7 @@
             "writeable": true
         },
         {
-            "@type": "Telemery",
+            "@type": "Telemetry",
             "name": "current_sample",
             "@id": "dtmi:jacdac:aggregator:ro:current_sample;1",
             "description": "Last collected sample."

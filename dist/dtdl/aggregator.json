@@ -10,7 +10,7 @@
             "name": "inputs",
             "@id": "dtmi:jacdac:aggregator:rw:inputs;1",
             "description": "Set automatic input collection.\nThese settings are stored in flash.",
-            "writeable": true
+            "writable": true
         },
         {
             "@type": "Property",
@@ -32,7 +32,7 @@
             "@id": "dtmi:jacdac:aggregator:rw:stream_samples;1",
             "description": "When set to `N`, will stream `N` samples as `current_sample` reading.",
             "schema": "integer",
-            "writeable": true
+            "writable": true
         },
         {
             "@type": "Telemetry",

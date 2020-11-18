@@ -10,7 +10,7 @@
             "name": "leds",
             "@id": "dtmi:jacdac:ledmatrixcontroller:rw:leds;1",
             "description": "Read or writes the state of the screen where pixel on/off state is \nstored as a bit, column by column. The column should be byte aligned.",
-            "writeable": true
+            "writable": true
         },
         {
             "@type": "Property",
@@ -18,7 +18,7 @@
             "@id": "dtmi:jacdac:ledmatrixcontroller:rw:enabled;1",
             "description": "Disables or enables the whole screen.",
             "schema": "boolean",
-            "writeable": true
+            "writable": true
         },
         {
             "@type": "Property",
@@ -26,7 +26,7 @@
             "@id": "dtmi:jacdac:ledmatrixcontroller:rw:brightness;1",
             "description": "Sets the general brightness of the LEDs.",
             "schema": "integer",
-            "writeable": true
+            "writable": true
         },
         {
             "@type": "Property",

@@ -18,7 +18,7 @@
             "description": "Get or set microphone sampling period.\nSampling rate is `1_000_000 / sampling_period Hz`.",
             "unit": "microsecond",
             "schema": "integer",
-            "writeable": true
+            "writable": true
         }
     ],
     "@context": "dtmi:dtdl:context;2"

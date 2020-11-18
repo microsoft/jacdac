@@ -11,7 +11,7 @@
             "@id": "dtmi:jacdac:motor:rw:duty;1",
             "description": "PWM duty cycle of the motor. Use negative/positive values to run the motor forwards and backwards.\nPositive is recommended to be clockwise rotation and negative counterclockwise.",
             "schema": "integer",
-            "writeable": true
+            "writable": true
         },
         {
             "@type": "Property",
@@ -19,7 +19,7 @@
             "@id": "dtmi:jacdac:motor:rw:enabled;1",
             "description": "Turn the power to the motor on/off.",
             "schema": "boolean",
-            "writeable": true
+            "writable": true
         }
     ],
     "@context": "dtmi:dtdl:context;2"

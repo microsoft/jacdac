@@ -305,7 +305,7 @@ function packetToDTDL(srv: jdspec.ServiceSpec, pkt: jdspec.PacketInfo): DTDLCont
             dtdl.unit = toUnit(pkt)
             dtdl.schema = toSchema(srv, pkt)
             if (pkt.kind === "rw")
-                dtdl.writeable = true;
+                dtdl.writable = true;
             if (pkt.kind == "ro" && pkt.identifier == 0x101) // isReading
                 dtdl["@type"] = "Telemetry"
 

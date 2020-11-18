@@ -11,7 +11,7 @@
             "@id": "dtmi:jacdac:music:rw:volume;1",
             "description": "The volume (duty cycle) of the buzzer.",
             "schema": "integer",
-            "writeable": true
+            "writable": true
         },
         {
             "@type": "Command",

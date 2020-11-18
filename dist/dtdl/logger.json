@@ -11,7 +11,7 @@
             "@id": "dtmi:jacdac:logger:rw:min_priority;1",
             "description": "Messages with level lower than this won't be emitted. The default setting may vary.\nLoggers should revert this to their default setting if the register has not been\nupdated in 3000ms, and also keep the lowest setting they have seen in the last 1500ms.\nThus, clients should write this register every 1000ms and ignore messages which are\ntoo verbose for them.",
             "schema": "dtmi:jacdac:x12dc1fca:Priority;1",
-            "writeable": true
+            "writable": true
         },
         {
             "@type": "Unsupportedreport",

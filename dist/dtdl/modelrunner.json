@@ -35,7 +35,7 @@
             "@id": "dtmi:jacdac:modelrunner:rw:auto_invoke_every;1",
             "description": "When register contains `N > 0`, run the model automatically every time new `N` samples are collected.\nModel may be run less often if it takes longer to run than `N * sampling_interval`.\nThe `outputs` register will stream its value after each run.\nThis register is not stored in flash.",
             "schema": "integer",
-            "writeable": true
+            "writable": true
         },
         {
             "@type": "Telemetry",

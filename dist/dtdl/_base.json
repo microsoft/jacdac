@@ -71,7 +71,7 @@
             "@id": "dtmi:jacdac:_base:rw:intensity;1",
             "description": "This is either binary on/off (0 or non-zero), or can be gradual (eg. brightness of an RGB LED strip).",
             "schema": "integer",
-            "writeable": true
+            "writable": true
         },
         {
             "@type": "Property",
@@ -79,7 +79,7 @@
             "@id": "dtmi:jacdac:_base:rw:value;1",
             "description": "The primary value of actuator (eg. servo pulse length, or motor duty cycle).",
             "schema": "integer",
-            "writeable": true
+            "writable": true
         },
         {
             "@type": "Property",
@@ -87,7 +87,7 @@
             "@id": "dtmi:jacdac:_base:rw:max_power;1",
             "description": "Limit the power drawn by the service, in mA.",
             "schema": "integer",
-            "writeable": true
+            "writable": true
         },
         {
             "@type": "Property",
@@ -95,7 +95,7 @@
             "@id": "dtmi:jacdac:_base:rw:stream_samples;1",
             "description": "Asks device to stream a given number of samples\n(clients will typically write `255` to this register every second or so, while streaming is required).",
             "schema": "integer",
-            "writeable": true
+            "writable": true
         },
         {
             "@type": "Property",
@@ -104,7 +104,7 @@
             "description": "Period between packets of data when streaming in milliseconds.",
             "unit": "millisecond",
             "schema": "integer",
-            "writeable": true
+            "writable": true
         },
         {
             "@type": "Telemetry",
@@ -119,7 +119,7 @@
             "@id": "dtmi:jacdac:_base:rw:low_threshold;1",
             "description": "Thresholds for event generation for event generation for analog sensors.",
             "schema": "integer",
-            "writeable": true
+            "writable": true
         },
         {
             "@type": "Property",
@@ -127,7 +127,7 @@
             "@id": "dtmi:jacdac:_base:rw:high_threshold;1",
             "description": "Thresholds for event generation for event generation for analog sensors.",
             "schema": "integer",
-            "writeable": true
+            "writable": true
         }
     ],
     "@context": "dtmi:dtdl:context;2"

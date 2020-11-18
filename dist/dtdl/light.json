@@ -11,7 +11,7 @@
             "@id": "dtmi:jacdac:light:rw:brightness;1",
             "description": "Set the luminosity of the strip.\nAt `0` the power to the strip is completely shut down.",
             "schema": "integer",
-            "writeable": true
+            "writable": true
         },
         {
             "@type": "Property",
@@ -26,7 +26,7 @@
             "@id": "dtmi:jacdac:light:rw:light_type;1",
             "description": "Specifies the type of light strip connected to controller.\nControllers which are sold with lights should default to the correct type\nand could not allow change.",
             "schema": "dtmi:jacdac:x126f00e0:LightType;1",
-            "writeable": true
+            "writable": true
         },
         {
             "@type": "Property",
@@ -34,7 +34,7 @@
             "@id": "dtmi:jacdac:light:rw:num_pixels;1",
             "description": "Specifies the number of pixels in the strip.\nControllers which are sold with lights should default to the correct length\nand could not allow change.\nIncreasing length at runtime leads to ineffective use of memory and may lead to controller reboot.",
             "schema": "integer",
-            "writeable": true
+            "writable": true
         },
         {
             "@type": "Property",
@@ -42,7 +42,7 @@
             "@id": "dtmi:jacdac:light:rw:max_power;1",
             "description": "Limit the power drawn by the light-strip (and controller).",
             "schema": "integer",
-            "writeable": true
+            "writable": true
         },
         {
             "@type": "Command",

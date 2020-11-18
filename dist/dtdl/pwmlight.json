@@ -11,7 +11,7 @@
             "@id": "dtmi:jacdac:pwmlight:rw:brightness;1",
             "description": "Set the luminosity of the strip. The value is used to scale `start_intensity` in `steps` register.\nAt `0` the power to the strip is completely shut down.",
             "schema": "integer",
-            "writeable": true
+            "writable": true
         },
         {
             "@type": "Property",
@@ -19,7 +19,7 @@
             "@id": "dtmi:jacdac:pwmlight:rw:max_power;1",
             "description": "Limit the power drawn by the light-strip (and controller).",
             "schema": "integer",
-            "writeable": true
+            "writable": true
         },
         {
             "@type": "Property",
@@ -33,7 +33,7 @@
             "name": "steps",
             "@id": "dtmi:jacdac:pwmlight:rw:steps;1",
             "description": "The steps of current animation. Setting this also sets `current_iteration` to `0`.\nStep with `duration == 0` is treated as an end marker.",
-            "writeable": true
+            "writable": true
         },
         {
             "@type": "Property",
@@ -41,7 +41,7 @@
             "@id": "dtmi:jacdac:pwmlight:rw:current_iteration;1",
             "description": "Currently excecuting iteration of animation. Can be set to `0` to restart current animation.\nIf `current_iteration > max_iterations`, then no animation is currently running.",
             "schema": "integer",
-            "writeable": true
+            "writable": true
         },
         {
             "@type": "Property",
@@ -49,7 +49,7 @@
             "@id": "dtmi:jacdac:pwmlight:rw:max_iterations;1",
             "description": "The animation will be repeated `max_iterations + 1` times.",
             "schema": "integer",
-            "writeable": true
+            "writable": true
         }
     ],
     "@context": "dtmi:dtdl:context;2"

@@ -11,7 +11,7 @@
             "@id": "dtmi:jacdac:power:rw:enabled;1",
             "description": "Turn the power to the bus on/off.",
             "schema": "boolean",
-            "writeable": true
+            "writable": true
         },
         {
             "@type": "Property",
@@ -19,7 +19,7 @@
             "@id": "dtmi:jacdac:power:rw:max_power;1",
             "description": "Limit the power provided by the service. The actual maximum limit will depend on hardware.\nThis field may be read-only in some implementations - you should read it back after setting.",
             "schema": "integer",
-            "writeable": true
+            "writable": true
         },
         {
             "@type": "Property",
@@ -63,7 +63,7 @@
             "description": "Many USB power packs need current to be drawn from time to time to prevent shutdown.\nThis regulates how often and for how long such current is drawn.\nTypically a 1/8W 22 ohm resistor is used as load. This limits the duty cycle to 10%.",
             "unit": "millisecond",
             "schema": "integer",
-            "writeable": true
+            "writable": true
         },
         {
             "@type": "Property",
@@ -72,7 +72,7 @@
             "description": "Many USB power packs need current to be drawn from time to time to prevent shutdown.\nThis regulates how often and for how long such current is drawn.\nTypically a 1/8W 22 ohm resistor is used as load. This limits the duty cycle to 10%.",
             "unit": "millisecond",
             "schema": "integer",
-            "writeable": true
+            "writable": true
         }
     ],
     "@context": "dtmi:dtdl:context;2"

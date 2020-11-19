@@ -1,6 +1,6 @@
 /// <reference path="jdspec.d.ts" />
 
-export function parseDeviceMarkdownToJSON(filecontent: string, defl: jdspec.DeviceSpec, usedFw: jdspec.SMap<string>, filename: string): jdspec.DeviceSpec {
+export function parseDeviceMarkdownToJSON(filecontent: string, defl: jdspec.DeviceSpec, usedFw: jdspec.SMap<string>, filename?: string): jdspec.DeviceSpec {
     filecontent = filecontent.replace(/\r/g, "")
 
     const info: jdspec.DeviceSpec = defl ? clone(defl) : {

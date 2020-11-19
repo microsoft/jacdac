@@ -124,7 +124,7 @@ export function resolveUnit(unit: string) {
     return undefined;
 }
 
-export function parseSpecificationMarkdownToJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>, filename = ""): jdspec.ServiceSpec {
+export function parseServiceSpecificationMarkdownToJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>, filename = ""): jdspec.ServiceSpec {
     filecontent = (filecontent || "").replace(/\r/g, "")
     let info: jdspec.ServiceSpec = {
         name: "",

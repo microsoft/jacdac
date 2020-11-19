@@ -1,6 +1,6 @@
 /// <reference path="jdspec.d.ts" />
 import { parseDeviceMarkdownToJSON } from "./devices";
-import { converters, parseSpecificationMarkdownToJSON } from "./jdspec"
+import { converters, parseServiceSpecificationMarkdownToJSON } from "./jdspec"
 
 declare var process: any;
 declare var require: any;
@@ -32,7 +32,7 @@ function processSpec(dn: string) {
             continue
         console.log(`process ${fn}`)
         const cont = readString(dn, fn)
-        const json = parseSpecificationMarkdownToJSON(cont, includes, fn)
+        const json = parseServiceSpecificationMarkdownToJSON(cont, includes, fn)
         const key = fn.replace(/\.md$/, "")
         includes[key] = json
 

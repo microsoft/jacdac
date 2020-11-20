@@ -82,7 +82,7 @@ function processModules(upperName: string) {
         if (fs.existsSync(deflName)) {
             const defl = parseDeviceMarkdownToJSON(readString(folder, defName), null, usedIds, deflName)
             const devs = fs.readdirSync(folder)
-            const outDir = path.join("../modules", defName);
+            const outDir = path.join("../modules", folderBaseName);
             if (!fs.existsSync(outDir))
                 mkdir(outDir)
             for (const dev of devs) {
@@ -96,7 +96,7 @@ function processModules(upperName: string) {
                     res.id = folderBaseName + "-" + dev.replace(/\.md$/, "")
                     allDevices.push(res)
 
-                    fs.writeFileSync(path.join(outDir, `${res.id}.json`), JSON.stringify(res, null, 2))
+                    fs.writeFileSync(path.join(outDir, `${dev.replace(/\.md$/, "")}.json`), JSON.stringify(res, null, 2))
                 }
             }
         }

@@ -1,0 +1,13 @@
+{
+  "id": "microsoft-jm-proto",
+  "name": "JM Proto v2.0",
+  "description": "A prototype multi-function board.\n* ``0x3f9bc26a`` JM Touch-Proto v2.0",
+  "repo": "https://github.com/microsoft/jacdac-stm32x0",
+  "firmwares": [
+    1052138004
+  ],
+  "services": [],
+  "source": "# JM Proto v2.0\n\nA prototype multi-function board.\n\n* firmware: 0x3eb65a14\n\n\n* ``0x3f9bc26a`` JM Touch-Proto v2.0",
+  "link": "https://github.com/microsoft/jacdac-stm32x0",
+  "image": "microsoft-jm/proto.jpg"
+}

@@ -1,0 +1,14 @@
+{
+  "id": "microsoft-jm-ml",
+  "name": "JM Machine Learning",
+  "description": "Lets you run machine learning models on data coming from JACDAC network.",
+  "repo": "https://github.com/microsoft/pxt-tensorflow",
+  "firmwares": [],
+  "services": [
+    336566904,
+    496034245
+  ],
+  "source": "# JM Machine Learning\n\nLets you run machine learning models on data coming from JACDAC network.\n\n* repo: https://github.com/microsoft/pxt-tensorflow\n* services: 0x140f9a78, 0x1d90e1c5\n",
+  "link": "https://github.com/microsoft/jacdac-stm32x0",
+  "image": "microsoft-jm/ml.jpg"
+}

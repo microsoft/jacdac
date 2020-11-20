@@ -124,7 +124,7 @@ export function resolveUnit(unit: string) {
     return undefined;
 }
 
-export function parseSpecificationMarkdownToJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>, filename = ""): jdspec.ServiceSpec {
+export function parseServiceSpecificationMarkdownToJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>, filename = ""): jdspec.ServiceSpec {
     filecontent = (filecontent || "").replace(/\r/g, "")
     let info: jdspec.ServiceSpec = {
         name: "",
@@ -149,7 +149,7 @@ export function parseSpecificationMarkdownToJSON(filecontent: string, includes?:
     let noteId = "short"
     let lastCmd: jdspec.PacketInfo
     let packetsToDescribe: jdspec.PacketInfo[]
-    let nextRepeats: boolean = undefined
+    let nextModifier: "" | "segmented" | "multi-segmented" | "repeats" = ""
 
     const baseInfo = includes ? includes["_base"] : undefined
     const usedIds: jdspec.SMap<string> = {}
@@ -488,8 +488,8 @@ export function parseSpecificationMarkdownToJSON(filecontent: string, includes?:
     }
 
     function packetField(words: string[]) {
-        if (words.length == 2 && words[0] == "repeats") {
-            nextRepeats = true
+        if (words.length == 2 && (words[0] == "repeats" || words[0] == "segmented" || words[0] == "multi-segmented")) {
+            nextModifier = words[0]
             return
         }
         const name = normalizeName(words.shift())
@@ -536,7 +536,9 @@ export function parseSpecificationMarkdownToJSON(filecontent: string, includes?:
             isSimpleType: canonicalType(storage) == type || undefined,
             defaultValue,
             isOptional,
-            startRepeats: nextRepeats
+            multiSegmented: nextModifier == "multi-segmented" || undefined,
+            segmented: nextModifier == "segmented" || nextModifier == "multi-segmented" || undefined,
+            startRepeats: nextModifier == "repeats" || undefined
         }
 
         if (tok == "{") {
@@ -593,7 +595,7 @@ export function parseSpecificationMarkdownToJSON(filecontent: string, includes?:
         }
 
         packetInfo.fields.push(field)
-        nextRepeats = undefined
+        nextModifier = undefined
     }
 
     function startEnum(words: string[]) {
@@ -1189,6 +1191,22 @@ function toTypescript(info: jdspec.ServiceSpec, isStatic: boolean) {
         r += "}\n"
 
     return r.replace(/ *$/mg, "")
+}
+
+
+export function normalizeDeviceSpecification(dev: jdspec.DeviceSpec) {
+    // reorder fields
+    const clone: jdspec.DeviceSpec = {
+        id: dev.id,
+        name: dev.name,
+        company: dev.company,
+        description: dev.description,
+        repo: dev.repo,
+        link: dev.link,
+        services: dev.services || [],
+        firmwares: dev.firmwares || []
+    }
+    return clone;
 }
 
 export function converters(): jdspec.SMap<(s: jdspec.ServiceSpec) => string> {

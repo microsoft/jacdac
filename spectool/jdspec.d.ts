@@ -351,6 +351,16 @@ declare namespace jdspec {
          * If set, this and following fields repeat in order, to fill the packet.
          */
         startRepeats?: boolean;
+
+        /**
+         * If set, the payload of multiple consecutive packets should be concatenated together.
+         */
+        segmented?: boolean;
+
+        /**
+         * If set, the segmented packets are separated with a zero-length packets.
+         */
+        multiSegmented?: boolean;
     }
 
     /**
@@ -390,6 +400,11 @@ declare namespace jdspec {
         description: string;
 
         /**
+         * Manufacturer of the device
+         */
+        company: string;
+
+        /**
          * Relative path to picture of the device.
          */
         image?: string;
@@ -418,10 +433,5 @@ declare namespace jdspec {
          * Hooks for parser.
          */
         errors?: Diagnostic[];
-
-        /**
-         * Original markdown source
-         */
-        source?: string;
     }
 }

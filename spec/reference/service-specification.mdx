@@ -283,3 +283,96 @@ Set brightness level on side lamps. Number of lamps depends on the rocket.
 
 The value of the register may have one of the unit or secondary defined in [SenML](https://tools.ietf.org/html/rfc8428),
 in addition to ``""`` (identifiers), ``"us"`` micro seconds, ``"mWh"`` milli watt-hours and ``"#"`` counts.
+
+### Pipes
+
+Pipes are application-level mechanism for establishing reliable one- and two-way point-to-point data links.
+
+Typical applications where pipes should be used:
+* a WiFi service, where the pipe represents a TCP connection
+* when a response to a command doesn't fit in one packet (eg. WiFi scan results)
+
+Pipes are typically established using commands and reports.
+The sink of the pipe needs to provide its device identifier (if not already present elsewhere)
+and a port number.
+For example:
+
+```markdown
+    command get_logs @ 0x84 {
+        results: pipe
+    }
+
+Ask for all stored logs.
+
+    pipe report log_entry {
+        timestamp: u32 ms
+        text: string
+    }
+
+A single log entry.
+```
+
+Here, the `get_logs` command includes information where to send results - the type `pipe` is built-in and
+consists of 8 byte device identifier, 2 byte port and 2 bytes of padding (should be sent as zero).
+The device identifier in `pipe` will be set to the device asking for logs (the packet device identifer will be
+set to the rocket identifier).
+The port number is also allocated on the device asking for logs.
+The logs are then sent, one entry per packet.
+Once all logs are sent, the pipe is closed by the rocket.
+A command like `monitor_logs` could leave the pipe open, and keep sending new log entries.
+
+You will notice that `pipe report` doesn't have a code assigned.
+If you need several different types of reports going over a single pipe,
+you can use `meta pipe report`:
+
+```markdown
+    meta pipe report log_progress @ 0x01 {
+        sent_entries: u32
+        total_entries: u32
+    }
+
+Sent while the logs are streaming to indicate progress.
+```
+
+The pipe packets in specification always refer to the most recent command or report.
+There can be only one `pipe report`, but multiple `meta pipe report` entries
+per pipe-opening command.
+
+In addition to pipe reports, pipe commands are also possible.
+
+```markdown
+    command set_certificate @ 0x85 {
+        certificate_name: string
+    }
+    report {
+        cert_port: pipe_port
+    }
+
+Start certificate update process for the named certificate.
+
+    pipe command certificate_part {
+    segmented:
+        x509: bytes
+    }
+
+A fragment of certificate to update.
+```
+
+Here the `set_certificate` command responds with a port where the certificate (which can be larger than 236 bytes) can be sent.
+`pipe_port` is stored as `u16` (device identifier is taken from the packet itself).
+Once we have the port number, we can start sending the certificate to the rocket.
+The certificate is split arbitrarily and sent segment by segment.
+The `segmented:` annotation indicates that the payloads of pipe commands should be concatenated together,
+and not treated as separate entries.
+
+A command, for example one that opens a TCP connection, can include `pipe` while its report also includes `pipe_port`.
+Then we have separate `pipe command` and `pipe report` packet description below.
+`meta pipe command` is analogous to `meta pipe report`.
+
+If a command needs to return multiple large objects, you can use `multi-segmented:` instead of `segmented:`.
+The interpretation is that each object is segmented as usual,
+and a zero-length packet is sent between each two objects.
+The final zero-length packet, before closing the pipe, is optional.
+
+Both `segmented:` and `multi-segmented:` are currently only supported in `pipe report` and `pipe command`,
+with a single field of type `bytes`.

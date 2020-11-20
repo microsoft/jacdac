@@ -1,0 +1,15 @@
+{
+  "id": "microsoft-jm-servo",
+  "name": "JM PWM (Servo) v2.0",
+  "description": "A controller for a 5V servo.",
+  "company": "Microsoft Research",
+  "repo": "https://github.com/microsoft/jacdac-stm32x0",
+  "firmwares": [
+    816890446
+  ],
+  "services": [
+    318542083
+  ],
+  "link": "https://github.com/microsoft/jacdac-stm32x0",
+  "image": "microsoft-jm/servo.jpg"
+}

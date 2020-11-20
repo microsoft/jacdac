@@ -1,0 +1,15 @@
+{
+  "id": "microsoft-jm-crank",
+  "name": "JM Crank v2",
+  "description": "A rotary encoder without a push button.",
+  "company": "Microsoft Research",
+  "repo": "https://github.com/microsoft/jacdac-stm32x0",
+  "firmwares": [
+    866678795
+  ],
+  "services": [
+    284830153
+  ],
+  "link": "https://github.com/microsoft/jacdac-stm32x0",
+  "image": "microsoft-jm/crank.jpg"
+}

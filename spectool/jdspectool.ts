@@ -1,5 +1,4 @@
 /// <reference path="jdspec.d.ts" />
-import { parseDeviceMarkdownToJSON } from "./devices";
 import { converters, parseServiceSpecificationMarkdownToJSON } from "./jdspec"
 
 declare var process: any;
@@ -64,43 +63,27 @@ function readString(folder: string, file: string) {
     return cont
 }
 
-function processDevices(upperName: string) {
+function processModules(upperName: string) {
     const path = require("path")
 
-    console.log("processing devices in directory " + upperName + "...")
+    console.log("processing modules in directory " + upperName + "...")
     const folders: string[] = fs.readdirSync(upperName)
     folders.sort()
 
-    const defName = "_default.md"
-
-    const allDevices: jdspec.DeviceSpec[] = []
+    const allModules: jdspec.DeviceSpec[] = []
     const usedIds: jdspec.SMap<string> = {}
 
     for (const folderBaseName of folders) {
         const folder = path.join(upperName, folderBaseName)
-        const deflName = path.join(folder, defName)
-        if (fs.existsSync(deflName)) {
-            const defl = parseDeviceMarkdownToJSON(readString(folder, defName), null, usedIds, deflName)
-            const devs = fs.readdirSync(folder)
-            for (const dev of devs) {
-                if (dev[0] != "_" && dev[0] != "." && /\.md$/.test(dev)) {
-                    const fn = path.join(folder, dev)
-                    const res = parseDeviceMarkdownToJSON(readString(folder, dev), defl, usedIds, fn)
-                    reportErrors(res.errors, folder, dev)
-                    const image = fn.replace(/\.md$/, ".jpg")
-                    if (fs.existsSync(image))
-                        res.image = folderBaseName + "/" + dev.replace(/\.md$/, ".jpg")
-                    res.id = folderBaseName + "-" + dev.replace(/\.md$/, "")
-                    allDevices.push(res)
-                }
-            }
+        const files = fs.readdirSync(folder) as string[];
+        for (const fn of files.filter(fn => /\.json/.test(fn))) {
+            const dev = JSON.parse(readString(folder, fn)) as jdspec.DeviceSpec;
+            // TODO validate
+            // ok add
+            allModules.push(dev)
         }
     }
-
-    //for (const dev of allDevices)
-    //    console.log(`0x${(dev.firmwares[0] || 0).toString(16)} ${dev.name}`)
-
-    fs.writeFileSync(path.join("../dist", "devices.json"), JSON.stringify(allDevices, null, 2))
+    fs.writeFileSync(path.join("../dist", "modules.json"), JSON.stringify(allModules, null, 2))
 }
 
 function reportErrors(errors: jdspec.Diagnostic[], folderName: string, fn: string) {
@@ -127,7 +110,7 @@ function nodeMain() {
         process.exit(1)
     }
 
-    if (deviceMode) processDevices(args[0])
+    if (deviceMode) processModules(args[0])
     else processSpec(args[0])
 }
 

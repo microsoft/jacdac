@@ -400,6 +400,11 @@ declare namespace jdspec {
         description: string;
 
         /**
+         * Manufacturer of the device
+         */
+        company: string;
+
+        /**
          * Relative path to picture of the device.
          */
         image?: string;
@@ -428,10 +433,5 @@ declare namespace jdspec {
          * Hooks for parser.
          */
         errors?: Diagnostic[];
-
-        /**
-         * Original markdown source
-         */
-        source?: string;
     }
 }

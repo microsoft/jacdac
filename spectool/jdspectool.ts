@@ -82,9 +82,9 @@ function processModules(upperName: string) {
         if (fs.existsSync(deflName)) {
             const defl = parseDeviceMarkdownToJSON(readString(folder, defName), null, usedIds, deflName)
             const devs = fs.readdirSync(folder)
-            const outDir = path.join("../dist", defl.id);
+            const outDir = path.join("../modules", defName);
             if (!fs.existsSync(outDir))
-                fs.createDirSync(outDir)
+                mkdir(outDir)
             for (const dev of devs) {
                 if (dev[0] != "_" && dev[0] != "." && /\.md$/.test(dev)) {
                     const fn = path.join(folder, dev)

@@ -2,6 +2,7 @@
   "id": "microsoft-jm-pwr",
   "name": "JM Power",
   "description": "Lets you supply power to JACDAC network from a MicroUSB connection (eg. a USB battery pack).",
+  "company": "Microsoft Research",
   "repo": "https://github.com/microsoft/jacdac-stm32x0",
   "firmwares": [
     815885628

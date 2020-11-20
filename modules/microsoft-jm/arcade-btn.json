@@ -2,6 +2,7 @@
   "id": "microsoft-jm-arcade-btn",
   "name": "JM ArcadeBtn v2.0",
   "description": "Lets you connect a single arcade button with an LED.",
+  "company": "Microsoft Research",
   "repo": "https://github.com/microsoft/jacdac-stm32x0",
   "firmwares": [
     886919574

@@ -2,6 +2,7 @@
   "id": "microsoft-jm-acc",
   "name": "JM Acc v2",
   "description": "A 3-axis accelerometer. 16G range.",
+  "company": "Microsoft Research",
   "repo": "https://github.com/microsoft/jacdac-stm32x0",
   "firmwares": [
     1020174761

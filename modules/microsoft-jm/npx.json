@@ -2,6 +2,7 @@
   "id": "microsoft-jm-npx",
   "name": "JM PWM (npx) v2.0",
   "description": "A light-strip controller. Supports WS2812B, APA102, and SK9822.",
+  "company": "Microsoft Research",
   "repo": "https://github.com/microsoft/jacdac-stm32x0",
   "firmwares": [
     895762065

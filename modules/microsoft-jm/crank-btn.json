@@ -2,6 +2,7 @@
   "id": "microsoft-jm-crank-btn",
   "name": "JM Crank+Btn v2",
   "description": "A rotary encoder with a push button.",
+  "company": "Microsoft Research",
   "repo": "https://github.com/microsoft/jacdac-stm32x0",
   "firmwares": [
     813927310

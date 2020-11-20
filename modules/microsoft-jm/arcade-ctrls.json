@@ -2,6 +2,7 @@
   "id": "microsoft-jm-arcade-ctrls",
   "name": "JM Arcade Controls v2",
   "description": "Lets you connect arcade buttons and joystick to a JACDAC network.",
+  "company": "Microsoft Research",
   "repo": "https://github.com/microsoft/jacdac-stm32x0",
   "firmwares": [
     954450524

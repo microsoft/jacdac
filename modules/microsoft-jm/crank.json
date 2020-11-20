@@ -9,7 +9,6 @@
   "services": [
     284830153
   ],
-  "source": "# JM Crank v2\n\nA rotary encoder without a push button.\n\n* services: 0x10fa29c9\n* firmware: 0x33a8780b\n",
   "link": "https://github.com/microsoft/jacdac-stm32x0",
   "image": "microsoft-jm/crank.jpg"
 }

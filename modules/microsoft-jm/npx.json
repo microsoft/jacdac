@@ -9,7 +9,6 @@
   "services": [
     309264608
   ],
-  "source": "# JM PWM (npx) v2.0\n\nA light-strip controller. Supports WS2812B, APA102, and SK9822.\n\n* services: 0x126f00e0\n* firmware: 0x35643e91\n",
   "link": "https://github.com/microsoft/jacdac-stm32x0",
   "image": "microsoft-jm/npx.jpg"
 }

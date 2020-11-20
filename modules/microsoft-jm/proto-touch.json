@@ -9,7 +9,6 @@
   "services": [
     416636459
   ],
-  "source": "# JM Touch-Proto v2.0\n\nA multi-touch sensor based on proto board.\n\n* services: 0x18d55e2b\n* firmware: 0x3f9bc26a\n",
   "link": "https://github.com/microsoft/jacdac-stm32x0",
   "image": "microsoft-jm/proto-touch.jpg"
 }

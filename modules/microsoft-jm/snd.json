@@ -9,7 +9,6 @@
   "services": [
     458731991
   ],
-  "source": "# JM SND v2.0\n\nA simple buzzer.\n\n* services: 0x1b57b1d7\n* firmware: 0x32f59e1b\n",
   "link": "https://github.com/microsoft/jacdac-stm32x0",
   "image": "microsoft-jm/snd.jpg"
 }

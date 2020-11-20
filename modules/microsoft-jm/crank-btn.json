@@ -10,7 +10,6 @@
     284830153,
     343122531
   ],
-  "source": "# JM Crank+Btn v2\n\nA rotary encoder with a push button.\n\n* services: 0x10fa29c9, 0x1473a263\n* firmware: 0x30838b8e\n",
   "link": "https://github.com/microsoft/jacdac-stm32x0",
   "image": "microsoft-jm/crank-btn.jpg"
 }

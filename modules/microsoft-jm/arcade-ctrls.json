@@ -9,7 +9,6 @@
   "services": [
     501915758
   ],
-  "source": "# JM Arcade Controls v2\n\nLets you connect arcade buttons and joystick to a JACDAC network.\n\n* services: 0x1deaa06e\n* firmware: 0x38e3c25c\n",
   "link": "https://github.com/microsoft/jacdac-stm32x0",
   "image": "microsoft-jm/arcade-ctrls.jpg"
 }

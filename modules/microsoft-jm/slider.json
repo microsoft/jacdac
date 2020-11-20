@@ -9,7 +9,6 @@
   "services": [
     522667846
   ],
-  "source": "# JM Slider v2\n\nA linear potentiometer (slider).\n\n* services: 0x1f274746\n* firmware: 0x3e344e1d\n",
   "link": "https://github.com/microsoft/jacdac-stm32x0",
   "image": "microsoft-jm/slider.jpg"
 }

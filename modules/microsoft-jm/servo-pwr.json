@@ -9,7 +9,6 @@
   "services": [
     318542083
   ],
-  "source": "# JM PWM (Servo) v2.1\n\nA controller for a 5V servo, with MicroUSB connector for power.\n\n* services: 0x12fc9103\n* firmware: 0x3ac74e57\n",
   "link": "https://github.com/microsoft/jacdac-stm32x0",
   "image": "microsoft-jm/servo-pwr.jpg"
 }

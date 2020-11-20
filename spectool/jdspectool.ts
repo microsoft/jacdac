@@ -1,5 +1,4 @@
 /// <reference path="jdspec.d.ts" />
-import { parseDeviceMarkdownToJSON } from "./devices";
 import { converters, parseServiceSpecificationMarkdownToJSON } from "./jdspec"
 
 declare var process: any;

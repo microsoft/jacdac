@@ -9,7 +9,6 @@
   "services": [
     343122531
   ],
-  "source": "# JM ArcadeBtn v2.0\n\nLets you connect a single arcade button with an LED.\n\n* services: 0x1473a263\n* firmware: 0x34dd5196\n",
   "link": "https://github.com/microsoft/jacdac-stm32x0",
   "image": "microsoft-jm/arcade-btn.jpg"
 }

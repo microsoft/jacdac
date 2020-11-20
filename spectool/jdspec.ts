@@ -1193,6 +1193,22 @@ function toTypescript(info: jdspec.ServiceSpec, isStatic: boolean) {
     return r.replace(/ *$/mg, "")
 }
 
+
+export function normalizeDeviceSpecification(dev: jdspec.DeviceSpec) {
+    // reorder fields
+    const clone: jdspec.DeviceSpec = {
+        id: dev.id,
+        name: dev.name,
+        company: dev.company,
+        description: dev.description,
+        repo: dev.repo,
+        link: dev.link,
+        services: dev.services || [],
+        firmwares: dev.firmwares || []
+    }
+    return clone;
+}
+
 export function converters(): jdspec.SMap<(s: jdspec.ServiceSpec) => string> {
     return {
         "json": (j: jdspec.ServiceSpec) => JSON.stringify(j, null, 2),

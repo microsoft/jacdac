@@ -80,7 +80,7 @@ function processModules(upperName: string) {
             const dev = JSON.parse(readString(folder, fn)) as jdspec.DeviceSpec;
             // TODO validate
             // ok add
-            allModules.push(normalizeDeviceSpecification(dev)))
+            allModules.push(normalizeDeviceSpecification(dev));
         }
     }
     fs.writeFileSync(path.join("../dist", "modules.json"), JSON.stringify(allModules, null, 2))

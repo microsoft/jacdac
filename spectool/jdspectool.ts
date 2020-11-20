@@ -64,10 +64,10 @@ function readString(folder: string, file: string) {
     return cont
 }
 
-function processDevices(upperName: string) {
+function processModules(upperName: string) {
     const path = require("path")
 
-    console.log("processing devices in directory " + upperName + "...")
+    console.log("processing modules in directory " + upperName + "...")
     const folders: string[] = fs.readdirSync(upperName)
     folders.sort()
 
@@ -82,6 +82,9 @@ function processDevices(upperName: string) {
         if (fs.existsSync(deflName)) {
             const defl = parseDeviceMarkdownToJSON(readString(folder, defName), null, usedIds, deflName)
             const devs = fs.readdirSync(folder)
+            const outDir = path.join("../dist", defl.id);
+            if (!fs.existsSync(outDir))
+                fs.createDirSync(outDir)
             for (const dev of devs) {
                 if (dev[0] != "_" && dev[0] != "." && /\.md$/.test(dev)) {
                     const fn = path.join(folder, dev)
@@ -92,6 +95,8 @@ function processDevices(upperName: string) {
                         res.image = folderBaseName + "/" + dev.replace(/\.md$/, ".jpg")
                     res.id = folderBaseName + "-" + dev.replace(/\.md$/, "")
                     allDevices.push(res)
+
+                    fs.writeFileSync(path.join(outDir, `${res.id}.json`), JSON.stringify(res, null, 2))
                 }
             }
         }
@@ -127,7 +132,7 @@ function nodeMain() {
         process.exit(1)
     }
 
-    if (deviceMode) processDevices(args[0])
+    if (deviceMode) processModules(args[0])
     else processSpec(args[0])
 }
 

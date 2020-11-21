@@ -1212,6 +1212,11 @@ export function normalizeDeviceSpecification(dev: jdspec.DeviceSpec) {
     return clone;
 }
 
+export function escapeDeviceIdentifier(text: string) {
+    const id = snakify(text)
+    return id;
+}
+
 export function converters(): jdspec.SMap<(s: jdspec.ServiceSpec) => string> {
     return {
         "json": (j: jdspec.ServiceSpec) => JSON.stringify(j, null, 2),

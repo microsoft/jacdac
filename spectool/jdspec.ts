@@ -1214,7 +1214,7 @@ export function normalizeDeviceSpecification(dev: jdspec.DeviceSpec) {
 
 export function escapeDeviceIdentifier(text: string) {
     if (!text) text = ""
-    const escaped = text.replace(/([^a-z0-9\_-])+/ig, '-');
+    const escaped = text.toLowerCase().replace(/([^a-z0-9\_-])+/g, '-');
     const id = snakify(escaped)
     return id;
 }

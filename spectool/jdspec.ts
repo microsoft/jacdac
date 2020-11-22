@@ -1219,6 +1219,10 @@ export function escapeDeviceIdentifier(text: string) {
     return id;
 }
 
+export function escapeDeviceNameIdentifier(text: string) {
+    return escapeDeviceIdentifier(text).replace("-", "")
+}
+
 export function converters(): jdspec.SMap<(s: jdspec.ServiceSpec) => string> {
     return {
         "json": (j: jdspec.ServiceSpec) => JSON.stringify(j, null, 2),

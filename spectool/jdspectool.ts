@@ -1,5 +1,5 @@
 /// <reference path="jdspec.d.ts" />
-import { converters, normalizeDeviceSpecification, parseServiceSpecificationMarkdownToJSON } from "./jdspec"
+import { converters, escapeDeviceIdentifier, escapeDeviceNameIdentifier, normalizeDeviceSpecification, parseServiceSpecificationMarkdownToJSON } from "./jdspec"
 
 declare var process: any;
 declare var require: any;
@@ -78,9 +78,11 @@ function processModules(upperName: string) {
         const files = fs.readdirSync(folder) as string[];
         for (const fn of files.filter(fn => /\.json/.test(fn))) {
             const dev = JSON.parse(readString(folder, fn)) as jdspec.DeviceSpec;
-            // TODO validate
-            // ok add
             allModules.push(normalizeDeviceSpecification(dev));
+
+            const p = path.join("../modules", dev.id.replace(/-/g, "/")) + ".json";
+            console.log({ id: dev.id, p })
+            fs.writeFileSync(p, JSON.stringify(allModules, null, 2))
         }
     }
     fs.writeFileSync(path.join("../dist", "modules.json"), JSON.stringify(allModules, null, 2))

@@ -1214,13 +1214,14 @@ export function normalizeDeviceSpecification(dev: jdspec.DeviceSpec) {
 
 export function escapeDeviceIdentifier(text: string) {
     if (!text) text = ""
-    const escaped = text.toLowerCase().replace(/([^a-z0-9\_-])+/g, '-');
+    const escaped = text.trim().toLowerCase().replace(/([^a-z0-9\_-])+/ig, '-')
+        .replace(/^-+/, '').replace(/-+$/, '');
     const id = snakify(escaped)
     return id;
 }
 
 export function escapeDeviceNameIdentifier(text: string) {
-    return escapeDeviceIdentifier(text).replace("-", "")
+    return escapeDeviceIdentifier(text).replace(/-/g, "")
 }
 
 export function converters(): jdspec.SMap<(s: jdspec.ServiceSpec) => string> {

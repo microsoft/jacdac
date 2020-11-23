@@ -63,11 +63,11 @@ function readString(folder: string, file: string) {
     return cont
 }
 
-function processModules(upperName: string) {
+function processDevices(upperName: string) {
     const path = require("path")
 
-    console.log("processing modules in directory " + upperName + "...")
-    const allModules: jdspec.DeviceSpec[] = []
+    console.log("processing devices in directory " + upperName + "...")
+    const allDevices: jdspec.DeviceSpec[] = []
     const todo = [upperName];
     while (todo.length) {
         const dir = todo.pop();
@@ -80,11 +80,11 @@ function processModules(upperName: string) {
                 todo.push(f);
             else if (/\.json/.test(f)) {
                 const dev = JSON.parse(readString(dir, fn)) as jdspec.DeviceSpec;
-                allModules.push(normalizeDeviceSpecification(dev));
+                allDevices.push(normalizeDeviceSpecification(dev));
             }
         }
     }
-    fs.writeFileSync(path.join("../dist", "modules.json"), JSON.stringify(allModules, null, 2))
+    fs.writeFileSync(path.join("../dist", "devices.json"), JSON.stringify(allDevices, null, 2))
 }
 
 function reportErrors(errors: jdspec.Diagnostic[], folderName: string, fn: string) {
@@ -111,7 +111,7 @@ function nodeMain() {
         process.exit(1)
     }
 
-    if (deviceMode) processModules(args[0])
+    if (deviceMode) processDevices(args[0])
     else processSpec(args[0])
 }
 

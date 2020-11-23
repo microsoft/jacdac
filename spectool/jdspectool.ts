@@ -63,10 +63,10 @@ function readString(folder: string, file: string) {
     return cont
 }
 
-function processModules(upperName: string) {
+function processDevices(upperName: string) {
     const path = require("path")
 
-    console.log("processing modules in directory " + upperName + "...")
+    console.log("processing devices in directory " + upperName + "...")
     const allDevices: jdspec.DeviceSpec[] = []
     const todo = [upperName];
     while (todo.length) {
@@ -111,7 +111,7 @@ function nodeMain() {
         process.exit(1)
     }
 
-    if (deviceMode) processModules(args[0])
+    if (deviceMode) processDevices(args[0])
     else processSpec(args[0])
 }
 

@@ -112,17 +112,29 @@
     ]
   },
   {
-    "id": "microsoft-research-jmpwmnpxv21",
-    "name": "JM PWM (npx) v2.1",
+    "id": "microsoft-research-jmpower",
+    "name": "JM Power",
     "company": "Microsoft Research",
-    "description": "A light-strip controller with MicroUSB connector for power. Supports WS2812B, APA102, and SK9822.",
+    "description": "Lets you supply power to JACDAC network from a MicroUSB connection (eg. a USB battery pack).",
     "repo": "https://github.com/microsoft/jacdac-stm32x0",
     "link": "https://github.com/microsoft/jacdac-stm32x0",
     "services": [
-      309264608
+      530893146
     ],
     "firmwares": [
-      1013705700
+      815885628
+    ]
+  },
+  {
+    "id": "microsoft-research-jmprotov20",
+    "name": "JM Proto v2.0",
+    "company": "Microsoft Research",
+    "description": "A prototype multi-function board.\n* ``0x3f9bc26a`` JM Touch-Proto v2.0",
+    "repo": "https://github.com/microsoft/jacdac-stm32x0",
+    "link": "https://github.com/microsoft/jacdac-stm32x0",
+    "services": [],
+    "firmwares": [
+      1052138004
     ]
   },
   {
@@ -140,57 +152,17 @@
     ]
   },
   {
-    "id": "microsoft-research-jmtouchprotov20",
-    "name": "JM Touch-Proto v2.0",
+    "id": "microsoft-research-jmpwmnpxv21",
+    "name": "JM PWM (npx) v2.1",
     "company": "Microsoft Research",
-    "description": "A multi-touch sensor based on proto board.",
+    "description": "A light-strip controller with MicroUSB connector for power. Supports WS2812B, APA102, and SK9822.",
     "repo": "https://github.com/microsoft/jacdac-stm32x0",
     "link": "https://github.com/microsoft/jacdac-stm32x0",
     "services": [
-      416636459
+      309264608
     ],
     "firmwares": [
-      1067172458
-    ]
-  },
-  {
-    "id": "microsoft-research-jmprotov20",
-    "name": "JM Proto v2.0",
-    "company": "Microsoft Research",
-    "description": "A prototype multi-function board.\n* ``0x3f9bc26a`` JM Touch-Proto v2.0",
-    "repo": "https://github.com/microsoft/jacdac-stm32x0",
-    "link": "https://github.com/microsoft/jacdac-stm32x0",
-    "services": [],
-    "firmwares": [
-      1052138004
-    ]
-  },
-  {
-    "id": "microsoft-research-jmpower",
-    "name": "JM Power",
-    "company": "Microsoft Research",
-    "description": "Lets you supply power to JACDAC network from a MicroUSB connection (eg. a USB battery pack).",
-    "repo": "https://github.com/microsoft/jacdac-stm32x0",
-    "link": "https://github.com/microsoft/jacdac-stm32x0",
-    "services": [
-      530893146
-    ],
-    "firmwares": [
-      815885628
-    ]
-  },
-  {
-    "id": "microsoft-research-jmpwmservov21",
-    "name": "JM PWM (Servo) v2.1",
-    "company": "Microsoft Research",
-    "description": "A controller for a 5V servo, with MicroUSB connector for power.",
-    "repo": "https://github.com/microsoft/jacdac-stm32x0",
-    "link": "https://github.com/microsoft/jacdac-stm32x0",
-    "services": [
-      318542083
-    ],
-    "firmwares": [
-      986140247
+      1013705700
     ]
   },
   {
@@ -205,6 +177,20 @@
     ],
     "firmwares": [
       816890446
+    ]
+  },
+  {
+    "id": "microsoft-research-jmpwmservov21",
+    "name": "JM PWM (Servo) v2.1",
+    "company": "Microsoft Research",
+    "description": "A controller for a 5V servo, with MicroUSB connector for power.",
+    "repo": "https://github.com/microsoft/jacdac-stm32x0",
+    "link": "https://github.com/microsoft/jacdac-stm32x0",
+    "services": [
+      318542083
+    ],
+    "firmwares": [
+      986140247
     ]
   },
   {
@@ -233,6 +219,20 @@
     ],
     "firmwares": [
       854957595
+    ]
+  },
+  {
+    "id": "microsoft-research-jmtouchprotov20",
+    "name": "JM Touch-Proto v2.0",
+    "company": "Microsoft Research",
+    "description": "A multi-touch sensor based on proto board.",
+    "repo": "https://github.com/microsoft/jacdac-stm32x0",
+    "link": "https://github.com/microsoft/jacdac-stm32x0",
+    "services": [
+      416636459
+    ],
+    "firmwares": [
+      1067172458
     ]
   }
 ]

@@ -1,16 +1,14 @@
-[
-  {
-    "id": "microsoft-research-jmaccv2",
-    "name": "JM Acc v2",
-    "company": "Microsoft Research",
-    "description": "A 3-axis accelerometer. 16G range.",
-    "repo": "https://github.com/microsoft/jacdac-stm32x0",
-    "link": "https://github.com/microsoft/jacdac-stm32x0",
-    "services": [
-      521405449
-    ],
-    "firmwares": [
-      1020174761
-    ]
-  }
-]
+{
+  "id": "microsoft-research-jmaccv2",
+  "name": "JM Acc v2",
+  "company": "Microsoft Research",
+  "description": "A 3-axis accelerometer. 16G range.",
+  "repo": "https://github.com/microsoft/jacdac-stm32x0",
+  "link": "https://github.com/microsoft/jacdac-stm32x0",
+  "services": [
+    521405449
+  ],
+  "firmwares": [
+    1020174761
+  ]
+}

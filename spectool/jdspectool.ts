@@ -67,28 +67,21 @@ function processModules(upperName: string) {
     const path = require("path")
 
     console.log("processing modules in directory " + upperName + "...")
-    const folders: string[] = fs.readdirSync(upperName)
-    folders.sort()
-
     const allModules: jdspec.DeviceSpec[] = []
-    const usedIds: jdspec.SMap<string> = {}
-
-    for (const folderBaseName of folders) {
-        const folder = path.join(upperName, folderBaseName)
-        const files = fs.readdirSync(folder) as string[];
-        for (const fn of files.filter(fn => /\.json/.test(fn))) {
-            const dev = JSON.parse(readString(folder, fn)) as jdspec.DeviceSpec;
-            allModules.push(normalizeDeviceSpecification(dev));
-
-            /*
-            const p = path.join("../modules", dev.id.replace(/-/g, "/")) + ".json";
-            const i = path.join(folder, path.basename(fn, ".json") + ".jpg");
-            console.log({ id: dev.id, p, i })
-            fs.writeFileSync(p, JSON.stringify(allModules, null, 2))
-            fs.copyFileSync(i,
-                path.join("../modules", dev.id.replace(/-/g, "/")) + ".jpg"
-            )
-            */
+    const todo = [upperName];
+    while (todo.length) {
+        const dir = todo.pop();
+        const files: string[] = fs.readdirSync(dir)
+        files.sort()
+        for (const fn of files) {
+            const f = path.join(dir, fn)
+            const stat = fs.statSync(f)
+            if (stat.isDirectory())
+                todo.push(f);
+            else if (/\.json/.test(f)) {
+                const dev = JSON.parse(readString(dir, fn)) as jdspec.DeviceSpec;
+                allModules.push(normalizeDeviceSpecification(dev));
+            }
         }
     }
     fs.writeFileSync(path.join("../dist", "modules.json"), JSON.stringify(allModules, null, 2))

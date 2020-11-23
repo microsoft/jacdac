@@ -1,32 +1,3 @@
-[
-  {
-    "id": "microsoft-research-jmaccv2",
-    "name": "JM Acc v2",
-    "company": "Microsoft Research",
-    "description": "A 3-axis accelerometer. 16G range.",
-    "repo": "https://github.com/microsoft/jacdac-stm32x0",
-    "link": "https://github.com/microsoft/jacdac-stm32x0",
-    "services": [
-      521405449
-    ],
-    "firmwares": [
-      1020174761
-    ]
-  },
-  {
-    "id": "microsoft-research-jmarcadebtnv20",
-    "name": "JM ArcadeBtn v2.0",
-    "company": "Microsoft Research",
-    "description": "Lets you connect a single arcade button with an LED.",
-    "repo": "https://github.com/microsoft/jacdac-stm32x0",
-    "link": "https://github.com/microsoft/jacdac-stm32x0",
-    "services": [
-      343122531
-    ],
-    "firmwares": [
-      886919574
-    ]
-  },
   {
     "id": "microsoft-research-jmarcadecontrolsv2",
     "name": "JM Arcade Controls v2",
@@ -41,4 +12,3 @@
       954450524
     ]
   }
-]

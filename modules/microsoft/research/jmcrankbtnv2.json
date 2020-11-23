@@ -1,0 +1,15 @@
+{
+  "id": "microsoft-research-jmcrankbtnv2",
+  "name": "JM Crank+Btn v2",
+  "company": "Microsoft Research",
+  "description": "A rotary encoder with a push button.",
+  "repo": "https://github.com/microsoft/jacdac-stm32x0",
+  "link": "https://github.com/microsoft/jacdac-stm32x0",
+  "services": [
+    284830153,
+    343122531
+  ],
+  "firmwares": [
+    813927310
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "microsoft-research-jmsndv20",
+  "name": "JM SND v2.0",
+  "company": "Microsoft Research",
+  "description": "A simple buzzer.",
+  "repo": "https://github.com/microsoft/jacdac-stm32x0",
+  "link": "https://github.com/microsoft/jacdac-stm32x0",
+  "services": [
+    458731991
+  ],
+  "firmwares": [
+    854957595
+  ]
+}

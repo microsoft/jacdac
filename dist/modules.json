@@ -1,6 +1,6 @@
 [
   {
-    "id": "microsoft-jm-acc",
+    "id": "microsoft-research-jmaccv2",
     "name": "JM Acc v2",
     "company": "Microsoft Research",
     "description": "A 3-axis accelerometer. 16G range.",
@@ -14,7 +14,7 @@
     ]
   },
   {
-    "id": "microsoft-jm-arcade-btn",
+    "id": "microsoft-research-jmarcadebtnv20",
     "name": "JM ArcadeBtn v2.0",
     "company": "Microsoft Research",
     "description": "Lets you connect a single arcade button with an LED.",
@@ -28,7 +28,7 @@
     ]
   },
   {
-    "id": "microsoft-jm-arcade-ctrls",
+    "id": "microsoft-research-jmarcadecontrolsv2",
     "name": "JM Arcade Controls v2",
     "company": "Microsoft Research",
     "description": "Lets you connect arcade buttons and joystick to a JACDAC network.",
@@ -42,7 +42,7 @@
     ]
   },
   {
-    "id": "microsoft-jm-crank-btn",
+    "id": "microsoft-research-jmcrankbtnv2",
     "name": "JM Crank+Btn v2",
     "company": "Microsoft Research",
     "description": "A rotary encoder with a push button.",
@@ -57,7 +57,7 @@
     ]
   },
   {
-    "id": "microsoft-jm-crank",
+    "id": "microsoft-research-jmcrankv2",
     "name": "JM Crank v2",
     "company": "Microsoft Research",
     "description": "A rotary encoder without a push button.",
@@ -71,7 +71,7 @@
     ]
   },
   {
-    "id": "microsoft-jm-gamepad",
+    "id": "microsoft-research-jmgamepadv2",
     "name": "JM GamePad v2",
     "company": "Microsoft Research",
     "description": "Lets you convert a plastic d-pad controller, so that it can be connected to a JACDAC network.",
@@ -85,7 +85,7 @@
     ]
   },
   {
-    "id": "microsoft-jm-ml",
+    "id": "microsoft-research-jmmachinelearning",
     "name": "JM Machine Learning",
     "company": "Microsoft Research",
     "description": "Lets you run machine learning models on data coming from JACDAC network.",
@@ -98,7 +98,7 @@
     "firmwares": []
   },
   {
-    "id": "microsoft-jm-motor",
+    "id": "microsoft-research-jmmotorv21",
     "name": "JM Motor v2.1",
     "company": "Microsoft Research",
     "description": "Lets you control a single DC motor (up to 5V; yellow plastic ones work well).",
@@ -112,61 +112,7 @@
     ]
   },
   {
-    "id": "microsoft-jm-npx-pwr",
-    "name": "JM PWM (npx) v2.1",
-    "company": "Microsoft Research",
-    "description": "A light-strip controller with MicroUSB connector for power. Supports WS2812B, APA102, and SK9822.",
-    "repo": "https://github.com/microsoft/jacdac-stm32x0",
-    "link": "https://github.com/microsoft/jacdac-stm32x0",
-    "services": [
-      309264608
-    ],
-    "firmwares": [
-      1013705700
-    ]
-  },
-  {
-    "id": "microsoft-jm-npx",
-    "name": "JM PWM (npx) v2.0",
-    "company": "Microsoft Research",
-    "description": "A light-strip controller. Supports WS2812B, APA102, and SK9822.",
-    "repo": "https://github.com/microsoft/jacdac-stm32x0",
-    "link": "https://github.com/microsoft/jacdac-stm32x0",
-    "services": [
-      309264608
-    ],
-    "firmwares": [
-      895762065
-    ]
-  },
-  {
-    "id": "microsoft-jm-proto-touch",
-    "name": "JM Touch-Proto v2.0",
-    "company": "Microsoft Research",
-    "description": "A multi-touch sensor based on proto board.",
-    "repo": "https://github.com/microsoft/jacdac-stm32x0",
-    "link": "https://github.com/microsoft/jacdac-stm32x0",
-    "services": [
-      416636459
-    ],
-    "firmwares": [
-      1067172458
-    ]
-  },
-  {
-    "id": "microsoft-jm-proto",
-    "name": "JM Proto v2.0",
-    "company": "Microsoft Research",
-    "description": "A prototype multi-function board.\n* ``0x3f9bc26a`` JM Touch-Proto v2.0",
-    "repo": "https://github.com/microsoft/jacdac-stm32x0",
-    "link": "https://github.com/microsoft/jacdac-stm32x0",
-    "services": [],
-    "firmwares": [
-      1052138004
-    ]
-  },
-  {
-    "id": "microsoft-jm-pwr",
+    "id": "microsoft-research-jmpower",
     "name": "JM Power",
     "company": "Microsoft Research",
     "description": "Lets you supply power to JACDAC network from a MicroUSB connection (eg. a USB battery pack).",
@@ -180,21 +126,47 @@
     ]
   },
   {
-    "id": "microsoft-jm-servo-pwr",
-    "name": "JM PWM (Servo) v2.1",
+    "id": "microsoft-research-jmprotov20",
+    "name": "JM Proto v2.0",
     "company": "Microsoft Research",
-    "description": "A controller for a 5V servo, with MicroUSB connector for power.",
+    "description": "A prototype multi-function board.\n* ``0x3f9bc26a`` JM Touch-Proto v2.0",
     "repo": "https://github.com/microsoft/jacdac-stm32x0",
     "link": "https://github.com/microsoft/jacdac-stm32x0",
-    "services": [
-      318542083
-    ],
+    "services": [],
     "firmwares": [
-      986140247
+      1052138004
     ]
   },
   {
-    "id": "microsoft-jm-servo",
+    "id": "microsoft-research-jmpwmnpxv20",
+    "name": "JM PWM (npx) v2.0",
+    "company": "Microsoft Research",
+    "description": "A light-strip controller. Supports WS2812B, APA102, and SK9822.",
+    "repo": "https://github.com/microsoft/jacdac-stm32x0",
+    "link": "https://github.com/microsoft/jacdac-stm32x0",
+    "services": [
+      309264608
+    ],
+    "firmwares": [
+      895762065
+    ]
+  },
+  {
+    "id": "microsoft-research-jmpwmnpxv21",
+    "name": "JM PWM (npx) v2.1",
+    "company": "Microsoft Research",
+    "description": "A light-strip controller with MicroUSB connector for power. Supports WS2812B, APA102, and SK9822.",
+    "repo": "https://github.com/microsoft/jacdac-stm32x0",
+    "link": "https://github.com/microsoft/jacdac-stm32x0",
+    "services": [
+      309264608
+    ],
+    "firmwares": [
+      1013705700
+    ]
+  },
+  {
+    "id": "microsoft-research-jmpwmservov20",
     "name": "JM PWM (Servo) v2.0",
     "company": "Microsoft Research",
     "description": "A controller for a 5V servo.",
@@ -208,7 +180,21 @@
     ]
   },
   {
-    "id": "microsoft-jm-slider",
+    "id": "microsoft-research-jmpwmservov21",
+    "name": "JM PWM (Servo) v2.1",
+    "company": "Microsoft Research",
+    "description": "A controller for a 5V servo, with MicroUSB connector for power.",
+    "repo": "https://github.com/microsoft/jacdac-stm32x0",
+    "link": "https://github.com/microsoft/jacdac-stm32x0",
+    "services": [
+      318542083
+    ],
+    "firmwares": [
+      986140247
+    ]
+  },
+  {
+    "id": "microsoft-research-jmsliderv2",
     "name": "JM Slider v2",
     "company": "Microsoft Research",
     "description": "A linear potentiometer (slider).",
@@ -222,7 +208,7 @@
     ]
   },
   {
-    "id": "microsoft-jm-snd",
+    "id": "microsoft-research-jmsndv20",
     "name": "JM SND v2.0",
     "company": "Microsoft Research",
     "description": "A simple buzzer.",
@@ -233,6 +219,20 @@
     ],
     "firmwares": [
       854957595
+    ]
+  },
+  {
+    "id": "microsoft-research-jmtouchprotov20",
+    "name": "JM Touch-Proto v2.0",
+    "company": "Microsoft Research",
+    "description": "A multi-touch sensor based on proto board.",
+    "repo": "https://github.com/microsoft/jacdac-stm32x0",
+    "link": "https://github.com/microsoft/jacdac-stm32x0",
+    "services": [
+      416636459
+    ],
+    "firmwares": [
+      1067172458
     ]
   }
 ]

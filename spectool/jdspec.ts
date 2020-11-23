@@ -1200,7 +1200,7 @@ function toTypescript(info: jdspec.ServiceSpec, isStatic: boolean) {
 export function normalizeDeviceSpecification(dev: jdspec.DeviceSpec) {
     // reorder fields
     const clone: jdspec.DeviceSpec = {
-        id: dev.id,
+        id: dev.id = escapeDeviceIdentifier(dev.company) + '-' + escapeDeviceNameIdentifier(dev.name),
         name: dev.name,
         company: dev.company,
         description: dev.description,

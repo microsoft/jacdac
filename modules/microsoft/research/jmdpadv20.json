@@ -1,0 +1,16 @@
+{
+  "id": "microsoft-research-jmdpadv20",
+  "name": "JM D-Pad v2.0",
+  "company": "Microsoft Research",
+  "description": "A sensor",
+  "repo": "https://github.com/microsoft/jacdac-stm32x0",
+  "services": [
+    434976332
+  ],
+  "firmwares": [
+    866678795,
+    955550524,
+    1025926463,
+    919754666
+  ]
+}

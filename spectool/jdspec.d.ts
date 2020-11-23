@@ -405,11 +405,6 @@ declare namespace jdspec {
         company: string;
 
         /**
-         * Relative path to picture of the device.
-         */
-        image?: string;
-
-        /**
          * A URL where the user can learn more about the device (and possibly buy it).
          */
         link?: string;

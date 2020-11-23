@@ -81,8 +81,12 @@ function processModules(upperName: string) {
             allModules.push(normalizeDeviceSpecification(dev));
 
             const p = path.join("../modules", dev.id.replace(/-/g, "/")) + ".json";
-            console.log({ id: dev.id, p })
+            const i = path.join(folder, path.basename(fn, ".json") + ".jpg");
+            console.log({ id: dev.id, p, i })
             fs.writeFileSync(p, JSON.stringify(allModules, null, 2))
+            fs.copyFileSync(i,
+                path.join("../modules", dev.id.replace(/-/g, "/")) + ".jpg"
+            )
         }
     }
     fs.writeFileSync(path.join("../dist", "modules.json"), JSON.stringify(allModules, null, 2))

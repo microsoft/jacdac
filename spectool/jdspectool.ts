@@ -80,6 +80,7 @@ function processModules(upperName: string) {
             const dev = JSON.parse(readString(folder, fn)) as jdspec.DeviceSpec;
             allModules.push(normalizeDeviceSpecification(dev));
 
+            /*
             const p = path.join("../modules", dev.id.replace(/-/g, "/")) + ".json";
             const i = path.join(folder, path.basename(fn, ".json") + ".jpg");
             console.log({ id: dev.id, p, i })
@@ -87,6 +88,7 @@ function processModules(upperName: string) {
             fs.copyFileSync(i,
                 path.join("../modules", dev.id.replace(/-/g, "/")) + ".jpg"
             )
+            */
         }
     }
     fs.writeFileSync(path.join("../dist", "modules.json"), JSON.stringify(allModules, null, 2))

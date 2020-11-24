@@ -14,53 +14,17 @@ Any manufacturer of JACDAC device is encouraged to add their own *devices* to th
 The device catalog is stored as markdown text files and JPEG images, organized under the [JACDAC devices](https://github.com/microsoft/jacdac/tree/main/devices) folder.
 Each company may create a new folder for their devices (or multiple folders for product families).
 
-### Device entry format
+### Device specification
 
-A device entry is authored in a markdown format 
-
-* example: [accelerometer](https://github.com/microsoft/jacdac/blob/main/devices/microsoft-jm/acc.md)
-
-You can start from this template:
-
-```
-# NAME
-
-DESCRIPTION
-
-* services: SERVICE_CLASS*
-* firmware: FIRMARE_ID*
-* repo: REPO_URL
-* link: HOME_URL
-```
-
-where 
-* ``NAME`` is the name of the device
-* ``DESCRIPTION`` is a short 1 sentence description
-* ``SERVICE_CLASS*`` is a comma separated list of [service classes](/services) supported by this device (``0x...``)
-* ``FIRMWARE_ID*`` are the unique firmware identifers for the device. Sometimes there can be more than one for different hardware
-   revisions. The JACDAC tool will detect duplicates. Use the widget below to generate a *Random Firmware Identifier*.
-* ``REPO_URL`` is the URL to the GitHub repository hosting the firmware binaries.
-* ``HOME_URL`` is the device store/home page for users
-
-<RandomGenerator firmware={true} />
-
-### Common file ``_default.md``
-
-The special file ``_default.md`` will be appended to all other markdown file in the folder. This is a useful file to add common information
-such as repository url or link url.
-
-* example: [_default.md](https://github.com/microsoft/jacdac/blob/main/devices/microsoft-jm/_default.md)
-
-```
-* repo: REPO_URL
-* link: HOME_URL
-```
+A device is specified by a JSON file and an image file (see below).
+The JSON schema is defined by the ``jdspec.DeviceSpec`` interface
+in ``jdspec.d.ts``. For an easier authoring experience, use the [device designer](/tools/device-designer).
 
 ### Image
 
 Each device file, (e.g. ``mydevice.md``), should be accompanied by a JPEG picture of the device, (e.g. ``mydevice.jpg``).
 * 4:3 aspect ratio
-* 600 pixels wide
+* 650 pixels wide
 * White background, picture from the top
 
 * example: [microsoft-jm](https://github.com/microsoft/jacdac/tree/main/devices/microsoft-jm)

@@ -47,7 +47,7 @@ typedef struct jd_ctrl_services_report {
 #define JD_CTRL_REG_FIRMWARE_VERSION 0x185
 
 /** Read-only °C int16_t. MCU temperature in degrees Celsius (approximate). */
-#define JD_CTRL_REG_TEMPERATURE 0x182
+#define JD_CTRL_REG_MCU_TEMPERATURE 0x182
 
 /** Read-only μs uint64_t. Number of microseconds since boot. */
 #define JD_CTRL_REG_UPTIME 0x186

@@ -259,7 +259,7 @@ export enum CtrlReg {
     FirmwareVersion = 0x185,
 
     /** Read-only °C int16_t. MCU temperature in degrees Celsius (approximate). */
-    Temperature = 0x182,
+    McuTemperature = 0x182,
 
     /** Read-only μs uint64_t. Number of microseconds since boot. */
     Uptime = 0x186,

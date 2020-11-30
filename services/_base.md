@@ -92,6 +92,10 @@ Period between packets of data when streaming in milliseconds.
 
 Read-only value of the sensor, also reported in streaming.
 
+    const streaming_preferred_interval: u32 ms @ 0x102
+
+Preferred default streaming interval for sensor in milliseconds.
+
     rw low_threshold: i32 @ 0x05
     rw high_threshold: i32 @ 0x06
 

@@ -7,6 +7,9 @@
 // enum AnnounceFlags (uint8_t)
 #define JD_CTRL_ANNOUNCE_FLAGS_SUPPORTS_ACK 0x1
 
+// enum StatusCode (uint16_t)
+#define JD_CTRL_STATUS_CODE_OK 0x0
+
 /**
  * No args. The `restart_counter` starts at `0x1` and increments by one until it reaches `0xf`, then it stays at `0xf`.
  * If this number ever goes down, it indicates that the device restarted.
@@ -60,7 +63,7 @@ typedef struct jd_ctrl_services_report {
  */
 #define JD_CTRL_REG_STATUS_CODE 0x187
 typedef struct jd_ctrl_status_code {
-    uint16_t code;
+    uint16_t code;  // StatusCode
     uint16_t vendor_code;
 } jd_ctrl_status_code_t;
 

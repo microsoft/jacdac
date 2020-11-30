@@ -6,8 +6,6 @@
 Control service is always service index `0`.
 It handles actions common to all services on a device.
 
-
-
 ## Commands
 
     flags AnnounceFlags : u8 {
@@ -67,8 +65,11 @@ MCU temperature in degrees Celsius (approximate).
 
 Number of microseconds since boot.
 
+    enum StatusCode : u16 {
+        Ok = 0,
+    }
     ro status_code? @ 0x187 {
-        code: u16
+        code: StatusCode
         vendor_code: u16
     }
 

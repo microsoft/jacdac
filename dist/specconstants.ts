@@ -222,6 +222,11 @@ export enum CtrlAnnounceFlags { // uint8_t
     SupportsACK = 0x1,
 }
 
+
+export enum CtrlStatusCode { // uint16_t
+    Ok = 0x0,
+}
+
 export enum CtrlCmd {
     /**
      * No args. The `restart_counter` starts at `0x1` and increments by one until it reaches `0xf`, then it stays at `0xf`.

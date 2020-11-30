@@ -1227,9 +1227,34 @@
           }
         ],
         "optional": true
+      },
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 391,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "optional": true
       }
     ],
-    "source": "# Control\n\n    identifier: 0x00000000\n    camel: ctrl\n\nControl service is always service index `0`.\nIt handles actions common to all services on a device.\n\n\n\n## Commands\n\n    flags AnnounceFlags : u8 {\n        SupportsACK = 0x01,\n    }\n    command services @ announce { }\n    report {\n        restart_counter: u8\n        flags: AnnounceFlags\n        reserved: u16\n    repeats:\n        service_class: u32\n    }\n\nThe `restart_counter` starts at `0x1` and increments by one until it reaches `0xf`, then it stays at `0xf`.\nIf this number ever goes down, it indicates that the device restarted.\nThe upper 4 bits of `restart_counter` are reserved.\n`service_class` indicates class identifier for each service index (service index `0` is always control, so it's\nskipped in this enumeration).\nThe command form can be used to induce report, which is otherwise broadcast every 500ms.\n\n    command noop @ 0x80 { }\n\nDo nothing. Always ignored. Can be used to test ACKs.\n\n    command identify @ 0x81 { }\n\nBlink an LED or otherwise draw user's attention.\n\n    command reset @ 0x82 { }\n\nReset device. ACK may or may not be sent.\n\n## Registers\n\n    const device_description?: string @ 0x180\n\nIdentifies the type of hardware (eg., ACME Corp. Servo X-42 Rev C)\n\n    const firmware_identifier? : u32 { absolute_min = 0x3000_0000, absolute_max = 0x3fff_ffff } @ 0x181\n\nA numeric code for the string above; used to identify firmware images and devices.\n\n    const bootloader_firmware_identifier?: u32 { absolute_min = 0x3000_0000, absolute_max = 0x3fff_ffff } @ 0x184\n\nTypically the same as `firmware_identifier` unless device was flashed by hand; the bootloader will respond to that code.\n\n    const firmware_version?: string @ 0x185\n\nA string describing firmware version; typically semver.\n\n    ro mcu_temperature?: i16 C { typical_min = -10, typical_max = 150 } @ 0x182\n\nMCU temperature in degrees Celsius (approximate).\n\n    ro uptime?: u64 us @ 0x186\n\nNumber of microseconds since boot.\n\n"
+    "source": "# Control\n\n    identifier: 0x00000000\n    camel: ctrl\n\nControl service is always service index `0`.\nIt handles actions common to all services on a device.\n\n\n\n## Commands\n\n    flags AnnounceFlags : u8 {\n        SupportsACK = 0x01,\n    }\n    command services @ announce { }\n    report {\n        restart_counter: u8\n        flags: AnnounceFlags\n        reserved: u16\n    repeats:\n        service_class: u32\n    }\n\nThe `restart_counter` starts at `0x1` and increments by one until it reaches `0xf`, then it stays at `0xf`.\nIf this number ever goes down, it indicates that the device restarted.\nThe upper 4 bits of `restart_counter` are reserved.\n`service_class` indicates class identifier for each service index (service index `0` is always control, so it's\nskipped in this enumeration).\nThe command form can be used to induce report, which is otherwise broadcast every 500ms.\n\n    command noop @ 0x80 { }\n\nDo nothing. Always ignored. Can be used to test ACKs.\n\n    command identify @ 0x81 { }\n\nBlink an LED or otherwise draw user's attention.\n\n    command reset @ 0x82 { }\n\nReset device. ACK may or may not be sent.\n\n## Registers\n\n    const device_description?: string @ 0x180\n\nIdentifies the type of hardware (eg., ACME Corp. Servo X-42 Rev C)\n\n    const firmware_identifier? : u32 { absolute_min = 0x3000_0000, absolute_max = 0x3fff_ffff } @ 0x181\n\nA numeric code for the string above; used to identify firmware images and devices.\n\n    const bootloader_firmware_identifier?: u32 { absolute_min = 0x3000_0000, absolute_max = 0x3fff_ffff } @ 0x184\n\nTypically the same as `firmware_identifier` unless device was flashed by hand; the bootloader will respond to that code.\n\n    const firmware_version?: string @ 0x185\n\nA string describing firmware version; typically semver.\n\n    ro mcu_temperature?: i16 C { typical_min = -10, typical_max = 150 } @ 0x182\n\nMCU temperature in degrees Celsius (approximate).\n\n    ro uptime?: u64 us @ 0x186\n\nNumber of microseconds since boot.\n\n    ro status_code? @ 0x187 {\n        code: u16\n        vendor_code: u16\n    }\n\nReports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.\n"
   },
   {
     "name": "Rotary encoder",

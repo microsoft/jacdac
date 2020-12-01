@@ -88,10 +88,6 @@ Asks device to stream a given number of samples
 
 Period between packets of data when streaming in milliseconds.
 
-    const streaming_preferred_interval: u32 ms @ 0x102
-
-Preferred default streaming interval for sensor in milliseconds.
-
     ro reading: i32 @ 0x101
 
 Read-only value of the sensor, also reported in streaming.
@@ -110,3 +106,7 @@ Reports the current state or error status of the device. ``code`` is a standardi
 the JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device
 state. This report is typically not queried, when a device has an error, it will typically
 add this report in frame along with the anounce packet.
+
+    const streaming_preferred_interval: u32 ms @ 0x8
+
+Preferred default streaming interval for sensor in milliseconds.

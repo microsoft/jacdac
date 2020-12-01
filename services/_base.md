@@ -16,11 +16,3 @@ the JACDAC error codes. ``vendor_code`` is any vendor specific error code descri
 state. This report is typically not queried, when a device has an error, it will typically
 add this report in frame along with the anounce packet.
 
-## Commands
-
-    command description? @ description { }
-    report {
-        text: string
-    }
-
-Request human-readable description of service.

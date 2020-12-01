@@ -46,13 +46,6 @@ Event from sensor or a broadcast service.
 
 Request to calibrate a sensor. The report indicates the calibration is done.
 
-    command description @ 0x03 { }
-    report {
-        text: string
-    }
-
-Request human-readable description of service.
-
 ## Registers
 
 Register codes are subdivided as follows:

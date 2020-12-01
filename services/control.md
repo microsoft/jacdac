@@ -64,3 +64,11 @@ MCU temperature in degrees Celsius (approximate).
     ro uptime?: u64 us @ 0x186
 
 Number of microseconds since boot.
+
+    const device_url?: string @ 0x187
+
+Request the information web site for this device
+
+    const firmware_url?: string @ 0x188
+
+Request the information web site for this device

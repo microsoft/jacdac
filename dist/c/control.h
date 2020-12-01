@@ -52,4 +52,10 @@ typedef struct jd_ctrl_services_report {
 /** Read-only μs uint64_t. Number of microseconds since boot. */
 #define JD_CTRL_REG_UPTIME 0x186
 
+/** Constant string (bytes). Request the information web site for this device */
+#define JD_CTRL_REG_DEVICE_URL 0x187
+
+/** Constant string (bytes). Request the information web site for this device */
+#define JD_CTRL_REG_FIRMWARE_URL 0x188
+
 #endif

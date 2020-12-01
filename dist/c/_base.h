@@ -14,7 +14,4 @@ typedef struct jd_base_status_code {
 } jd_base_status_code_t;
 
 
-/** No args. Request human-readable description of service. */
-// Report: Argument: text string (bytes)
-
 #endif

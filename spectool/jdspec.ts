@@ -162,8 +162,8 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
     }
 
     try {
-        if(includes["_system"] && includes["_base"])
-                processInclude("_base")
+        if (includes["_system"] && includes["_base"])
+            processInclude("_base")
         for (let line of filecontent.split(/\n/)) {
             lineNo++
             processLine(line)
@@ -731,12 +731,14 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
         if (inner.errors)
             errors = errors.concat(inner.errors)
         const innerEnums = clone(inner.enums);
-        Object.keys(innerEnums).forEach(k => {
-            const ie = innerEnums[k];
-            ie.derived = name
-            info.enums[k] = ie;
-        })
-        const innerPackets = clone(inner.packets);
+        Object.keys(innerEnums).filter(k => !info.enums[k])
+            .forEach(k => {
+                const ie = innerEnums[k];
+                ie.derived = name
+                info.enums[k] = ie;
+            })
+        const innerPackets = clone(inner.packets
+            .filter(pkt => !info.packets.find(ipkt => ipkt.identifier === pkt.identifier)));
         innerPackets.forEach(pkt => pkt.derived = name)
         info.packets = [...info.packets, ...innerPackets]
         if (inner.highCommands)

@@ -24,9 +24,6 @@ export enum SystemCmd {
 
     /** No args. Request to calibrate a sensor. The report indicates the calibration is done. */
     Calibrate = 0x2,
-
-    /** No args. Request human-readable description of service. */
-    Description = 0x3,
 }
 
 export enum SystemReg {
@@ -80,11 +77,6 @@ export enum BaseReg {
      * add this report in frame along with the anounce packet.
      */
     StatusCode = 0x7,
-}
-
-export enum BaseCmd {
-    /** No args. Request human-readable description of service. */
-    Description = 0x3,
 }
 
 // Service: Sensor
@@ -295,6 +287,12 @@ export enum CtrlReg {
 
     /** Read-only μs uint64_t. Number of microseconds since boot. */
     Uptime = 0x186,
+
+    /** Constant string (bytes). Request the information web site for this device */
+    DeviceUrl = 0x187,
+
+    /** Constant string (bytes). URL with machine-readable metadata information about updating device firmware */
+    FirmwareUrl = 0x188,
 }
 
 // Service: Rotary encoder

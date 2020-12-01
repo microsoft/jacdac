@@ -25,9 +25,6 @@ namespace jacdac {
 
         /** No args. Request to calibrate a sensor. The report indicates the calibration is done. */
         Calibrate = 0x2,
-
-        /** No args. Request human-readable description of service. */
-        Description = 0x3,
     }
 
     export const enum SystemReg {
@@ -83,11 +80,6 @@ namespace jacdac {
          * add this report in frame along with the anounce packet.
          */
         StatusCode = 0x7,
-    }
-
-    export const enum BaseCmd {
-        /** No args. Request human-readable description of service. */
-        Description = 0x3,
     }
 
 }
@@ -312,6 +304,12 @@ namespace jacdac {
 
         /** Read-only μs uint64_t. Number of microseconds since boot. */
         Uptime = 0x186,
+
+        /** Constant string (bytes). Request the information web site for this device */
+        DeviceUrl = 0x187,
+
+        /** Constant string (bytes). URL with machine-readable metadata information about updating device firmware */
+        FirmwareUrl = 0x188,
     }
 
 }

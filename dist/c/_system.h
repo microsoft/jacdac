@@ -34,10 +34,6 @@ typedef struct jd_system_event_report {
 #define JD_CMD_CALIBRATE 0x2
 // Report: No args
 
-/** No args. Request human-readable description of service. */
-#define JD_CMD_DESCRIPTION 0x3
-// Report: Argument: text string (bytes)
-
 /** Read-write uint32_t. This is either binary on/off (0 or non-zero), or can be gradual (eg. brightness of an RGB LED strip). */
 #define JD_REG_INTENSITY 0x1
 

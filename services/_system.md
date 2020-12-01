@@ -88,6 +88,10 @@ Asks device to stream a given number of samples
 
 Period between packets of data when streaming in milliseconds.
 
+    const streaming_preferred_interval: u32 ms @ 0x102
+
+Preferred default streaming interval for sensor in milliseconds.
+
     ro reading: i32 @ 0x101
 
 Read-only value of the sensor, also reported in streaming.

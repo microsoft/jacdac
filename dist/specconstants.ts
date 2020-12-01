@@ -48,6 +48,9 @@ export enum SystemReg {
     /** Read-write ms uint32_t. Period between packets of data when streaming in milliseconds. */
     StreamingInterval = 0x4,
 
+    /** Constant ms uint32_t. Preferred default streaming interval for sensor in milliseconds. */
+    StreamingPreferredInterval = 0x102,
+
     /** Read-only int32_t. Read-only value of the sensor, also reported in streaming. */
     Reading = 0x101,
 
@@ -94,6 +97,9 @@ export enum SensorReg {
 
     /** Read-write ms uint32_t. Period between packets of data when streaming in milliseconds. */
     StreamingInterval = 0x4,
+
+    /** Constant ms uint32_t. Preferred default streaming interval for sensor in milliseconds. */
+    StreamingPreferredInterval = 0x102,
 }
 
 // Service: Accelerometer

@@ -56,6 +56,9 @@ typedef struct jd_system_event_report {
 /** Read-write ms uint32_t. Period between packets of data when streaming in milliseconds. */
 #define JD_REG_STREAMING_INTERVAL 0x4
 
+/** Constant ms uint32_t. Preferred default streaming interval for sensor in milliseconds. */
+#define JD_REG_STREAMING_PREFERRED_INTERVAL 0x102
+
 /** Read-only int32_t. Read-only value of the sensor, also reported in streaming. */
 #define JD_REG_READING 0x101
 

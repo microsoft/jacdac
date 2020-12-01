@@ -7,9 +7,6 @@
 // enum AnnounceFlags (uint8_t)
 #define JD_CTRL_ANNOUNCE_FLAGS_SUPPORTS_ACK 0x1
 
-// enum StatusCode (uint16_t)
-#define JD_CTRL_STATUS_CODE_OK 0x0
-
 /**
  * No args. The `restart_counter` starts at `0x1` and increments by one until it reaches `0xf`, then it stays at `0xf`.
  * If this number ever goes down, it indicates that the device restarted.
@@ -54,18 +51,5 @@ typedef struct jd_ctrl_services_report {
 
 /** Read-only μs uint64_t. Number of microseconds since boot. */
 #define JD_CTRL_REG_UPTIME 0x186
-
-/**
- * Reports the current state or error status of the device. ``code`` is a standardized value from 
- * the JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device
- * state. This report is typically not queried, when a device has an error, it will typically
- * add this report in frame along with the anounce packet.
- */
-#define JD_CTRL_REG_STATUS_CODE 0x187
-typedef struct jd_ctrl_status_code {
-    uint16_t code;  // StatusCode
-    uint16_t vendor_code;
-} jd_ctrl_status_code_t;
-
 
 #endif

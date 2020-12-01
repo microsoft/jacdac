@@ -2,6 +2,9 @@
 #ifndef _JACDAC_SPEC_BASE_H
 #define _JACDAC_SPEC_BASE_H 1
 
+// enum StatusCode (uint16_t)
+#define JD_STATUS_CODE_OK 0x0
+
 /**
  * No args. Enumeration data for control service; service-specific advertisement data otherwise.
  * Control broadcasts it automatically every 500ms, but other service have to be queried to provide it.
@@ -64,5 +67,18 @@ typedef struct jd_base_event_report {
 
 /** Read-write int32_t. Thresholds for event generation for event generation for analog sensors. */
 #define JD_REG_HIGH_THRESHOLD 0x6
+
+/**
+ * Reports the current state or error status of the device. ``code`` is a standardized value from 
+ * the JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device
+ * state. This report is typically not queried, when a device has an error, it will typically
+ * add this report in frame along with the anounce packet.
+ */
+#define JD_REG_STATUS_CODE 0x7
+typedef struct jd_base_status_code {
+    uint16_t code;  // StatusCode
+    uint16_t vendor_code;
+} jd_base_status_code_t;
+
 
 #endif

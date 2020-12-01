@@ -64,16 +64,3 @@ MCU temperature in degrees Celsius (approximate).
     ro uptime?: u64 us @ 0x186
 
 Number of microseconds since boot.
-
-    enum StatusCode : u16 {
-        Ok = 0,
-    }
-    ro status_code? @ 0x187 {
-        code: StatusCode
-        vendor_code: u16
-    }
-
-Reports the current state or error status of the device. ``code`` is a standardized value from 
-the JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device
-state. This report is typically not queried, when a device has an error, it will typically
-add this report in frame along with the anounce packet.

@@ -1,4 +1,9 @@
 // Service: Common registers and commands
+
+export enum BaseStatusCode { // uint16_t
+    Ok = 0x0,
+}
+
 export enum BaseCmd {
     /**
      * No args. Enumeration data for control service; service-specific advertisement data otherwise.
@@ -56,6 +61,15 @@ export enum BaseReg {
 
     /** Read-write int32_t. Thresholds for event generation for event generation for analog sensors. */
     HighThreshold = 0x6,
+
+    // const [code, vendorCode] = unpack(buf, "HH")
+    /**
+     * Reports the current state or error status of the device. ``code`` is a standardized value from
+     * the JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device
+     * state. This report is typically not queried, when a device has an error, it will typically
+     * add this report in frame along with the anounce packet.
+     */
+    StatusCode = 0x7,
 }
 
 // Service: Sensor
@@ -222,11 +236,6 @@ export enum CtrlAnnounceFlags { // uint8_t
     SupportsACK = 0x1,
 }
 
-
-export enum CtrlStatusCode { // uint16_t
-    Ok = 0x0,
-}
-
 export enum CtrlCmd {
     /**
      * No args. The `restart_counter` starts at `0x1` and increments by one until it reaches `0xf`, then it stays at `0xf`.
@@ -268,15 +277,6 @@ export enum CtrlReg {
 
     /** Read-only μs uint64_t. Number of microseconds since boot. */
     Uptime = 0x186,
-
-    // const [code, vendorCode] = unpack(buf, "HH")
-    /**
-     * Reports the current state or error status of the device. ``code`` is a standardized value from
-     * the JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device
-     * state. This report is typically not queried, when a device has an error, it will typically
-     * add this report in frame along with the anounce packet.
-     */
-    StatusCode = 0x187,
 }
 
 // Service: Rotary encoder

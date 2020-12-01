@@ -1,5 +1,10 @@
 namespace jacdac {
     // Service: Common registers and commands
+
+    export const enum BaseStatusCode { // uint16_t
+        Ok = 0x0,
+    }
+
     export const enum BaseCmd {
         /**
          * No args. Enumeration data for control service; service-specific advertisement data otherwise.
@@ -57,6 +62,15 @@ namespace jacdac {
 
         /** Read-write int32_t. Thresholds for event generation for event generation for analog sensors. */
         HighThreshold = 0x6,
+
+        // const [code, vendorCode] = buf.unpack("HH")
+        /**
+         * Reports the current state or error status of the device. ``code`` is a standardized value from
+         * the JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device
+         * state. This report is typically not queried, when a device has an error, it will typically
+         * add this report in frame along with the anounce packet.
+         */
+        StatusCode = 0x7,
     }
 
 }
@@ -237,11 +251,6 @@ namespace jacdac {
         SupportsACK = 0x1,
     }
 
-
-    export const enum CtrlStatusCode { // uint16_t
-        Ok = 0x0,
-    }
-
     export const enum CtrlCmd {
         /**
          * No args. The `restart_counter` starts at `0x1` and increments by one until it reaches `0xf`, then it stays at `0xf`.
@@ -283,15 +292,6 @@ namespace jacdac {
 
         /** Read-only μs uint64_t. Number of microseconds since boot. */
         Uptime = 0x186,
-
-        // const [code, vendorCode] = buf.unpack("HH")
-        /**
-         * Reports the current state or error status of the device. ``code`` is a standardized value from
-         * the JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device
-         * state. This report is typically not queried, when a device has an error, it will typically
-         * add this report in frame along with the anounce packet.
-         */
-        StatusCode = 0x187,
     }
 
 }

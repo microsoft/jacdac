@@ -12,7 +12,15 @@
       "registers": "Register codes are subdivided as follows:\n* Registers `0x001-0x07f` - r/w common to all services\n* Registers `0x080-0x0ff` - r/w defined per-service\n* Registers `0x100-0x17f` - r/o common to all services\n* Registers `0x180-0x1ff` - r/o defined per-service\n* Registers `0x200-0xeff` - custom, defined per-service\n* Registers `0xf00-0xfff` - reserved for implementation, should not be seen on the wire\n\nThe types listed are typical. Check spec for particular service for exact type,\nand a service-specific name for a register (eg. `value` could be `pulse_length`).\nAll registers default to `0` unless otherwise indicated."
     },
     "classIdentifier": 536870897,
-    "enums": {},
+    "enums": {
+      "StatusCode": {
+        "name": "StatusCode",
+        "storage": 2,
+        "members": {
+          "Ok": 0
+        }
+      }
+    },
     "packets": [
       {
         "kind": "command",
@@ -248,9 +256,33 @@
             "isSimpleType": true
           }
         ]
+      },
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "StatusCode",
+            "storage": 2
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "optional": true
       }
     ],
-    "source": "# Common registers and commands\n\n    camel: base\n\nThis file describes common register and command codes.\nThese are defined in ranges separate from the per-service ones.\nNo service actually derives from this file, but services can include packets\ndefined here.\nTheir code is listed as say `@ intensity` and not `@ 0x01` (the spectool enforces that).\n\n## Commands\n\nCommand codes are subdivided as follows:\n* Commands `0x000-0x07f` - common to all services\n* Commands `0x080-0xeff` - defined per-service\n* Commands `0xf00-0xfff` - reserved for implementation\n\nCommands follow.\n\n    command announce @ 0x00 { }\n    report { ... }\n\nEnumeration data for control service; service-specific advertisement data otherwise.\nControl broadcasts it automatically every 500ms, but other service have to be queried to provide it.\n\n    command get_register @ 0x1000 {}\n    report { ... }\n\nRegisters number `N` is fetched by issuing command `0x1000 | N`.\nThe report format is the same as the format of the register.\n\n    command set_register @ 0x2000 { ... }\n\nRegisters number `N` is set by issuing command `0x2000 | N`, with the format\nthe same as the format of the register.\n\n    report event @ 0x01 {\n        event_id: u32\n        event_argument: u32\n    }\n\nEvent from sensor or a broadcast service. \n\n    command calibrate @ 0x02 { }\n    report { }\n\nRequest to calibrate a sensor. The report indicates the calibration is done.\n\n    command description @ 0x03 { }\n    report {\n        text: string\n    }\n\nRequest human-readable description of service.\n\n## Registers\n\nRegister codes are subdivided as follows:\n* Registers `0x001-0x07f` - r/w common to all services\n* Registers `0x080-0x0ff` - r/w defined per-service\n* Registers `0x100-0x17f` - r/o common to all services\n* Registers `0x180-0x1ff` - r/o defined per-service\n* Registers `0x200-0xeff` - custom, defined per-service\n* Registers `0xf00-0xfff` - reserved for implementation, should not be seen on the wire\n\nThe types listed are typical. Check spec for particular service for exact type,\nand a service-specific name for a register (eg. `value` could be `pulse_length`).\nAll registers default to `0` unless otherwise indicated.\n\n    rw intensity: u32 @ 0x01\n\nThis is either binary on/off (0 or non-zero), or can be gradual (eg. brightness of an RGB LED strip).\n\n    rw value: i32 @ 0x02\n\nThe primary value of actuator (eg. servo pulse length, or motor duty cycle).\n\n    rw max_power = 500: u16 mA {typical_max = 500} @ 0x07\n\nLimit the power drawn by the service, in mA.\n\n    rw stream_samples: u8 @ 0x03\n\nAsks device to stream a given number of samples\n(clients will typically write `255` to this register every second or so, while streaming is required).\n\n    rw streaming_interval = 100: u32 ms @ 0x04\n\nPeriod between packets of data when streaming in milliseconds.\n\n    ro reading: i32 @ 0x101\n\nRead-only value of the sensor, also reported in streaming.\n\n    rw low_threshold: i32 @ 0x05\n    rw high_threshold: i32 @ 0x06\n\nThresholds for event generation for event generation for analog sensors.\n\n"
+    "source": "# Common registers and commands\n\n    camel: base\n\nThis file describes common register and command codes.\nThese are defined in ranges separate from the per-service ones.\nNo service actually derives from this file, but services can include packets\ndefined here.\nTheir code is listed as say `@ intensity` and not `@ 0x01` (the spectool enforces that).\n\n## Commands\n\nCommand codes are subdivided as follows:\n* Commands `0x000-0x07f` - common to all services\n* Commands `0x080-0xeff` - defined per-service\n* Commands `0xf00-0xfff` - reserved for implementation\n\nCommands follow.\n\n    command announce @ 0x00 { }\n    report { ... }\n\nEnumeration data for control service; service-specific advertisement data otherwise.\nControl broadcasts it automatically every 500ms, but other service have to be queried to provide it.\n\n    command get_register @ 0x1000 {}\n    report { ... }\n\nRegisters number `N` is fetched by issuing command `0x1000 | N`.\nThe report format is the same as the format of the register.\n\n    command set_register @ 0x2000 { ... }\n\nRegisters number `N` is set by issuing command `0x2000 | N`, with the format\nthe same as the format of the register.\n\n    report event @ 0x01 {\n        event_id: u32\n        event_argument: u32\n    }\n\nEvent from sensor or a broadcast service. \n\n    command calibrate @ 0x02 { }\n    report { }\n\nRequest to calibrate a sensor. The report indicates the calibration is done.\n\n    command description @ 0x03 { }\n    report {\n        text: string\n    }\n\nRequest human-readable description of service.\n\n## Registers\n\nRegister codes are subdivided as follows:\n* Registers `0x001-0x07f` - r/w common to all services\n* Registers `0x080-0x0ff` - r/w defined per-service\n* Registers `0x100-0x17f` - r/o common to all services\n* Registers `0x180-0x1ff` - r/o defined per-service\n* Registers `0x200-0xeff` - custom, defined per-service\n* Registers `0xf00-0xfff` - reserved for implementation, should not be seen on the wire\n\nThe types listed are typical. Check spec for particular service for exact type,\nand a service-specific name for a register (eg. `value` could be `pulse_length`).\nAll registers default to `0` unless otherwise indicated.\n\n    rw intensity: u32 @ 0x01\n\nThis is either binary on/off (0 or non-zero), or can be gradual (eg. brightness of an RGB LED strip).\n\n    rw value: i32 @ 0x02\n\nThe primary value of actuator (eg. servo pulse length, or motor duty cycle).\n\n    rw max_power = 500: u16 mA {typical_max = 500} @ 0x07\n\nLimit the power drawn by the service, in mA.\n\n    rw stream_samples: u8 @ 0x03\n\nAsks device to stream a given number of samples\n(clients will typically write `255` to this register every second or so, while streaming is required).\n\n    rw streaming_interval = 100: u32 ms @ 0x04\n\nPeriod between packets of data when streaming in milliseconds.\n\n    ro reading: i32 @ 0x101\n\nRead-only value of the sensor, also reported in streaming.\n\n    rw low_threshold: i32 @ 0x05\n    rw high_threshold: i32 @ 0x06\n\nThresholds for event generation for event generation for analog sensors.\n\n\n    enum StatusCode : u16 {\n        Ok = 0,\n    }\n    ro status_code? @ 0x7 {\n        code: StatusCode\n        vendor_code: u16\n    }\n\nReports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.\n"
   },
   {
     "name": "Sensor",
@@ -1048,13 +1080,6 @@
         "members": {
           "SupportsACK": 1
         }
-      },
-      "StatusCode": {
-        "name": "StatusCode",
-        "storage": 2,
-        "members": {
-          "Ok": 0
-        }
       }
     },
     "packets": [
@@ -1234,33 +1259,9 @@
           }
         ],
         "optional": true
-      },
-      {
-        "kind": "ro",
-        "name": "status_code",
-        "identifier": 391,
-        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
-        "fields": [
-          {
-            "name": "code",
-            "unit": "",
-            "isFloat": false,
-            "type": "StatusCode",
-            "storage": 2
-          },
-          {
-            "name": "vendor_code",
-            "unit": "",
-            "isFloat": false,
-            "type": "u16",
-            "storage": 2,
-            "isSimpleType": true
-          }
-        ],
-        "optional": true
       }
     ],
-    "source": "# Control\n\n    identifier: 0x00000000\n    camel: ctrl\n\nControl service is always service index `0`.\nIt handles actions common to all services on a device.\n\n## Commands\n\n    flags AnnounceFlags : u8 {\n        SupportsACK = 0x01,\n    }\n    command services @ announce { }\n    report {\n        restart_counter: u8\n        flags: AnnounceFlags\n        reserved: u16\n    repeats:\n        service_class: u32\n    }\n\nThe `restart_counter` starts at `0x1` and increments by one until it reaches `0xf`, then it stays at `0xf`.\nIf this number ever goes down, it indicates that the device restarted.\nThe upper 4 bits of `restart_counter` are reserved.\n`service_class` indicates class identifier for each service index (service index `0` is always control, so it's\nskipped in this enumeration).\nThe command form can be used to induce report, which is otherwise broadcast every 500ms.\n\n    command noop @ 0x80 { }\n\nDo nothing. Always ignored. Can be used to test ACKs.\n\n    command identify @ 0x81 { }\n\nBlink an LED or otherwise draw user's attention.\n\n    command reset @ 0x82 { }\n\nReset device. ACK may or may not be sent.\n\n## Registers\n\n    const device_description?: string @ 0x180\n\nIdentifies the type of hardware (eg., ACME Corp. Servo X-42 Rev C)\n\n    const firmware_identifier? : u32 { absolute_min = 0x3000_0000, absolute_max = 0x3fff_ffff } @ 0x181\n\nA numeric code for the string above; used to identify firmware images and devices.\n\n    const bootloader_firmware_identifier?: u32 { absolute_min = 0x3000_0000, absolute_max = 0x3fff_ffff } @ 0x184\n\nTypically the same as `firmware_identifier` unless device was flashed by hand; the bootloader will respond to that code.\n\n    const firmware_version?: string @ 0x185\n\nA string describing firmware version; typically semver.\n\n    ro mcu_temperature?: i16 C { typical_min = -10, typical_max = 150 } @ 0x182\n\nMCU temperature in degrees Celsius (approximate).\n\n    ro uptime?: u64 us @ 0x186\n\nNumber of microseconds since boot.\n\n    enum StatusCode : u16 {\n        Ok = 0,\n    }\n    ro status_code? @ 0x187 {\n        code: StatusCode\n        vendor_code: u16\n    }\n\nReports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.\n"
+    "source": "# Control\n\n    identifier: 0x00000000\n    camel: ctrl\n\nControl service is always service index `0`.\nIt handles actions common to all services on a device.\n\n## Commands\n\n    flags AnnounceFlags : u8 {\n        SupportsACK = 0x01,\n    }\n    command services @ announce { }\n    report {\n        restart_counter: u8\n        flags: AnnounceFlags\n        reserved: u16\n    repeats:\n        service_class: u32\n    }\n\nThe `restart_counter` starts at `0x1` and increments by one until it reaches `0xf`, then it stays at `0xf`.\nIf this number ever goes down, it indicates that the device restarted.\nThe upper 4 bits of `restart_counter` are reserved.\n`service_class` indicates class identifier for each service index (service index `0` is always control, so it's\nskipped in this enumeration).\nThe command form can be used to induce report, which is otherwise broadcast every 500ms.\n\n    command noop @ 0x80 { }\n\nDo nothing. Always ignored. Can be used to test ACKs.\n\n    command identify @ 0x81 { }\n\nBlink an LED or otherwise draw user's attention.\n\n    command reset @ 0x82 { }\n\nReset device. ACK may or may not be sent.\n\n## Registers\n\n    const device_description?: string @ 0x180\n\nIdentifies the type of hardware (eg., ACME Corp. Servo X-42 Rev C)\n\n    const firmware_identifier? : u32 { absolute_min = 0x3000_0000, absolute_max = 0x3fff_ffff } @ 0x181\n\nA numeric code for the string above; used to identify firmware images and devices.\n\n    const bootloader_firmware_identifier?: u32 { absolute_min = 0x3000_0000, absolute_max = 0x3fff_ffff } @ 0x184\n\nTypically the same as `firmware_identifier` unless device was flashed by hand; the bootloader will respond to that code.\n\n    const firmware_version?: string @ 0x185\n\nA string describing firmware version; typically semver.\n\n    ro mcu_temperature?: i16 C { typical_min = -10, typical_max = 150 } @ 0x182\n\nMCU temperature in degrees Celsius (approximate).\n\n    ro uptime?: u64 us @ 0x186\n\nNumber of microseconds since boot.\n"
   },
   {
     "name": "Rotary encoder",

@@ -941,8 +941,11 @@ export enum SettingsCmd {
 
     // const key = string0(buf, 0, 0)
     // const value = buf.slice(0)
-    /** Set the value of a given setting. Empty value indicates that the setting should be deleted. */
+    /** Set the value of a given setting. */
     Set = 0x81,
+
+    /** Argument: key string (bytes). Delete a given setting. */
+    Delete = 0x84,
 
     /** Argument: results pipe (bytes). Return keys of all settings. */
     ListKeys = 0x82,

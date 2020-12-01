@@ -13,13 +13,16 @@ typedef struct jd_settings_get_report {
 } jd_settings_get_report_t;
 
 
-/** Set the value of a given setting. Empty value indicates that the setting should be deleted. */
+/** Set the value of a given setting. */
 #define JD_SETTINGS_CMD_SET 0x81
 typedef struct jd_settings_set {
     char key[0];  // string0
     // uint8_t value[0];
 } jd_settings_set_t;
 
+
+/** Argument: key string (bytes). Delete a given setting. */
+#define JD_SETTINGS_CMD_DELETE 0x84
 
 /** Argument: results pipe (bytes). Return keys of all settings. */
 #define JD_SETTINGS_CMD_LIST_KEYS 0x82

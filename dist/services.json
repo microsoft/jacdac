@@ -2,9 +2,9 @@
   {
     "name": "Common registers and commands",
     "status": "experimental",
-    "shortId": "_base",
-    "camelName": "base",
-    "shortName": "base",
+    "shortId": "_system",
+    "camelName": "system",
+    "shortName": "system",
     "extends": [],
     "notes": {
       "short": "This file describes common register and command codes.\nThese are defined in ranges separate from the per-service ones.\nNo service actually derives from this file, but services can include packets\ndefined here.\nTheir code is listed as say `@ intensity` and not `@ 0x01` (the spectool enforces that).",
@@ -12,15 +12,7 @@
       "registers": "Register codes are subdivided as follows:\n* Registers `0x001-0x07f` - r/w common to all services\n* Registers `0x080-0x0ff` - r/w defined per-service\n* Registers `0x100-0x17f` - r/o common to all services\n* Registers `0x180-0x1ff` - r/o defined per-service\n* Registers `0x200-0xeff` - custom, defined per-service\n* Registers `0xf00-0xfff` - reserved for implementation, should not be seen on the wire\n\nThe types listed are typical. Check spec for particular service for exact type,\nand a service-specific name for a register (eg. `value` could be `pulse_length`).\nAll registers default to `0` unless otherwise indicated."
     },
     "classIdentifier": 536870897,
-    "enums": {
-      "StatusCode": {
-        "name": "StatusCode",
-        "storage": 2,
-        "members": {
-          "Ok": 0
-        }
-      }
-    },
+    "enums": {},
     "packets": [
       {
         "kind": "command",
@@ -267,8 +259,49 @@
             "name": "code",
             "unit": "",
             "isFloat": false,
-            "type": "StatusCode",
-            "storage": 2
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ]
+      }
+    ],
+    "source": "# Common registers and commands\n\n    camel: system\n\nThis file describes common register and command codes.\nThese are defined in ranges separate from the per-service ones.\nNo service actually derives from this file, but services can include packets\ndefined here.\nTheir code is listed as say `@ intensity` and not `@ 0x01` (the spectool enforces that).\n\n## Commands\n\nCommand codes are subdivided as follows:\n* Commands `0x000-0x07f` - common to all services\n* Commands `0x080-0xeff` - defined per-service\n* Commands `0xf00-0xfff` - reserved for implementation\n\nCommands follow.\n\n    command announce @ 0x00 { }\n    report { ... }\n\nEnumeration data for control service; service-specific advertisement data otherwise.\nControl broadcasts it automatically every 500ms, but other service have to be queried to provide it.\n\n    command get_register @ 0x1000 {}\n    report { ... }\n\nRegisters number `N` is fetched by issuing command `0x1000 | N`.\nThe report format is the same as the format of the register.\n\n    command set_register @ 0x2000 { ... }\n\nRegisters number `N` is set by issuing command `0x2000 | N`, with the format\nthe same as the format of the register.\n\n    report event @ 0x01 {\n        event_id: u32\n        event_argument: u32\n    }\n\nEvent from sensor or a broadcast service. \n\n    command calibrate @ 0x02 { }\n    report { }\n\nRequest to calibrate a sensor. The report indicates the calibration is done.\n\n    command description @ 0x03 { }\n    report {\n        text: string\n    }\n\nRequest human-readable description of service.\n\n## Registers\n\nRegister codes are subdivided as follows:\n* Registers `0x001-0x07f` - r/w common to all services\n* Registers `0x080-0x0ff` - r/w defined per-service\n* Registers `0x100-0x17f` - r/o common to all services\n* Registers `0x180-0x1ff` - r/o defined per-service\n* Registers `0x200-0xeff` - custom, defined per-service\n* Registers `0xf00-0xfff` - reserved for implementation, should not be seen on the wire\n\nThe types listed are typical. Check spec for particular service for exact type,\nand a service-specific name for a register (eg. `value` could be `pulse_length`).\nAll registers default to `0` unless otherwise indicated.\n\n    rw intensity: u32 @ 0x01\n\nThis is either binary on/off (0 or non-zero), or can be gradual (eg. brightness of an RGB LED strip).\n\n    rw value: i32 @ 0x02\n\nThe primary value of actuator (eg. servo pulse length, or motor duty cycle).\n\n    rw max_power = 500: u16 mA {typical_max = 500} @ 0x07\n\nLimit the power drawn by the service, in mA.\n\n    rw stream_samples: u8 @ 0x03\n\nAsks device to stream a given number of samples\n(clients will typically write `255` to this register every second or so, while streaming is required).\n\n    rw streaming_interval = 100: u32 ms @ 0x04\n\nPeriod between packets of data when streaming in milliseconds.\n\n    ro reading: i32 @ 0x101\n\nRead-only value of the sensor, also reported in streaming.\n\n    rw low_threshold: i32 @ 0x05\n    rw high_threshold: i32 @ 0x06\n\nThresholds for event generation for event generation for analog sensors.\n\n    ro status_code @ 0x7 {\n        code: u16\n        vendor_code: u16\n    }\n\nReports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.\n"
+  },
+  {
+    "name": "Base service",
+    "status": "experimental",
+    "shortId": "_base",
+    "camelName": "base",
+    "shortName": "base",
+    "extends": [],
+    "notes": {
+      "short": "Base class for all services."
+    },
+    "classIdentifier": 536870899,
+    "enums": {},
+    "packets": [
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
           },
           {
             "name": "vendor_code",
@@ -279,10 +312,36 @@
             "isSimpleType": true
           }
         ],
-        "optional": true
+        "identifierName": "status_code"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true
       }
     ],
-    "source": "# Common registers and commands\n\n    camel: base\n\nThis file describes common register and command codes.\nThese are defined in ranges separate from the per-service ones.\nNo service actually derives from this file, but services can include packets\ndefined here.\nTheir code is listed as say `@ intensity` and not `@ 0x01` (the spectool enforces that).\n\n## Commands\n\nCommand codes are subdivided as follows:\n* Commands `0x000-0x07f` - common to all services\n* Commands `0x080-0xeff` - defined per-service\n* Commands `0xf00-0xfff` - reserved for implementation\n\nCommands follow.\n\n    command announce @ 0x00 { }\n    report { ... }\n\nEnumeration data for control service; service-specific advertisement data otherwise.\nControl broadcasts it automatically every 500ms, but other service have to be queried to provide it.\n\n    command get_register @ 0x1000 {}\n    report { ... }\n\nRegisters number `N` is fetched by issuing command `0x1000 | N`.\nThe report format is the same as the format of the register.\n\n    command set_register @ 0x2000 { ... }\n\nRegisters number `N` is set by issuing command `0x2000 | N`, with the format\nthe same as the format of the register.\n\n    report event @ 0x01 {\n        event_id: u32\n        event_argument: u32\n    }\n\nEvent from sensor or a broadcast service. \n\n    command calibrate @ 0x02 { }\n    report { }\n\nRequest to calibrate a sensor. The report indicates the calibration is done.\n\n    command description @ 0x03 { }\n    report {\n        text: string\n    }\n\nRequest human-readable description of service.\n\n## Registers\n\nRegister codes are subdivided as follows:\n* Registers `0x001-0x07f` - r/w common to all services\n* Registers `0x080-0x0ff` - r/w defined per-service\n* Registers `0x100-0x17f` - r/o common to all services\n* Registers `0x180-0x1ff` - r/o defined per-service\n* Registers `0x200-0xeff` - custom, defined per-service\n* Registers `0xf00-0xfff` - reserved for implementation, should not be seen on the wire\n\nThe types listed are typical. Check spec for particular service for exact type,\nand a service-specific name for a register (eg. `value` could be `pulse_length`).\nAll registers default to `0` unless otherwise indicated.\n\n    rw intensity: u32 @ 0x01\n\nThis is either binary on/off (0 or non-zero), or can be gradual (eg. brightness of an RGB LED strip).\n\n    rw value: i32 @ 0x02\n\nThe primary value of actuator (eg. servo pulse length, or motor duty cycle).\n\n    rw max_power = 500: u16 mA {typical_max = 500} @ 0x07\n\nLimit the power drawn by the service, in mA.\n\n    rw stream_samples: u8 @ 0x03\n\nAsks device to stream a given number of samples\n(clients will typically write `255` to this register every second or so, while streaming is required).\n\n    rw streaming_interval = 100: u32 ms @ 0x04\n\nPeriod between packets of data when streaming in milliseconds.\n\n    ro reading: i32 @ 0x101\n\nRead-only value of the sensor, also reported in streaming.\n\n    rw low_threshold: i32 @ 0x05\n    rw high_threshold: i32 @ 0x06\n\nThresholds for event generation for event generation for analog sensors.\n\n\n    enum StatusCode : u16 {\n        Ok = 0,\n    }\n    ro status_code? @ 0x7 {\n        code: StatusCode\n        vendor_code: u16\n    }\n\nReports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.\n"
+    "source": "# Base service\n\n    camel: base\n\nBase class for all services.\n\n## Registers\n\n    ro status_code @ status_code {\n        code: u16\n        vendor_code: u16\n    }\n\nReports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.\n\n## Commands\n\n    command description? @ description { }\n    report {\n        text: string\n    }\n\nRequest human-readable description of service.\n"
   },
   {
     "name": "Sensor",
@@ -290,13 +349,69 @@
     "shortId": "_sensor",
     "camelName": "sensor",
     "shortName": "sensor",
-    "extends": [],
+    "extends": [
+      "_base"
+    ],
     "notes": {
       "short": "Base class for sensors."
     },
     "classIdentifier": 536870898,
     "enums": {},
     "packets": [
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_base"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_base"
+      },
       {
         "kind": "rw",
         "name": "stream_samples",
@@ -344,6 +459,7 @@
     "camelName": "accel",
     "shortName": "accel",
     "extends": [
+      "_base",
       "_sensor"
     ],
     "notes": {
@@ -353,6 +469,114 @@
     "classIdentifier": 521405449,
     "enums": {},
     "packets": [
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_base"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_sensor"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_sensor"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_sensor"
+      },
       {
         "kind": "rw",
         "name": "stream_samples",
@@ -369,7 +593,7 @@
           }
         ],
         "identifierName": "stream_samples",
-        "derived": true
+        "derived": "_sensor"
       },
       {
         "kind": "rw",
@@ -390,7 +614,7 @@
           }
         ],
         "identifierName": "streaming_interval",
-        "derived": true
+        "derived": "_sensor"
       },
       {
         "kind": "ro",
@@ -518,7 +742,9 @@
     "shortId": "aggregator",
     "camelName": "SensorAggregator",
     "shortName": "SensorAggregator",
-    "extends": [],
+    "extends": [
+      "_base"
+    ],
     "notes": {
       "short": "Aggregate data from multiple sensors into a single stream\n(often used as input to machine learning models on the same device, see model runner service)."
     },
@@ -538,6 +764,60 @@
       }
     },
     "packets": [
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_base"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_base"
+      },
       {
         "kind": "rw",
         "name": "inputs",
@@ -692,7 +972,9 @@
     "shortId": "bootloader",
     "camelName": "Bootloader",
     "shortName": "Bootloader",
-    "extends": [],
+    "extends": [
+      "_base"
+    ],
     "notes": {
       "short": "Allows flashing (reprogramming) devices over JACDAC."
     },
@@ -711,6 +993,60 @@
       }
     },
     "packets": [
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_base"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_base"
+      },
       {
         "kind": "command",
         "name": "info",
@@ -927,6 +1263,7 @@
     "camelName": "Button",
     "shortName": "Button",
     "extends": [
+      "_base",
       "_sensor"
     ],
     "notes": {
@@ -935,6 +1272,114 @@
     "classIdentifier": 343122531,
     "enums": {},
     "packets": [
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_base"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_sensor"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_sensor"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_sensor"
+      },
       {
         "kind": "rw",
         "name": "stream_samples",
@@ -951,7 +1396,7 @@
           }
         ],
         "identifierName": "stream_samples",
-        "derived": true
+        "derived": "_sensor"
       },
       {
         "kind": "rw",
@@ -972,7 +1417,7 @@
           }
         ],
         "identifierName": "streaming_interval",
-        "derived": true
+        "derived": "_sensor"
       },
       {
         "kind": "ro",
@@ -1027,13 +1472,69 @@
     "shortId": "codalmessagebus",
     "camelName": "CODALMessageBus",
     "shortName": "CODALMessageBus",
-    "extends": [],
+    "extends": [
+      "_base"
+    ],
     "notes": {
       "short": "A service that allows passing events through the [CODAL Message Bus](https://lancaster-university.github.io/microbit-docs/ubit/messageBus/)\n* ``id`` is a unique identifier that identifies a component in the device. Use ``0`` to address all sources. The value of other identifiers is typically hardware dependent.\n* ``event`` is an identifier that determines the event type. Use ``0`` as a wildcard."
     },
     "classIdentifier": 380468437,
     "enums": {},
     "packets": [
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_base"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_base"
+      },
       {
         "kind": "command",
         "name": "send",
@@ -1067,7 +1568,9 @@
     "shortId": "control",
     "camelName": "ctrl",
     "shortName": "ctrl",
-    "extends": [],
+    "extends": [
+      "_base"
+    ],
     "notes": {
       "short": "Control service is always service index `0`.\nIt handles actions common to all services on a device."
     },
@@ -1083,6 +1586,60 @@
       }
     },
     "packets": [
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_base"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_base"
+      },
       {
         "kind": "command",
         "name": "services",
@@ -1270,6 +1827,7 @@
     "camelName": "RotaryEncoder",
     "shortName": "crank",
     "extends": [
+      "_base",
       "_sensor"
     ],
     "notes": {
@@ -1278,6 +1836,114 @@
     "classIdentifier": 284830153,
     "enums": {},
     "packets": [
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_base"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_sensor"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_sensor"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_sensor"
+      },
       {
         "kind": "rw",
         "name": "stream_samples",
@@ -1294,7 +1960,7 @@
           }
         ],
         "identifierName": "stream_samples",
-        "derived": true
+        "derived": "_sensor"
       },
       {
         "kind": "rw",
@@ -1315,7 +1981,7 @@
           }
         ],
         "identifierName": "streaming_interval",
-        "derived": true
+        "derived": "_sensor"
       },
       {
         "kind": "ro",
@@ -1361,6 +2027,7 @@
     "camelName": "Gamepad",
     "shortName": "Gamepad",
     "extends": [
+      "_base",
       "_sensor"
     ],
     "notes": {
@@ -1387,6 +2054,114 @@
     },
     "packets": [
       {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_base"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_sensor"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_sensor"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_sensor"
+      },
+      {
         "kind": "rw",
         "name": "stream_samples",
         "identifier": 3,
@@ -1402,7 +2177,7 @@
           }
         ],
         "identifierName": "stream_samples",
-        "derived": true
+        "derived": "_sensor"
       },
       {
         "kind": "rw",
@@ -1423,7 +2198,7 @@
           }
         ],
         "identifierName": "streaming_interval",
-        "derived": true
+        "derived": "_sensor"
       },
       {
         "kind": "command",
@@ -1559,6 +2334,7 @@
     "camelName": "Humidity",
     "shortName": "Humidity",
     "extends": [
+      "_base",
       "_sensor"
     ],
     "notes": {
@@ -1568,6 +2344,114 @@
     "classIdentifier": 382210232,
     "enums": {},
     "packets": [
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_base"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_sensor"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_sensor"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_sensor"
+      },
       {
         "kind": "rw",
         "name": "stream_samples",
@@ -1584,7 +2468,7 @@
           }
         ],
         "identifierName": "stream_samples",
-        "derived": true
+        "derived": "_sensor"
       },
       {
         "kind": "rw",
@@ -1605,7 +2489,7 @@
           }
         ],
         "identifierName": "streaming_interval",
-        "derived": true
+        "derived": "_sensor"
       },
       {
         "kind": "ro",
@@ -1635,13 +2519,69 @@
     "shortId": "iothub",
     "camelName": "iotHub",
     "shortName": "iotHub",
-    "extends": [],
+    "extends": [
+      "_base"
+    ],
     "notes": {
       "short": "Send messages, receive commands, and work with device twins in Azure IoT Hub."
     },
     "classIdentifier": 434976332,
     "enums": {},
     "packets": [
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_base"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_base"
+      },
       {
         "kind": "command",
         "name": "connect",
@@ -2188,7 +3128,9 @@
     "shortId": "keyboard",
     "camelName": "Keyboard",
     "shortName": "Keyboard",
-    "extends": [],
+    "extends": [
+      "_base"
+    ],
     "notes": {
       "short": "A keyboard that can send keystrokes.\n\nThe codes for the key (selectors) is defined in the [HID Keyboard\nspecification](https://usb.org/sites/default/files/hut1_21.pdf), chapter 10 Keyboard/Keypad Page, page 81.\n\nThe device keeps tracks of the key state and is able to clear it all with the clear command."
     },
@@ -2220,6 +3162,60 @@
       }
     },
     "packets": [
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_base"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_base"
+      },
       {
         "kind": "command",
         "name": "key",
@@ -2267,13 +3263,69 @@
     "shortId": "ledmatrixcontroller",
     "camelName": "LEDMatrixController",
     "shortName": "LEDMatrixController",
-    "extends": [],
+    "extends": [
+      "_base"
+    ],
     "notes": {
       "short": "A service that allows to control a rectangular matrix of monochrome LEDs.\nTo stream the state of the screen, use [LED Matrix display](/services/led-matrix-display) instead."
     },
     "classIdentifier": 490070931,
     "enums": {},
     "packets": [
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_base"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_base"
+      },
       {
         "kind": "rw",
         "name": "leds",
@@ -2370,6 +3422,7 @@
     "camelName": "LEDMatrixDisplay",
     "shortName": "LEDMatrixDisplay",
     "extends": [
+      "_base",
       "_sensor"
     ],
     "notes": {
@@ -2378,6 +3431,114 @@
     "classIdentifier": 286070091,
     "enums": {},
     "packets": [
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_base"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_sensor"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_sensor"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_sensor"
+      },
       {
         "kind": "rw",
         "name": "stream_samples",
@@ -2394,7 +3555,7 @@
           }
         ],
         "identifierName": "stream_samples",
-        "derived": true
+        "derived": "_sensor"
       },
       {
         "kind": "rw",
@@ -2415,7 +3576,7 @@
           }
         ],
         "identifierName": "streaming_interval",
-        "derived": true
+        "derived": "_sensor"
       },
       {
         "kind": "ro",
@@ -2443,7 +3604,9 @@
     "shortId": "light",
     "camelName": "Light",
     "shortName": "Light",
-    "extends": [],
+    "extends": [
+      "_base"
+    ],
     "notes": {
       "short": "A controller for strips of RGB LEDs.",
       "long": "## Light programs\n\nRealistically, with 1 mbit JACDAC, we can transmit under 2k of data per animation frame (at 20fps).\nIf transmitting raw data that would be around 500 pixels, which is not enough for many\ninstallations and it would completely clog the network.\n\nThus, light service defines a domain-specific language for describing light animations\nand efficiently transmitting them over wire.\n\nLight commands are not JACDAC commands.\nLight commands are efficiently encoded as sequences of bytes and typically sent as payload\nof `run` command.\n\nDefinitions:\n* `P` - position in the strip\n* `R` - number of repetitions of the command\n* `N` - number of pixels affected by the command\n* `C` - single color designation\n* `C+` - sequence of color designations\n\nUpdate modes:\n* `0` - replace\n* `1` - add RGB\n* `2` - subtract RGB\n* `3` - multiply RGB (by c/128); each pixel value will change by at least 1\n\nProgram commands:\n* `0xD0: set_all(C+)` - set all pixels in current range to given color pattern\n* `0xD1: fade(C+)` - set pixels in current range to colors between colors in sequence\n* `0xD2: fade_hsv(C+)` - similar to `fade()`, but colors are specified and faded in HSV\n* `0xD3: rotate_fwd(K)` - rotate (shift) pixels by `K` positions away from the connector\n* `0xD4: rotate_back(K)` - same, but towards the connector\n* `0xD5: show(M=50)` - send buffer to strip and wait `M` milliseconds\n* `0xD6: range(P=0, N=length, W=1, S=0)` - range from pixel `P`, `N` pixels long\n  (currently unsupported: every `W` pixels skip `S` pixels)\n* `0xD7: mode(K=0)` - set update mode\n* `0xD8: mode1(K=0)` - set update mode for next command only\n* `0xCF: set1(P, C)` - set one pixel at `P` (in current range) to given color\n\nA number `k` is encoded as follows:\n* `0 <= k < 128` -> `k`\n* `128 <= k < 16383` -> `0x80 | (k >> 8), k & 0xff`\n* bigger and negative numbers are not supported\n\nThus, bytes `0xC0-0xFF` are free to use for commands.\n\nFormats:\n* `0xC1, R, G, B` - single color parameter\n* `0xC2, R0, G0, B0, R1, G1, B1` - two color parameter\n* `0xC3, R0, G0, B0, R1, G1, B1, R2, G2, B2` - three color parameter\n* `0xC0, N, R0, G0, B0, ..., R(N-1), G(N-1), B(N-1)` - `N` color parameter\n* `0xCF, <number>, R, G, B` - `set1` special format\n\nCommands are encoded as command byte, followed by parameters in the order\nfrom the command definition.\n\nThe `set1()` command has irregular encoding to save space - it is byte `0xCF` followed by encoded\nnumber, and followed by 3 bytes of color."
@@ -2461,6 +3624,60 @@
       }
     },
     "packets": [
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_base"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_base"
+      },
       {
         "kind": "rw",
         "name": "brightness",
@@ -2572,7 +3789,9 @@
     "shortId": "logger",
     "camelName": "Logger",
     "shortName": "Logger",
-    "extends": [],
+    "extends": [
+      "_base"
+    ],
     "notes": {
       "short": "A service which can report messages to the bus."
     },
@@ -2590,6 +3809,60 @@
       }
     },
     "packets": [
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_base"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_base"
+      },
       {
         "kind": "rw",
         "name": "min_priority",
@@ -2675,13 +3948,69 @@
     "shortId": "microphone",
     "camelName": "Microphone",
     "shortName": "Microphone",
-    "extends": [],
+    "extends": [
+      "_base"
+    ],
     "notes": {
       "short": "A single-channel microphone."
     },
     "classIdentifier": 289254534,
     "enums": {},
     "packets": [
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_base"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_base"
+      },
       {
         "kind": "command",
         "name": "sample",
@@ -2731,7 +4060,9 @@
     "shortId": "modelrunner",
     "camelName": "ModelRunner",
     "shortName": "ModelRunner",
-    "extends": [],
+    "extends": [
+      "_base"
+    ],
     "notes": {
       "short": "Run machine learning models.\nOnly models with a single input tensor and a single output tensor are supported at the moment.\nInput is provided by Sensor Aggregator service on the same device.\nMultiple instances of this service may be present, if more than one model format is supported by a device."
     },
@@ -2748,6 +4079,60 @@
       }
     },
     "packets": [
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_base"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_base"
+      },
       {
         "kind": "command",
         "name": "set_model",
@@ -3002,13 +4387,69 @@
     "shortId": "motor",
     "camelName": "Motor",
     "shortName": "Motor",
-    "extends": [],
+    "extends": [
+      "_base"
+    ],
     "notes": {
       "short": "A bi-directional DC motor."
     },
     "classIdentifier": 385895640,
     "enums": {},
     "packets": [
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_base"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_base"
+      },
       {
         "kind": "rw",
         "name": "duty",
@@ -3052,7 +4493,9 @@
     "shortId": "mouse",
     "camelName": "Mouse",
     "shortName": "Mouse",
-    "extends": [],
+    "extends": [
+      "_base"
+    ],
     "notes": {
       "short": "Control a device that acts as a mouse."
     },
@@ -3080,6 +4523,60 @@
       }
     },
     "packets": [
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_base"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_base"
+      },
       {
         "kind": "command",
         "name": "set_button",
@@ -3168,6 +4665,7 @@
     "camelName": "Multitouch",
     "shortName": "Multitouch",
     "extends": [
+      "_base",
       "_sensor"
     ],
     "notes": {
@@ -3177,6 +4675,114 @@
     "classIdentifier": 416636459,
     "enums": {},
     "packets": [
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_base"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_sensor"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_sensor"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_sensor"
+      },
       {
         "kind": "rw",
         "name": "stream_samples",
@@ -3193,7 +4799,7 @@
           }
         ],
         "identifierName": "stream_samples",
-        "derived": true
+        "derived": "_sensor"
       },
       {
         "kind": "rw",
@@ -3214,7 +4820,7 @@
           }
         ],
         "identifierName": "streaming_interval",
-        "derived": true
+        "derived": "_sensor"
       },
       {
         "kind": "ro",
@@ -3321,13 +4927,69 @@
     "shortId": "music",
     "camelName": "Music",
     "shortName": "Music",
-    "extends": [],
+    "extends": [
+      "_base"
+    ],
     "notes": {
       "short": "A simple buzzer."
     },
     "classIdentifier": 458731991,
     "enums": {},
     "packets": [
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_base"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_base"
+      },
       {
         "kind": "rw",
         "name": "volume",
@@ -3388,13 +5050,69 @@
     "shortId": "power",
     "camelName": "Power",
     "shortName": "Power",
-    "extends": [],
+    "extends": [
+      "_base"
+    ],
     "notes": {
       "short": "A power-provider service."
     },
     "classIdentifier": 530893146,
     "enums": {},
     "packets": [
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_base"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_base"
+      },
       {
         "kind": "rw",
         "name": "enabled",
@@ -3560,7 +5278,9 @@
     "shortId": "pwmlight",
     "camelName": "PwmLight",
     "shortName": "PwmLight",
-    "extends": [],
+    "extends": [
+      "_base"
+    ],
     "notes": {
       "short": "A controller for 1 or more LEDs connected in parallel.",
       "long": "## Animation steps\n\nAnimations are described using pairs of intensity and duration.\nFor example, the following animation\n`(0, 10ms), (0.5, 5ms), (0.5, 10ms), (1, 5ms), (0, 7ms), (0, 0ms)`\nwill gradually rise the intensity `0 - 0.5` in 10ms,\nthen, it will keep it steady for at `0.5` for 5ms,\nthen it will rise it again `0.5 - 1` over 10ms,\ndrop `1 - 0` in 5ms,\nand keep it at 0 for 7ms more.\nAny entry with duration of 0ms is considered to be end-marker.\n\nTo get steady glow at `x`, use animation of `(x, 60000ms), (x, 0ms)` and keep `max_iterations` at `0xffff`."
@@ -3568,6 +5288,60 @@
     "classIdentifier": 531985491,
     "enums": {},
     "packets": [
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_base"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_base"
+      },
       {
         "kind": "rw",
         "name": "brightness",
@@ -3688,13 +5462,69 @@
     "shortId": "rolemanager",
     "camelName": "RoleManager",
     "shortName": "RoleManager",
-    "extends": [],
+    "extends": [
+      "_base"
+    ],
     "notes": {
       "short": "Assign roles to devices on JACDAC bus."
     },
     "classIdentifier": 295451345,
     "enums": {},
     "packets": [
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_base"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_base"
+      },
       {
         "kind": "command",
         "name": "get_role",
@@ -3863,13 +5693,69 @@
     "shortId": "servo",
     "camelName": "Servo",
     "shortName": "Servo",
-    "extends": [],
+    "extends": [
+      "_base"
+    ],
     "notes": {
       "short": "Servo is a small motor directed with a PWM signal.\nThis services fixes the servo period at 20ms, and the pulse can be regulated."
     },
     "classIdentifier": 318542083,
     "enums": {},
     "packets": [
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_base"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_base"
+      },
       {
         "kind": "rw",
         "name": "pulse",
@@ -3914,7 +5800,9 @@
     "shortId": "settings",
     "camelName": "settings",
     "shortName": "settings",
-    "extends": [],
+    "extends": [
+      "_base"
+    ],
     "notes": {
       "short": "Non-volatile key-value storage interface for storing settings.",
       "long": "## Secrets\n\nEntries with keys starting with `$` are considered secret.\nThey can be written normally, but they always read as a single `0` byte.\nThese are typically used by other services on the same device."
@@ -3922,6 +5810,60 @@
     "classIdentifier": 285727818,
     "enums": {},
     "packets": [
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_base"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_base"
+      },
       {
         "kind": "command",
         "name": "get",
@@ -4067,6 +6009,7 @@
     "camelName": "Slider",
     "shortName": "Slider",
     "extends": [
+      "_base",
       "_sensor"
     ],
     "notes": {
@@ -4075,6 +6018,114 @@
     "classIdentifier": 522667846,
     "enums": {},
     "packets": [
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_base"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_sensor"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_sensor"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_sensor"
+      },
       {
         "kind": "rw",
         "name": "stream_samples",
@@ -4091,7 +6142,7 @@
           }
         ],
         "identifierName": "stream_samples",
-        "derived": true
+        "derived": "_sensor"
       },
       {
         "kind": "rw",
@@ -4112,7 +6163,7 @@
           }
         ],
         "identifierName": "streaming_interval",
-        "derived": true
+        "derived": "_sensor"
       },
       {
         "kind": "ro",
@@ -4141,7 +6192,9 @@
     "shortId": "tcp",
     "camelName": "TCP",
     "shortName": "TCP",
-    "extends": [],
+    "extends": [
+      "_base"
+    ],
     "notes": {
       "short": "Data transfer over TCP/IP and TLS stream sockets.",
       "commands": "## Pipes"
@@ -4158,6 +6211,60 @@
       }
     },
     "packets": [
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_base"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_base"
+      },
       {
         "kind": "command",
         "name": "open",
@@ -4276,6 +6383,7 @@
     "camelName": "Temperature",
     "shortName": "Temperature",
     "extends": [
+      "_base",
       "_sensor"
     ],
     "notes": {
@@ -4285,6 +6393,114 @@
     "classIdentifier": 337754823,
     "enums": {},
     "packets": [
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_base"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_sensor"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_sensor"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_sensor"
+      },
       {
         "kind": "rw",
         "name": "stream_samples",
@@ -4301,7 +6517,7 @@
           }
         ],
         "identifierName": "stream_samples",
-        "derived": true
+        "derived": "_sensor"
       },
       {
         "kind": "rw",
@@ -4322,7 +6538,7 @@
           }
         ],
         "identifierName": "streaming_interval",
-        "derived": true
+        "derived": "_sensor"
       },
       {
         "kind": "ro",
@@ -4350,7 +6566,9 @@
     "shortId": "wifi",
     "camelName": "wifi",
     "shortName": "wifi",
-    "extends": [],
+    "extends": [
+      "_base"
+    ],
     "notes": {
       "short": "Discovery and connection to WiFi networks. Separate TCP service is used for data transfer."
     },
@@ -4376,6 +6594,60 @@
       }
     },
     "packets": [
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "status_code",
+        "derived": "_base"
+      },
+      {
+        "kind": "command",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [],
+        "optional": true,
+        "identifierName": "description",
+        "hasReport": true,
+        "derived": "_base"
+      },
+      {
+        "kind": "report",
+        "name": "description",
+        "identifier": 3,
+        "description": "Request human-readable description of service.",
+        "fields": [
+          {
+            "name": "text",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ],
+        "secondary": true,
+        "derived": "_base"
+      },
       {
         "kind": "command",
         "name": "scan",

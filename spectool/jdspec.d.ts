@@ -176,6 +176,11 @@ declare namespace jdspec {
          * Map from enum member name to its value.
          */
         members: SMap<number>;
+
+        /**
+         * If present, this packet was derived from a base class.
+         */
+        derived?: string;
     }
 
     /**
@@ -251,9 +256,9 @@ declare namespace jdspec {
         optional?: boolean;
 
         /**
-         * If present and true, this packet was derived from base class.
+         * If present, this packet was derived from a base class.
          */
-        derived?: boolean;
+        derived?: string;
 
         /**
          * If present and true, this is a report that has the same identifier as preceding command.

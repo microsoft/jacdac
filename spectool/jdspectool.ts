@@ -19,6 +19,9 @@ function processSpec(dn: string) {
     const files: string[] = fs.readdirSync(dn)
     const includes: jdspec.SMap<jdspec.ServiceSpec> = {}
     files.sort()
+    // ensure _system is first
+    files.splice(files.indexOf("_system.md"), 1);
+    files.unshift("_system.md");
 
     const outp = path.join(dn, "generated")
     mkdir(outp)

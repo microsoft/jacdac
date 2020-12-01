@@ -6,7 +6,7 @@ Base class for all services.
 
 ## Registers
 
-    ro status_code @ status_code {
+    ro status_code? @ status_code {
         code: u16
         vendor_code: u16
     }

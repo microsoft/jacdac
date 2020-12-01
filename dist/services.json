@@ -304,10 +304,11 @@
             "isSimpleType": true
           }
         ],
+        "optional": true,
         "identifierName": "status_code"
       }
     ],
-    "source": "# Base service\n\n    camel: base\n\nBase class for all services.\n\n## Registers\n\n    ro status_code @ status_code {\n        code: u16\n        vendor_code: u16\n    }\n\nReports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.\n\n"
+    "source": "# Base service\n\n    camel: base\n\nBase class for all services.\n\n## Registers\n\n    ro status_code? @ status_code {\n        code: u16\n        vendor_code: u16\n    }\n\nReports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.\n\n"
   },
   {
     "name": "Sensor",
@@ -347,6 +348,7 @@
             "isSimpleType": true
           }
         ],
+        "optional": true,
         "identifierName": "status_code",
         "derived": "_base"
       },
@@ -448,6 +450,7 @@
             "isSimpleType": true
           }
         ],
+        "optional": true,
         "identifierName": "status_code",
         "derived": "_base"
       },
@@ -680,6 +683,7 @@
             "isSimpleType": true
           }
         ],
+        "optional": true,
         "identifierName": "status_code",
         "derived": "_base"
       },
@@ -881,6 +885,7 @@
             "isSimpleType": true
           }
         ],
+        "optional": true,
         "identifierName": "status_code",
         "derived": "_base"
       },
@@ -1132,6 +1137,7 @@
             "isSimpleType": true
           }
         ],
+        "optional": true,
         "identifierName": "status_code",
         "derived": "_base"
       },
@@ -1278,6 +1284,7 @@
             "isSimpleType": true
           }
         ],
+        "optional": true,
         "identifierName": "status_code",
         "derived": "_base"
       },
@@ -1355,6 +1362,7 @@
             "isSimpleType": true
           }
         ],
+        "optional": true,
         "identifierName": "status_code",
         "derived": "_base"
       },
@@ -1609,6 +1617,7 @@
             "isSimpleType": true
           }
         ],
+        "optional": true,
         "identifierName": "status_code",
         "derived": "_base"
       },
@@ -1763,6 +1772,7 @@
             "isSimpleType": true
           }
         ],
+        "optional": true,
         "identifierName": "status_code",
         "derived": "_base"
       },
@@ -1991,6 +2001,7 @@
             "isSimpleType": true
           }
         ],
+        "optional": true,
         "identifierName": "status_code",
         "derived": "_base"
       },
@@ -2112,6 +2123,7 @@
             "isSimpleType": true
           }
         ],
+        "optional": true,
         "identifierName": "status_code",
         "derived": "_base"
       },
@@ -2718,6 +2730,7 @@
             "isSimpleType": true
           }
         ],
+        "optional": true,
         "identifierName": "status_code",
         "derived": "_base"
       },
@@ -2800,6 +2813,7 @@
             "isSimpleType": true
           }
         ],
+        "optional": true,
         "identifierName": "status_code",
         "derived": "_base"
       },
@@ -2931,6 +2945,7 @@
             "isSimpleType": true
           }
         ],
+        "optional": true,
         "identifierName": "status_code",
         "derived": "_base"
       },
@@ -3061,6 +3076,7 @@
             "isSimpleType": true
           }
         ],
+        "optional": true,
         "identifierName": "status_code",
         "derived": "_base"
       },
@@ -3218,6 +3234,7 @@
             "isSimpleType": true
           }
         ],
+        "optional": true,
         "identifierName": "status_code",
         "derived": "_base"
       },
@@ -3338,6 +3355,7 @@
             "isSimpleType": true
           }
         ],
+        "optional": true,
         "identifierName": "status_code",
         "derived": "_base"
       },
@@ -3432,6 +3450,7 @@
             "isSimpleType": true
           }
         ],
+        "optional": true,
         "identifierName": "status_code",
         "derived": "_base"
       },
@@ -3721,6 +3740,7 @@
             "isSimpleType": true
           }
         ],
+        "optional": true,
         "identifierName": "status_code",
         "derived": "_base"
       },
@@ -3820,6 +3840,7 @@
             "isSimpleType": true
           }
         ],
+        "optional": true,
         "identifierName": "status_code",
         "derived": "_base"
       },
@@ -3944,6 +3965,7 @@
             "isSimpleType": true
           }
         ],
+        "optional": true,
         "identifierName": "status_code",
         "derived": "_base"
       },
@@ -4142,6 +4164,7 @@
             "isSimpleType": true
           }
         ],
+        "optional": true,
         "identifierName": "status_code",
         "derived": "_base"
       },
@@ -4237,6 +4260,7 @@
             "isSimpleType": true
           }
         ],
+        "optional": true,
         "identifierName": "status_code",
         "derived": "_base"
       },
@@ -4438,6 +4462,7 @@
             "isSimpleType": true
           }
         ],
+        "optional": true,
         "identifierName": "status_code",
         "derived": "_base"
       },
@@ -4593,6 +4618,7 @@
             "isSimpleType": true
           }
         ],
+        "optional": true,
         "identifierName": "status_code",
         "derived": "_base"
       },
@@ -4796,6 +4822,7 @@
             "isSimpleType": true
           }
         ],
+        "optional": true,
         "identifierName": "status_code",
         "derived": "_base"
       },
@@ -4876,6 +4903,7 @@
             "isSimpleType": true
           }
         ],
+        "optional": true,
         "identifierName": "status_code",
         "derived": "_base"
       },
@@ -5056,6 +5084,7 @@
             "isSimpleType": true
           }
         ],
+        "optional": true,
         "identifierName": "status_code",
         "derived": "_base"
       },
@@ -5186,6 +5215,7 @@
             "isSimpleType": true
           }
         ],
+        "optional": true,
         "identifierName": "status_code",
         "derived": "_base"
       },
@@ -5340,6 +5370,7 @@
             "isSimpleType": true
           }
         ],
+        "optional": true,
         "identifierName": "status_code",
         "derived": "_base"
       },
@@ -5478,6 +5509,7 @@
             "isSimpleType": true
           }
         ],
+        "optional": true,
         "identifierName": "status_code",
         "derived": "_base"
       },

@@ -291,7 +291,7 @@ export enum CtrlReg {
     /** Constant string (bytes). Request the information web site for this device */
     DeviceUrl = 0x187,
 
-    /** Constant string (bytes). Request the information web site for this device */
+    /** Constant string (bytes). URL with machine-readable metadata information about updating device firmware */
     FirmwareUrl = 0x188,
 }
 

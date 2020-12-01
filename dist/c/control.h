@@ -55,7 +55,7 @@ typedef struct jd_ctrl_services_report {
 /** Constant string (bytes). Request the information web site for this device */
 #define JD_CTRL_REG_DEVICE_URL 0x187
 
-/** Constant string (bytes). Request the information web site for this device */
+/** Constant string (bytes). URL with machine-readable metadata information about updating device firmware */
 #define JD_CTRL_REG_FIRMWARE_URL 0x188
 
 #endif

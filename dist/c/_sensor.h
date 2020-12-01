@@ -9,4 +9,6 @@
 
 /** Read-write ms uint32_t. Period between packets of data when streaming in milliseconds. */
 
+/** Constant ms uint32_t. Preferred default streaming interval for sensor in milliseconds. */
+
 #endif

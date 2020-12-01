@@ -14,3 +14,7 @@ Asks device to stream a given number of samples
     rw streaming_interval = 100: u32 ms {typical_min = 1, typical_max = 60000} @ streaming_interval
 
 Period between packets of data when streaming in milliseconds.
+
+    const streaming_preferred_interval?: u32 ms @ streaming_preferred_interval
+
+Preferred default streaming interval for sensor in milliseconds.

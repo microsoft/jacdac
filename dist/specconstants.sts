@@ -52,6 +52,9 @@ namespace jacdac {
         /** Read-only int32_t. Read-only value of the sensor, also reported in streaming. */
         Reading = 0x101,
 
+        /** Constant ms uint32_t. Preferred default streaming interval for sensor in milliseconds. */
+        StreamingPreferredInterval = 0x102,
+
         /** Read-write int32_t. Thresholds for event generation for event generation for analog sensors. */
         LowThreshold = 0x5,
 
@@ -71,6 +74,9 @@ namespace jacdac {
 
         /** Read-write ms uint32_t. Period between packets of data when streaming in milliseconds. */
         StreamingInterval = 0x4,
+
+        /** Constant ms uint32_t. Preferred default streaming interval for sensor in milliseconds. */
+        StreamingPreferredInterval = 0x102,
     }
 
 }

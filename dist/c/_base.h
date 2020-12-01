@@ -59,6 +59,9 @@ typedef struct jd_base_event_report {
 /** Read-only int32_t. Read-only value of the sensor, also reported in streaming. */
 #define JD_REG_READING 0x101
 
+/** Constant ms uint32_t. Preferred default streaming interval for sensor in milliseconds. */
+#define JD_REG_STREAMING_PREFERRED_INTERVAL 0x102
+
 /** Read-write int32_t. Thresholds for event generation for event generation for analog sensors. */
 #define JD_REG_LOW_THRESHOLD 0x5
 

@@ -51,7 +51,7 @@ typedef struct jd_system_event_report {
  * Read-write uint8_t. Asks device to stream a given number of samples
  * (clients will typically write `255` to this register every second or so, while streaming is required).
  */
-#define JD_REG_STREAM_SAMPLES 0x3
+#define JD_REG_STREAMING_SAMPLES 0x3
 
 /** Read-write ms uint32_t. Period between packets of data when streaming in milliseconds. */
 #define JD_REG_STREAMING_INTERVAL 0x4
@@ -79,6 +79,6 @@ typedef struct jd_system_status_code {
 
 
 /** Constant ms uint32_t. Preferred default streaming interval for sensor in milliseconds. */
-#define JD_REG_STREAMING_PREFERRED_INTERVAL 0x8
+#define JD_REG_STREAMING_PREFERRED_INTERVAL 0x102
 
 #endif

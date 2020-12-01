@@ -6,7 +6,7 @@ Base class for sensors.
 
 ## Registers
 
-    rw stream_samples: u8 @ stream_samples
+    rw streaming_samples: u8 @ streaming_samples
 
 Asks device to stream a given number of samples
 (clients will typically write `255` to this register every second or so, while streaming is required).

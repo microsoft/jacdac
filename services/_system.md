@@ -79,7 +79,7 @@ The primary value of actuator (eg. servo pulse length, or motor duty cycle).
 
 Limit the power drawn by the service, in mA.
 
-    rw stream_samples: u8 @ 0x03
+    rw streaming_samples: u8 @ 0x03
 
 Asks device to stream a given number of samples
 (clients will typically write `255` to this register every second or so, while streaming is required).
@@ -107,6 +107,6 @@ the JACDAC error codes. ``vendor_code`` is any vendor specific error code descri
 state. This report is typically not queried, when a device has an error, it will typically
 add this report in frame along with the anounce packet.
 
-    const streaming_preferred_interval: u32 ms @ 0x8
+    const streaming_preferred_interval: u32 ms @ 0x102
 
 Preferred default streaming interval for sensor in milliseconds.

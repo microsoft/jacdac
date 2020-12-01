@@ -71,4 +71,4 @@ Request the information web site for this device
 
     const firmware_url?: string @ 0x188
 
-Request the information web site for this device
+URL with machine-readable metadata information about updating device firmware

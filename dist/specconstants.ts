@@ -1,5 +1,5 @@
 // Service: Common registers and commands
-export enum BaseCmd {
+export enum SystemCmd {
     /**
      * No args. Enumeration data for control service; service-specific advertisement data otherwise.
      * Control broadcasts it automatically every 500ms, but other service have to be queried to provide it.
@@ -29,7 +29,7 @@ export enum BaseCmd {
     Description = 0x3,
 }
 
-export enum BaseReg {
+export enum SystemReg {
     /** Read-write uint32_t. This is either binary on/off (0 or non-zero), or can be gradual (eg. brightness of an RGB LED strip). */
     Intensity = 0x1,
 
@@ -43,7 +43,7 @@ export enum BaseReg {
      * Read-write uint8_t. Asks device to stream a given number of samples
      * (clients will typically write `255` to this register every second or so, while streaming is required).
      */
-    StreamSamples = 0x3,
+    StreamingSamples = 0x3,
 
     /** Read-write ms uint32_t. Period between packets of data when streaming in milliseconds. */
     StreamingInterval = 0x4,
@@ -51,14 +51,40 @@ export enum BaseReg {
     /** Read-only int32_t. Read-only value of the sensor, also reported in streaming. */
     Reading = 0x101,
 
-    /** Constant ms uint32_t. Preferred default streaming interval for sensor in milliseconds. */
-    StreamingPreferredInterval = 0x102,
-
     /** Read-write int32_t. Thresholds for event generation for event generation for analog sensors. */
     LowThreshold = 0x5,
 
     /** Read-write int32_t. Thresholds for event generation for event generation for analog sensors. */
     HighThreshold = 0x6,
+
+    // const [code, vendorCode] = unpack(buf, "HH")
+    /**
+     * Reports the current state or error status of the device. ``code`` is a standardized value from
+     * the JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device
+     * state. This report is typically not queried, when a device has an error, it will typically
+     * add this report in frame along with the anounce packet.
+     */
+    StatusCode = 0x7,
+
+    /** Constant ms uint32_t. Preferred default streaming interval for sensor in milliseconds. */
+    StreamingPreferredInterval = 0x102,
+}
+
+// Service: Base service
+export enum BaseReg {
+    // const [code, vendorCode] = unpack(buf, "HH")
+    /**
+     * Reports the current state or error status of the device. ``code`` is a standardized value from
+     * the JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device
+     * state. This report is typically not queried, when a device has an error, it will typically
+     * add this report in frame along with the anounce packet.
+     */
+    StatusCode = 0x7,
+}
+
+export enum BaseCmd {
+    /** No args. Request human-readable description of service. */
+    Description = 0x3,
 }
 
 // Service: Sensor
@@ -67,7 +93,7 @@ export enum SensorReg {
      * Read-write uint8_t. Asks device to stream a given number of samples
      * (clients will typically write `255` to this register every second or so, while streaming is required).
      */
-    StreamSamples = 0x3,
+    StreamingSamples = 0x3,
 
     /** Read-write ms uint32_t. Period between packets of data when streaming in milliseconds. */
     StreamingInterval = 0x4,

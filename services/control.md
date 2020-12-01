@@ -6,8 +6,6 @@
 Control service is always service index `0`.
 It handles actions common to all services on a device.
 
-
-
 ## Commands
 
     flags AnnounceFlags : u8 {
@@ -66,4 +64,3 @@ MCU temperature in degrees Celsius (approximate).
     ro uptime?: u64 us @ 0x186
 
 Number of microseconds since boot.
-

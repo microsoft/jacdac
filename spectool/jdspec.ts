@@ -154,7 +154,7 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
     let packetsToDescribe: jdspec.PacketInfo[]
     let nextModifier: "" | "segmented" | "multi-segmented" | "repeats" = ""
 
-    const baseInfo = includes ? includes["_base"] : undefined
+    const systemInfo = includes?.["_system"]
     const usedIds: jdspec.SMap<string> = {}
     for (const prev of values(includes || {})) {
         if (prev.classIdentifier)
@@ -162,6 +162,8 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
     }
 
     try {
+        if(includes["_system"] && includes["_base"])
+                processInclude("_base")
         for (let line of filecontent.split(/\n/)) {
             lineNo++
             processLine(line)
@@ -186,8 +188,10 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
     if (!info.shortName)
         info.shortName = info.camelName
 
-    if (info.camelName == "base")
+    if (info.camelName == "system")
         info.classIdentifier = 0x1fff_fff1
+    else if (info.camelName == "base")
+        info.classIdentifier = 0x1fff_fff3
     else if (info.camelName == "sensor")
         info.classIdentifier = 0x1fff_fff2
 
@@ -390,19 +394,19 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
             if (isNaN(v)) {
                 v = 0
                 isSet = false
-                if (baseInfo) {
-                    const basePacket = baseInfo.packets.find(p => p.name == w)
-                    if (basePacket) {
-                        v = basePacket.identifier
+                if (systemInfo) {
+                    const systemPacket = systemInfo.packets.find(p => p.name == w)
+                    if (systemPacket) {
+                        v = systemPacket.identifier
                         packetInfo.identifierName = w
-                        if (basePacket.kind != kind)
-                            error(`kind mismatch on ${w}: ${basePacket.kind} vs ${kind}`)
+                        if (systemPacket.kind != kind)
+                            error(`kind mismatch on ${w}: ${systemPacket.kind} vs ${kind}`)
                         else
                             isSet = true
                     } else
-                        error(`${w} not found in _base`)
+                        error(`${w} not found in _system`)
                 } else {
-                    error(`${w} cannot be resolved, since _base is missing`)
+                    error(`${w} cannot be resolved, since _system is missing`)
                 }
             }
 
@@ -435,7 +439,7 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
                 // ok
             } else if (isSystem) {
                 if (!packetInfo.identifierName)
-                    warn(`${kind} @ ${toHex(v)} should be expressed with a name from _base.md`)
+                    warn(`${kind} @ ${toHex(v)} should be expressed with a name from _system.md`)
             } else if (isHigh) {
                 if (!info.highCommands)
                     warn(`${kind} @ ${toHex(v)} is from the extended range but 'high: 1' missing`)
@@ -716,22 +720,27 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
     }
 
     function processInclude(name: string) {
-        if (name == "base")
+        if (name == "_system")
             return
         const inner = includes[name]
         if (!inner)
             return error("include file not found: " + name)
-        if (Object.keys(info.packets).length || Object.keys(info.enums).length)
+        if (info.packets.some(pkt => !pkt.derived)
+            || values(info.enums).some(e => !e.derived))
             error("extends: only allowed on top of the .md file")
         if (inner.errors)
             errors = errors.concat(inner.errors)
-        info.enums = clone(inner.enums)
-        info.packets = clone(inner.packets)
-        for (const pkt of info.packets)
-            pkt.derived = true
+        const innerEnums = clone(inner.enums);
+        Object.keys(innerEnums).forEach(k => {
+            const ie = innerEnums[k];
+            ie.derived = name
+            info.enums[k] = ie;
+        })
+        const innerPackets = clone(inner.packets);
+        innerPackets.forEach(pkt => pkt.derived = name)
+        info.packets = [...info.packets, ...innerPackets]
         if (inner.highCommands)
             info.highCommands = true
-        info.notes = {}
         info.extends = inner.extends.concat([name])
     }
 
@@ -747,8 +756,8 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
     }
 
     function warn(msg: string) {
-        if (info.camelName == "base")
-            return // no warnings in _base
+        if (info.camelName == "system")
+            return // no warnings in _system
         if (errors.some(e => e.line == lineNo && e.message == msg))
             return
         errors.push({ file: filename, line: lineNo, message: msg })
@@ -927,7 +936,7 @@ function toH(info: jdspec.ServiceSpec) {
     if (info.shortId[0] != "_")
         r += `\n#define JD_SERVICE_CLASS_${toUpper(info.shortName)}  ${toHex(info.classIdentifier)}\n`
 
-    for (let en of values(info.enums)) {
+    for (let en of values(info.enums).filter(en => !en.derived)) {
         const enPref = pref + toUpper(en.name)
         r += `\n// enum ${en.name} (${cStorage(en.storage)})\n`
         for (let k of Object.keys(en.members))

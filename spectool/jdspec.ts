@@ -342,6 +342,13 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
         } else {
             kind = kindSt as any
         }
+
+        let internal: boolean = undefined;
+        if (words[0] === "internal") {
+            internal = true;
+            words.shift();
+        }
+
         let name = words.shift()
         const isReport = kind == "report"
         if (isReport && lastCmd && !/^\w+$/.test(name)) {
@@ -353,7 +360,8 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
             name: normalizeName(name),
             identifier: undefined,
             description: "",
-            fields: []
+            fields: [],
+            internal
         }
         if (isReport && lastCmd && name == lastCmd.name) {
             packetInfo.secondary = true

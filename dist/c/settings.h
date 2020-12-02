@@ -4,16 +4,23 @@
 
 #define JD_SERVICE_CLASS_SETTINGS  0x1107dc4a
 
-/** Argument: key string (bytes). Get the value of given setting. If no such entry exists, the value returned is empty. */
+/**
+ * Argument: key string (bytes). Get the value of given setting. If no such entry exists, the value returned is empty.
+ */
 #define JD_SETTINGS_CMD_GET 0x80
-// Report: 
+
+/**
+ * Report: 
+ */
 typedef struct jd_settings_get_report {
     char key[0];  // string0
     // uint8_t value[0];
 } jd_settings_get_report_t;
 
 
-/** Set the value of a given setting. */
+/**
+ * Set the value of a given setting.
+ */
 #define JD_SETTINGS_CMD_SET 0x81
 typedef struct jd_settings_set {
     char key[0];  // string0
@@ -21,18 +28,28 @@ typedef struct jd_settings_set {
 } jd_settings_set_t;
 
 
-/** Argument: key string (bytes). Delete a given setting. */
+/**
+ * Argument: key string (bytes). Delete a given setting.
+ */
 #define JD_SETTINGS_CMD_DELETE 0x84
 
-/** Argument: results pipe (bytes). Return keys of all settings. */
+/**
+ * Argument: results pipe (bytes). Return keys of all settings.
+ */
 #define JD_SETTINGS_CMD_LIST_KEYS 0x82
 
-/** Argument: key string (bytes). Return keys of all settings. */
+/**
+ * Argument: key string (bytes). Return keys of all settings.
+ */
 
-/** Argument: results pipe (bytes). Return keys and values of all settings. */
+/**
+ * Argument: results pipe (bytes). Return keys and values of all settings.
+ */
 #define JD_SETTINGS_CMD_LIST 0x83
 
-/** Return keys and values of all settings. */
+/**
+ * Return keys and values of all settings.
+ */
 typedef struct jd_settings_listed_entry {
     char key[0];  // string0
     // uint8_t value[0];

@@ -30,16 +30,24 @@ typedef struct jd_sensor_aggregator_inputs {
 } jd_sensor_aggregator_inputs_t;
 
 
-/** Read-only uint32_t. Number of input samples collected so far. */
+/**
+ * Read-only uint32_t. Number of input samples collected so far.
+ */
 #define JD_SENSOR_AGGREGATOR_REG_NUM_SAMPLES 0x180
 
-/** Read-only B uint8_t. Size of a single sample. */
+/**
+ * Read-only B uint8_t. Size of a single sample.
+ */
 #define JD_SENSOR_AGGREGATOR_REG_SAMPLE_SIZE 0x181
 
-/** Read-write uint32_t. When set to `N`, will stream `N` samples as `current_sample` reading. */
+/**
+ * Read-write uint32_t. When set to `N`, will stream `N` samples as `current_sample` reading.
+ */
 #define JD_SENSOR_AGGREGATOR_REG_STREAM_SAMPLES 0x81
 
-/** Read-only bytes. Last collected sample. */
+/**
+ * Read-only bytes. Last collected sample.
+ */
 #define JD_SENSOR_AGGREGATOR_REG_CURRENT_SAMPLE JD_REG_READING
 
 #endif

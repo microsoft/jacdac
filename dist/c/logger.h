@@ -19,16 +19,24 @@
  */
 #define JD_LOGGER_REG_MIN_PRIORITY 0x80
 
-/** Argument: message string (bytes). Report a message. */
+/**
+ * Argument: message string (bytes). Report a message.
+ */
 #define JD_LOGGER_CMD_DEBUG 0x80
 
-/** Argument: message string (bytes). Report a message. */
+/**
+ * Argument: message string (bytes). Report a message.
+ */
 #define JD_LOGGER_CMD_LOG 0x81
 
-/** Argument: message string (bytes). Report a message. */
+/**
+ * Argument: message string (bytes). Report a message.
+ */
 #define JD_LOGGER_CMD_WARN 0x82
 
-/** Argument: message string (bytes). Report a message. */
+/**
+ * Argument: message string (bytes). Report a message.
+ */
 #define JD_LOGGER_CMD_ERROR 0x83
 
 #endif

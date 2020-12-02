@@ -11,22 +11,34 @@
  */
 #define JD_MULTITOUCH_REG_CAPACITY JD_REG_READING
 
-/** Argument: channel uint32_t. Emitted when an input is touched. */
+/**
+ * Argument: channel uint32_t. Emitted when an input is touched.
+ */
 #define JD_MULTITOUCH_EV_TOUCH 0x1
 
-/** Argument: channel uint32_t. Emitted when an input is no longer touched. */
+/**
+ * Argument: channel uint32_t. Emitted when an input is no longer touched.
+ */
 #define JD_MULTITOUCH_EV_RELEASE 0x2
 
-/** Argument: channel uint32_t. Emitted when an input is briefly touched. TODO Not implemented. */
+/**
+ * Argument: channel uint32_t. Emitted when an input is briefly touched. TODO Not implemented.
+ */
 #define JD_MULTITOUCH_EV_TAP 0x3
 
-/** Argument: channel uint32_t. Emitted when an input is touched for longer than 500ms. TODO Not implemented. */
+/**
+ * Argument: channel uint32_t. Emitted when an input is touched for longer than 500ms. TODO Not implemented.
+ */
 #define JD_MULTITOUCH_EV_LONG_PRESS 0x4
 
-/** Emitted when input channels are successively touched in order of increasing channel numbers. */
+/**
+ * Emitted when input channels are successively touched in order of increasing channel numbers.
+ */
 #define JD_MULTITOUCH_EV_SWIPE_POS 0x10
 
-/** Emitted when input channels are successively touched in order of decreasing channel numbers. */
+/**
+ * Emitted when input channels are successively touched in order of decreasing channel numbers.
+ */
 #define JD_MULTITOUCH_EV_SWIPE_NEG 0x11
 
 #endif

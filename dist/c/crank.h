@@ -10,7 +10,9 @@
  */
 #define JD_CRANK_REG_POSITION JD_REG_READING
 
-/** Constant # uint16_t. This specifies by how much `position` changes when the crank does 360 degree turn. Typically 12 or 24. */
+/**
+ * Constant # uint16_t. This specifies by how much `position` changes when the crank does 360 degree turn. Typically 12 or 24.
+ */
 #define JD_CRANK_REG_CLICKS_PER_TURN 0x180
 
 #endif

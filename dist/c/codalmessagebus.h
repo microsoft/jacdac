@@ -4,7 +4,9 @@
 
 #define JD_SERVICE_CLASS_CODALMESSAGE_BUS  0x16ad7cd5
 
-/** Sends a new event on the message bus. */
+/**
+ * Sends a new event on the message bus.
+ */
 #define JD_CODALMESSAGE_BUS_CMD_SEND 0x80
 typedef struct jd_codalmessage_bus_send {
     uint16_t id;

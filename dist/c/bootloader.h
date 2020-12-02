@@ -16,7 +16,10 @@
  * that "fits" this device.
  */
 #define JD_BOOTLOADER_CMD_INFO JD_CMD_ANNOUNCE
-// Report: 
+
+/**
+ * Report: 
+ */
 typedef struct jd_bootloader_info_report {
     uint32_t service_class;
     uint32_t page_size; // B
@@ -25,9 +28,14 @@ typedef struct jd_bootloader_info_report {
 } jd_bootloader_info_report_t;
 
 
-/** Argument: session_id uint32_t. The flashing host should generate a random id, and use this command to set it. */
+/**
+ * Argument: session_id uint32_t. The flashing host should generate a random id, and use this command to set it.
+ */
 #define JD_BOOTLOADER_CMD_SET_SESSION 0x81
-// Report: Argument: session_id uint32_t
+
+/**
+ * Report: Argument: session_id uint32_t
+ */
 
 /**
  * Use to send flashing data. A physical page is split into `chunk_max + 1` chunks, where `chunk_no = 0 ... chunk_max`.
@@ -49,7 +57,10 @@ typedef struct jd_bootloader_page_data {
     uint8_t page_data[208];
 } jd_bootloader_page_data_t;
 
-// Report: 
+
+/**
+ * Report: 
+ */
 typedef struct jd_bootloader_page_data_report {
     uint32_t session_id;
     uint32_t page_error;  // Error

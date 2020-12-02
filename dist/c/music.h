@@ -4,7 +4,9 @@
 
 #define JD_SERVICE_CLASS_MUSIC  0x1b57b1d7
 
-/** Read-write ratio uint8_t. The volume (duty cycle) of the buzzer. */
+/**
+ * Read-write ratio uint8_t. The volume (duty cycle) of the buzzer.
+ */
 #define JD_MUSIC_REG_VOLUME JD_REG_INTENSITY
 
 /**

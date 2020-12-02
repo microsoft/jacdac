@@ -17,10 +17,14 @@
 #define JD_WIFI_APFLAGS_IEEE_802_11AX 0x2000
 #define JD_WIFI_APFLAGS_IEEE_802_LONG_RANGE 0x8000
 
-/** Argument: results pipe (bytes). Initiate search for WiFi networks. Results are returned via pipe, one entry per packet. */
+/**
+ * Argument: results pipe (bytes). Initiate search for WiFi networks. Results are returned via pipe, one entry per packet.
+ */
 #define JD_WIFI_CMD_SCAN 0x80
 
-/** Initiate search for WiFi networks. Results are returned via pipe, one entry per packet. */
+/**
+ * Initiate search for WiFi networks. Results are returned via pipe, one entry per packet.
+ */
 typedef struct jd_wifi_results {
     uint32_t flags;  // APFlags
     uint32_t reserved;
@@ -31,7 +35,9 @@ typedef struct jd_wifi_results {
 } jd_wifi_results_t;
 
 
-/** Connect to named network. */
+/**
+ * Connect to named network.
+ */
 #define JD_WIFI_CMD_CONNECT 0x81
 typedef struct jd_wifi_connect {
     char ssid[0];  // string0
@@ -39,16 +45,24 @@ typedef struct jd_wifi_connect {
 } jd_wifi_connect_t;
 
 
-/** No args. Disconnect from current WiFi network if any. */
+/**
+ * No args. Disconnect from current WiFi network if any.
+ */
 #define JD_WIFI_CMD_DISCONNECT 0x82
 
-/** Read-only bool (uint8_t). Indicates whether or not we currently have an IP address assigned. */
+/**
+ * Read-only bool (uint8_t). Indicates whether or not we currently have an IP address assigned.
+ */
 #define JD_WIFI_REG_CONNECTED 0x180
 
-/** Emitted upon successful join and IP address assignment. */
+/**
+ * Emitted upon successful join and IP address assignment.
+ */
 #define JD_WIFI_EV_GOT_IP 0x1
 
-/** Emitted when disconnected from network. */
+/**
+ * Emitted when disconnected from network.
+ */
 #define JD_WIFI_EV_LOST_IP 0x2
 
 #endif

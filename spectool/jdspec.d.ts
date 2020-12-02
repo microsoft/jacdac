@@ -269,6 +269,11 @@ declare namespace jdspec {
          * If present and true, this command is followed by its report.
          */
         hasReport?: boolean;
+
+        /**
+         * This register supports the JACDAC infrastructure and is not meant to be reported outside the JACDAC bus.
+         */
+        internal?: boolean;
     }
 
     /**

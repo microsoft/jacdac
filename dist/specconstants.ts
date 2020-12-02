@@ -67,6 +67,11 @@ export enum SystemReg {
     StreamingPreferredInterval = 0x102,
 }
 
+export enum SystemEvent {
+    /** Emit notifying that the internal state of the service changed. */
+    Change = 0x1,
+}
+
 // Service: Base service
 export enum BaseReg {
     // const [code, vendorCode] = unpack(buf, "HH")
@@ -889,6 +894,11 @@ export enum PwmLightReg {
 
 // Service: Role Manager
 export const SRV_ROLE_MANAGER = 0x119c3ad1
+export enum RoleManagerReg {
+    /** Read-only bool (uint8_t). Indicates if all required roles have been allocated to devices. */
+    AllRolesAllocated = 0x181,
+}
+
 export enum RoleManagerCmd {
     /** Argument: device_id uint64_t. Get the role corresponding to given device identifer. Returns empty string if unset. */
     GetRole = 0x80,
@@ -919,6 +929,11 @@ export enum RoleManagerCmd {
 // const deviceId = buf.slice(0, 8)
 // const roles = buf.slice(12).toString()
 
+
+export enum RoleManagerEvent {
+    /** Emit notifying that the internal state of the service changed. */
+    Change = 0x1,
+}
 
 // Service: Servo
 export const SRV_SERVO = 0x12fc9103

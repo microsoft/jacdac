@@ -4,6 +4,11 @@
 
 Assign roles to devices on JACDAC bus.
 
+## Registers
+
+    ro all_roles_allocated: bool @ 0x181
+
+Indicates if all required roles have been allocated to devices.
 
 ## Commands
 
@@ -48,3 +53,9 @@ Return all roles stored internally.
     }
 
 List all roles required by the current program. `device_id` is `0` if role is unbound.
+
+## Events
+
+    event change @ change { }
+
+Emit notifying that the internal state of the service changed.

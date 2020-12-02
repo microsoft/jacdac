@@ -336,6 +336,29 @@ export enum ButtonEvent {
     LongClick = 0x4,
 }
 
+// Service: Buzzer
+export const SRV_BUZZER = 0x1b57b1d7
+export enum BuzzerReg {
+    /**
+     * Read-write ratio uint8_t. The volume (duty cycle) of the buzzer.
+     */
+    Volume = 0x1,
+}
+
+export enum BuzzerCmd {
+    /**
+     * Play a PWM tone with given period and duty for given duration.
+     * The duty is scaled down with `volume` register.
+     * To play tone at frequency `F` Hz and volume `V` (in `0..1`) you will want
+     * to send `P = 1000000 / F` and `D = P * V / 2`.
+     *
+     * ```
+     * const [period, duty, duration] = unpack(buf, "HHH")
+     * ```
+     */
+    PlayTone = 0x80,
+}
+
 // Service: CODAL Message Bus
 export const SRV_CODAL_MESSAGE_BUS = 0x16ad7cd5
 export enum CODALMessageBusCmd {
@@ -1072,29 +1095,6 @@ export enum MultitouchEvent {
      * Emitted when input channels are successively touched in order of decreasing channel numbers.
      */
     SwipeNeg = 0x11,
-}
-
-// Service: Music
-export const SRV_MUSIC = 0x1b57b1d7
-export enum MusicReg {
-    /**
-     * Read-write ratio uint8_t. The volume (duty cycle) of the buzzer.
-     */
-    Volume = 0x1,
-}
-
-export enum MusicCmd {
-    /**
-     * Play a PWM tone with given period and duty for given duration.
-     * The duty is scaled down with `volume` register.
-     * To play tone at frequency `F` Hz and volume `V` (in `0..1`) you will want
-     * to send `P = 1000000 / F` and `D = P * V / 2`.
-     *
-     * ```
-     * const [period, duty, duration] = unpack(buf, "HHH")
-     * ```
-     */
-    PlayTone = 0x80,
 }
 
 // Service: Power

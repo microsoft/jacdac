@@ -1260,6 +1260,102 @@
     "source": "# Button\n\n    identifier: 0x1473a263\n    extends: _sensor\n\nA simple push-button.\n\nNote: this service will stream readings while the button is pressed and shortly after it's released, even\nwhen `stream_samples == 0`. TODO remove this?\n\n## Registers\n\n    ro pressed: bool @ reading\n\nIndicates whether the button is currently active (pressed).\n\n## Events\n\n    event down @ 0x01\n\nEmitted when button goes from inactive (`pressed == 0`) to active.\n\n    event up @ 0x02\n\nEmitted when button goes from active (`pressed == 1`) to inactive.\n\n    event click @ 0x03\n\nEmitted together with `up` when the press time was not longer than 500ms.\n\n    event long_click @ 0x04\n\nEmitted together with `up` when the press time was more than 500ms.\n"
   },
   {
+    "name": "Buzzer",
+    "status": "experimental",
+    "shortId": "buzzer",
+    "camelName": "buzzer",
+    "shortName": "buzzer",
+    "extends": [
+      "_base"
+    ],
+    "notes": {
+      "short": "A simple buzzer."
+    },
+    "classIdentifier": 458731991,
+    "enums": {},
+    "packets": [
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "optional": true,
+        "identifierName": "status_code",
+        "derived": "_base"
+      },
+      {
+        "kind": "rw",
+        "name": "volume",
+        "identifier": 1,
+        "description": "The volume (duty cycle) of the buzzer.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "/",
+            "shift": 8,
+            "isFloat": false,
+            "type": "u8",
+            "storage": 1,
+            "isSimpleType": true,
+            "defaultValue": 255
+          }
+        ],
+        "identifierName": "intensity"
+      },
+      {
+        "kind": "command",
+        "name": "play_tone",
+        "identifier": 128,
+        "description": "Play a PWM tone with given period and duty for given duration.\nThe duty is scaled down with `volume` register.\nTo play tone at frequency `F` Hz and volume `V` (in `0..1`) you will want\nto send `P = 1000000 / F` and `D = P * V / 2`.",
+        "fields": [
+          {
+            "name": "period",
+            "unit": "us",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "duty",
+            "unit": "us",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "duration",
+            "unit": "ms",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ]
+      }
+    ],
+    "source": "# Buzzer\n\n    identifier: 0x1b57b1d7\n    camel: buzzer\n\nA simple buzzer.\n\n## Registers\n\n    rw volume = 255: u8 / @ intensity\n\nThe volume (duty cycle) of the buzzer.\n\n## Commands\n\n    command play_tone @ 0x80 {\n        period: u16 us\n        duty: u16 us\n        duration: u16 ms\n    }\n\nPlay a PWM tone with given period and duty for given duration.\nThe duty is scaled down with `volume` register.\nTo play tone at frequency `F` Hz and volume `V` (in `0..1`) you will want\nto send `P = 1000000 / F` and `D = P * V / 2`.\n"
+  },
+  {
     "name": "CODAL Message Bus",
     "status": "experimental",
     "shortId": "codalmessagebus",
@@ -4148,102 +4244,6 @@
       }
     ],
     "source": "# Multitouch\n\n    identifier: 0x18d55e2b\n    extends: _sensor\n\nA capacitive touch sensor with multiple inputs.\n\n## Registers\n\n    ro capacity @ reading {\n    repeats:\n        capacitance: i32\n    }\n\nCapacitance of channels. The capacitance is continuously calibrated, and a value of `0` indicates\nno touch, wheres a value of around `100` or more indicates touch.\nIt's best to ignore this (unless debugging), and use events.\n\n## Events\n\nMost events include the channel number of the input.\n\n    event touch @ 0x01 {\n        channel: u32\n    }\n\nEmitted when an input is touched.\n\n    event release @ 0x02 {\n        channel: u32\n    }\n\nEmitted when an input is no longer touched.\n\n    event tap @ 0x03 {\n        channel: u32\n    }\n\nEmitted when an input is briefly touched. TODO Not implemented.\n\n    event long_press @ 0x04 {\n        channel: u32\n    }\n\nEmitted when an input is touched for longer than 500ms. TODO Not implemented.\n\n    event swipe_pos @ 0x10\n\nEmitted when input channels are successively touched in order of increasing channel numbers.\n\n    event swipe_neg @ 0x11\n\nEmitted when input channels are successively touched in order of decreasing channel numbers.\n"
-  },
-  {
-    "name": "Music",
-    "status": "experimental",
-    "shortId": "music",
-    "camelName": "Music",
-    "shortName": "Music",
-    "extends": [
-      "_base"
-    ],
-    "notes": {
-      "short": "A simple buzzer."
-    },
-    "classIdentifier": 458731991,
-    "enums": {},
-    "packets": [
-      {
-        "kind": "ro",
-        "name": "status_code",
-        "identifier": 7,
-        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
-        "fields": [
-          {
-            "name": "code",
-            "unit": "",
-            "isFloat": false,
-            "type": "u16",
-            "storage": 2,
-            "isSimpleType": true
-          },
-          {
-            "name": "vendor_code",
-            "unit": "",
-            "isFloat": false,
-            "type": "u16",
-            "storage": 2,
-            "isSimpleType": true
-          }
-        ],
-        "optional": true,
-        "identifierName": "status_code",
-        "derived": "_base"
-      },
-      {
-        "kind": "rw",
-        "name": "volume",
-        "identifier": 1,
-        "description": "The volume (duty cycle) of the buzzer.",
-        "fields": [
-          {
-            "name": "_",
-            "unit": "/",
-            "shift": 8,
-            "isFloat": false,
-            "type": "u8",
-            "storage": 1,
-            "isSimpleType": true,
-            "defaultValue": 255
-          }
-        ],
-        "identifierName": "intensity"
-      },
-      {
-        "kind": "command",
-        "name": "play_tone",
-        "identifier": 128,
-        "description": "Play a PWM tone with given period and duty for given duration.\nThe duty is scaled down with `volume` register.\nTo play tone at frequency `F` Hz and volume `V` (in `0..1`) you will want\nto send `P = 1000000 / F` and `D = P * V / 2`.",
-        "fields": [
-          {
-            "name": "period",
-            "unit": "us",
-            "isFloat": false,
-            "type": "u16",
-            "storage": 2,
-            "isSimpleType": true
-          },
-          {
-            "name": "duty",
-            "unit": "us",
-            "isFloat": false,
-            "type": "u16",
-            "storage": 2,
-            "isSimpleType": true
-          },
-          {
-            "name": "duration",
-            "unit": "ms",
-            "isFloat": false,
-            "type": "u16",
-            "storage": 2,
-            "isSimpleType": true
-          }
-        ]
-      }
-    ],
-    "source": "# Music\n\n    identifier: 0x1b57b1d7\n\nA simple buzzer.\n\n## Registers\n\n    rw volume = 255: u8 / @ intensity\n\nThe volume (duty cycle) of the buzzer.\n\n## Commands\n\n    command play_tone @ 0x80 {\n        period: u16 us\n        duty: u16 us\n        duration: u16 ms\n    }\n\nPlay a PWM tone with given period and duty for given duration.\nThe duty is scaled down with `volume` register.\nTo play tone at frequency `F` Hz and volume `V` (in `0..1`) you will want\nto send `P = 1000000 / F` and `D = P * V / 2`.\n"
   },
   {
     "name": "Power",

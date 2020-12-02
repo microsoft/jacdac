@@ -46,12 +46,12 @@ Delete a given setting.
 
 Return keys of all settings.
 
-    command list @ 0x83 {
-        results: pipe
-    }
-    pipe report listed_entry {
-        key: string0
-        value: bytes
-    }
+    command clear @ 0x83 { }
 
-Return keys and values of all settings.
+Clears all keys from the store
+
+## Events
+
+    event changed @ 0x01
+
+Emitted when a value was changed in the store.

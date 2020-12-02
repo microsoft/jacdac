@@ -53,3 +53,9 @@ Return all roles stored internally.
     }
 
 List all roles required by the current program. `device_id` is `0` if role is unbound.
+
+## Events
+
+    event change @ change { }
+
+Emit notifying that the internal state of the service changed.

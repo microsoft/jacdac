@@ -983,6 +983,11 @@ namespace jacdac {
     // const roles = buf.slice(12).toString()
 
 
+    export const enum RoleManagerEvent {
+        /** Emit notifying that the internal state of the service changed. */
+        Change = 0x1,
+    }
+
 }
 namespace jacdac {
     // Service: Servo

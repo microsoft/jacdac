@@ -930,6 +930,11 @@ export enum RoleManagerCmd {
 // const roles = buf.slice(12).toString()
 
 
+export enum RoleManagerEvent {
+    /** Emit notifying that the internal state of the service changed. */
+    Change = 0x1,
+}
+
 // Service: Servo
 export const SRV_SERVO = 0x12fc9103
 export enum ServoReg {

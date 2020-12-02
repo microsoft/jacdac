@@ -950,14 +950,14 @@ export enum SettingsCmd {
     /** Argument: results pipe (bytes). Return keys of all settings. */
     ListKeys = 0x82,
 
-    /** Argument: results pipe (bytes). Return keys and values of all settings. */
-    List = 0x83,
+    /** No args. Clears all keys from the store */
+    Clear = 0x83,
 }
 
-// pipe_report ListedEntry
-// const key = string0(buf, 0, 0)
-// const value = buf.slice(0)
-
+export enum SettingsEvent {
+    /** Emitted when a value was changed in the store. */
+    Changed = 0x1,
+}
 
 // Service: Slider
 export const SRV_SLIDER = 0x1f274746

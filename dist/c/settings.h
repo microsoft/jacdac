@@ -29,14 +29,10 @@ typedef struct jd_settings_set {
 
 /** Argument: key string (bytes). Return keys of all settings. */
 
-/** Argument: results pipe (bytes). Return keys and values of all settings. */
-#define JD_SETTINGS_CMD_LIST 0x83
+/** No args. Clears all keys from the store */
+#define JD_SETTINGS_CMD_CLEAR 0x83
 
-/** Return keys and values of all settings. */
-typedef struct jd_settings_listed_entry {
-    char key[0];  // string0
-    // uint8_t value[0];
-} jd_settings_listed_entry_t;
-
+/** Emitted when a value was changed in the store. */
+#define JD_SETTINGS_EV_CHANGED 0x1
 
 #endif

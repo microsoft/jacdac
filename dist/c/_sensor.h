@@ -7,8 +7,12 @@
  * (clients will typically write `255` to this register every second or so, while streaming is required).
  */
 
-/** Read-write ms uint32_t. Period between packets of data when streaming in milliseconds. */
+/**
+ * Read-write ms uint32_t. Period between packets of data when streaming in milliseconds.
+ */
 
-/** Constant ms uint32_t. Preferred default streaming interval for sensor in milliseconds. */
+/**
+ * Constant ms uint32_t. Preferred default streaming interval for sensor in milliseconds.
+ */
 
 #endif

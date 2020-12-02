@@ -16,9 +16,14 @@
 #define JD_GAMEPAD_BUTTON_RESET 0x9
 #define JD_GAMEPAD_BUTTON_EXIT 0xa
 
-/** No args. Indicates number of players supported and which buttons are present on the controller. */
+/**
+ * No args. Indicates number of players supported and which buttons are present on the controller.
+ */
 #define JD_GAMEPAD_CMD_ANNOUNCE JD_CMD_ANNOUNCE
-// Report: 
+
+/**
+ * Report: 
+ */
 typedef struct jd_gamepad_announce_report {
     uint8_t flags;
     uint8_t num_players;
@@ -38,7 +43,9 @@ typedef struct jd_gamepad_buttons {
 } jd_gamepad_buttons_t;
 
 
-/** Emitted when button goes from inactive to active. */
+/**
+ * Emitted when button goes from inactive to active.
+ */
 #define JD_GAMEPAD_EV_DOWN 0x1
 typedef struct jd_gamepad_down {
     uint16_t button;  // Button
@@ -46,7 +53,9 @@ typedef struct jd_gamepad_down {
 } jd_gamepad_down_t;
 
 
-/** Emitted when button goes from active to inactive. */
+/**
+ * Emitted when button goes from active to inactive.
+ */
 #define JD_GAMEPAD_EV_UP 0x2
 typedef struct jd_gamepad_up {
     uint16_t button;  // Button

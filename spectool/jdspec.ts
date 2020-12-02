@@ -957,7 +957,7 @@ function toH(info: jdspec.ServiceSpec) {
             continue
 
         const cmt = addComment(pkt)
-        r += cmt.comment
+        r += wrapComment(cmt.comment)
 
         if (!pkt.secondary && pkt.kind != "pipe_command" && pkt.kind != "pipe_report") {
             let inner = "CMD"
@@ -1077,21 +1077,34 @@ function addComment(pkt: jdspec.PacketInfo) {
     }
 
     if (pkt.kind == "report" && pkt.secondary) {
-        comment += "// Report: " + typeInfo + "\n"
+        comment += "Report: " + typeInfo + "\n"
     } else {
         if (pkt.description) {
             let desc = pkt.description.replace(/\n\n[^]*/, "")
             if (typeInfo)
                 desc = typeInfo + ". " + desc
-            if (desc.indexOf("\n") > 0)
-                comment += "\n/**\n * " + desc.replace(/\n/g, "\n * ") + "\n */\n"
-            else
-                comment += "\n/** " + desc + " */\n"
+            comment = desc + "\n" + comment;
         }
     }
 
-    return { comment, needsStruct }
+    return {
+        comment,
+        needsStruct
+    }
 
+}
+
+function wrapComment(comment: string) {
+    return "\n/**\n * " + comment.replace(/\n+$/, '').replace(/\n/g, "\n * ") + "\n */\n";
+}
+
+function wrapSnippet(code: string) {
+    if (!code) return code;
+    return `
+\`\`\`
+${code.replace(/^\n+/, '').replace(/\n+$/, '')}
+\`\`\`
+`
 }
 
 function packInfo(pkt: jdspec.PacketInfo, isStatic: boolean) {
@@ -1143,8 +1156,6 @@ function packInfo(pkt: jdspec.PacketInfo, isStatic: boolean) {
     }
 
     buffers = buffers.replace(/\n*$/, "")
-    if (buffers)
-        buffers = "\n" + buffers.replace(/^/mg, "// ")
 
     return buffers
 }
@@ -1187,10 +1198,10 @@ function toTypescript(info: jdspec.ServiceSpec, isStatic: boolean) {
         let text = ""
         if (pkt.secondary || inner == "info") {
             if (pack)
-                text = `// ${pkt.kind} ${upperCamel(pkt.name)}${pack}\n`
+                text = wrapComment(`${pkt.kind} ${upperCamel(pkt.name)}${wrapSnippet(pack)}`);
         } else {
             let val = toHex(pkt.identifier)
-            text = `${pack}${cmt.comment}${upperCamel(pkt.name)} = ${val},\n`
+            text = `${wrapComment(cmt.comment + wrapSnippet(pack))}${upperCamel(pkt.name)} = ${val},\n`
         }
 
         if (text)

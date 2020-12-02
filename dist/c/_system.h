@@ -7,14 +7,20 @@
  * Control broadcasts it automatically every 500ms, but other service have to be queried to provide it.
  */
 #define JD_CMD_ANNOUNCE 0x0
-// Report: No args
+
+/**
+ * Report: No args
+ */
 
 /**
  * No args. Registers number `N` is fetched by issuing command `0x1000 | N`.
  * The report format is the same as the format of the register.
  */
 #define JD_CMD_GET_REGISTER 0x1000
-// Report: No args
+
+/**
+ * Report: No args
+ */
 
 /**
  * No args. Registers number `N` is set by issuing command `0x2000 | N`, with the format
@@ -22,7 +28,9 @@
  */
 #define JD_CMD_SET_REGISTER 0x2000
 
-/** Event from sensor or a broadcast service. */
+/**
+ * Event from sensor or a broadcast service.
+ */
 #define JD_CMD_EVENT 0x1
 typedef struct jd_system_event_report {
     uint32_t event_id;
@@ -30,17 +38,28 @@ typedef struct jd_system_event_report {
 } jd_system_event_report_t;
 
 
-/** No args. Request to calibrate a sensor. The report indicates the calibration is done. */
+/**
+ * No args. Request to calibrate a sensor. The report indicates the calibration is done.
+ */
 #define JD_CMD_CALIBRATE 0x2
-// Report: No args
 
-/** Read-write uint32_t. This is either binary on/off (0 or non-zero), or can be gradual (eg. brightness of an RGB LED strip). */
+/**
+ * Report: No args
+ */
+
+/**
+ * Read-write uint32_t. This is either binary on/off (0 or non-zero), or can be gradual (eg. brightness of an RGB LED strip).
+ */
 #define JD_REG_INTENSITY 0x1
 
-/** Read-write int32_t. The primary value of actuator (eg. servo pulse length, or motor duty cycle). */
+/**
+ * Read-write int32_t. The primary value of actuator (eg. servo pulse length, or motor duty cycle).
+ */
 #define JD_REG_VALUE 0x2
 
-/** Read-write mA uint16_t. Limit the power drawn by the service, in mA. */
+/**
+ * Read-write mA uint16_t. Limit the power drawn by the service, in mA.
+ */
 #define JD_REG_MAX_POWER 0x7
 
 /**
@@ -49,16 +68,24 @@ typedef struct jd_system_event_report {
  */
 #define JD_REG_STREAMING_SAMPLES 0x3
 
-/** Read-write ms uint32_t. Period between packets of data when streaming in milliseconds. */
+/**
+ * Read-write ms uint32_t. Period between packets of data when streaming in milliseconds.
+ */
 #define JD_REG_STREAMING_INTERVAL 0x4
 
-/** Read-only int32_t. Read-only value of the sensor, also reported in streaming. */
+/**
+ * Read-only int32_t. Read-only value of the sensor, also reported in streaming.
+ */
 #define JD_REG_READING 0x101
 
-/** Read-write int32_t. Thresholds for event generation for event generation for analog sensors. */
+/**
+ * Read-write int32_t. Thresholds for event generation for event generation for analog sensors.
+ */
 #define JD_REG_LOW_THRESHOLD 0x5
 
-/** Read-write int32_t. Thresholds for event generation for event generation for analog sensors. */
+/**
+ * Read-write int32_t. Thresholds for event generation for event generation for analog sensors.
+ */
 #define JD_REG_HIGH_THRESHOLD 0x6
 
 /**
@@ -74,10 +101,14 @@ typedef struct jd_system_status_code {
 } jd_system_status_code_t;
 
 
-/** Constant ms uint32_t. Preferred default streaming interval for sensor in milliseconds. */
+/**
+ * Constant ms uint32_t. Preferred default streaming interval for sensor in milliseconds.
+ */
 #define JD_REG_STREAMING_PREFERRED_INTERVAL 0x102
 
-/** Emit notifying that the internal state of the service changed. */
+/**
+ * Emit notifying that the internal state of the service changed.
+ */
 #define JD_EV_CHANGE 0x1
 
 #endif

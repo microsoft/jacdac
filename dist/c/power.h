@@ -4,7 +4,9 @@
 
 #define JD_SERVICE_CLASS_POWER  0x1fa4c95a
 
-/** Read-write bool (uint8_t). Turn the power to the bus on/off. */
+/**
+ * Read-write bool (uint8_t). Turn the power to the bus on/off.
+ */
 #define JD_POWER_REG_ENABLED JD_REG_INTENSITY
 
 /**
@@ -13,16 +15,24 @@
  */
 #define JD_POWER_REG_MAX_POWER JD_REG_MAX_POWER
 
-/** Read-only bool (uint8_t). Indicates whether the power has been shut down due to overdraw. */
+/**
+ * Read-only bool (uint8_t). Indicates whether the power has been shut down due to overdraw.
+ */
 #define JD_POWER_REG_OVERLOAD 0x181
 
-/** Read-only mA uint16_t. Present current draw from the bus. */
+/**
+ * Read-only mA uint16_t. Present current draw from the bus.
+ */
 #define JD_POWER_REG_CURRENT_DRAW JD_REG_READING
 
-/** Read-only mV uint16_t. Voltage on input. */
+/**
+ * Read-only mV uint16_t. Voltage on input.
+ */
 #define JD_POWER_REG_BATTERY_VOLTAGE 0x180
 
-/** Read-only ratio uint16_t. Fraction of charge in the battery. */
+/**
+ * Read-only ratio uint16_t. Fraction of charge in the battery.
+ */
 #define JD_POWER_REG_BATTERY_CHARGE 0x182
 
 /**

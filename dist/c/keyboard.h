@@ -19,7 +19,9 @@
 #define JD_KEYBOARD_ACTION_UP 0x1
 #define JD_KEYBOARD_ACTION_DOWN 0x2
 
-/** Presses a key or a sequence of keys down. */
+/**
+ * Presses a key or a sequence of keys down.
+ */
 #define JD_KEYBOARD_CMD_KEY 0x80
 typedef struct jd_keyboard_key {
     uint16_t selector;
@@ -28,7 +30,9 @@ typedef struct jd_keyboard_key {
 } jd_keyboard_key_t;
 
 
-/** No args. Clears all pressed keys. */
+/**
+ * No args. Clears all pressed keys.
+ */
 #define JD_KEYBOARD_CMD_CLEAR 0x81
 
 #endif

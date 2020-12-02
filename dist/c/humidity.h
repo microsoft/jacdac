@@ -4,7 +4,9 @@
 
 #define JD_SERVICE_CLASS_HUMIDITY  0x16c810b8
 
-/** Read-only %RH u22.10 (uint32_t). The relative humidity in percentage of full water saturation. */
+/**
+ * Read-only %RH u22.10 (uint32_t). The relative humidity in percentage of full water saturation.
+ */
 #define JD_HUMIDITY_REG_HUMIDITY JD_REG_READING
 
 #endif

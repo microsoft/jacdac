@@ -4,19 +4,29 @@
 
 #define JD_SERVICE_CLASS_BUTTON  0x1473a263
 
-/** Read-only bool (uint8_t). Indicates whether the button is currently active (pressed). */
+/**
+ * Read-only bool (uint8_t). Indicates whether the button is currently active (pressed).
+ */
 #define JD_BUTTON_REG_PRESSED JD_REG_READING
 
-/** Emitted when button goes from inactive (`pressed == 0`) to active. */
+/**
+ * Emitted when button goes from inactive (`pressed == 0`) to active.
+ */
 #define JD_BUTTON_EV_DOWN 0x1
 
-/** Emitted when button goes from active (`pressed == 1`) to inactive. */
+/**
+ * Emitted when button goes from active (`pressed == 1`) to inactive.
+ */
 #define JD_BUTTON_EV_UP 0x2
 
-/** Emitted together with `up` when the press time was not longer than 500ms. */
+/**
+ * Emitted together with `up` when the press time was not longer than 500ms.
+ */
 #define JD_BUTTON_EV_CLICK 0x3
 
-/** Emitted together with `up` when the press time was more than 500ms. */
+/**
+ * Emitted together with `up` when the press time was more than 500ms.
+ */
 #define JD_BUTTON_EV_LONG_CLICK 0x4
 
 #endif

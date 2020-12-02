@@ -4,7 +4,9 @@
 
 #define JD_SERVICE_CLASS_ACCEL  0x1f140409
 
-/** Indicates the current forces acting on accelerometer. */
+/**
+ * Indicates the current forces acting on accelerometer.
+ */
 #define JD_ACCEL_REG_FORCES JD_REG_READING
 typedef struct jd_accel_forces {
     int16_t x;  // g i6.10
@@ -13,40 +15,64 @@ typedef struct jd_accel_forces {
 } jd_accel_forces_t;
 
 
-/** Emitted when accelerometer is tilted in the given direction. */
+/**
+ * Emitted when accelerometer is tilted in the given direction.
+ */
 #define JD_ACCEL_EV_TILT_UP 0x1
 
-/** Emitted when accelerometer is tilted in the given direction. */
+/**
+ * Emitted when accelerometer is tilted in the given direction.
+ */
 #define JD_ACCEL_EV_TILT_DOWN 0x2
 
-/** Emitted when accelerometer is tilted in the given direction. */
+/**
+ * Emitted when accelerometer is tilted in the given direction.
+ */
 #define JD_ACCEL_EV_TILT_LEFT 0x3
 
-/** Emitted when accelerometer is tilted in the given direction. */
+/**
+ * Emitted when accelerometer is tilted in the given direction.
+ */
 #define JD_ACCEL_EV_TILT_RIGHT 0x4
 
-/** Emitted when accelerometer is laying flat in the given direction. */
+/**
+ * Emitted when accelerometer is laying flat in the given direction.
+ */
 #define JD_ACCEL_EV_FACE_UP 0x5
 
-/** Emitted when accelerometer is laying flat in the given direction. */
+/**
+ * Emitted when accelerometer is laying flat in the given direction.
+ */
 #define JD_ACCEL_EV_FACE_DOWN 0x6
 
-/** Emitted when total force acting on accelerometer is much less than 1g. */
+/**
+ * Emitted when total force acting on accelerometer is much less than 1g.
+ */
 #define JD_ACCEL_EV_FREEFALL 0x7
 
-/** Emitted when forces change violently a few times. */
+/**
+ * Emitted when forces change violently a few times.
+ */
 #define JD_ACCEL_EV_SHAKE 0xb
 
-/** Emitted when force in any direction exceeds given threshold. */
+/**
+ * Emitted when force in any direction exceeds given threshold.
+ */
 #define JD_ACCEL_EV_FORCE_2G 0xc
 
-/** Emitted when force in any direction exceeds given threshold. */
+/**
+ * Emitted when force in any direction exceeds given threshold.
+ */
 #define JD_ACCEL_EV_FORCE_3G 0x8
 
-/** Emitted when force in any direction exceeds given threshold. */
+/**
+ * Emitted when force in any direction exceeds given threshold.
+ */
 #define JD_ACCEL_EV_FORCE_6G 0x9
 
-/** Emitted when force in any direction exceeds given threshold. */
+/**
+ * Emitted when force in any direction exceeds given threshold.
+ */
 #define JD_ACCEL_EV_FORCE_8G 0xa
 
 #endif

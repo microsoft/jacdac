@@ -10,10 +10,14 @@
  */
 #define JD_PWM_LIGHT_REG_BRIGHTNESS JD_REG_INTENSITY
 
-/** Read-write mA uint16_t. Limit the power drawn by the light-strip (and controller). */
+/**
+ * Read-write mA uint16_t. Limit the power drawn by the light-strip (and controller).
+ */
 #define JD_PWM_LIGHT_REG_MAX_POWER JD_REG_MAX_POWER
 
-/** Constant uint8_t. Maximum number of steps allowed in animation definition. This determines the size of the `steps` register. */
+/**
+ * Constant uint8_t. Maximum number of steps allowed in animation definition. This determines the size of the `steps` register.
+ */
 #define JD_PWM_LIGHT_REG_MAX_STEPS 0x180
 
 /**
@@ -33,7 +37,9 @@ typedef struct jd_pwm_light_steps {
  */
 #define JD_PWM_LIGHT_REG_CURRENT_ITERATION 0x80
 
-/** Read-write uint16_t. The animation will be repeated `max_iterations + 1` times. */
+/**
+ * Read-write uint16_t. The animation will be repeated `max_iterations + 1` times.
+ */
 #define JD_PWM_LIGHT_REG_MAX_ITERATIONS 0x81
 
 #endif

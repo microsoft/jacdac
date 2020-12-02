@@ -16,7 +16,10 @@
  * The command form can be used to induce report, which is otherwise broadcast every 500ms.
  */
 #define JD_CTRL_CMD_SERVICES JD_CMD_ANNOUNCE
-// Report: 
+
+/**
+ * Report: 
+ */
 typedef struct jd_ctrl_services_report {
     uint8_t restart_counter;
     uint8_t flags;  // AnnounceFlags
@@ -25,37 +28,59 @@ typedef struct jd_ctrl_services_report {
 } jd_ctrl_services_report_t;
 
 
-/** No args. Do nothing. Always ignored. Can be used to test ACKs. */
+/**
+ * No args. Do nothing. Always ignored. Can be used to test ACKs.
+ */
 #define JD_CTRL_CMD_NOOP 0x80
 
-/** No args. Blink an LED or otherwise draw user's attention. */
+/**
+ * No args. Blink an LED or otherwise draw user's attention.
+ */
 #define JD_CTRL_CMD_IDENTIFY 0x81
 
-/** No args. Reset device. ACK may or may not be sent. */
+/**
+ * No args. Reset device. ACK may or may not be sent.
+ */
 #define JD_CTRL_CMD_RESET 0x82
 
-/** Constant string (bytes). Identifies the type of hardware (eg., ACME Corp. Servo X-42 Rev C) */
+/**
+ * Constant string (bytes). Identifies the type of hardware (eg., ACME Corp. Servo X-42 Rev C)
+ */
 #define JD_CTRL_REG_DEVICE_DESCRIPTION 0x180
 
-/** Constant uint32_t. A numeric code for the string above; used to identify firmware images and devices. */
+/**
+ * Constant uint32_t. A numeric code for the string above; used to identify firmware images and devices.
+ */
 #define JD_CTRL_REG_FIRMWARE_IDENTIFIER 0x181
 
-/** Constant uint32_t. Typically the same as `firmware_identifier` unless device was flashed by hand; the bootloader will respond to that code. */
+/**
+ * Constant uint32_t. Typically the same as `firmware_identifier` unless device was flashed by hand; the bootloader will respond to that code.
+ */
 #define JD_CTRL_REG_BOOTLOADER_FIRMWARE_IDENTIFIER 0x184
 
-/** Constant string (bytes). A string describing firmware version; typically semver. */
+/**
+ * Constant string (bytes). A string describing firmware version; typically semver.
+ */
 #define JD_CTRL_REG_FIRMWARE_VERSION 0x185
 
-/** Read-only °C int16_t. MCU temperature in degrees Celsius (approximate). */
+/**
+ * Read-only °C int16_t. MCU temperature in degrees Celsius (approximate).
+ */
 #define JD_CTRL_REG_MCU_TEMPERATURE 0x182
 
-/** Read-only μs uint64_t. Number of microseconds since boot. */
+/**
+ * Read-only μs uint64_t. Number of microseconds since boot.
+ */
 #define JD_CTRL_REG_UPTIME 0x186
 
-/** Constant string (bytes). Request the information web site for this device */
+/**
+ * Constant string (bytes). Request the information web site for this device
+ */
 #define JD_CTRL_REG_DEVICE_URL 0x187
 
-/** Constant string (bytes). URL with machine-readable metadata information about updating device firmware */
+/**
+ * Constant string (bytes). URL with machine-readable metadata information about updating device firmware
+ */
 #define JD_CTRL_REG_FIRMWARE_URL 0x188
 
 #endif

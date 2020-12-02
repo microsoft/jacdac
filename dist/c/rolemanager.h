@@ -4,6 +4,9 @@
 
 #define JD_SERVICE_CLASS_ROLE_MANAGER  0x119c3ad1
 
+/** Read-only bool (uint8_t). Indicates if all required roles have been allocated to devices. */
+#define JD_ROLE_MANAGER_REG_ALL_ROLES_ALLOCATED 0x181
+
 /** Argument: device_id uint64_t. Get the role corresponding to given device identifer. Returns empty string if unset. */
 #define JD_ROLE_MANAGER_CMD_GET_ROLE 0x80
 // Report: 

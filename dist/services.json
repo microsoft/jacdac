@@ -4639,6 +4639,21 @@
         "derived": "_base"
       },
       {
+        "kind": "ro",
+        "name": "all_roles_allocated",
+        "identifier": 385,
+        "description": "Indicates if all required roles have been allocated to devices.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "isFloat": false,
+            "type": "bool",
+            "storage": 1
+          }
+        ]
+      },
+      {
         "kind": "command",
         "name": "get_role",
         "identifier": 128,
@@ -4798,7 +4813,7 @@
         "pipeType": "list_required_roles"
       }
     ],
-    "source": "# Role Manager\n\n    identifier: 0x119c3ad1\n\nAssign roles to devices on JACDAC bus.\n\n\n## Commands\n\n    command get_role @ 0x80 {\n        device_id: u64\n    }\n    report {\n        device_id: u64\n        role: string\n    }\n\nGet the role corresponding to given device identifer. Returns empty string if unset.\n\n    command set_role @ 0x81 {\n        device_id: u64\n        role: string\n    }\n\nSet role. Can set to empty to remove role binding.\n\n    command clear_all_roles @ 0x84 {}\n\nRemove all role bindings.\n\n    command list_stored_roles @ 0x82 {\n        stored_roles: pipe\n    }\n    pipe report stored_roles {\n        device_id: u64\n        role: string\n    }\n\nReturn all roles stored internally.\n\n    command list_required_roles @ 0x83 {\n        required_roles: pipe\n    }\n    pipe report required_roles {\n        device_id: u64\n        service_class: u32\n        roles: string\n    }\n\nList all roles required by the current program. `device_id` is `0` if role is unbound.\n"
+    "source": "# Role Manager\n\n    identifier: 0x119c3ad1\n\nAssign roles to devices on JACDAC bus.\n\n## Registers\n\n    ro all_roles_allocated: bool @ 0x181\n\nIndicates if all required roles have been allocated to devices.\n\n## Commands\n\n    command get_role @ 0x80 {\n        device_id: u64\n    }\n    report {\n        device_id: u64\n        role: string\n    }\n\nGet the role corresponding to given device identifer. Returns empty string if unset.\n\n    command set_role @ 0x81 {\n        device_id: u64\n        role: string\n    }\n\nSet role. Can set to empty to remove role binding.\n\n    command clear_all_roles @ 0x84 {}\n\nRemove all role bindings.\n\n    command list_stored_roles @ 0x82 {\n        stored_roles: pipe\n    }\n    pipe report stored_roles {\n        device_id: u64\n        role: string\n    }\n\nReturn all roles stored internally.\n\n    command list_required_roles @ 0x83 {\n        required_roles: pipe\n    }\n    pipe report required_roles {\n        device_id: u64\n        service_class: u32\n        roles: string\n    }\n\nList all roles required by the current program. `device_id` is `0` if role is unbound.\n"
   },
   {
     "name": "Servo",

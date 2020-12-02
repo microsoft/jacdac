@@ -6,7 +6,7 @@ Assign roles to devices on JACDAC bus.
 
 ## Registers
 
-    ro all_roles_allocated: boolean @ 0x80
+    ro all_roles_allocated: bool @ 0x181
 
 Indicates if all required roles have been allocated to devices.
 

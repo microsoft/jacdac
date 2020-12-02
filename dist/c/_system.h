@@ -77,4 +77,7 @@ typedef struct jd_system_status_code {
 /** Constant ms uint32_t. Preferred default streaming interval for sensor in milliseconds. */
 #define JD_REG_STREAMING_PREFERRED_INTERVAL 0x102
 
+/** Emit notifying that the internal state of the service changed. */
+#define JD_EV_CHANGE 0x1
+
 #endif

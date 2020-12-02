@@ -103,3 +103,9 @@ add this report in frame along with the anounce packet.
     const streaming_preferred_interval: u32 ms @ 0x102
 
 Preferred default streaming interval for sensor in milliseconds.
+
+## Events
+
+    event change @ 0x01 { }
+
+Emit notifying that the internal state of the service changed.

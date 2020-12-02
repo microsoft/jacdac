@@ -67,6 +67,11 @@ export enum SystemReg {
     StreamingPreferredInterval = 0x102,
 }
 
+export enum SystemEvent {
+    /** Emit notifying that the internal state of the service changed. */
+    Change = 0x1,
+}
+
 // Service: Base service
 export enum BaseReg {
     // const [code, vendorCode] = unpack(buf, "HH")

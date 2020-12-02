@@ -68,6 +68,11 @@ namespace jacdac {
         StreamingPreferredInterval = 0x102,
     }
 
+    export const enum SystemEvent {
+        /** Emit notifying that the internal state of the service changed. */
+        Change = 0x1,
+    }
+
 }
 namespace jacdac {
     // Service: Base service

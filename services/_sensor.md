@@ -6,7 +6,7 @@ Base class for sensors.
 
 ## Registers
 
-    rw streaming_samples: u8 @ streaming_samples
+    rw internal streaming_samples: u8 @ streaming_samples
 
 Asks device to stream a given number of samples
 (clients will typically write `255` to this register every second or so, while streaming is required).
@@ -15,6 +15,6 @@ Asks device to stream a given number of samples
 
 Period between packets of data when streaming in milliseconds.
 
-    const streaming_preferred_interval?: u32 ms @ streaming_preferred_interval
+    const internal streaming_preferred_interval?: u32 ms @ streaming_preferred_interval
 
 Preferred default streaming interval for sensor in milliseconds.

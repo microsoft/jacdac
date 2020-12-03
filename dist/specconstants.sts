@@ -1227,6 +1227,16 @@ namespace jacdac {
         RoU32 = 0x191,
 
         /**
+         * Read-write int32_t. A read write i32 register.
+         */
+        RwI32 = 0x192,
+
+        /**
+         * Read-only int32_t. A read only i32 register.. Mirrors rw_i32.
+         */
+        RoI32 = 0x193,
+
+        /**
          * Read-write string (bytes). A read write string register.
          */
         RwString = 0x1a0,
@@ -1257,6 +1267,11 @@ namespace jacdac {
          * Argument: u32 uint32_t. An event raised when rw_u32 is modified
          */
         EU32 = 0x190,
+
+        /**
+         * Argument: i32 int32_t. An event raised when rw_i32 is modified
+         */
+        EI32 = 0x192,
     }
 
     export const enum ProtoTestCmd {
@@ -1269,6 +1284,11 @@ namespace jacdac {
          * Argument: u32 uint32_t. A command to set rw_u32. Returns the value.
          */
         CU32 = 0x81,
+
+        /**
+         * Argument: i32 int32_t. A command to set rw_i32. Returns the value.
+         */
+        CI32 = 0x82,
     }
 
 }

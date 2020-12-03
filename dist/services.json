@@ -4555,6 +4555,38 @@
       },
       {
         "kind": "rw",
+        "name": "rw_i32",
+        "identifier": 402,
+        "description": "A read write i32 register.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "isFloat": false,
+            "type": "i32",
+            "storage": -4,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "ro",
+        "name": "ro_i32",
+        "identifier": 403,
+        "description": "A read only i32 register.. Mirrors rw_i32.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "isFloat": false,
+            "type": "i32",
+            "storage": -4,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "rw",
         "name": "rw_string",
         "identifier": 416,
         "description": "A read write string register.",
@@ -4647,6 +4679,22 @@
         ]
       },
       {
+        "kind": "event",
+        "name": "e_i32",
+        "identifier": 402,
+        "description": "An event raised when rw_i32 is modified",
+        "fields": [
+          {
+            "name": "i32",
+            "unit": "",
+            "isFloat": false,
+            "type": "i32",
+            "storage": -4,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
         "kind": "command",
         "name": "c_bool",
         "identifier": 128,
@@ -4676,9 +4724,25 @@
             "isSimpleType": true
           }
         ]
+      },
+      {
+        "kind": "command",
+        "name": "c_i32",
+        "identifier": 130,
+        "description": "A command to set rw_i32. Returns the value.",
+        "fields": [
+          {
+            "name": "i32",
+            "unit": "",
+            "isFloat": false,
+            "type": "i32",
+            "storage": -4,
+            "isSimpleType": true
+          }
+        ]
       }
     ],
-    "source": "# Protocol Test\n\n    identifier: 0x16c7466a\n    camel: protoTest\n\nThis is test service to validate the protocol packet transmissions.\n\n### Test procedure\n\nFor each ``rw`` registers, set a random value ``x``\n  * read ``rw`` and check value is equal to ``x``\n  * read ``ro`` and check value is equal to ``x``\n  * listen to ``e`` event and check that data is equal to ``x``\n  * call ``c`` command with new random value ``y``\n  * read ``rw`` and check value is equal to ``y``\n\n## Registers\n\nEvery ``rw`` register has a corresponding ``ro`` regisrer\nand a corresponding ``set_...`` command to also set the value.\n\n    rw rw_bool : bool @ 0x181\n\nA read write bool register.\n\n    ro ro_bool : bool @ 0x182\n\nA read only bool register. Mirrors rw_bool.\n\n    rw rw_u32 : u32 @ 0x190\n\nA read write u32 register.\n\n    ro ro_u32 : u32 @ 0x191\n\nA read only u32 register.. Mirrors rw_u32.\n\n    rw rw_string : string @ 0x1a0\n\nA read write string register.\n\n    ro ro_string : string @ 0x1a1\n\nA read only string register. Mirrors rw_string.\n\n    rw rw_bytes : bytes @ 0x1b0\n\nA read write string register.\n\n    ro ro_bytes : bytes @ 0x1b1\n\nA read only string register. Mirrors ro_bytes.\n\n\nA read only u8/u16/u32 register.\n\n## Events\n\n    event e_bool @ 0x180 { \n        bool: bool \n    }\n\nAn event raised when rw_bool is modified\n\n    event e_u32 @ 0x190 { \n        u32: u32 \n    }\n\nAn event raised when rw_u32 is modified\n\n## Commands\n\n    command c_bool @ 0x80 {\n        bool: bool\n    }\n\nA command to set rw_bool. Returns the value.\n\n    command c_u32 @ 0x81 {\n        u32: u32\n    }\n\nA command to set rw_u32. Returns the value.\n"
+    "source": "# Protocol Test\n\n    identifier: 0x16c7466a\n    camel: protoTest\n\nThis is test service to validate the protocol packet transmissions.\n\n### Test procedure\n\nFor each ``rw`` registers, set a random value ``x``\n  * read ``rw`` and check value is equal to ``x``\n  * read ``ro`` and check value is equal to ``x``\n  * listen to ``e`` event and check that data is equal to ``x``\n  * call ``c`` command with new random value ``y``\n  * read ``rw`` and check value is equal to ``y``\n\n## Registers\n\nEvery ``rw`` register has a corresponding ``ro`` regisrer\nand a corresponding ``set_...`` command to also set the value.\n\n    rw rw_bool : bool @ 0x181\n\nA read write bool register.\n\n    ro ro_bool : bool @ 0x182\n\nA read only bool register. Mirrors rw_bool.\n\n    rw rw_u32 : u32 @ 0x190\n\nA read write u32 register.\n\n    ro ro_u32 : u32 @ 0x191\n\nA read only u32 register.. Mirrors rw_u32.\n\n    rw rw_i32 : i32 @ 0x192\n\nA read write i32 register.\n\n    ro ro_i32 : i32 @ 0x193\n\nA read only i32 register.. Mirrors rw_i32.\n\n    rw rw_string : string @ 0x1a0\n\nA read write string register.\n\n    ro ro_string : string @ 0x1a1\n\nA read only string register. Mirrors rw_string.\n\n    rw rw_bytes : bytes @ 0x1b0\n\nA read write string register.\n\n    ro ro_bytes : bytes @ 0x1b1\n\nA read only string register. Mirrors ro_bytes.\n\n\nA read only u8/u16/u32 register.\n\n## Events\n\n    event e_bool @ 0x180 { \n        bool: bool \n    }\n\nAn event raised when rw_bool is modified\n\n    event e_u32 @ 0x190 { \n        u32: u32 \n    }\n\nAn event raised when rw_u32 is modified\n\n    event e_i32 @ 0x192 { \n        i32: i32 \n    }\n\nAn event raised when rw_i32 is modified\n\n## Commands\n\n    command c_bool @ 0x80 {\n        bool: bool\n    }\n\nA command to set rw_bool. Returns the value.\n\n    command c_u32 @ 0x81 {\n        u32: u32\n    }\n\nA command to set rw_u32. Returns the value.\n\n    command c_i32 @ 0x82 {\n        i32: i32\n    }\n\nA command to set rw_i32. Returns the value.\n"
   },
   {
     "name": "PWM Light",

@@ -25,6 +25,16 @@
 #define JD_PROTO_TEST_REG_RO_U32 0x191
 
 /**
+ * Read-write int32_t. A read write i32 register.
+ */
+#define JD_PROTO_TEST_REG_RW_I32 0x192
+
+/**
+ * Read-only int32_t. A read only i32 register.. Mirrors rw_i32.
+ */
+#define JD_PROTO_TEST_REG_RO_I32 0x193
+
+/**
  * Read-write string (bytes). A read write string register.
  */
 #define JD_PROTO_TEST_REG_RW_STRING 0x1a0
@@ -55,6 +65,11 @@
 #define JD_PROTO_TEST_EV_E_U32 0x190
 
 /**
+ * Argument: i32 int32_t. An event raised when rw_i32 is modified
+ */
+#define JD_PROTO_TEST_EV_E_I32 0x192
+
+/**
  * Argument: bool bool (uint8_t). A command to set rw_bool. Returns the value.
  */
 #define JD_PROTO_TEST_CMD_C_BOOL 0x80
@@ -63,5 +78,10 @@
  * Argument: u32 uint32_t. A command to set rw_u32. Returns the value.
  */
 #define JD_PROTO_TEST_CMD_C_U32 0x81
+
+/**
+ * Argument: i32 int32_t. A command to set rw_i32. Returns the value.
+ */
+#define JD_PROTO_TEST_CMD_C_I32 0x82
 
 #endif

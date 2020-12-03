@@ -56,4 +56,9 @@ typedef struct jd_settings_listed_entry {
 } jd_settings_listed_entry_t;
 
 
+/**
+ * No args. Clears all keys.
+ */
+#define JD_SETTINGS_CMD_CLEAR 0x85
+
 #endif

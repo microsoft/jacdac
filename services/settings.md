@@ -55,3 +55,7 @@ Return keys of all settings.
     }
 
 Return keys and values of all settings.
+
+    command clear @ 0x85 { }
+
+Clears all keys.

@@ -1379,6 +1379,11 @@ namespace jacdac {
          * Argument: results pipe (bytes). Return keys and values of all settings.
          */
         List = 0x83,
+
+        /**
+         * No args. Clears all keys.
+         */
+        Clear = 0x85,
     }
 
 

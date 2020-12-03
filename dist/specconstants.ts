@@ -246,7 +246,7 @@ export enum SensorAggregatorReg {
     /**
      * Read-write uint32_t. When set to `N`, will stream `N` samples as `current_sample` reading.
      */
-    StreamSamples = 0x81,
+    StreamingSamples = 0x81,
 
     /**
      * Read-only bytes. Last collected sample.

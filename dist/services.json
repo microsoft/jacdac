@@ -812,7 +812,7 @@
       },
       {
         "kind": "rw",
-        "name": "stream_samples",
+        "name": "streaming_samples",
         "identifier": 129,
         "description": "When set to `N`, will stream `N` samples as `current_sample` reading.",
         "fields": [
@@ -844,7 +844,7 @@
         "identifierName": "reading"
       }
     ],
-    "source": "# Sensor Aggregator\n\n    identifier: 0x1d90e1c5\n\nAggregate data from multiple sensors into a single stream\n(often used as input to machine learning models on the same device, see model runner service).\n\n## Registers\n\n    enum SampleType : u8 {\n        U8 = 0x08\n        I8 = 0x88\n        U16 = 0x10\n        I16 = 0x90\n        U32 = 0x20\n        I32 = 0xA0\n    }\n    rw inputs @ 0x80 {\n        sampling_interval: u16 ms\n        samples_in_window: u16\n        reserved: u32\n    repeats:\n        device_id: u64\n        service_class: u32\n        service_num: u8\n        sample_size: u8 B\n        sample_type: SampleType\n        sample_shift: i8\n    }\n\nSet automatic input collection.\nThese settings are stored in flash.\n\n    ro num_samples: u32 @ 0x180\n\nNumber of input samples collected so far.\n\n    ro sample_size: u8 B @ 0x181\n\nSize of a single sample.\n\n    rw stream_samples: u32 @ 0x81\n\nWhen set to `N`, will stream `N` samples as `current_sample` reading.\n\n    ro current_sample: bytes @ reading\n\nLast collected sample.\n"
+    "source": "# Sensor Aggregator\n\n    identifier: 0x1d90e1c5\n\nAggregate data from multiple sensors into a single stream\n(often used as input to machine learning models on the same device, see model runner service).\n\n## Registers\n\n    enum SampleType : u8 {\n        U8 = 0x08\n        I8 = 0x88\n        U16 = 0x10\n        I16 = 0x90\n        U32 = 0x20\n        I32 = 0xA0\n    }\n    rw inputs @ 0x80 {\n        sampling_interval: u16 ms\n        samples_in_window: u16\n        reserved: u32\n    repeats:\n        device_id: u64\n        service_class: u32\n        service_num: u8\n        sample_size: u8 B\n        sample_type: SampleType\n        sample_shift: i8\n    }\n\nSet automatic input collection.\nThese settings are stored in flash.\n\n    ro num_samples: u32 @ 0x180\n\nNumber of input samples collected so far.\n\n    ro sample_size: u8 B @ 0x181\n\nSize of a single sample.\n\n    rw streaming_samples: u32 @ 0x81\n\nWhen set to `N`, will stream `N` samples as `current_sample` reading.\n\n    ro current_sample: bytes @ reading\n\nLast collected sample.\n"
   },
   {
     "name": "Bootloader",

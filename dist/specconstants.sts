@@ -98,7 +98,7 @@ namespace jacdac {
         /**
          * Emit notifying that the internal state of the service changed.
          */
-        Change = 0x1,
+        Change = 0x2,
     }
 
 }
@@ -1318,7 +1318,7 @@ namespace jacdac {
         /**
          * Emit notifying that the internal state of the service changed.
          */
-        Change = 0x1,
+        Change = 0x2,
     }
 
 }

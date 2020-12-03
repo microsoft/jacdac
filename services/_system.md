@@ -106,6 +106,11 @@ Preferred default streaming interval for sensor in milliseconds.
 
 ## Events
 
-    event change @ 0x01 { }
+Command codes are subdivided as follows:
+* Commands `0x000-0x07f` - common to all services
+* Commands `0x080-0xeff` - defined per-service
+* Commands `0xf00-0xfff` - reserved for implementation
+
+    event change @ 0x02 { }
 
 Emit notifying that the internal state of the service changed.

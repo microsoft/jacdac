@@ -97,7 +97,7 @@ export enum SystemEvent {
     /**
      * Emit notifying that the internal state of the service changed.
      */
-    Change = 0x1,
+    Change = 0x2,
 }
 
 // Service: Base service
@@ -1265,7 +1265,7 @@ export enum RoleManagerEvent {
     /**
      * Emit notifying that the internal state of the service changed.
      */
-    Change = 0x1,
+    Change = 0x2,
 }
 
 // Service: Servo

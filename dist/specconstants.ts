@@ -22,7 +22,7 @@ export enum SystemCmd {
      * Event from sensor or a broadcast service.
      *
      * ```
-     * const [eventId, eventArgument] = unpack(buf, "LL")
+     * const [eventId, eventArgument] = pkt.unpack(buf, "LL")
      * ```
      */
     Event = 0x1,
@@ -82,7 +82,7 @@ export enum SystemReg {
      * add this report in frame along with the anounce packet.
      *
      * ```
-     * const [code, vendorCode] = unpack(buf, "HH")
+     * const [code, vendorCode] = pkt.unpack(buf, "HH")
      * ```
      */
     StatusCode = 0x7,
@@ -109,7 +109,7 @@ export enum BaseReg {
      * add this report in frame along with the anounce packet.
      *
      * ```
-     * const [code, vendorCode] = unpack(buf, "HH")
+     * const [code, vendorCode] = pkt.unpack(buf, "HH")
      * ```
      */
     StatusCode = 0x7,
@@ -141,7 +141,7 @@ export enum AccelReg {
      * Indicates the current forces acting on accelerometer.
      *
      * ```
-     * const [x, y, z] = unpack(buf, "hhh")
+     * const [x, y, z] = pkt.unpack(buf, "hhh")
      * ```
      */
     Forces = 0x101,
@@ -227,7 +227,7 @@ export enum SensorAggregatorReg {
      * These settings are stored in flash.
      *
      * ```
-     * const [samplingInterval, samplesInWindow, reserved, serviceClass, serviceNum, sampleSize, sampleType, sampleShift] = unpack(buf, "HHL8xLBBBb")
+     * const [samplingInterval, samplesInWindow, reserved, serviceClass, serviceNum, sampleSize, sampleType, sampleShift] = pkt.unpack(buf, "HHL8xLBBBb")
      * const deviceId = buf.slice(8, 16)
      * ```
      */
@@ -275,7 +275,7 @@ export enum BootloaderCmd {
     /**
      * report Info
      * ```
-     * const [serviceClass, pageSize, flashableSize, firmwareIdentifier] = unpack(buf, "LLLL")
+     * const [serviceClass, pageSize, flashableSize, firmwareIdentifier] = pkt.unpack(buf, "LLLL")
      * ```
      */
 
@@ -291,7 +291,7 @@ export enum BootloaderCmd {
      * Only the last chunk causes writing to flash and elicits response.
      *
      * ```
-     * const [pageAddress, pageOffset, chunkNo, chunkMax, sessionId, reserved0, reserved1, reserved2, reserved3] = unpack(buf, "LHBBLLLLL")
+     * const [pageAddress, pageOffset, chunkNo, chunkMax, sessionId, reserved0, reserved1, reserved2, reserved3] = pkt.unpack(buf, "LHBBLLLLL")
      * const pageData = buf.slice(28)
      * ```
      */
@@ -300,7 +300,7 @@ export enum BootloaderCmd {
     /**
      * report PageData
      * ```
-     * const [sessionId, pageError, pageAddress] = unpack(buf, "LLL")
+     * const [sessionId, pageError, pageAddress] = pkt.unpack(buf, "LLL")
      * ```
      */
 }
@@ -353,7 +353,7 @@ export enum BuzzerCmd {
      * to send `P = 1000000 / F` and `D = P * V / 2`.
      *
      * ```
-     * const [period, duty, duration] = unpack(buf, "HHH")
+     * const [period, duty, duration] = pkt.unpack(buf, "HHH")
      * ```
      */
     PlayTone = 0x80,
@@ -366,7 +366,7 @@ export enum CODALMessageBusCmd {
      * Sends a new event on the message bus.
      *
      * ```
-     * const [id, event] = unpack(buf, "HH")
+     * const [id, event] = pkt.unpack(buf, "HH")
      * ```
      */
     Send = 0x80,
@@ -393,7 +393,7 @@ export enum CtrlCmd {
     /**
      * report Services
      * ```
-     * const [restartCounter, flags, reserved, serviceClass] = unpack(buf, "BBHL")
+     * const [restartCounter, flags, reserved, serviceClass] = pkt.unpack(buf, "BBHL")
      * ```
      */
 
@@ -495,7 +495,7 @@ export enum GamepadCmd {
     /**
      * report Announce
      * ```
-     * const [flags, numPlayers, buttonPresent] = unpack(buf, "BBH")
+     * const [flags, numPlayers, buttonPresent] = pkt.unpack(buf, "BBH")
      * ```
      */
 }
@@ -506,7 +506,7 @@ export enum GamepadReg {
      * `pressure` should be `0xff` for digital buttons, and proportional for analog ones.
      *
      * ```
-     * const [button, playerIndex, pressure] = unpack(buf, "HBB")
+     * const [button, playerIndex, pressure] = pkt.unpack(buf, "HBB")
      * ```
      */
     Buttons = 0x101,
@@ -517,7 +517,7 @@ export enum GamepadEvent {
      * Emitted when button goes from inactive to active.
      *
      * ```
-     * const [button, playerIndex] = unpack(buf, "HH")
+     * const [button, playerIndex] = pkt.unpack(buf, "HH")
      * ```
      */
     Down = 0x1,
@@ -526,7 +526,7 @@ export enum GamepadEvent {
      * Emitted when button goes from active to inactive.
      *
      * ```
-     * const [button, playerIndex] = unpack(buf, "HH")
+     * const [button, playerIndex] = pkt.unpack(buf, "HH")
      * ```
      */
     Up = 0x2,
@@ -601,7 +601,7 @@ export enum IotHubCmd {
      * Respond to a direct method call (`request_id` comes from `subscribe_method` pipe).
      *
      * ```
-     * const [status] = unpack(buf, "L")
+     * const [status] = pkt.unpack(buf, "L")
      * const requestId = string0(buf, 4, 0)
      * ```
      */
@@ -723,7 +723,7 @@ export enum KeyboardCmd {
      * Presses a key or a sequence of keys down.
      *
      * ```
-     * const [selector, modifiers, action] = unpack(buf, "HBB")
+     * const [selector, modifiers, action] = pkt.unpack(buf, "HBB")
      * ```
      */
     Key = 0x80,
@@ -885,7 +885,7 @@ export enum MicrophoneCmd {
      * Samples are sent as `i16`.
      *
      * ```
-     * const [numSamples] = unpack(buf, "12xL")
+     * const [numSamples] = pkt.unpack(buf, "12xL")
      * const samples = buf.slice(0, 12)
      * ```
      */
@@ -1028,7 +1028,7 @@ export enum MouseCmd {
      * A ``DoubleClick`` is two clicks with ``150ms`` gap between them (that is, ``100ms`` first click, ``150ms`` gap, ``100ms`` second click).
      *
      * ```
-     * const [buttons, event] = unpack(buf, "HB")
+     * const [buttons, event] = pkt.unpack(buf, "HB")
      * ```
      */
     SetButton = 0x80,
@@ -1038,7 +1038,7 @@ export enum MouseCmd {
      * If the time is positive, it specifies how long to make the move.
      *
      * ```
-     * const [dx, dy, time] = unpack(buf, "hhH")
+     * const [dx, dy, time] = pkt.unpack(buf, "hhH")
      * ```
      */
     Move = 0x81,
@@ -1048,7 +1048,7 @@ export enum MouseCmd {
      * If the time is positive, it specifies how long to make the move.
      *
      * ```
-     * const [dy, time] = unpack(buf, "hH")
+     * const [dy, time] = pkt.unpack(buf, "hH")
      * ```
      */
     Wheel = 0x82,
@@ -1176,7 +1176,7 @@ export enum PwmLightReg {
      * Step with `duration == 0` is treated as an end marker.
      *
      * ```
-     * const [startIntensity, duration] = unpack(buf, "HH")
+     * const [startIntensity, duration] = pkt.unpack(buf, "HH")
      * ```
      */
     Steps = 0x82,
@@ -1254,7 +1254,7 @@ export enum RoleManagerCmd {
 /**
  * pipe_report RequiredRoles
  * ```
- * const [serviceClass] = unpack(buf, "8xL")
+ * const [serviceClass] = pkt.unpack(buf, "8xL")
  * const deviceId = buf.slice(0, 8)
  * const roles = buf.slice(12).toString()
  * ```
@@ -1370,7 +1370,7 @@ export enum TCPPipeCmd {
      * Connection is closed by closing the pipe.
      *
      * ```
-     * const [tcpPort] = unpack(buf, "H")
+     * const [tcpPort] = pkt.unpack(buf, "H")
      * const hostname = buf.slice(2).toString()
      * ```
      */
@@ -1434,7 +1434,7 @@ export enum WifiCmd {
 /**
  * pipe_report Results
  * ```
- * const [flags, reserved, rssi, channel] = unpack(buf, "LLbB")
+ * const [flags, reserved, rssi, channel] = pkt.unpack(buf, "LLbB")
  * const bssid = buf.slice(10, 16)
  * const ssid = buf.slice(16).toString()
  * ```

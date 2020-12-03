@@ -251,6 +251,11 @@ declare namespace jdspec {
         packed?: boolean;
 
         /**
+         * If applicable, the pack/unpack string to decode the data
+         */
+        packFormat?: string;
+
+        /**
          * If present and true, the handling of given packet is optional and can be left out by implementation.
          */
         optional?: boolean;

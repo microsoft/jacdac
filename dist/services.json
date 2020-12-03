@@ -4448,6 +4448,239 @@
     "source": "# Power\n\n    identifier: 0x1fa4c95a\n\nA power-provider service.\n\n## Registers\n\n    rw enabled = 1: bool @ intensity\n\nTurn the power to the bus on/off.\n\n    rw max_power = 500: u16 mA {typical_max = 500} @ max_power\n\nLimit the power provided by the service. The actual maximum limit will depend on hardware.\nThis field may be read-only in some implementations - you should read it back after setting.\n\n    ro overload: bool @ 0x181\n\nIndicates whether the power has been shut down due to overdraw.\n\n    ro current_draw: u16 mA @ reading\n\nPresent current draw from the bus.\n\n    ro battery_voltage: u16 mV {typical_min = 4500, typical_max = 5500} @ 0x180\n\nVoltage on input.\n\n    ro battery_charge?: u16 / @ 0x182\n\nFraction of charge in the battery.\n\n    const battery_capacity?: u32 mWh @ 0x183\n\nEnergy that can be delivered to the bus when battery is fully charged.\nThis excludes conversion overheads if any.\n\n    rw keep_on_pulse_duration = 600: u16 ms @ 0x80\n    rw keep_on_pulse_period = 20000: u16 ms @ 0x81\n\nMany USB power packs need current to be drawn from time to time to prevent shutdown.\nThis regulates how often and for how long such current is drawn.\nTypically a 1/8W 22 ohm resistor is used as load. This limits the duty cycle to 10%.\n"
   },
   {
+    "name": "Protocol Test",
+    "status": "experimental",
+    "shortId": "prototest",
+    "camelName": "protoTest",
+    "shortName": "protoTest",
+    "extends": [
+      "_base"
+    ],
+    "notes": {
+      "short": "This is test service to validate the protocol packet transmissions.",
+      "long": "### Test procedure\n\nFor each ``rw`` registers, set a random value ``x``\n  * read ``rw`` and check value is equal to ``x``\n  * read ``ro`` and check value is equal to ``x``\n  * listen to ``e`` event and check that data is equal to ``x``\n  * call ``c`` command with new random value ``y``\n  * read ``rw`` and check value is equal to ``y``",
+      "registers": "Every ``rw`` register has a corresponding ``ro`` regisrer\nand a corresponding ``set_...`` command to also set the value."
+    },
+    "classIdentifier": 382158442,
+    "enums": {},
+    "packets": [
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "isFloat": false,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "optional": true,
+        "identifierName": "status_code",
+        "derived": "_base"
+      },
+      {
+        "kind": "rw",
+        "name": "rw_bool",
+        "identifier": 385,
+        "description": "A read write bool register.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "isFloat": false,
+            "type": "bool",
+            "storage": 1
+          }
+        ]
+      },
+      {
+        "kind": "ro",
+        "name": "ro_bool",
+        "identifier": 386,
+        "description": "A read only bool register. Mirrors rw_bool.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "isFloat": false,
+            "type": "bool",
+            "storage": 1
+          }
+        ]
+      },
+      {
+        "kind": "rw",
+        "name": "rw_u32",
+        "identifier": 400,
+        "description": "A read write u32 register.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "isFloat": false,
+            "type": "u32",
+            "storage": 4,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "ro",
+        "name": "ro_u32",
+        "identifier": 401,
+        "description": "A read only u32 register.. Mirrors rw_u32.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "isFloat": false,
+            "type": "u32",
+            "storage": 4,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "rw",
+        "name": "rw_string",
+        "identifier": 416,
+        "description": "A read write string register.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ]
+      },
+      {
+        "kind": "ro",
+        "name": "ro_string",
+        "identifier": 417,
+        "description": "A read only string register. Mirrors rw_string.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "isFloat": false,
+            "type": "string",
+            "storage": 0
+          }
+        ]
+      },
+      {
+        "kind": "rw",
+        "name": "rw_bytes",
+        "identifier": 432,
+        "description": "A read write string register.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "isFloat": false,
+            "type": "bytes",
+            "storage": 0,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "ro",
+        "name": "ro_bytes",
+        "identifier": 433,
+        "description": "A read only string register. Mirrors ro_bytes.\n\n\nA read only u8/u16/u32 register.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "isFloat": false,
+            "type": "bytes",
+            "storage": 0,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "event",
+        "name": "e_bool",
+        "identifier": 384,
+        "description": "An event raised when rw_bool is modified",
+        "fields": [
+          {
+            "name": "bool",
+            "unit": "",
+            "isFloat": false,
+            "type": "bool",
+            "storage": 1
+          }
+        ]
+      },
+      {
+        "kind": "event",
+        "name": "e_u32",
+        "identifier": 400,
+        "description": "An event raised when rw_u32 is modified",
+        "fields": [
+          {
+            "name": "u32",
+            "unit": "",
+            "isFloat": false,
+            "type": "u32",
+            "storage": 4,
+            "isSimpleType": true
+          }
+        ]
+      },
+      {
+        "kind": "command",
+        "name": "c_bool",
+        "identifier": 128,
+        "description": "A command to set rw_bool. Returns the value.",
+        "fields": [
+          {
+            "name": "bool",
+            "unit": "",
+            "isFloat": false,
+            "type": "bool",
+            "storage": 1
+          }
+        ]
+      },
+      {
+        "kind": "command",
+        "name": "c_u32",
+        "identifier": 129,
+        "description": "A command to set rw_u32. Returns the value.",
+        "fields": [
+          {
+            "name": "u32",
+            "unit": "",
+            "isFloat": false,
+            "type": "u32",
+            "storage": 4,
+            "isSimpleType": true
+          }
+        ]
+      }
+    ],
+    "source": "# Protocol Test\n\n    identifier: 0x16c7466a\n    camel: protoTest\n\nThis is test service to validate the protocol packet transmissions.\n\n### Test procedure\n\nFor each ``rw`` registers, set a random value ``x``\n  * read ``rw`` and check value is equal to ``x``\n  * read ``ro`` and check value is equal to ``x``\n  * listen to ``e`` event and check that data is equal to ``x``\n  * call ``c`` command with new random value ``y``\n  * read ``rw`` and check value is equal to ``y``\n\n## Registers\n\nEvery ``rw`` register has a corresponding ``ro`` regisrer\nand a corresponding ``set_...`` command to also set the value.\n\n    rw rw_bool : bool @ 0x181\n\nA read write bool register.\n\n    ro ro_bool : bool @ 0x182\n\nA read only bool register. Mirrors rw_bool.\n\n    rw rw_u32 : u32 @ 0x190\n\nA read write u32 register.\n\n    ro ro_u32 : u32 @ 0x191\n\nA read only u32 register.. Mirrors rw_u32.\n\n    rw rw_string : string @ 0x1a0\n\nA read write string register.\n\n    ro ro_string : string @ 0x1a1\n\nA read only string register. Mirrors rw_string.\n\n    rw rw_bytes : bytes @ 0x1b0\n\nA read write string register.\n\n    ro ro_bytes : bytes @ 0x1b1\n\nA read only string register. Mirrors ro_bytes.\n\n\nA read only u8/u16/u32 register.\n\n## Events\n\n    event e_bool @ 0x180 { \n        bool: bool \n    }\n\nAn event raised when rw_bool is modified\n\n    event e_u32 @ 0x190 { \n        u32: u32 \n    }\n\nAn event raised when rw_u32 is modified\n\n## Commands\n\n    command c_bool @ 0x80 {\n        bool: bool\n    }\n\nA command to set rw_bool. Returns the value.\n\n    command c_u32 @ 0x81 {\n        u32: u32\n    }\n\nA command to set rw_u32. Returns the value.\n"
+  },
+  {
     "name": "PWM Light",
     "status": "experimental",
     "shortId": "pwmlight",

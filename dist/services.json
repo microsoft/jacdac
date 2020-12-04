@@ -77,7 +77,7 @@
             "isSimpleType": true
           }
         ],
-        "packFormat": "L L"
+        "packFormat": "L,L"
       },
       {
         "kind": "command",
@@ -258,7 +258,7 @@
             "isSimpleType": true
           }
         ],
-        "packFormat": "H H"
+        "packFormat": "H,H"
       },
       {
         "kind": "const",
@@ -325,7 +325,7 @@
         ],
         "optional": true,
         "identifierName": "status_code",
-        "packFormat": "H H"
+        "packFormat": "H,H"
       }
     ],
     "source": "# Base service\n\n    camel: base\n\nBase class for all services.\n\n## Registers\n\n    ro status_code? @ status_code {\n        code: u16\n        vendor_code: u16\n    }\n\nReports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.\n\n"
@@ -370,7 +370,7 @@
         ],
         "optional": true,
         "identifierName": "status_code",
-        "packFormat": "H H",
+        "packFormat": "H,H",
         "derived": "_base"
       },
       {
@@ -478,7 +478,7 @@
         ],
         "optional": true,
         "identifierName": "status_code",
-        "packFormat": "H H",
+        "packFormat": "H,H",
         "derived": "_base"
       },
       {
@@ -576,7 +576,7 @@
           }
         ],
         "identifierName": "reading",
-        "packFormat": "h h h"
+        "packFormat": "h,h,h"
       },
       {
         "kind": "event",
@@ -718,7 +718,7 @@
         ],
         "optional": true,
         "identifierName": "status_code",
-        "packFormat": "H H",
+        "packFormat": "H,H",
         "derived": "_base"
       },
       {
@@ -800,7 +800,7 @@
             "isSimpleType": true
           }
         ],
-        "packFormat": "H H L b8x L B B B b"
+        "packFormat": "H,H,L,b8x,L,B,B,B,b"
       },
       {
         "kind": "ro",
@@ -926,7 +926,7 @@
         ],
         "optional": true,
         "identifierName": "status_code",
-        "packFormat": "H H",
+        "packFormat": "H,H",
         "derived": "_base"
       },
       {
@@ -978,7 +978,7 @@
           }
         ],
         "secondary": true,
-        "packFormat": "L L L L"
+        "packFormat": "L,L,L,L"
       },
       {
         "kind": "command",
@@ -1105,7 +1105,7 @@
           }
         ],
         "hasReport": true,
-        "packFormat": "L H B B L L L L L b"
+        "packFormat": "L,H,B,B,L,L,L,L,L,b"
       },
       {
         "kind": "report",
@@ -1138,7 +1138,7 @@
           }
         ],
         "secondary": true,
-        "packFormat": "L L L"
+        "packFormat": "L,L,L"
       }
     ],
     "source": "# Bootloader\n\n    identifier: 0x1ffa9948\n\nAllows flashing (reprogramming) devices over JACDAC.\n\n## Commands\n\n    command info @ announce { }\n    report {\n        service_class: u32\n        page_size: u32 B\n        flashable_size: u32 B\n        firmware_identifier: u32\n    }\n\nThe `service_class` is always `0x1ffa9948`. The `firmware_identifier` identifies the kind of firmware\nthat \"fits\" this device.\n\n    command set_session @ 0x81 {\n        session_id: u32\n    }\n    report {\n        session_id: u32\n    }\n\nThe flashing host should generate a random id, and use this command to set it.\n\n    enum Error : u32 {\n        NoError = 0\n        PacketTooSmall = 1\n        OutOfFlashableRange = 2\n        InvalidPageOffset = 3\n        NotPageAligned = 4\n    }\n    command page_data @ 0x80 {\n        page_address: u32\n        page_offset: u16\n        chunk_no: u8\n        chunk_max: u8\n        session_id: u32\n        reserved0: u32\n        reserved1: u32\n        reserved2: u32\n        reserved3: u32\n        page_data: bytes {maxBytes = 208}\n    }\n    report {\n        session_id: u32\n        page_error: Error\n        page_address: u32\n    }\n\nUse to send flashing data. A physical page is split into `chunk_max + 1` chunks, where `chunk_no = 0 ... chunk_max`.\nEach chunk is stored at `page_address + page_offset`. `page_address` has to be equal in all chunks,\nand is included in response.\nOnly the last chunk causes writing to flash and elicits response.\n\nErrors not listed are also possible. Errors larger than `0xffff` indicate de-synchronization on chunk numbers.\n"
@@ -1184,7 +1184,7 @@
         ],
         "optional": true,
         "identifierName": "status_code",
-        "packFormat": "H H",
+        "packFormat": "H,H",
         "derived": "_base"
       },
       {
@@ -1338,7 +1338,7 @@
         ],
         "optional": true,
         "identifierName": "status_code",
-        "packFormat": "H H",
+        "packFormat": "H,H",
         "derived": "_base"
       },
       {
@@ -1392,7 +1392,7 @@
             "isSimpleType": true
           }
         ],
-        "packFormat": "H H H"
+        "packFormat": "H,H,H"
       }
     ],
     "source": "# Buzzer\n\n    identifier: 0x1b57b1d7\n    camel: buzzer\n\nA simple buzzer.\n\n## Registers\n\n    rw volume = 255: u8 / @ intensity\n\nThe volume (duty cycle) of the buzzer.\n\n## Commands\n\n    command play_tone @ 0x80 {\n        period: u16 us\n        duty: u16 us\n        duration: u16 ms\n    }\n\nPlay a PWM tone with given period and duty for given duration.\nThe duty is scaled down with `volume` register.\nTo play tone at frequency `F` Hz and volume `V` (in `0..1`) you will want\nto send `P = 1000000 / F` and `D = P * V / 2`.\n"
@@ -1437,7 +1437,7 @@
         ],
         "optional": true,
         "identifierName": "status_code",
-        "packFormat": "H H",
+        "packFormat": "H,H",
         "derived": "_base"
       },
       {
@@ -1463,7 +1463,7 @@
             "isSimpleType": true
           }
         ],
-        "packFormat": "H H"
+        "packFormat": "H,H"
       }
     ],
     "source": "# CODAL Message Bus\n\n    identifier: 0x16ad7cd5\n    \nA service that allows passing events through the [CODAL Message Bus](https://lancaster-university.github.io/microbit-docs/ubit/messageBus/)\n* ``id`` is a unique identifier that identifies a component in the device. Use ``0`` to address all sources. The value of other identifiers is typically hardware dependent.\n* ``event`` is an identifier that determines the event type. Use ``0`` as a wildcard.\n\n## Commands\n\n    command send @ 0x80 {\n        id: u16\n        event: u16\n    }\n    \nSends a new event on the message bus.\n"
@@ -1517,7 +1517,7 @@
         ],
         "optional": true,
         "identifierName": "status_code",
-        "packFormat": "H H",
+        "packFormat": "H,H",
         "derived": "_base"
       },
       {
@@ -1569,7 +1569,7 @@
           }
         ],
         "secondary": true,
-        "packFormat": "B B H L"
+        "packFormat": "B,B,H,L"
       },
       {
         "kind": "command",
@@ -1782,7 +1782,7 @@
         ],
         "optional": true,
         "identifierName": "status_code",
-        "packFormat": "H H",
+        "packFormat": "H,H",
         "derived": "_base"
       },
       {
@@ -1945,7 +1945,7 @@
         ],
         "optional": true,
         "identifierName": "status_code",
-        "packFormat": "H H",
+        "packFormat": "H,H",
         "derived": "_base"
       },
       {
@@ -2054,7 +2054,7 @@
           }
         ],
         "secondary": true,
-        "packFormat": "B B H"
+        "packFormat": "B,B,H"
       },
       {
         "kind": "ro",
@@ -2089,7 +2089,7 @@
           }
         ],
         "identifierName": "reading",
-        "packFormat": "H B B"
+        "packFormat": "H,B,B"
       },
       {
         "kind": "event",
@@ -2113,7 +2113,7 @@
             "isSimpleType": true
           }
         ],
-        "packFormat": "H H"
+        "packFormat": "H,H"
       },
       {
         "kind": "event",
@@ -2137,7 +2137,7 @@
             "isSimpleType": true
           }
         ],
-        "packFormat": "H H"
+        "packFormat": "H,H"
       }
     ],
     "source": "# Gamepad\n\n    identifier: 0x1deaa06e\n    extends: _sensor\n\nA gamepad with direction and action buttons for 1 or more players.\n\n## Commands\n\n    enum Button : u16 {\n        Left = 1\n        Up = 2\n        Right = 3\n        Down = 4\n        A = 5\n        B = 6\n        Menu = 7\n        MenuAlt = 8\n        Reset = 9\n        Exit = 10\n    }\n    command announce @ announce {}\n    report {\n        flags: u8\n        num_players: u8 {typical_max = 4}\n    repeats:\n        button_present: Button\n    }\n\nIndicates number of players supported and which buttons are present on the controller.\n\n## Registers\n\n    ro buttons @ reading {\n    repeats:\n        button: Button\n        player_index: u8\n        pressure: u8 /\n    }\n\nIndicates which buttons are currently active (pressed).\n`pressure` should be `0xff` for digital buttons, and proportional for analog ones.\n\n## Events\n\n    event down @ 0x01 {\n        button: Button\n        player_index: u16\n    }\n\nEmitted when button goes from inactive to active.\n\n    event up @ 0x02 {\n        button: Button\n        player_index: u16\n    }\n\nEmitted when button goes from active to inactive.\n"
@@ -2184,7 +2184,7 @@
         ],
         "optional": true,
         "identifierName": "status_code",
-        "packFormat": "H H",
+        "packFormat": "H,H",
         "derived": "_base"
       },
       {
@@ -2313,7 +2313,7 @@
         ],
         "optional": true,
         "identifierName": "status_code",
-        "packFormat": "H H",
+        "packFormat": "H,H",
         "derived": "_base"
       },
       {
@@ -2360,7 +2360,7 @@
           }
         ],
         "hasReport": true,
-        "packFormat": "z z z"
+        "packFormat": "z,z,z"
       },
       {
         "kind": "report",
@@ -2438,7 +2438,7 @@
           }
         ],
         "pipeType": "send_msg_ext",
-        "packFormat": "z z"
+        "packFormat": "z,z"
       },
       {
         "kind": "command",
@@ -2480,7 +2480,7 @@
           }
         ],
         "pipeType": "subscribe",
-        "packFormat": "z z"
+        "packFormat": "z,z"
       },
       {
         "kind": "pipe_report",
@@ -2697,7 +2697,7 @@
           }
         ],
         "pipeType": "subscribe_method",
-        "packFormat": "z z"
+        "packFormat": "z,z"
       },
       {
         "kind": "command",
@@ -2722,7 +2722,7 @@
           }
         ],
         "hasReport": true,
-        "packFormat": "L z"
+        "packFormat": "L,z"
       },
       {
         "kind": "report",
@@ -2877,7 +2877,7 @@
             "storage": 0
           }
         ],
-        "packFormat": "z z z"
+        "packFormat": "z,z,z"
       }
     ],
     "source": "# Azure IoT Hub\n\n    identifier: 0x19ed364c\n    camel: iotHub\n\nSend messages, receive commands, and work with device twins in Azure IoT Hub.\n\n## Commands\n\n    command connect @ 0x80 {}\n\nTry connecting using currently set `connection_string`.\nThe service normally preiodically tries to connect automatically.\n\n    command disconnect @ 0x81 {}\n\nDisconnect from current Hub if any.\nThis disables auto-connect behavior, until a `connect` command is issued.\n\n    command send_string_msg @ 0x82 {\n        msg: string0\n    repeats:\n        property_name: string0\n        property_value: string0\n    }\n    report {}\n\nSends a short message in string format (it's typically JSON-encoded). Multiple properties can be attached.\n\n    command send_msg_ext @ 0x83 {}\n    report {\n        message: pipe_port\n    }\n\nSends an arbitrary, possibly binary, message. The size is only limited by RAM on the module.\n\n    pipe command message {\n    segmented:\n        body: bytes\n    }\n\nPart of the body of the message.\n\n    meta pipe command properties @ 0x01 {\n    repeats:\n        property_name: string0\n        property_value: string0\n    }\n\nSet properties on the message. Can be repeated multiple times.\n\n    command subscribe @ 0x84 {\n        devicebound: pipe\n    }\n\nSubscribes for cloud to device messages, which will be sent over the specified pipe.\n\n    meta pipe report devicebound_properties @ 0x01 {\n    repeats:\n        property_name: string0\n        property_value: string0\n    }\n\nIf there are any properties, this meta-report is send one or more times.\nAll properties of a given message are always sent before the body.\n\n    pipe report devicebound {\n    multi-segmented:\n        body: bytes\n    }\n\nFor every message, the body is sent in one or more reports like this.\n\n    command get_twin @ 0x85 {\n        twin_result: pipe\n    }\n\nAsk for current device digital twin.\n\n    pipe report twin_json {\n    segmented:\n        json: bytes\n    }\n\nThe JSON-encoded twin. This is typically something like:\n`{ \"desired\": { \"foo\": 1, \"$version\": 12 }, \"reported\": { \"foo\": 1, \"bar\" 2, \"$version\": 123 } }`\n\n    meta pipe report twin_error @ 0x01 {\n        status_code: u32\n    }\n\nThis emitted if status is not 200.\n\n    command subscribe_twin @ 0x87 {\n        twin_updates: pipe\n    }\n\nSubscribe to updates to our twin.\n\n    pipe report twin_update_json {\n    multi-segmented:\n        json: bytes\n    }\n\nFirst, the current value of the twin is sent (this includes desired and reported properties).\nNext updates done by the back-end are streamed as they arrive (they only include the desired properties).\n\n    command patch_twin @ 0x86 {}\n    report {\n        patch_port: pipe_port\n    }\n\nStart twin update.\n\n    pipe command twin_patch_json {\n    segmented:\n        json: bytes\n    }\n\nThe JSON-encoded twin update. The pipe should be closed when the last packet is sent.\nYou just send updates for `reported` field, like this:\n`{ \"bar\": 3, \"baz\": null }` (skip `\"$version\"` and no `\"reported\": { ... }`).\n\n    command subscribe_method @ 0x88 {\n        method_call: pipe\n    }\n\nSubscribe to direct method calls.\n\n    pipe report method_call_body {\n    multi-segmented:\n        json: bytes\n    }\n\nThe method call body is sent using these packets.\nIf the body is empty, a single empty `method_call_body` is sent.\n\n    meta pipe report method_call @ 0x01 {\n        method_name: string0\n        request_id: string0\n    }\n\nThis is sent after the last part of the `method_call_body`.\n\n    command respond_to_method @ 0x89 {\n        status: u32\n        request_id: string0\n    }\n    report {\n        response_body: pipe_port\n    }\n\nRespond to a direct method call (`request_id` comes from `subscribe_method` pipe).\n\n    pipe command method_response {\n    segmented:\n        json: bytes\n    }\n\nThe pipe should be closed when the last packet of response body is sent.\n\n## Registers\n\n    ro connection_status: string @ 0x180\n\nReturns `\"ok\"` when connected, and an error description otherwise.\n\n    rw connection_string: string @ 0x80\n\nConnection string typically looks something like \n`HostName=my-iot-hub.azure-devices.net;DeviceId=my-dev-007;SharedAccessKey=xyz+base64key`.\nYou can get it in `Shared access policies -> iothubowner -> Connection string-primary key` in the Azure Portal.\nThis register is write-only.\nYou can use `hub_name` and `device_id` to check if connection string is set, but you cannot get the shared access key.\n\n    ro hub_name: string @ 0x181\n\nSomething like `my-iot-hub.azure-devices.net`; empty string when `connection_string` is not set.\n\n    ro device_id: string @ 0x182\n\nSomething like `my-dev-007`; empty string when `connection_string` is not set.\n\n\n## Events\n\n    event connected @ 0x01\n\nEmitted upon successful connection.\n\n    event connection_error @ 0x02 {\n        reason: string\n    }\n\nEmitted when connection was lost.\n\n    event devicebound_str @ 0x03 {\n        msg: string0\n    repeats:\n        property_name: string0\n        property_value: string0 \n    }\n\nThis event is emitted upon reception of a cloud to device message, that is a string\n(doesn't contain NUL bytes) and fits in a single event packet.\nFor reliable reception, use the `subscribe` command above.\n"
@@ -2947,7 +2947,7 @@
         ],
         "optional": true,
         "identifierName": "status_code",
-        "packFormat": "H H",
+        "packFormat": "H,H",
         "derived": "_base"
       },
       {
@@ -2980,7 +2980,7 @@
             "storage": 1
           }
         ],
-        "packFormat": "H B B"
+        "packFormat": "H,B,B"
       },
       {
         "kind": "command",
@@ -3032,7 +3032,7 @@
         ],
         "optional": true,
         "identifierName": "status_code",
-        "packFormat": "H H",
+        "packFormat": "H,H",
         "derived": "_base"
       },
       {
@@ -3170,7 +3170,7 @@
         ],
         "optional": true,
         "identifierName": "status_code",
-        "packFormat": "H H",
+        "packFormat": "H,H",
         "derived": "_base"
       },
       {
@@ -3308,7 +3308,7 @@
         ],
         "optional": true,
         "identifierName": "status_code",
-        "packFormat": "H H",
+        "packFormat": "H,H",
         "derived": "_base"
       },
       {
@@ -3473,7 +3473,7 @@
         ],
         "optional": true,
         "identifierName": "status_code",
-        "packFormat": "H H",
+        "packFormat": "H,H",
         "derived": "_base"
       },
       {
@@ -3600,7 +3600,7 @@
         ],
         "optional": true,
         "identifierName": "status_code",
-        "packFormat": "H H",
+        "packFormat": "H,H",
         "derived": "_base"
       },
       {
@@ -3626,7 +3626,7 @@
           }
         ],
         "pipeType": "sample",
-        "packFormat": "b12x L"
+        "packFormat": "b12x,L"
       },
       {
         "kind": "rw",
@@ -3698,7 +3698,7 @@
         ],
         "optional": true,
         "identifierName": "status_code",
-        "packFormat": "H H",
+        "packFormat": "H,H",
         "derived": "_base"
       },
       {
@@ -4004,7 +4004,7 @@
         ],
         "optional": true,
         "identifierName": "status_code",
-        "packFormat": "H H",
+        "packFormat": "H,H",
         "derived": "_base"
       },
       {
@@ -4107,7 +4107,7 @@
         ],
         "optional": true,
         "identifierName": "status_code",
-        "packFormat": "H H",
+        "packFormat": "H,H",
         "derived": "_base"
       },
       {
@@ -4131,7 +4131,7 @@
             "storage": 1
           }
         ],
-        "packFormat": "H B"
+        "packFormat": "H,B"
       },
       {
         "kind": "command",
@@ -4164,7 +4164,7 @@
             "isSimpleType": true
           }
         ],
-        "packFormat": "h h H"
+        "packFormat": "h,h,H"
       },
       {
         "kind": "command",
@@ -4189,7 +4189,7 @@
             "isSimpleType": true
           }
         ],
-        "packFormat": "h H"
+        "packFormat": "h,H"
       }
     ],
     "source": "# Mouse\n\n    identifier: 0x1885dc1c\n    status: experimental\n\nControl a device that acts as a mouse.\n\n## Commands\n\n    flags Button : u16 {\n        Right = 0x01\n        Middle = 0x04\n        Left = 0x02\n    }\n    enum ButtonEvent : u8 {\n        Up = 0x01\n        Down = 0x02\n        Click = 0x03\n        DoubleClick = 0x04\n    }\n    command set_button @ 0x80 {\n        buttons: Button\n        event: ButtonEvent\n    }\n\nSets the up/down state of one or more buttons.\nA ``Click`` is the same as ``Down`` followed by ``Up`` after 100ms.\nA ``DoubleClick`` is two clicks with ``150ms`` gap between them (that is, ``100ms`` first click, ``150ms`` gap, ``100ms`` second click).\n\n    command move @ 0x81 {\n      dx: i16 #\n      dy: i16 #\n      time: u16 ms\n    }\n\nMoves the mouse by the distance specified.\nIf the time is positive, it specifies how long to make the move.\n\n    command wheel @ 0x82 {\n        dy: i16 #\n        time: u16 ms\n    }\n\nTurns the wheel up or down. Positive if scrolling up.\nIf the time is positive, it specifies how long to make the move.\n"
@@ -4236,7 +4236,7 @@
         ],
         "optional": true,
         "identifierName": "status_code",
-        "packFormat": "H H",
+        "packFormat": "H,H",
         "derived": "_base"
       },
       {
@@ -4446,7 +4446,7 @@
         ],
         "optional": true,
         "identifierName": "status_code",
-        "packFormat": "H H",
+        "packFormat": "H,H",
         "derived": "_base"
       },
       {
@@ -4659,7 +4659,7 @@
         ],
         "optional": true,
         "identifierName": "status_code",
-        "packFormat": "H H",
+        "packFormat": "H,H",
         "derived": "_base"
       },
       {
@@ -4972,7 +4972,7 @@
         ],
         "optional": true,
         "identifierName": "status_code",
-        "packFormat": "H H",
+        "packFormat": "H,H",
         "derived": "_base"
       },
       {
@@ -5055,7 +5055,7 @@
             "isSimpleType": true
           }
         ],
-        "packFormat": "H H"
+        "packFormat": "H,H"
       },
       {
         "kind": "rw",
@@ -5135,7 +5135,7 @@
         ],
         "optional": true,
         "identifierName": "status_code",
-        "packFormat": "H H",
+        "packFormat": "H,H",
         "derived": "_base"
       },
       {
@@ -5195,7 +5195,7 @@
           }
         ],
         "secondary": true,
-        "packFormat": "b s"
+        "packFormat": "b,s"
       },
       {
         "kind": "command",
@@ -5219,7 +5219,7 @@
             "storage": 0
           }
         ],
-        "packFormat": "b s"
+        "packFormat": "b,s"
       },
       {
         "kind": "command",
@@ -5268,7 +5268,7 @@
           }
         ],
         "pipeType": "list_stored_roles",
-        "packFormat": "b s"
+        "packFormat": "b,s"
       },
       {
         "kind": "command",
@@ -5318,7 +5318,7 @@
           }
         ],
         "pipeType": "list_required_roles",
-        "packFormat": "b8x L s"
+        "packFormat": "b8x,L,s"
       },
       {
         "kind": "event",
@@ -5371,7 +5371,7 @@
         ],
         "optional": true,
         "identifierName": "status_code",
-        "packFormat": "H H",
+        "packFormat": "H,H",
         "derived": "_base"
       },
       {
@@ -5455,7 +5455,7 @@
         ],
         "optional": true,
         "identifierName": "status_code",
-        "packFormat": "H H",
+        "packFormat": "H,H",
         "derived": "_base"
       },
       {
@@ -5498,7 +5498,7 @@
           }
         ],
         "secondary": true,
-        "packFormat": "z b"
+        "packFormat": "z,b"
       },
       {
         "kind": "command",
@@ -5522,7 +5522,7 @@
             "isSimpleType": true
           }
         ],
-        "packFormat": "z b"
+        "packFormat": "z,b"
       },
       {
         "kind": "command",
@@ -5614,7 +5614,7 @@
           }
         ],
         "pipeType": "list",
-        "packFormat": "z b"
+        "packFormat": "z,b"
       },
       {
         "kind": "command",
@@ -5667,7 +5667,7 @@
         ],
         "optional": true,
         "identifierName": "status_code",
-        "packFormat": "H H",
+        "packFormat": "H,H",
         "derived": "_base"
       },
       {
@@ -5805,7 +5805,7 @@
         ],
         "optional": true,
         "identifierName": "status_code",
-        "packFormat": "H H",
+        "packFormat": "H,H",
         "derived": "_base"
       },
       {
@@ -5867,7 +5867,7 @@
           }
         ],
         "pipeType": "open",
-        "packFormat": "H s"
+        "packFormat": "H,s"
       },
       {
         "kind": "pipe_command",
@@ -5967,7 +5967,7 @@
         ],
         "optional": true,
         "identifierName": "status_code",
-        "packFormat": "H H",
+        "packFormat": "H,H",
         "derived": "_base"
       },
       {
@@ -6113,7 +6113,7 @@
         ],
         "optional": true,
         "identifierName": "status_code",
-        "packFormat": "H H",
+        "packFormat": "H,H",
         "derived": "_base"
       },
       {
@@ -6191,7 +6191,7 @@
           }
         ],
         "pipeType": "scan",
-        "packFormat": "L L b B b s"
+        "packFormat": "L,L,b,B,b,s"
       },
       {
         "kind": "command",
@@ -6215,7 +6215,7 @@
             "isOptional": true
           }
         ],
-        "packFormat": "z z"
+        "packFormat": "z,z"
       },
       {
         "kind": "command",

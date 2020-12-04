@@ -1142,7 +1142,7 @@ export function packFormat(pkt: jdspec.PacketInfo): string {
                 fmt.push("b");
         }
         if (i < sizes.length && !info && sz)
-            fmt.push(`${sz}x`)
+            fmt[fmt.length -1] += `${sz}x`;
         i++
         off += sz
     }

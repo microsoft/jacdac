@@ -799,7 +799,7 @@
             "isSimpleType": true
           }
         ],
-        "packFormat": "H H L b 8x L B B B b"
+        "packFormat": "H H L b8x L B B B b"
       },
       {
         "kind": "ro",
@@ -3625,7 +3625,7 @@
           }
         ],
         "pipeType": "sample",
-        "packFormat": "b 12x L"
+        "packFormat": "b12x L"
       },
       {
         "kind": "rw",
@@ -5003,7 +5003,7 @@
           }
         ],
         "pipeType": "list_required_roles",
-        "packFormat": "b 8x L s"
+        "packFormat": "b8x L s"
       },
       {
         "kind": "event",

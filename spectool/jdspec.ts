@@ -198,6 +198,8 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
     if (info.shortName != "control" && !info.classIdentifier)
         error("identifier: not specified")
 
+    info.packets.forEach(pkt => pkt.packFormat = packFormat(pkt));
+
     return info
 
     function processLine(line: string) {
@@ -1107,6 +1109,42 @@ ${code.replace(/^\n+/, '').replace(/\n+$/, '')}
 `
 }
 
+/**
+ * Generates the format to pack/unpack a data payload for this packet
+ * @param pkt 
+ * TODO fix this
+ */
+export function packFormat(pkt: jdspec.PacketInfo): string {
+    if (pkt.packed || !pkt.fields?.length)
+        return undefined;
+
+    let fmt: string[] = []
+    let i = 0
+    let off = 0
+    let numstr0 = 0
+    for (const fld of pkt.fields) {
+        const info = tsNumFmt[fld.storage]
+        const sz = Math.abs(fld.storage)
+        if (info) {
+            fmt.push(info.replace(/.*:/, ""))
+        } else {
+            if (fld.type == "string0") {
+                fmt.push("z")
+                numstr0++
+            } else if (fld.type === "string") {
+                fmt.push("s");
+            } else
+                fmt.push("b");
+        }
+        if (!info && sz)
+            fmt[fmt.length -1] += `${sz}x`;
+        i++
+        off += sz
+    }
+
+    return fmt.join("`");
+}
+
 function packInfo(pkt: jdspec.PacketInfo, isStatic: boolean) {
     let vars = ""
     let fmt = ""
@@ -1150,9 +1188,9 @@ function packInfo(pkt: jdspec.PacketInfo, isStatic: boolean) {
 
     if (fmt) {
         if (isStatic)
-            buffers = `const [${vars}] = buf.unpack("${fmt}")\n` + buffers
+            buffers = `const [${vars}] = pkt.unpack("${fmt}")\n` + buffers
         else
-            buffers = `const [${vars}] = unpack(buf, "${fmt}")\n` + buffers
+            buffers = `const [${vars}] = pkt.unpack(buf, "${fmt}")\n` + buffers
     }
 
     buffers = buffers.replace(/\n*$/, "")

@@ -13,7 +13,8 @@ For each ``rw`` registers, set a random value ``x``
   * listen to ``e`` event and check that data is equal to ``x``
   * call ``c`` command with new random value ``y``
   * read ``rw`` and check value is equal to ``y``
-
+  * do all the above steps with acks
+  
 ## Registers
 
 Every ``rw`` register has a corresponding ``ro`` regisrer

@@ -109,6 +109,6 @@ typedef struct jd_system_status_code {
 /**
  * Emit notifying that the internal state of the service changed.
  */
-#define JD_EV_CHANGE 0x1
+#define JD_EV_CHANGE 0x2
 
 #endif

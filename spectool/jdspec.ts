@@ -1118,15 +1118,23 @@ export function packFormat(pkt: jdspec.PacketInfo): string {
     if (pkt.packed || !pkt.fields?.length)
         return undefined;
 
+    const numFmt: jdspec.SMap<string> = {
+        "1": "u8",
+        "2": "u16",
+        "4": "u32",
+        "-1": "i8",
+        "-2": "i16",
+        "-4": "i32",
+    }
     let fmt: string[] = []
     let i = 0
     let off = 0
     let numstr0 = 0
     for (const fld of pkt.fields) {
-        const info = tsNumFmt[fld.storage]
+        const info = numFmt[fld.storage]
         const sz = Math.abs(fld.storage)
         if (info) {
-            fmt.push(info.replace(/.*:/, ""))
+            fmt.push(info)
         } else {
             if (fld.type == "string0") {
                 fmt.push("z")
@@ -1137,12 +1145,12 @@ export function packFormat(pkt: jdspec.PacketInfo): string {
                 fmt.push("b");
         }
         if (!info && sz)
-            fmt[fmt.length -1] += `${sz}x`;
+            fmt[fmt.length - 1] += `${sz}x`;
         i++
         off += sz
     }
 
-    return fmt.join("`");
+    return fmt.join(" ");
 }
 
 function packInfo(pkt: jdspec.PacketInfo, isStatic: boolean) {

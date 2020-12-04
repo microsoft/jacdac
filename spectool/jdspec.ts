@@ -1112,25 +1112,20 @@ ${code.replace(/^\n+/, '').replace(/\n+$/, '')}
 /**
  * Generates the format to pack/unpack a data payload for this packet
  * @param pkt 
+ * TODO fix this
  */
 export function packFormat(pkt: jdspec.PacketInfo): string {
     if (pkt.packed || !pkt.fields?.length)
         return undefined;
 
     let fmt: string[] = []
-
-    const sizes = pkt.fields.map(f => f.storage)
-    while (sizes.length > 0 && !tsNumFmt[sizes[sizes.length - 1]]) {
-        sizes.pop()
-    }
-
     let i = 0
     let off = 0
     let numstr0 = 0
     for (const fld of pkt.fields) {
         const info = tsNumFmt[fld.storage]
         const sz = Math.abs(fld.storage)
-        if (i < sizes.length && info) {
+        if (info) {
             fmt.push(info.replace(/.*:/, ""))
         } else {
             if (fld.type == "string0") {
@@ -1141,13 +1136,13 @@ export function packFormat(pkt: jdspec.PacketInfo): string {
             } else
                 fmt.push("b");
         }
-        if (i < sizes.length && !info && sz)
+        if (!info && sz)
             fmt[fmt.length -1] += `${sz}x`;
         i++
         off += sz
     }
 
-    return fmt.join();
+    return fmt.join("`");
 }
 
 function packInfo(pkt: jdspec.PacketInfo, isStatic: boolean) {

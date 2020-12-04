@@ -1147,7 +1147,7 @@ export function packFormat(pkt: jdspec.PacketInfo): string {
         off += sz
     }
 
-    return fmt.join(" ");
+    return fmt.join();
 }
 
 function packInfo(pkt: jdspec.PacketInfo, isStatic: boolean) {

@@ -23,7 +23,7 @@ namespace jacdac {
          * Event from sensor or a broadcast service.
          *
          * ```
-         * const [eventId, eventArgument] = pkt.unpack("LL")
+         * const [eventId, eventArgument] = jdunpack<[number, number]>(buf, "u32 u32")
          * ```
          */
         Event = 0x1,
@@ -83,7 +83,7 @@ namespace jacdac {
          * add this report in frame along with the anounce packet.
          *
          * ```
-         * const [code, vendorCode] = pkt.unpack("HH")
+         * const [code, vendorCode] = jdunpack<[number, number]>(buf, "u16 u16")
          * ```
          */
         StatusCode = 0x7,
@@ -112,7 +112,7 @@ namespace jacdac {
          * add this report in frame along with the anounce packet.
          *
          * ```
-         * const [code, vendorCode] = pkt.unpack("HH")
+         * const [code, vendorCode] = jdunpack<[number, number]>(buf, "u16 u16")
          * ```
          */
         StatusCode = 0x7,
@@ -148,7 +148,7 @@ namespace jacdac {
          * Indicates the current forces acting on accelerometer.
          *
          * ```
-         * const [x, y, z] = pkt.unpack("hhh")
+         * const [x, y, z] = jdunpack<[number, number, number]>(buf, "i6.10 i6.10 i6.10")
          * ```
          */
         Forces = 0x101,
@@ -236,8 +236,8 @@ namespace jacdac {
          * These settings are stored in flash.
          *
          * ```
-         * const [samplingInterval, samplesInWindow, reserved, serviceClass, serviceNum, sampleSize, sampleType, sampleShift] = pkt.unpack("HHL8xLBBBb")
-         * const deviceId = buf.slice(8, 8)
+         * const [samplingInterval, samplesInWindow, rest] = jdunpack<[number, number, ([Buffer, number, number, number, SensorAggregatorSampleType, number])[]]>(buf, "u16 u16 x[4] r: b[8] u32 u8 u8 u8 i8")
+         * const [deviceId, serviceClass, serviceNum, sampleSize, sampleType, sampleShift] = rest[0]
          * ```
          */
         Inputs = 0x80,
@@ -286,7 +286,7 @@ namespace jacdac {
         /**
          * report Info
          * ```
-         * const [serviceClass, pageSize, flashableSize, firmwareIdentifier] = pkt.unpack("LLLL")
+         * const [serviceClass, pageSize, flashableSize, firmwareIdentifier] = jdunpack<[number, number, number, number]>(buf, "u32 u32 u32 u32")
          * ```
          */
 
@@ -302,8 +302,7 @@ namespace jacdac {
          * Only the last chunk causes writing to flash and elicits response.
          *
          * ```
-         * const [pageAddress, pageOffset, chunkNo, chunkMax, sessionId, reserved0, reserved1, reserved2, reserved3] = pkt.unpack("LHBBLLLLL")
-         * const pageData = buf.slice(28)
+         * const [pageAddress, pageOffset, chunkNo, chunkMax, sessionId, pageData] = jdunpack<[number, number, number, number, number, Buffer]>(buf, "u32 u16 u8 u8 u32 x[4] x[4] x[4] x[4] b[208]")
          * ```
          */
         PageData = 0x80,
@@ -311,7 +310,7 @@ namespace jacdac {
         /**
          * report PageData
          * ```
-         * const [sessionId, pageError, pageAddress] = pkt.unpack("LLL")
+         * const [sessionId, pageError, pageAddress] = jdunpack<[number, BootloaderError, number]>(buf, "u32 u32 u32")
          * ```
          */
     }
@@ -368,7 +367,7 @@ namespace jacdac {
          * to send `P = 1000000 / F` and `D = P * V / 2`.
          *
          * ```
-         * const [period, duty, duration] = pkt.unpack("HHH")
+         * const [period, duty, duration] = jdunpack<[number, number, number]>(buf, "u16 u16 u16")
          * ```
          */
         PlayTone = 0x80,
@@ -383,7 +382,7 @@ namespace jacdac {
          * Sends a new event on the message bus.
          *
          * ```
-         * const [id, event] = pkt.unpack("HH")
+         * const [id, event] = jdunpack<[number, number]>(buf, "u16 u16")
          * ```
          */
         Send = 0x80,
@@ -412,7 +411,7 @@ namespace jacdac {
         /**
          * report Services
          * ```
-         * const [restartCounter, flags, reserved, serviceClass] = pkt.unpack("BBHL")
+         * const [restartCounter, flags, serviceClass] = jdunpack<[number, CtrlAnnounceFlags, number[]]>(buf, "u8 u8 x[2] u32[]")
          * ```
          */
 
@@ -518,7 +517,7 @@ namespace jacdac {
         /**
          * report Announce
          * ```
-         * const [flags, numPlayers, buttonPresent] = pkt.unpack("BBH")
+         * const [flags, numPlayers, buttonPresent] = jdunpack<[number, number, GamepadButton[]]>(buf, "u8 u8 u16[]")
          * ```
          */
     }
@@ -529,7 +528,8 @@ namespace jacdac {
          * `pressure` should be `0xff` for digital buttons, and proportional for analog ones.
          *
          * ```
-         * const [button, playerIndex, pressure] = pkt.unpack("HBB")
+         * const [rest] = jdunpack<[([GamepadButton, number, number])[]]>(buf, "r: u16 u8 u8")
+         * const [button, playerIndex, pressure] = rest[0]
          * ```
          */
         Buttons = 0x101,
@@ -540,7 +540,7 @@ namespace jacdac {
          * Emitted when button goes from inactive to active.
          *
          * ```
-         * const [button, playerIndex] = pkt.unpack("HH")
+         * const [button, playerIndex] = jdunpack<[GamepadButton, number]>(buf, "u16 u16")
          * ```
          */
         Down = 0x1,
@@ -549,7 +549,7 @@ namespace jacdac {
          * Emitted when button goes from active to inactive.
          *
          * ```
-         * const [button, playerIndex] = pkt.unpack("HH")
+         * const [button, playerIndex] = jdunpack<[GamepadButton, number]>(buf, "u16 u16")
          * ```
          */
         Up = 0x2,
@@ -587,9 +587,8 @@ namespace jacdac {
          * Sends a short message in string format (it's typically JSON-encoded). Multiple properties can be attached.
          *
          * ```
-         * const msg = string0(buf, 0, 0)
-         * const propertyName = string0(buf, 0, 1)
-         * const propertyValue = string0(buf, 0, 2)
+         * const [msg, rest] = jdunpack<[string, ([string, string])[]]>(buf, "z r: z z")
+         * const [propertyName, propertyValue] = rest[0]
          * ```
          */
         SendStringMsg = 0x82,
@@ -628,8 +627,7 @@ namespace jacdac {
          * Respond to a direct method call (`request_id` comes from `subscribe_method` pipe).
          *
          * ```
-         * const [status] = pkt.unpack("L")
-         * const requestId = string0(buf, 4, 0)
+         * const [status, requestId] = jdunpack<[number, string]>(buf, "u32 z")
          * ```
          */
         RespondToMethod = 0x89,
@@ -640,8 +638,8 @@ namespace jacdac {
          * Set properties on the message. Can be repeated multiple times.
          *
          * ```
-         * const propertyName = string0(buf, 0, 0)
-         * const propertyValue = string0(buf, 0, 1)
+         * const [rest] = jdunpack<[([string, string])[]]>(buf, "r: z z")
+         * const [propertyName, propertyValue] = rest[0]
          * ```
          */
         Properties = 0x1,
@@ -651,8 +649,8 @@ namespace jacdac {
          * All properties of a given message are always sent before the body.
          *
          * ```
-         * const propertyName = string0(buf, 0, 0)
-         * const propertyValue = string0(buf, 0, 1)
+         * const [rest] = jdunpack<[([string, string])[]]>(buf, "r: z z")
+         * const [propertyName, propertyValue] = rest[0]
          * ```
          */
         DeviceboundProperties = 0x1,
@@ -666,8 +664,7 @@ namespace jacdac {
          * This is sent after the last part of the `method_call_body`.
          *
          * ```
-         * const methodName = string0(buf, 0, 0)
-         * const requestId = string0(buf, 0, 1)
+         * const [methodName, requestId] = jdunpack<[string, string]>(buf, "z z")
          * ```
          */
         MethodCall = 0x1,
@@ -716,9 +713,8 @@ namespace jacdac {
          * For reliable reception, use the `subscribe` command above.
          *
          * ```
-         * const msg = string0(buf, 0, 0)
-         * const propertyName = string0(buf, 0, 1)
-         * const propertyValue = string0(buf, 0, 2)
+         * const [msg, rest] = jdunpack<[string, ([string, string])[]]>(buf, "z r: z z")
+         * const [propertyName, propertyValue] = rest[0]
          * ```
          */
         DeviceboundStr = 0x3,
@@ -752,7 +748,8 @@ namespace jacdac {
          * Presses a key or a sequence of keys down.
          *
          * ```
-         * const [selector, modifiers, action] = pkt.unpack("HBB")
+         * const [rest] = jdunpack<[([number, KeyboardModifiers, KeyboardAction])[]]>(buf, "r: u16 u8 u8")
+         * const [selector, modifiers, action] = rest[0]
          * ```
          */
         Key = 0x80,
@@ -924,8 +921,7 @@ namespace jacdac {
          * Samples are sent as `i16`.
          *
          * ```
-         * const [numSamples] = pkt.unpack("12xL")
-         * const samples = buf.slice(0, 12)
+         * const [samples, numSamples] = jdunpack<[Buffer, number]>(buf, "b[12] u32")
          * ```
          */
         Sample = 0x81,
@@ -976,17 +972,29 @@ namespace jacdac {
         AutoInvokeEvery = 0x80,
 
         /**
-         * Read-only output f32 (uint32_t). Results of last model invocation as `float32` array.
+         * Read-only. Results of last model invocation as `float32` array.
+         *
+         * ```
+         * const [output] = jdunpack<[number[]]>(buf, "f32[]")
+         * ```
          */
         Outputs = 0x101,
 
         /**
-         * Read-only dimension uint16_t. The shape of the input tensor.
+         * Read-only. The shape of the input tensor.
+         *
+         * ```
+         * const [dimension] = jdunpack<[number[]]>(buf, "u16[]")
+         * ```
          */
         InputShape = 0x180,
 
         /**
-         * Read-only dimension uint16_t. The shape of the output tensor.
+         * Read-only. The shape of the output tensor.
+         *
+         * ```
+         * const [dimension] = jdunpack<[number[]]>(buf, "u16[]")
+         * ```
          */
         OutputShape = 0x181,
 
@@ -1073,7 +1081,7 @@ namespace jacdac {
          * A ``DoubleClick`` is two clicks with ``150ms`` gap between them (that is, ``100ms`` first click, ``150ms`` gap, ``100ms`` second click).
          *
          * ```
-         * const [buttons, event] = pkt.unpack("HB")
+         * const [buttons, event] = jdunpack<[MouseButton, MouseButtonEvent]>(buf, "u16 u8")
          * ```
          */
         SetButton = 0x80,
@@ -1083,7 +1091,7 @@ namespace jacdac {
          * If the time is positive, it specifies how long to make the move.
          *
          * ```
-         * const [dx, dy, time] = pkt.unpack("hhH")
+         * const [dx, dy, time] = jdunpack<[number, number, number]>(buf, "i16 i16 u16")
          * ```
          */
         Move = 0x81,
@@ -1093,7 +1101,7 @@ namespace jacdac {
          * If the time is positive, it specifies how long to make the move.
          *
          * ```
-         * const [dy, time] = pkt.unpack("hH")
+         * const [dy, time] = jdunpack<[number, number]>(buf, "i16 u16")
          * ```
          */
         Wheel = 0x82,
@@ -1105,9 +1113,13 @@ namespace jacdac {
     export const SRV_MULTITOUCH = 0x18d55e2b
     export const enum MultitouchReg {
         /**
-         * Read-only capacitance int32_t. Capacitance of channels. The capacitance is continuously calibrated, and a value of `0` indicates
+         * Read-only. Capacitance of channels. The capacitance is continuously calibrated, and a value of `0` indicates
          * no touch, wheres a value of around `100` or more indicates touch.
          * It's best to ignore this (unless debugging), and use events.
+         *
+         * ```
+         * const [capacitance] = jdunpack<[number[]]>(buf, "i32[]")
+         * ```
          */
         Capacity = 0x101,
     }
@@ -1317,7 +1329,8 @@ namespace jacdac {
          * Step with `duration == 0` is treated as an end marker.
          *
          * ```
-         * const [startIntensity, duration] = pkt.unpack("HH")
+         * const [rest] = jdunpack<[([number, number])[]]>(buf, "r: u16 u16")
+         * const [startIntensity, duration] = rest[0]
          * ```
          */
         Steps = 0x82,
@@ -1347,15 +1360,14 @@ namespace jacdac {
 
     export const enum RoleManagerCmd {
         /**
-         * Argument: device_id uint64_t. Get the role corresponding to given device identifer. Returns empty string if unset.
+         * Argument: device_id devid (uint64_t). Get the role corresponding to given device identifer. Returns empty string if unset.
          */
         GetRole = 0x80,
 
         /**
          * report GetRole
          * ```
-         * const deviceId = buf.slice(0, 8)
-         * const role = buf.slice(8).toString()
+         * const [deviceId, role] = jdunpack<[Buffer, string]>(buf, "b[8] s")
          * ```
          */
 
@@ -1363,8 +1375,7 @@ namespace jacdac {
          * Set role. Can set to empty to remove role binding.
          *
          * ```
-         * const deviceId = buf.slice(0, 8)
-         * const role = buf.slice(8).toString()
+         * const [deviceId, role] = jdunpack<[Buffer, string]>(buf, "b[8] s")
          * ```
          */
         SetRole = 0x81,
@@ -1389,17 +1400,14 @@ namespace jacdac {
     /**
      * pipe_report StoredRoles
      * ```
-     * const deviceId = buf.slice(0, 8)
-     * const role = buf.slice(8).toString()
+     * const [deviceId, role] = jdunpack<[Buffer, string]>(buf, "b[8] s")
      * ```
      */
 
     /**
      * pipe_report RequiredRoles
      * ```
-     * const [serviceClass] = pkt.unpack("8xL")
-     * const deviceId = buf.slice(0, 8)
-     * const roles = buf.slice(12).toString()
+     * const [deviceId, serviceClass, roles] = jdunpack<[Buffer, number, string]>(buf, "b[8] u32 s")
      * ```
      */
 
@@ -1440,8 +1448,7 @@ namespace jacdac {
         /**
          * report Get
          * ```
-         * const key = string0(buf, 0, 0)
-         * const value = buf.slice(0)
+         * const [key, value] = jdunpack<[string, Buffer]>(buf, "z b")
          * ```
          */
 
@@ -1449,8 +1456,7 @@ namespace jacdac {
          * Set the value of a given setting.
          *
          * ```
-         * const key = string0(buf, 0, 0)
-         * const value = buf.slice(0)
+         * const [key, value] = jdunpack<[string, Buffer]>(buf, "z b")
          * ```
          */
         Set = 0x81,
@@ -1480,8 +1486,7 @@ namespace jacdac {
     /**
      * pipe_report ListedEntry
      * ```
-     * const key = string0(buf, 0, 0)
-     * const value = buf.slice(0)
+     * const [key, value] = jdunpack<[string, Buffer]>(buf, "z b")
      * ```
      */
 
@@ -1521,8 +1526,7 @@ namespace jacdac {
          * Connection is closed by closing the pipe.
          *
          * ```
-         * const [tcpPort] = pkt.unpack("H")
-         * const hostname = buf.slice(2).toString()
+         * const [tcpPort, hostname] = jdunpack<[number, string]>(buf, "u16 s")
          * ```
          */
         OpenSsl = 0x1,
@@ -1573,8 +1577,7 @@ namespace jacdac {
          * Connect to named network.
          *
          * ```
-         * const ssid = string0(buf, 0, 0)
-         * const password = string0(buf, 0, 1)
+         * const [ssid, password] = jdunpack<[string, string]>(buf, "z z")
          * ```
          */
         Connect = 0x81,
@@ -1589,9 +1592,7 @@ namespace jacdac {
     /**
      * pipe_report Results
      * ```
-     * const [flags, reserved, rssi, channel] = pkt.unpack("LLbB")
-     * const bssid = buf.slice(10, 6)
-     * const ssid = buf.slice(16).toString()
+     * const [flags, rssi, channel, bssid, ssid] = jdunpack<[WifiAPFlags, number, number, Buffer, string]>(buf, "u32 x[4] i8 u8 b[6] s[33]")
      * ```
      */
 

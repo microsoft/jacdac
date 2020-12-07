@@ -10,7 +10,7 @@
 #define JD_ROLE_MANAGER_REG_ALL_ROLES_ALLOCATED 0x181
 
 /**
- * Argument: device_id uint64_t. Get the role corresponding to given device identifer. Returns empty string if unset.
+ * Argument: device_id devid (uint64_t). Get the role corresponding to given device identifer. Returns empty string if unset.
  */
 #define JD_ROLE_MANAGER_CMD_GET_ROLE 0x80
 

@@ -5,11 +5,15 @@
 #define JD_SERVICE_CLASS_MULTITOUCH  0x18d55e2b
 
 /**
- * Read-only capacitance int32_t. Capacitance of channels. The capacitance is continuously calibrated, and a value of `0` indicates
+ * Read-only. Capacitance of channels. The capacitance is continuously calibrated, and a value of `0` indicates
  * no touch, wheres a value of around `100` or more indicates touch.
  * It's best to ignore this (unless debugging), and use events.
  */
 #define JD_MULTITOUCH_REG_CAPACITY JD_REG_READING
+typedef struct jd_multitouch_capacity {
+    int32_t capacitance[0];
+} jd_multitouch_capacity_t;
+
 
 /**
  * Argument: channel uint32_t. Emitted when an input is touched.

@@ -22,7 +22,7 @@ export enum SystemCmd {
      * Event from sensor or a broadcast service.
      *
      * ```
-     * const [eventId, eventArgument] = pkt.unpack(buf, "LL")
+     * const [eventId, eventArgument] = jdunpack<[number, number]>(buf, "u32 u32")
      * ```
      */
     Event = 0x1,
@@ -82,7 +82,7 @@ export enum SystemReg {
      * add this report in frame along with the anounce packet.
      *
      * ```
-     * const [code, vendorCode] = pkt.unpack(buf, "HH")
+     * const [code, vendorCode] = jdunpack<[number, number]>(buf, "u16 u16")
      * ```
      */
     StatusCode = 0x7,
@@ -109,7 +109,7 @@ export enum BaseReg {
      * add this report in frame along with the anounce packet.
      *
      * ```
-     * const [code, vendorCode] = pkt.unpack(buf, "HH")
+     * const [code, vendorCode] = jdunpack<[number, number]>(buf, "u16 u16")
      * ```
      */
     StatusCode = 0x7,
@@ -141,7 +141,7 @@ export enum AccelReg {
      * Indicates the current forces acting on accelerometer.
      *
      * ```
-     * const [x, y, z] = pkt.unpack(buf, "hhh")
+     * const [x, y, z] = jdunpack<[number, number, number]>(buf, "i6.10 i6.10 i6.10")
      * ```
      */
     Forces = 0x101,
@@ -227,8 +227,8 @@ export enum SensorAggregatorReg {
      * These settings are stored in flash.
      *
      * ```
-     * const [samplingInterval, samplesInWindow, reserved, serviceClass, serviceNum, sampleSize, sampleType, sampleShift] = pkt.unpack(buf, "HHL8xLBBBb")
-     * const deviceId = buf.slice(8, 16)
+     * const [samplingInterval, samplesInWindow, rest] = jdunpack<[number, number, ([UInt8Array, number, number, number, SensorAggregatorSampleType, number])[]]>(buf, "u16 u16 x[4] r: b[8] u32 u8 u8 u8 i8")
+     * const [deviceId, serviceClass, serviceNum, sampleSize, sampleType, sampleShift] = rest[0]
      * ```
      */
     Inputs = 0x80,
@@ -275,7 +275,7 @@ export enum BootloaderCmd {
     /**
      * report Info
      * ```
-     * const [serviceClass, pageSize, flashableSize, firmwareIdentifier] = pkt.unpack(buf, "LLLL")
+     * const [serviceClass, pageSize, flashableSize, firmwareIdentifier] = jdunpack<[number, number, number, number]>(buf, "u32 u32 u32 u32")
      * ```
      */
 
@@ -291,8 +291,7 @@ export enum BootloaderCmd {
      * Only the last chunk causes writing to flash and elicits response.
      *
      * ```
-     * const [pageAddress, pageOffset, chunkNo, chunkMax, sessionId, reserved0, reserved1, reserved2, reserved3] = pkt.unpack(buf, "LHBBLLLLL")
-     * const pageData = buf.slice(28)
+     * const [pageAddress, pageOffset, chunkNo, chunkMax, sessionId, pageData] = jdunpack<[number, number, number, number, number, UInt8Array]>(buf, "u32 u16 u8 u8 u32 x[4] x[4] x[4] x[4] b[208]")
      * ```
      */
     PageData = 0x80,
@@ -300,7 +299,7 @@ export enum BootloaderCmd {
     /**
      * report PageData
      * ```
-     * const [sessionId, pageError, pageAddress] = pkt.unpack(buf, "LLL")
+     * const [sessionId, pageError, pageAddress] = jdunpack<[number, BootloaderError, number]>(buf, "u32 u32 u32")
      * ```
      */
 }
@@ -353,7 +352,7 @@ export enum BuzzerCmd {
      * to send `P = 1000000 / F` and `D = P * V / 2`.
      *
      * ```
-     * const [period, duty, duration] = pkt.unpack(buf, "HHH")
+     * const [period, duty, duration] = jdunpack<[number, number, number]>(buf, "u16 u16 u16")
      * ```
      */
     PlayTone = 0x80,
@@ -366,7 +365,7 @@ export enum CODALMessageBusCmd {
      * Sends a new event on the message bus.
      *
      * ```
-     * const [id, event] = pkt.unpack(buf, "HH")
+     * const [id, event] = jdunpack<[number, number]>(buf, "u16 u16")
      * ```
      */
     Send = 0x80,
@@ -393,7 +392,7 @@ export enum CtrlCmd {
     /**
      * report Services
      * ```
-     * const [restartCounter, flags, reserved, serviceClass] = pkt.unpack(buf, "BBHL")
+     * const [restartCounter, flags, serviceClass] = jdunpack<[number, CtrlAnnounceFlags, number[]]>(buf, "u8 u8 x[2] u32[]")
      * ```
      */
 
@@ -495,7 +494,7 @@ export enum GamepadCmd {
     /**
      * report Announce
      * ```
-     * const [flags, numPlayers, buttonPresent] = pkt.unpack(buf, "BBH")
+     * const [flags, numPlayers, buttonPresent] = jdunpack<[number, number, GamepadButton[]]>(buf, "u8 u8 u16[]")
      * ```
      */
 }
@@ -506,7 +505,8 @@ export enum GamepadReg {
      * `pressure` should be `0xff` for digital buttons, and proportional for analog ones.
      *
      * ```
-     * const [button, playerIndex, pressure] = pkt.unpack(buf, "HBB")
+     * const [rest] = jdunpack<[([GamepadButton, number, number])[]]>(buf, "r: u16 u8 u8")
+     * const [button, playerIndex, pressure] = rest[0]
      * ```
      */
     Buttons = 0x101,
@@ -517,7 +517,7 @@ export enum GamepadEvent {
      * Emitted when button goes from inactive to active.
      *
      * ```
-     * const [button, playerIndex] = pkt.unpack(buf, "HH")
+     * const [button, playerIndex] = jdunpack<[GamepadButton, number]>(buf, "u16 u16")
      * ```
      */
     Down = 0x1,
@@ -526,7 +526,7 @@ export enum GamepadEvent {
      * Emitted when button goes from active to inactive.
      *
      * ```
-     * const [button, playerIndex] = pkt.unpack(buf, "HH")
+     * const [button, playerIndex] = jdunpack<[GamepadButton, number]>(buf, "u16 u16")
      * ```
      */
     Up = 0x2,
@@ -560,9 +560,8 @@ export enum IotHubCmd {
      * Sends a short message in string format (it's typically JSON-encoded). Multiple properties can be attached.
      *
      * ```
-     * const msg = string0(buf, 0, 0)
-     * const propertyName = string0(buf, 0, 1)
-     * const propertyValue = string0(buf, 0, 2)
+     * const [msg, rest] = jdunpack<[string, ([string, string])[]]>(buf, "z r: z z")
+     * const [propertyName, propertyValue] = rest[0]
      * ```
      */
     SendStringMsg = 0x82,
@@ -601,8 +600,7 @@ export enum IotHubCmd {
      * Respond to a direct method call (`request_id` comes from `subscribe_method` pipe).
      *
      * ```
-     * const [status] = pkt.unpack(buf, "L")
-     * const requestId = string0(buf, 4, 0)
+     * const [status, requestId] = jdunpack<[number, string]>(buf, "u32 z")
      * ```
      */
     RespondToMethod = 0x89,
@@ -613,8 +611,8 @@ export enum IotHubPipeCmd {
      * Set properties on the message. Can be repeated multiple times.
      *
      * ```
-     * const propertyName = string0(buf, 0, 0)
-     * const propertyValue = string0(buf, 0, 1)
+     * const [rest] = jdunpack<[([string, string])[]]>(buf, "r: z z")
+     * const [propertyName, propertyValue] = rest[0]
      * ```
      */
     Properties = 0x1,
@@ -624,8 +622,8 @@ export enum IotHubPipeCmd {
      * All properties of a given message are always sent before the body.
      *
      * ```
-     * const propertyName = string0(buf, 0, 0)
-     * const propertyValue = string0(buf, 0, 1)
+     * const [rest] = jdunpack<[([string, string])[]]>(buf, "r: z z")
+     * const [propertyName, propertyValue] = rest[0]
      * ```
      */
     DeviceboundProperties = 0x1,
@@ -639,8 +637,7 @@ export enum IotHubPipeCmd {
      * This is sent after the last part of the `method_call_body`.
      *
      * ```
-     * const methodName = string0(buf, 0, 0)
-     * const requestId = string0(buf, 0, 1)
+     * const [methodName, requestId] = jdunpack<[string, string]>(buf, "z z")
      * ```
      */
     MethodCall = 0x1,
@@ -689,9 +686,8 @@ export enum IotHubEvent {
      * For reliable reception, use the `subscribe` command above.
      *
      * ```
-     * const msg = string0(buf, 0, 0)
-     * const propertyName = string0(buf, 0, 1)
-     * const propertyValue = string0(buf, 0, 2)
+     * const [msg, rest] = jdunpack<[string, ([string, string])[]]>(buf, "z r: z z")
+     * const [propertyName, propertyValue] = rest[0]
      * ```
      */
     DeviceboundStr = 0x3,
@@ -723,7 +719,8 @@ export enum KeyboardCmd {
      * Presses a key or a sequence of keys down.
      *
      * ```
-     * const [selector, modifiers, action] = pkt.unpack(buf, "HBB")
+     * const [rest] = jdunpack<[([number, KeyboardModifiers, KeyboardAction])[]]>(buf, "r: u16 u8 u8")
+     * const [selector, modifiers, action] = rest[0]
      * ```
      */
     Key = 0x80,
@@ -885,8 +882,7 @@ export enum MicrophoneCmd {
      * Samples are sent as `i16`.
      *
      * ```
-     * const [numSamples] = pkt.unpack(buf, "12xL")
-     * const samples = buf.slice(0, 12)
+     * const [samples, numSamples] = jdunpack<[UInt8Array, number]>(buf, "b[12] u32")
      * ```
      */
     Sample = 0x81,
@@ -935,17 +931,29 @@ export enum ModelRunnerReg {
     AutoInvokeEvery = 0x80,
 
     /**
-     * Read-only output f32 (uint32_t). Results of last model invocation as `float32` array.
+     * Read-only. Results of last model invocation as `float32` array.
+     *
+     * ```
+     * const [output] = jdunpack<[number[]]>(buf, "f32[]")
+     * ```
      */
     Outputs = 0x101,
 
     /**
-     * Read-only dimension uint16_t. The shape of the input tensor.
+     * Read-only. The shape of the input tensor.
+     *
+     * ```
+     * const [dimension] = jdunpack<[number[]]>(buf, "u16[]")
+     * ```
      */
     InputShape = 0x180,
 
     /**
-     * Read-only dimension uint16_t. The shape of the output tensor.
+     * Read-only. The shape of the output tensor.
+     *
+     * ```
+     * const [dimension] = jdunpack<[number[]]>(buf, "u16[]")
+     * ```
      */
     OutputShape = 0x181,
 
@@ -1028,7 +1036,7 @@ export enum MouseCmd {
      * A ``DoubleClick`` is two clicks with ``150ms`` gap between them (that is, ``100ms`` first click, ``150ms`` gap, ``100ms`` second click).
      *
      * ```
-     * const [buttons, event] = pkt.unpack(buf, "HB")
+     * const [buttons, event] = jdunpack<[MouseButton, MouseButtonEvent]>(buf, "u16 u8")
      * ```
      */
     SetButton = 0x80,
@@ -1038,7 +1046,7 @@ export enum MouseCmd {
      * If the time is positive, it specifies how long to make the move.
      *
      * ```
-     * const [dx, dy, time] = pkt.unpack(buf, "hhH")
+     * const [dx, dy, time] = jdunpack<[number, number, number]>(buf, "i16 i16 u16")
      * ```
      */
     Move = 0x81,
@@ -1048,7 +1056,7 @@ export enum MouseCmd {
      * If the time is positive, it specifies how long to make the move.
      *
      * ```
-     * const [dy, time] = pkt.unpack(buf, "hH")
+     * const [dy, time] = jdunpack<[number, number]>(buf, "i16 u16")
      * ```
      */
     Wheel = 0x82,
@@ -1058,9 +1066,13 @@ export enum MouseCmd {
 export const SRV_MULTITOUCH = 0x18d55e2b
 export enum MultitouchReg {
     /**
-     * Read-only capacitance int32_t. Capacitance of channels. The capacitance is continuously calibrated, and a value of `0` indicates
+     * Read-only. Capacitance of channels. The capacitance is continuously calibrated, and a value of `0` indicates
      * no touch, wheres a value of around `100` or more indicates touch.
      * It's best to ignore this (unless debugging), and use events.
+     *
+     * ```
+     * const [capacitance] = jdunpack<[number[]]>(buf, "i32[]")
+     * ```
      */
     Capacity = 0x101,
 }
@@ -1264,7 +1276,8 @@ export enum PwmLightReg {
      * Step with `duration == 0` is treated as an end marker.
      *
      * ```
-     * const [startIntensity, duration] = pkt.unpack(buf, "HH")
+     * const [rest] = jdunpack<[([number, number])[]]>(buf, "r: u16 u16")
+     * const [startIntensity, duration] = rest[0]
      * ```
      */
     Steps = 0x82,
@@ -1292,15 +1305,14 @@ export enum RoleManagerReg {
 
 export enum RoleManagerCmd {
     /**
-     * Argument: device_id uint64_t. Get the role corresponding to given device identifer. Returns empty string if unset.
+     * Argument: device_id devid (uint64_t). Get the role corresponding to given device identifer. Returns empty string if unset.
      */
     GetRole = 0x80,
 
     /**
      * report GetRole
      * ```
-     * const deviceId = buf.slice(0, 8)
-     * const role = buf.slice(8).toString()
+     * const [deviceId, role] = jdunpack<[UInt8Array, string]>(buf, "b[8] s")
      * ```
      */
 
@@ -1308,8 +1320,7 @@ export enum RoleManagerCmd {
      * Set role. Can set to empty to remove role binding.
      *
      * ```
-     * const deviceId = buf.slice(0, 8)
-     * const role = buf.slice(8).toString()
+     * const [deviceId, role] = jdunpack<[UInt8Array, string]>(buf, "b[8] s")
      * ```
      */
     SetRole = 0x81,
@@ -1334,17 +1345,14 @@ export enum RoleManagerCmd {
 /**
  * pipe_report StoredRoles
  * ```
- * const deviceId = buf.slice(0, 8)
- * const role = buf.slice(8).toString()
+ * const [deviceId, role] = jdunpack<[UInt8Array, string]>(buf, "b[8] s")
  * ```
  */
 
 /**
  * pipe_report RequiredRoles
  * ```
- * const [serviceClass] = pkt.unpack(buf, "8xL")
- * const deviceId = buf.slice(0, 8)
- * const roles = buf.slice(12).toString()
+ * const [deviceId, serviceClass, roles] = jdunpack<[UInt8Array, number, string]>(buf, "b[8] u32 s")
  * ```
  */
 
@@ -1381,8 +1389,7 @@ export enum SettingsCmd {
     /**
      * report Get
      * ```
-     * const key = string0(buf, 0, 0)
-     * const value = buf.slice(0)
+     * const [key, value] = jdunpack<[string, UInt8Array]>(buf, "z b")
      * ```
      */
 
@@ -1390,8 +1397,7 @@ export enum SettingsCmd {
      * Set the value of a given setting.
      *
      * ```
-     * const key = string0(buf, 0, 0)
-     * const value = buf.slice(0)
+     * const [key, value] = jdunpack<[string, UInt8Array]>(buf, "z b")
      * ```
      */
     Set = 0x81,
@@ -1421,8 +1427,7 @@ export enum SettingsCmd {
 /**
  * pipe_report ListedEntry
  * ```
- * const key = string0(buf, 0, 0)
- * const value = buf.slice(0)
+ * const [key, value] = jdunpack<[string, UInt8Array]>(buf, "z b")
  * ```
  */
 
@@ -1458,8 +1463,7 @@ export enum TCPPipeCmd {
      * Connection is closed by closing the pipe.
      *
      * ```
-     * const [tcpPort] = pkt.unpack(buf, "H")
-     * const hostname = buf.slice(2).toString()
+     * const [tcpPort, hostname] = jdunpack<[number, string]>(buf, "u16 s")
      * ```
      */
     OpenSsl = 0x1,
@@ -1506,8 +1510,7 @@ export enum WifiCmd {
      * Connect to named network.
      *
      * ```
-     * const ssid = string0(buf, 0, 0)
-     * const password = string0(buf, 0, 1)
+     * const [ssid, password] = jdunpack<[string, string]>(buf, "z z")
      * ```
      */
     Connect = 0x81,
@@ -1522,9 +1525,7 @@ export enum WifiCmd {
 /**
  * pipe_report Results
  * ```
- * const [flags, reserved, rssi, channel] = pkt.unpack(buf, "LLbB")
- * const bssid = buf.slice(10, 16)
- * const ssid = buf.slice(16).toString()
+ * const [flags, rssi, channel, bssid, ssid] = jdunpack<[WifiAPFlags, number, number, UInt8Array, string]>(buf, "u32 x[4] i8 u8 b[6] s[33]")
  * ```
  */
 

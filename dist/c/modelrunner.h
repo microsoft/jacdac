@@ -40,19 +40,31 @@
 #define JD_MODEL_RUNNER_REG_AUTO_INVOKE_EVERY 0x80
 
 /**
- * Read-only output f32 (uint32_t). Results of last model invocation as `float32` array.
+ * Read-only. Results of last model invocation as `float32` array.
  */
 #define JD_MODEL_RUNNER_REG_OUTPUTS JD_REG_READING
+typedef struct jd_model_runner_outputs {
+    uint32_t output[0];  // f32
+} jd_model_runner_outputs_t;
+
 
 /**
- * Read-only dimension uint16_t. The shape of the input tensor.
+ * Read-only. The shape of the input tensor.
  */
 #define JD_MODEL_RUNNER_REG_INPUT_SHAPE 0x180
+typedef struct jd_model_runner_input_shape {
+    uint16_t dimension[0];
+} jd_model_runner_input_shape_t;
+
 
 /**
- * Read-only dimension uint16_t. The shape of the output tensor.
+ * Read-only. The shape of the output tensor.
  */
 #define JD_MODEL_RUNNER_REG_OUTPUT_SHAPE 0x181
+typedef struct jd_model_runner_output_shape {
+    uint16_t dimension[0];
+} jd_model_runner_output_shape_t;
+
 
 /**
  * Read-only μs uint32_t. The time consumed in last model execution.

@@ -1241,7 +1241,6 @@ function toTypescript(info: jdspec.ServiceSpec, isStatic: boolean) {
     r += indent + "// Service: " + info.name + "\n"
     if (info.shortId[0] != "_") {
         r += indent + `export const SRV_${snakify(info.camelName).toLocaleUpperCase()} = ${toHex(info.classIdentifier)}\n`
-        r += indent + `export const SRV_${snakify(info.camelName).toLocaleUpperCase()}_SHORT_ID = "${info.shortId}"\n`
     }
     const pref = upperCamel(info.camelName)
     for (let en of values(info.enums)) {

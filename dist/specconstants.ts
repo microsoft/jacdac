@@ -136,7 +136,6 @@ export enum SensorReg {
 
 // Service: Accelerometer
 export const SRV_ACCELEROMETER = 0x1f140409
-export const SRV_ACCELEROMETER_SHORT_ID = "accelerometer"
 export enum AccelerometerReg {
     /**
      * Indicates the current forces acting on accelerometer.
@@ -212,7 +211,6 @@ export enum AccelerometerEvent {
 
 // Service: Sensor Aggregator
 export const SRV_SENSOR_AGGREGATOR = 0x1d90e1c5
-export const SRV_SENSOR_AGGREGATOR_SHORT_ID = "aggregator"
 
 export enum SensorAggregatorSampleType { // uint8_t
     U8 = 0x8,
@@ -258,7 +256,6 @@ export enum SensorAggregatorReg {
 
 // Service: Bootloader
 export const SRV_BOOTLOADER = 0x1ffa9948
-export const SRV_BOOTLOADER_SHORT_ID = "bootloader"
 
 export enum BootloaderError { // uint32_t
     NoError = 0x0,
@@ -309,7 +306,6 @@ export enum BootloaderCmd {
 
 // Service: Button
 export const SRV_BUTTON = 0x1473a263
-export const SRV_BUTTON_SHORT_ID = "button"
 export enum ButtonReg {
     /**
      * Read-only bool (uint8_t). Indicates whether the button is currently active (pressed).
@@ -341,7 +337,6 @@ export enum ButtonEvent {
 
 // Service: Buzzer
 export const SRV_BUZZER = 0x1b57b1d7
-export const SRV_BUZZER_SHORT_ID = "buzzer"
 export enum BuzzerReg {
     /**
      * Read-write ratio uint8_t. The volume (duty cycle) of the buzzer.
@@ -365,7 +360,6 @@ export enum BuzzerCmd {
 
 // Service: CODAL Message Bus
 export const SRV_CODAL_MESSAGE_BUS = 0x16ad7cd5
-export const SRV_CODAL_MESSAGE_BUS_SHORT_ID = "codalmessagebus"
 export enum CodalMessageBusCmd {
     /**
      * Sends a new event on the message bus.
@@ -379,7 +373,6 @@ export enum CodalMessageBusCmd {
 
 // Service: Control
 export const SRV_CONTROL = 0x0
-export const SRV_CONTROL_SHORT_ID = "control"
 
 export enum ControlAnnounceFlags { // uint8_t
     SupportsACK = 0x1,
@@ -463,7 +456,6 @@ export enum ControlReg {
 
 // Service: Gamepad
 export const SRV_GAMEPAD = 0x1deaa06e
-export const SRV_GAMEPAD_SHORT_ID = "gamepad"
 
 export enum GamepadButton { // uint16_t
     Left = 0x1,
@@ -527,7 +519,6 @@ export enum GamepadEvent {
 
 // Service: Humidity
 export const SRV_HUMIDITY = 0x16c810b8
-export const SRV_HUMIDITY_SHORT_ID = "humidity"
 export enum HumidityReg {
     /**
      * Read-only %RH u22.10 (uint32_t). The relative humidity in percentage of full water saturation.
@@ -537,7 +528,6 @@ export enum HumidityReg {
 
 // Service: Azure IoT Hub
 export const SRV_IOT_HUB = 0x19ed364c
-export const SRV_IOT_HUB_SHORT_ID = "iothub"
 export enum IotHubCmd {
     /**
      * No args. Try connecting using currently set `connection_string`.
@@ -690,7 +680,6 @@ export enum IotHubEvent {
 
 // Service: Keyboard
 export const SRV_KEYBOARD = 0x18b05b6a
-export const SRV_KEYBOARD_SHORT_ID = "keyboard"
 
 export enum KeyboardModifiers { // uint8_t
     LeftControl = 0xe0,
@@ -729,7 +718,6 @@ export enum KeyboardCmd {
 
 // Service: LED Matrix Controller
 export const SRV_LED_MATRIX_CONTROLLER = 0x1d35e393
-export const SRV_LED_MATRIX_CONTROLLER_SHORT_ID = "ledmatrixcontroller"
 export enum LedMatrixControllerReg {
     /**
      * Read-write bytes. Read or writes the state of the screen where pixel on/off state is
@@ -767,7 +755,6 @@ export enum LedMatrixControllerCmd {
 
 // Service: LED Matrix Display
 export const SRV_LED_MATRIX_DISPLAY = 0x110d154b
-export const SRV_LED_MATRIX_DISPLAY_SHORT_ID = "ledmatrixdisplay"
 export enum LedMatrixDisplayReg {
     /**
      * Read-only bytes. Streams the state of the screen where pixel on/off state is
@@ -778,7 +765,6 @@ export enum LedMatrixDisplayReg {
 
 // Service: Light
 export const SRV_LIGHT = 0x126f00e0
-export const SRV_LIGHT_SHORT_ID = "light"
 
 export enum LightLightType { // uint8_t
     WS2812B_GRB = 0x0,
@@ -830,7 +816,6 @@ export enum LightCmd {
 
 // Service: Logger
 export const SRV_LOGGER = 0x12dc1fca
-export const SRV_LOGGER_SHORT_ID = "logger"
 
 export enum LoggerPriority { // uint8_t
     Debug = 0x0,
@@ -874,7 +859,6 @@ export enum LoggerCmd {
 
 // Service: Microphone
 export const SRV_MICROPHONE = 0x113dac86
-export const SRV_MICROPHONE_SHORT_ID = "microphone"
 export enum MicrophoneCmd {
     /**
      * The samples will be streamed back over the `samples` pipe.
@@ -899,7 +883,6 @@ export enum MicrophoneReg {
 
 // Service: Model Runner
 export const SRV_MODEL_RUNNER = 0x140f9a78
-export const SRV_MODEL_RUNNER_SHORT_ID = "modelrunner"
 
 export enum ModelRunnerModelFormat { // uint32_t
     TFLite = 0x334c4654,
@@ -1001,7 +984,6 @@ export enum ModelRunnerReg {
 
 // Service: Motor
 export const SRV_MOTOR = 0x17004cd8
-export const SRV_MOTOR_SHORT_ID = "motor"
 export enum MotorReg {
     /**
      * Read-write ratio int16_t. PWM duty cycle of the motor. Use negative/positive values to run the motor forwards and backwards.
@@ -1017,7 +999,6 @@ export enum MotorReg {
 
 // Service: Mouse
 export const SRV_MOUSE = 0x1885dc1c
-export const SRV_MOUSE_SHORT_ID = "mouse"
 
 export enum MouseButton { // uint16_t
     Right = 0x1,
@@ -1068,7 +1049,6 @@ export enum MouseCmd {
 
 // Service: Multitouch
 export const SRV_MULTITOUCH = 0x18d55e2b
-export const SRV_MULTITOUCH_SHORT_ID = "multitouch"
 export enum MultitouchReg {
     /**
      * Read-only. Capacitance of channels. The capacitance is continuously calibrated, and a value of `0` indicates
@@ -1116,7 +1096,6 @@ export enum MultitouchEvent {
 
 // Service: Power
 export const SRV_POWER = 0x1fa4c95a
-export const SRV_POWER_SHORT_ID = "power"
 export enum PowerReg {
     /**
      * Read-write bool (uint8_t). Turn the power to the bus on/off.
@@ -1172,7 +1151,6 @@ export enum PowerReg {
 
 // Service: Protocol Test
 export const SRV_PROTO_TEST = 0x16c7466a
-export const SRV_PROTO_TEST_SHORT_ID = "prototest"
 export enum ProtoTestReg {
     /**
      * Read-write bool (uint8_t). A read write bool register.
@@ -1261,7 +1239,6 @@ export enum ProtoTestCmd {
 
 // Service: PWM Light
 export const SRV_PWM_LIGHT = 0x1fb57453
-export const SRV_PWM_LIGHT_SHORT_ID = "pwmlight"
 export enum PwmLightReg {
     /**
      * Read-write ratio uint16_t. Set the luminosity of the strip. The value is used to scale `start_intensity` in `steps` register.
@@ -1304,7 +1281,6 @@ export enum PwmLightReg {
 
 // Service: Role Manager
 export const SRV_ROLE_MANAGER = 0x119c3ad1
-export const SRV_ROLE_MANAGER_SHORT_ID = "rolemanager"
 export enum RoleManagerReg {
     /**
      * Read-only bool (uint8_t). Indicates if all required roles have been allocated to devices.
@@ -1375,7 +1351,6 @@ export enum RoleManagerEvent {
 
 // Service: Rotary encoder
 export const SRV_ROTARY_ENCODER = 0x10fa29c9
-export const SRV_ROTARY_ENCODER_SHORT_ID = "rotary-encoder"
 export enum RotaryEncoderReg {
     /**
      * Read-only # int32_t. Upon device reset starts at `0` (regardless of the shaft position).
@@ -1391,7 +1366,6 @@ export enum RotaryEncoderReg {
 
 // Service: Servo
 export const SRV_SERVO = 0x12fc9103
-export const SRV_SERVO_SHORT_ID = "servo"
 export enum ServoReg {
     /**
      * Read-write μs uint32_t. Specifies length of the pulse in microseconds. The period is always 20ms.
@@ -1406,7 +1380,6 @@ export enum ServoReg {
 
 // Service: Settings
 export const SRV_SETTINGS = 0x1107dc4a
-export const SRV_SETTINGS_SHORT_ID = "settings"
 export enum SettingsCmd {
     /**
      * Argument: key string (bytes). Get the value of given setting. If no such entry exists, the value returned is empty.
@@ -1461,7 +1434,6 @@ export enum SettingsCmd {
 
 // Service: Slider
 export const SRV_SLIDER = 0x1f274746
-export const SRV_SLIDER_SHORT_ID = "slider"
 export enum SliderReg {
     /**
      * Read-only ratio uint16_t. The relative position of the slider between `0x0000` and `0xffff`.
@@ -1471,7 +1443,6 @@ export enum SliderReg {
 
 // Service: TCP
 export const SRV_TCP = 0x1b43b70b
-export const SRV_TCP_SHORT_ID = "tcp"
 
 export enum TcpTcpError { // int32_t
     InvalidCommand = 0x1,
@@ -1505,7 +1476,6 @@ export enum TcpPipeCmd {
 
 // Service: Thermometer
 export const SRV_THERMOMETER = 0x1421bac7
-export const SRV_THERMOMETER_SHORT_ID = "thermometer"
 export enum ThermometerReg {
     /**
      * Read-only °C u22.10 (uint32_t). The temperature.
@@ -1515,7 +1485,6 @@ export enum ThermometerReg {
 
 // Service: WIFI
 export const SRV_WIFI = 0x18aae1fa
-export const SRV_WIFI_SHORT_ID = "wifi"
 
 export enum WifiAPFlags { // uint32_t
     HasPassword = 0x1,

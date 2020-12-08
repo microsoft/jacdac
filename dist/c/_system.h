@@ -94,7 +94,7 @@ typedef struct jd_system_event_report {
  * state. This report is typically not queried, when a device has an error, it will typically
  * add this report in frame along with the anounce packet.
  */
-#define JD_REG_STATUS_CODE 0x7
+#define JD_REG_STATUS_CODE 0x103
 typedef struct jd_system_status_code {
     uint16_t code;
     uint16_t vendor_code;

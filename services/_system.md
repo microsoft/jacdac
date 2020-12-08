@@ -90,7 +90,7 @@ Read-only value of the sensor, also reported in streaming.
 
 Thresholds for event generation for event generation for analog sensors.
 
-    ro status_code @ 0x7 {
+    ro status_code @ 0x103 {
         code: u16
         vendor_code: u16
     }
@@ -106,10 +106,10 @@ Preferred default streaming interval for sensor in milliseconds.
 
 ## Events
 
-Command codes are subdivided as follows:
-* Commands `0x000-0x07f` - common to all services
-* Commands `0x080-0xeff` - defined per-service
-* Commands `0xf00-0xfff` - reserved for implementation
+Events codes are subdivided as follows:
+* Events `0x000-0x07f` - common to all services
+* Events `0x080-0xeff` - defined per-service
+* Events `0xf00-0xfff` - reserved for implementation
 
     event change @ 0x02 { }
 

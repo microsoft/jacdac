@@ -7,52 +7,52 @@
 /**
  * Read-write bool (uint8_t). A read write bool register.
  */
-#define JD_PROTO_TEST_REG_RW_BOOL 0x181
+#define JD_PROTO_TEST_REG_RW_BOOL 0x81
 
 /**
  * Read-only bool (uint8_t). A read only bool register. Mirrors rw_bool.
  */
-#define JD_PROTO_TEST_REG_RO_BOOL 0x182
+#define JD_PROTO_TEST_REG_RO_BOOL 0x181
 
 /**
  * Read-write uint32_t. A read write u32 register.
  */
-#define JD_PROTO_TEST_REG_RW_U32 0x190
+#define JD_PROTO_TEST_REG_RW_U32 0x82
 
 /**
  * Read-only uint32_t. A read only u32 register.. Mirrors rw_u32.
  */
-#define JD_PROTO_TEST_REG_RO_U32 0x191
+#define JD_PROTO_TEST_REG_RO_U32 0x182
 
 /**
  * Read-write int32_t. A read write i32 register.
  */
-#define JD_PROTO_TEST_REG_RW_I32 0x192
+#define JD_PROTO_TEST_REG_RW_I32 0x83
 
 /**
  * Read-only int32_t. A read only i32 register.. Mirrors rw_i32.
  */
-#define JD_PROTO_TEST_REG_RO_I32 0x193
+#define JD_PROTO_TEST_REG_RO_I32 0x183
 
 /**
  * Read-write string (bytes). A read write string register.
  */
-#define JD_PROTO_TEST_REG_RW_STRING 0x1a0
+#define JD_PROTO_TEST_REG_RW_STRING 0x84
 
 /**
  * Read-only string (bytes). A read only string register. Mirrors rw_string.
  */
-#define JD_PROTO_TEST_REG_RO_STRING 0x1a1
+#define JD_PROTO_TEST_REG_RO_STRING 0x184
 
 /**
  * Read-write bytes. A read write string register.
  */
-#define JD_PROTO_TEST_REG_RW_BYTES 0x1b0
+#define JD_PROTO_TEST_REG_RW_BYTES 0x85
 
 /**
  * Read-only bytes. A read only string register. Mirrors ro_bytes.
  */
-#define JD_PROTO_TEST_REG_RO_BYTES 0x1b1
+#define JD_PROTO_TEST_REG_RO_BYTES 0x185
 
 /**
  * Argument: bool bool (uint8_t). An event raised when rw_bool is modified

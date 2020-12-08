@@ -96,7 +96,7 @@ export enum SystemReg {
      * const [code, vendorCode] = jdunpack<[number, number]>(buf, "u16 u16")
      * ```
      */
-    StatusCode = 0x7,
+    StatusCode = 0x103,
 
     /**
      * Constant ms uint32_t. Preferred default streaming interval for sensor in milliseconds.
@@ -124,7 +124,7 @@ export enum BaseReg {
      * const [code, vendorCode] = jdunpack<[number, number]>(buf, "u16 u16")
      * ```
      */
-    StatusCode = 0x7,
+    StatusCode = 0x103,
 }
 
 // Service: Sensor
@@ -1295,52 +1295,52 @@ export enum ProtoTestReg {
     /**
      * Read-write bool (uint8_t). A read write bool register.
      */
-    RwBool = 0x181,
+    RwBool = 0x81,
 
     /**
      * Read-only bool (uint8_t). A read only bool register. Mirrors rw_bool.
      */
-    RoBool = 0x182,
+    RoBool = 0x181,
 
     /**
      * Read-write uint32_t. A read write u32 register.
      */
-    RwU32 = 0x190,
+    RwU32 = 0x82,
 
     /**
      * Read-only uint32_t. A read only u32 register.. Mirrors rw_u32.
      */
-    RoU32 = 0x191,
+    RoU32 = 0x182,
 
     /**
      * Read-write int32_t. A read write i32 register.
      */
-    RwI32 = 0x192,
+    RwI32 = 0x83,
 
     /**
      * Read-only int32_t. A read only i32 register.. Mirrors rw_i32.
      */
-    RoI32 = 0x193,
+    RoI32 = 0x183,
 
     /**
      * Read-write string (bytes). A read write string register.
      */
-    RwString = 0x1a0,
+    RwString = 0x84,
 
     /**
      * Read-only string (bytes). A read only string register. Mirrors rw_string.
      */
-    RoString = 0x1a1,
+    RoString = 0x184,
 
     /**
      * Read-write bytes. A read write string register.
      */
-    RwBytes = 0x1b0,
+    RwBytes = 0x85,
 
     /**
      * Read-only bytes. A read only string register. Mirrors ro_bytes.
      */
-    RoBytes = 0x1b1,
+    RoBytes = 0x185,
 }
 
 export enum ProtoTestEvent {

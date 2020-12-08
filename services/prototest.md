@@ -20,48 +20,45 @@ For each ``rw`` registers, set a random value ``x``
 Every ``rw`` register has a corresponding ``ro`` regisrer
 and a corresponding ``set_...`` command to also set the value.
 
-    rw rw_bool : bool @ 0x181
+    rw rw_bool : bool @ 0x081
 
 A read write bool register.
 
-    ro ro_bool : bool @ 0x182
+    ro ro_bool : bool @ 0x181
 
 A read only bool register. Mirrors rw_bool.
 
-    rw rw_u32 : u32 @ 0x190
+    rw rw_u32 : u32 @ 0x082
 
 A read write u32 register.
 
-    ro ro_u32 : u32 @ 0x191
+    ro ro_u32 : u32 @ 0x182
 
 A read only u32 register.. Mirrors rw_u32.
 
-    rw rw_i32 : i32 @ 0x192
+    rw rw_i32 : i32 @ 0x083
 
 A read write i32 register.
 
-    ro ro_i32 : i32 @ 0x193
+    ro ro_i32 : i32 @ 0x183
 
 A read only i32 register.. Mirrors rw_i32.
 
-    rw rw_string : string @ 0x1a0
+    rw rw_string : string @ 0x084
 
 A read write string register.
 
-    ro ro_string : string @ 0x1a1
+    ro ro_string : string @ 0x184
 
 A read only string register. Mirrors rw_string.
 
-    rw rw_bytes : bytes @ 0x1b0
+    rw rw_bytes : bytes @ 0x085
 
 A read write string register.
 
-    ro ro_bytes : bytes @ 0x1b1
+    ro ro_bytes : bytes @ 0x185
 
 A read only string register. Mirrors ro_bytes.
-
-
-A read only u8/u16/u32 register.
 
 ## Events
 

@@ -127,6 +127,40 @@ export function resolveUnit(unit: string) {
     return undefined;
 }
 
+
+/* check ranges, see system.md
+Registers `0x001-0x07f` - r/w common to all services
+Registers `0x080-0x0ff` - r/w defined per-service
+Registers `0x100-0x17f` - r/o common to all services
+Registers `0x180-0x1ff` - r/o defined per-service
+Registers `0x200-0xeff` - custom, defined per-service
+Registers `0xf00-0xfff` - reserved for implementation, should not be seen on the wire
+*/
+const identifierRanges: { [index: string]: [number, number][] } = {
+    "rw": [
+        [0x001, 0x07f],
+        [0x080, 0x0ff],
+        [0x200, 0xeff], // custom
+        [0xf00, 0xfff], // impl
+    ],
+    "ro": [
+        [0x100, 0x17f],
+        [0x180, 0x1ff],
+        [0x200, 0xeff], // custom
+        [0xf00, 0xfff], // impl
+    ],
+    "command": [
+        [0x000, 0x07f],
+        [0x080, 0xeff],
+        [0xf00, 0xfff],
+    ],
+    "event": [
+        [0x000, 0x07f],
+        [0x080, 0xeff],
+        [0xf00, 0xfff],
+    ],
+};
+
 export function parseServiceSpecificationMarkdownToJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>, filename = ""): jdspec.ServiceSpec {
     filecontent = (filecontent || "").replace(/\r/g, "")
     let info: jdspec.ServiceSpec = {
@@ -302,6 +336,14 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
         packetInfo.packed = hasNaturalAlignment(packetInfo) ? undefined : true
         if (packetInfo.packed)
             warn(`you may want to use explicit padding in ${packetInfo.name}`)
+
+        const pid = packetInfo.identifier;
+        const ranges = identifierRanges[packetInfo.kind];
+        if (packetInfo.name != "set_register"
+            && packetInfo.name != "get_register"
+            && ranges && !ranges.some(range => range[0] <= pid && pid <= range[1]))
+            error(`${packetInfo.name} identifier 0x${pid.toString(16)} out of range, expected in ${ranges.map(range => `[${range.map(r => `0x${r.toString(16)}`).join(', ')}]`).join(', ')}`)
+
         packetInfo = null
     }
 

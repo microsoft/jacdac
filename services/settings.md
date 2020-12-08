@@ -1,4 +1,4 @@
-# Settings Storage
+# Settings
 
     identifier: 0x1107dc4a
     camel: settings

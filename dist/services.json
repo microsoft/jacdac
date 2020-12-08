@@ -641,8 +641,8 @@
     "name": "Sensor Aggregator",
     "status": "experimental",
     "shortId": "aggregator",
-    "camelName": "SensorAggregator",
-    "shortName": "SensorAggregator",
+    "camelName": "sensorAggregator",
+    "shortName": "sensorAggregator",
     "extends": [
       "_base"
     ],
@@ -834,8 +834,8 @@
     "name": "Bootloader",
     "status": "experimental",
     "shortId": "bootloader",
-    "camelName": "Bootloader",
-    "shortName": "Bootloader",
+    "camelName": "bootloader",
+    "shortName": "bootloader",
     "extends": [
       "_base"
     ],
@@ -1082,8 +1082,8 @@
     "name": "Button",
     "status": "experimental",
     "shortId": "button",
-    "camelName": "Button",
-    "shortName": "Button",
+    "camelName": "button",
+    "shortName": "button",
     "extends": [
       "_base",
       "_sensor"
@@ -1324,8 +1324,8 @@
     "name": "CODAL Message Bus",
     "status": "experimental",
     "shortId": "codalmessagebus",
-    "camelName": "CODALMessageBus",
-    "shortName": "CODALMessageBus",
+    "camelName": "codalMessageBus",
+    "shortName": "codalMessageBus",
     "extends": [
       "_base"
     ],
@@ -1385,7 +1385,7 @@
         "packFormat": "u16 u16"
       }
     ],
-    "source": "# CODAL Message Bus\n\n    identifier: 0x16ad7cd5\n    \nA service that allows passing events through the [CODAL Message Bus](https://lancaster-university.github.io/microbit-docs/ubit/messageBus/)\n* ``id`` is a unique identifier that identifies a component in the device. Use ``0`` to address all sources. The value of other identifiers is typically hardware dependent.\n* ``event`` is an identifier that determines the event type. Use ``0`` as a wildcard.\n\n## Commands\n\n    command send @ 0x80 {\n        id: u16\n        event: u16\n    }\n    \nSends a new event on the message bus.\n"
+    "source": "# CODAL Message Bus\n\n    identifier: 0x16ad7cd5\n    camel: codalMessageBus\n    \nA service that allows passing events through the [CODAL Message Bus](https://lancaster-university.github.io/microbit-docs/ubit/messageBus/)\n* ``id`` is a unique identifier that identifies a component in the device. Use ``0`` to address all sources. The value of other identifiers is typically hardware dependent.\n* ``event`` is an identifier that determines the event type. Use ``0`` as a wildcard.\n\n## Commands\n\n    command send @ 0x80 {\n        id: u16\n        event: u16\n    }\n    \nSends a new event on the message bus.\n"
   },
   {
     "name": "Control",
@@ -1650,7 +1650,7 @@
     "name": "Rotary encoder",
     "status": "experimental",
     "shortId": "crank",
-    "camelName": "RotaryEncoder",
+    "camelName": "rotaryEncoder",
     "shortName": "crank",
     "extends": [
       "_base",
@@ -1789,8 +1789,8 @@
     "name": "Gamepad",
     "status": "experimental",
     "shortId": "gamepad",
-    "camelName": "Gamepad",
-    "shortName": "Gamepad",
+    "camelName": "gamepad",
+    "shortName": "gamepad",
     "extends": [
       "_base",
       "_sensor"
@@ -2029,8 +2029,8 @@
     "name": "Humidity",
     "status": "experimental",
     "shortId": "humidity",
-    "camelName": "Humidity",
-    "shortName": "Humidity",
+    "camelName": "humidity",
+    "shortName": "humidity",
     "extends": [
       "_base",
       "_sensor"
@@ -2727,8 +2727,8 @@
     "name": "Keyboard",
     "status": "experimental",
     "shortId": "keyboard",
-    "camelName": "Keyboard",
-    "shortName": "Keyboard",
+    "camelName": "keyboard",
+    "shortName": "keyboard",
     "extends": [
       "_base"
     ],
@@ -2832,8 +2832,8 @@
     "name": "LED Matrix Controller",
     "status": "experimental",
     "shortId": "ledmatrixcontroller",
-    "camelName": "LEDMatrixController",
-    "shortName": "LEDMatrixController",
+    "camelName": "lEDMatrixController",
+    "shortName": "lEDMatrixController",
     "extends": [
       "_base"
     ],
@@ -2962,8 +2962,8 @@
     "name": "LED Matrix Display",
     "status": "experimental",
     "shortId": "ledmatrixdisplay",
-    "camelName": "LEDMatrixDisplay",
-    "shortName": "LEDMatrixDisplay",
+    "camelName": "ledMatrixDisplay",
+    "shortName": "ledMatrixDisplay",
     "extends": [
       "_base",
       "_sensor"
@@ -3078,14 +3078,14 @@
         "packFormat": "b"
       }
     ],
-    "source": "# LED Matrix Display\n\n    identifier: 0x110d154b\n    extends: _sensor\n\nA sensor that streams the state of a rectangular LED matrix.\nTo control the state of the screen, use [LED Matrix Controller](/services/led-matrix-controller) instead.\n\n\n## Registers\n\n    ro leds : bytes @ reading\n    \nStreams the state of the screen where pixel on/off state is \nstored as a bit, column by column. The column should be byte aligned.\n"
+    "source": "# LED Matrix Display\n\n    identifier: 0x110d154b\n    extends: _sensor\n    camel: ledMatrixDisplay\n\nA sensor that streams the state of a rectangular LED matrix.\nTo control the state of the screen, use [LED Matrix Controller](/services/led-matrix-controller) instead.\n\n\n## Registers\n\n    ro leds : bytes @ reading\n    \nStreams the state of the screen where pixel on/off state is \nstored as a bit, column by column. The column should be byte aligned.\n"
   },
   {
     "name": "Light",
     "status": "experimental",
     "shortId": "light",
-    "camelName": "Light",
-    "shortName": "Light",
+    "camelName": "light",
+    "shortName": "light",
     "extends": [
       "_base"
     ],
@@ -3241,8 +3241,8 @@
     "name": "Logger",
     "status": "experimental",
     "shortId": "logger",
-    "camelName": "Logger",
-    "shortName": "Logger",
+    "camelName": "logger",
+    "shortName": "logger",
     "extends": [
       "_base"
     ],
@@ -3372,8 +3372,8 @@
     "name": "Microphone",
     "status": "experimental",
     "shortId": "microphone",
-    "camelName": "Microphone",
-    "shortName": "Microphone",
+    "camelName": "microphone",
+    "shortName": "microphone",
     "extends": [
       "_base"
     ],
@@ -3455,8 +3455,8 @@
     "name": "Model Runner",
     "status": "experimental",
     "shortId": "modelrunner",
-    "camelName": "ModelRunner",
-    "shortName": "ModelRunner",
+    "camelName": "modelRunner",
+    "shortName": "modelRunner",
     "extends": [
       "_base"
     ],
@@ -3755,8 +3755,8 @@
     "name": "Motor",
     "status": "experimental",
     "shortId": "motor",
-    "camelName": "Motor",
-    "shortName": "Motor",
+    "camelName": "motor",
+    "shortName": "motor",
     "extends": [
       "_base"
     ],
@@ -3833,8 +3833,8 @@
     "name": "Mouse",
     "status": "experimental",
     "shortId": "mouse",
-    "camelName": "Mouse",
-    "shortName": "Mouse",
+    "camelName": "mouse",
+    "shortName": "mouse",
     "extends": [
       "_base"
     ],
@@ -3972,8 +3972,8 @@
     "name": "Multitouch",
     "status": "experimental",
     "shortId": "multitouch",
-    "camelName": "Multitouch",
-    "shortName": "Multitouch",
+    "camelName": "multitouch",
+    "shortName": "multitouch",
     "extends": [
       "_base",
       "_sensor"
@@ -4174,8 +4174,8 @@
     "name": "Power",
     "status": "experimental",
     "shortId": "power",
-    "camelName": "Power",
-    "shortName": "Power",
+    "camelName": "power",
+    "shortName": "power",
     "extends": [
       "_base"
     ],
@@ -4825,8 +4825,8 @@
     "name": "Role Manager",
     "status": "experimental",
     "shortId": "rolemanager",
-    "camelName": "RoleManager",
-    "shortName": "RoleManager",
+    "camelName": "roleManager",
+    "shortName": "roleManager",
     "extends": [
       "_base"
     ],
@@ -5041,8 +5041,8 @@
     "name": "Servo",
     "status": "experimental",
     "shortId": "servo",
-    "camelName": "Servo",
-    "shortName": "Servo",
+    "camelName": "servo",
+    "shortName": "servo",
     "extends": [
       "_base"
     ],
@@ -5319,8 +5319,8 @@
     "name": "Slider",
     "status": "experimental",
     "shortId": "slider",
-    "camelName": "Slider",
-    "shortName": "Slider",
+    "camelName": "slider",
+    "shortName": "slider",
     "extends": [
       "_base",
       "_sensor"
@@ -5442,8 +5442,8 @@
     "name": "TCP",
     "status": "experimental",
     "shortId": "tcp",
-    "camelName": "TCP",
-    "shortName": "TCP",
+    "camelName": "tcp",
+    "shortName": "tcp",
     "extends": [
       "_base"
     ],
@@ -5597,14 +5597,14 @@
         "packFormat": "i32"
       }
     ],
-    "source": "# TCP\n\n    identifier: 0x1b43b70b\n\nData transfer over TCP/IP and TLS stream sockets.\n\n## Commands\n\n    command open @ 0x80 {\n        inbound: pipe\n    }\n    report {\n        outbound_port: pipe_port\n    }\n\nOpen pair of pipes between network peripheral and a controlling device. In/outbound refers to direction from/to internet.\n\n## Pipes\n\n    meta pipe command open_ssl @ 0x01 {\n        tcp_port: u16\n        hostname: string\n    }\n\nOpen an SSL connection to a given host:port pair. Can be issued only once on given pipe.\nAfter the connection is established, an empty data report is sent.\nConnection is closed by closing the pipe.\n\n    pipe command outdata {\n        data: bytes\n    }\n\nBytes to be sent directly over an established TCP or SSL connection.\n\n    pipe report indata {\n        data: bytes\n    }\n\nBytes read directly from directly over an established TCP or SSL connection.\n\n    enum TcpError : i32 {\n        InvalidCommand = 1\n        InvalidCommandPayload = 2\n    }\n    meta pipe report error @ 0x00 {\n        error: TcpError\n    }\n\nReported when an error is encountered. Negative error codes come directly from the SSL implementation.\n"
+    "source": "# TCP\n\n    identifier: 0x1b43b70b\n    camel: tcp\n\nData transfer over TCP/IP and TLS stream sockets.\n\n## Commands\n\n    command open @ 0x80 {\n        inbound: pipe\n    }\n    report {\n        outbound_port: pipe_port\n    }\n\nOpen pair of pipes between network peripheral and a controlling device. In/outbound refers to direction from/to internet.\n\n## Pipes\n\n    meta pipe command open_ssl @ 0x01 {\n        tcp_port: u16\n        hostname: string\n    }\n\nOpen an SSL connection to a given host:port pair. Can be issued only once on given pipe.\nAfter the connection is established, an empty data report is sent.\nConnection is closed by closing the pipe.\n\n    pipe command outdata {\n        data: bytes\n    }\n\nBytes to be sent directly over an established TCP or SSL connection.\n\n    pipe report indata {\n        data: bytes\n    }\n\nBytes read directly from directly over an established TCP or SSL connection.\n\n    enum TcpError : i32 {\n        InvalidCommand = 1\n        InvalidCommandPayload = 2\n    }\n    meta pipe report error @ 0x00 {\n        error: TcpError\n    }\n\nReported when an error is encountered. Negative error codes come directly from the SSL implementation.\n"
   },
   {
     "name": "Thermometer",
     "status": "experimental",
     "shortId": "thermometer",
-    "camelName": "Thermometer",
-    "shortName": "Thermometer",
+    "camelName": "thermometer",
+    "shortName": "thermometer",
     "extends": [
       "_base",
       "_sensor"

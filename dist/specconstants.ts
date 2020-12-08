@@ -360,7 +360,7 @@ export enum BuzzerCmd {
 
 // Service: CODAL Message Bus
 export const SRV_CODAL_MESSAGE_BUS = 0x16ad7cd5
-export enum CODALMessageBusCmd {
+export enum CodalMessageBusCmd {
     /**
      * Sends a new event on the message bus.
      *
@@ -770,7 +770,7 @@ export enum LEDMatrixControllerCmd {
 
 // Service: LED Matrix Display
 export const SRV_LED_MATRIX_DISPLAY = 0x110d154b
-export enum LEDMatrixDisplayReg {
+export enum LedMatrixDisplayReg {
     /**
      * Read-only bytes. Streams the state of the screen where pixel on/off state is
      * stored as a bit, column by column. The column should be byte aligned.
@@ -1444,19 +1444,19 @@ export enum SliderReg {
 // Service: TCP
 export const SRV_TCP = 0x1b43b70b
 
-export enum TCPTcpError { // int32_t
+export enum TcpTcpError { // int32_t
     InvalidCommand = 0x1,
     InvalidCommandPayload = 0x2,
 }
 
-export enum TCPCmd {
+export enum TcpCmd {
     /**
      * Argument: inbound pipe (bytes). Open pair of pipes between network peripheral and a controlling device. In/outbound refers to direction from/to internet.
      */
     Open = 0x80,
 }
 
-export enum TCPPipeCmd {
+export enum TcpPipeCmd {
     /**
      * Open an SSL connection to a given host:port pair. Can be issued only once on given pipe.
      * After the connection is established, an empty data report is sent.

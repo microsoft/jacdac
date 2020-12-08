@@ -1,5 +1,5 @@
 /// <reference path="jdspec.d.ts" />
-import { converters, escapeDeviceIdentifier, escapeDeviceNameIdentifier, normalizeDeviceSpecification, parseServiceSpecificationMarkdownToJSON } from "./jdspec"
+import { converters, dashify, normalizeDeviceSpecification, parseServiceSpecificationMarkdownToJSON, snakify } from "./jdspec"
 
 declare var process: any;
 declare var require: any;
@@ -28,6 +28,10 @@ function processSpec(dn: string) {
     for (let n of Object.keys(converters()))
         mkdir(path.join(outp, n))
 
+    // generate makecode file structure
+    const mkcdir = path.join(outp, "makecode")
+    mkdir(mkcdir)
+
     const concats: jdspec.SMap<string> = {}
     for (let fn of files) {
         if (!/\.md$/.test(fn) || fn[0] == ".")
@@ -52,6 +56,16 @@ function processSpec(dn: string) {
             console.log(`written ${cfn}`)
             if (!concats[n]) concats[n] = ""
             concats[n] += convResult
+
+            if (n === "sts") {
+                if (/_/.test(json.shortId)) {
+                    fs.writeFileSync(path.join(mkcdir, dashify(`${json.camelName}-constants.ts`)), convResult)
+                } else {
+                    const srvdir = path.join(mkcdir, dashify(json.camelName))
+                    mkdir(srvdir);
+                    fs.writeFileSync(path.join(srvdir, "constants.ts"), convResult)
+                }
+            }
         }
     }
 

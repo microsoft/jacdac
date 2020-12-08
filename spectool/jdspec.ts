@@ -181,10 +181,10 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
         v.description = normalizeMD(v.description)
 
     if (!info.camelName)
-        info.camelName = info.name
+        info.camelName = camelize(info.name
             .replace(/\s+/g, " ")
             .replace(/[ -](.)/g, (f, l) => l.toUpperCase())
-            .replace(/[^\w]+/g, "_")
+            .replace(/[^\w]+/g, "_"))
     if (!info.shortName)
         info.shortName = info.camelName
 
@@ -1019,8 +1019,9 @@ function toH(info: jdspec.ServiceSpec) {
     return r
 }
 
-function camelize(name: string) {
-    return name?.replace(/_([a-z])/g, (_, l) => l.toUpperCase())
+export function camelize(name: string) {
+    if (!name) return name;
+    return name[0].toLowerCase() + name.slice(1).replace(/_([a-z])/g, (_, l) => l.toUpperCase())
 }
 
 function upperCamel(name: string) {
@@ -1029,8 +1030,12 @@ function upperCamel(name: string) {
     return name[0].toUpperCase() + name.slice(1)
 }
 
-function snakify(name: string) {
+export function snakify(name: string) {
     return name?.replace(/([a-z])([A-Z])/g, (_, a, b) => a + "_" + b)
+}
+
+export function dashify(name: string) {
+    return snakify(name).replace(/_/g, '-').toLowerCase();
 }
 
 function addComment(pkt: jdspec.PacketInfo) {

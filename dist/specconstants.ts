@@ -1,4 +1,15 @@
 // Service: Common registers and commands
+export const SRV_SYSTEM_EVENT_REPORT_PACK_FORMAT = "u32 u32"
+export const SRV_SYSTEM_INTENSITY_RW_PACK_FORMAT = "u32"
+export const SRV_SYSTEM_VALUE_RW_PACK_FORMAT = "i32"
+export const SRV_SYSTEM_MAX_POWER_RW_PACK_FORMAT = "u16"
+export const SRV_SYSTEM_STREAMING_SAMPLES_RW_PACK_FORMAT = "u8"
+export const SRV_SYSTEM_STREAMING_INTERVAL_RW_PACK_FORMAT = "u32"
+export const SRV_SYSTEM_READING_RO_PACK_FORMAT = "i32"
+export const SRV_SYSTEM_LOW_THRESHOLD_RW_PACK_FORMAT = "i32"
+export const SRV_SYSTEM_HIGH_THRESHOLD_RW_PACK_FORMAT = "i32"
+export const SRV_SYSTEM_STATUS_CODE_RO_PACK_FORMAT = "u16 u16"
+export const SRV_SYSTEM_STREAMING_PREFERRED_INTERVAL_CONST_PACK_FORMAT = "u32"
 export enum SystemCmd {
     /**
      * No args. Enumeration data for control service; service-specific advertisement data otherwise.
@@ -101,6 +112,7 @@ export enum SystemEvent {
 }
 
 // Service: Base service
+export const SRV_BASE_STATUS_CODE_RO_PACK_FORMAT = "u16 u16"
 export enum BaseReg {
     /**
      * Reports the current state or error status of the device. ``code`` is a standardized value from
@@ -116,6 +128,9 @@ export enum BaseReg {
 }
 
 // Service: Sensor
+export const SRV_SENSOR_STREAMING_SAMPLES_RW_PACK_FORMAT = "u8"
+export const SRV_SENSOR_STREAMING_INTERVAL_RW_PACK_FORMAT = "u32"
+export const SRV_SENSOR_STREAMING_PREFERRED_INTERVAL_CONST_PACK_FORMAT = "u32"
 export enum SensorReg {
     /**
      * Read-write uint8_t. Asks device to stream a given number of samples
@@ -136,6 +151,7 @@ export enum SensorReg {
 
 // Service: Accelerometer
 export const SRV_ACCELEROMETER = 0x1f140409
+export const SRV_ACCELEROMETER_FORCES_RO_PACK_FORMAT = "i6.10 i6.10 i6.10"
 export enum AccelerometerReg {
     /**
      * Indicates the current forces acting on accelerometer.
@@ -221,6 +237,11 @@ export enum SensorAggregatorSampleType { // uint8_t
     I32 = 0xa0,
 }
 
+export const SRV_SENSOR_AGGREGATOR_INPUTS_RW_PACK_FORMAT = "u16 u16 u32 r: b[8] u32 u8 u8 u8 i8"
+export const SRV_SENSOR_AGGREGATOR_NUM_SAMPLES_RO_PACK_FORMAT = "u32"
+export const SRV_SENSOR_AGGREGATOR_SAMPLE_SIZE_RO_PACK_FORMAT = "u8"
+export const SRV_SENSOR_AGGREGATOR_STREAMING_SAMPLES_RW_PACK_FORMAT = "u32"
+export const SRV_SENSOR_AGGREGATOR_CURRENT_SAMPLE_RO_PACK_FORMAT = "b"
 export enum SensorAggregatorReg {
     /**
      * Set automatic input collection.
@@ -265,6 +286,11 @@ export enum BootloaderError { // uint32_t
     NotPageAligned = 0x4,
 }
 
+export const SRV_BOOTLOADER_INFO_REPORT_PACK_FORMAT = "u32 u32 u32 u32"
+export const SRV_BOOTLOADER_SET_SESSION_COMMAND_PACK_FORMAT = "u32"
+export const SRV_BOOTLOADER_SET_SESSION_REPORT_PACK_FORMAT = "u32"
+export const SRV_BOOTLOADER_PAGE_DATA_COMMAND_PACK_FORMAT = "u32 u16 u8 u8 u32 u32 u32 u32 u32 b[208]"
+export const SRV_BOOTLOADER_PAGE_DATA_REPORT_PACK_FORMAT = "u32 u32 u32"
 export enum BootloaderCmd {
     /**
      * No args. The `service_class` is always `0x1ffa9948`. The `firmware_identifier` identifies the kind of firmware
@@ -306,6 +332,7 @@ export enum BootloaderCmd {
 
 // Service: Button
 export const SRV_BUTTON = 0x1473a263
+export const SRV_BUTTON_PRESSED_RO_PACK_FORMAT = "u8"
 export enum ButtonReg {
     /**
      * Read-only bool (uint8_t). Indicates whether the button is currently active (pressed).
@@ -337,6 +364,8 @@ export enum ButtonEvent {
 
 // Service: Buzzer
 export const SRV_BUZZER = 0x1b57b1d7
+export const SRV_BUZZER_VOLUME_RW_PACK_FORMAT = "u8"
+export const SRV_BUZZER_PLAY_TONE_COMMAND_PACK_FORMAT = "u16 u16 u16"
 export enum BuzzerReg {
     /**
      * Read-write ratio uint8_t. The volume (duty cycle) of the buzzer.
@@ -360,6 +389,7 @@ export enum BuzzerCmd {
 
 // Service: CODAL Message Bus
 export const SRV_CODAL_MESSAGE_BUS = 0x16ad7cd5
+export const SRV_CODAL_MESSAGE_BUS_SEND_COMMAND_PACK_FORMAT = "u16 u16"
 export enum CodalMessageBusCmd {
     /**
      * Sends a new event on the message bus.
@@ -378,6 +408,15 @@ export enum ControlAnnounceFlags { // uint8_t
     SupportsACK = 0x1,
 }
 
+export const SRV_CONTROL_SERVICES_REPORT_PACK_FORMAT = "u8 u8 u16 r: u32"
+export const SRV_CONTROL_DEVICE_DESCRIPTION_CONST_PACK_FORMAT = "s"
+export const SRV_CONTROL_FIRMWARE_IDENTIFIER_CONST_PACK_FORMAT = "u32"
+export const SRV_CONTROL_BOOTLOADER_FIRMWARE_IDENTIFIER_CONST_PACK_FORMAT = "u32"
+export const SRV_CONTROL_FIRMWARE_VERSION_CONST_PACK_FORMAT = "s"
+export const SRV_CONTROL_MCU_TEMPERATURE_RO_PACK_FORMAT = "i16"
+export const SRV_CONTROL_UPTIME_RO_PACK_FORMAT = "u64"
+export const SRV_CONTROL_DEVICE_URL_CONST_PACK_FORMAT = "s"
+export const SRV_CONTROL_FIRMWARE_URL_CONST_PACK_FORMAT = "s"
 export enum ControlCmd {
     /**
      * No args. The `restart_counter` starts at `0x1` and increments by one until it reaches `0xf`, then it stays at `0xf`.
@@ -470,6 +509,10 @@ export enum GamepadButton { // uint16_t
     Exit = 0xa,
 }
 
+export const SRV_GAMEPAD_ANNOUNCE_REPORT_PACK_FORMAT = "u8 u8 r: u16"
+export const SRV_GAMEPAD_BUTTONS_RO_PACK_FORMAT = "r: u16 u8 u8"
+export const SRV_GAMEPAD_DOWN_EVENT_PACK_FORMAT = "u16 u16"
+export const SRV_GAMEPAD_UP_EVENT_PACK_FORMAT = "u16 u16"
 export enum GamepadCmd {
     /**
      * No args. Indicates number of players supported and which buttons are present on the controller.
@@ -519,6 +562,7 @@ export enum GamepadEvent {
 
 // Service: Humidity
 export const SRV_HUMIDITY = 0x16c810b8
+export const SRV_HUMIDITY_HUMIDITY_RO_PACK_FORMAT = "u22.10"
 export enum HumidityReg {
     /**
      * Read-only %RH u22.10 (uint32_t). The relative humidity in percentage of full water saturation.
@@ -528,6 +572,32 @@ export enum HumidityReg {
 
 // Service: Azure IoT Hub
 export const SRV_IOT_HUB = 0x19ed364c
+export const SRV_IOT_HUB_SEND_STRING_MSG_COMMAND_PACK_FORMAT = "z r: z z"
+export const SRV_IOT_HUB_SEND_MSG_EXT_REPORT_PACK_FORMAT = "u16"
+export const SRV_IOT_HUB_MESSAGE_PIPE_COMMAND_PACK_FORMAT = "b"
+export const SRV_IOT_HUB_PROPERTIES_META_PIPE_COMMAND_PACK_FORMAT = "r: z z"
+export const SRV_IOT_HUB_SUBSCRIBE_COMMAND_PACK_FORMAT = "b[12]"
+export const SRV_IOT_HUB_DEVICEBOUND_PROPERTIES_META_PIPE_REPORT_PACK_FORMAT = "r: z z"
+export const SRV_IOT_HUB_DEVICEBOUND_PIPE_REPORT_PACK_FORMAT = "b"
+export const SRV_IOT_HUB_GET_TWIN_COMMAND_PACK_FORMAT = "b[12]"
+export const SRV_IOT_HUB_TWIN_JSON_PIPE_REPORT_PACK_FORMAT = "b"
+export const SRV_IOT_HUB_TWIN_ERROR_META_PIPE_REPORT_PACK_FORMAT = "u32"
+export const SRV_IOT_HUB_SUBSCRIBE_TWIN_COMMAND_PACK_FORMAT = "b[12]"
+export const SRV_IOT_HUB_TWIN_UPDATE_JSON_PIPE_REPORT_PACK_FORMAT = "b"
+export const SRV_IOT_HUB_PATCH_TWIN_REPORT_PACK_FORMAT = "u16"
+export const SRV_IOT_HUB_TWIN_PATCH_JSON_PIPE_COMMAND_PACK_FORMAT = "b"
+export const SRV_IOT_HUB_SUBSCRIBE_METHOD_COMMAND_PACK_FORMAT = "b[12]"
+export const SRV_IOT_HUB_METHOD_CALL_BODY_PIPE_REPORT_PACK_FORMAT = "b"
+export const SRV_IOT_HUB_METHOD_CALL_META_PIPE_REPORT_PACK_FORMAT = "z z"
+export const SRV_IOT_HUB_RESPOND_TO_METHOD_COMMAND_PACK_FORMAT = "u32 z"
+export const SRV_IOT_HUB_RESPOND_TO_METHOD_REPORT_PACK_FORMAT = "u16"
+export const SRV_IOT_HUB_METHOD_RESPONSE_PIPE_COMMAND_PACK_FORMAT = "b"
+export const SRV_IOT_HUB_CONNECTION_STATUS_RO_PACK_FORMAT = "s"
+export const SRV_IOT_HUB_CONNECTION_STRING_RW_PACK_FORMAT = "s"
+export const SRV_IOT_HUB_HUB_NAME_RO_PACK_FORMAT = "s"
+export const SRV_IOT_HUB_DEVICE_ID_RO_PACK_FORMAT = "s"
+export const SRV_IOT_HUB_CONNECTION_ERROR_EVENT_PACK_FORMAT = "s"
+export const SRV_IOT_HUB_DEVICEBOUND_STR_EVENT_PACK_FORMAT = "z r: z z"
 export enum IotHubCmd {
     /**
      * No args. Try connecting using currently set `connection_string`.
@@ -699,6 +769,7 @@ export enum KeyboardAction { // uint8_t
     Down = 0x2,
 }
 
+export const SRV_KEYBOARD_KEY_COMMAND_PACK_FORMAT = "r: u16 u8 u8"
 export enum KeyboardCmd {
     /**
      * Presses a key or a sequence of keys down.
@@ -718,6 +789,11 @@ export enum KeyboardCmd {
 
 // Service: LED Matrix Controller
 export const SRV_LED_MATRIX_CONTROLLER = 0x1d35e393
+export const SRV_LED_MATRIX_CONTROLLER_LEDS_RW_PACK_FORMAT = "b"
+export const SRV_LED_MATRIX_CONTROLLER_ENABLED_RW_PACK_FORMAT = "u8"
+export const SRV_LED_MATRIX_CONTROLLER_BRIGHTNESS_RW_PACK_FORMAT = "u8"
+export const SRV_LED_MATRIX_CONTROLLER_ROWS_CONST_PACK_FORMAT = "u16"
+export const SRV_LED_MATRIX_CONTROLLER_COLUMNS_CONST_PACK_FORMAT = "u16"
 export enum LedMatrixControllerReg {
     /**
      * Read-write bytes. Read or writes the state of the screen where pixel on/off state is
@@ -755,6 +831,7 @@ export enum LedMatrixControllerCmd {
 
 // Service: LED Matrix Display
 export const SRV_LED_MATRIX_DISPLAY = 0x110d154b
+export const SRV_LED_MATRIX_DISPLAY_LEDS_RO_PACK_FORMAT = "b"
 export enum LedMatrixDisplayReg {
     /**
      * Read-only bytes. Streams the state of the screen where pixel on/off state is
@@ -772,6 +849,12 @@ export enum LightLightType { // uint8_t
     SK9822 = 0x11,
 }
 
+export const SRV_LIGHT_BRIGHTNESS_RW_PACK_FORMAT = "u8"
+export const SRV_LIGHT_ACTUAL_BRIGHTNESS_RO_PACK_FORMAT = "u8"
+export const SRV_LIGHT_LIGHT_TYPE_RW_PACK_FORMAT = "u8"
+export const SRV_LIGHT_NUM_PIXELS_RW_PACK_FORMAT = "u16"
+export const SRV_LIGHT_MAX_POWER_RW_PACK_FORMAT = "u16"
+export const SRV_LIGHT_RUN_COMMAND_PACK_FORMAT = "b"
 export enum LightReg {
     /**
      * Read-write ratio uint8_t. Set the luminosity of the strip.
@@ -824,6 +907,11 @@ export enum LoggerPriority { // uint8_t
     Error = 0x3,
 }
 
+export const SRV_LOGGER_MIN_PRIORITY_RW_PACK_FORMAT = "u8"
+export const SRV_LOGGER_DEBUG_REPORT_PACK_FORMAT = "s"
+export const SRV_LOGGER_LOG_REPORT_PACK_FORMAT = "s"
+export const SRV_LOGGER_WARN_REPORT_PACK_FORMAT = "s"
+export const SRV_LOGGER_ERROR_REPORT_PACK_FORMAT = "s"
 export enum LoggerReg {
     /**
      * Read-write Priority (uint8_t). Messages with level lower than this won't be emitted. The default setting may vary.
@@ -859,6 +947,8 @@ export enum LoggerCmd {
 
 // Service: Microphone
 export const SRV_MICROPHONE = 0x113dac86
+export const SRV_MICROPHONE_SAMPLE_COMMAND_PACK_FORMAT = "b[12] u32"
+export const SRV_MICROPHONE_SAMPLING_PERIOD_RW_PACK_FORMAT = "u32"
 export enum MicrophoneCmd {
     /**
      * The samples will be streamed back over the `samples` pipe.
@@ -890,6 +980,21 @@ export enum ModelRunnerModelFormat { // uint32_t
     EdgeImpulseCompiled = 0x30564945,
 }
 
+export const SRV_MODEL_RUNNER_SET_MODEL_COMMAND_PACK_FORMAT = "u32"
+export const SRV_MODEL_RUNNER_SET_MODEL_REPORT_PACK_FORMAT = "u16"
+export const SRV_MODEL_RUNNER_PREDICT_COMMAND_PACK_FORMAT = "b[12]"
+export const SRV_MODEL_RUNNER_PREDICT_REPORT_PACK_FORMAT = "u16"
+export const SRV_MODEL_RUNNER_AUTO_INVOKE_EVERY_RW_PACK_FORMAT = "u16"
+export const SRV_MODEL_RUNNER_OUTPUTS_RO_PACK_FORMAT = "r: f32"
+export const SRV_MODEL_RUNNER_INPUT_SHAPE_RO_PACK_FORMAT = "r: u16"
+export const SRV_MODEL_RUNNER_OUTPUT_SHAPE_RO_PACK_FORMAT = "r: u16"
+export const SRV_MODEL_RUNNER_LAST_RUN_TIME_RO_PACK_FORMAT = "u32"
+export const SRV_MODEL_RUNNER_ALLOCATED_ARENA_SIZE_RO_PACK_FORMAT = "u32"
+export const SRV_MODEL_RUNNER_MODEL_SIZE_RO_PACK_FORMAT = "u32"
+export const SRV_MODEL_RUNNER_LAST_ERROR_RO_PACK_FORMAT = "s"
+export const SRV_MODEL_RUNNER_FORMAT_CONST_PACK_FORMAT = "u32"
+export const SRV_MODEL_RUNNER_FORMAT_VERSION_CONST_PACK_FORMAT = "u32"
+export const SRV_MODEL_RUNNER_PARALLEL_CONST_PACK_FORMAT = "u8"
 export enum ModelRunnerCmd {
     /**
      * Argument: model_size B uint32_t. Open pipe for streaming in the model. The size of the model has to be declared upfront.
@@ -984,6 +1089,8 @@ export enum ModelRunnerReg {
 
 // Service: Motor
 export const SRV_MOTOR = 0x17004cd8
+export const SRV_MOTOR_DUTY_RW_PACK_FORMAT = "i16"
+export const SRV_MOTOR_ENABLED_RW_PACK_FORMAT = "u8"
 export enum MotorReg {
     /**
      * Read-write ratio int16_t. PWM duty cycle of the motor. Use negative/positive values to run the motor forwards and backwards.
@@ -1014,6 +1121,9 @@ export enum MouseButtonEvent { // uint8_t
     DoubleClick = 0x4,
 }
 
+export const SRV_MOUSE_SET_BUTTON_COMMAND_PACK_FORMAT = "u16 u8"
+export const SRV_MOUSE_MOVE_COMMAND_PACK_FORMAT = "i16 i16 u16"
+export const SRV_MOUSE_WHEEL_COMMAND_PACK_FORMAT = "i16 u16"
 export enum MouseCmd {
     /**
      * Sets the up/down state of one or more buttons.
@@ -1049,6 +1159,11 @@ export enum MouseCmd {
 
 // Service: Multitouch
 export const SRV_MULTITOUCH = 0x18d55e2b
+export const SRV_MULTITOUCH_CAPACITY_RO_PACK_FORMAT = "r: i32"
+export const SRV_MULTITOUCH_TOUCH_EVENT_PACK_FORMAT = "u32"
+export const SRV_MULTITOUCH_RELEASE_EVENT_PACK_FORMAT = "u32"
+export const SRV_MULTITOUCH_TAP_EVENT_PACK_FORMAT = "u32"
+export const SRV_MULTITOUCH_LONG_PRESS_EVENT_PACK_FORMAT = "u32"
 export enum MultitouchReg {
     /**
      * Read-only. Capacitance of channels. The capacitance is continuously calibrated, and a value of `0` indicates
@@ -1096,6 +1211,15 @@ export enum MultitouchEvent {
 
 // Service: Power
 export const SRV_POWER = 0x1fa4c95a
+export const SRV_POWER_ENABLED_RW_PACK_FORMAT = "u8"
+export const SRV_POWER_MAX_POWER_RW_PACK_FORMAT = "u16"
+export const SRV_POWER_OVERLOAD_RO_PACK_FORMAT = "u8"
+export const SRV_POWER_CURRENT_DRAW_RO_PACK_FORMAT = "u16"
+export const SRV_POWER_BATTERY_VOLTAGE_RO_PACK_FORMAT = "u16"
+export const SRV_POWER_BATTERY_CHARGE_RO_PACK_FORMAT = "u16"
+export const SRV_POWER_BATTERY_CAPACITY_CONST_PACK_FORMAT = "u32"
+export const SRV_POWER_KEEP_ON_PULSE_DURATION_RW_PACK_FORMAT = "u16"
+export const SRV_POWER_KEEP_ON_PULSE_PERIOD_RW_PACK_FORMAT = "u16"
 export enum PowerReg {
     /**
      * Read-write bool (uint8_t). Turn the power to the bus on/off.
@@ -1151,6 +1275,22 @@ export enum PowerReg {
 
 // Service: Protocol Test
 export const SRV_PROTO_TEST = 0x16c7466a
+export const SRV_PROTO_TEST_RW_BOOL_RW_PACK_FORMAT = "u8"
+export const SRV_PROTO_TEST_RO_BOOL_RO_PACK_FORMAT = "u8"
+export const SRV_PROTO_TEST_RW_U32_RW_PACK_FORMAT = "u32"
+export const SRV_PROTO_TEST_RO_U32_RO_PACK_FORMAT = "u32"
+export const SRV_PROTO_TEST_RW_I32_RW_PACK_FORMAT = "i32"
+export const SRV_PROTO_TEST_RO_I32_RO_PACK_FORMAT = "i32"
+export const SRV_PROTO_TEST_RW_STRING_RW_PACK_FORMAT = "s"
+export const SRV_PROTO_TEST_RO_STRING_RO_PACK_FORMAT = "s"
+export const SRV_PROTO_TEST_RW_BYTES_RW_PACK_FORMAT = "b"
+export const SRV_PROTO_TEST_RO_BYTES_RO_PACK_FORMAT = "b"
+export const SRV_PROTO_TEST_E_BOOL_EVENT_PACK_FORMAT = "u8"
+export const SRV_PROTO_TEST_E_U32_EVENT_PACK_FORMAT = "u32"
+export const SRV_PROTO_TEST_E_I32_EVENT_PACK_FORMAT = "i32"
+export const SRV_PROTO_TEST_C_BOOL_COMMAND_PACK_FORMAT = "u8"
+export const SRV_PROTO_TEST_C_U32_COMMAND_PACK_FORMAT = "u32"
+export const SRV_PROTO_TEST_C_I32_COMMAND_PACK_FORMAT = "i32"
 export enum ProtoTestReg {
     /**
      * Read-write bool (uint8_t). A read write bool register.
@@ -1239,6 +1379,12 @@ export enum ProtoTestCmd {
 
 // Service: PWM Light
 export const SRV_PWM_LIGHT = 0x1fb57453
+export const SRV_PWM_LIGHT_BRIGHTNESS_RW_PACK_FORMAT = "u16"
+export const SRV_PWM_LIGHT_MAX_POWER_RW_PACK_FORMAT = "u16"
+export const SRV_PWM_LIGHT_MAX_STEPS_CONST_PACK_FORMAT = "u8"
+export const SRV_PWM_LIGHT_STEPS_RW_PACK_FORMAT = "r: u16 u16"
+export const SRV_PWM_LIGHT_CURRENT_ITERATION_RW_PACK_FORMAT = "u16"
+export const SRV_PWM_LIGHT_MAX_ITERATIONS_RW_PACK_FORMAT = "u16"
 export enum PwmLightReg {
     /**
      * Read-write ratio uint16_t. Set the luminosity of the strip. The value is used to scale `start_intensity` in `steps` register.
@@ -1281,6 +1427,14 @@ export enum PwmLightReg {
 
 // Service: Role Manager
 export const SRV_ROLE_MANAGER = 0x119c3ad1
+export const SRV_ROLE_MANAGER_ALL_ROLES_ALLOCATED_RO_PACK_FORMAT = "u8"
+export const SRV_ROLE_MANAGER_GET_ROLE_COMMAND_PACK_FORMAT = "b[8]"
+export const SRV_ROLE_MANAGER_GET_ROLE_REPORT_PACK_FORMAT = "b[8] s"
+export const SRV_ROLE_MANAGER_SET_ROLE_COMMAND_PACK_FORMAT = "b[8] s"
+export const SRV_ROLE_MANAGER_LIST_STORED_ROLES_COMMAND_PACK_FORMAT = "b[12]"
+export const SRV_ROLE_MANAGER_STORED_ROLES_PIPE_REPORT_PACK_FORMAT = "b[8] s"
+export const SRV_ROLE_MANAGER_LIST_REQUIRED_ROLES_COMMAND_PACK_FORMAT = "b[12]"
+export const SRV_ROLE_MANAGER_REQUIRED_ROLES_PIPE_REPORT_PACK_FORMAT = "b[8] u32 s"
 export enum RoleManagerReg {
     /**
      * Read-only bool (uint8_t). Indicates if all required roles have been allocated to devices.
@@ -1351,6 +1505,8 @@ export enum RoleManagerEvent {
 
 // Service: Rotary encoder
 export const SRV_ROTARY_ENCODER = 0x10fa29c9
+export const SRV_ROTARY_ENCODER_POSITION_RO_PACK_FORMAT = "i32"
+export const SRV_ROTARY_ENCODER_CLICKS_PER_TURN_CONST_PACK_FORMAT = "u16"
 export enum RotaryEncoderReg {
     /**
      * Read-only # int32_t. Upon device reset starts at `0` (regardless of the shaft position).
@@ -1366,6 +1522,8 @@ export enum RotaryEncoderReg {
 
 // Service: Servo
 export const SRV_SERVO = 0x12fc9103
+export const SRV_SERVO_PULSE_RW_PACK_FORMAT = "u32"
+export const SRV_SERVO_ENABLED_RW_PACK_FORMAT = "u8"
 export enum ServoReg {
     /**
      * Read-write μs uint32_t. Specifies length of the pulse in microseconds. The period is always 20ms.
@@ -1380,6 +1538,14 @@ export enum ServoReg {
 
 // Service: Settings
 export const SRV_SETTINGS = 0x1107dc4a
+export const SRV_SETTINGS_GET_COMMAND_PACK_FORMAT = "s"
+export const SRV_SETTINGS_GET_REPORT_PACK_FORMAT = "z b"
+export const SRV_SETTINGS_SET_COMMAND_PACK_FORMAT = "z b"
+export const SRV_SETTINGS_DELETE_COMMAND_PACK_FORMAT = "s"
+export const SRV_SETTINGS_LIST_KEYS_COMMAND_PACK_FORMAT = "b[12]"
+export const SRV_SETTINGS_LISTED_KEY_PIPE_REPORT_PACK_FORMAT = "s"
+export const SRV_SETTINGS_LIST_COMMAND_PACK_FORMAT = "b[12]"
+export const SRV_SETTINGS_LISTED_ENTRY_PIPE_REPORT_PACK_FORMAT = "z b"
 export enum SettingsCmd {
     /**
      * Argument: key string (bytes). Get the value of given setting. If no such entry exists, the value returned is empty.
@@ -1434,6 +1600,7 @@ export enum SettingsCmd {
 
 // Service: Slider
 export const SRV_SLIDER = 0x1f274746
+export const SRV_SLIDER_POSITION_RO_PACK_FORMAT = "u16"
 export enum SliderReg {
     /**
      * Read-only ratio uint16_t. The relative position of the slider between `0x0000` and `0xffff`.
@@ -1449,6 +1616,12 @@ export enum TcpTcpError { // int32_t
     InvalidCommandPayload = 0x2,
 }
 
+export const SRV_TCP_OPEN_COMMAND_PACK_FORMAT = "b[12]"
+export const SRV_TCP_OPEN_REPORT_PACK_FORMAT = "u16"
+export const SRV_TCP_OPEN_SSL_META_PIPE_COMMAND_PACK_FORMAT = "u16 s"
+export const SRV_TCP_OUTDATA_PIPE_COMMAND_PACK_FORMAT = "b"
+export const SRV_TCP_INDATA_PIPE_REPORT_PACK_FORMAT = "b"
+export const SRV_TCP_ERROR_META_PIPE_REPORT_PACK_FORMAT = "i32"
 export enum TcpCmd {
     /**
      * Argument: inbound pipe (bytes). Open pair of pipes between network peripheral and a controlling device. In/outbound refers to direction from/to internet.
@@ -1476,6 +1649,7 @@ export enum TcpPipeCmd {
 
 // Service: Thermometer
 export const SRV_THERMOMETER = 0x1421bac7
+export const SRV_THERMOMETER_TEMPERATURE_RO_PACK_FORMAT = "u22.10"
 export enum ThermometerReg {
     /**
      * Read-only °C u22.10 (uint32_t). The temperature.
@@ -1500,6 +1674,10 @@ export enum WifiAPFlags { // uint32_t
     IEEE_802_LongRange = 0x8000,
 }
 
+export const SRV_WIFI_SCAN_COMMAND_PACK_FORMAT = "b[12]"
+export const SRV_WIFI_RESULTS_PIPE_REPORT_PACK_FORMAT = "u32 u32 i8 u8 b[6] s[33]"
+export const SRV_WIFI_CONNECT_COMMAND_PACK_FORMAT = "z z"
+export const SRV_WIFI_CONNECTED_RO_PACK_FORMAT = "u8"
 export enum WifiCmd {
     /**
      * Argument: results pipe (bytes). Initiate search for WiFi networks. Results are returned via pipe, one entry per packet.

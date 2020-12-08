@@ -5,6 +5,12 @@ declare var process: any;
 declare var require: any;
 let fs: any
 
+const builtins = [
+    "control",
+    "logger",
+    "rolemanager"
+]
+
 function values<T>(o: jdspec.SMap<T>): T[] {
     let r: T[] = []
     for (let k of Object.keys(o))
@@ -58,13 +64,9 @@ function processSpec(dn: string) {
             concats[n] += convResult
 
             if (n === "sts") {
-                if (/_/.test(json.shortId)) {
-                    fs.writeFileSync(path.join(mkcdir, dashify(`${json.camelName}-constants.ts`)), convResult)
-                } else {
-                    const srvdir = path.join(mkcdir, dashify(json.camelName))
-                    mkdir(srvdir);
-                    fs.writeFileSync(path.join(srvdir, "constants.ts"), convResult)
-                }
+                const srvdir = path.join(mkcdir, dashify(json.camelName))
+                mkdir(srvdir);
+                fs.writeFileSync(path.join(srvdir, "constants.ts"), convResult)
             }
         }
     }

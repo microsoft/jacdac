@@ -1035,7 +1035,8 @@ export function snakify(name: string) {
 }
 
 export function dashify(name: string) {
-    return snakify(name).replace(/_/g, '-').toLowerCase();
+    if (!name) return name;
+    return snakify(name.replace(/^_+/, '')).replace(/_/g, '-').toLowerCase();
 }
 
 function addComment(pkt: jdspec.PacketInfo) {

@@ -374,11 +374,11 @@ export enum CodalMessageBusCmd {
 // Service: Control
 export const SRV_CONTROL = 0x0
 
-export enum CtrlAnnounceFlags { // uint8_t
+export enum ControlAnnounceFlags { // uint8_t
     SupportsACK = 0x1,
 }
 
-export enum CtrlCmd {
+export enum ControlCmd {
     /**
      * No args. The `restart_counter` starts at `0x1` and increments by one until it reaches `0xf`, then it stays at `0xf`.
      * If this number ever goes down, it indicates that the device restarted.
@@ -392,7 +392,7 @@ export enum CtrlCmd {
     /**
      * report Services
      * ```
-     * const [restartCounter, flags, serviceClass] = jdunpack<[number, CtrlAnnounceFlags, number[]]>(buf, "u8 u8 x[2] u32[]")
+     * const [restartCounter, flags, serviceClass] = jdunpack<[number, ControlAnnounceFlags, number[]]>(buf, "u8 u8 x[2] u32[]")
      * ```
      */
 
@@ -412,7 +412,7 @@ export enum CtrlCmd {
     Reset = 0x82,
 }
 
-export enum CtrlReg {
+export enum ControlReg {
     /**
      * Constant string (bytes). Identifies the type of hardware (eg., ACME Corp. Servo X-42 Rev C)
      */
@@ -452,21 +452,6 @@ export enum CtrlReg {
      * Constant string (bytes). URL with machine-readable metadata information about updating device firmware
      */
     FirmwareUrl = 0x188,
-}
-
-// Service: Rotary encoder
-export const SRV_ROTARY_ENCODER = 0x10fa29c9
-export enum RotaryEncoderReg {
-    /**
-     * Read-only # int32_t. Upon device reset starts at `0` (regardless of the shaft position).
-     * Increases by `1` for a clockwise "click", by `-1` for counter-clockwise.
-     */
-    Position = 0x101,
-
-    /**
-     * Constant # uint16_t. This specifies by how much `position` changes when the crank does 360 degree turn. Typically 12 or 24.
-     */
-    ClicksPerTurn = 0x180,
 }
 
 // Service: Gamepad
@@ -733,7 +718,7 @@ export enum KeyboardCmd {
 
 // Service: LED Matrix Controller
 export const SRV_LED_MATRIX_CONTROLLER = 0x1d35e393
-export enum LEDMatrixControllerReg {
+export enum LedMatrixControllerReg {
     /**
      * Read-write bytes. Read or writes the state of the screen where pixel on/off state is
      * stored as a bit, column by column. The column should be byte aligned.
@@ -761,7 +746,7 @@ export enum LEDMatrixControllerReg {
     Columns = 0x84,
 }
 
-export enum LEDMatrixControllerCmd {
+export enum LedMatrixControllerCmd {
     /**
      * No args. Shorthand command to clear all the LEDs on the screen.
      */
@@ -1362,6 +1347,21 @@ export enum RoleManagerEvent {
      * Emit notifying that the internal state of the service changed.
      */
     Change = 0x2,
+}
+
+// Service: Rotary encoder
+export const SRV_ROTARY_ENCODER = 0x10fa29c9
+export enum RotaryEncoderReg {
+    /**
+     * Read-only # int32_t. Upon device reset starts at `0` (regardless of the shaft position).
+     * Increases by `1` for a clockwise "click", by `-1` for counter-clockwise.
+     */
+    Position = 0x101,
+
+    /**
+     * Constant # uint16_t. This specifies by how much `position` changes when the crank does 360 degree turn. Typically 12 or 24.
+     */
+    ClicksPerTurn = 0x180,
 }
 
 // Service: Servo

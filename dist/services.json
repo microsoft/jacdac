@@ -1391,8 +1391,8 @@
     "name": "Control",
     "status": "experimental",
     "shortId": "control",
-    "camelName": "ctrl",
-    "shortName": "ctrl",
+    "camelName": "control",
+    "shortName": "control",
     "extends": [
       "_base"
     ],
@@ -1644,146 +1644,7 @@
         "packFormat": "s"
       }
     ],
-    "source": "# Control\n\n    identifier: 0x00000000\n    camel: ctrl\n\nControl service is always service index `0`.\nIt handles actions common to all services on a device.\n\n## Commands\n\n    flags AnnounceFlags : u8 {\n        SupportsACK = 0x01,\n    }\n    command services @ announce { }\n    report {\n        restart_counter: u8\n        flags: AnnounceFlags\n        reserved: u16\n    repeats:\n        service_class: u32\n    }\n\nThe `restart_counter` starts at `0x1` and increments by one until it reaches `0xf`, then it stays at `0xf`.\nIf this number ever goes down, it indicates that the device restarted.\nThe upper 4 bits of `restart_counter` are reserved.\n`service_class` indicates class identifier for each service index (service index `0` is always control, so it's\nskipped in this enumeration).\nThe command form can be used to induce report, which is otherwise broadcast every 500ms.\n\n    command noop @ 0x80 { }\n\nDo nothing. Always ignored. Can be used to test ACKs.\n\n    command identify @ 0x81 { }\n\nBlink an LED or otherwise draw user's attention.\n\n    command reset @ 0x82 { }\n\nReset device. ACK may or may not be sent.\n\n## Registers\n\n    const device_description?: string @ 0x180\n\nIdentifies the type of hardware (eg., ACME Corp. Servo X-42 Rev C)\n\n    const firmware_identifier? : u32 { absolute_min = 0x3000_0000, absolute_max = 0x3fff_ffff } @ 0x181\n\nA numeric code for the string above; used to identify firmware images and devices.\n\n    const bootloader_firmware_identifier?: u32 { absolute_min = 0x3000_0000, absolute_max = 0x3fff_ffff } @ 0x184\n\nTypically the same as `firmware_identifier` unless device was flashed by hand; the bootloader will respond to that code.\n\n    const firmware_version?: string @ 0x185\n\nA string describing firmware version; typically semver.\n\n    ro mcu_temperature?: i16 C { typical_min = -10, typical_max = 150 } @ 0x182\n\nMCU temperature in degrees Celsius (approximate).\n\n    ro uptime?: u64 us @ 0x186\n\nNumber of microseconds since boot.\n\n    const device_url?: string @ 0x187\n\nRequest the information web site for this device\n\n    const firmware_url?: string @ 0x188\n\nURL with machine-readable metadata information about updating device firmware\n"
-  },
-  {
-    "name": "Rotary encoder",
-    "status": "experimental",
-    "shortId": "crank",
-    "camelName": "rotaryEncoder",
-    "shortName": "crank",
-    "extends": [
-      "_base",
-      "_sensor"
-    ],
-    "notes": {
-      "short": "An incremental rotary encoder - converts angular motion of a shaft to digital signal."
-    },
-    "classIdentifier": 284830153,
-    "enums": {},
-    "packets": [
-      {
-        "kind": "ro",
-        "name": "status_code",
-        "identifier": 7,
-        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
-        "fields": [
-          {
-            "name": "code",
-            "unit": "",
-            "type": "u16",
-            "storage": 2,
-            "isSimpleType": true
-          },
-          {
-            "name": "vendor_code",
-            "unit": "",
-            "type": "u16",
-            "storage": 2,
-            "isSimpleType": true
-          }
-        ],
-        "optional": true,
-        "identifierName": "status_code",
-        "packFormat": "u16 u16",
-        "derived": "_base"
-      },
-      {
-        "kind": "rw",
-        "name": "streaming_samples",
-        "identifier": 3,
-        "description": "Asks device to stream a given number of samples\n(clients will typically write `255` to this register every second or so, while streaming is required).",
-        "fields": [
-          {
-            "name": "_",
-            "unit": "",
-            "type": "u8",
-            "storage": 1,
-            "isSimpleType": true
-          }
-        ],
-        "internal": true,
-        "identifierName": "streaming_samples",
-        "packFormat": "u8",
-        "derived": "_sensor"
-      },
-      {
-        "kind": "rw",
-        "name": "streaming_interval",
-        "identifier": 4,
-        "description": "Period between packets of data when streaming in milliseconds.",
-        "fields": [
-          {
-            "name": "_",
-            "unit": "ms",
-            "type": "u32",
-            "storage": 4,
-            "isSimpleType": true,
-            "defaultValue": 100,
-            "typicalMin": 1,
-            "typicalMax": 60000
-          }
-        ],
-        "identifierName": "streaming_interval",
-        "packFormat": "u32",
-        "derived": "_sensor"
-      },
-      {
-        "kind": "const",
-        "name": "streaming_preferred_interval",
-        "identifier": 258,
-        "description": "Preferred default streaming interval for sensor in milliseconds.",
-        "fields": [
-          {
-            "name": "_",
-            "unit": "ms",
-            "type": "u32",
-            "storage": 4,
-            "isSimpleType": true
-          }
-        ],
-        "internal": true,
-        "optional": true,
-        "identifierName": "streaming_preferred_interval",
-        "packFormat": "u32",
-        "derived": "_sensor"
-      },
-      {
-        "kind": "ro",
-        "name": "position",
-        "identifier": 257,
-        "description": "Upon device reset starts at `0` (regardless of the shaft position).\nIncreases by `1` for a clockwise \"click\", by `-1` for counter-clockwise.",
-        "fields": [
-          {
-            "name": "_",
-            "unit": "#",
-            "type": "i32",
-            "storage": -4,
-            "isSimpleType": true
-          }
-        ],
-        "identifierName": "reading",
-        "packFormat": "i32"
-      },
-      {
-        "kind": "const",
-        "name": "clicks_per_turn",
-        "identifier": 384,
-        "description": "This specifies by how much `position` changes when the crank does 360 degree turn. Typically 12 or 24.",
-        "fields": [
-          {
-            "name": "_",
-            "unit": "#",
-            "type": "u16",
-            "storage": 2,
-            "isSimpleType": true
-          }
-        ],
-        "optional": true,
-        "packFormat": "u16"
-      }
-    ],
-    "source": "# Rotary encoder\n\n    identifier: 0x10fa29c9\n    extends: _sensor\n    short: crank\n\nAn incremental rotary encoder - converts angular motion of a shaft to digital signal.\n\n## Registers\n\n    ro position: i32 # @ reading\n\nUpon device reset starts at `0` (regardless of the shaft position).\nIncreases by `1` for a clockwise \"click\", by `-1` for counter-clockwise.\n\n    const clicks_per_turn?: u16 # @ 0x180\n\nThis specifies by how much `position` changes when the crank does 360 degree turn. Typically 12 or 24."
+    "source": "# Control\n\n    identifier: 0x00000000\n\nControl service is always service index `0`.\nIt handles actions common to all services on a device.\n\n## Commands\n\n    flags AnnounceFlags : u8 {\n        SupportsACK = 0x01,\n    }\n    command services @ announce { }\n    report {\n        restart_counter: u8\n        flags: AnnounceFlags\n        reserved: u16\n    repeats:\n        service_class: u32\n    }\n\nThe `restart_counter` starts at `0x1` and increments by one until it reaches `0xf`, then it stays at `0xf`.\nIf this number ever goes down, it indicates that the device restarted.\nThe upper 4 bits of `restart_counter` are reserved.\n`service_class` indicates class identifier for each service index (service index `0` is always control, so it's\nskipped in this enumeration).\nThe command form can be used to induce report, which is otherwise broadcast every 500ms.\n\n    command noop @ 0x80 { }\n\nDo nothing. Always ignored. Can be used to test ACKs.\n\n    command identify @ 0x81 { }\n\nBlink an LED or otherwise draw user's attention.\n\n    command reset @ 0x82 { }\n\nReset device. ACK may or may not be sent.\n\n## Registers\n\n    const device_description?: string @ 0x180\n\nIdentifies the type of hardware (eg., ACME Corp. Servo X-42 Rev C)\n\n    const firmware_identifier? : u32 { absolute_min = 0x3000_0000, absolute_max = 0x3fff_ffff } @ 0x181\n\nA numeric code for the string above; used to identify firmware images and devices.\n\n    const bootloader_firmware_identifier?: u32 { absolute_min = 0x3000_0000, absolute_max = 0x3fff_ffff } @ 0x184\n\nTypically the same as `firmware_identifier` unless device was flashed by hand; the bootloader will respond to that code.\n\n    const firmware_version?: string @ 0x185\n\nA string describing firmware version; typically semver.\n\n    ro mcu_temperature?: i16 C { typical_min = -10, typical_max = 150 } @ 0x182\n\nMCU temperature in degrees Celsius (approximate).\n\n    ro uptime?: u64 us @ 0x186\n\nNumber of microseconds since boot.\n\n    const device_url?: string @ 0x187\n\nRequest the information web site for this device\n\n    const firmware_url?: string @ 0x188\n\nURL with machine-readable metadata information about updating device firmware\n"
   },
   {
     "name": "Gamepad",
@@ -2832,8 +2693,8 @@
     "name": "LED Matrix Controller",
     "status": "experimental",
     "shortId": "ledmatrixcontroller",
-    "camelName": "lEDMatrixController",
-    "shortName": "lEDMatrixController",
+    "camelName": "ledMatrixController",
+    "shortName": "ledMatrixController",
     "extends": [
       "_base"
     ],
@@ -2956,7 +2817,7 @@
         "fields": []
       }
     ],
-    "source": "# LED Matrix Controller\n\n    identifier: 0x1d35e393\n    status: experimental\n\nA service that allows to control a rectangular matrix of monochrome LEDs.\nTo stream the state of the screen, use [LED Matrix display](/services/led-matrix-display) instead.\n\n## Registers\n\n    rw leds: bytes @ 0x80\n\nRead or writes the state of the screen where pixel on/off state is \nstored as a bit, column by column. The column should be byte aligned.\n\n    rw enabled: bool @ 0x81\n \n Disables or enables the whole screen.\n \n    rw brightness: u8 @ 0x82\n    \nSets the general brightness of the LEDs.\n \n    const rows: u16 # @ 0x83\n    \nNumber of rows on the screen\n\n    const columns: u16 # @ 0x84\n    \nNumber of columns on the screen\n\n## Commands\n\n    command clear @ 0x80 {}\n\nShorthand command to clear all the LEDs on the screen."
+    "source": "# LED Matrix Controller\n\n    identifier: 0x1d35e393\n    camel: ledMatrixController\n\nA service that allows to control a rectangular matrix of monochrome LEDs.\nTo stream the state of the screen, use [LED Matrix display](/services/led-matrix-display) instead.\n\n## Registers\n\n    rw leds: bytes @ 0x80\n\nRead or writes the state of the screen where pixel on/off state is \nstored as a bit, column by column. The column should be byte aligned.\n\n    rw enabled: bool @ 0x81\n \n Disables or enables the whole screen.\n \n    rw brightness: u8 @ 0x82\n    \nSets the general brightness of the LEDs.\n \n    const rows: u16 # @ 0x83\n    \nNumber of rows on the screen\n\n    const columns: u16 # @ 0x84\n    \nNumber of columns on the screen\n\n## Commands\n\n    command clear @ 0x80 {}\n\nShorthand command to clear all the LEDs on the screen."
   },
   {
     "name": "LED Matrix Display",
@@ -5036,6 +4897,145 @@
       }
     ],
     "source": "# Role Manager\n\n    identifier: 0x119c3ad1\n\nAssign roles to devices on JACDAC bus.\n\n## Registers\n\n    ro all_roles_allocated: bool @ 0x181\n\nIndicates if all required roles have been allocated to devices.\n\n## Commands\n\n    command get_role @ 0x80 {\n        device_id: devid\n    }\n    report {\n        device_id: devid\n        role: string\n    }\n\nGet the role corresponding to given device identifer. Returns empty string if unset.\n\n    command set_role @ 0x81 {\n        device_id: devid\n        role: string\n    }\n\nSet role. Can set to empty to remove role binding.\n\n    command clear_all_roles @ 0x84 {}\n\nRemove all role bindings.\n\n    command list_stored_roles @ 0x82 {\n        stored_roles: pipe\n    }\n    pipe report stored_roles {\n        device_id: devid\n        role: string\n    }\n\nReturn all roles stored internally.\n\n    command list_required_roles @ 0x83 {\n        required_roles: pipe\n    }\n    pipe report required_roles {\n        device_id: devid\n        service_class: u32\n        roles: string\n    }\n\nList all roles required by the current program. `device_id` is `0` if role is unbound.\n\n## Events\n\n    event change @ change { }\n\nEmit notifying that the internal state of the service changed."
+  },
+  {
+    "name": "Rotary encoder",
+    "status": "experimental",
+    "shortId": "rotary-encoder",
+    "camelName": "rotaryEncoder",
+    "shortName": "rotaryEncoder",
+    "extends": [
+      "_base",
+      "_sensor"
+    ],
+    "notes": {
+      "short": "An incremental rotary encoder - converts angular motion of a shaft to digital signal."
+    },
+    "classIdentifier": 284830153,
+    "enums": {},
+    "packets": [
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 7,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "optional": true,
+        "identifierName": "status_code",
+        "packFormat": "u16 u16",
+        "derived": "_base"
+      },
+      {
+        "kind": "rw",
+        "name": "streaming_samples",
+        "identifier": 3,
+        "description": "Asks device to stream a given number of samples\n(clients will typically write `255` to this register every second or so, while streaming is required).",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "type": "u8",
+            "storage": 1,
+            "isSimpleType": true
+          }
+        ],
+        "internal": true,
+        "identifierName": "streaming_samples",
+        "packFormat": "u8",
+        "derived": "_sensor"
+      },
+      {
+        "kind": "rw",
+        "name": "streaming_interval",
+        "identifier": 4,
+        "description": "Period between packets of data when streaming in milliseconds.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "ms",
+            "type": "u32",
+            "storage": 4,
+            "isSimpleType": true,
+            "defaultValue": 100,
+            "typicalMin": 1,
+            "typicalMax": 60000
+          }
+        ],
+        "identifierName": "streaming_interval",
+        "packFormat": "u32",
+        "derived": "_sensor"
+      },
+      {
+        "kind": "const",
+        "name": "streaming_preferred_interval",
+        "identifier": 258,
+        "description": "Preferred default streaming interval for sensor in milliseconds.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "ms",
+            "type": "u32",
+            "storage": 4,
+            "isSimpleType": true
+          }
+        ],
+        "internal": true,
+        "optional": true,
+        "identifierName": "streaming_preferred_interval",
+        "packFormat": "u32",
+        "derived": "_sensor"
+      },
+      {
+        "kind": "ro",
+        "name": "position",
+        "identifier": 257,
+        "description": "Upon device reset starts at `0` (regardless of the shaft position).\nIncreases by `1` for a clockwise \"click\", by `-1` for counter-clockwise.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "#",
+            "type": "i32",
+            "storage": -4,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "reading",
+        "packFormat": "i32"
+      },
+      {
+        "kind": "const",
+        "name": "clicks_per_turn",
+        "identifier": 384,
+        "description": "This specifies by how much `position` changes when the crank does 360 degree turn. Typically 12 or 24.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "#",
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "optional": true,
+        "packFormat": "u16"
+      }
+    ],
+    "source": "# Rotary encoder\n\n    identifier: 0x10fa29c9\n    extends: _sensor\n\nAn incremental rotary encoder - converts angular motion of a shaft to digital signal.\n\n## Registers\n\n    ro position: i32 # @ reading\n\nUpon device reset starts at `0` (regardless of the shaft position).\nIncreases by `1` for a clockwise \"click\", by `-1` for counter-clockwise.\n\n    const clicks_per_turn?: u16 # @ 0x180\n\nThis specifies by how much `position` changes when the crank does 360 degree turn. Typically 12 or 24."
   },
   {
     "name": "Servo",

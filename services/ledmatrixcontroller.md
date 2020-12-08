@@ -1,7 +1,7 @@
 # LED Matrix Controller
 
     identifier: 0x1d35e393
-    status: experimental
+    camel: ledMatrixController
 
 A service that allows to control a rectangular matrix of monochrome LEDs.
 To stream the state of the screen, use [LED Matrix display](/services/led-matrix-display) instead.

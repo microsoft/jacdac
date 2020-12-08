@@ -1239,8 +1239,10 @@ function toTypescript(info: jdspec.ServiceSpec, isStatic: boolean) {
     const enumkw = isStatic ? indent + "export const enum" : "export enum"
     let r = isStatic ? "namespace jacdac {\n" : "";
     r += indent + "// Service: " + info.name + "\n"
-    if (info.shortId[0] != "_")
-        r += indent + `export const SRV_${info.name.replace(/ /g, "_").toUpperCase()} = ${toHex(info.classIdentifier)}\n`
+    if (info.shortId[0] != "_") {
+        r += indent + `export const SRV_${snakify(info.camelName).toLocaleUpperCase()} = ${toHex(info.classIdentifier)}\n`
+        r += indent + `export const SRV_${snakify(info.camelName).toLocaleUpperCase()}_SHORT_ID = "${info.shortId}"\n`
+    }
     const pref = upperCamel(info.camelName)
     for (let en of values(info.enums)) {
         const enPref = pref + upperCamel(en.name)

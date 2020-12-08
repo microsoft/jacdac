@@ -5117,7 +5117,7 @@
     "source": "# Servo\n\n    identifier: 0x12fc9103\n\nServo is a small motor directed with a PWM signal.\nThis services fixes the servo period at 20ms, and the pulse can be regulated.\n\n## Registers\n\n    rw pulse: u32 us {typical_min = 500, typical_max = 2500} @ value\n\nSpecifies length of the pulse in microseconds. The period is always 20ms.\n\n    rw enabled: bool @ intensity\n\nTurn the power to the servo on/off."
   },
   {
-    "name": "Settings Storage",
+    "name": "Settings",
     "status": "experimental",
     "shortId": "settings",
     "camelName": "settings",
@@ -5313,7 +5313,7 @@
         "fields": []
       }
     ],
-    "source": "# Settings Storage\n\n    identifier: 0x1107dc4a\n    camel: settings\n\nNon-volatile key-value storage interface for storing settings.\n\n## Secrets\n\nEntries with keys starting with `$` are considered secret.\nThey can be written normally, but they read as a single `0` byte,\nunless they are empty, in which case the value returned is also empty.\nThese are typically used by other services on the same device.\n\n## Commands\n\n    command get @ 0x80 {\n        key: string\n    }\n    report {\n        key: string0\n        value: bytes\n    }\n\nGet the value of given setting. If no such entry exists, the value returned is empty.\n\n    command set @ 0x81 {\n        key: string0\n        value: bytes\n    }\n\nSet the value of a given setting.\n\n    command delete @ 0x84 {\n        key: string\n    }\n\nDelete a given setting.\n\n    command list_keys @ 0x82 {\n        results: pipe\n    }\n    pipe report listed_key {\n        key: string\n    }\n\nReturn keys of all settings.\n\n    command list @ 0x83 {\n        results: pipe\n    }\n    pipe report listed_entry {\n        key: string0\n        value: bytes\n    }\n\nReturn keys and values of all settings.\n\n    command clear @ 0x85 { }\n\nClears all keys."
+    "source": "# Settings\n\n    identifier: 0x1107dc4a\n    camel: settings\n\nNon-volatile key-value storage interface for storing settings.\n\n## Secrets\n\nEntries with keys starting with `$` are considered secret.\nThey can be written normally, but they read as a single `0` byte,\nunless they are empty, in which case the value returned is also empty.\nThese are typically used by other services on the same device.\n\n## Commands\n\n    command get @ 0x80 {\n        key: string\n    }\n    report {\n        key: string0\n        value: bytes\n    }\n\nGet the value of given setting. If no such entry exists, the value returned is empty.\n\n    command set @ 0x81 {\n        key: string0\n        value: bytes\n    }\n\nSet the value of a given setting.\n\n    command delete @ 0x84 {\n        key: string\n    }\n\nDelete a given setting.\n\n    command list_keys @ 0x82 {\n        results: pipe\n    }\n    pipe report listed_key {\n        key: string\n    }\n\nReturn keys of all settings.\n\n    command list @ 0x83 {\n        results: pipe\n    }\n    pipe report listed_entry {\n        key: string0\n        value: bytes\n    }\n\nReturn keys and values of all settings.\n\n    command clear @ 0x85 { }\n\nClears all keys."
   },
   {
     "name": "Slider",

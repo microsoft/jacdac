@@ -1378,8 +1378,8 @@ export enum ServoReg {
     Enabled = 0x1,
 }
 
-// Service: Settings Storage
-export const SRV_SETTINGS_STORAGE = 0x1107dc4a
+// Service: Settings
+export const SRV_SETTINGS = 0x1107dc4a
 export enum SettingsCmd {
     /**
      * Argument: key string (bytes). Get the value of given setting. If no such entry exists, the value returned is empty.

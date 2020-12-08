@@ -420,8 +420,8 @@
     "name": "Accelerometer",
     "status": "experimental",
     "shortId": "accelerometer",
-    "camelName": "accel",
-    "shortName": "accel",
+    "camelName": "accelerometer",
+    "shortName": "accelerometer",
     "extends": [
       "_base",
       "_sensor"
@@ -635,7 +635,7 @@
         "fields": []
       }
     ],
-    "source": "# Accelerometer\n\n    identifier: 0x1f140409\n    extends: _sensor\n    camel: accel\n\nA 3-axis accelerometer.\n\n## Registers\n\n    ro forces @ reading {\n        x: i6.10 g\n        y: i6.10 g\n        z: i6.10 g\n    }\n\nIndicates the current forces acting on accelerometer.\n\n## Events\n\nAll events are debounced.\n\n    event tilt_up @ 1\n    event tilt_down @ 2\n    event tilt_left @ 3\n    event tilt_right @ 4\n\nEmitted when accelerometer is tilted in the given direction.\n\n    event face_up @ 5\n    event face_down @ 6\n\nEmitted when accelerometer is laying flat in the given direction.\n\n    event freefall @ 7\n\nEmitted when total force acting on accelerometer is much less than 1g.\n\n    event shake @ 11\n\nEmitted when forces change violently a few times.\n\n    event force_2g @ 12\n    event force_3g @ 8\n    event force_6g @ 9\n    event force_8g @ 10\n\nEmitted when force in any direction exceeds given threshold.\n"
+    "source": "# Accelerometer\n\n    identifier: 0x1f140409\n    extends: _sensor\n\nA 3-axis accelerometer.\n\n## Registers\n\n    ro forces @ reading {\n        x: i6.10 g\n        y: i6.10 g\n        z: i6.10 g\n    }\n\nIndicates the current forces acting on accelerometer.\n\n## Events\n\nAll events are debounced.\n\n    event tilt_up @ 1\n    event tilt_down @ 2\n    event tilt_left @ 3\n    event tilt_right @ 4\n\nEmitted when accelerometer is tilted in the given direction.\n\n    event face_up @ 5\n    event face_down @ 6\n\nEmitted when accelerometer is laying flat in the given direction.\n\n    event freefall @ 7\n\nEmitted when total force acting on accelerometer is much less than 1g.\n\n    event shake @ 11\n\nEmitted when forces change violently a few times.\n\n    event force_2g @ 12\n    event force_3g @ 8\n    event force_6g @ 9\n    event force_8g @ 10\n\nEmitted when force in any direction exceeds given threshold.\n"
   },
   {
     "name": "Sensor Aggregator",

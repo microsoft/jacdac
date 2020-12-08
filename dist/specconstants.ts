@@ -136,7 +136,7 @@ export enum SensorReg {
 
 // Service: Accelerometer
 export const SRV_ACCELEROMETER = 0x1f140409
-export enum AccelReg {
+export enum AccelerometerReg {
     /**
      * Indicates the current forces acting on accelerometer.
      *
@@ -147,7 +147,7 @@ export enum AccelReg {
     Forces = 0x101,
 }
 
-export enum AccelEvent {
+export enum AccelerometerEvent {
     /**
      * Emitted when accelerometer is tilted in the given direction.
      */

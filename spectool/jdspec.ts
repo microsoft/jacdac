@@ -1323,9 +1323,8 @@ function toTypescript(info: jdspec.ServiceSpec, isStatic: boolean) {
         if (text)
             tsEnums[inner] = (tsEnums[inner] || "") + text
 
-        // string enums not supported in MakeCode
-        if (pkt.packFormat)
-            r += indent + `export const SRV_${[info.camelName, pkt.name, pkt.kind].map(n => snakify(n).toLocaleUpperCase()).join('_')}_PACK_FORMAT = "${pkt.packFormat}"\n`
+        // don't line const strings in makecode,
+        // they don't get dropped efficiently
     }
 
     for (const k of Object.keys(tsEnums)) {

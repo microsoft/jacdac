@@ -38,6 +38,7 @@ function processSpec(dn: string) {
     const mkcdir = path.join(outp, "makecode")
     mkdir(mkcdir)
 
+    const fmtStats: { [index: string]: number;} = {};
     const concats: jdspec.SMap<string> = {}
     for (let fn of files) {
         if (!/\.md$/.test(fn) || fn[0] == ".")
@@ -47,6 +48,10 @@ function processSpec(dn: string) {
         const json = parseServiceSpecificationMarkdownToJSON(cont, includes, fn)
         const key = fn.replace(/\.md$/, "")
         includes[key] = json
+
+        json.packets.map(pkt => pkt.packFormat)
+            .filter(fmt => !!fmt)
+            .forEach(fmt => fmtStats[fmt] = (fmtStats[fmt] || 0) + 1);
 
         reportErrors(json.errors, dn, fn)
         const cnv = converters()
@@ -67,13 +72,16 @@ function processSpec(dn: string) {
                 const srvdir = path.join(mkcdir, dashify(json.camelName))
                 mkdir(srvdir);
                 fs.writeFileSync(path.join(srvdir, "constants.ts"), convResult)
-            }
+            }    
         }
     }
 
     fs.writeFileSync(path.join(outp, "services.json"), JSON.stringify(values(includes), null, 2))
     fs.writeFileSync(path.join(outp, "specconstants.ts"), concats["ts"])
     fs.writeFileSync(path.join(outp, "specconstants.sts"), concats["sts"])
+
+    const fms = Object.keys(fmtStats).sort((l,r) => -fmtStats[l] + fmtStats[r])
+    console.log(fms.map(fmt => `${fmt}: ${fmtStats[fmt]}`))
 }
 
 function readString(folder: string, file: string) {

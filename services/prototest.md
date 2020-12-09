@@ -14,6 +14,11 @@ For each ``rw`` registers, set a random value ``x``
   * call ``c`` command with new random value ``y``
   * read ``rw`` and check value is equal to ``y``
   * do all the above steps with acks
+
+For each ``rw`` registers, there shall also
+be an ``event`` and a ``command``. The event
+should get raised when the value changes;
+and the command should set the value.
   
 ## Registers
 
@@ -62,19 +67,19 @@ A read only string register. Mirrors ro_bytes.
 
 ## Events
 
-    event e_bool @ 0x180 { 
+    event e_bool @ 0x81 { 
         bool: bool 
     }
 
 An event raised when rw_bool is modified
 
-    event e_u32 @ 0x190 { 
+    event e_u32 @ 0x82 { 
         u32: u32 
     }
 
 An event raised when rw_u32 is modified
 
-    event e_i32 @ 0x192 { 
+    event e_i32 @ 0x83 { 
         i32: i32 
     }
 
@@ -82,19 +87,19 @@ An event raised when rw_i32 is modified
 
 ## Commands
 
-    command c_bool @ 0x80 {
+    command c_bool @ 0x81 {
         bool: bool
     }
 
 A command to set rw_bool. Returns the value.
 
-    command c_u32 @ 0x81 {
+    command c_u32 @ 0x82 {
         u32: u32
     }
 
 A command to set rw_u32. Returns the value.
 
-    command c_i32 @ 0x82 {
+    command c_i32 @ 0x83 {
         i32: i32
     }
 

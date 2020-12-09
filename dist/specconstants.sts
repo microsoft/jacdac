@@ -1256,34 +1256,34 @@ namespace jacdac {
         /**
          * Argument: bool bool (uint8_t). An event raised when rw_bool is modified
          */
-        EBool = 0x180,
+        EBool = 0x81,
 
         /**
          * Argument: u32 uint32_t. An event raised when rw_u32 is modified
          */
-        EU32 = 0x190,
+        EU32 = 0x82,
 
         /**
          * Argument: i32 int32_t. An event raised when rw_i32 is modified
          */
-        EI32 = 0x192,
+        EI32 = 0x83,
     }
 
     export const enum ProtoTestCmd {
         /**
          * Argument: bool bool (uint8_t). A command to set rw_bool. Returns the value.
          */
-        CBool = 0x80,
+        CBool = 0x81,
 
         /**
          * Argument: u32 uint32_t. A command to set rw_u32. Returns the value.
          */
-        CU32 = 0x81,
+        CU32 = 0x82,
 
         /**
          * Argument: i32 int32_t. A command to set rw_i32. Returns the value.
          */
-        CI32 = 0x82,
+        CI32 = 0x83,
     }
 
 }

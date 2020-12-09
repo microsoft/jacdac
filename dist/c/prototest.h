@@ -57,31 +57,31 @@
 /**
  * Argument: bool bool (uint8_t). An event raised when rw_bool is modified
  */
-#define JD_PROTO_TEST_EV_E_BOOL 0x180
+#define JD_PROTO_TEST_EV_E_BOOL 0x81
 
 /**
  * Argument: u32 uint32_t. An event raised when rw_u32 is modified
  */
-#define JD_PROTO_TEST_EV_E_U32 0x190
+#define JD_PROTO_TEST_EV_E_U32 0x82
 
 /**
  * Argument: i32 int32_t. An event raised when rw_i32 is modified
  */
-#define JD_PROTO_TEST_EV_E_I32 0x192
+#define JD_PROTO_TEST_EV_E_I32 0x83
 
 /**
  * Argument: bool bool (uint8_t). A command to set rw_bool. Returns the value.
  */
-#define JD_PROTO_TEST_CMD_C_BOOL 0x80
+#define JD_PROTO_TEST_CMD_C_BOOL 0x81
 
 /**
  * Argument: u32 uint32_t. A command to set rw_u32. Returns the value.
  */
-#define JD_PROTO_TEST_CMD_C_U32 0x81
+#define JD_PROTO_TEST_CMD_C_U32 0x82
 
 /**
  * Argument: i32 int32_t. A command to set rw_i32. Returns the value.
  */
-#define JD_PROTO_TEST_CMD_C_I32 0x82
+#define JD_PROTO_TEST_CMD_C_I32 0x83
 
 #endif

@@ -1218,6 +1218,16 @@ export enum ProtoTestEvent {
      * Argument: i32 int32_t. An event raised when rw_i32 is modified
      */
     EI32 = 0x83,
+
+    /**
+     * Argument: string string (bytes). An event raised when rw_string is modified
+     */
+    EString = 0x84,
+
+    /**
+     * Argument: bytes bytes. An event raised when rw_bytes is modified
+     */
+    EBytes = 0x85,
 }
 
 export enum ProtoTestCmd {
@@ -1235,6 +1245,16 @@ export enum ProtoTestCmd {
      * Argument: i32 int32_t. A command to set rw_i32. Returns the value.
      */
     CI32 = 0x83,
+
+    /**
+     * Argument: string string (bytes). A command to set rw_string. Returns the value.
+     */
+    CString = 0x84,
+
+    /**
+     * Argument: bytes bytes. A command to set rw_bytes. Returns the value.
+     */
+    CBytes = 0x85,
 }
 
 // Service: PWM Light

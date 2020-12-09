@@ -70,6 +70,16 @@
 #define JD_PROTO_TEST_EV_E_I32 0x83
 
 /**
+ * Argument: string string (bytes). An event raised when rw_string is modified
+ */
+#define JD_PROTO_TEST_EV_E_STRING 0x84
+
+/**
+ * Argument: bytes bytes. An event raised when rw_bytes is modified
+ */
+#define JD_PROTO_TEST_EV_E_BYTES 0x85
+
+/**
  * Argument: bool bool (uint8_t). A command to set rw_bool. Returns the value.
  */
 #define JD_PROTO_TEST_CMD_C_BOOL 0x81
@@ -83,5 +93,15 @@
  * Argument: i32 int32_t. A command to set rw_i32. Returns the value.
  */
 #define JD_PROTO_TEST_CMD_C_I32 0x83
+
+/**
+ * Argument: string string (bytes). A command to set rw_string. Returns the value.
+ */
+#define JD_PROTO_TEST_CMD_C_STRING 0x84
+
+/**
+ * Argument: bytes bytes. A command to set rw_bytes. Returns the value.
+ */
+#define JD_PROTO_TEST_CMD_C_BYTES 0x85
 
 #endif

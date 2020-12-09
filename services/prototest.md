@@ -85,6 +85,18 @@ An event raised when rw_u32 is modified
 
 An event raised when rw_i32 is modified
 
+    event e_string @ 0x84 { 
+        string: string 
+    }
+
+An event raised when rw_string is modified
+
+    event e_bytes @ 0x85 { 
+        bytes: bytes 
+    }
+
+An event raised when rw_bytes is modified
+
 ## Commands
 
     command c_bool @ 0x81 {
@@ -104,3 +116,15 @@ A command to set rw_u32. Returns the value.
     }
 
 A command to set rw_i32. Returns the value.
+
+    command c_string @ 0x84 {
+        string: string
+    }
+
+A command to set rw_string. Returns the value.
+
+    command c_bytes @ 0x85 {
+        bytes: bytes
+    }
+
+A command to set rw_bytes. Returns the value.

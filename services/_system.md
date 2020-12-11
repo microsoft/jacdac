@@ -106,10 +106,9 @@ Preferred default streaming interval for sensor in milliseconds.
 
 ## Events
 
-Events codes are subdivided as follows:
-* Events `0x000-0x07f` - common to all services
-* Events `0x080-0xeff` - defined per-service
-* Events `0xf00-0xfff` - reserved for implementation
+Events codes are 8-bit and are subdivided as follows:
+* Events `0x00-0x7f` - common to all services
+* Events `0x80-0xff` - defined per-service
 
     event change @ 0x02 { }
 

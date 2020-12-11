@@ -22,7 +22,8 @@ The operation is stored in the top most nibble of the `service_command` field. T
 | `0x0XXX` | Action	|
 | `0x1XXX` | Register read	|
 | `0x2XXX` | Register write	|
-| `0x3XXX`- `0xfXXX` | Reserved	|
+| `0x3XXX`- `0x7XXX` | Reserved	|
+| `0x8XXX`- `0xfXXX` | Events	|
 
 #### Actions
 
@@ -75,14 +76,41 @@ The layout of a report depends on its purpose:
 *  __Register reports__ must always contain the register values requested in the original command packet, but for actions, the format is left up to the service creator to define.
 * __Actions reports__ can either contain a pre-determined number of bytes as defined in the service specification or bear no operation.
 
-A third type of report is an __Event__. Events are emitted independently by a service without prompting. Some services may offer an interface to configure which events are emitted. Event reports have the following format:
+A third type of report is an __Event__. Events are emitted independently by a service without prompting. Some services may offer an interface to configure which events are emitted.
 
-| Memory offset | Field size (bytes) 	| Field name 	| Description  	|
-|--------|------------	|-------------	|----------	|
-| 16 | 4	|`event_id`	| A number that uniquely identifies an event. |
-| 18 | 4	|`event_argument`	| An optional argument that can provide additional context.	|
+Events have a specially-constructed operation code:
+| Bits | Function 
+|------|----------------------
+| 15   | Always set for events
+| 14:8 | Sequential counter
+| 7:0  | Event code
+
+Event codes `0x00-0x7f` are common to all services, and codes `0x80-0xff` are service-specific.
+Events can (but often don't) contain payloads.
 
 Event reports are sent in the same way as any other packet, and `device_identifier`, `service_index`, and `service_command` differentiate it from other types of reports. These differentiators provide a unique namespace for each service. Multiple event reports can be sent by using multiple packets in the same frame.
+
+The counter in operation code is incremented by 1 for every event emitted.
+This is global to device, not per-service.
+Every event is typically emitted 3 times:
+* once when it happens
+* the first repetition after about 20ms
+* the second repetition after about 100ms
+
+Each repetition is emitted with the same sequential counter.
+
+The client should ignore the repetitions it recives.
+However, if the client misses an event, it will likely get the repetition, and handle that.
+The client should maintain the last sequential number for every device.
+If an event comes with an unexpected number, the client should wait with handling it
+for at least 100ms, until the preceding (repetitions of) events arrive.
+Then the client should handle events in the intended order.
+
+As a motivation, consider a device with button services.
+If these are handled purely through events, the client will maintain the pressed state for each button.
+For this, it's critical not to swap order of up/down events.
+To recognize button combinations, it's important not to swap order of events from the two services.
+
 
 ### The control service
 

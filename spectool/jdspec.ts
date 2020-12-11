@@ -823,6 +823,8 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
     function normalizeName(n: string) {
         if (!/^\w+$/.test(n))
             error("expecting name here")
+        if (n.length > 31)
+            error(`name '${n}' too long`)
         return n
     }
 

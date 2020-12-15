@@ -1121,6 +1121,7 @@ export enum LoggerPriority { // uint8_t
     Log = 0x1,
     Warning = 0x2,
     Error = 0x3,
+    Silent = 0x4,
 }
 
 export enum LoggerReg {

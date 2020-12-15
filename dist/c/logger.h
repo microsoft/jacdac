@@ -9,6 +9,7 @@
 #define JD_LOGGER_PRIORITY_LOG 0x1
 #define JD_LOGGER_PRIORITY_WARNING 0x2
 #define JD_LOGGER_PRIORITY_ERROR 0x3
+#define JD_LOGGER_PRIORITY_SILENT 0x4
 
 /**
  * Read-write Priority (uint8_t). Messages with level lower than this won't be emitted. The default setting may vary.

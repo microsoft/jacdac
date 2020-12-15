@@ -10,7 +10,8 @@ A service which can report messages to the bus.
         Debug = 0,
         Log = 1,
         Warning = 2,
-        Error = 3
+        Error = 3,
+        Silent = 4
     }
     rw min_priority = 1: Priority @ 0x80
 

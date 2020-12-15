@@ -1,0 +1,1 @@
+This folder contains schematics for hardware supporting JACDAC.

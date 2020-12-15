@@ -3679,6 +3679,161 @@
     "source": "# Model Runner\n\n    identifier: 0x140f9a78\n\nRun machine learning models.\nOnly models with a single input tensor and a single output tensor are supported at the moment.\nInput is provided by Sensor Aggregator service on the same device.\nMultiple instances of this service may be present, if more than one model format is supported by a device.\n\n## Commands\n\n    command set_model @ 0x80 {\n        model_size: u32 B\n    }\n    report {\n        model_port: pipe_port\n    }\n\nOpen pipe for streaming in the model. The size of the model has to be declared upfront.\nThe model is streamed over regular pipe data packets.\nThe format supported by this instance of the service is specified in `format` register.\nWhen the pipe is closed, the model is written all into flash, and the device running the service may reset.\n\n    command predict @ 0x81 {\n        outputs: pipe\n    }\n    report {\n        inputs: pipe_port\n    }\n\nOpen channel that can be used to manually invoke the model. When enough data is sent over the `inputs` pipe, the model is invoked,\nand results are send over the `outputs` pipe.\n\n## Registers\n\n    rw auto_invoke_every: u16 @ 0x80\n\nWhen register contains `N > 0`, run the model automatically every time new `N` samples are collected.\nModel may be run less often if it takes longer to run than `N * sampling_interval`.\nThe `outputs` register will stream its value after each run.\nThis register is not stored in flash.\n\n    ro outputs @ reading {\n    repeats:\n        output: f32\n    }\n\nResults of last model invocation as `float32` array.\n\n    ro input_shape @ 0x180 {\n    repeats:\n        dimension: u16\n    }\n\nThe shape of the input tensor.\n\n    ro output_shape @ 0x181 {\n    repeats:\n        dimension: u16\n    }\n\nThe shape of the output tensor.\n\n    ro last_run_time: u32 us @ 0x182\n\nThe time consumed in last model execution.\n\n    ro allocated_arena_size: u32 B @ 0x183\n\nNumber of RAM bytes allocated for model execution.\n\n    ro model_size: u32 B @ 0x184\n\nThe size of the model in bytes.\n\n    ro last_error: string @ 0x185\n\nTextual description of last error when running or loading model (if any).\n\n    enum ModelFormat: u32 {\n        TFLite = 0x334c4654,\n        ML4F = 0x30470f62,\n        EdgeImpulseCompiled = 0x30564945,\n    }\n    const format: ModelFormat @ 0x186\n\nThe type of ML models supported by this service.\n`TFLite` is flatbuffer `.tflite` file.\n`ML4F` is compiled machine code model for Cortex-M4F.\nThe format is typically present as first or second little endian word of model file.\n\n    const format_version: u32 @ 0x187\n\nA version number for the format.\n\n    const parallel?: bool @ 0x188\n\nIf present and true this service can run models independently of other\ninstances of this service on the device.\n"
   },
   {
+    "name": "Mono Light",
+    "status": "experimental",
+    "shortId": "monolight",
+    "camelName": "monoLight",
+    "shortName": "monoLight",
+    "extends": [
+      "_base"
+    ],
+    "notes": {
+      "short": "A controller for 1 or more LEDs connected in parallel.",
+      "long": "## Animation steps\n\nAnimations are described using pairs of intensity and duration.\nFor example, the following animation\n`(0, 10ms), (0.5, 5ms), (0.5, 10ms), (1, 5ms), (0, 7ms), (0, 0ms)`\nwill gradually rise the intensity `0 - 0.5` in 10ms,\nthen, it will keep it steady for at `0.5` for 5ms,\nthen it will rise it again `0.5 - 1` over 10ms,\ndrop `1 - 0` in 5ms,\nand keep it at 0 for 7ms more.\nAny entry with duration of 0ms is considered to be end-marker.\n\nTo get steady glow at `x`, use animation of `(x, 60000ms), (x, 0ms)` and keep `max_iterations` at `0xffff`."
+    },
+    "classIdentifier": 531985491,
+    "enums": {},
+    "packets": [
+      {
+        "kind": "ro",
+        "name": "status_code",
+        "identifier": 259,
+        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
+        "fields": [
+          {
+            "name": "code",
+            "unit": "",
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          },
+          {
+            "name": "vendor_code",
+            "unit": "",
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "optional": true,
+        "identifierName": "status_code",
+        "packFormat": "u16 u16",
+        "derived": "_base"
+      },
+      {
+        "kind": "rw",
+        "name": "brightness",
+        "identifier": 1,
+        "description": "Set the luminosity of the strip. The value is used to scale `start_intensity` in `steps` register.\nAt `0` the power to the strip is completely shut down.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "/",
+            "shift": 16,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "identifierName": "intensity",
+        "packFormat": "u16"
+      },
+      {
+        "kind": "rw",
+        "name": "max_power",
+        "identifier": 7,
+        "description": "Limit the power drawn by the light-strip (and controller).",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "mA",
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true,
+            "defaultValue": 100
+          }
+        ],
+        "identifierName": "max_power",
+        "packFormat": "u16"
+      },
+      {
+        "kind": "const",
+        "name": "max_steps",
+        "identifier": 384,
+        "description": "Maximum number of steps allowed in animation definition. This determines the size of the `steps` register.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "type": "u8",
+            "storage": 1,
+            "isSimpleType": true
+          }
+        ],
+        "packFormat": "u8"
+      },
+      {
+        "kind": "rw",
+        "name": "steps",
+        "identifier": 130,
+        "description": "The steps of current animation. Setting this also sets `current_iteration` to `0`.\nStep with `duration == 0` is treated as an end marker.",
+        "fields": [
+          {
+            "name": "start_intensity",
+            "unit": "/",
+            "shift": 16,
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true,
+            "startRepeats": true
+          },
+          {
+            "name": "duration",
+            "unit": "ms",
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "packFormat": "r: u16 u16"
+      },
+      {
+        "kind": "rw",
+        "name": "current_iteration",
+        "identifier": 128,
+        "description": "Currently excecuting iteration of animation. Can be set to `0` to restart current animation.\nIf `current_iteration > max_iterations`, then no animation is currently running.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true
+          }
+        ],
+        "packFormat": "u16"
+      },
+      {
+        "kind": "rw",
+        "name": "max_iterations",
+        "identifier": 129,
+        "description": "The animation will be repeated `max_iterations + 1` times.",
+        "fields": [
+          {
+            "name": "_",
+            "unit": "",
+            "type": "u16",
+            "storage": 2,
+            "isSimpleType": true,
+            "defaultValue": 65535
+          }
+        ],
+        "packFormat": "u16"
+      }
+    ],
+    "source": "# Mono Light\n\n    identifier: 0x1fb57453\n    camel: monoLight\n\nA controller for 1 or more LEDs connected in parallel.\n\n## Animation steps\n\nAnimations are described using pairs of intensity and duration.\nFor example, the following animation\n`(0, 10ms), (0.5, 5ms), (0.5, 10ms), (1, 5ms), (0, 7ms), (0, 0ms)`\nwill gradually rise the intensity `0 - 0.5` in 10ms,\nthen, it will keep it steady for at `0.5` for 5ms,\nthen it will rise it again `0.5 - 1` over 10ms,\ndrop `1 - 0` in 5ms,\nand keep it at 0 for 7ms more.\nAny entry with duration of 0ms is considered to be end-marker.\n\nTo get steady glow at `x`, use animation of `(x, 60000ms), (x, 0ms)` and keep `max_iterations` at `0xffff`.\n\n## Registers\n\n    rw brightness: u16 / @ intensity\n\nSet the luminosity of the strip. The value is used to scale `start_intensity` in `steps` register.\nAt `0` the power to the strip is completely shut down.\n\n    rw max_power = 100: u16 mA @ max_power\n\nLimit the power drawn by the light-strip (and controller).\n\n    const max_steps: u8 @ 0x180\n\nMaximum number of steps allowed in animation definition. This determines the size of the `steps` register.\n\n    rw steps @ 0x82 {\n        repeats:\n            start_intensity: u16 /\n            duration: u16 ms\n    }\n\nThe steps of current animation. Setting this also sets `current_iteration` to `0`.\nStep with `duration == 0` is treated as an end marker.\n\n    rw current_iteration: u16 @ 0x80\n\nCurrently excecuting iteration of animation. Can be set to `0` to restart current animation.\nIf `current_iteration > max_iterations`, then no animation is currently running.\n\n    rw max_iterations = 0xffff: u16 @ 0x81\n\nThe animation will be repeated `max_iterations + 1` times.\n"
+  },
+  {
     "name": "Motor",
     "status": "experimental",
     "shortId": "motor",
@@ -4654,161 +4809,6 @@
       }
     ],
     "source": "# Protocol Test\n\n    identifier: 0x16c7466a\n    camel: protoTest\n\nThis is test service to validate the protocol packet transmissions between the browser and a MCU.\nUse this page if you developing JACDAC HDK for a new platform.\n\n### Test procedure\n\nFor each ``rw`` registers, set a random value ``x``\n  * read ``rw`` and check value is equal to ``x``\n  * read ``ro`` and check value is equal to ``x``\n  * listen to ``e`` event and check that data is equal to ``x``\n  * call ``c`` command with new random value ``y``\n  * read ``rw`` and check value is equal to ``y``\n  * do all the above steps with acks\n\nFor each ``rw`` registers, there shall also\nbe an ``event`` and a ``command``. The event\nshould get raised when the value changes;\nand the command should set the value.\n  \n## Registers\n\nEvery ``rw`` register has a corresponding ``ro`` regisrer\nand a corresponding ``set_...`` command to also set the value.\n\n    rw rw_bool : bool @ 0x081\n\nA read write bool register.\n\n    ro ro_bool : bool @ 0x181\n\nA read only bool register. Mirrors rw_bool.\n\n    rw rw_u32 : u32 @ 0x082\n\nA read write u32 register.\n\n    ro ro_u32 : u32 @ 0x182\n\nA read only u32 register.. Mirrors rw_u32.\n\n    rw rw_i32 : i32 @ 0x083\n\nA read write i32 register.\n\n    ro ro_i32 : i32 @ 0x183\n\nA read only i32 register.. Mirrors rw_i32.\n\n    rw rw_string : string @ 0x084\n\nA read write string register.\n\n    ro ro_string : string @ 0x184\n\nA read only string register. Mirrors rw_string.\n\n    rw rw_bytes : bytes @ 0x085\n\nA read write string register.\n\n    ro ro_bytes : bytes @ 0x185\n\nA read only string register. Mirrors ro_bytes.\n\n## Events\n\n    event e_bool @ 0x81 { \n        bool: bool \n    }\n\nAn event raised when rw_bool is modified\n\n    event e_u32 @ 0x82 { \n        u32: u32 \n    }\n\nAn event raised when rw_u32 is modified\n\n    event e_i32 @ 0x83 { \n        i32: i32 \n    }\n\nAn event raised when rw_i32 is modified\n\n    event e_string @ 0x84 { \n        string: string \n    }\n\nAn event raised when rw_string is modified\n\n    event e_bytes @ 0x85 { \n        bytes: bytes \n    }\n\nAn event raised when rw_bytes is modified\n\n## Commands\n\n    command c_bool @ 0x81 {\n        bool: bool\n    }\n\nA command to set rw_bool. Returns the value.\n\n    command c_u32 @ 0x82 {\n        u32: u32\n    }\n\nA command to set rw_u32. Returns the value.\n\n    command c_i32 @ 0x83 {\n        i32: i32\n    }\n\nA command to set rw_i32. Returns the value.\n\n    command c_string @ 0x84 {\n        string: string\n    }\n\nA command to set rw_string. Returns the value.\n\n    command c_bytes @ 0x85 {\n        bytes: bytes\n    }\n\nA command to set rw_bytes. Returns the value.\n"
-  },
-  {
-    "name": "PWM Light",
-    "status": "experimental",
-    "shortId": "pwmlight",
-    "camelName": "PwmLight",
-    "shortName": "PwmLight",
-    "extends": [
-      "_base"
-    ],
-    "notes": {
-      "short": "A controller for 1 or more LEDs connected in parallel.",
-      "long": "## Animation steps\n\nAnimations are described using pairs of intensity and duration.\nFor example, the following animation\n`(0, 10ms), (0.5, 5ms), (0.5, 10ms), (1, 5ms), (0, 7ms), (0, 0ms)`\nwill gradually rise the intensity `0 - 0.5` in 10ms,\nthen, it will keep it steady for at `0.5` for 5ms,\nthen it will rise it again `0.5 - 1` over 10ms,\ndrop `1 - 0` in 5ms,\nand keep it at 0 for 7ms more.\nAny entry with duration of 0ms is considered to be end-marker.\n\nTo get steady glow at `x`, use animation of `(x, 60000ms), (x, 0ms)` and keep `max_iterations` at `0xffff`."
-    },
-    "classIdentifier": 531985491,
-    "enums": {},
-    "packets": [
-      {
-        "kind": "ro",
-        "name": "status_code",
-        "identifier": 259,
-        "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the anounce packet.",
-        "fields": [
-          {
-            "name": "code",
-            "unit": "",
-            "type": "u16",
-            "storage": 2,
-            "isSimpleType": true
-          },
-          {
-            "name": "vendor_code",
-            "unit": "",
-            "type": "u16",
-            "storage": 2,
-            "isSimpleType": true
-          }
-        ],
-        "optional": true,
-        "identifierName": "status_code",
-        "packFormat": "u16 u16",
-        "derived": "_base"
-      },
-      {
-        "kind": "rw",
-        "name": "brightness",
-        "identifier": 1,
-        "description": "Set the luminosity of the strip. The value is used to scale `start_intensity` in `steps` register.\nAt `0` the power to the strip is completely shut down.",
-        "fields": [
-          {
-            "name": "_",
-            "unit": "/",
-            "shift": 16,
-            "type": "u16",
-            "storage": 2,
-            "isSimpleType": true
-          }
-        ],
-        "identifierName": "intensity",
-        "packFormat": "u16"
-      },
-      {
-        "kind": "rw",
-        "name": "max_power",
-        "identifier": 7,
-        "description": "Limit the power drawn by the light-strip (and controller).",
-        "fields": [
-          {
-            "name": "_",
-            "unit": "mA",
-            "type": "u16",
-            "storage": 2,
-            "isSimpleType": true,
-            "defaultValue": 100
-          }
-        ],
-        "identifierName": "max_power",
-        "packFormat": "u16"
-      },
-      {
-        "kind": "const",
-        "name": "max_steps",
-        "identifier": 384,
-        "description": "Maximum number of steps allowed in animation definition. This determines the size of the `steps` register.",
-        "fields": [
-          {
-            "name": "_",
-            "unit": "",
-            "type": "u8",
-            "storage": 1,
-            "isSimpleType": true
-          }
-        ],
-        "packFormat": "u8"
-      },
-      {
-        "kind": "rw",
-        "name": "steps",
-        "identifier": 130,
-        "description": "The steps of current animation. Setting this also sets `current_iteration` to `0`.\nStep with `duration == 0` is treated as an end marker.",
-        "fields": [
-          {
-            "name": "start_intensity",
-            "unit": "/",
-            "shift": 16,
-            "type": "u16",
-            "storage": 2,
-            "isSimpleType": true,
-            "startRepeats": true
-          },
-          {
-            "name": "duration",
-            "unit": "ms",
-            "type": "u16",
-            "storage": 2,
-            "isSimpleType": true
-          }
-        ],
-        "packFormat": "r: u16 u16"
-      },
-      {
-        "kind": "rw",
-        "name": "current_iteration",
-        "identifier": 128,
-        "description": "Currently excecuting iteration of animation. Can be set to `0` to restart current animation.\nIf `current_iteration > max_iterations`, then no animation is currently running.",
-        "fields": [
-          {
-            "name": "_",
-            "unit": "",
-            "type": "u16",
-            "storage": 2,
-            "isSimpleType": true
-          }
-        ],
-        "packFormat": "u16"
-      },
-      {
-        "kind": "rw",
-        "name": "max_iterations",
-        "identifier": 129,
-        "description": "The animation will be repeated `max_iterations + 1` times.",
-        "fields": [
-          {
-            "name": "_",
-            "unit": "",
-            "type": "u16",
-            "storage": 2,
-            "isSimpleType": true,
-            "defaultValue": 65535
-          }
-        ],
-        "packFormat": "u16"
-      }
-    ],
-    "source": "# PWM Light\n\n    identifier: 0x1fb57453\n    camel: PwmLight\n\nA controller for 1 or more LEDs connected in parallel.\n\n## Animation steps\n\nAnimations are described using pairs of intensity and duration.\nFor example, the following animation\n`(0, 10ms), (0.5, 5ms), (0.5, 10ms), (1, 5ms), (0, 7ms), (0, 0ms)`\nwill gradually rise the intensity `0 - 0.5` in 10ms,\nthen, it will keep it steady for at `0.5` for 5ms,\nthen it will rise it again `0.5 - 1` over 10ms,\ndrop `1 - 0` in 5ms,\nand keep it at 0 for 7ms more.\nAny entry with duration of 0ms is considered to be end-marker.\n\nTo get steady glow at `x`, use animation of `(x, 60000ms), (x, 0ms)` and keep `max_iterations` at `0xffff`.\n\n## Registers\n\n    rw brightness: u16 / @ intensity\n\nSet the luminosity of the strip. The value is used to scale `start_intensity` in `steps` register.\nAt `0` the power to the strip is completely shut down.\n\n    rw max_power = 100: u16 mA @ max_power\n\nLimit the power drawn by the light-strip (and controller).\n\n    const max_steps: u8 @ 0x180\n\nMaximum number of steps allowed in animation definition. This determines the size of the `steps` register.\n\n    rw steps @ 0x82 {\n        repeats:\n            start_intensity: u16 /\n            duration: u16 ms\n    }\n\nThe steps of current animation. Setting this also sets `current_iteration` to `0`.\nStep with `duration == 0` is treated as an end marker.\n\n    rw current_iteration: u16 @ 0x80\n\nCurrently excecuting iteration of animation. Can be set to `0` to restart current animation.\nIf `current_iteration > max_iterations`, then no animation is currently running.\n\n    rw max_iterations = 0xffff: u16 @ 0x81\n\nThe animation will be repeated `max_iterations + 1` times.\n"
   },
   {
     "name": "Role Manager",

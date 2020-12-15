@@ -1301,7 +1301,7 @@ function toTypescript(info: jdspec.ServiceSpec, isStatic: boolean) {
             continue
 
         const cmt = addComment(pkt)
-        let pack = cmt.needsStruct ? packInfo(info, pkt, isStatic) : ""
+        let pack = pkt.fields.length ? packInfo(info, pkt, isStatic) : ""
 
         let inner = "Cmd"
         if (isRegister(pkt.kind))

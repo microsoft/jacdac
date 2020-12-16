@@ -456,15 +456,15 @@ declare namespace jdspec {
         /**
          * Client information if any
          */
-        client?: {
+        client: {
             /**
              * GitHub slub and path (OWNER/NAME[/PATH])
              */
             repo: string;
             /**
-             * The client type
+             * The TypeScript fully qualified type  name
              */
-            client: string;
+            qName: string;
         }
     }
 }

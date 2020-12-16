@@ -1,17 +1,20 @@
-{
-    "accelerometer": {
-        "repo": "microsoft/pxt-jacdac/accelerometer",
-        "client": "modules.AccelerometerClient"
+[
+    {
+        "service": "accelerometer",
+        "client": {
+            "repo": "microsoft/pxt-jacdac/accelerometer",
+            "name": "modules.AccelerometerClient"
+        }
     },
-    "button": {
-        "repo": "microsoft/pxt-jacdac/button",
-        "client": "modules.ButtonClient"
+    {
+        "service": "button",
+        "client": {
+            "repo": "microsoft/pxt-jacdac/button"
+        }
     },
-    "servo": {
-        "repo": "microsoft/pxt-jacdac/servo",
-        "client": "modules.ServoClient"
+    {
+        "service": "servo",
+        "client": "microsoft/pxt-jacdac/servo"
     },
-    "slider": {
-        "repo": "microsoft/pxt-jacdac/slider"
-    }
-}
+    "slider"
+]

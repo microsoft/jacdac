@@ -467,9 +467,4 @@ declare namespace jdspec {
             client: string;
         }
     }
-
-    /**
-     * A list of known MakeCode implementations. 
-     */
-    export type MakeCodeServicesInfo = MakeCodeServiceInfo[]
 }

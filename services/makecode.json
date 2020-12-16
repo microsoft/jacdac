@@ -9,12 +9,22 @@
     {
         "service": "button",
         "client": {
-            "repo": "microsoft/pxt-jacdac/button"
+            "repo": "microsoft/pxt-jacdac/button",
+            "client": "modules.ButtonClient"
         }
     },
     {
         "service": "servo",
-        "client": "microsoft/pxt-jacdac/servo"
+        "client": {
+            "repo": "microsoft/pxt-jacdac/servo",
+            "client": "modules.ServoClient"
+        }
     },
-    "slider"
+    {
+        "service": "slider",
+        "client": {
+            "repo": "microsoft/pxt-jacdac/slider",
+            "client": "modules.SliderClient"
+        }
+    }
 ]

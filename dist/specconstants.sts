@@ -134,6 +134,7 @@ namespace jacdac {
         /**
          * Emit notifying that the internal state of the service changed.
          */
+        //% block="change"
         Change = 0x2,
     }
 
@@ -206,61 +207,73 @@ namespace jacdac {
         /**
          * Emitted when accelerometer is tilted in the given direction.
          */
+        //% block="tilt up"
         TiltUp = 0x1,
 
         /**
          * Emitted when accelerometer is tilted in the given direction.
          */
+        //% block="tilt down"
         TiltDown = 0x2,
 
         /**
          * Emitted when accelerometer is tilted in the given direction.
          */
+        //% block="tilt left"
         TiltLeft = 0x3,
 
         /**
          * Emitted when accelerometer is tilted in the given direction.
          */
+        //% block="tilt right"
         TiltRight = 0x4,
 
         /**
          * Emitted when accelerometer is laying flat in the given direction.
          */
+        //% block="face up"
         FaceUp = 0x5,
 
         /**
          * Emitted when accelerometer is laying flat in the given direction.
          */
+        //% block="face down"
         FaceDown = 0x6,
 
         /**
          * Emitted when total force acting on accelerometer is much less than 1g.
          */
+        //% block="freefall"
         Freefall = 0x7,
 
         /**
          * Emitted when forces change violently a few times.
          */
+        //% block="shake"
         Shake = 0xb,
 
         /**
          * Emitted when force in any direction exceeds given threshold.
          */
+        //% block="force 2g"
         Force_2g = 0xc,
 
         /**
          * Emitted when force in any direction exceeds given threshold.
          */
+        //% block="force 3g"
         Force_3g = 0x8,
 
         /**
          * Emitted when force in any direction exceeds given threshold.
          */
+        //% block="force 6g"
         Force_6g = 0x9,
 
         /**
          * Emitted when force in any direction exceeds given threshold.
          */
+        //% block="force 8g"
         Force_8g = 0xa,
     }
 
@@ -409,21 +422,25 @@ namespace jacdac {
         /**
          * Emitted when button goes from inactive (`pressed == 0`) to active.
          */
+        //% block="down"
         Down = 0x1,
 
         /**
          * Emitted when button goes from active (`pressed == 1`) to inactive.
          */
+        //% block="up"
         Up = 0x2,
 
         /**
          * Emitted together with `up` when the press time was not longer than 500ms.
          */
+        //% block="click"
         Click = 0x3,
 
         /**
          * Emitted together with `up` when the press time was more than 500ms.
          */
+        //% block="long click"
         LongClick = 0x4,
     }
 
@@ -661,6 +678,7 @@ namespace jacdac {
          * const [button, playerIndex] = jdunpack<[GamepadButton, number]>(buf, "u16 u16")
          * ```
          */
+        //% block="down"
         Down = 0x1,
 
         /**
@@ -670,6 +688,7 @@ namespace jacdac {
          * const [button, playerIndex] = jdunpack<[GamepadButton, number]>(buf, "u16 u16")
          * ```
          */
+        //% block="up"
         Up = 0x2,
     }
 
@@ -930,6 +949,7 @@ namespace jacdac {
         /**
          * Emitted upon successful connection.
          */
+        //% block="connected"
         Connected = 0x1,
 
         /**
@@ -939,6 +959,7 @@ namespace jacdac {
          * const [reason] = jdunpack<[string]>(buf, "s")
          * ```
          */
+        //% block="connection error"
         ConnectionError = 0x2,
 
         /**
@@ -951,6 +972,7 @@ namespace jacdac {
          * const [propertyName, propertyValue] = rest[0]
          * ```
          */
+        //% block="devicebound str"
         DeviceboundStr = 0x3,
     }
 
@@ -1565,6 +1587,7 @@ namespace jacdac {
          * const [channel] = jdunpack<[number]>(buf, "u32")
          * ```
          */
+        //% block="touch"
         Touch = 0x1,
 
         /**
@@ -1574,6 +1597,7 @@ namespace jacdac {
          * const [channel] = jdunpack<[number]>(buf, "u32")
          * ```
          */
+        //% block="release"
         Release = 0x2,
 
         /**
@@ -1583,6 +1607,7 @@ namespace jacdac {
          * const [channel] = jdunpack<[number]>(buf, "u32")
          * ```
          */
+        //% block="tap"
         Tap = 0x3,
 
         /**
@@ -1592,16 +1617,19 @@ namespace jacdac {
          * const [channel] = jdunpack<[number]>(buf, "u32")
          * ```
          */
+        //% block="long press"
         LongPress = 0x4,
 
         /**
          * Emitted when input channels are successively touched in order of increasing channel numbers.
          */
+        //% block="swipe pos"
         SwipePos = 0x10,
 
         /**
          * Emitted when input channels are successively touched in order of decreasing channel numbers.
          */
+        //% block="swipe neg"
         SwipeNeg = 0x11,
     }
 
@@ -1802,6 +1830,7 @@ namespace jacdac {
          * const [bool] = jdunpack<[number]>(buf, "u8")
          * ```
          */
+        //% block="e bool"
         EBool = 0x81,
 
         /**
@@ -1811,6 +1840,7 @@ namespace jacdac {
          * const [u32] = jdunpack<[number]>(buf, "u32")
          * ```
          */
+        //% block="e u32"
         EU32 = 0x82,
 
         /**
@@ -1820,6 +1850,7 @@ namespace jacdac {
          * const [i32] = jdunpack<[number]>(buf, "i32")
          * ```
          */
+        //% block="e i32"
         EI32 = 0x83,
 
         /**
@@ -1829,6 +1860,7 @@ namespace jacdac {
          * const [string] = jdunpack<[string]>(buf, "s")
          * ```
          */
+        //% block="e string"
         EString = 0x84,
 
         /**
@@ -1838,6 +1870,7 @@ namespace jacdac {
          * const [bytes] = jdunpack<[Buffer]>(buf, "b")
          * ```
          */
+        //% block="e bytes"
         EBytes = 0x85,
     }
 
@@ -1973,6 +2006,7 @@ namespace jacdac {
         /**
          * Emit notifying that the internal state of the service changed.
          */
+        //% block="change"
         Change = 0x2,
     }
 
@@ -2268,11 +2302,13 @@ namespace jacdac {
         /**
          * Emitted upon successful join and IP address assignment.
          */
+        //% block="got ip"
         GotIp = 0x1,
 
         /**
          * Emitted when disconnected from network.
          */
+        //% block="lost ip"
         LostIp = 0x2,
     }
 

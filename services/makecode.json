@@ -12,7 +12,6 @@
         "client": "modules.ServoClient"
     },
     "slider": {
-        "repo": "microsoft/pxt-jacdac/slider",
-        "client": "modules.SliderClient"
+        "repo": "microsoft/pxt-jacdac/slider"
     }
 }

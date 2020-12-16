@@ -444,4 +444,27 @@ declare namespace jdspec {
          */
         errors?: Diagnostic[];
     }
+
+    /**
+ * Information about MakeCode support for a JACDAC service
+ */
+    export interface MakeCodeServiceInfo {
+        /**
+         * Short id of the service
+         */
+        service: string;
+        /**
+         * Client information if any
+         */
+        client?: {
+            /**
+             * GitHub slub and path (OWNER/NAME[/PATH])
+             */
+            repo: string;
+            /**
+             * The client type
+             */
+            client: string;
+        }
+    }
 }

@@ -457,6 +457,8 @@ declare namespace jdspec {
          * Client information if any
          */
         client: {
+            /** project name */
+            name: string;
             /**
              * GitHub slub and path (OWNER/NAME[/PATH])
              */

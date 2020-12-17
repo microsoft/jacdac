@@ -1,6 +1,7 @@
 # CODAL Message Bus
 
     identifier: 0x16ad7cd5
+    camel: codalMessageBus
     
 A service that allows passing events through the [CODAL Message Bus](https://lancaster-university.github.io/microbit-docs/ubit/messageBus/)
 * ``id`` is a unique identifier that identifies a component in the device. Use ``0`` to address all sources. The value of other identifiers is typically hardware dependent.

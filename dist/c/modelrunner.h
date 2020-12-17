@@ -16,14 +16,20 @@
  * When the pipe is closed, the model is written all into flash, and the device running the service may reset.
  */
 #define JD_MODEL_RUNNER_CMD_SET_MODEL 0x80
-// Report: Argument: model_port pipe_port (uint16_t)
+
+/**
+ * Report: Argument: model_port pipe_port (uint16_t)
+ */
 
 /**
  * Argument: outputs pipe (bytes). Open channel that can be used to manually invoke the model. When enough data is sent over the `inputs` pipe, the model is invoked,
  * and results are send over the `outputs` pipe.
  */
 #define JD_MODEL_RUNNER_CMD_PREDICT 0x81
-// Report: Argument: inputs pipe_port (uint16_t)
+
+/**
+ * Report: Argument: inputs pipe_port (uint16_t)
+ */
 
 /**
  * Read-write uint16_t. When register contains `N > 0`, run the model automatically every time new `N` samples are collected.
@@ -33,25 +39,51 @@
  */
 #define JD_MODEL_RUNNER_REG_AUTO_INVOKE_EVERY 0x80
 
-/** Read-only output f32 (uint32_t). Results of last model invocation as `float32` array. */
+/**
+ * Read-only. Results of last model invocation as `float32` array.
+ */
 #define JD_MODEL_RUNNER_REG_OUTPUTS JD_REG_READING
+typedef struct jd_model_runner_outputs {
+    uint32_t output[0];  // f32
+} jd_model_runner_outputs_t;
 
-/** Read-only dimension uint16_t. The shape of the input tensor. */
+
+/**
+ * Read-only. The shape of the input tensor.
+ */
 #define JD_MODEL_RUNNER_REG_INPUT_SHAPE 0x180
+typedef struct jd_model_runner_input_shape {
+    uint16_t dimension[0];
+} jd_model_runner_input_shape_t;
 
-/** Read-only dimension uint16_t. The shape of the output tensor. */
+
+/**
+ * Read-only. The shape of the output tensor.
+ */
 #define JD_MODEL_RUNNER_REG_OUTPUT_SHAPE 0x181
+typedef struct jd_model_runner_output_shape {
+    uint16_t dimension[0];
+} jd_model_runner_output_shape_t;
 
-/** Read-only μs uint32_t. The time consumed in last model execution. */
+
+/**
+ * Read-only μs uint32_t. The time consumed in last model execution.
+ */
 #define JD_MODEL_RUNNER_REG_LAST_RUN_TIME 0x182
 
-/** Read-only B uint32_t. Number of RAM bytes allocated for model execution. */
+/**
+ * Read-only B uint32_t. Number of RAM bytes allocated for model execution.
+ */
 #define JD_MODEL_RUNNER_REG_ALLOCATED_ARENA_SIZE 0x183
 
-/** Read-only B uint32_t. The size of the model in bytes. */
+/**
+ * Read-only B uint32_t. The size of the model in bytes.
+ */
 #define JD_MODEL_RUNNER_REG_MODEL_SIZE 0x184
 
-/** Read-only string (bytes). Textual description of last error when running or loading model (if any). */
+/**
+ * Read-only string (bytes). Textual description of last error when running or loading model (if any).
+ */
 #define JD_MODEL_RUNNER_REG_LAST_ERROR 0x185
 
 /**
@@ -62,7 +94,9 @@
  */
 #define JD_MODEL_RUNNER_REG_FORMAT 0x186
 
-/** Constant uint32_t. A version number for the format. */
+/**
+ * Constant uint32_t. A version number for the format.
+ */
 #define JD_MODEL_RUNNER_REG_FORMAT_VERSION 0x187
 
 /**

@@ -2,6 +2,7 @@
 
     identifier: 0x110d154b
     extends: _sensor
+    camel: ledMatrixDisplay
 
 A sensor that streams the state of a rectangular LED matrix.
 To control the state of the screen, use [LED Matrix Controller](/services/led-matrix-controller) instead.

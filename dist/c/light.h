@@ -37,10 +37,14 @@
  */
 #define JD_LIGHT_REG_NUM_PIXELS 0x81
 
-/** Read-write mA uint16_t. Limit the power drawn by the light-strip (and controller). */
+/**
+ * Read-write mA uint16_t. Limit the power drawn by the light-strip (and controller).
+ */
 #define JD_LIGHT_REG_MAX_POWER JD_REG_MAX_POWER
 
-/** Argument: program bytes. Run the given light "program". See service description for details. */
+/**
+ * Argument: program bytes. Run the given light "program". See service description for details.
+ */
 #define JD_LIGHT_CMD_RUN 0x81
 
 #endif

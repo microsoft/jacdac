@@ -10,7 +10,9 @@
  */
 #define JD_MOTOR_REG_DUTY JD_REG_VALUE
 
-/** Read-write bool (uint8_t). Turn the power to the motor on/off. */
+/**
+ * Read-write bool (uint8_t). Turn the power to the motor on/off.
+ */
 #define JD_MOTOR_REG_ENABLED JD_REG_INTENSITY
 
 #endif

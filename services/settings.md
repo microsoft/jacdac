@@ -1,4 +1,4 @@
-# Settings Storage
+# Settings
 
     identifier: 0x1107dc4a
     camel: settings
@@ -8,7 +8,8 @@ Non-volatile key-value storage interface for storing settings.
 ## Secrets
 
 Entries with keys starting with `$` are considered secret.
-They can be written normally, but they always read as a single `0` byte.
+They can be written normally, but they read as a single `0` byte,
+unless they are empty, in which case the value returned is also empty.
 These are typically used by other services on the same device.
 
 ## Commands
@@ -28,7 +29,13 @@ Get the value of given setting. If no such entry exists, the value returned is e
         value: bytes
     }
 
-Set the value of a given setting. Empty value indicates that the setting should be deleted.
+Set the value of a given setting.
+
+    command delete @ 0x84 {
+        key: string
+    }
+
+Delete a given setting.
 
     command list_keys @ 0x82 {
         results: pipe
@@ -48,3 +55,7 @@ Return keys of all settings.
     }
 
 Return keys and values of all settings.
+
+    command clear @ 0x85 { }
+
+Clears all keys.

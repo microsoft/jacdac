@@ -1,9 +1,15 @@
 /// <reference path="jdspec.d.ts" />
-import { converters, escapeDeviceIdentifier, escapeDeviceNameIdentifier, normalizeDeviceSpecification, parseServiceSpecificationMarkdownToJSON } from "./jdspec"
+import { converters, dashify, normalizeDeviceSpecification, parseServiceSpecificationMarkdownToJSON, snakify } from "./jdspec"
 
 declare var process: any;
 declare var require: any;
 let fs: any
+
+const builtins = [
+    "control",
+    "logger",
+    "rolemanager"
+]
 
 function values<T>(o: jdspec.SMap<T>): T[] {
     let r: T[] = []
@@ -19,12 +25,20 @@ function processSpec(dn: string) {
     const files: string[] = fs.readdirSync(dn)
     const includes: jdspec.SMap<jdspec.ServiceSpec> = {}
     files.sort()
+    // ensure _system is first
+    files.splice(files.indexOf("_system.md"), 1);
+    files.unshift("_system.md");
 
     const outp = path.join(dn, "generated")
     mkdir(outp)
     for (let n of Object.keys(converters()))
         mkdir(path.join(outp, n))
 
+    // generate makecode file structure
+    const mkcdir = path.join(outp, "makecode")
+    mkdir(mkcdir)
+
+    const fmtStats: { [index: string]: number;} = {};
     const concats: jdspec.SMap<string> = {}
     for (let fn of files) {
         if (!/\.md$/.test(fn) || fn[0] == ".")
@@ -34,6 +48,10 @@ function processSpec(dn: string) {
         const json = parseServiceSpecificationMarkdownToJSON(cont, includes, fn)
         const key = fn.replace(/\.md$/, "")
         includes[key] = json
+
+        json.packets.map(pkt => pkt.packFormat)
+            .filter(fmt => !!fmt)
+            .forEach(fmt => fmtStats[fmt] = (fmtStats[fmt] || 0) + 1);
 
         reportErrors(json.errors, dn, fn)
         const cnv = converters()
@@ -49,12 +67,21 @@ function processSpec(dn: string) {
             console.log(`written ${cfn}`)
             if (!concats[n]) concats[n] = ""
             concats[n] += convResult
+
+            if (n === "sts") {
+                const srvdir = path.join(mkcdir, dashify(json.camelName))
+                mkdir(srvdir);
+                fs.writeFileSync(path.join(srvdir, "constants.ts"), convResult)
+            }    
         }
     }
 
     fs.writeFileSync(path.join(outp, "services.json"), JSON.stringify(values(includes), null, 2))
     fs.writeFileSync(path.join(outp, "specconstants.ts"), concats["ts"])
     fs.writeFileSync(path.join(outp, "specconstants.sts"), concats["sts"])
+
+    const fms = Object.keys(fmtStats).sort((l,r) => -fmtStats[l] + fmtStats[r])
+    console.log(fms.map(fmt => `${fmt}: ${fmtStats[fmt]}`))
 }
 
 function readString(folder: string, file: string) {
@@ -63,11 +90,11 @@ function readString(folder: string, file: string) {
     return cont
 }
 
-function processModules(upperName: string) {
+function processDevices(upperName: string) {
     const path = require("path")
 
-    console.log("processing modules in directory " + upperName + "...")
-    const allModules: jdspec.DeviceSpec[] = []
+    console.log("processing devices in directory " + upperName + "...")
+    const allDevices: jdspec.DeviceSpec[] = []
     const todo = [upperName];
     while (todo.length) {
         const dir = todo.pop();
@@ -80,11 +107,11 @@ function processModules(upperName: string) {
                 todo.push(f);
             else if (/\.json/.test(f)) {
                 const dev = JSON.parse(readString(dir, fn)) as jdspec.DeviceSpec;
-                allModules.push(normalizeDeviceSpecification(dev));
+                allDevices.push(normalizeDeviceSpecification(dev));
             }
         }
     }
-    fs.writeFileSync(path.join("../dist", "modules.json"), JSON.stringify(allModules, null, 2))
+    fs.writeFileSync(path.join("../dist", "devices.json"), JSON.stringify(allDevices, null, 2))
 }
 
 function reportErrors(errors: jdspec.Diagnostic[], folderName: string, fn: string) {
@@ -111,7 +138,7 @@ function nodeMain() {
         process.exit(1)
     }
 
-    if (deviceMode) processModules(args[0])
+    if (deviceMode) processDevices(args[0])
     else processSpec(args[0])
 }
 

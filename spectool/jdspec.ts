@@ -127,6 +127,40 @@ export function resolveUnit(unit: string) {
     return undefined;
 }
 
+
+/* check ranges, see system.md
+Registers `0x001-0x07f` - r/w common to all services
+Registers `0x080-0x0ff` - r/w defined per-service
+Registers `0x100-0x17f` - r/o common to all services
+Registers `0x180-0x1ff` - r/o defined per-service
+Registers `0x200-0xeff` - custom, defined per-service
+Registers `0xf00-0xfff` - reserved for implementation, should not be seen on the wire
+*/
+const identifierRanges: { [index: string]: [number, number][] } = {
+    "rw": [
+        [0x001, 0x07f],
+        [0x080, 0x0ff],
+        [0x200, 0xeff], // custom
+        [0xf00, 0xfff], // impl
+    ],
+    "ro": [
+        [0x100, 0x17f],
+        [0x180, 0x1ff],
+        [0x200, 0xeff], // custom
+        [0xf00, 0xfff], // impl
+    ],
+    "command": [
+        [0x000, 0x07f],
+        [0x080, 0xeff],
+        [0xf00, 0xfff],
+    ],
+    "event": [
+        [0x000, 0x07f],
+        [0x080, 0xeff],
+        [0xf00, 0xfff],
+    ],
+};
+
 export function parseServiceSpecificationMarkdownToJSON(filecontent: string, includes?: jdspec.SMap<jdspec.ServiceSpec>, filename = ""): jdspec.ServiceSpec {
     filecontent = (filecontent || "").replace(/\r/g, "")
     let info: jdspec.ServiceSpec = {
@@ -154,7 +188,7 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
     let packetsToDescribe: jdspec.PacketInfo[]
     let nextModifier: "" | "segmented" | "multi-segmented" | "repeats" = ""
 
-    const baseInfo = includes ? includes["_base"] : undefined
+    const systemInfo = includes?.["_system"]
     const usedIds: jdspec.SMap<string> = {}
     for (const prev of values(includes || {})) {
         if (prev.classIdentifier)
@@ -162,6 +196,8 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
     }
 
     try {
+        if (includes["_system"] && includes["_base"])
+            processInclude("_base")
         for (let line of filecontent.split(/\n/)) {
             lineNo++
             processLine(line)
@@ -179,20 +215,24 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
         v.description = normalizeMD(v.description)
 
     if (!info.camelName)
-        info.camelName = info.name
+        info.camelName = camelize(info.name
             .replace(/\s+/g, " ")
             .replace(/[ -](.)/g, (f, l) => l.toUpperCase())
-            .replace(/[^\w]+/g, "_")
+            .replace(/[^\w]+/g, "_"))
     if (!info.shortName)
         info.shortName = info.camelName
 
-    if (info.camelName == "base")
+    if (info.camelName == "system")
         info.classIdentifier = 0x1fff_fff1
+    else if (info.camelName == "base")
+        info.classIdentifier = 0x1fff_fff3
     else if (info.camelName == "sensor")
         info.classIdentifier = 0x1fff_fff2
 
     if (info.shortName != "control" && !info.classIdentifier)
         error("identifier: not specified")
+
+    info.packets.forEach(pkt => pkt.packFormat = packFormat(info, pkt));
 
     return info
 
@@ -296,6 +336,14 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
         packetInfo.packed = hasNaturalAlignment(packetInfo) ? undefined : true
         if (packetInfo.packed)
             warn(`you may want to use explicit padding in ${packetInfo.name}`)
+
+        const pid = packetInfo.identifier;
+        const ranges = identifierRanges[packetInfo.kind];
+        if (packetInfo.name != "set_register"
+            && packetInfo.name != "get_register"
+            && ranges && !ranges.some(range => range[0] <= pid && pid <= range[1]))
+            error(`${packetInfo.name} identifier 0x${pid.toString(16)} out of range, expected in ${ranges.map(range => `[${range.map(r => `0x${r.toString(16)}`).join(', ')}]`).join(', ')}`)
+
         packetInfo = null
     }
 
@@ -338,6 +386,13 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
         } else {
             kind = kindSt as any
         }
+
+        let internal: boolean = undefined;
+        if (words[0] === "internal") {
+            internal = true;
+            words.shift();
+        }
+
         let name = words.shift()
         const isReport = kind == "report"
         if (isReport && lastCmd && !/^\w+$/.test(name)) {
@@ -349,7 +404,8 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
             name: normalizeName(name),
             identifier: undefined,
             description: "",
-            fields: []
+            fields: [],
+            internal
         }
         if (isReport && lastCmd && name == lastCmd.name) {
             packetInfo.secondary = true
@@ -390,19 +446,19 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
             if (isNaN(v)) {
                 v = 0
                 isSet = false
-                if (baseInfo) {
-                    const basePacket = baseInfo.packets.find(p => p.name == w)
-                    if (basePacket) {
-                        v = basePacket.identifier
+                if (systemInfo) {
+                    const systemPacket = systemInfo.packets.find(p => p.name == w)
+                    if (systemPacket) {
+                        v = systemPacket.identifier
                         packetInfo.identifierName = w
-                        if (basePacket.kind != kind)
-                            error(`kind mismatch on ${w}: ${basePacket.kind} vs ${kind}`)
+                        if (systemPacket.kind != kind)
+                            error(`kind mismatch on ${w}: ${systemPacket.kind} vs ${kind}`)
                         else
                             isSet = true
                     } else
-                        error(`${w} not found in _base`)
+                        error(`${w} not found in _system`)
                 } else {
-                    error(`${w} cannot be resolved, since _base is missing`)
+                    error(`${w} cannot be resolved, since _system is missing`)
                 }
             }
 
@@ -435,7 +491,7 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
                 // ok
             } else if (isSystem) {
                 if (!packetInfo.identifierName)
-                    warn(`${kind} @ ${toHex(v)} should be expressed with a name from _base.md`)
+                    warn(`${kind} @ ${toHex(v)} should be expressed with a name from _system.md`)
             } else if (isHigh) {
                 if (!info.highCommands)
                     warn(`${kind} @ ${toHex(v)} is from the extended range but 'high: 1' missing`)
@@ -513,7 +569,7 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
 
         let tp = words.shift()
         const [storage, type, typeShift] = normalizeStorageType(tp)
-        const isFloat = typeShift === null
+        const isFloat = typeShift === null || undefined
 
         let tok = words.shift()
         let unit: jdspec.Unit = ""
@@ -583,6 +639,9 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
 
         if (field.absoluteMin === undefined && field.absoluteMax !== undefined && storage > 0)
             field.absoluteMin = 0
+
+        if (!field.storage && field.maxBytes)
+            field.storage = field.maxBytes
 
         if (/pipe/.test(type)) {
             packetInfo.pipeType = packetInfo.name
@@ -716,22 +775,29 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
     }
 
     function processInclude(name: string) {
-        if (name == "base")
+        if (name == "_system")
             return
         const inner = includes[name]
         if (!inner)
             return error("include file not found: " + name)
-        if (Object.keys(info.packets).length || Object.keys(info.enums).length)
+        if (info.packets.some(pkt => !pkt.derived)
+            || values(info.enums).some(e => !e.derived))
             error("extends: only allowed on top of the .md file")
         if (inner.errors)
             errors = errors.concat(inner.errors)
-        info.enums = clone(inner.enums)
-        info.packets = clone(inner.packets)
-        for (const pkt of info.packets)
-            pkt.derived = true
+        const innerEnums = clone(inner.enums);
+        Object.keys(innerEnums).filter(k => !info.enums[k])
+            .forEach(k => {
+                const ie = innerEnums[k];
+                ie.derived = name
+                info.enums[k] = ie;
+            })
+        const innerPackets = clone(inner.packets
+            .filter(pkt => !info.packets.find(ipkt => ipkt.identifier === pkt.identifier)));
+        innerPackets.forEach(pkt => pkt.derived = name)
+        info.packets = [...info.packets, ...innerPackets]
         if (inner.highCommands)
             info.highCommands = true
-        info.notes = {}
         info.extends = inner.extends.concat([name])
     }
 
@@ -747,8 +813,8 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
     }
 
     function warn(msg: string) {
-        if (info.camelName == "base")
-            return // no warnings in _base
+        if (info.camelName == "system")
+            return // no warnings in _system
         if (errors.some(e => e.line == lineNo && e.message == msg))
             return
         errors.push({ file: filename, line: lineNo, message: msg })
@@ -757,6 +823,8 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
     function normalizeName(n: string) {
         if (!/^\w+$/.test(n))
             error("expecting name here")
+        if (n.length > 31)
+            error(`name '${n}' too long`)
         return n
     }
 
@@ -800,6 +868,8 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
                 return [12, tp2, 0]
             case "pipe_port":
                 return [2, tp2, 0]
+            case "devid":
+                return [8, tp2, 0]
             case "bytes":
             case "string":
             case "string0":
@@ -827,7 +897,7 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
         let byteOffset = 0
 
         for (let m of iface.fields) {
-            let sz = byteSize(m.storage)
+            let sz = memberSize(m)
             if (sz == 0)
                 continue
             const pad = sz > 4 ? 4 : sz
@@ -849,10 +919,6 @@ function values<T>(o: jdspec.SMap<T>): T[] {
 
 function fail(msg: string) {
     throw new Error(msg)
-}
-
-function byteSize(tp: jdspec.StorageType) {
-    return Math.abs(tp)
 }
 
 function toUpper(name: string) {
@@ -927,7 +993,7 @@ function toH(info: jdspec.ServiceSpec) {
     if (info.shortId[0] != "_")
         r += `\n#define JD_SERVICE_CLASS_${toUpper(info.shortName)}  ${toHex(info.classIdentifier)}\n`
 
-    for (let en of values(info.enums)) {
+    for (let en of values(info.enums).filter(en => !en.derived)) {
         const enPref = pref + toUpper(en.name)
         r += `\n// enum ${en.name} (${cStorage(en.storage)})\n`
         for (let k of Object.keys(en.members))
@@ -938,7 +1004,7 @@ function toH(info: jdspec.ServiceSpec) {
             continue
 
         const cmt = addComment(pkt)
-        r += cmt.comment
+        r += wrapComment(cmt.comment)
 
         if (!pkt.secondary && pkt.kind != "pipe_command" && pkt.kind != "pipe_report") {
             let inner = "CMD"
@@ -971,9 +1037,7 @@ function toH(info: jdspec.ServiceSpec) {
                 const f = pkt.fields[i]
                 let def = ""
                 const cst = cStorage(f.storage)
-                let sz = Math.abs(f.storage)
-                if (!sz && f.maxBytes)
-                    sz = f.maxBytes
+                const sz = memberSize(f)
                 if (f.type == "string" || f.type == "string0")
                     def = `char ${f.name}[${sz}]`
                 else if (cst == "bytes")
@@ -984,7 +1048,7 @@ function toH(info: jdspec.ServiceSpec) {
                 if (f.startRepeats && i == pkt.fields.length - 1)
                     def += "[0]";
                 def += ";"
-                if (!f.isSimpleType)
+                if (!f.isSimpleType && f.type != "devid")
                     def += "  // " + unitPref(f) + f.type
                 else if (f.unit)
                     def += " // " + prettyUnit(f.unit)
@@ -999,17 +1063,9 @@ function toH(info: jdspec.ServiceSpec) {
     return r
 }
 
-const tsNumFmt: jdspec.SMap<string> = {
-    "1": "UInt8LE:B",
-    "2": "UInt16LE:H",
-    "4": "UInt32LE:L",
-    "-1": "Int8LE:b",
-    "-2": "Int16LE:h",
-    "-4": "Int32LE:l",
-}
-
-function camelize(name: string) {
-    return name?.replace(/_([a-z])/g, (_, l) => l.toUpperCase())
+export function camelize(name: string) {
+    if (!name) return name;
+    return name[0].toLowerCase() + name.slice(1).replace(/_([a-z])/g, (_, l) => l.toUpperCase())
 }
 
 function upperCamel(name: string) {
@@ -1018,8 +1074,13 @@ function upperCamel(name: string) {
     return name[0].toUpperCase() + name.slice(1)
 }
 
-function snakify(name: string) {
+export function snakify(name: string) {
     return name?.replace(/([a-z])([A-Z])/g, (_, a, b) => a + "_" + b)
+}
+
+export function dashify(name: string) {
+    if (!name) return name;
+    return snakify(name.replace(/^_+/, '')).replace(/_/g, '-').toLowerCase();
 }
 
 function addComment(pkt: jdspec.PacketInfo) {
@@ -1030,7 +1091,7 @@ function addComment(pkt: jdspec.PacketInfo) {
     if (pkt.fields.length == 0) {
         if (pkt.kind != "event")
             typeInfo = "No args"
-    } else if (pkt.fields.length == 1) {
+    } else if (pkt.fields.length == 1 && !pkt.fields[0].startRepeats) {
         const f0 = pkt.fields[0]
         typeInfo = cStorage(f0.storage)
         if (!f0.isSimpleType)
@@ -1058,86 +1119,173 @@ function addComment(pkt: jdspec.PacketInfo) {
     }
 
     if (pkt.kind == "report" && pkt.secondary) {
-        comment += "// Report: " + typeInfo + "\n"
+        comment += "Report: " + typeInfo + "\n"
     } else {
         if (pkt.description) {
             let desc = pkt.description.replace(/\n\n[^]*/, "")
             if (typeInfo)
                 desc = typeInfo + ". " + desc
-            if (desc.indexOf("\n") > 0)
-                comment += "\n/**\n * " + desc.replace(/\n/g, "\n * ") + "\n */\n"
-            else
-                comment += "\n/** " + desc + " */\n"
+            comment = desc + "\n" + comment;
         }
     }
 
-    return { comment, needsStruct }
+    return {
+        comment,
+        needsStruct
+    }
 
 }
 
-function packInfo(pkt: jdspec.PacketInfo, isStatic: boolean) {
-    let vars = ""
+function wrapComment(comment: string) {
+    return "\n/**\n * " + comment.replace(/\n+$/, '').replace(/\n/g, "\n * ") + "\n */\n";
+}
+
+function wrapSnippet(code: string) {
+    if (!code) return code;
+    return `
+\`\`\`
+${code.replace(/^\n+/, '').replace(/\n+$/, '')}
+\`\`\`
+`
+}
+
+function packFormatForField(info: jdspec.ServiceSpec, fld: jdspec.PacketMember) {
+    const sz = memberSize(fld)
+    const szSuff = sz ? `[${sz}]` : ``
+    let tsType = "number"
     let fmt = ""
-    let buffers = ""
-
-    if (pkt.packed)
-        return ""
-
-    const sizes = pkt.fields.map(f => f.storage)
-    while (sizes.length > 0 && !tsNumFmt[sizes[sizes.length - 1]]) {
-        sizes.pop()
+    if (/^[fiu]\d+(\.\d+)?$/.test(fld.type) && 1 <= sz && sz <= 8) {
+        fmt = fld.type
+    } else if (/^u8\[\d*\]$/.exec(fld.type)) {
+        fmt = "b" + szSuff
+    } else if (info.enums[fld.type]) {
+        fmt = canonicalType(info.enums[fld.type].storage)
+        tsType = upperCamel(info.camelName) + upperCamel(fld.type)
+    } else {
+        switch (fld.type) {
+            case "string":
+                fmt = "s" + szSuff
+                tsType = "string"
+                break
+            case "bytes":
+                fmt = "b" + szSuff
+                break
+            case "string0":
+                fmt = "z"
+                tsType = "string"
+                break
+            case "devid":
+                fmt = "b[8]"
+                break
+            case "pipe_port":
+                fmt = "u16"
+                break
+            case "pipe":
+                fmt = "b[12]"
+                break
+            case "bool":
+                // TODO native bool support
+                fmt = "u8"
+                break
+            default:
+                return null
+        }
     }
 
-    let i = 0
-    let off = 0
-    let numstr0 = 0
+    if (tsType == "number" && fmt && fmt[0] == 'b')
+        tsType = "Buffer"
+    return { fmt, tsType }
+}
+
+/**
+ * Generates the format to pack/unpack a data payload for this packet
+ * @param pkt 
+ * TODO fix this
+ */
+export function packFormat(sinfo: jdspec.ServiceSpec, pkt: jdspec.PacketInfo): string {
+    if (pkt.packed || !pkt.fields?.length)
+        return undefined;
+
+    const fmt: string[] = []
     for (const fld of pkt.fields) {
-        const varname = camelize(fld.name)
-        const info = tsNumFmt[fld.storage]
-        const sz = Math.abs(fld.storage)
-        if (i < sizes.length && info) {
-            fmt += info.replace(/.*:/, "")
-            if (vars) vars += ", "
-            vars += varname
-        } else {
-            const endmark = fld.storage == 0 ? "" :
-                isStatic ? `, ${sz}` : `, ${off + sz}`
-            if (fld.type == "string0") {
-                buffers += `const ${varname} = string0(buf, ${off}, ${numstr0})\n`
-                numstr0++
+        if (fld.startRepeats)
+            fmt.push("r:")
+        fmt.push(packFormatForField(sinfo, fld).fmt)
+    }
+
+    return fmt.join(" ");
+}
+
+function packInfo(info: jdspec.ServiceSpec, pkt: jdspec.PacketInfo, isStatic: boolean) {
+    const vars: string[] = []
+    const vartp: string[] = []
+    let fmt = ""
+    let repeats: string[]
+    let reptp: string[]
+
+    for (let i = 0; i < pkt.fields.length; ++i) {
+        const fld = pkt.fields[i]
+        let isArray = ""
+        if (fld.startRepeats) {
+            if (i == pkt.fields.length - 1) {
+                isArray = "[]"
             } else {
-                const toStr = fld.type == "string" ? ".toString()" : ""
-                buffers += `const ${varname} = buf.slice(${off}${endmark})${toStr}\n`
+                fmt += "r: "
+                repeats = []
+                reptp = []
+                vars.push("rest")
             }
         }
-        if (i < sizes.length && !info && sz)
-            fmt += `${sz}x`
-        i++
-        off += sz
+        const varname = camelize(fld.name == "_" ? pkt.name : fld.name)
+        const f0 = packFormatForField(info, fld)
+        if (!f0 || /(reserved|padding)/.test(fld.name)) {
+            if (!f0)
+                console.log(`${pkt.name}/${fld.name} - can't get format for '${fld.type}'`)
+            fmt += `x[${memberSize(fld)}] `
+        } else {
+            fmt += f0.fmt + isArray + " "
+            let tp = f0.tsType
+            if (tp == "Buffer" && !isStatic)
+                tp = "UInt8Array"
+            tp += isArray
+            if (repeats) {
+                repeats.push(varname)
+                reptp.push(tp)
+            } else {
+                vars.push(varname)
+                vartp.push(tp)
+            }
+        }
     }
 
-    if (fmt) {
-        if (isStatic)
-            buffers = `const [${vars}] = buf.unpack("${fmt}")\n` + buffers
-        else
-            buffers = `const [${vars}] = unpack(buf, "${fmt}")\n` + buffers
-    }
+    fmt = fmt.replace(/ *$/, "")
+
+    if (reptp)
+        vartp.push("([" + reptp.join(", ") + "])[]")
+
+    let buffers = ""
+    buffers += `const [${vars.join(", ")}] = jdunpack<[${vartp.join(", ")}]>(buf, "${fmt}")\n`
+    if (repeats)
+        buffers += `const [${repeats.join(", ")}] = rest[0]\n`
 
     buffers = buffers.replace(/\n*$/, "")
-    if (buffers)
-        buffers = "\n" + buffers.replace(/^/mg, "// ")
 
     return buffers
 }
 
-function toTypescript(info: jdspec.ServiceSpec, isStatic: boolean) {
-    const indent = isStatic ? "    " : "";
+function memberSize(fld: jdspec.PacketMember) {
+    return Math.abs(fld.storage)
+}
+
+function toTypescript(info: jdspec.ServiceSpec, staticTypeScript: boolean) {
+    const indent = staticTypeScript ? "    " : "";
     const indent2 = indent + "    "
-    const enumkw = isStatic ? indent + "export const enum" : "export enum"
-    let r = isStatic ? "namespace jacdac {\n" : "";
+    const enumkw = staticTypeScript ? indent + "export const enum" : "export enum"
+    let r = staticTypeScript ? "namespace jacdac {\n" : "";
     r += indent + "// Service: " + info.name + "\n"
-    if (info.shortId[0] != "_")
-        r += indent + `export const SRV_${info.name.replace(/ /g, "_").toUpperCase()} = ${toHex(info.classIdentifier)}\n`
+    if (info.shortId[0] != "_") {
+        r += indent + `export const SRV_${snakify(info.camelName).toLocaleUpperCase()} = ${toHex(info.classIdentifier)}\n`
+    }
     const pref = upperCamel(info.camelName)
     for (let en of values(info.enums)) {
         const enPref = pref + upperCamel(en.name)
@@ -1153,7 +1301,7 @@ function toTypescript(info: jdspec.ServiceSpec, isStatic: boolean) {
             continue
 
         const cmt = addComment(pkt)
-        let pack = cmt.needsStruct ? packInfo(pkt, isStatic) : ""
+        let pack = pkt.fields.length ? packInfo(info, pkt, staticTypeScript) : ""
 
         let inner = "Cmd"
         if (isRegister(pkt.kind))
@@ -1166,16 +1314,23 @@ function toTypescript(info: jdspec.ServiceSpec, isStatic: boolean) {
             inner = "info"
 
         let text = ""
+        let meta = ""
         if (pkt.secondary || inner == "info") {
             if (pack)
-                text = `// ${pkt.kind} ${upperCamel(pkt.name)}${pack}\n`
+                text = wrapComment(`${pkt.kind} ${upperCamel(pkt.name)}${wrapSnippet(pack)}`);
         } else {
             let val = toHex(pkt.identifier)
-            text = `${pack}${cmt.comment}${upperCamel(pkt.name)} = ${val},\n`
+            if (staticTypeScript && pkt.kind === "event") {
+                meta = `//% block="${snakify(pkt.name).replace(/_/g, ' ')}"\n`
+            }
+            text = `${wrapComment(cmt.comment + wrapSnippet(pack)) + meta}${upperCamel(pkt.name)} = ${val},\n`
         }
 
         if (text)
             tsEnums[inner] = (tsEnums[inner] || "") + text
+
+        // don't line const strings in makecode,
+        // they don't get dropped efficiently
     }
 
     for (const k of Object.keys(tsEnums)) {
@@ -1190,7 +1345,7 @@ function toTypescript(info: jdspec.ServiceSpec, isStatic: boolean) {
         }
     }
 
-    if (isStatic)
+    if (staticTypeScript)
         r += "}\n"
 
     return r.replace(/ *$/mg, "")

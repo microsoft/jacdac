@@ -9,6 +9,7 @@
 #define JD_LOGGER_PRIORITY_LOG 0x1
 #define JD_LOGGER_PRIORITY_WARNING 0x2
 #define JD_LOGGER_PRIORITY_ERROR 0x3
+#define JD_LOGGER_PRIORITY_SILENT 0x4
 
 /**
  * Read-write Priority (uint8_t). Messages with level lower than this won't be emitted. The default setting may vary.
@@ -19,16 +20,24 @@
  */
 #define JD_LOGGER_REG_MIN_PRIORITY 0x80
 
-/** Argument: message string (bytes). Report a message. */
+/**
+ * Argument: message string (bytes). Report a message.
+ */
 #define JD_LOGGER_CMD_DEBUG 0x80
 
-/** Argument: message string (bytes). Report a message. */
+/**
+ * Argument: message string (bytes). Report a message.
+ */
 #define JD_LOGGER_CMD_LOG 0x81
 
-/** Argument: message string (bytes). Report a message. */
+/**
+ * Argument: message string (bytes). Report a message.
+ */
 #define JD_LOGGER_CMD_WARN 0x82
 
-/** Argument: message string (bytes). Report a message. */
+/**
+ * Argument: message string (bytes). Report a message.
+ */
 #define JD_LOGGER_CMD_ERROR 0x83
 
 #endif

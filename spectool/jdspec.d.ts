@@ -176,6 +176,11 @@ declare namespace jdspec {
          * Map from enum member name to its value.
          */
         members: SMap<number>;
+
+        /**
+         * If present, this packet was derived from a base class.
+         */
+        derived?: string;
     }
 
     /**
@@ -246,14 +251,19 @@ declare namespace jdspec {
         packed?: boolean;
 
         /**
+         * If applicable, the pack/unpack string to decode the data
+         */
+        packFormat?: string;
+
+        /**
          * If present and true, the handling of given packet is optional and can be left out by implementation.
          */
         optional?: boolean;
 
         /**
-         * If present and true, this packet was derived from base class.
+         * If present, this packet was derived from a base class.
          */
-        derived?: boolean;
+        derived?: string;
 
         /**
          * If present and true, this is a report that has the same identifier as preceding command.
@@ -264,6 +274,11 @@ declare namespace jdspec {
          * If present and true, this command is followed by its report.
          */
         hasReport?: boolean;
+
+        /**
+         * This register supports the JACDAC infrastructure and is not meant to be reported outside the JACDAC bus.
+         */
+        internal?: boolean;
     }
 
     /**
@@ -287,7 +302,7 @@ declare namespace jdspec {
         type: string;
 
         /**
-         * Type is one of u8, u16, u32, u64, i8, i16, i32, i64, B.
+         * Type is one of u8, u16, u32, u64, i8, i16, i32, i64, bytes.
          */
         isSimpleType?: boolean;
 
@@ -428,5 +443,30 @@ declare namespace jdspec {
          * Hooks for parser.
          */
         errors?: Diagnostic[];
+    }
+
+    /**
+ * Information about MakeCode support for a JACDAC service
+ */
+    export interface MakeCodeServiceInfo {
+        /**
+         * Short id of the service
+         */
+        service: string;
+        /**
+         * Client information if any
+         */
+        client: {
+            /** project name */
+            name: string;
+            /**
+             * GitHub slub and path (OWNER/NAME[/PATH])
+             */
+            repo: string;
+            /**
+             * The TypeScript fully qualified type  name
+             */
+            qName: string;
+        }
     }
 }

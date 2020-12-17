@@ -4,7 +4,9 @@
 
 #define JD_SERVICE_CLASS_TEMPERATURE  0x1421bac7
 
-/** Read-only °C u22.10 (uint32_t). The temperature. */
+/**
+ * Read-only °C u22.10 (uint32_t). The temperature.
+ */
 #define JD_TEMPERATURE_REG_TEMPERATURE JD_REG_READING
 
 #endif

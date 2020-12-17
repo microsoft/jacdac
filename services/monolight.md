@@ -1,7 +1,7 @@
-# PWM Light
+# Mono Light
 
     identifier: 0x1fb57453
-    camel: PwmLight
+    camel: monoLight
 
 A controller for 1 or more LEDs connected in parallel.
 

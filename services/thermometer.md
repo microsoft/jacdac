@@ -1,4 +1,4 @@
-# Temperature
+# Thermometer
 
     identifier: 0x1421bac7
     extends: _sensor

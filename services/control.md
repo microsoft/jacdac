@@ -1,12 +1,9 @@
 # Control
 
     identifier: 0x00000000
-    camel: ctrl
 
 Control service is always service index `0`.
 It handles actions common to all services on a device.
-
-
 
 ## Commands
 
@@ -17,7 +14,8 @@ It handles actions common to all services on a device.
     report {
         restart_counter: u8
         flags: AnnounceFlags
-        reserved: u16
+        packet_count: u8
+        reserved: u8
     repeats:
         service_class: u32
     }
@@ -27,19 +25,35 @@ If this number ever goes down, it indicates that the device restarted.
 The upper 4 bits of `restart_counter` are reserved.
 `service_class` indicates class identifier for each service index (service index `0` is always control, so it's
 skipped in this enumeration).
+`packet_count` indicates the number of packets sent by the current device since last announce,
+including the current announce packet (it is always 0 if this feature is not supported).
 The command form can be used to induce report, which is otherwise broadcast every 500ms.
 
     command noop @ 0x80 { }
 
 Do nothing. Always ignored. Can be used to test ACKs.
 
-    command identify @ 0x81 { }
+    command identify? @ 0x81 { }
 
 Blink an LED or otherwise draw user's attention.
 
-    command reset @ 0x82 { }
+    command reset? @ 0x82 { }
 
 Reset device. ACK may or may not be sent.
+
+    command flood_ping? @ 0x83 {
+        num_responses: u32
+        start_counter: u32
+        size: u8 B
+    }
+    report {
+        counter: u32
+        dummy_payload: bytes
+    }
+
+The device will respond `num_responses` times, as fast as it can, setting the `counter` field in the report
+to `start_counter`, then `start_counter + 1`, ..., and finally `start_counter + num_responses - 1`.
+The `dummy_payload` is `size` bytes long and contains bytes `0, 1, 2, ...`.
 
 ## Registers
 
@@ -59,7 +73,7 @@ Typically the same as `firmware_identifier` unless device was flashed by hand; t
 
 A string describing firmware version; typically semver.
 
-    ro temperature?: i16 C { typical_min = -10, typical_max = 150 } @ 0x182
+    ro mcu_temperature?: i16 C { typical_min = -10, typical_max = 150 } @ 0x182
 
 MCU temperature in degrees Celsius (approximate).
 
@@ -67,3 +81,10 @@ MCU temperature in degrees Celsius (approximate).
 
 Number of microseconds since boot.
 
+    const device_url?: string @ 0x187
+
+Request the information web site for this device
+
+    const firmware_url?: string @ 0x188
+
+URL with machine-readable metadata information about updating device firmware

@@ -526,7 +526,7 @@ export enum ControlReg {
     DeviceDescription = 0x180,
 
     /**
-     * Constant uint32_t. A numeric code for the string above; used to identify firmware images and devices.
+     * Constant uint32_t. A numeric code for the string above; used to identify firmware images and modules.
      *
      * ```
      * const [firmwareIdentifier] = jdunpack<[number]>(buf, "u32")

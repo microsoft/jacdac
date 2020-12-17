@@ -74,7 +74,7 @@ typedef struct jd_control_flood_ping_report {
 #define JD_CONTROL_REG_DEVICE_DESCRIPTION 0x180
 
 /**
- * Constant uint32_t. A numeric code for the string above; used to identify firmware images and devices.
+ * Constant uint32_t. A numeric code for the string above; used to identify firmware images and modules.
  */
 #define JD_CONTROL_REG_FIRMWARE_IDENTIFIER 0x181
 

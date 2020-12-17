@@ -2,7 +2,7 @@
 
     identifier: 0x119c3ad1
 
-Assign roles to modules on the JACDAC bus.
+Assign roles to devices on the JACDAC bus.
 
 ## Registers
 

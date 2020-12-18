@@ -105,12 +105,12 @@
 #define JD_PROTO_TEST_CMD_C_BYTES 0x85
 
 /**
- * Argument: p_bytes pipe (bytes). A command to read the rw_bytes as a pipe, by per byte.
+ * Argument: p_bytes pipe (bytes). A command to read the rw_bytes as a pipe.
  */
 #define JD_PROTO_TEST_CMD_C_REPORT_PIPE 0x86
 
 /**
- * Argument: bytes bytes. A command to read the rw_bytes as a pipe, by per byte.
+ * Argument: bytes bytes. A command to read the rw_bytes as a pipe.
  */
 
 #endif

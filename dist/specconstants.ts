@@ -1837,7 +1837,7 @@ export enum ProtoTestCmd {
     CBytes = 0x85,
 
     /**
-     * Argument: p_bytes pipe (bytes). A command to read the rw_bytes as a pipe, by per byte.
+     * Argument: p_bytes pipe (bytes). A command to read the rw_bytes as a pipe.
      *
      * ```
      * const [pBytes] = jdunpack<[UInt8Array]>(buf, "b[12]")

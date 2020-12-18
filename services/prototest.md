@@ -173,4 +173,4 @@ A command to set rw_bytes. Returns the value.
         bytes: bytes
     }
 
-A command to read the rw_bytes as a pipe.
+A command to read the rw_bytes, byte per byte, as a pipe.

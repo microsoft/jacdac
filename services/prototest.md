@@ -116,6 +116,15 @@ An event raised when rw_string is modified
 
 An event raised when rw_bytes is modified
 
+    event e_i8_u8_u16_i32 @ 0x86 { 
+        i8: i8
+        u8: u8
+        u16: u16
+        i32: i32
+    }
+
+An event raised when rw_i8_u8_u16_i32 is modified
+
 ## Commands
 
     command c_bool @ 0x81 {
@@ -146,9 +155,18 @@ A command to set rw_string. Returns the value.
         bytes: bytes
     }
 
+A command to set rw_string. Returns the value.
+
+    command c_i8_u8_u16_i32 @ 0x86 {
+        i8: i8
+        u8: u8
+        u16: u16
+        i32: i32
+    }
+
 A command to set rw_bytes. Returns the value.
 
-    command c_report_pipe @ 0x86 {
+    command c_report_pipe @ 0x87 {
         p_bytes: pipe
     }
     pipe report p_bytes {

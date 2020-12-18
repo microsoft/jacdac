@@ -1806,6 +1806,15 @@ export enum ProtoTestEvent {
      * ```
      */
     EBytes = 0x85,
+
+    /**
+     * An event raised when rw_i8_u8_u16_i32 is modified
+     *
+     * ```
+     * const [i8, u8, u16, i32] = jdunpack<[number, number, number, number]>(buf, "i8 u8 u16 i32")
+     * ```
+     */
+    EI8U8U16I32 = 0x86,
 }
 
 export enum ProtoTestCmd {
@@ -1846,7 +1855,7 @@ export enum ProtoTestCmd {
     CString = 0x84,
 
     /**
-     * Argument: bytes bytes. A command to set rw_bytes. Returns the value.
+     * Argument: bytes bytes. A command to set rw_string. Returns the value.
      *
      * ```
      * const [bytes] = jdunpack<[UInt8Array]>(buf, "b")
@@ -1855,13 +1864,22 @@ export enum ProtoTestCmd {
     CBytes = 0x85,
 
     /**
+     * A command to set rw_bytes. Returns the value.
+     *
+     * ```
+     * const [i8, u8, u16, i32] = jdunpack<[number, number, number, number]>(buf, "i8 u8 u16 i32")
+     * ```
+     */
+    CI8U8U16I32 = 0x86,
+
+    /**
      * Argument: p_bytes pipe (bytes). A command to read the rw_bytes as a pipe.
      *
      * ```
      * const [pBytes] = jdunpack<[UInt8Array]>(buf, "b[12]")
      * ```
      */
-    CReportPipe = 0x86,
+    CReportPipe = 0x87,
 }
 
 

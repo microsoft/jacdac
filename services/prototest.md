@@ -66,6 +66,24 @@ A read write string register.
 
 A read only string register. Mirrors ro_bytes.
 
+    rw rw_i8_u8_u16_i32 @ 0x86 {
+        i8: i8
+        u8: u8
+        u16: u16
+        i32: i32
+    }
+
+A read write i8, u8, u16, i32 register.
+
+    ro ro_i8_u8_u16_i32 @ 0x186 {
+        i8: i8
+        u8: u8
+        u16: u16
+        i32: i32
+    }
+
+A read only i8, u8, u16, i32 register.. Mirrors rw_i8_u8_u16_i32.
+
 ## Events
 
     event e_bool @ 0x81 { 

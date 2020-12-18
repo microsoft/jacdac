@@ -1741,6 +1741,24 @@ export enum ProtoTestReg {
      * ```
      */
     RoBytes = 0x185,
+
+    /**
+     * A read write i8, u8, u16, i32 register.
+     *
+     * ```
+     * const [i8, u8, u16, i32] = jdunpack<[number, number, number, number]>(buf, "i8 u8 u16 i32")
+     * ```
+     */
+    RwI8U8U16I32 = 0x86,
+
+    /**
+     * A read only i8, u8, u16, i32 register.. Mirrors rw_i8_u8_u16_i32.
+     *
+     * ```
+     * const [i8, u8, u16, i32] = jdunpack<[number, number, number, number]>(buf, "i8 u8 u16 i32")
+     * ```
+     */
+    RoI8U8U16I32 = 0x186,
 }
 
 export enum ProtoTestEvent {
@@ -1837,7 +1855,7 @@ export enum ProtoTestCmd {
     CBytes = 0x85,
 
     /**
-     * Argument: p_bytes pipe (bytes). A command to read the rw_bytes as a pipe, by per byte.
+     * Argument: p_bytes pipe (bytes). A command to read the rw_bytes as a pipe.
      *
      * ```
      * const [pBytes] = jdunpack<[UInt8Array]>(buf, "b[12]")

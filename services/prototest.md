@@ -129,3 +129,12 @@ A command to set rw_string. Returns the value.
     }
 
 A command to set rw_bytes. Returns the value.
+
+    command c_report_pipe @ 0x86 {
+        p_bytes: pipe
+    }
+    pipe report p_bytes {
+        bytes: bytes
+    }
+
+A command to read the rw_bytes as a pipe.

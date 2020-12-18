@@ -1835,7 +1835,25 @@ export enum ProtoTestCmd {
      * ```
      */
     CBytes = 0x85,
+
+    /**
+     * Argument: p_bytes pipe (bytes). A command to read the rw_bytes as a pipe, by per byte.
+     *
+     * ```
+     * const [pBytes] = jdunpack<[UInt8Array]>(buf, "b[12]")
+     * ```
+     */
+    CReportPipe = 0x86,
 }
+
+
+/**
+ * pipe_report PBytes
+ * ```
+ * const [bytes] = jdunpack<[UInt8Array]>(buf, "b")
+ * ```
+ */
+
 
 // Service: Role Manager
 export const SRV_ROLE_MANAGER = 0x119c3ad1

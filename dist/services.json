@@ -4806,9 +4806,42 @@
           }
         ],
         "packFormat": "b"
+      },
+      {
+        "kind": "command",
+        "name": "c_report_pipe",
+        "identifier": 134,
+        "description": "A command to read the rw_bytes as a pipe, by per byte.",
+        "fields": [
+          {
+            "name": "p_bytes",
+            "unit": "",
+            "type": "pipe",
+            "storage": 12
+          }
+        ],
+        "pipeType": "c_report_pipe",
+        "packFormat": "b[12]"
+      },
+      {
+        "kind": "pipe_report",
+        "name": "p_bytes",
+        "identifier": 0,
+        "description": "A command to read the rw_bytes as a pipe, by per byte.",
+        "fields": [
+          {
+            "name": "bytes",
+            "unit": "",
+            "type": "bytes",
+            "storage": 0,
+            "isSimpleType": true
+          }
+        ],
+        "pipeType": "c_report_pipe",
+        "packFormat": "b"
       }
     ],
-    "source": "# Protocol Test\n\n    identifier: 0x16c7466a\n    camel: protoTest\n\nThis is test service to validate the protocol packet transmissions between the browser and a MCU.\nUse this page if you developing JACDAC HDK for a new platform.\n\n### Test procedure\n\nFor each ``rw`` registers, set a random value ``x``\n  * read ``rw`` and check value is equal to ``x``\n  * read ``ro`` and check value is equal to ``x``\n  * listen to ``e`` event and check that data is equal to ``x``\n  * call ``c`` command with new random value ``y``\n  * read ``rw`` and check value is equal to ``y``\n  * do all the above steps with acks\n\nFor each ``rw`` registers, there shall also\nbe an ``event`` and a ``command``. The event\nshould get raised when the value changes;\nand the command should set the value.\n  \n## Registers\n\nEvery ``rw`` register has a corresponding ``ro`` regisrer\nand a corresponding ``set_...`` command to also set the value.\n\n    rw rw_bool : bool @ 0x081\n\nA read write bool register.\n\n    ro ro_bool : bool @ 0x181\n\nA read only bool register. Mirrors rw_bool.\n\n    rw rw_u32 : u32 @ 0x082\n\nA read write u32 register.\n\n    ro ro_u32 : u32 @ 0x182\n\nA read only u32 register.. Mirrors rw_u32.\n\n    rw rw_i32 : i32 @ 0x083\n\nA read write i32 register.\n\n    ro ro_i32 : i32 @ 0x183\n\nA read only i32 register.. Mirrors rw_i32.\n\n    rw rw_string : string @ 0x084\n\nA read write string register.\n\n    ro ro_string : string @ 0x184\n\nA read only string register. Mirrors rw_string.\n\n    rw rw_bytes : bytes @ 0x085\n\nA read write string register.\n\n    ro ro_bytes : bytes @ 0x185\n\nA read only string register. Mirrors ro_bytes.\n\n## Events\n\n    event e_bool @ 0x81 { \n        bool: bool \n    }\n\nAn event raised when rw_bool is modified\n\n    event e_u32 @ 0x82 { \n        u32: u32 \n    }\n\nAn event raised when rw_u32 is modified\n\n    event e_i32 @ 0x83 { \n        i32: i32 \n    }\n\nAn event raised when rw_i32 is modified\n\n    event e_string @ 0x84 { \n        string: string \n    }\n\nAn event raised when rw_string is modified\n\n    event e_bytes @ 0x85 { \n        bytes: bytes \n    }\n\nAn event raised when rw_bytes is modified\n\n## Commands\n\n    command c_bool @ 0x81 {\n        bool: bool\n    }\n\nA command to set rw_bool. Returns the value.\n\n    command c_u32 @ 0x82 {\n        u32: u32\n    }\n\nA command to set rw_u32. Returns the value.\n\n    command c_i32 @ 0x83 {\n        i32: i32\n    }\n\nA command to set rw_i32. Returns the value.\n\n    command c_string @ 0x84 {\n        string: string\n    }\n\nA command to set rw_string. Returns the value.\n\n    command c_bytes @ 0x85 {\n        bytes: bytes\n    }\n\nA command to set rw_bytes. Returns the value.\n"
+    "source": "# Protocol Test\n\n    identifier: 0x16c7466a\n    camel: protoTest\n\nThis is test service to validate the protocol packet transmissions between the browser and a MCU.\nUse this page if you developing JACDAC HDK for a new platform.\n\n### Test procedure\n\nFor each ``rw`` registers, set a random value ``x``\n  * read ``rw`` and check value is equal to ``x``\n  * read ``ro`` and check value is equal to ``x``\n  * listen to ``e`` event and check that data is equal to ``x``\n  * call ``c`` command with new random value ``y``\n  * read ``rw`` and check value is equal to ``y``\n  * do all the above steps with acks\n\nFor each ``rw`` registers, there shall also\nbe an ``event`` and a ``command``. The event\nshould get raised when the value changes;\nand the command should set the value.\n  \n## Registers\n\nEvery ``rw`` register has a corresponding ``ro`` regisrer\nand a corresponding ``set_...`` command to also set the value.\n\n    rw rw_bool : bool @ 0x081\n\nA read write bool register.\n\n    ro ro_bool : bool @ 0x181\n\nA read only bool register. Mirrors rw_bool.\n\n    rw rw_u32 : u32 @ 0x082\n\nA read write u32 register.\n\n    ro ro_u32 : u32 @ 0x182\n\nA read only u32 register.. Mirrors rw_u32.\n\n    rw rw_i32 : i32 @ 0x083\n\nA read write i32 register.\n\n    ro ro_i32 : i32 @ 0x183\n\nA read only i32 register.. Mirrors rw_i32.\n\n    rw rw_string : string @ 0x084\n\nA read write string register.\n\n    ro ro_string : string @ 0x184\n\nA read only string register. Mirrors rw_string.\n\n    rw rw_bytes : bytes @ 0x085\n\nA read write string register.\n\n    ro ro_bytes : bytes @ 0x185\n\nA read only string register. Mirrors ro_bytes.\n\n## Events\n\n    event e_bool @ 0x81 { \n        bool: bool \n    }\n\nAn event raised when rw_bool is modified\n\n    event e_u32 @ 0x82 { \n        u32: u32 \n    }\n\nAn event raised when rw_u32 is modified\n\n    event e_i32 @ 0x83 { \n        i32: i32 \n    }\n\nAn event raised when rw_i32 is modified\n\n    event e_string @ 0x84 { \n        string: string \n    }\n\nAn event raised when rw_string is modified\n\n    event e_bytes @ 0x85 { \n        bytes: bytes \n    }\n\nAn event raised when rw_bytes is modified\n\n## Commands\n\n    command c_bool @ 0x81 {\n        bool: bool\n    }\n\nA command to set rw_bool. Returns the value.\n\n    command c_u32 @ 0x82 {\n        u32: u32\n    }\n\nA command to set rw_u32. Returns the value.\n\n    command c_i32 @ 0x83 {\n        i32: i32\n    }\n\nA command to set rw_i32. Returns the value.\n\n    command c_string @ 0x84 {\n        string: string\n    }\n\nA command to set rw_string. Returns the value.\n\n    command c_bytes @ 0x85 {\n        bytes: bytes\n    }\n\nA command to set rw_bytes. Returns the value.\n\n    command c_report_pipe @ 0x86 {\n        p_bytes: pipe\n    }\n    pipe report p_bytes {\n        bytes: bytes\n    }\n\nA command to read the rw_bytes as a pipe, by per byte."
   },
   {
     "name": "Role Manager",

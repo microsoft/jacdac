@@ -1919,7 +1919,25 @@ namespace jacdac {
          * ```
          */
         CBytes = 0x85,
+
+        /**
+         * Argument: p_bytes pipe (bytes). A command to read the rw_bytes as a pipe, by per byte.
+         *
+         * ```
+         * const [pBytes] = jdunpack<[Buffer]>(buf, "b[12]")
+         * ```
+         */
+        CReportPipe = 0x86,
     }
+
+
+    /**
+     * pipe_report PBytes
+     * ```
+     * const [bytes] = jdunpack<[Buffer]>(buf, "b")
+     * ```
+     */
+
 
 }
 namespace jacdac {

@@ -1210,7 +1210,10 @@ export function packFormat(sinfo: jdspec.ServiceSpec, pkt: jdspec.PacketInfo): s
     for (const fld of pkt.fields) {
         if (fld.startRepeats)
             fmt.push("r:")
-        fmt.push(packFormatForField(sinfo, fld).fmt)
+        const ff = packFormatForField(sinfo, fld);
+        if (!ff)
+            return undefined;
+        fmt.push(ff.fmt)
     }
 
     return fmt.join(" ");

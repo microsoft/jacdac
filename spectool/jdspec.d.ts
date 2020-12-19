@@ -467,6 +467,10 @@ declare namespace jdspec {
              * The TypeScript fully qualified type  name
              */
             qName: string;
+            /**
+             * Default fixed instance for this client
+             */
+            default?: string;
         }
     }
 }

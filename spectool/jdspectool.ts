@@ -40,6 +40,7 @@ function processSpec(dn: string) {
 
     const fmtStats: { [index: string]: number;} = {};
     const concats: jdspec.SMap<string> = {}
+    const markdowns: jdspec.ServiceMarkdownSpec[] = [];
     for (let fn of files) {
         if (!/\.md$/.test(fn) || fn[0] == ".")
             continue
@@ -48,6 +49,12 @@ function processSpec(dn: string) {
         const json = parseServiceSpecificationMarkdownToJSON(cont, includes, fn)
         const key = fn.replace(/\.md$/, "")
         includes[key] = json
+
+        markdowns.push({
+            classIdentifier: json.classIdentifier,
+            shortId: json.shortId,
+            source: cont
+        })
 
         json.packets.map(pkt => pkt.packFormat)
             .filter(fmt => !!fmt)
@@ -76,7 +83,8 @@ function processSpec(dn: string) {
         }
     }
 
-    fs.writeFileSync(path.join(outp, "services.json"), JSON.stringify(values(includes), null, 2))
+    fs.writeFileSync(path.join(outp, "services-sources.json"), JSON.stringify(markdowns), "utf-8")
+    fs.writeFileSync(path.join(outp, "services.json"), JSON.stringify(values(includes)), "utf-8")
     fs.writeFileSync(path.join(outp, "specconstants.ts"), concats["ts"])
     fs.writeFileSync(path.join(outp, "specconstants.sts"), concats["sts"])
 

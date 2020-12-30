@@ -173,8 +173,7 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
         notes: {},
         classIdentifier: 0,
         enums: {},
-        packets: [],
-        source: filecontent,
+        packets: []
     }
 
     let backticksType = ""

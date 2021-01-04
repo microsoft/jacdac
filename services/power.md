@@ -4,6 +4,35 @@
 
 A power-provider service.
 
+## Power negotiation protocol
+
+The purpose of the power negotiation is to ensure that there is no more than ~500mA
+delivered to the power rail.
+This is realized by limiting the number of enabled power provider services to 1.
+
+Note, that it's also possible to have low-current power providers, which do not
+run a power provider service.
+These are **not** accounted for in the power negotiation protocol.
+
+* Upon reset, a power service enables itself.
+* Every enabled power service emits power `on` reports with its announce packets.
+* If an enabled power service sees a power `on` report, it disables itself (unless in protection period).
+* If a power service has been disabled for at least 55-60s (random), it enables itself, sends
+  a power `on` report, and enters protection period for ~100ms.
+* If a disabled power service sees no power `on` report for more than ~1100ms, it enables itself.
+
+The purpose of the protection period in a new provider is for the other power services to
+receive the power `on` report from the new provider and shut down.
+Otherwise, a power `on` report from an old provider could arrive in the receive queue of the new
+provider, while it's queuing its own initial report.
+This would result in both old and new provider shutting down.
+It's still possible, though unlikely, for the new power `on` to fail to reach the old provider;
+the next old power `on` will disable the new provider, while keeping the old one running.
+
+A separate power `on` report is used, as opposed to `enabled` reading or a service announce packet
+because these reports are only emitted directly after the device announce packet, and cannot
+be triggered otherwise, minimizing the number of cases to analyze in the protocol.
+
 ## Registers
 
     rw enabled = 1: bool @ intensity
@@ -42,3 +71,9 @@ This excludes conversion overheads if any.
 Many USB power packs need current to be drawn from time to time to prevent shutdown.
 This regulates how often and for how long such current is drawn.
 Typically a 1/8W 22 ohm resistor is used as load. This limits the duty cycle to 10%.
+
+## Commands
+
+    report on @ 0x80 {}
+
+Emitted with announce packets when the service is running.

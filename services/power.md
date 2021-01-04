@@ -14,14 +14,29 @@ Note, that it's also possible to have low-current power providers, which do not
 run a power provider service.
 These are **not** accounted for in the power negotiation protocol.
 
-* Upon reset, a power service enables itself.
-* Every enabled power service emits power `on` reports with its announce packets.
-* If an enabled power service sees a power `on` report, it disables itself (unless in protection period).
-* If a power service has been disabled for at least 55-60s (random), it enables itself, sends
-  a power `on` report, and enters protection period for ~100ms.
-* If a disabled power service sees no power `on` report for more than ~1100ms, it enables itself.
+The protocol is based on `on` reports, which are always sent in the same frame,
+after general device announce packets.
+This makes it simpler for other power services to parse them.
 
-The purpose of the protection period in a new provider is for the other power services to
+The `on` reports contain device priority, which is either its remaining battery
+capacity, or a constant.
+
+After sending an announce with `on` report, the service enters 10ms grace period.
+During grace period incoming `on` reports are ignored.
+
+* Upon reset, a power service enables itself (instant-on), and after 0-300ms (random)
+  send the first announce packet (with `on` report)
+* Every enabled power service emits power `on` reports with its announce packets,
+  which are sent every 400-600ms (random).
+* If an enabled power service sees a power `on` report from somebody else of higher or equal priority,
+  it disables itself (unless in grace period).
+* If a power service has been disabled for at least 55-60s (random) and in the last second
+  it has only seen `on` report of lower or equal priority,
+  then just before the next announce period it enables itself.
+* If a disabled power service sees no power `on` report for more than ~1100ms, it enables itself
+  (this is when the previous power source is unplugged or otherwise malfunctions).
+
+The purpose of the grace period in a new provider is for the other power services to
 receive the power `on` report from the new provider and shut down.
 Otherwise, a power `on` report from an old provider could arrive in the receive queue of the new
 provider, while it's queuing its own initial report.
@@ -74,6 +89,8 @@ Typically a 1/8W 22 ohm resistor is used as load. This limits the duty cycle to 
 
 ## Commands
 
-    report on @ 0x80 {}
+    report on @ 0x80 {
+        priority: u32 mWh
+    }
 
 Emitted with announce packets when the service is running.

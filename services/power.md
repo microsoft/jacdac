@@ -31,7 +31,7 @@ During grace period incoming `on` reports are ignored.
   which are sent every 400-600ms (random; first few announce packets can be even sent more often)
 * If an enabled power service sees a power `on` report from somebody else of higher or equal priority,
   it disables itself (unless in grace period)
-* If a disabled power service sees no power `on` report for more than ~1100ms, it enables itself
+* If a disabled power service sees no power `on` report for more than ~1200ms, it enables itself
   (this is when the previous power source is unplugged or otherwise malfunctions)
 * Power services keep track of the current provider
   (device ID from the most recent `on` report, either incoming or outgoing).
@@ -54,6 +54,18 @@ So instead, we never disable the service, while the `on` packet is queued.
 This may lead to delays in disabling power services, but these should be limited due to the
 random nature of the announce packet spacing.
 
+### Rationale for timings
+
+The initial 0-300ms delay is set to spread out the announce periods of power services,
+to minimize collisions.
+The announce periods are randomized 400-600ms, instead of a fixed 500ms used for regular
+services, for the same reason.
+
+The 1200ms period is set so that droping two announce packets in a row
+from the current provider will not cause power switch, while missing 3 will.
+
+The 50-60s power switch period is arbitrary, but chosen to limit amount of switching between supplies,
+while keeping it short enough for user to notice any problems such switching may cause.
 
 ## Registers
 

@@ -14,39 +14,46 @@ Note, that it's also possible to have low-current power providers, which do not
 run a power provider service.
 These are **not** accounted for in the power negotiation protocol.
 
-The protocol is based on `on` reports, which are always sent in the same frame,
-after general device announce packets.
+The protocol is based on `on` reports, which are always sent 
+after general device announce packets, in the same frame.
 This makes it simpler for other power services to parse them.
 
 The `on` reports contain device priority, which is either its remaining battery
 capacity, or a constant.
 
-After sending an announce with `on` report, the service enters 10ms grace period.
+After queuing an announce with `on` report, the service enters a grace period
+until the report has been sent on the wire.
 During grace period incoming `on` reports are ignored.
 
 * Upon reset, a power service enables itself (instant-on), and after 0-300ms (random)
   send the first announce packet (with `on` report)
 * Every enabled power service emits power `on` reports with its announce packets,
-  which are sent every 400-600ms (random).
+  which are sent every 400-600ms (random; first few announce packets can be even sent more often)
 * If an enabled power service sees a power `on` report from somebody else of higher or equal priority,
-  it disables itself (unless in grace period).
-* If a power service has been disabled for at least 55-60s (random) and in the last second
-  it has only seen `on` report of lower or equal priority,
-  then just before the next announce period it enables itself.
+  it disables itself (unless in grace period)
 * If a disabled power service sees no power `on` report for more than ~1100ms, it enables itself
-  (this is when the previous power source is unplugged or otherwise malfunctions).
+  (this is when the previous power source is unplugged or otherwise malfunctions)
+* Power services keep track of the current provider
+  (device ID from the most recent `on` report, either incoming or outgoing).
+  If the current provider has not changed for at least 50-60s (random),
+  and its last priority is lower or equal to the current service priority,
+  then just before the next announce period, the service enables itself
+  (thus also resetting the 50-60s timer).
 
-The purpose of the grace period in a new provider is for the other power services to
-receive the power `on` report from the new provider and shut down.
-Otherwise, a power `on` report from an old provider could arrive in the receive queue of the new
-provider, while it's queuing its own initial report.
-This would result in both old and new provider shutting down.
-It's still possible, though unlikely, for the new power `on` to fail to reach the old provider;
-the next old power `on` will disable the new provider, while keeping the old one running.
+### Rationale for the grace period
 
-A separate power `on` report is used, as opposed to `enabled` reading or a service announce packet
-because these reports are only emitted directly after the device announce packet, and cannot
-be triggered otherwise, minimizing the number of cases to analyze in the protocol.
+Consider the following scenario:
+* device A queues `on` report for sending
+* A receives external `on` packet from B (thus disabling A)
+* the A `on` report is sent from the queue (thus eventually disabling B)
+To avoid that, we make sure that at the precise instant when `on` report is sent,
+the device is enabled (and thus will stay enabled until another `on` report arrives).
+This could be achieved by inspecting the enable bit, aftering acquiring the line
+and before starting UART transmission, however that would require breaking abstraction layers.
+So instead, we never disable the service, while the `on` packet is queued.
+This may lead to delays in disabling power services, but these should be limited due to the
+random nature of the announce packet spacing.
+
 
 ## Registers
 
@@ -63,11 +70,11 @@ This field may be read-only in some implementations - you should read it back af
 
 Indicates whether the power has been shut down due to overdraw.
 
-    ro current_draw: u16 mA @ reading
+    ro current_draw?: u16 mA @ reading
 
 Present current draw from the bus.
 
-    ro battery_voltage: u16 mV {typical_min = 4500, typical_max = 5500} @ 0x180
+    ro battery_voltage?: u16 mV {typical_min = 4500, typical_max = 5500} @ 0x180
 
 Voltage on input.
 
@@ -87,6 +94,12 @@ Many USB power packs need current to be drawn from time to time to prevent shutd
 This regulates how often and for how long such current is drawn.
 Typically a 1/8W 22 ohm resistor is used as load. This limits the duty cycle to 10%.
 
+    rw priority_offset: i32 mWh @ 0x82
+
+This value is added to `priority` of `on` reports, thus modifying amount of load-sharing
+between different supplies.
+The `priority` is clamped to `u32` range before sending in `on` packets.
+
 ## Commands
 
     report on @ 0x80 {
@@ -94,3 +107,10 @@ Typically a 1/8W 22 ohm resistor is used as load. This limits the duty cycle to 
     }
 
 Emitted with announce packets when the service is running.
+`priority` is either the remaining battery capacity,
+or `0x10000000` when the remaining capacity is unknown,
+or `0x20000000` when the capacity is considered infinite (eg., wall charger).
+In cases where battery capacity is unknown but the charge percentage can be estimated,
+it's recommended to assume a fixed (typical) battery capacity for priority purposes,
+rather than using `0x10000000`, as this will have a better load-sharing characteristic,
+especially if several power providers of the same type are used.

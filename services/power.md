@@ -26,7 +26,7 @@ until the report has been sent on the wire.
 During the grace period incoming `active` reports are ignored.
 
 * Upon reset, a power service enables itself, and then only after 0-300ms (random)
-  send the first announce packet (with `active` report)
+  send the first device announce packet directly followed by `active` report
 * Every enabled power service emits power `active` reports with its announce packets,
   which are sent every 400-600ms (random; first few announce packets can be even sent more often)
 * If an enabled power service sees a power `active` report from somebody else of higher or equal priority,

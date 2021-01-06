@@ -8,10 +8,10 @@ A power-provider service.
 
 The purpose of the power negotiation is to ensure that there is no more than ~500mA
 delivered to the power rail.
-This is realized by limiting the number of enabled power provider services to 1.
+This is realized by limiting the number of enabled power provider services to one.
 
-Note, that it's also possible to have low-current power providers, which do not
-run a power provider service.
+Note, that it's also possible to have low-current power providers,
+which are limited to 100mA and do not run a power provider service.
 These are **not** accounted for in the power negotiation protocol.
 
 The protocol is based on `on` reports, which are always sent 
@@ -23,9 +23,9 @@ capacity, or a constant.
 
 After queuing an announce with `on` report, the service enters a grace period
 until the report has been sent on the wire.
-During grace period incoming `on` reports are ignored.
+During the grace period incoming `on` reports are ignored.
 
-* Upon reset, a power service enables itself (instant-on), and after 0-300ms (random)
+* Upon reset, a power service enables itself, and then only after 0-300ms (random)
   send the first announce packet (with `on` report)
 * Every enabled power service emits power `on` reports with its announce packets,
   which are sent every 400-600ms (random; first few announce packets can be even sent more often)

@@ -14,27 +14,27 @@ Note, that it's also possible to have low-current power providers,
 which are limited to 100mA and do not run a power provider service.
 These are **not** accounted for in the power negotiation protocol.
 
-The protocol is based on `on` reports, which are always sent 
+The protocol is based on `active` reports, which are always sent 
 after general device announce packets, in the same frame.
 This makes it simpler for other power services to parse them.
 
-The `on` reports contain device priority, which is either its remaining battery
+The `active` reports contain device priority, which is either its remaining battery
 capacity, or a constant.
 
-After queuing an announce with `on` report, the service enters a grace period
+After queuing an announce with `active` report, the service enters a grace period
 until the report has been sent on the wire.
-During the grace period incoming `on` reports are ignored.
+During the grace period incoming `active` reports are ignored.
 
 * Upon reset, a power service enables itself, and then only after 0-300ms (random)
-  send the first announce packet (with `on` report)
-* Every enabled power service emits power `on` reports with its announce packets,
+  send the first announce packet (with `active` report)
+* Every enabled power service emits power `active` reports with its announce packets,
   which are sent every 400-600ms (random; first few announce packets can be even sent more often)
-* If an enabled power service sees a power `on` report from somebody else of higher or equal priority,
+* If an enabled power service sees a power `active` report from somebody else of higher or equal priority,
   it disables itself (unless in grace period)
-* If a disabled power service sees no power `on` report for more than ~1200ms, it enables itself
+* If a disabled power service sees no power `active` report for more than ~1200ms, it enables itself
   (this is when the previous power source is unplugged or otherwise malfunctions)
 * Power services keep track of the current provider
-  (device ID from the most recent `on` report, either incoming or outgoing).
+  (device ID from the most recent `active` report, either incoming or outgoing).
   If the current provider has not changed for at least 50-60s (random),
   and its last priority is lower or equal to the current service priority,
   then just before the next announce period, the service enables itself
@@ -43,14 +43,14 @@ During the grace period incoming `on` reports are ignored.
 ### Rationale for the grace period
 
 Consider the following scenario:
-* device A queues `on` report for sending
-* A receives external `on` packet from B (thus disabling A)
-* the A `on` report is sent from the queue (thus eventually disabling B)
-To avoid that, we make sure that at the precise instant when `on` report is sent,
-the device is enabled (and thus will stay enabled until another `on` report arrives).
+* device A queues `active` report for sending
+* A receives external `active` packet from B (thus disabling A)
+* the A `active` report is sent from the queue (thus eventually disabling B)
+To avoid that, we make sure that at the precise instant when `active` report is sent,
+the device is enabled (and thus will stay enabled until another `active` report arrives).
 This could be achieved by inspecting the enable bit, aftering acquiring the line
 and before starting UART transmission, however that would require breaking abstraction layers.
-So instead, we never disable the service, while the `on` packet is queued.
+So instead, we never disable the service, while the `active` packet is queued.
 This may lead to delays in disabling power services, but these should be limited due to the
 random nature of the announce packet spacing.
 
@@ -108,13 +108,13 @@ Typically a 1/8W 22 ohm resistor is used as load. This limits the duty cycle to 
 
     rw priority_offset: i32 mWh @ 0x82
 
-This value is added to `priority` of `on` reports, thus modifying amount of load-sharing
+This value is added to `priority` of `active` reports, thus modifying amount of load-sharing
 between different supplies.
-The `priority` is clamped to `u32` range before sending in `on` packets.
+The `priority` is clamped to `u32` range before sending in `active` packets.
 
 ## Commands
 
-    report on @ 0x80 {
+    report active @ 0x80 {
         priority: u32 mWh
     }
 

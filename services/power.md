@@ -18,8 +18,8 @@ The protocol is based on `active` reports, which are always sent
 after general device announce packets, in the same frame.
 This makes it simpler for other power services to parse them.
 
-The `active` reports contain device priority, which is either its remaining battery
-capacity, or a constant.
+The `active` reports contain device priority, which is formed from the maximum available current
+and remaining battery capacity.
 
 After queuing an announce with `active` report, the service enters a grace period
 until the report has been sent on the wire.
@@ -106,23 +106,27 @@ Many USB power packs need current to be drawn from time to time to prevent shutd
 This regulates how often and for how long such current is drawn.
 Typically a 1/8W 22 ohm resistor is used as load. This limits the duty cycle to 10%.
 
-    rw priority_offset: i32 mWh @ 0x82
+    rw priority_offset: i32 @ 0x82
 
 This value is added to `priority` of `active` reports, thus modifying amount of load-sharing
 between different supplies.
-The `priority` is clamped to `u32` range before sending in `active` packets.
+The `priority` is clamped to `u32` range when included in `active` reports.
 
 ## Commands
 
     report active @ 0x80 {
-        priority: u32 mWh
+        priority: u32
     }
 
 Emitted with announce packets when the service is running.
-`priority` is either the remaining battery capacity,
-or `0x10000000` when the remaining capacity is unknown,
-or `0x20000000` when the capacity is considered infinite (eg., wall charger).
+The `priority` should be computed as
+`(((max_power >> 5) << 24) | remaining_capacity) + priority_offset`
+where the `remaining_capacity` is `(battery_charge * battery_capacity) >> 16`,
+or one of the special constants
+`0xe00000` when the remaining capacity is unknown,
+or `0xf00000` when the capacity is considered infinite (eg., wall charger).
+The `priority` is clamped to `u32` range after computation.
 In cases where battery capacity is unknown but the charge percentage can be estimated,
 it's recommended to assume a fixed (typical) battery capacity for priority purposes,
-rather than using `0x10000000`, as this will have a better load-sharing characteristic,
+rather than using `0xe00000`, as this will have a better load-sharing characteristic,
 especially if several power providers of the same type are used.

@@ -69,6 +69,13 @@ typedef struct jd_control_flood_ping_report {
 
 
 /**
+ * Read-write μs uint32_t. When set to value other than `0`, it asks the device to reset after specified number of microseconds.
+ * This is typically used to implement watchdog functionality, where a brain device sets `reset_in` to
+ * say 1.6s every 0.5s.
+ */
+#define JD_CONTROL_REG_RESET_IN 0x80
+
+/**
  * Constant string (bytes). Identifies the type of hardware (eg., ACME Corp. Servo X-42 Rev C)
  */
 #define JD_CONTROL_REG_DEVICE_DESCRIPTION 0x180

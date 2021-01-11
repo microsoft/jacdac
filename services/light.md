@@ -99,6 +99,11 @@ Increasing length at runtime leads to ineffective use of memory and may lead to 
 
 Limit the power drawn by the light-strip (and controller).
 
+    const max_pixels: u16 @ 0x181
+
+The maximum supported number of pixels.
+All writes to `num_pixels` are clamped to `max_pixels`.
+
 ## Commands
 
     command run @ 0x81 {

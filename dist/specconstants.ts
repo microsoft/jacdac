@@ -1111,6 +1111,16 @@ export enum LightReg {
      * ```
      */
     MaxPower = 0x7,
+
+    /**
+     * Constant uint16_t. The maximum supported number of pixels.
+     * All writes to `num_pixels` are clamped to `max_pixels`.
+     *
+     * ```
+     * const [maxPixels] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    MaxPixels = 0x181,
 }
 
 export enum LightCmd {

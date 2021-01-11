@@ -43,6 +43,12 @@
 #define JD_LIGHT_REG_MAX_POWER JD_REG_MAX_POWER
 
 /**
+ * Constant uint16_t. The maximum supported number of pixels.
+ * All writes to `num_pixels` are clamped to `max_pixels`.
+ */
+#define JD_LIGHT_REG_MAX_PIXELS 0x181
+
+/**
  * Argument: program bytes. Run the given light "program". See service description for details.
  */
 #define JD_LIGHT_CMD_RUN 0x81

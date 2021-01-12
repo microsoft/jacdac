@@ -53,10 +53,10 @@ Indicates whether or not we currently have an IP address assigned.
 
 ## Events
 
-    event got_ip @ 0x01
+    event got_ip @ active
 
 Emitted upon successful join and IP address assignment.
 
-    event lost_ip @ 0x02
+    event lost_ip @ inactive
 
 Emitted when disconnected from network.

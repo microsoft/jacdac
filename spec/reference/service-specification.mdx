@@ -81,7 +81,7 @@ and is meant to be displayed along with every register description in various UI
 The first register we define (`oxygen_delay`) can be read and written. When the device restarts, its value is `100` (default values are
 typically `0` and in that case are not specified).
 The value is unsigned and 16 bit long, and is expressed in milliseconds.
-The register code is `0x80` (code ranges are specified in `_base.md`).
+The register code is `0x80` (code ranges are specified in `_system.md`).
 The text after the register definition ends up in `description` field in JSON.
 Neither the register name (nor description) is ever sent over wire (the same applies to commands and events).
 
@@ -154,7 +154,7 @@ Also note that `0x80` command code is used, which is the same as the register co
 This is allowed, as register codes occupy separate namespace from command codes -
 register codes combined with masks of `0x1000` or `0x2000` form command codes
 for getting or setting registers.
-Again, `_base.md` has ranges for allowed command codes.
+Again, `_system.md` has ranges for allowed command codes.
 
 The next command doesn't have a associated report.
 The sender can still ask for ACK.
@@ -174,25 +174,19 @@ The empty braces `{ }` can also be skipped.
 ```markdown
 ## Events
 
-All events are emitted three times, to ensure good reception.
-
-    event take_off @ 0x01
+    event take_off @ 0x80
 
 Rockets leaves the launch pad.
 
-    event bird_in_nozzle @ 0x02 {
+    event bird_in_nozzle @ 0x81 {
         nozzle_id: u8
     }
 
 Indicates that nozzle is about to fail because of a forign object.
 ```
 
-First, there's a `note["events"]`.
-The strategy mentioned is valid, though this is better achieved with streams.
-
-The address space for events is separate from commands and registers, as they are nested
-inside of the `event` command.
-This 32 bit are available, it's recommended to stick to low numbers.
+The address space for events is separate from commands and registers.
+The range for user events is `0x80-0xff`.
 
 Many events have no arguments, like the `take_off` one.
 Arguments can be specified as for registers and commands.
@@ -219,11 +213,11 @@ Indicates whether the button is currently active (pressed).
 
 ## Events
 
-    event down @ 0x01
+    event down @ active
 
 Emitted when button goes from inactive (`pressed == 0`) to active.
 
-    event up @ 0x02
+    event up @ inactive
 
 Emitted when button goes from active (`pressed == 1`) to inactive.
 ```
@@ -232,9 +226,10 @@ All registers from the `_sensor.md` will be included (meaning `stream_samples` a
 Similarly, all commands and events would be included (but there are none).
 
 The address of `pressed` register is specified as `@ reading`, meaning the
-address of the `reading` register in `_base.md`.
-Services cannot extend `_base.md`, because it includes a large number of packets that are
+address of the `reading` register in `_system.md`.
+Services cannot extend `_system.md`, because it includes a large number of packets that are
 never all present at the same time in a regular service.
+All services implicitly extend `_base.md` though.
 However, the names of these packets can be used in place of addresses.
 In fact, this is the only way to refer to the addresses in the system range:
 if the example used `@ 0x101` instead of `@ reading`, the jdspectool would

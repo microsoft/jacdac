@@ -155,9 +155,8 @@ const identifierRanges: { [index: string]: [number, number][] } = {
         [0xf00, 0xfff],
     ],
     "event": [
-        [0x000, 0x07f],
-        [0x080, 0xeff],
-        [0xf00, 0xfff],
+        [0x00, 0x7f], // system
+        [0x80, 0xff],
     ],
 };
 
@@ -482,8 +481,8 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
                     isHigh = 0x100 <= v && v <= 0xeff
                     break
                 case "event":
-                    isUser = 0x0000 <= v && v <= 0xffff
-                    isHigh = 0x1_0000 <= v && v <= 0xffff_ffff
+                    isSystem = 0x00 <= v && v <= 0x7f
+                    isUser = 0x80 <= v && v <= 0xff
                     break
             }
 

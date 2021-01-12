@@ -55,4 +55,27 @@
  */
 #define JD_POWER_REG_KEEP_ON_PULSE_PERIOD 0x81
 
+/**
+ * Read-write int32_t. This value is added to `priority` of `active` reports, thus modifying amount of load-sharing
+ * between different supplies.
+ * The `priority` is clamped to `u32` range when included in `active` reports.
+ */
+#define JD_POWER_REG_PRIORITY_OFFSET 0x82
+
+/**
+ * Argument: priority uint32_t. Emitted with announce packets when the service is running.
+ * The `priority` should be computed as
+ * `(((max_power >> 5) << 24) | remaining_capacity) + priority_offset`
+ * where the `remaining_capacity` is `(battery_charge * battery_capacity) >> 16`,
+ * or one of the special constants
+ * `0xe00000` when the remaining capacity is unknown,
+ * or `0xf00000` when the capacity is considered infinite (eg., wall charger).
+ * The `priority` is clamped to `u32` range after computation.
+ * In cases where battery capacity is unknown but the charge percentage can be estimated,
+ * it's recommended to assume a fixed (typical) battery capacity for priority purposes,
+ * rather than using `0xe00000`, as this will have a better load-sharing characteristic,
+ * especially if several power providers of the same type are used.
+ */
+#define JD_POWER_CMD_ACTIVE 0x80
+
 #endif

@@ -41,6 +41,7 @@ If the third bit of `flags` is set (_multicast commands_), then the low order 32
 | `0x01` | if set, the `device_identifier` is the recipient of command; if clear, the `device_identifier` is the sender of a report;
 | `0x02` | if set, an ACK should be issued with CRC |
 | `0x04` | if set, the device_identifier contains target service class number (multicast) |
+| `0x80` | if set, the packet comes from JACDAC vNext and should be ignored by the current implementation |
 
 ## Acks
 

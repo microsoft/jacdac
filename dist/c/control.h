@@ -13,6 +13,8 @@
  * The upper 4 bits of `restart_counter` are reserved.
  * `service_class` indicates class identifier for each service index (service index `0` is always control, so it's
  * skipped in this enumeration).
+ * `packet_count` indicates the number of packets sent by the current device since last announce,
+ * including the current announce packet (it is always 0 if this feature is not supported).
  * The command form can be used to induce report, which is otherwise broadcast every 500ms.
  */
 #define JD_CONTROL_CMD_SERVICES JD_CMD_ANNOUNCE
@@ -23,7 +25,8 @@
 typedef struct jd_control_services_report {
     uint8_t restart_counter;
     uint8_t flags;  // AnnounceFlags
-    uint16_t reserved;
+    uint8_t packet_count;
+    uint8_t reserved;
     uint32_t service_class[0];
 } jd_control_services_report_t;
 
@@ -42,6 +45,35 @@ typedef struct jd_control_services_report {
  * No args. Reset device. ACK may or may not be sent.
  */
 #define JD_CONTROL_CMD_RESET 0x82
+
+/**
+ * The device will respond `num_responses` times, as fast as it can, setting the `counter` field in the report
+ * to `start_counter`, then `start_counter + 1`, ..., and finally `start_counter + num_responses - 1`.
+ * The `dummy_payload` is `size` bytes long and contains bytes `0, 1, 2, ...`.
+ */
+#define JD_CONTROL_CMD_FLOOD_PING 0x83
+typedef struct jd_control_flood_ping {
+    uint32_t num_responses;
+    uint32_t start_counter;
+    uint8_t size; // B
+} jd_control_flood_ping_t;
+
+
+/**
+ * Report: 
+ */
+typedef struct jd_control_flood_ping_report {
+    uint32_t counter;
+    uint8_t dummy_payload[0];
+} jd_control_flood_ping_report_t;
+
+
+/**
+ * Read-write μs uint32_t. When set to value other than `0`, it asks the device to reset after specified number of microseconds.
+ * This is typically used to implement watchdog functionality, where a brain device sets `reset_in` to
+ * say 1.6s every 0.5s.
+ */
+#define JD_CONTROL_REG_RESET_IN 0x80
 
 /**
  * Constant string (bytes). Identifies the type of hardware (eg., ACME Corp. Servo X-42 Rev C)

@@ -70,6 +70,23 @@ declare namespace jdspec {
      */
     type StabilityStatus = "stable" | "experimental" | "deprecated";
 
+    interface ServiceMarkdownSpec {
+        /**
+         * Short identifier for the service, from file name.
+         */
+        shortId: string;
+
+        /**
+         * When written in hex, it has the form 0x1xxxxxxx (except for control service).
+         */
+        classIdentifier: number;
+
+        /**
+         * Markdown source
+         */
+        source: string;
+    }
+
     /**
      * Service specification.
      */
@@ -93,11 +110,6 @@ declare namespace jdspec {
          * Short identifier for the service, from file name.
          */
         shortId: string;
-
-        /**
-         * The full markdown source for the spec.
-         */
-        source?: string;
 
         /**
          * When written in hex, it has the form 0x1xxxxxxx (except for control service).
@@ -443,5 +455,34 @@ declare namespace jdspec {
          * Hooks for parser.
          */
         errors?: Diagnostic[];
+    }
+
+    /**
+ * Information about MakeCode support for a JACDAC service
+ */
+    export interface MakeCodeServiceInfo {
+        /**
+         * Short id of the service
+         */
+        service: string;
+        /**
+         * Client information if any
+         */
+        client: {
+            /** project name */
+            name: string;
+            /**
+             * GitHub slub and path (OWNER/NAME[/PATH])
+             */
+            repo: string;
+            /**
+             * The TypeScript fully qualified type  name
+             */
+            qName: string;
+            /**
+             * Default fixed instance for this client
+             */
+            default?: string;
+        }
     }
 }

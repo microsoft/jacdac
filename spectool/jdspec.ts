@@ -172,8 +172,7 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
         notes: {},
         classIdentifier: 0,
         enums: {},
-        packets: [],
-        source: filecontent,
+        packets: []
     }
 
     let backticksType = ""
@@ -1209,7 +1208,10 @@ export function packFormat(sinfo: jdspec.ServiceSpec, pkt: jdspec.PacketInfo): s
     for (const fld of pkt.fields) {
         if (fld.startRepeats)
             fmt.push("r:")
-        fmt.push(packFormatForField(sinfo, fld).fmt)
+        const ff = packFormatForField(sinfo, fld);
+        if (!ff)
+            return undefined;
+        fmt.push(ff.fmt)
     }
 
     return fmt.join(" ");
@@ -1276,11 +1278,11 @@ function memberSize(fld: jdspec.PacketMember) {
     return Math.abs(fld.storage)
 }
 
-function toTypescript(info: jdspec.ServiceSpec, isStatic: boolean) {
-    const indent = isStatic ? "    " : "";
+function toTypescript(info: jdspec.ServiceSpec, staticTypeScript: boolean) {
+    const indent = staticTypeScript ? "    " : "";
     const indent2 = indent + "    "
-    const enumkw = isStatic ? indent + "export const enum" : "export enum"
-    let r = isStatic ? "namespace jacdac {\n" : "";
+    const enumkw = staticTypeScript ? indent + "export const enum" : "export enum"
+    let r = staticTypeScript ? "namespace jacdac {\n" : "";
     r += indent + "// Service: " + info.name + "\n"
     if (info.shortId[0] != "_") {
         r += indent + `export const SRV_${snakify(info.camelName).toLocaleUpperCase()} = ${toHex(info.classIdentifier)}\n`
@@ -1300,7 +1302,7 @@ function toTypescript(info: jdspec.ServiceSpec, isStatic: boolean) {
             continue
 
         const cmt = addComment(pkt)
-        let pack = cmt.needsStruct ? packInfo(info, pkt, isStatic) : ""
+        let pack = pkt.fields.length ? packInfo(info, pkt, staticTypeScript) : ""
 
         let inner = "Cmd"
         if (isRegister(pkt.kind))
@@ -1313,12 +1315,16 @@ function toTypescript(info: jdspec.ServiceSpec, isStatic: boolean) {
             inner = "info"
 
         let text = ""
+        let meta = ""
         if (pkt.secondary || inner == "info") {
             if (pack)
                 text = wrapComment(`${pkt.kind} ${upperCamel(pkt.name)}${wrapSnippet(pack)}`);
         } else {
             let val = toHex(pkt.identifier)
-            text = `${wrapComment(cmt.comment + wrapSnippet(pack))}${upperCamel(pkt.name)} = ${val},\n`
+            if (staticTypeScript && pkt.kind === "event") {
+                meta = `//% block="${snakify(pkt.name).replace(/_/g, ' ')}"\n`
+            }
+            text = `${wrapComment(cmt.comment + wrapSnippet(pack)) + meta}${upperCamel(pkt.name)} = ${val},\n`
         }
 
         if (text)
@@ -1340,7 +1346,7 @@ function toTypescript(info: jdspec.ServiceSpec, isStatic: boolean) {
         }
     }
 
-    if (isStatic)
+    if (staticTypeScript)
         r += "}\n"
 
     return r.replace(/ *$/mg, "")

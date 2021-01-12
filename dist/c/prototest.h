@@ -55,6 +55,30 @@
 #define JD_PROTO_TEST_REG_RO_BYTES 0x185
 
 /**
+ * A read write i8, u8, u16, i32 register.
+ */
+#define JD_PROTO_TEST_REG_RW_I8_U8_U16_I32 0x86
+typedef struct jd_proto_test_rw_i8_u8_u16_i32 {
+    int8_t i8;
+    uint8_t u8;
+    uint16_t u16;
+    int32_t i32;
+} jd_proto_test_rw_i8_u8_u16_i32_t;
+
+
+/**
+ * A read only i8, u8, u16, i32 register.. Mirrors rw_i8_u8_u16_i32.
+ */
+#define JD_PROTO_TEST_REG_RO_I8_U8_U16_I32 0x186
+typedef struct jd_proto_test_ro_i8_u8_u16_i32 {
+    int8_t i8;
+    uint8_t u8;
+    uint16_t u16;
+    int32_t i32;
+} jd_proto_test_ro_i8_u8_u16_i32_t;
+
+
+/**
  * Argument: bool bool (uint8_t). An event raised when rw_bool is modified
  */
 #define JD_PROTO_TEST_EV_E_BOOL 0x81
@@ -80,6 +104,18 @@
 #define JD_PROTO_TEST_EV_E_BYTES 0x85
 
 /**
+ * An event raised when rw_i8_u8_u16_i32 is modified
+ */
+#define JD_PROTO_TEST_EV_E_I8_U8_U16_I32 0x86
+typedef struct jd_proto_test_e_i8_u8_u16_i32 {
+    int8_t i8;
+    uint8_t u8;
+    uint16_t u16;
+    int32_t i32;
+} jd_proto_test_e_i8_u8_u16_i32_t;
+
+
+/**
  * Argument: bool bool (uint8_t). A command to set rw_bool. Returns the value.
  */
 #define JD_PROTO_TEST_CMD_C_BOOL 0x81
@@ -100,8 +136,29 @@
 #define JD_PROTO_TEST_CMD_C_STRING 0x84
 
 /**
- * Argument: bytes bytes. A command to set rw_bytes. Returns the value.
+ * Argument: bytes bytes. A command to set rw_string. Returns the value.
  */
 #define JD_PROTO_TEST_CMD_C_BYTES 0x85
+
+/**
+ * A command to set rw_bytes. Returns the value.
+ */
+#define JD_PROTO_TEST_CMD_C_I8_U8_U16_I32 0x86
+typedef struct jd_proto_test_c_i8_u8_u16_i32 {
+    int8_t i8;
+    uint8_t u8;
+    uint16_t u16;
+    int32_t i32;
+} jd_proto_test_c_i8_u8_u16_i32_t;
+
+
+/**
+ * Argument: p_bytes pipe (bytes). A command to read the rw_bytes, byte per byte, as a pipe.
+ */
+#define JD_PROTO_TEST_CMD_C_REPORT_PIPE 0x87
+
+/**
+ * Argument: bytes bytes. A command to read the rw_bytes, byte per byte, as a pipe.
+ */
 
 #endif

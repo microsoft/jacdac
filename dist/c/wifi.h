@@ -58,11 +58,11 @@ typedef struct jd_wifi_connect {
 /**
  * Emitted upon successful join and IP address assignment.
  */
-#define JD_WIFI_EV_GOT_IP 0x1
+#define JD_WIFI_EV_GOT_IP JD_EV_ACTIVE
 
 /**
  * Emitted when disconnected from network.
  */
-#define JD_WIFI_EV_LOST_IP 0x2
+#define JD_WIFI_EV_LOST_IP JD_EV_INACTIVE
 
 #endif

@@ -187,19 +187,19 @@ typedef struct jd_iot_hub_respond_to_method {
 /**
  * Emitted upon successful connection.
  */
-#define JD_IOT_HUB_EV_CONNECTED 0x1
+#define JD_IOT_HUB_EV_CONNECTED 0x80
 
 /**
  * Argument: reason string (bytes). Emitted when connection was lost.
  */
-#define JD_IOT_HUB_EV_CONNECTION_ERROR 0x2
+#define JD_IOT_HUB_EV_CONNECTION_ERROR 0x81
 
 /**
  * This event is emitted upon reception of a cloud to device message, that is a string
  * (doesn't contain NUL bytes) and fits in a single event packet.
  * For reliable reception, use the `subscribe` command above.
  */
-#define JD_IOT_HUB_EV_DEVICEBOUND_STR 0x3
+#define JD_IOT_HUB_EV_DEVICEBOUND_STR 0x82
 typedef struct jd_iot_hub_devicebound_str {
     char msg[0];  // string0
     // char property_name[0];  // string0

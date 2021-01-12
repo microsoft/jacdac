@@ -98,7 +98,7 @@ Thresholds for event generation for event generation for analog sensors.
 Reports the current state or error status of the device. ``code`` is a standardized value from 
 the JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device
 state. This report is typically not queried, when a device has an error, it will typically
-add this report in frame along with the anounce packet.
+add this report in frame along with the announce packet.
 
     const streaming_preferred_interval: u32 ms @ 0x102
 
@@ -106,11 +106,18 @@ Preferred default streaming interval for sensor in milliseconds.
 
 ## Events
 
-Events codes are subdivided as follows:
-* Events `0x000-0x07f` - common to all services
-* Events `0x080-0xeff` - defined per-service
-* Events `0xf00-0xfff` - reserved for implementation
+Events codes are 8-bit and are subdivided as follows:
+* Events `0x00-0x7f` - common to all services
+* Events `0x80-0xff` - defined per-service
 
-    event change @ 0x02 { }
+    event active @ 0x01 { }
 
-Emit notifying that the internal state of the service changed.
+Notifies that the service has been activated (eg. button pressed, network connected, etc.)
+
+    event inactive @ 0x02 { }
+
+Notifies that the service has been dis-activated.
+
+    event change @ 0x03 { }
+
+Notifies that the internal state of the service changed.

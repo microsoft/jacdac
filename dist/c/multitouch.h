@@ -18,31 +18,31 @@ typedef struct jd_multitouch_capacity {
 /**
  * Argument: channel uint32_t. Emitted when an input is touched.
  */
-#define JD_MULTITOUCH_EV_TOUCH 0x1
+#define JD_MULTITOUCH_EV_TOUCH JD_EV_ACTIVE
 
 /**
  * Argument: channel uint32_t. Emitted when an input is no longer touched.
  */
-#define JD_MULTITOUCH_EV_RELEASE 0x2
+#define JD_MULTITOUCH_EV_RELEASE JD_EV_INACTIVE
 
 /**
  * Argument: channel uint32_t. Emitted when an input is briefly touched. TODO Not implemented.
  */
-#define JD_MULTITOUCH_EV_TAP 0x3
+#define JD_MULTITOUCH_EV_TAP 0x80
 
 /**
  * Argument: channel uint32_t. Emitted when an input is touched for longer than 500ms. TODO Not implemented.
  */
-#define JD_MULTITOUCH_EV_LONG_PRESS 0x4
+#define JD_MULTITOUCH_EV_LONG_PRESS 0x81
 
 /**
  * Emitted when input channels are successively touched in order of increasing channel numbers.
  */
-#define JD_MULTITOUCH_EV_SWIPE_POS 0x10
+#define JD_MULTITOUCH_EV_SWIPE_POS 0x90
 
 /**
  * Emitted when input channels are successively touched in order of decreasing channel numbers.
  */
-#define JD_MULTITOUCH_EV_SWIPE_NEG 0x11
+#define JD_MULTITOUCH_EV_SWIPE_NEG 0x91
 
 #endif

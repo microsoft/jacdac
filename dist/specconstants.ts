@@ -111,7 +111,7 @@ export enum SystemReg {
      * Reports the current state or error status of the device. ``code`` is a standardized value from
      * the JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device
      * state. This report is typically not queried, when a device has an error, it will typically
-     * add this report in frame along with the anounce packet.
+     * add this report in frame along with the announce packet.
      *
      * ```
      * const [code, vendorCode] = jdunpack<[number, number]>(buf, "u16 u16")
@@ -131,9 +131,19 @@ export enum SystemReg {
 
 export enum SystemEvent {
     /**
-     * Emit notifying that the internal state of the service changed.
+     * Notifies that the service has been activated (eg. button pressed, network connected, etc.)
      */
-    Change = 0x2,
+    Active = 0x1,
+
+    /**
+     * Notifies that the service has been dis-activated.
+     */
+    Inactive = 0x2,
+
+    /**
+     * Notifies that the internal state of the service changed.
+     */
+    Change = 0x3,
 }
 
 // Service: Base service
@@ -142,7 +152,7 @@ export enum BaseReg {
      * Reports the current state or error status of the device. ``code`` is a standardized value from
      * the JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device
      * state. This report is typically not queried, when a device has an error, it will typically
-     * add this report in frame along with the anounce packet.
+     * add this report in frame along with the announce packet.
      *
      * ```
      * const [code, vendorCode] = jdunpack<[number, number]>(buf, "u16 u16")
@@ -199,62 +209,62 @@ export enum AccelerometerEvent {
     /**
      * Emitted when accelerometer is tilted in the given direction.
      */
-    TiltUp = 0x1,
+    TiltUp = 0x81,
 
     /**
      * Emitted when accelerometer is tilted in the given direction.
      */
-    TiltDown = 0x2,
+    TiltDown = 0x82,
 
     /**
      * Emitted when accelerometer is tilted in the given direction.
      */
-    TiltLeft = 0x3,
+    TiltLeft = 0x83,
 
     /**
      * Emitted when accelerometer is tilted in the given direction.
      */
-    TiltRight = 0x4,
+    TiltRight = 0x84,
 
     /**
      * Emitted when accelerometer is laying flat in the given direction.
      */
-    FaceUp = 0x5,
+    FaceUp = 0x85,
 
     /**
      * Emitted when accelerometer is laying flat in the given direction.
      */
-    FaceDown = 0x6,
+    FaceDown = 0x86,
 
     /**
      * Emitted when total force acting on accelerometer is much less than 1g.
      */
-    Freefall = 0x7,
+    Freefall = 0x87,
 
     /**
      * Emitted when forces change violently a few times.
      */
-    Shake = 0xb,
+    Shake = 0x8b,
 
     /**
      * Emitted when force in any direction exceeds given threshold.
      */
-    Force_2g = 0xc,
+    Force_2g = 0x8c,
 
     /**
      * Emitted when force in any direction exceeds given threshold.
      */
-    Force_3g = 0x8,
+    Force_3g = 0x88,
 
     /**
      * Emitted when force in any direction exceeds given threshold.
      */
-    Force_6g = 0x9,
+    Force_6g = 0x89,
 
     /**
      * Emitted when force in any direction exceeds given threshold.
      */
-    Force_8g = 0xa,
+    Force_8g = 0x8a,
 }
 
 // Service: Sensor Aggregator
@@ -406,12 +416,12 @@ export enum ButtonEvent {
     /**
      * Emitted together with `up` when the press time was not longer than 500ms.
      */
-    Click = 0x3,
+    Click = 0x80,
 
     /**
      * Emitted together with `up` when the press time was more than 500ms.
      */
-    LongClick = 0x4,
+    LongClick = 0x81,
 }
 
 // Service: Buzzer
@@ -916,7 +926,7 @@ export enum IotHubEvent {
     /**
      * Emitted upon successful connection.
      */
-    Connected = 0x1,
+    Connected = 0x80,
 
     /**
      * Argument: reason string (bytes). Emitted when connection was lost.
@@ -925,7 +935,7 @@ export enum IotHubEvent {
      * const [reason] = jdunpack<[string]>(buf, "s")
      * ```
      */
-    ConnectionError = 0x2,
+    ConnectionError = 0x81,
 
     /**
      * This event is emitted upon reception of a cloud to device message, that is a string
@@ -937,7 +947,7 @@ export enum IotHubEvent {
      * const [propertyName, propertyValue] = rest[0]
      * ```
      */
-    DeviceboundStr = 0x3,
+    DeviceboundStr = 0x82,
 }
 
 // Service: Keyboard
@@ -1557,7 +1567,7 @@ export enum MultitouchEvent {
      * const [channel] = jdunpack<[number]>(buf, "u32")
      * ```
      */
-    Tap = 0x3,
+    Tap = 0x80,
 
     /**
      * Argument: channel uint32_t. Emitted when an input is touched for longer than 500ms. TODO Not implemented.
@@ -1566,17 +1576,17 @@ export enum MultitouchEvent {
      * const [channel] = jdunpack<[number]>(buf, "u32")
      * ```
      */
-    LongPress = 0x4,
+    LongPress = 0x81,
 
     /**
      * Emitted when input channels are successively touched in order of increasing channel numbers.
      */
-    SwipePos = 0x10,
+    SwipePos = 0x90,
 
     /**
      * Emitted when input channels are successively touched in order of decreasing channel numbers.
      */
-    SwipeNeg = 0x11,
+    SwipeNeg = 0x91,
 }
 
 // Service: Power
@@ -2028,7 +2038,7 @@ export enum RoleManagerEvent {
     /**
      * Emit notifying that the internal state of the service changed.
      */
-    Change = 0x2,
+    Change = 0x3,
 }
 
 // Service: Rotary encoder

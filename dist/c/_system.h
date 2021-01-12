@@ -92,7 +92,7 @@ typedef struct jd_system_event_report {
  * Reports the current state or error status of the device. ``code`` is a standardized value from 
  * the JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device
  * state. This report is typically not queried, when a device has an error, it will typically
- * add this report in frame along with the anounce packet.
+ * add this report in frame along with the announce packet.
  */
 #define JD_REG_STATUS_CODE 0x103
 typedef struct jd_system_status_code {
@@ -107,8 +107,18 @@ typedef struct jd_system_status_code {
 #define JD_REG_STREAMING_PREFERRED_INTERVAL 0x102
 
 /**
- * Emit notifying that the internal state of the service changed.
+ * Notifies that the service has been activated (eg. button pressed, network connected, etc.)
  */
-#define JD_EV_CHANGE 0x2
+#define JD_EV_ACTIVE 0x1
+
+/**
+ * Notifies that the service has been dis-activated.
+ */
+#define JD_EV_INACTIVE 0x2
+
+/**
+ * Notifies that the internal state of the service changed.
+ */
+#define JD_EV_CHANGE 0x3
 
 #endif

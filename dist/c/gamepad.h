@@ -46,7 +46,7 @@ typedef struct jd_gamepad_buttons {
 /**
  * Emitted when button goes from inactive to active.
  */
-#define JD_GAMEPAD_EV_DOWN 0x1
+#define JD_GAMEPAD_EV_DOWN JD_EV_ACTIVE
 typedef struct jd_gamepad_down {
     uint16_t button;  // Button
     uint16_t player_index;
@@ -56,7 +56,7 @@ typedef struct jd_gamepad_down {
 /**
  * Emitted when button goes from active to inactive.
  */
-#define JD_GAMEPAD_EV_UP 0x2
+#define JD_GAMEPAD_EV_UP JD_EV_INACTIVE
 typedef struct jd_gamepad_up {
     uint16_t button;  // Button
     uint16_t player_index;

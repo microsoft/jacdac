@@ -1627,6 +1627,34 @@ export enum MultitouchEvent {
     SwipeNeg = 0x91,
 }
 
+// Service: Potentiometer
+export const SRV_POTENTIOMETER = 0x1f274746
+
+export enum PotentiometerVariant { // uint32_t
+    Slider = 0x1,
+    Rotary = 0x2,
+}
+
+export enum PotentiometerReg {
+    /**
+     * Read-only ratio uint16_t. The relative position of the slider between `0x0000` and `0xffff`.
+     *
+     * ```
+     * const [position] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    Position = 0x101,
+
+    /**
+     * Constant Variant (uint32_t). Specifies the physical layout of the potentiometer.
+     *
+     * ```
+     * const [variant] = jdunpack<[PotentiometerVariant]>(buf, "u32")
+     * ```
+     */
+    Variant = 0x107,
+}
+
 // Service: Power
 export const SRV_POWER = 0x1fa4c95a
 export enum PowerReg {
@@ -2200,34 +2228,6 @@ export enum SettingsCmd {
  * ```
  */
 
-
-// Service: Slider
-export const SRV_SLIDER = 0x1f274746
-
-export enum SliderVariant { // uint32_t
-    Slider = 0x1,
-    Rotary = 0x2,
-}
-
-export enum SliderReg {
-    /**
-     * Read-only ratio uint16_t. The relative position of the slider between `0x0000` and `0xffff`.
-     *
-     * ```
-     * const [position] = jdunpack<[number]>(buf, "u16")
-     * ```
-     */
-    Position = 0x101,
-
-    /**
-     * Constant Variant (uint32_t). Specifies the physical layout of the potentiometer.
-     *
-     * ```
-     * const [variant] = jdunpack<[SliderVariant]>(buf, "u32")
-     * ```
-     */
-    Variant = 0x107,
-}
 
 // Service: TCP
 export const SRV_TCP = 0x1b43b70b

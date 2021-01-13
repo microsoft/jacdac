@@ -610,11 +610,13 @@ export enum ControlReg {
     FirmwareUrl = 0x188,
 
     /**
-     * Specifies a status light animation sequence on a colored or monochrome LED. ?``color`` is a palette color? and ``duration``.
+     * Specifies a status light animation sequence on a colored or monochrome LED. ``hue``,
+     * ``saturation``, ``value`` are the channel of an HSV color and ``duration8`` is a multiple of ``8 ms``. The status light is also used by JACDAC to
+     * indicate various status mode, and this animation may be overriden when those modes are enabled.
      *
      * ```
-     * const [rest] = jdunpack<[([number, number, number])[]]>(buf, "r: u8 u8 u16")
-     * const [hue, brightness, duration] = rest[0]
+     * const [rest] = jdunpack<[([number, number, number, number])[]]>(buf, "r: u8 u8 u8 u8")
+     * const [hue, saturation, value, duration8] = rest[0]
      * ```
      */
     StatusLight = 0x81,

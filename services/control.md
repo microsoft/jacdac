@@ -98,9 +98,11 @@ URL with machine-readable metadata information about updating device firmware
     rw status_light? @ 0x81 {
         repeats:
             hue: u8
-            brightness: u8
-            duration: u16 ms
+            saturation: u8
+            value: u8
+            duration8: u8
     }
 
-Specifies a status light animation sequence on a colored or monochrome LED. ?``color`` is a palette color? and ``duration``. The status light is also used by JACDAC to 
+Specifies a status light animation sequence on a colored or monochrome LED. ``hue``,
+``saturation``, ``value`` are the channel of an HSV color and ``duration8`` is a multiple of ``8 ms``. The status light is also used by JACDAC to 
 indicate various status mode, and this animation may be overriden when those modes are enabled.

@@ -4,6 +4,7 @@ export const DEVICE_IMAGE_WIDTH = 600
 export const DEVICE_IMAGE_HEIGHT = 450
 
 export const SenMLUnitDescription: jdspec.SMap<string> = {
+    "°": "angle",
     "m": "meter",
     "kg": "kilogram",
     "s": "second",

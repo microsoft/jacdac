@@ -94,3 +94,12 @@ Request the information web site for this device
     const firmware_url?: string @ 0x188
 
 URL with machine-readable metadata information about updating device firmware
+
+    rw status_light? @ 0x81 {
+        repeats:
+            hue: u8
+            brightness: u8
+            duration: u16 ms
+    }
+
+Specifies a status light animation sequence on a colored or monochrome LED. ?``color`` is a palette color? and ``duration``.

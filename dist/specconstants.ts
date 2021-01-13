@@ -608,6 +608,16 @@ export enum ControlReg {
      * ```
      */
     FirmwareUrl = 0x188,
+
+    /**
+     * Specifies a status light animation sequence on a colored or monochrome LED. ?``color`` is a palette color? and ``duration``.
+     *
+     * ```
+     * const [rest] = jdunpack<[([number, number, number])[]]>(buf, "r: u8 u8 u16")
+     * const [hue, brightness, duration] = rest[0]
+     * ```
+     */
+    StatusLight = 0x81,
 }
 
 // Service: Gamepad

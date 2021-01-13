@@ -62,7 +62,9 @@ export const unitDescription: jdspec.SMap<string> = {
     "var": "volt-ampere reactive (Reactive Power)",
     "vars": "volt-ampere-reactive second (Reactive Energy)",
     "J/m": "joule per meter (Energy per distance)",
-    "kg/m3": "kilogram per cubic meter (mass density, mass concentration)"
+    "kg/m3": "kilogram per cubic meter (mass density, mass concentration)",
+    "hsv": "bit HSV color",
+    "rgb": "RGB color"
 }
 
 export const secondaryUnitConverters: jdspec.SMap<{

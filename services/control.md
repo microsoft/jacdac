@@ -102,4 +102,5 @@ URL with machine-readable metadata information about updating device firmware
             duration: u16 ms
     }
 
-Specifies a status light animation sequence on a colored or monochrome LED. ?``color`` is a palette color? and ``duration``.
+Specifies a status light animation sequence on a colored or monochrome LED. ?``color`` is a palette color? and ``duration``. The status light is also used by JACDAC to 
+indicate various status mode, and this animation may be overriden when those modes are enabled.

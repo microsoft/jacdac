@@ -2412,6 +2412,7 @@ namespace jacdac {
         Indoor = 0x2,
         Body = 0x3,
         HeatProbe = 0x4,
+        Thermocouple = 0x5,
     }
 
     export const enum ThermometerReg {

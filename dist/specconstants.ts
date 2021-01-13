@@ -2310,6 +2310,7 @@ export enum ThermometerVariant { // uint32_t
     Indoor = 0x2,
     Body = 0x3,
     HeatProbe = 0x4,
+    Thermocouple = 0x5,
 }
 
 export enum ThermometerReg {

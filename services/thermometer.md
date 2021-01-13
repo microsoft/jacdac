@@ -30,6 +30,7 @@ The real temperature is between `temperature - temperature_error` and `temperatu
         Indoor = 2,
         Body = 3,
         HeatProbe = 4,
+        Thermocouple = 5,
     }
     const variant: Variant @ variant
 

@@ -117,7 +117,7 @@ add this report in frame along with the announce packet.
 
 Preferred default streaming interval for sensor in milliseconds.
 
-    const variant: i32 @ 0x107
+    const variant: u32 @ 0x107
 
 The hardware variant of the service.
 For services which support this, there's an enum defining the meaning.

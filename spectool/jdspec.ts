@@ -3,7 +3,8 @@
 export const DEVICE_IMAGE_WIDTH = 600
 export const DEVICE_IMAGE_HEIGHT = 450
 
-export const SenMLUnitDescription: jdspec.SMap<string> = {
+// modified subset of SenML
+export const unitDescription: jdspec.SMap<string> = {
     "°": "angle",
     "m": "meter",
     "kg": "kilogram",
@@ -27,7 +28,7 @@ export const SenMLUnitDescription: jdspec.SMap<string> = {
     "Wb": "weber",
     "T": "tesla",
     "H": "henry",
-    "Cel": "degrees Celsius",
+    "°C": "degrees Celsius",
     "lm": "lumen",
     "lx": "lux",
     "Bq": "becquerel",
@@ -64,7 +65,7 @@ export const SenMLUnitDescription: jdspec.SMap<string> = {
     "kg/m3": "kilogram per cubic meter (mass density, mass concentration)"
 }
 
-export const SenMLSecondaryUnitConverters: jdspec.SMap<{
+export const secondaryUnitConverters: jdspec.SMap<{
     name: string;
     unit: senml.Unit | "#";
     scale: number;
@@ -117,11 +118,11 @@ export function resolveUnit(unit: string) {
         return { name: "", unit: "", scale: 1, offset: 1 }; // indentifier
 
     // seconary unit?
-    const su = SenMLSecondaryUnitConverters[unit];
+    const su = secondaryUnitConverters[unit];
     if (su)
         return su;
 
-    const name = SenMLUnitDescription[unit];
+    const name = unitDescription[unit];
     if (name)
         return { name, unit, scale: 1, offset: 0 }
 
@@ -130,11 +131,11 @@ export function resolveUnit(unit: string) {
 
 export function units(): { name: string, description: string }[] {
     const r: { name: string, description: string }[] = []
-    Object.keys(SenMLUnitDescription).forEach(k => {
-        r.push({ name: k, description: SenMLUnitDescription[k] })
-        Object.keys(SenMLSecondaryUnitConverters)
-            .filter(scd => SenMLSecondaryUnitConverters[scd].unit === k)
-            .forEach(scd => r.push({ name: scd, description: SenMLSecondaryUnitConverters[scd].name }))
+    Object.keys(unitDescription).forEach(k => {
+        r.push({ name: k, description: unitDescription[k] })
+        Object.keys(secondaryUnitConverters)
+            .filter(scd => secondaryUnitConverters[scd].unit === k)
+            .forEach(scd => r.push({ name: scd, description: secondaryUnitConverters[scd].name }))
     })
     r.sort((l,r) => l.name.localeCompare(r.name))
     return r;
@@ -897,7 +898,7 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
         if (unit === undefined || unit === null)
             return "";
 
-        if (SenMLUnitDescription[unit] || SenMLSecondaryUnitConverters[unit])
+        if (unitDescription[unit] || secondaryUnitConverters[unit])
             return unit as jdspec.Unit;
         error(`expecting unit, got '${unit}'`)
         return ""

@@ -87,10 +87,6 @@ Neither the register name (nor description) is ever sent over wire (the same app
 
 The next line specifies a read-only register (`core_temperature`), giving the current temperature in degrees Kelvin. A 32 bit value is used to avoid overflows.
 
-JACDAC supports units specified in [SenML](https://www.iana.org/assignments/senml/senml.xhtml).
-
-<SpecificationUnitList />
-
 The third register (`num_nozzles`) is unit-less and constant, at least until the device resets
 (in the case of this service, the reset is usually quite spectacular).
 
@@ -278,8 +274,9 @@ Set brightness level on side lamps. Number of lamps depends on the rocket.
 
 ### Units
 
-The value of the register may have one of the unit or secondary defined in [SenML](https://tools.ietf.org/html/rfc8428),
-in addition to ``""`` (identifiers), ``"us"`` micro seconds, ``"mWh"`` milli watt-hours and ``"#"`` counts.
+Any data field should be annoted with its unit, to allow better interpretation of the data.
+
+<SpecificationUnitList />
 
 ### Pipes
 

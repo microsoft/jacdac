@@ -9,6 +9,6 @@ A thermometer measuring outside environment.
 
 Default streaming interval is 1s.
 
-    ro temperature: u22.10 C @ reading
+    ro temperature: u22.10 °C @ reading
 
 The temperature.

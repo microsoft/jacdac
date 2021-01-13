@@ -79,7 +79,7 @@ Typically the same as `firmware_identifier` unless device was flashed by hand; t
 
 A string describing firmware version; typically semver.
 
-    ro mcu_temperature?: i16 C { typical_min = -10, typical_max = 150 } @ 0x182
+    ro mcu_temperature?: i16 °C { typical_min = -10, typical_max = 150 } @ 0x182
 
 MCU temperature in degrees Celsius (approximate).
 

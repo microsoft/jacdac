@@ -127,6 +127,17 @@ export function resolveUnit(unit: string) {
     return undefined;
 }
 
+export function units(): { name: string, description: string }[] {
+    const r: { name: string, description: string }[] = []
+    Object.keys(SenMLUnitDescription).forEach(k => {
+        r.push({ name: k, description: SenMLUnitDescription[k] })
+        Object.keys(SenMLSecondaryUnitConverters)
+            .filter(scd => SenMLSecondaryUnitConverters[scd].unit === k)
+            .forEach(scd => r.push({ name: scd, description: SenMLSecondaryUnitConverters[scd].name }))
+    })
+    r.sort((l,r) => l.name.localeCompare(r.name))
+    return r;
+}
 
 /* check ranges, see system.md
 Registers `0x001-0x07f` - r/w common to all services

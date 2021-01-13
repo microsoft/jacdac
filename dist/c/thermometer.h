@@ -11,17 +11,17 @@
 #define JD_THERMOMETER_VARIANT_HEAT_PROBE 0x4
 
 /**
- * Read-only °C u22.10 (uint32_t). The temperature.
+ * Read-only °C i22.10 (int32_t). The temperature.
  */
 #define JD_THERMOMETER_REG_TEMPERATURE JD_REG_READING
 
 /**
- * Constant °C u22.10 (uint32_t). Lowest temperature that can be reported.
+ * Constant °C i22.10 (int32_t). Lowest temperature that can be reported.
  */
 #define JD_THERMOMETER_REG_MIN_TEMPERATURE JD_REG_MIN_READING
 
 /**
- * Constant °C u22.10 (uint32_t). Highest temperature that can be reported.
+ * Constant °C i22.10 (int32_t). Highest temperature that can be reported.
  */
 #define JD_THERMOMETER_REG_MAX_TEMPERATURE JD_REG_MAX_READING
 

@@ -2314,28 +2314,28 @@ export enum ThermometerVariant { // uint32_t
 
 export enum ThermometerReg {
     /**
-     * Read-only °C u22.10 (uint32_t). The temperature.
+     * Read-only °C i22.10 (int32_t). The temperature.
      *
      * ```
-     * const [temperature] = jdunpack<[number]>(buf, "u22.10")
+     * const [temperature] = jdunpack<[number]>(buf, "i22.10")
      * ```
      */
     Temperature = 0x101,
 
     /**
-     * Constant °C u22.10 (uint32_t). Lowest temperature that can be reported.
+     * Constant °C i22.10 (int32_t). Lowest temperature that can be reported.
      *
      * ```
-     * const [minTemperature] = jdunpack<[number]>(buf, "u22.10")
+     * const [minTemperature] = jdunpack<[number]>(buf, "i22.10")
      * ```
      */
     MinTemperature = 0x104,
 
     /**
-     * Constant °C u22.10 (uint32_t). Highest temperature that can be reported.
+     * Constant °C i22.10 (int32_t). Highest temperature that can be reported.
      *
      * ```
-     * const [maxTemperature] = jdunpack<[number]>(buf, "u22.10")
+     * const [maxTemperature] = jdunpack<[number]>(buf, "i22.10")
      * ```
      */
     MaxTemperature = 0x105,

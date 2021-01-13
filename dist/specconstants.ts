@@ -722,6 +722,15 @@ export enum HumidityReg {
      * ```
      */
     Humidity = 0x101,
+
+    /**
+     * Read-only %RH u22.10 (uint32_t). The real humidity is between `humidity - humidity_error` and `humidity + humidity_error`.
+     *
+     * ```
+     * const [humidityError] = jdunpack<[number]>(buf, "u22.10")
+     * ```
+     */
+    HumidityError = 0x106,
 }
 
 // Service: Azure IoT Hub

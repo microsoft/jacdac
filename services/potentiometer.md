@@ -1,4 +1,4 @@
-# Slider
+# Potentiometer
 
     identifier: 0x1f274746
     extends: _sensor

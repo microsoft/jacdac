@@ -4,9 +4,18 @@
 
 #define JD_SERVICE_CLASS_SLIDER  0x1f274746
 
+// enum Variant (uint32_t)
+#define JD_SLIDER_VARIANT_SLIDER 0x1
+#define JD_SLIDER_VARIANT_ROTARY 0x2
+
 /**
  * Read-only ratio uint16_t. The relative position of the slider between `0x0000` and `0xffff`.
  */
 #define JD_SLIDER_REG_POSITION JD_REG_READING
+
+/**
+ * Constant Variant (uint32_t). Specifies the physical layout of the potentiometer.
+ */
+#define JD_SLIDER_REG_VARIANT JD_REG_VARIANT
 
 #endif

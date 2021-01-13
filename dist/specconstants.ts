@@ -90,6 +90,34 @@ export enum SystemReg {
     Reading = 0x101,
 
     /**
+     * Constant int32_t. The lowest value that can be reported by the sensor.
+     *
+     * ```
+     * const [minReading] = jdunpack<[number]>(buf, "i32")
+     * ```
+     */
+    MinReading = 0x104,
+
+    /**
+     * Constant int32_t. The highest value that can be reported by the sensor.
+     *
+     * ```
+     * const [maxReading] = jdunpack<[number]>(buf, "i32")
+     * ```
+     */
+    MaxReading = 0x105,
+
+    /**
+     * Read-only int32_t. The real value of whatever is measured is between `reading - reading_error` and `reading + reading_error`.
+     * This register is often, but not always `const`.
+     *
+     * ```
+     * const [readingError] = jdunpack<[number]>(buf, "i32")
+     * ```
+     */
+    ReadingError = 0x106,
+
+    /**
      * Read-write int32_t. Thresholds for event generation for event generation for analog sensors.
      *
      * ```
@@ -127,6 +155,16 @@ export enum SystemReg {
      * ```
      */
     StreamingPreferredInterval = 0x102,
+
+    /**
+     * Constant uint32_t. The hardware variant of the service.
+     * For services which support this, there's an enum defining the meaning.
+     *
+     * ```
+     * const [variant] = jdunpack<[number]>(buf, "u32")
+     * ```
+     */
+    Variant = 0x107,
 }
 
 export enum SystemEvent {
@@ -2165,6 +2203,12 @@ export enum SettingsCmd {
 
 // Service: Slider
 export const SRV_SLIDER = 0x1f274746
+
+export enum SliderVariant { // uint32_t
+    Slider = 0x1,
+    Rotary = 0x2,
+}
+
 export enum SliderReg {
     /**
      * Read-only ratio uint16_t. The relative position of the slider between `0x0000` and `0xffff`.
@@ -2174,6 +2218,15 @@ export enum SliderReg {
      * ```
      */
     Position = 0x101,
+
+    /**
+     * Constant Variant (uint32_t). Specifies the physical layout of the potentiometer.
+     *
+     * ```
+     * const [variant] = jdunpack<[SliderVariant]>(buf, "u32")
+     * ```
+     */
+    Variant = 0x107,
 }
 
 // Service: TCP
@@ -2242,6 +2295,14 @@ export enum TcpPipeCmd {
 
 // Service: Thermometer
 export const SRV_THERMOMETER = 0x1421bac7
+
+export enum ThermometerVariant { // uint32_t
+    Outdoor = 0x1,
+    Indoor = 0x2,
+    Body = 0x3,
+    HeatProbe = 0x4,
+}
+
 export enum ThermometerReg {
     /**
      * Read-only °C u22.10 (uint32_t). The temperature.
@@ -2251,6 +2312,42 @@ export enum ThermometerReg {
      * ```
      */
     Temperature = 0x101,
+
+    /**
+     * Constant °C u22.10 (uint32_t). Lowest temperature that can be reported.
+     *
+     * ```
+     * const [minTemperature] = jdunpack<[number]>(buf, "u22.10")
+     * ```
+     */
+    MinTemperature = 0x104,
+
+    /**
+     * Constant °C u22.10 (uint32_t). Highest temperature that can be reported.
+     *
+     * ```
+     * const [maxTemperature] = jdunpack<[number]>(buf, "u22.10")
+     * ```
+     */
+    MaxTemperature = 0x105,
+
+    /**
+     * Read-only °C u22.10 (uint32_t). The real temperature is between `temperature - temperature_error` and `temperature + temperature_error`.
+     *
+     * ```
+     * const [temperatureError] = jdunpack<[number]>(buf, "u22.10")
+     * ```
+     */
+    TemperatureError = 0x106,
+
+    /**
+     * Constant Variant (uint32_t). Specifies the type of thermometer.
+     *
+     * ```
+     * const [variant] = jdunpack<[ThermometerVariant]>(buf, "u32")
+     * ```
+     */
+    Variant = 0x107,
 }
 
 // Service: Vibration motor

@@ -648,9 +648,14 @@ namespace jacdac {
         FirmwareUrl = 0x188,
 
         /**
-         * Specifies a status light animation sequence on a colored or monochrome LED. ``hue``,
-         * ``saturation``, ``value`` are the channel of an HSV color and ``duration8`` is a multiple of ``8 ms``. The status light is also used by JACDAC to
-         * indicate various status mode, and this animation may be overriden when those modes are enabled.
+         * Specifies a status light animation sequence on a colored or monochrome LED.
+         * ``hue``, ``saturation``, ``value`` are the components of an HSV color
+         * and ``duration8`` is the duration of transition to the next color in the array, in units of ``8ms``.
+         * The animation is played in a loop.
+         * Typically, up to 8 steps (repeats) are supported.
+         * Set the register to empty buffer to disable the animation.
+         * The status light is also used by JACDAC software stack to indicate various status mode
+         * and this animation may be overridden when those modes are enabled.
          *
          * ```
          * const [rest] = jdunpack<[([number, number, number, number])[]]>(buf, "r: u8 u8 u8 u8")

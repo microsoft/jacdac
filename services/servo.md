@@ -2,15 +2,18 @@
 
     identifier: 0x12fc9103
 
-Servo is a small motor directed with a PWM signal.
-This services fixes the servo period at 20ms, and the pulse can be regulated.
+Servo is a small motor with arm that can be pointing at a specific direction.
 
 ## Registers
 
-    rw pulse: u32 us {typical_min = 500, typical_max = 2500} @ value
+    rw angle: i16 ° {typical_min = -90, typical_max = 90} @ value
 
-Specifies length of the pulse in microseconds. The period is always 20ms.
+Specifies the angle of the arm.
 
     rw enabled: bool @ intensity
 
 Turn the power to the servo on/off.
+
+    rw drift?: i16 ° @ 0x81
+
+Correction applied to the angle to account for the servo arm drift.

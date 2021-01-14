@@ -107,7 +107,8 @@ All writes to `num_pixels` are clamped to `max_pixels`.
     enum Variant: u32 {
         Strip = 1,
         Ring = 2,
-        Square = 3
+        Stick = 3,
+        Jewel = 4
     }
     const variant: Variant @ variant
 

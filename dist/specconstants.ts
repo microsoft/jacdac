@@ -1119,7 +1119,8 @@ export enum LightLightType { // uint8_t
 export enum LightVariant { // uint32_t
     Strip = 0x1,
     Ring = 0x2,
-    Square = 0x3,
+    Stick = 0x3,
+    Jewel = 0x4,
 }
 
 export enum LightReg {

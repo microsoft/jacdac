@@ -12,7 +12,8 @@
 // enum Variant (uint32_t)
 #define JD_LIGHT_VARIANT_STRIP 0x1
 #define JD_LIGHT_VARIANT_RING 0x2
-#define JD_LIGHT_VARIANT_SQUARE 0x3
+#define JD_LIGHT_VARIANT_STICK 0x3
+#define JD_LIGHT_VARIANT_JEWEL 0x4
 
 /**
  * Read-write ratio uint8_t. Set the luminosity of the strip.

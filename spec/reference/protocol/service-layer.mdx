@@ -102,9 +102,9 @@ Each repetition is emitted with the same sequential counter.
 The client should ignore the repetitions it receives.
 However, if the client misses an event, it will likely get the repetition, and handle that.
 The client should maintain the last sequential number for every device.
-If an event comes with an sequential number in advance of what's expected, the client should wait with handling it
-for at least 100ms, until the preceding (repetitions of) events arrive.
-Then the client should handle events in the intended order.
+If an event `X` comes with a sequential number in advance of what's expected, the client should drop it,
+wait for the preceding event(s), and eventually handle the repetition of `X` when it arrives.
+The client thus handles events in sequential order.
 
 As a motivation, consider a device with button services.
 If these are handled purely through events, the client will maintain the pressed state for each button.

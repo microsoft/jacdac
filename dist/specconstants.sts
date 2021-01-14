@@ -1172,6 +1172,13 @@ namespace jacdac {
         SK9822 = 0x11,
     }
 
+
+    export const enum LightVariant { // uint32_t
+        Strip = 0x1,
+        Ring = 0x2,
+        Square = 0x3,
+    }
+
     export const enum LightReg {
         /**
          * Read-write ratio uint8_t. Set the luminosity of the strip.
@@ -1235,6 +1242,15 @@ namespace jacdac {
          * ```
          */
         MaxPixels = 0x181,
+
+        /**
+         * Constant Variant (uint32_t). Specifies the shape of the light strip.
+         *
+         * ```
+         * const [variant] = jdunpack<[LightVariant]>(buf, "u32")
+         * ```
+         */
+        Variant = 0x107,
     }
 
     export const enum LightCmd {

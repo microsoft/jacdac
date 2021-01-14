@@ -9,6 +9,11 @@
 #define JD_LIGHT_LIGHT_TYPE_APA102 0x10
 #define JD_LIGHT_LIGHT_TYPE_SK9822 0x11
 
+// enum Variant (uint32_t)
+#define JD_LIGHT_VARIANT_STRIP 0x1
+#define JD_LIGHT_VARIANT_RING 0x2
+#define JD_LIGHT_VARIANT_SQUARE 0x3
+
 /**
  * Read-write ratio uint8_t. Set the luminosity of the strip.
  * At `0` the power to the strip is completely shut down.
@@ -47,6 +52,11 @@
  * All writes to `num_pixels` are clamped to `max_pixels`.
  */
 #define JD_LIGHT_REG_MAX_PIXELS 0x181
+
+/**
+ * Constant Variant (uint32_t). Specifies the shape of the light strip.
+ */
+#define JD_LIGHT_REG_VARIANT JD_REG_VARIANT
 
 /**
  * Argument: program bytes. Run the given light "program". See service description for details.

@@ -1115,6 +1115,13 @@ export enum LightLightType { // uint8_t
     SK9822 = 0x11,
 }
 
+
+export enum LightVariant { // uint32_t
+    Strip = 0x1,
+    Ring = 0x2,
+    Square = 0x3,
+}
+
 export enum LightReg {
     /**
      * Read-write ratio uint8_t. Set the luminosity of the strip.
@@ -1178,6 +1185,15 @@ export enum LightReg {
      * ```
      */
     MaxPixels = 0x181,
+
+    /**
+     * Constant Variant (uint32_t). Specifies the shape of the light strip.
+     *
+     * ```
+     * const [variant] = jdunpack<[LightVariant]>(buf, "u32")
+     * ```
+     */
+    Variant = 0x107,
 }
 
 export enum LightCmd {

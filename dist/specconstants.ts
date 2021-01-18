@@ -2255,6 +2255,13 @@ export enum SettingsCmd {
  */
 
 
+export enum SettingsEvent {
+    /**
+     * Notifies that some setting have been modified.
+     */
+    Change = 0x3,
+}
+
 // Service: TCP
 export const SRV_TCP = 0x1b43b70b
 

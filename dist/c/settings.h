@@ -61,4 +61,9 @@ typedef struct jd_settings_listed_entry {
  */
 #define JD_SETTINGS_CMD_CLEAR 0x85
 
+/**
+ * Notifies that some setting have been modified.
+ */
+#define JD_SETTINGS_EV_CHANGE JD_EV_CHANGE
+
 #endif

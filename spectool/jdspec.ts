@@ -1260,7 +1260,7 @@ function packInfo(info: jdspec.ServiceSpec, pkt: jdspec.PacketInfo, isStatic: bo
             fmt += f0.fmt + isArray + " "
             let tp = f0.tsType
             if (tp == "Buffer" && !isStatic)
-                tp = "UInt8Array"
+                tp = "Uint8Array"
             tp += isArray
             if (repeats) {
                 repeats.push(varname)

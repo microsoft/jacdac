@@ -323,7 +323,7 @@ export enum SensorAggregatorReg {
      * These settings are stored in flash.
      *
      * ```
-     * const [samplingInterval, samplesInWindow, rest] = jdunpack<[number, number, ([UInt8Array, number, number, number, SensorAggregatorSampleType, number])[]]>(buf, "u16 u16 x[4] r: b[8] u32 u8 u8 u8 i8")
+     * const [samplingInterval, samplesInWindow, rest] = jdunpack<[number, number, ([Uint8Array, number, number, number, SensorAggregatorSampleType, number])[]]>(buf, "u16 u16 x[4] r: b[8] u32 u8 u8 u8 i8")
      * const [deviceId, serviceClass, serviceNum, sampleSize, sampleType, sampleShift] = rest[0]
      * ```
      */
@@ -360,7 +360,7 @@ export enum SensorAggregatorReg {
      * Read-only bytes. Last collected sample.
      *
      * ```
-     * const [currentSample] = jdunpack<[UInt8Array]>(buf, "b")
+     * const [currentSample] = jdunpack<[Uint8Array]>(buf, "b")
      * ```
      */
     CurrentSample = 0x101,
@@ -414,7 +414,7 @@ export enum BootloaderCmd {
      * Only the last chunk causes writing to flash and elicits response.
      *
      * ```
-     * const [pageAddress, pageOffset, chunkNo, chunkMax, sessionId, pageData] = jdunpack<[number, number, number, number, number, UInt8Array]>(buf, "u32 u16 u8 u8 u32 x[4] x[4] x[4] x[4] b[208]")
+     * const [pageAddress, pageOffset, chunkNo, chunkMax, sessionId, pageData] = jdunpack<[number, number, number, number, number, Uint8Array]>(buf, "u32 u16 u8 u8 u32 x[4] x[4] x[4] x[4] b[208]")
      * ```
      */
     PageData = 0x80,
@@ -558,7 +558,7 @@ export enum ControlCmd {
     /**
      * report FloodPing
      * ```
-     * const [counter, dummyPayload] = jdunpack<[number, UInt8Array]>(buf, "u32 b")
+     * const [counter, dummyPayload] = jdunpack<[number, Uint8Array]>(buf, "u32 b")
      * ```
      */
 }
@@ -774,7 +774,7 @@ export enum IotHubCmd {
      * Argument: devicebound pipe (bytes). Subscribes for cloud to device messages, which will be sent over the specified pipe.
      *
      * ```
-     * const [devicebound] = jdunpack<[UInt8Array]>(buf, "b[12]")
+     * const [devicebound] = jdunpack<[Uint8Array]>(buf, "b[12]")
      * ```
      */
     Subscribe = 0x84,
@@ -783,7 +783,7 @@ export enum IotHubCmd {
      * Argument: twin_result pipe (bytes). Ask for current device digital twin.
      *
      * ```
-     * const [twinResult] = jdunpack<[UInt8Array]>(buf, "b[12]")
+     * const [twinResult] = jdunpack<[Uint8Array]>(buf, "b[12]")
      * ```
      */
     GetTwin = 0x85,
@@ -792,7 +792,7 @@ export enum IotHubCmd {
      * Argument: twin_updates pipe (bytes). Subscribe to updates to our twin.
      *
      * ```
-     * const [twinUpdates] = jdunpack<[UInt8Array]>(buf, "b[12]")
+     * const [twinUpdates] = jdunpack<[Uint8Array]>(buf, "b[12]")
      * ```
      */
     SubscribeTwin = 0x87,
@@ -813,7 +813,7 @@ export enum IotHubCmd {
      * Argument: method_call pipe (bytes). Subscribe to direct method calls.
      *
      * ```
-     * const [methodCall] = jdunpack<[UInt8Array]>(buf, "b[12]")
+     * const [methodCall] = jdunpack<[Uint8Array]>(buf, "b[12]")
      * ```
      */
     SubscribeMethod = 0x88,
@@ -839,49 +839,49 @@ export enum IotHubCmd {
 /**
  * pipe_command Message
  * ```
- * const [body] = jdunpack<[UInt8Array]>(buf, "b")
+ * const [body] = jdunpack<[Uint8Array]>(buf, "b")
  * ```
  */
 
 /**
  * pipe_report Devicebound
  * ```
- * const [body] = jdunpack<[UInt8Array]>(buf, "b")
+ * const [body] = jdunpack<[Uint8Array]>(buf, "b")
  * ```
  */
 
 /**
  * pipe_report TwinJson
  * ```
- * const [json] = jdunpack<[UInt8Array]>(buf, "b")
+ * const [json] = jdunpack<[Uint8Array]>(buf, "b")
  * ```
  */
 
 /**
  * pipe_report TwinUpdateJson
  * ```
- * const [json] = jdunpack<[UInt8Array]>(buf, "b")
+ * const [json] = jdunpack<[Uint8Array]>(buf, "b")
  * ```
  */
 
 /**
  * pipe_command TwinPatchJson
  * ```
- * const [json] = jdunpack<[UInt8Array]>(buf, "b")
+ * const [json] = jdunpack<[Uint8Array]>(buf, "b")
  * ```
  */
 
 /**
  * pipe_report MethodCallBody
  * ```
- * const [json] = jdunpack<[UInt8Array]>(buf, "b")
+ * const [json] = jdunpack<[Uint8Array]>(buf, "b")
  * ```
  */
 
 /**
  * pipe_command MethodResponse
  * ```
- * const [json] = jdunpack<[UInt8Array]>(buf, "b")
+ * const [json] = jdunpack<[Uint8Array]>(buf, "b")
  * ```
  */
 
@@ -1043,7 +1043,7 @@ export enum LedMatrixControllerReg {
      * stored as a bit, column by column. The column should be byte aligned.
      *
      * ```
-     * const [leds] = jdunpack<[UInt8Array]>(buf, "b")
+     * const [leds] = jdunpack<[Uint8Array]>(buf, "b")
      * ```
      */
     Leds = 0x80,
@@ -1100,7 +1100,7 @@ export enum LedMatrixDisplayReg {
      * stored as a bit, column by column. The column should be byte aligned.
      *
      * ```
-     * const [leds] = jdunpack<[UInt8Array]>(buf, "b")
+     * const [leds] = jdunpack<[Uint8Array]>(buf, "b")
      * ```
      */
     Leds = 0x101,
@@ -1202,7 +1202,7 @@ export enum LightCmd {
      * Argument: program bytes. Run the given light "program". See service description for details.
      *
      * ```
-     * const [program] = jdunpack<[UInt8Array]>(buf, "b")
+     * const [program] = jdunpack<[Uint8Array]>(buf, "b")
      * ```
      */
     Run = 0x81,
@@ -1282,7 +1282,7 @@ export enum MicrophoneCmd {
      * Samples are sent as `i16`.
      *
      * ```
-     * const [samples, numSamples] = jdunpack<[UInt8Array, number]>(buf, "b[12] u32")
+     * const [samples, numSamples] = jdunpack<[Uint8Array, number]>(buf, "b[12] u32")
      * ```
      */
     Sample = 0x81,
@@ -1334,7 +1334,7 @@ export enum ModelRunnerCmd {
      * and results are send over the `outputs` pipe.
      *
      * ```
-     * const [outputs] = jdunpack<[UInt8Array]>(buf, "b[12]")
+     * const [outputs] = jdunpack<[Uint8Array]>(buf, "b[12]")
      * ```
      */
     Predict = 0x81,
@@ -1884,7 +1884,7 @@ export enum ProtoTestReg {
      * Read-write bytes. A read write string register.
      *
      * ```
-     * const [rwBytes] = jdunpack<[UInt8Array]>(buf, "b")
+     * const [rwBytes] = jdunpack<[Uint8Array]>(buf, "b")
      * ```
      */
     RwBytes = 0x85,
@@ -1893,7 +1893,7 @@ export enum ProtoTestReg {
      * Read-only bytes. A read only string register. Mirrors ro_bytes.
      *
      * ```
-     * const [roBytes] = jdunpack<[UInt8Array]>(buf, "b")
+     * const [roBytes] = jdunpack<[Uint8Array]>(buf, "b")
      * ```
      */
     RoBytes = 0x185,
@@ -1958,7 +1958,7 @@ export enum ProtoTestEvent {
      * Argument: bytes bytes. An event raised when rw_bytes is modified
      *
      * ```
-     * const [bytes] = jdunpack<[UInt8Array]>(buf, "b")
+     * const [bytes] = jdunpack<[Uint8Array]>(buf, "b")
      * ```
      */
     EBytes = 0x85,
@@ -2014,7 +2014,7 @@ export enum ProtoTestCmd {
      * Argument: bytes bytes. A command to set rw_string. Returns the value.
      *
      * ```
-     * const [bytes] = jdunpack<[UInt8Array]>(buf, "b")
+     * const [bytes] = jdunpack<[Uint8Array]>(buf, "b")
      * ```
      */
     CBytes = 0x85,
@@ -2032,7 +2032,7 @@ export enum ProtoTestCmd {
      * Argument: p_bytes pipe (bytes). A command to read the rw_bytes, byte per byte, as a pipe.
      *
      * ```
-     * const [pBytes] = jdunpack<[UInt8Array]>(buf, "b[12]")
+     * const [pBytes] = jdunpack<[Uint8Array]>(buf, "b[12]")
      * ```
      */
     CReportPipe = 0x87,
@@ -2042,7 +2042,7 @@ export enum ProtoTestCmd {
 /**
  * pipe_report PBytes
  * ```
- * const [bytes] = jdunpack<[UInt8Array]>(buf, "b")
+ * const [bytes] = jdunpack<[Uint8Array]>(buf, "b")
  * ```
  */
 
@@ -2065,7 +2065,7 @@ export enum RoleManagerCmd {
      * Argument: device_id devid (uint64_t). Get the role corresponding to given device identifer. Returns empty string if unset.
      *
      * ```
-     * const [deviceId] = jdunpack<[UInt8Array]>(buf, "b[8]")
+     * const [deviceId] = jdunpack<[Uint8Array]>(buf, "b[8]")
      * ```
      */
     GetRole = 0x80,
@@ -2073,7 +2073,7 @@ export enum RoleManagerCmd {
     /**
      * report GetRole
      * ```
-     * const [deviceId, role] = jdunpack<[UInt8Array, string]>(buf, "b[8] s")
+     * const [deviceId, role] = jdunpack<[Uint8Array, string]>(buf, "b[8] s")
      * ```
      */
 
@@ -2081,7 +2081,7 @@ export enum RoleManagerCmd {
      * Set role. Can set to empty to remove role binding.
      *
      * ```
-     * const [deviceId, role] = jdunpack<[UInt8Array, string]>(buf, "b[8] s")
+     * const [deviceId, role] = jdunpack<[Uint8Array, string]>(buf, "b[8] s")
      * ```
      */
     SetRole = 0x81,
@@ -2095,7 +2095,7 @@ export enum RoleManagerCmd {
      * Argument: stored_roles pipe (bytes). Return all roles stored internally.
      *
      * ```
-     * const [storedRoles] = jdunpack<[UInt8Array]>(buf, "b[12]")
+     * const [storedRoles] = jdunpack<[Uint8Array]>(buf, "b[12]")
      * ```
      */
     ListStoredRoles = 0x82,
@@ -2104,7 +2104,7 @@ export enum RoleManagerCmd {
      * Argument: required_roles pipe (bytes). List all roles required by the current program. `device_id` is `0` if role is unbound.
      *
      * ```
-     * const [requiredRoles] = jdunpack<[UInt8Array]>(buf, "b[12]")
+     * const [requiredRoles] = jdunpack<[Uint8Array]>(buf, "b[12]")
      * ```
      */
     ListRequiredRoles = 0x83,
@@ -2114,14 +2114,14 @@ export enum RoleManagerCmd {
 /**
  * pipe_report StoredRoles
  * ```
- * const [deviceId, role] = jdunpack<[UInt8Array, string]>(buf, "b[8] s")
+ * const [deviceId, role] = jdunpack<[Uint8Array, string]>(buf, "b[8] s")
  * ```
  */
 
 /**
  * pipe_report RequiredRoles
  * ```
- * const [deviceId, serviceClass, roles] = jdunpack<[UInt8Array, number, string]>(buf, "b[8] u32 s")
+ * const [deviceId, serviceClass, roles] = jdunpack<[Uint8Array, number, string]>(buf, "b[8] u32 s")
  * ```
  */
 
@@ -2193,7 +2193,7 @@ export enum SettingsCmd {
     /**
      * report Get
      * ```
-     * const [key, value] = jdunpack<[string, UInt8Array]>(buf, "z b")
+     * const [key, value] = jdunpack<[string, Uint8Array]>(buf, "z b")
      * ```
      */
 
@@ -2201,7 +2201,7 @@ export enum SettingsCmd {
      * Set the value of a given setting.
      *
      * ```
-     * const [key, value] = jdunpack<[string, UInt8Array]>(buf, "z b")
+     * const [key, value] = jdunpack<[string, Uint8Array]>(buf, "z b")
      * ```
      */
     Set = 0x81,
@@ -2219,7 +2219,7 @@ export enum SettingsCmd {
      * Argument: results pipe (bytes). Return keys of all settings.
      *
      * ```
-     * const [results] = jdunpack<[UInt8Array]>(buf, "b[12]")
+     * const [results] = jdunpack<[Uint8Array]>(buf, "b[12]")
      * ```
      */
     ListKeys = 0x82,
@@ -2228,7 +2228,7 @@ export enum SettingsCmd {
      * Argument: results pipe (bytes). Return keys and values of all settings.
      *
      * ```
-     * const [results] = jdunpack<[UInt8Array]>(buf, "b[12]")
+     * const [results] = jdunpack<[Uint8Array]>(buf, "b[12]")
      * ```
      */
     List = 0x83,
@@ -2250,7 +2250,7 @@ export enum SettingsCmd {
 /**
  * pipe_report ListedEntry
  * ```
- * const [key, value] = jdunpack<[string, UInt8Array]>(buf, "z b")
+ * const [key, value] = jdunpack<[string, Uint8Array]>(buf, "z b")
  * ```
  */
 
@@ -2268,7 +2268,7 @@ export enum TcpCmd {
      * Argument: inbound pipe (bytes). Open pair of pipes between network peripheral and a controlling device. In/outbound refers to direction from/to internet.
      *
      * ```
-     * const [inbound] = jdunpack<[UInt8Array]>(buf, "b[12]")
+     * const [inbound] = jdunpack<[Uint8Array]>(buf, "b[12]")
      * ```
      */
     Open = 0x80,
@@ -2307,14 +2307,14 @@ export enum TcpPipeCmd {
 /**
  * pipe_command Outdata
  * ```
- * const [data] = jdunpack<[UInt8Array]>(buf, "b")
+ * const [data] = jdunpack<[Uint8Array]>(buf, "b")
  * ```
  */
 
 /**
  * pipe_report Indata
  * ```
- * const [data] = jdunpack<[UInt8Array]>(buf, "b")
+ * const [data] = jdunpack<[Uint8Array]>(buf, "b")
  * ```
  */
 
@@ -2413,7 +2413,7 @@ export enum WifiCmd {
      * Argument: results pipe (bytes). Initiate search for WiFi networks. Results are returned via pipe, one entry per packet.
      *
      * ```
-     * const [results] = jdunpack<[UInt8Array]>(buf, "b[12]")
+     * const [results] = jdunpack<[Uint8Array]>(buf, "b[12]")
      * ```
      */
     Scan = 0x80,
@@ -2437,7 +2437,7 @@ export enum WifiCmd {
 /**
  * pipe_report Results
  * ```
- * const [flags, rssi, channel, bssid, ssid] = jdunpack<[WifiAPFlags, number, number, UInt8Array, string]>(buf, "u32 x[4] i8 u8 b[6] s[33]")
+ * const [flags, rssi, channel, bssid, ssid] = jdunpack<[WifiAPFlags, number, number, Uint8Array, string]>(buf, "u32 x[4] i8 u8 b[6] s[33]")
  * ```
  */
 

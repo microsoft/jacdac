@@ -2029,7 +2029,7 @@ export enum ProtoTestCmd {
     CI8U8U16I32 = 0x86,
 
     /**
-     * Argument: p_bytes pipe (bytes). A command to read the rw_bytes, byte per byte, as a pipe.
+     * Argument: p_bytes pipe (bytes). A command to read the content of rw_bytes, byte per byte, as a pipe.
      *
      * ```
      * const [pBytes] = jdunpack<[Uint8Array]>(buf, "b[12]")
@@ -2042,7 +2042,7 @@ export enum ProtoTestCmd {
 /**
  * pipe_report PBytes
  * ```
- * const [bytes] = jdunpack<[Uint8Array]>(buf, "b")
+ * const [byte] = jdunpack<[number]>(buf, "u8")
  * ```
  */
 

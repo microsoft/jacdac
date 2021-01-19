@@ -2183,8 +2183,7 @@ export const SRV_SERVO = 0x12fc9103
 
 export enum ServoVariant { // uint32_t
     PositionalRotation = 0x1,
-    ContinuousRotation = 0x2,
-    Linear = 0x3,
+    Linear = 0x2,
 }
 
 export enum ServoReg {
@@ -2234,10 +2233,9 @@ export enum ServoReg {
     MaxAngle = 0x105,
 
     /**
-     * Constant Variant (uint32_t). Specifies the type of thermometer.
+     * Constant Variant (uint32_t). Specifies the type of servo motor.
      * * Positional Rotation Servos: Positional servos can rotate the shaft in about half of the circle,
      * with features to avoid over-rotating. Most servo have a range of 180° but some allow 270° or 360°.
-     * * Continuous Rotation Servos: Continous servos can move in both clockwise and anticlockwise directions without restrictions. The angle is typically interpreted as a throttle.
      * * Linear Servos: linear servos are also like a positional servo, but with additional gears to the adjust the output from circular to back-and-forth.
      *
      * ```

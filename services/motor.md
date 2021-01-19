@@ -9,7 +9,8 @@ A bi-directional DC motor.
     rw duty: i16 / @ value
 
 PWM duty cycle of the motor. Use negative/positive values to run the motor forwards and backwards.
-Positive is recommended to be clockwise rotation and negative counterclockwise.
+Positive is recommended to be clockwise rotation and negative counterclockwise. A duty of ``0`` 
+while ``enabled`` acts as brake.
 
     rw enabled: bool @ intensity
 

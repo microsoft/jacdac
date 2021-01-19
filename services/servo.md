@@ -6,7 +6,7 @@ Servo is a small motor with arm that can be pointing at a specific direction.
 
 ## Registers
 
-    rw angle: i16.16 ° { typical_min=-90, typical_max=-90 } @ value
+    rw angle: i16.16 ° { typical_min=-90, typical_max=90 } @ value
 
 Specifies the angle of the arm.
 

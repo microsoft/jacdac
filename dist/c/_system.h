@@ -79,6 +79,22 @@ typedef struct jd_system_event_report {
 #define JD_REG_READING 0x101
 
 /**
+ * Constant int32_t. The lowest value that can be reported by the sensor.
+ */
+#define JD_REG_MIN_READING 0x104
+
+/**
+ * Constant int32_t. The highest value that can be reported by the sensor.
+ */
+#define JD_REG_MAX_READING 0x105
+
+/**
+ * Read-only int32_t. The real value of whatever is measured is between `reading - reading_error` and `reading + reading_error`.
+ * This register is often, but not always `const`.
+ */
+#define JD_REG_READING_ERROR 0x106
+
+/**
  * Read-write int32_t. Thresholds for event generation for event generation for analog sensors.
  */
 #define JD_REG_LOW_THRESHOLD 0x5
@@ -105,6 +121,12 @@ typedef struct jd_system_status_code {
  * Constant ms uint32_t. Preferred default streaming interval for sensor in milliseconds.
  */
 #define JD_REG_STREAMING_PREFERRED_INTERVAL 0x102
+
+/**
+ * Constant uint32_t. The hardware variant of the service.
+ * For services which support this, there's an enum defining the meaning.
+ */
+#define JD_REG_VARIANT 0x107
 
 /**
  * Notifies that the service has been activated (eg. button pressed, network connected, etc.)

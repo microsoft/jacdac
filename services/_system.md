@@ -85,6 +85,19 @@ Period between packets of data when streaming in milliseconds.
 
 Read-only value of the sensor, also reported in streaming.
 
+    const min_reading: i32 @ 0x104
+
+The lowest value that can be reported by the sensor.
+
+    const max_reading: i32 @ 0x105
+
+The highest value that can be reported by the sensor.
+
+    ro reading_error: i32 @ 0x106
+
+The real value of whatever is measured is between `reading - reading_error` and `reading + reading_error`.
+This register is often, but not always `const`.
+
     rw low_threshold: i32 @ 0x05
     rw high_threshold: i32 @ 0x06
 
@@ -103,6 +116,11 @@ add this report in frame along with the announce packet.
     const streaming_preferred_interval: u32 ms @ 0x102
 
 Preferred default streaming interval for sensor in milliseconds.
+
+    const variant: u32 @ 0x107
+
+The hardware variant of the service.
+For services which support this, there's an enum defining the meaning.
 
 ## Events
 

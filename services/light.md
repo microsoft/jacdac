@@ -104,6 +104,16 @@ Limit the power drawn by the light-strip (and controller).
 The maximum supported number of pixels.
 All writes to `num_pixels` are clamped to `max_pixels`.
 
+    enum Variant: u32 {
+        Strip = 1,
+        Ring = 2,
+        Stick = 3,
+        Jewel = 4
+    }
+    const variant: Variant @ variant
+
+Specifies the shape of the light strip.
+
 ## Commands
 
     command run @ 0x81 {

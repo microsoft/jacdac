@@ -153,12 +153,12 @@ typedef struct jd_proto_test_c_i8_u8_u16_i32 {
 
 
 /**
- * Argument: p_bytes pipe (bytes). A command to read the rw_bytes, byte per byte, as a pipe.
+ * Argument: p_bytes pipe (bytes). A command to read the content of rw_bytes, byte per byte, as a pipe.
  */
 #define JD_PROTO_TEST_CMD_C_REPORT_PIPE 0x87
 
 /**
- * Argument: bytes bytes. A command to read the rw_bytes, byte per byte, as a pipe.
+ * Argument: byte uint8_t. A command to read the content of rw_bytes, byte per byte, as a pipe.
  */
 
 #endif

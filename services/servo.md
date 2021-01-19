@@ -35,6 +35,6 @@ Highest angle that can be set.
 
 Specifies the type of thermometer.
 * Positional Rotation Servos: Positional servos can rotate the shaft in about half of the circle,
-with features to avoid over-rotating. Most servo have a range of 180° but some allow 360°.
+with features to avoid over-rotating. Most servo have a range of 180° but some allow 270° or 360°.
 * Continuous Rotation Servos: Continous servos can move in both clockwise and anticlockwise directions without restrictions. The angle is typically interpreted as a throttle.
 * Linear Servos: linear servos are also like a positional servo, but with additional gears to the adjust the output from circular to back-and-forth.

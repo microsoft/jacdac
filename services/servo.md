@@ -6,7 +6,7 @@ Servo is a small motor with arm that can be pointing at a specific direction.
 
 ## Registers
 
-    rw angle: i16.16 ° {typical_min = -90, typical_max = 90} @ value
+    rw angle: i16.16 ° {typical_min = -60, typical_max = 60} @ value
 
 Specifies the angle of the arm.
 
@@ -38,3 +38,11 @@ Specifies the type of thermometer.
 with features to avoid over-rotating. Most servo have a range of 180° but some allow 270° or 360°.
 * Continuous Rotation Servos: Continous servos can move in both clockwise and anticlockwise directions without restrictions. The angle is typically interpreted as a throttle.
 * Linear Servos: linear servos are also like a positional servo, but with additional gears to the adjust the output from circular to back-and-forth.
+
+    const stall_torque?: u16.16 kg/cm @ 0x180
+
+The servo motor will stop rotating when it is trying to move a ``stall_torque`` weight at a radial distance of ``1.0`` cm.
+
+    const response_speed?: u16.16 s/60° @ 0x181
+
+Time to move 60°.

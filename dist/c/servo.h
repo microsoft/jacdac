@@ -37,10 +37,20 @@
 /**
  * Constant Variant (uint32_t). Specifies the type of thermometer.
  * * Positional Rotation Servos: Positional servos can rotate the shaft in about half of the circle,
- * with features to avoid over-rotating. Most servo have a range of 180° but some allow 360°.
+ * with features to avoid over-rotating. Most servo have a range of 180° but some allow 270° or 360°.
  * * Continuous Rotation Servos: Continous servos can move in both clockwise and anticlockwise directions without restrictions. The angle is typically interpreted as a throttle.
  * * Linear Servos: linear servos are also like a positional servo, but with additional gears to the adjust the output from circular to back-and-forth.
  */
 #define JD_SERVO_REG_VARIANT JD_REG_VARIANT
+
+/**
+ * Constant kg/cm u16.16 (uint32_t). The servo motor will stop rotating when it is trying to move a ``stall_torque`` weight at a radial distance of ``1.0`` cm.
+ */
+#define JD_SERVO_REG_STALL_TORQUE 0x180
+
+/**
+ * Constant s/60° u16.16 (uint32_t). Time to move 60°.
+ */
+#define JD_SERVO_REG_RESPONSE_SPEED 0x181
 
 #endif

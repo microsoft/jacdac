@@ -2236,7 +2236,7 @@ export enum ServoReg {
     /**
      * Constant Variant (uint32_t). Specifies the type of thermometer.
      * * Positional Rotation Servos: Positional servos can rotate the shaft in about half of the circle,
-     * with features to avoid over-rotating. Most servo have a range of 180° but some allow 360°.
+     * with features to avoid over-rotating. Most servo have a range of 180° but some allow 270° or 360°.
      * * Continuous Rotation Servos: Continous servos can move in both clockwise and anticlockwise directions without restrictions. The angle is typically interpreted as a throttle.
      * * Linear Servos: linear servos are also like a positional servo, but with additional gears to the adjust the output from circular to back-and-forth.
      *
@@ -2245,6 +2245,24 @@ export enum ServoReg {
      * ```
      */
     Variant = 0x107,
+
+    /**
+     * Constant kg/cm u16.16 (uint32_t). The servo motor will stop rotating when it is trying to move a ``stall_torque`` weight at a radial distance of ``1.0`` cm.
+     *
+     * ```
+     * const [stallTorque] = jdunpack<[number]>(buf, "u16.16")
+     * ```
+     */
+    StallTorque = 0x180,
+
+    /**
+     * Constant s/60° u16.16 (uint32_t). Time to move 60°.
+     *
+     * ```
+     * const [responseSpeed] = jdunpack<[number]>(buf, "u16.16")
+     * ```
+     */
+    ResponseSpeed = 0x181,
 }
 
 // Service: Settings

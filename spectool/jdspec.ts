@@ -6,6 +6,8 @@ export const DEVICE_IMAGE_HEIGHT = 450
 // modified subset of SenML
 export const unitDescription: jdspec.SMap<string> = {
     "°": "angle",
+    "°/s": "rotation rate",
+    "°/s2": "rotation acceleration",
     "m": "meter",
     "kg": "kilogram",
     "s": "second",
@@ -62,7 +64,9 @@ export const unitDescription: jdspec.SMap<string> = {
     "var": "volt-ampere reactive (Reactive Power)",
     "vars": "volt-ampere-reactive second (Reactive Energy)",
     "J/m": "joule per meter (Energy per distance)",
-    "kg/m3": "kilogram per cubic meter (mass density, mass concentration)"
+    "kg/m3": "kilogram per cubic meter (mass density, mass concentration)",
+    "s/60°": "servo speed (time to travel 60°)",
+    "kg/cm": "servo torque",
 }
 
 export const secondaryUnitConverters: jdspec.SMap<{
@@ -137,7 +141,7 @@ export function units(): { name: string, description: string }[] {
             .filter(scd => secondaryUnitConverters[scd].unit === k)
             .forEach(scd => r.push({ name: scd, description: secondaryUnitConverters[scd].name }))
     })
-    r.sort((l,r) => l.name.localeCompare(r.name))
+    r.sort((l, r) => l.name.localeCompare(r.name))
     return r;
 }
 

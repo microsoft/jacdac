@@ -66,9 +66,10 @@ export const unitDescription: jdspec.SMap<string> = {
     "J/m": "joule per meter (Energy per distance)",
     "kg/m3": "kilogram per cubic meter (mass density, mass concentration)",
     "s/60°": "servo speed (time to travel 60°)",
-    "kg/cm": "servo torque",
+    "kg/cm": "torque",
     "hsv": "bit HSV color",
-    "rgb": "RGB color"
+    "rgb": "RGB color",
+    "rpm": "revolutions per minute",
 }
 
 export const secondaryUnitConverters: jdspec.SMap<{

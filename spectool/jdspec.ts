@@ -62,7 +62,9 @@ export const unitDescription: jdspec.SMap<string> = {
     "var": "volt-ampere reactive (Reactive Power)",
     "vars": "volt-ampere-reactive second (Reactive Energy)",
     "J/m": "joule per meter (Energy per distance)",
-    "kg/m3": "kilogram per cubic meter (mass density, mass concentration)"
+    "kg/m3": "kilogram per cubic meter (mass density, mass concentration)",
+    "hsv": "bit HSV color",
+    "rgb": "RGB color"
 }
 
 export const secondaryUnitConverters: jdspec.SMap<{
@@ -110,7 +112,7 @@ export const secondaryUnitConverters: jdspec.SMap<{
     "us": { name: "micro seconds", unit: "s", scale: 1e-6, offset: 0 },
     "mWh": { name: "micro watt-hour", unit: "J", scale: 3.6e-3, offset: 0 },
     "g": { name: "earth gravity", unit: "m/s2", scale: 9.80665, offset: 0 },
-    "#": { name: "count", unit: "#", scale: 1, offset: 0 },
+    "#": { name: "count", unit: "#", scale: 1, offset: 0 }
 }
 
 export function resolveUnit(unit: string) {

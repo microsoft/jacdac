@@ -94,3 +94,20 @@ Request the information web site for this device
     const firmware_url?: string @ 0x188
 
 URL with machine-readable metadata information about updating device firmware
+
+    rw status_light? @ 0x81 {
+        repeats:
+            hue: u8
+            saturation: u8
+            value: u8
+            duration8: u8
+    }
+
+Specifies a status light animation sequence on a colored or monochrome LED.
+``hue``, ``saturation``, ``value`` are the components of an HSV color
+and ``duration8`` is the duration of transition to the next color in the array, in units of ``8ms``.
+Module with monochrome LED can ignore ``hue``, ``saturation`` and use ``value``. The animation is played in a loop.
+Typically, up to 8 steps (repeats) are supported.
+Set the register to empty buffer to disable the animation.
+The status light is also used by JACDAC software stack to indicate various status mode
+and this animation may be overridden when those modes are enabled.

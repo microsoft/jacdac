@@ -170,7 +170,7 @@ A command to set rw_bytes. Returns the value.
         p_bytes: pipe
     }
     pipe report p_bytes {
-        bytes: bytes
+        byte: u8
     }
 
-A command to read the rw_bytes, byte per byte, as a pipe.
+A command to read the content of rw_bytes, byte per byte, as a pipe.

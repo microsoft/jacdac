@@ -59,3 +59,9 @@ Return keys and values of all settings.
     command clear @ 0x85 { }
 
 Clears all keys.
+
+## Events
+
+    event change @ change
+
+Notifies that some setting have been modified.

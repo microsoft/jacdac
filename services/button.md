@@ -3,7 +3,7 @@
     identifier: 0x1473a263
     extends: _sensor
 
-A push-button.
+A push-button, which returns to inactive position when not operated anymore.
 
 ## Registers
 

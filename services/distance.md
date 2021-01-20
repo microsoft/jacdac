@@ -7,15 +7,15 @@ A sensor that determines the distance of an object without any physical contact 
 
 ## Registers
 
-    ro distance: u6.10 m { typical_min=0.02, typical_max=4 } @ reading
+    ro distance: u16.16 m { typical_min=0.02, typical_max=4 } @ reading
 
 Current distance from the object
 
-    const min_range?: u6.10 m @ min_reading
+    const min_range?: u16.16 m @ min_reading
 
 Minimum measurable distance 
 
-    const max_range?: u6.10 m @ max_reading
+    const max_range?: u16.16 m @ max_reading
 
 Maximum measurable distance
 
@@ -23,7 +23,7 @@ Maximum measurable distance
         Ultrasonic = 1,
         Infrared = 2,
         LiDAR = 3,
-        TimeOfFlight = 4,
+        Laser = 4,
     }
     const variant?: Variant @ variant
 

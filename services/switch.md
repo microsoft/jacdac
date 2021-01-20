@@ -7,7 +7,7 @@ A switch.
 
 ## Registers
 
-    ro on: bool @ reading
+    ro active: bool @ reading
 
 Indicates whether the switch is currently active (on).
 

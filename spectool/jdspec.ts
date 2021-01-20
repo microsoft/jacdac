@@ -443,7 +443,7 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
         } else if (prev.length == 1 && prev[0].kind == "command" && packetInfo.kind == "report") {
             // OK
         } else {
-            error("packet redefinition")
+            error(`packet redefinition ${prev.map(p => p.name).join(', ')} `)
         }
 
         if (/pipe/.test(kind)) {

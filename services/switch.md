@@ -16,11 +16,16 @@ Indicates whether the switch is currently active (on).
         Tilt = 2,
         PushButton = 3,
         Tactile = 4,
-        Toggle = 5
+        Toggle = 5,
+        Light = 6
     }
     const variant?: Variant @ variant
 
 Describes the type of switch used.
+
+    const auto_off_delay?: u16.16 s @ 0x180
+
+Specifies the delay without activity to automatically turn off after turning on.
 
 ## Events
 

@@ -3,10 +3,7 @@
     identifier: 0x1473a263
     extends: _sensor
 
-A simple push-button.
-
-Note: this service will stream readings while the button is pressed and shortly after it's released, even
-when `stream_samples == 0`. TODO remove this?
+A push-button.
 
 ## Registers
 

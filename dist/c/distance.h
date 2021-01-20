@@ -8,20 +8,20 @@
 #define JD_DISTANCE_VARIANT_ULTRASONIC 0x1
 #define JD_DISTANCE_VARIANT_INFRARED 0x2
 #define JD_DISTANCE_VARIANT_LI_DAR 0x3
-#define JD_DISTANCE_VARIANT_TIME_OF_FLIGHT 0x4
+#define JD_DISTANCE_VARIANT_LASER 0x4
 
 /**
- * Read-only m u6.10 (uint16_t). Current distance from the object
+ * Read-only m u16.16 (uint32_t). Current distance from the object
  */
 #define JD_DISTANCE_REG_DISTANCE JD_REG_READING
 
 /**
- * Constant m u6.10 (uint16_t). Minimum measurable distance
+ * Constant m u16.16 (uint32_t). Minimum measurable distance
  */
 #define JD_DISTANCE_REG_MIN_RANGE JD_REG_MIN_READING
 
 /**
- * Constant m u6.10 (uint16_t). Maximum measurable distance
+ * Constant m u16.16 (uint32_t). Maximum measurable distance
  */
 #define JD_DISTANCE_REG_MAX_RANGE JD_REG_MAX_READING
 

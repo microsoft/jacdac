@@ -10,7 +10,7 @@
 #define JD_SWITCH_VARIANT_PUSH_BUTTON 0x3
 #define JD_SWITCH_VARIANT_TACTILE 0x4
 #define JD_SWITCH_VARIANT_TOGGLE 0x5
-#define JD_SWITCH_VARIANT_LIGHT 0x6
+#define JD_SWITCH_VARIANT_PROXIMITY 0x6
 
 /**
  * Read-only bool (uint8_t). Indicates whether the switch is currently active (on).
@@ -24,6 +24,7 @@
 
 /**
  * Constant s u16.16 (uint32_t). Specifies the delay without activity to automatically turn off after turning on.
+ * For example, some light switches in staircases have such a capability.
  */
 #define JD_SWITCH_REG_AUTO_OFF_DELAY 0x180
 

@@ -694,33 +694,33 @@ export enum DistanceVariant { // uint32_t
     Ultrasonic = 0x1,
     Infrared = 0x2,
     LiDAR = 0x3,
-    TimeOfFlight = 0x4,
+    Laser = 0x4,
 }
 
 export enum DistanceReg {
     /**
-     * Read-only m u6.10 (uint16_t). Current distance from the object
+     * Read-only m u16.16 (uint32_t). Current distance from the object
      *
      * ```
-     * const [distance] = jdunpack<[number]>(buf, "u6.10")
+     * const [distance] = jdunpack<[number]>(buf, "u16.16")
      * ```
      */
     Distance = 0x101,
 
     /**
-     * Constant m u6.10 (uint16_t). Minimum measurable distance
+     * Constant m u16.16 (uint32_t). Minimum measurable distance
      *
      * ```
-     * const [minRange] = jdunpack<[number]>(buf, "u6.10")
+     * const [minRange] = jdunpack<[number]>(buf, "u16.16")
      * ```
      */
     MinRange = 0x104,
 
     /**
-     * Constant m u6.10 (uint16_t). Maximum measurable distance
+     * Constant m u16.16 (uint32_t). Maximum measurable distance
      *
      * ```
-     * const [maxRange] = jdunpack<[number]>(buf, "u6.10")
+     * const [maxRange] = jdunpack<[number]>(buf, "u16.16")
      * ```
      */
     MaxRange = 0x105,
@@ -2440,7 +2440,7 @@ export enum SwitchVariant { // uint32_t
     PushButton = 0x3,
     Tactile = 0x4,
     Toggle = 0x5,
-    Light = 0x6,
+    Proximity = 0x6,
 }
 
 export enum SwitchReg {
@@ -2464,6 +2464,7 @@ export enum SwitchReg {
 
     /**
      * Constant s u16.16 (uint32_t). Specifies the delay without activity to automatically turn off after turning on.
+     * For example, some light switches in staircases have such a capability.
      *
      * ```
      * const [autoOffDelay] = jdunpack<[number]>(buf, "u16.16")

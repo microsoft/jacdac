@@ -1275,6 +1275,17 @@ export enum LightReg {
     MaxPixels = 0x181,
 
     /**
+     * Read-write uint16_t. How many times to repeat the program passed in `run` command.
+     * Should be set before the `run` command.
+     * Setting to `0` means to repeat forever.
+     *
+     * ```
+     * const [numRepeats] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    NumRepeats = 0x82,
+
+    /**
      * Constant Variant (uint32_t). Specifies the shape of the light strip.
      *
      * ```

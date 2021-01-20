@@ -104,6 +104,12 @@ Limit the power drawn by the light-strip (and controller).
 The maximum supported number of pixels.
 All writes to `num_pixels` are clamped to `max_pixels`.
 
+    rw num_repeats = 1: u16 @ 0x82
+
+How many times to repeat the program passed in `run` command.
+Should be set before the `run` command.
+Setting to `0` means to repeat forever.
+
     enum Variant: u32 {
         Strip = 1,
         Ring = 2,

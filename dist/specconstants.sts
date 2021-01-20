@@ -729,6 +729,56 @@ namespace jacdac {
 
 }
 namespace jacdac {
+    // Service: Distance
+    export const SRV_DISTANCE = 0x141a6b8a
+
+    export const enum DistanceVariant { // uint32_t
+        Ultrasonic = 0x1,
+        Infrared = 0x2,
+        LiDAR = 0x3,
+        TimeOfFlight = 0x4,
+    }
+
+    export const enum DistanceReg {
+        /**
+         * Read-only m u6.10 (uint16_t). Current distance from the object
+         *
+         * ```
+         * const [distance] = jdunpack<[number]>(buf, "u6.10")
+         * ```
+         */
+        Distance = 0x101,
+
+        /**
+         * Constant m u6.10 (uint16_t). Minimum measurable distance
+         *
+         * ```
+         * const [minRange] = jdunpack<[number]>(buf, "u6.10")
+         * ```
+         */
+        MinRange = 0x104,
+
+        /**
+         * Constant m u6.10 (uint16_t). Maximum measurable distance
+         *
+         * ```
+         * const [maxRange] = jdunpack<[number]>(buf, "u6.10")
+         * ```
+         */
+        MaxRange = 0x105,
+
+        /**
+         * Constant Variant (uint32_t). Determines the type of sensor used.
+         *
+         * ```
+         * const [variant] = jdunpack<[DistanceVariant]>(buf, "u32")
+         * ```
+         */
+        Variant = 0x107,
+    }
+
+}
+namespace jacdac {
     // Service: Gamepad
     export const SRV_GAMEPAD = 0x1deaa06e
 
@@ -2482,6 +2532,63 @@ namespace jacdac {
          */
         //% block="change"
         Change = 0x3,
+    }
+
+}
+namespace jacdac {
+    // Service: Switch
+    export const SRV_SWITCH = 0x1ad29402
+
+    export const enum SwitchVariant { // uint32_t
+        Slide = 0x1,
+        Tilt = 0x2,
+        PushButton = 0x3,
+        Tactile = 0x4,
+        Toggle = 0x5,
+        Light = 0x6,
+    }
+
+    export const enum SwitchReg {
+        /**
+         * Read-only bool (uint8_t). Indicates whether the switch is currently active (on).
+         *
+         * ```
+         * const [active] = jdunpack<[number]>(buf, "u8")
+         * ```
+         */
+        Active = 0x101,
+
+        /**
+         * Constant Variant (uint32_t). Describes the type of switch used.
+         *
+         * ```
+         * const [variant] = jdunpack<[SwitchVariant]>(buf, "u32")
+         * ```
+         */
+        Variant = 0x107,
+
+        /**
+         * Constant s u16.16 (uint32_t). Specifies the delay without activity to automatically turn off after turning on.
+         *
+         * ```
+         * const [autoOffDelay] = jdunpack<[number]>(buf, "u16.16")
+         * ```
+         */
+        AutoOffDelay = 0x180,
+    }
+
+    export const enum SwitchEvent {
+        /**
+         * Emitted when button goes from ``off`` to ``on``.
+         */
+        //% block="on"
+        On = 0x1,
+
+        /**
+         * Emitted when button goes from ``on`` to ``off``.
+         */
+        //% block="off"
+        Off = 0x2,
     }
 
 }

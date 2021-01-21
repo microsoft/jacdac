@@ -8,18 +8,14 @@ To stream the state of the screen, use [LED Matrix display](/services/led-matrix
 
 ## Registers
 
-    rw leds: bytes @ 0x80
+    rw leds: bytes @ value
 
 Read or writes the state of the screen where pixel on/off state is 
 stored as a bit, column by column. The column should be byte aligned.
-
-    rw enabled: bool @ 0x81
  
- Disables or enables the whole screen.
- 
-    rw brightness: u8 @ 0x82
+    rw brightness: u8 @ intensity
     
-Sets the general brightness of the LEDs.
+Sets the general brightness of the LEDs. ``0`` turns off the screen.
  
     const rows: u16 # @ 0x83
     
@@ -31,6 +27,6 @@ Number of columns on the screen
 
 ## Commands
 
-    command clear @ 0x80 {}
+    command clear @ 0x80 { }
 
 Shorthand command to clear all the LEDs on the screen.

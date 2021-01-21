@@ -2236,13 +2236,13 @@ export enum RelayVariant { // uint32_t
 
 export enum RelayReg {
     /**
-     * Read-write bool (uint8_t). Indicates whether the relay is currently on (closed).
+     * Read-write bool (uint8_t). Indicates whether the relay circuit is currently on (closed) or off (closed).
      *
      * ```
-     * const [conducting] = jdunpack<[number]>(buf, "u8")
+     * const [closed] = jdunpack<[number]>(buf, "u8")
      * ```
      */
-    Conducting = 0x1,
+    Closed = 0x1,
 
     /**
      * Constant Variant (uint32_t). Describes the type of relay used.

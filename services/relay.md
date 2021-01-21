@@ -6,7 +6,7 @@ A switching relay.
 
 ## Registers
 
-    rw active: bool @ intensity
+    rw conducting: bool @ intensity
 
 Indicates whether the relay is currently on (closed).
 

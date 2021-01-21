@@ -511,6 +511,67 @@ export enum BuzzerCmd {
     PlayTone = 0x80,
 }
 
+// Service: Character Screen
+export const SRV_CHARACTER_SCREEN = 0x1f37c56a
+
+export enum CharacterScreenVariant { // uint8_t
+    LCD = 0x1,
+    OLED = 0x2,
+}
+
+
+export enum CharacterScreenTextDirection { // uint8_t
+    LeftToRight = 0x1,
+    RightToLeft = 0x2,
+}
+
+export enum CharacterScreenReg {
+    /**
+     * Read-write string (bytes). Text to show. Use `\n` to break lines.
+     *
+     * ```
+     * const [message] = jdunpack<[string]>(buf, "s")
+     * ```
+     */
+    Message = 0x2,
+
+    /**
+     * Constant Variant (uint8_t). Describes the type of character LED screen.
+     *
+     * ```
+     * const [variant] = jdunpack<[CharacterScreenVariant]>(buf, "u8")
+     * ```
+     */
+    Variant = 0x107,
+
+    /**
+     * Read-write TextDirection (uint8_t). Specifies the RTL or LTR direction of the text.
+     *
+     * ```
+     * const [textDirection] = jdunpack<[CharacterScreenTextDirection]>(buf, "u8")
+     * ```
+     */
+    TextDirection = 0x82,
+
+    /**
+     * Constant uint8_t. Gets the number of rows.
+     *
+     * ```
+     * const [rows] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Rows = 0x180,
+
+    /**
+     * Constant uint8_t. Gets the number of columns.
+     *
+     * ```
+     * const [columns] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Columns = 0x181,
+}
+
 // Service: CODAL Message Bus
 export const SRV_CODAL_MESSAGE_BUS = 0x16ad7cd5
 export enum CodalMessageBusCmd {

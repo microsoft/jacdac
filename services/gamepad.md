@@ -19,11 +19,9 @@ A gamepad with direction and action buttons for 1 or more players.
         Reset = 9
         Exit = 10
     }
-    command announce @ announce {}
-    report {
-        flags: u8
+    const available_buttons @ {
     repeats:
-        button_present: Button
+        button: Button
     }
 
 Indicates number of players supported and which buttons are present on the controller.
@@ -33,7 +31,6 @@ Indicates number of players supported and which buttons are present on the contr
     ro buttons @ reading {
     repeats:
         button: Button
-        player_index: u8
         pressure: u8 /
     }
 

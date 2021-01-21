@@ -23,7 +23,10 @@ Number of rows in the matrix
 
 Number of columns in the matrix
 
-    const keys?: string @ 0x182
+    const labels? @ 0x182 {
+        repeats:
+            label: string
+    }
 
 The characters printed on the keys if any, in indexing sequence.
 

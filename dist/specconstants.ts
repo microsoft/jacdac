@@ -3102,7 +3102,7 @@ export enum WifiEvent {
 export const SRV_WIND_DIRECTION = 0x186be92b
 export enum WindDirectionReg {
     /**
-     * Read-only ° uint16_t. The direction of the wind.
+     * Read-only uint16_t. The direction of the wind.
      *
      * ```
      * const [windDirection] = jdunpack<[number]>(buf, "u16")

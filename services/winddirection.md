@@ -7,7 +7,7 @@ A sensor that measures wind direction.
 
 ## Registers
 
-    ro wind_direction: u16 ° @ reading
+    ro wind_direction: u16 { absolute_min=0, absolute_max=359 } ° @ reading
 
 The direction of the wind.
 

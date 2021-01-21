@@ -2288,31 +2288,13 @@ namespace jacdac {
         Variant = 0x107,
 
         /**
-         * Constant A uint16_t. Maximum current load
+         * Constant A uint16_t. Maximum switching current for a resistive load.
          *
          * ```
-         * const [maxCurrent] = jdunpack<[number]>(buf, "u16")
+         * const [maxSwitchingCurrent] = jdunpack<[number]>(buf, "u16")
          * ```
          */
-        MaxCurrent = 0x180,
-
-        /**
-         * Constant V uint16_t. Maximum AC voltage allowed
-         *
-         * ```
-         * const [maxAcVoltage] = jdunpack<[number]>(buf, "u16")
-         * ```
-         */
-        MaxAcVoltage = 0xb5,
-
-        /**
-         * Constant V uint16_t. Maximum AC voltage allowed
-         *
-         * ```
-         * const [maxDcVoltage] = jdunpack<[number]>(buf, "u16")
-         * ```
-         */
-        MaxDcVoltage = 0xb6,
+        MaxSwitchingCurrent = 0x180,
     }
 
     export const enum RelayEvent {

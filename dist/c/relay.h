@@ -20,21 +20,6 @@
 #define JD_RELAY_REG_VARIANT JD_REG_VARIANT
 
 /**
- * Constant A uint16_t. Maximum current load
- */
-#define JD_RELAY_REG_MAX_CURRENT 0x180
-
-/**
- * Constant V uint16_t. Maximum AC voltage allowed
- */
-#define JD_RELAY_REG_MAX_AC_VOLTAGE 0xb5
-
-/**
- * Constant V uint16_t. Maximum AC voltage allowed
- */
-#define JD_RELAY_REG_MAX_DC_VOLTAGE 0xb6
-
-/**
  * Emitted when relay goes from ``off`` to ``on`` state.
  */
 #define JD_RELAY_EV_ON JD_EV_ACTIVE
@@ -43,5 +28,10 @@
  * Emitted when relay goes from ``on`` to ``off`` state.
  */
 #define JD_RELAY_EV_OFF JD_EV_INACTIVE
+
+/**
+ * Constant A uint16_t. Maximum switching current for a resistive load.
+ */
+#define JD_RELAY_REG_MAX_SWITCHING_CURRENT 0x180
 
 #endif

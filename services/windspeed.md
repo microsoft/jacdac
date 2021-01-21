@@ -1,4 +1,4 @@
-# Anemometer
+# Wind speed
 
 A sensor that measures wind speed.
 
@@ -10,6 +10,10 @@ A sensor that measures wind speed.
     ro wind_speed: u16.16 m/s @ reading
 
 The velocity of the wind.
+
+    ro wind_speed_error: u16.16 m/s @ reading_error
+
+Error on the reading
 
     const max_wind_speed?: u16.16 m/s @ max_reading
 

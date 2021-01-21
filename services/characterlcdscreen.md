@@ -8,7 +8,7 @@ A character LCD screen.
 
     rw message: string @ value
 
-Sets text, with `\n` as the newline character.
+Text to show. Use `\n` to break lines.
 
     rw cursor: bool @ 0x80
 

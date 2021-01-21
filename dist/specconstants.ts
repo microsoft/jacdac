@@ -1221,7 +1221,7 @@ export enum LedMatrixControllerReg {
      * const [rows] = jdunpack<[number]>(buf, "u16")
      * ```
      */
-    Rows = 0x83,
+    Rows = 0x181,
 
     /**
      * Constant # uint16_t. Number of columns on the screen
@@ -1230,7 +1230,7 @@ export enum LedMatrixControllerReg {
      * const [columns] = jdunpack<[number]>(buf, "u16")
      * ```
      */
-    Columns = 0x84,
+    Columns = 0x182,
 }
 
 export enum LedMatrixControllerCmd {
@@ -1254,13 +1254,22 @@ export enum LedMatrixDisplayReg {
     Leds = 0x101,
 
     /**
+     * Read-only uint8_t. Reads the general brightness of the LEDs. ``0`` when the screen is off.
+     *
+     * ```
+     * const [brightness] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Brightness = 0x180,
+
+    /**
      * Constant # uint16_t. Number of rows on the screen
      *
      * ```
      * const [rows] = jdunpack<[number]>(buf, "u16")
      * ```
      */
-    Rows = 0x83,
+    Rows = 0x181,
 
     /**
      * Constant # uint16_t. Number of columns on the screen
@@ -1269,7 +1278,7 @@ export enum LedMatrixDisplayReg {
      * const [columns] = jdunpack<[number]>(buf, "u16")
      * ```
      */
-    Columns = 0x84,
+    Columns = 0x182,
 }
 
 // Service: Light

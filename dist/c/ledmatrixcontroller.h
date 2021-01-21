@@ -18,12 +18,12 @@
 /**
  * Constant # uint16_t. Number of rows on the screen
  */
-#define JD_LED_MATRIX_CONTROLLER_REG_ROWS 0x83
+#define JD_LED_MATRIX_CONTROLLER_REG_ROWS 0x181
 
 /**
  * Constant # uint16_t. Number of columns on the screen
  */
-#define JD_LED_MATRIX_CONTROLLER_REG_COLUMNS 0x84
+#define JD_LED_MATRIX_CONTROLLER_REG_COLUMNS 0x182
 
 /**
  * No args. Shorthand command to clear all the LEDs on the screen.

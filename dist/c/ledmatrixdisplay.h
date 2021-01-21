@@ -11,13 +11,18 @@
 #define JD_LED_MATRIX_DISPLAY_REG_LEDS JD_REG_READING
 
 /**
+ * Read-only uint8_t. Reads the general brightness of the LEDs. ``0`` when the screen is off.
+ */
+#define JD_LED_MATRIX_DISPLAY_REG_BRIGHTNESS 0x180
+
+/**
  * Constant # uint16_t. Number of rows on the screen
  */
-#define JD_LED_MATRIX_DISPLAY_REG_ROWS 0x83
+#define JD_LED_MATRIX_DISPLAY_REG_ROWS 0x181
 
 /**
  * Constant # uint16_t. Number of columns on the screen
  */
-#define JD_LED_MATRIX_DISPLAY_REG_COLUMNS 0x84
+#define JD_LED_MATRIX_DISPLAY_REG_COLUMNS 0x182
 
 #endif

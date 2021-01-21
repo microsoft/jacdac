@@ -17,11 +17,11 @@ stored as a bit, column by column. The column should be byte aligned.
     
 Sets the general brightness of the LEDs. ``0`` turns off the screen.
  
-    const rows: u16 # @ 0x83
+    const rows: u16 # @ 0x181
     
 Number of rows on the screen
 
-    const columns: u16 # @ 0x84
+    const columns: u16 # @ 0x182
     
 Number of columns on the screen
 

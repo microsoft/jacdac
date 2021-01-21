@@ -13,7 +13,7 @@ A matrix of buttons connected as a keypad
     }
 
 The coordinate of the button currently pressed. Keys are zero-indexed from left to right, top to bottom:
-``row = index / columns%, ``column = index % columns``.
+``row = index / columns``, ``column = index % columns``.
 
     const rows: u8 @ 0x180
 

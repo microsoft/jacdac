@@ -22,25 +22,25 @@ Configures to blink the cursor.
         LeftToRight = 1,
         RightToLeft = 2
     }
-    rw text_direction: TextDirection @ 0x82
+    rw text_direction?: TextDirection @ 0x82
 
 Specifies the RTL or LTR direction of the text.
 
     rw backlight_color? @ 0x83 {
-        red: u8
-        green: u8
-        blue: u8
+        hue: u8
+        saturation: u8
+        value: u8
     }
 
 If available, sets the backlight color.
 
-    const rows?: u8 @ 0x180
+    const rows: u8 @ 0x180
 
-Gets the number of rows. Default is ``2``.
+Gets the number of rows.
 
-    const columns?: u8 @ 0x181
+    const columns: u8 @ 0x181
 
-Gets the number of columns. Default is ``16``.
+Gets the number of columns.
 
 ## Commands
 

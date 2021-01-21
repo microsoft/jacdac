@@ -9,9 +9,9 @@ A 3-axis magnetometer.
 ## Registers
 
     ro forces @ reading {
-        x: i16.16 F
-        y: i16.16 F
-        z: i16.16 F
+        x: i16 nT
+        y: i16 NT
+        z: i16 nT
     }
 
 Indicates the current magnetic field on magnetometer.

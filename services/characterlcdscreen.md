@@ -41,9 +41,3 @@ Gets the number of rows.
     const columns: u8 @ 0x181
 
 Gets the number of columns.
-
-## Commands
-
-    command clear @ 0x80 { }
-
-Clears the screen

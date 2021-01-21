@@ -4,7 +4,7 @@
 
 #define JD_SERVICE_CLASS_ARCADE_GAMEPAD  0x1deaa06e
 
-// enum Button (uint16_t)
+// enum Button (uint8_t)
 #define JD_ARCADE_GAMEPAD_BUTTON_LEFT 0x1
 #define JD_ARCADE_GAMEPAD_BUTTON_UP 0x2
 #define JD_ARCADE_GAMEPAD_BUTTON_RIGHT 0x3
@@ -22,7 +22,7 @@
  */
 #define JD_ARCADE_GAMEPAD_REG_BUTTONS JD_REG_READING
 typedef struct jd_arcade_gamepad_buttons {
-    uint16_t button;  // Button
+    uint8_t button;  // Button
     uint8_t pressure; // ratio
 } jd_arcade_gamepad_buttons_t;
 
@@ -32,17 +32,17 @@ typedef struct jd_arcade_gamepad_buttons {
  */
 #define JD_ARCADE_GAMEPAD_REG_AVAILABLE_BUTTONS 0x180
 typedef struct jd_arcade_gamepad_available_buttons {
-    uint16_t button[0];  // Button
+    uint8_t button[0];  // Button
 } jd_arcade_gamepad_available_buttons_t;
 
 
 /**
- * Argument: button Button (uint16_t). Emitted when button goes from inactive to active.
+ * Argument: button Button (uint8_t). Emitted when button goes from inactive to active.
  */
 #define JD_ARCADE_GAMEPAD_EV_DOWN JD_EV_ACTIVE
 
 /**
- * Argument: button Button (uint16_t). Emitted when button goes from active to inactive.
+ * Argument: button Button (uint8_t). Emitted when button goes from active to inactive.
  */
 #define JD_ARCADE_GAMEPAD_EV_UP JD_EV_INACTIVE
 

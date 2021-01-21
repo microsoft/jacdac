@@ -7,7 +7,7 @@ A gamepad with direction and action buttons for one players.
 
 ## Registers
 
-    enum Button : u16 {
+    enum Button : u8 {
         Left = 1
         Up = 2
         Right = 3

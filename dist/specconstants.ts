@@ -378,7 +378,7 @@ export enum SensorAggregatorReg {
 // Service: Arcade Gamepad
 export const SRV_ARCADE_GAMEPAD = 0x1deaa06e
 
-export enum ArcadeGamepadButton { // uint16_t
+export enum ArcadeGamepadButton { // uint8_t
     Left = 0x1,
     Up = 0x2,
     Right = 0x3,
@@ -397,7 +397,7 @@ export enum ArcadeGamepadReg {
      * `pressure` should be `0xff` for digital buttons, and proportional for analog ones.
      *
      * ```
-     * const [rest] = jdunpack<[([ArcadeGamepadButton, number])[]]>(buf, "r: u16 u8")
+     * const [rest] = jdunpack<[([ArcadeGamepadButton, number])[]]>(buf, "r: u8 u8")
      * const [button, pressure] = rest[0]
      * ```
      */
@@ -407,7 +407,7 @@ export enum ArcadeGamepadReg {
      * Constant. Indicates number of players supported and which buttons are present on the controller.
      *
      * ```
-     * const [button] = jdunpack<[ArcadeGamepadButton[]]>(buf, "u16[]")
+     * const [button] = jdunpack<[ArcadeGamepadButton[]]>(buf, "u8[]")
      * ```
      */
     AvailableButtons = 0x180,
@@ -415,19 +415,19 @@ export enum ArcadeGamepadReg {
 
 export enum ArcadeGamepadEvent {
     /**
-     * Argument: button Button (uint16_t). Emitted when button goes from inactive to active.
+     * Argument: button Button (uint8_t). Emitted when button goes from inactive to active.
      *
      * ```
-     * const [button] = jdunpack<[ArcadeGamepadButton]>(buf, "u16")
+     * const [button] = jdunpack<[ArcadeGamepadButton]>(buf, "u8")
      * ```
      */
     Down = 0x1,
 
     /**
-     * Argument: button Button (uint16_t). Emitted when button goes from active to inactive.
+     * Argument: button Button (uint8_t). Emitted when button goes from active to inactive.
      *
      * ```
-     * const [button] = jdunpack<[ArcadeGamepadButton]>(buf, "u16")
+     * const [button] = jdunpack<[ArcadeGamepadButton]>(buf, "u8")
      * ```
      */
     Up = 0x2,

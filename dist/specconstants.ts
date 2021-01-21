@@ -1281,24 +1281,24 @@ export enum LedMatrixDisplayReg {
     Columns = 0x182,
 }
 
-// Service: Light
-export const SRV_LIGHT = 0x126f00e0
+// Service: LED Pixel
+export const SRV_L_EDPIXEL = 0x126f00e0
 
-export enum LightLightType { // uint8_t
+export enum LEDPixelLightType { // uint8_t
     WS2812B_GRB = 0x0,
     APA102 = 0x10,
     SK9822 = 0x11,
 }
 
 
-export enum LightVariant { // uint32_t
+export enum LEDPixelVariant { // uint32_t
     Strip = 0x1,
     Ring = 0x2,
     Stick = 0x3,
     Jewel = 0x4,
 }
 
-export enum LightReg {
+export enum LEDPixelReg {
     /**
      * Read-write ratio uint8_t. Set the luminosity of the strip.
      * At `0` the power to the strip is completely shut down.
@@ -1326,7 +1326,7 @@ export enum LightReg {
      * and could not allow change.
      *
      * ```
-     * const [lightType] = jdunpack<[LightLightType]>(buf, "u8")
+     * const [lightType] = jdunpack<[LEDPixelLightType]>(buf, "u8")
      * ```
      */
     LightType = 0x80,
@@ -1377,13 +1377,13 @@ export enum LightReg {
      * Constant Variant (uint32_t). Specifies the shape of the light strip.
      *
      * ```
-     * const [variant] = jdunpack<[LightVariant]>(buf, "u32")
+     * const [variant] = jdunpack<[LEDPixelVariant]>(buf, "u32")
      * ```
      */
     Variant = 0x107,
 }
 
-export enum LightCmd {
+export enum LEDPixelCmd {
     /**
      * Argument: program bytes. Run the given light "program". See service description for details.
      *

@@ -66,6 +66,28 @@ declare namespace jdspec {
     type Unit = "" | "us" | "mWh" | "#" | senml.Unit | senml.SecondaryUnit
 
     /**
+     * Stability status of a feature
+     */
+    type StabilityStatus = "stable" | "experimental" | "deprecated";
+
+    interface ServiceMarkdownSpec {
+        /**
+         * Short identifier for the service, from file name.
+         */
+        shortId: string;
+
+        /**
+         * When written in hex, it has the form 0x1xxxxxxx (except for control service).
+         */
+        classIdentifier: number;
+
+        /**
+         * Markdown source
+         */
+        source: string;
+    }
+
+    /**
      * Service specification.
      */
     interface ServiceSpec {
@@ -88,11 +110,6 @@ declare namespace jdspec {
          * Short identifier for the service, from file name.
          */
         shortId: string;
-
-        /**
-         * The full markdown source for the spec.
-         */
-        source?: string;
 
         /**
          * When written in hex, it has the form 0x1xxxxxxx (except for control service).
@@ -141,6 +158,11 @@ declare namespace jdspec {
          * If parsing of markdown fails, this includes the parse errors. Set to null/undefined when no errors.
          */
         errors?: Diagnostic[];
+
+        /**
+         * Specifies the stability status of this service.
+         */
+        status: StabilityStatus;
     }
 
     /**
@@ -166,6 +188,11 @@ declare namespace jdspec {
          * Map from enum member name to its value.
          */
         members: SMap<number>;
+
+        /**
+         * If present, this packet was derived from a base class.
+         */
+        derived?: string;
     }
 
     /**
@@ -231,8 +258,14 @@ declare namespace jdspec {
         /**
          * If present and true, the binary layout of fields does not follow natural alignment
          * and need to have PACKED C attribute or similar applied.
+         * The spec tool warns of such packets (and currently doesn't allow them).
          */
         packed?: boolean;
+
+        /**
+         * If applicable, the pack/unpack string to decode the data
+         */
+        packFormat?: string;
 
         /**
          * If present and true, the handling of given packet is optional and can be left out by implementation.
@@ -240,9 +273,9 @@ declare namespace jdspec {
         optional?: boolean;
 
         /**
-         * If present and true, this packet was derived from base class.
+         * If present, this packet was derived from a base class.
          */
-        derived?: boolean;
+        derived?: string;
 
         /**
          * If present and true, this is a report that has the same identifier as preceding command.
@@ -253,6 +286,11 @@ declare namespace jdspec {
          * If present and true, this command is followed by its report.
          */
         hasReport?: boolean;
+
+        /**
+         * This register supports the JACDAC infrastructure and is not meant to be reported outside the JACDAC bus.
+         */
+        internal?: boolean;
     }
 
     /**
@@ -271,11 +309,12 @@ declare namespace jdspec {
          *   - u8, u16, u32, u64, i8, i16, i32, i64, bytes
          *   - name of an enum defined in the current service
          *   - string - UTF-8 encoded string
+         *   - string0 - NUL-terminated UTF-8 encoded string
          */
         type: string;
 
         /**
-         * Type is one of u8, u16, u32, u64, i8, i16, i32, i64, B.
+         * Type is one of u8, u16, u32, u64, i8, i16, i32, i64, bytes.
          */
         isSimpleType?: boolean;
 
@@ -283,6 +322,11 @@ declare namespace jdspec {
          * If present and set, indicates that the number is IEEE little endian float (16, 32 or 64 bit long).
          */
         isFloat?: boolean;
+
+        /**
+         * If present and set, indicates that the number field can be skipped.
+         */
+        isOptional?: boolean;
 
         /**
          * If present, specifies the raw value should be divided by (1 << shift) before usage.
@@ -326,9 +370,24 @@ declare namespace jdspec {
         absoluteMax?: number;
 
         /**
+         * Maximum number of bytes in a given field (typically a string at the end of a packet).
+         */
+        maxBytes?: number;
+
+        /**
          * If set, this and following fields repeat in order, to fill the packet.
          */
         startRepeats?: boolean;
+
+        /**
+         * If set, the payload of multiple consecutive packets should be concatenated together.
+         */
+        segmented?: boolean;
+
+        /**
+         * If set, the segmented packets are separated with a zero-length packets.
+         */
+        multiSegmented?: boolean;
     }
 
     /**
@@ -368,9 +427,9 @@ declare namespace jdspec {
         description: string;
 
         /**
-         * Relative path to picture of the device.
+         * Manufacturer of the device
          */
-        image?: string;
+        company: string;
 
         /**
          * A URL where the user can learn more about the device (and possibly buy it).
@@ -396,10 +455,34 @@ declare namespace jdspec {
          * Hooks for parser.
          */
         errors?: Diagnostic[];
+    }
 
+    /**
+ * Information about MakeCode support for a JACDAC service
+ */
+    export interface MakeCodeServiceInfo {
         /**
-         * Original markdown source
+         * Short id of the service
          */
-        source?: string;
+        service: string;
+        /**
+         * Client information if any
+         */
+        client: {
+            /** project name */
+            name: string;
+            /**
+             * GitHub slub and path (OWNER/NAME[/PATH])
+             */
+            repo: string;
+            /**
+             * The TypeScript fully qualified type  name
+             */
+            qName: string;
+            /**
+             * Default fixed instance for this client
+             */
+            default?: string;
+        }
     }
 }

@@ -31,17 +31,18 @@ Update modes:
 * `3` - multiply RGB (by c/128); each pixel value will change by at least 1
 
 Program commands:
-* `0xD0: set_all(C+)` - set all pixels in current range to given color pattern
-* `0xD1: fade(C+)` - set pixels in current range to colors between colors in sequence
-* `0xD2: fade_hsv(C+)` - similar to `fade()`, but colors are specified and faded in HSV
-* `0xD3: rotate_fwd(K)` - rotate (shift) pixels by `K` positions away from the connector
-* `0xD4: rotate_back(K)` - same, but towards the connector
-* `0xD5: show(M=50)` - send buffer to strip and wait `M` milliseconds
-* `0xD6: range(P=0, N=length, W=1, S=0)` - range from pixel `P`, `N` pixels long
+* `0xD0: setall C+` - set all pixels in current range to given color pattern
+* `0xD1: fade C+` - set pixels in current range to colors between colors in sequence
+* `0xD2: fadehsv C+` - similar to `fade()`, but colors are specified and faded in HSV
+* `0xD3: rotfwd K` - rotate (shift) pixels by `K` positions away from the connector
+* `0xD4: rotback K` - same, but towards the connector
+* `0xD5: show M=50` - send buffer to strip and wait `M` milliseconds
+* `0xD6: range P=0 N=length W=1 S=0` - range from pixel `P`, `N` pixels long
   (currently unsupported: every `W` pixels skip `S` pixels)
-* `0xD7: mode(K=0)` - set update mode
-* `0xD8: mode1(K=0)` - set update mode for next command only
-* `0xCF: set1(P, C)` - set one pixel at `P` (in current range) to given color
+* `0xD7: mode K=0` - set update mode
+* `0xD8: tmpmode K=0` - set update mode for next command only
+* `0xCF: setone P C` - set one pixel at `P` (in current range) to given color
+* `mult V` - macro to multiply current range by given value (float)
 
 A number `k` is encoded as follows:
 * `0 <= k < 128` -> `k`
@@ -60,7 +61,7 @@ Formats:
 Commands are encoded as command byte, followed by parameters in the order
 from the command definition.
 
-The `set1()` command has irregular encoding to save space - it is byte `0xCF` followed by encoded
+The `setone()` command has irregular encoding to save space - it is byte `0xCF` followed by encoded
 number, and followed by 3 bytes of color.
 
 ## Registers
@@ -97,6 +98,27 @@ Increasing length at runtime leads to ineffective use of memory and may lead to 
     rw max_power = 200: u16 mA @ max_power
 
 Limit the power drawn by the light-strip (and controller).
+
+    const max_pixels: u16 @ 0x181
+
+The maximum supported number of pixels.
+All writes to `num_pixels` are clamped to `max_pixels`.
+
+    rw num_repeats = 1: u16 @ 0x82
+
+How many times to repeat the program passed in `run` command.
+Should be set before the `run` command.
+Setting to `0` means to repeat forever.
+
+    enum Variant: u32 {
+        Strip = 1,
+        Ring = 2,
+        Stick = 3,
+        Jewel = 4
+    }
+    const variant: Variant @ variant
+
+Specifies the shape of the light strip.
 
 ## Commands
 

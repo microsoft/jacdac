@@ -1,6 +1,7 @@
 # TCP
 
     identifier: 0x1b43b70b
+    camel: tcp
 
 Data transfer over TCP/IP and TLS stream sockets.
 

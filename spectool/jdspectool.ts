@@ -1,10 +1,15 @@
 /// <reference path="jdspec.d.ts" />
-import { parseDeviceMarkdownToJSON } from "./devices";
-import { converters, parseSpecificationMarkdownToJSON } from "./jdspec"
+import { converters, dashify, normalizeDeviceSpecification, parseServiceSpecificationMarkdownToJSON, snakify } from "./jdspec"
 
 declare var process: any;
 declare var require: any;
 let fs: any
+
+const builtins = [
+    "control",
+    "logger",
+    "rolemanager"
+]
 
 function values<T>(o: jdspec.SMap<T>): T[] {
     let r: T[] = []
@@ -20,35 +25,71 @@ function processSpec(dn: string) {
     const files: string[] = fs.readdirSync(dn)
     const includes: jdspec.SMap<jdspec.ServiceSpec> = {}
     files.sort()
+    // ensure _system is first
+    files.splice(files.indexOf("_system.md"), 1);
+    files.unshift("_system.md");
 
     const outp = path.join(dn, "generated")
     mkdir(outp)
     for (let n of Object.keys(converters()))
         mkdir(path.join(outp, n))
 
+    // generate makecode file structure
+    const mkcdir = path.join(outp, "makecode")
+    mkdir(mkcdir)
+
+    const fmtStats: { [index: string]: number;} = {};
     const concats: jdspec.SMap<string> = {}
+    const markdowns: jdspec.ServiceMarkdownSpec[] = [];
     for (let fn of files) {
         if (!/\.md$/.test(fn) || fn[0] == ".")
             continue
         console.log(`process ${fn}`)
         const cont = readString(dn, fn)
-        const json = parseSpecificationMarkdownToJSON(cont, includes, fn)
+        const json = parseServiceSpecificationMarkdownToJSON(cont, includes, fn)
         const key = fn.replace(/\.md$/, "")
         includes[key] = json
+
+        markdowns.push({
+            classIdentifier: json.classIdentifier,
+            shortId: json.shortId,
+            source: cont
+        })
+
+        json.packets.map(pkt => pkt.packFormat)
+            .filter(fmt => !!fmt)
+            .forEach(fmt => fmtStats[fmt] = (fmtStats[fmt] || 0) + 1);
 
         reportErrors(json.errors, dn, fn)
         const cnv = converters()
         for (let n of Object.keys(cnv)) {
             const convResult = cnv[n](json)
-            fs.writeFileSync(path.join(outp, n, fn.slice(0, -3) + "." + n), convResult)
+            const ext =
+                n == "sts" ? "ts" :
+                    n == "c" ? "h" :
+                        n;
+
+            const cfn = path.join(outp, n, fn.slice(0, -3) + "." + ext);
+            fs.writeFileSync(cfn, convResult)
+            console.log(`written ${cfn}`)
             if (!concats[n]) concats[n] = ""
             concats[n] += convResult
+
+            if (n === "sts") {
+                const srvdir = path.join(mkcdir, dashify(json.camelName))
+                mkdir(srvdir);
+                fs.writeFileSync(path.join(srvdir, "constants.ts"), convResult)
+            }    
         }
     }
 
-    fs.writeFileSync(path.join(outp, "services.json"), JSON.stringify(values(includes), null, 2))
+    fs.writeFileSync(path.join(outp, "services-sources.json"), JSON.stringify(markdowns), "utf-8")
+    fs.writeFileSync(path.join(outp, "services.json"), JSON.stringify(values(includes)), "utf-8")
     fs.writeFileSync(path.join(outp, "specconstants.ts"), concats["ts"])
     fs.writeFileSync(path.join(outp, "specconstants.sts"), concats["sts"])
+
+    const fms = Object.keys(fmtStats).sort((l,r) => -fmtStats[l] + fmtStats[r])
+    console.log(fms.map(fmt => `${fmt}: ${fmtStats[fmt]}`))
 }
 
 function readString(folder: string, file: string) {
@@ -61,38 +102,23 @@ function processDevices(upperName: string) {
     const path = require("path")
 
     console.log("processing devices in directory " + upperName + "...")
-    const folders: string[] = fs.readdirSync(upperName)
-    folders.sort()
-
-    const defName = "_default.md"
-
     const allDevices: jdspec.DeviceSpec[] = []
-    const usedIds: jdspec.SMap<string> = {}
-
-    for (const folderBaseName of folders) {
-        const folder = path.join(upperName, folderBaseName)
-        const deflName = path.join(folder, defName)
-        if (fs.existsSync(deflName)) {
-            const defl = parseDeviceMarkdownToJSON(readString(folder, defName), null, usedIds, deflName)
-            const devs = fs.readdirSync(folder)
-            for (const dev of devs) {
-                if (dev[0] != "_" && dev[0] != "." && /\.md$/.test(dev)) {
-                    const fn = path.join(folder, dev)
-                    const res = parseDeviceMarkdownToJSON(readString(folder, dev), defl, usedIds, fn)
-                    reportErrors(res.errors, folder, dev)
-                    const image = fn.replace(/\.md$/, ".jpg")
-                    if (fs.existsSync(image))
-                        res.image = folderBaseName + "/" + dev.replace(/\.md$/, ".jpg")
-                    res.id = folderBaseName + "-" + dev.replace(/\.md$/, "")
-                    allDevices.push(res)
-                }
+    const todo = [upperName];
+    while (todo.length) {
+        const dir = todo.pop();
+        const files: string[] = fs.readdirSync(dir)
+        files.sort()
+        for (const fn of files) {
+            const f = path.join(dir, fn)
+            const stat = fs.statSync(f)
+            if (stat.isDirectory())
+                todo.push(f);
+            else if (/\.json/.test(f)) {
+                const dev = JSON.parse(readString(dir, fn)) as jdspec.DeviceSpec;
+                allDevices.push(normalizeDeviceSpecification(dev));
             }
         }
     }
-
-    //for (const dev of allDevices)
-    //    console.log(`0x${(dev.firmwares[0] || 0).toString(16)} ${dev.name}`)
-
     fs.writeFileSync(path.join("../dist", "devices.json"), JSON.stringify(allDevices, null, 2))
 }
 

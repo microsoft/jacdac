@@ -43,14 +43,14 @@ Indicates which buttons are currently active (pressed).
 
 ## Events
 
-    event down @ 0x01 {
+    event down @ active {
         button: Button
         player_index: u16
     }
 
 Emitted when button goes from inactive to active.
 
-    event up @ 0x02 {
+    event up @ inactive {
         button: Button
         player_index: u16
     }

@@ -2,7 +2,7 @@
 
     identifier: 0x126f00e0
 
-A controller for strips of programmable RGB LEDs.
+A controller for strips of individually controlled RGB LEDs.
 
 ## Light programs
 

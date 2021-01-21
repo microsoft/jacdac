@@ -109,14 +109,23 @@ namespace jacdac {
         MaxReading = 0x105,
 
         /**
-         * Read-only int32_t. The real value of whatever is measured is between `reading - reading_error` and `reading + reading_error`.
+         * Read-only uint32_t. The real value of whatever is measured is between `reading - reading_error` and `reading + reading_error`.
          * This register is often, but not always `const`.
          *
          * ```
-         * const [readingError] = jdunpack<[number]>(buf, "i32")
+         * const [readingError] = jdunpack<[number]>(buf, "u32")
          * ```
          */
         ReadingError = 0x106,
+
+        /**
+         * Constant uint32_t. Smallest, yet distinguishable change in reading.
+         *
+         * ```
+         * const [readingResolution] = jdunpack<[number]>(buf, "u32")
+         * ```
+         */
+        ReadingResolution = 0x108,
 
         /**
          * Read-write int32_t. Thresholds for event generation for event generation for analog sensors.

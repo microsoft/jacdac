@@ -1,6 +1,7 @@
 # LED Pixel
 
     identifier: 0x126f00e0
+    camel: ledPixel
 
 A controller for strips of individually controlled RGB LEDs.
 

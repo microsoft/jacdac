@@ -2234,6 +2234,28 @@ export enum ProtoTestCmd {
  */
 
 
+// Service: Rain gauge
+export const SRV_RAIN_GAUGE = 0x13734c95
+export enum RainGaugeReg {
+    /**
+     * Read-only mm u16.16 (uint32_t). Total precipitation recorded so far.
+     *
+     * ```
+     * const [precipitation] = jdunpack<[number]>(buf, "u16.16")
+     * ```
+     */
+    Precipitation = 0x101,
+
+    /**
+     * Constant mm u16.16 (uint32_t). Typically the amount of rain needed for tipping the bucket.
+     *
+     * ```
+     * const [precipitationPrecipitation] = jdunpack<[number]>(buf, "u16.16")
+     * ```
+     */
+    PrecipitationPrecipitation = 0x108,
+}
+
 // Service: Relay
 export const SRV_RELAY = 0x183fe656
 

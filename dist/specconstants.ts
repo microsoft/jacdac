@@ -375,6 +375,64 @@ export enum SensorAggregatorReg {
     CurrentSample = 0x101,
 }
 
+// Service: Arcade Gamepad
+export const SRV_ARCADE_GAMEPAD = 0x1deaa06e
+
+export enum ArcadeGamepadButton { // uint16_t
+    Left = 0x1,
+    Up = 0x2,
+    Right = 0x3,
+    Down = 0x4,
+    A = 0x5,
+    B = 0x6,
+    Menu = 0x7,
+    MenuAlt = 0x8,
+    Reset = 0x9,
+    Exit = 0xa,
+}
+
+export enum ArcadeGamepadReg {
+    /**
+     * Indicates which buttons are currently active (pressed).
+     * `pressure` should be `0xff` for digital buttons, and proportional for analog ones.
+     *
+     * ```
+     * const [rest] = jdunpack<[([ArcadeGamepadButton, number])[]]>(buf, "r: u16 u8")
+     * const [button, pressure] = rest[0]
+     * ```
+     */
+    Buttons = 0x101,
+
+    /**
+     * Constant. Indicates number of players supported and which buttons are present on the controller.
+     *
+     * ```
+     * const [button] = jdunpack<[ArcadeGamepadButton[]]>(buf, "u16[]")
+     * ```
+     */
+    AvailableButtons = 0x180,
+}
+
+export enum ArcadeGamepadEvent {
+    /**
+     * Argument: button Button (uint16_t). Emitted when button goes from inactive to active.
+     *
+     * ```
+     * const [button] = jdunpack<[ArcadeGamepadButton]>(buf, "u16")
+     * ```
+     */
+    Down = 0x1,
+
+    /**
+     * Argument: button Button (uint16_t). Emitted when button goes from active to inactive.
+     *
+     * ```
+     * const [button] = jdunpack<[ArcadeGamepadButton]>(buf, "u16")
+     * ```
+     */
+    Up = 0x2,
+}
+
 // Service: Barometer
 export const SRV_BAROMETER = 0x1e117cea
 export enum BarometerReg {
@@ -805,67 +863,53 @@ export enum DistanceReg {
     Variant = 0x107,
 }
 
-// Service: Gamepad
-export const SRV_GAMEPAD = 0x1deaa06e
-
-export enum GamepadButton { // uint16_t
-    Left = 0x1,
-    Up = 0x2,
-    Right = 0x3,
-    Down = 0x4,
-    A = 0x5,
-    B = 0x6,
-    Menu = 0x7,
-    MenuAlt = 0x8,
-    Reset = 0x9,
-    Exit = 0xa,
-}
-
-export enum GamepadCmd {
+// Service: Equivalent CO²
+export const SRV_E_CO2 = 0x169c9dc6
+export enum ECO2Reg {
     /**
-     * No args. Indicates number of players supported and which buttons are present on the controller.
-     */
-    Announce = 0x0,
-
-    /**
-     * report Announce
-     * ```
-     * const [flags, numPlayers, buttonPresent] = jdunpack<[number, number, GamepadButton[]]>(buf, "u8 u8 u16[]")
-     * ```
-     */
-}
-
-export enum GamepadReg {
-    /**
-     * Indicates which buttons are currently active (pressed).
-     * `pressure` should be `0xff` for digital buttons, and proportional for analog ones.
+     * Read-only ppm u22.10 (uint32_t). Equivalent CO² (eCO²) readings.
      *
      * ```
-     * const [rest] = jdunpack<[([GamepadButton, number, number])[]]>(buf, "r: u16 u8 u8")
-     * const [button, playerIndex, pressure] = rest[0]
+     * const [e_CO2] = jdunpack<[number]>(buf, "u22.10")
      * ```
      */
-    Buttons = 0x101,
-}
-
-export enum GamepadEvent {
-    /**
-     * Emitted when button goes from inactive to active.
-     *
-     * ```
-     * const [button, playerIndex] = jdunpack<[GamepadButton, number]>(buf, "u16 u16")
-     * ```
-     */
-    Down = 0x1,
+    E_CO2 = 0x101,
 
     /**
-     * Emitted when button goes from active to inactive.
+     * Read-only ppm u22.10 (uint32_t). Error on the reading value.
      *
      * ```
-     * const [button, playerIndex] = jdunpack<[GamepadButton, number]>(buf, "u16 u16")
+     * const [e_CO2Error] = jdunpack<[number]>(buf, "u22.10")
      * ```
      */
-    Up = 0x2,
+    E_CO2Error = 0x106,
+
+    /**
+     * Constant ppm u22.10 (uint32_t). Minimum measurable value
+     *
+     * ```
+     * const [minE_CO2] = jdunpack<[number]>(buf, "u22.10")
+     * ```
+     */
+    MinE_CO2 = 0x104,
+
+    /**
+     * Constant ppm u22.10 (uint32_t). Minimum measurable value
+     *
+     * ```
+     * const [maxE_CO2] = jdunpack<[number]>(buf, "u22.10")
+     * ```
+     */
+    MaxE_CO2 = 0x105,
+
+    /**
+     * Constant s uint32_t. Time required to achieve good sensor stability before measuring after long idle period.
+     *
+     * ```
+     * const [conditioningPeriod] = jdunpack<[number]>(buf, "u32")
+     * ```
+     */
+    ConditioningPeriod = 0x180,
 }
 
 // Service: Humidity
@@ -1392,6 +1436,35 @@ export enum LEDPixelCmd {
      * ```
      */
     Run = 0x81,
+}
+
+// Service: Light level
+export const SRV_LIGHT_LEVEL = 0x17dc9a1c
+
+export enum LightLevelVariant { // uint8_t
+    PhotoResistor = 0x1,
+    LEDMatrix = 0x2,
+    Ambient = 0x3,
+}
+
+export enum LightLevelReg {
+    /**
+     * Read-only ratio uint16_t. Detect light level
+     *
+     * ```
+     * const [lightLevel] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    LightLevel = 0x101,
+
+    /**
+     * Constant Variant (uint8_t). The type of physical sensor.
+     *
+     * ```
+     * const [variant] = jdunpack<[LightLevelVariant]>(buf, "u8")
+     * ```
+     */
+    Variant = 0x107,
 }
 
 // Service: Logger
@@ -2902,6 +2975,55 @@ export enum VibrationMotorReg {
     Speed = 0x1,
 }
 
+// Service: Volatile organic compound
+export const SRV_VOC = 0x12a5b597
+export enum VocReg {
+    /**
+     * Read-only ppm u22.10 (uint32_t). Total volatile organic compound readings.
+     *
+     * ```
+     * const [vOC] = jdunpack<[number]>(buf, "u22.10")
+     * ```
+     */
+    VOC = 0x101,
+
+    /**
+     * Read-only ppm u22.10 (uint32_t). Error on the reading data
+     *
+     * ```
+     * const [vOCError] = jdunpack<[number]>(buf, "u22.10")
+     * ```
+     */
+    VOCError = 0x106,
+
+    /**
+     * Constant ppm u22.10 (uint32_t). Minimum measurable value
+     *
+     * ```
+     * const [min_TVOC] = jdunpack<[number]>(buf, "u22.10")
+     * ```
+     */
+    Min_TVOC = 0x104,
+
+    /**
+     * Constant ppm u22.10 (uint32_t). Minimum measurable value
+     *
+     * ```
+     * const [max_TVOC] = jdunpack<[number]>(buf, "u22.10")
+     * ```
+     */
+    Max_TVOC = 0x105,
+
+    /**
+     * Constant s uint32_t. Time required to achieve good sensor stability before measuring after long idle period.
+     *
+     * ```
+     * const [conditioningPeriod] = jdunpack<[number]>(buf, "u32")
+     * ```
+     */
+    ConditioningPeriod = 0x180,
+}
+
 // Service: WIFI
 export const SRV_WIFI = 0x18aae1fa
 
@@ -2974,6 +3096,37 @@ export enum WifiEvent {
      * Emitted when disconnected from network.
      */
     LostIp = 0x2,
+}
+
+// Service: Wind direction
+export const SRV_WIND_DIRECTION = 0x186be92b
+export enum WindDirectionReg {
+    /**
+     * Read-only ° uint16_t. The direction of the wind.
+     *
+     * ```
+     * const [windDirection] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    WindDirection = 0x101,
+
+    /**
+     * Read-only ° uint16_t. Error on the wind direction reading
+     *
+     * ```
+     * const [windDirectionError] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    WindDirectionError = 0x106,
+
+    /**
+     * Read-only ° int16_t. Offset added to direction to account for sensor calibration.
+     *
+     * ```
+     * const [windDirectionOffset] = jdunpack<[number]>(buf, "i16")
+     * ```
+     */
+    WindDirectionOffset = 0x180,
 }
 
 // Service: Wind speed

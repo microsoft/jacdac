@@ -12,9 +12,9 @@ A sensor that measures luminosity level.
 Detect light level
 
     enum Variant: u8 {
-        PhotoResistor: 1,
-        LEDMatrix: 2,
-        Ambient: 3
+        PhotoResistor = 1,
+        LEDMatrix = 2,
+        Ambient = 3
     }
     const variant?: Variant @ variant
 

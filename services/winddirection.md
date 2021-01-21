@@ -11,10 +11,10 @@ A sensor that measures wind direction.
 
 The direction of the wind.
 
-    ro wind_direction_offset?: i16 ° @ 0x80
-
-Offset added to direction to account for sensor calibration.
-
     ro wind_direction_error?: u16 ° @ reading_error
 
 Error on the wind direction reading
+
+    ro wind_direction_offset?: i16 ° @ 0x180
+
+Offset added to direction to account for sensor calibration.

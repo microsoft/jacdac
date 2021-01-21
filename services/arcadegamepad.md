@@ -7,15 +7,6 @@ A gamepad with direction and action buttons for one players.
 
 ## Registers
 
-    ro buttons @ reading {
-    repeats:
-        button: Button
-        pressure: u8 /
-    }
-
-Indicates which buttons are currently active (pressed).
-`pressure` should be `0xff` for digital buttons, and proportional for analog ones.
-
     enum Button : u16 {
         Left = 1
         Up = 2
@@ -28,7 +19,16 @@ Indicates which buttons are currently active (pressed).
         Reset = 9        
         Exit = 10
     }
-    const available_buttons @ {
+    ro buttons @ reading {
+    repeats:
+        button: Button
+        pressure: u8 /
+    }
+
+Indicates which buttons are currently active (pressed).
+`pressure` should be `0xff` for digital buttons, and proportional for analog ones.
+
+    const available_buttons @ 0x180 {
     repeats:
         button: Button
     }

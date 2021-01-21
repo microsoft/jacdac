@@ -12,6 +12,6 @@
 /**
  * Constant mm u16.16 (uint32_t). Typically the amount of rain needed for tipping the bucket.
  */
-#define JD_RAIN_GAUGE_REG_PRECIPITATION_PRECIPITATION JD_REG_READING_RESOLUTION
+#define JD_RAIN_GAUGE_REG_PRECIPITATION_PRECISION JD_REG_READING_RESOLUTION
 
 #endif

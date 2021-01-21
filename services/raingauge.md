@@ -11,6 +11,6 @@ Measures the amount of liquid precipitation over an area in a predefined period 
 
 Total precipitation recorded so far.
 
-    const precipitation_precipitation?: u16.16 mm @ reading_resolution
+    const precipitation_precision?: u16.16 mm @ reading_resolution
 
 Typically the amount of rain needed for tipping the bucket.

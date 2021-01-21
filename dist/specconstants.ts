@@ -2250,10 +2250,10 @@ export enum RainGaugeReg {
      * Constant mm u16.16 (uint32_t). Typically the amount of rain needed for tipping the bucket.
      *
      * ```
-     * const [precipitationPrecipitation] = jdunpack<[number]>(buf, "u16.16")
+     * const [precipitationPrecision] = jdunpack<[number]>(buf, "u16.16")
      * ```
      */
-    PrecipitationPrecipitation = 0x108,
+    PrecipitationPrecision = 0x108,
 }
 
 // Service: Relay

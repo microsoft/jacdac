@@ -1,4 +1,4 @@
-# Gamepad
+# Arcade Gamepad
 
     identifier: 0x1deaa06e
     extends: _sensor
@@ -25,7 +25,7 @@ Indicates which buttons are currently active (pressed).
         B = 6
         Menu = 7
         MenuAlt = 8
-        Reset = 9
+        Reset = 9        
         Exit = 10
     }
     const available_buttons @ {

@@ -26,14 +26,6 @@ Describes the type of character LED screen.
 
 Specifies the RTL or LTR direction of the text.
 
-    rw backlight_color? @ 0x83 {
-        hue: u8
-        saturation: u8
-        value: u8
-    }
-
-If available, sets the backlight color.
-
     const rows: u8 @ 0x180
 
 Gets the number of rows.

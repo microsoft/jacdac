@@ -29,12 +29,12 @@
 #define JD_SWITCH_REG_AUTO_OFF_DELAY 0x180
 
 /**
- * Emitted when button goes from ``off`` to ``on``.
+ * Emitted when switch goes from ``off`` to ``on``.
  */
 #define JD_SWITCH_EV_ON JD_EV_ACTIVE
 
 /**
- * Emitted when button goes from ``on`` to ``off``.
+ * Emitted when switch goes from ``on`` to ``off``.
  */
 #define JD_SWITCH_EV_OFF JD_EV_INACTIVE
 

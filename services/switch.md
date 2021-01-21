@@ -32,8 +32,8 @@ For example, some light switches in staircases have such a capability.
 
     event on @ active
 
-Emitted when button goes from ``off`` to ``on``.
+Emitted when switch goes from ``off`` to ``on``.
 
     event off @ inactive
 
-Emitted when button goes from ``on`` to ``off``.
+Emitted when switch goes from ``on`` to ``off``.

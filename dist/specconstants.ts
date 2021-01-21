@@ -2164,6 +2164,74 @@ export enum ProtoTestCmd {
  */
 
 
+// Service: Relay
+export const SRV_RELAY = 0x183fe656
+
+export enum RelayVariant { // uint32_t
+    Electromechanical = 0x1,
+    SolidState = 0x2,
+    Reed = 0x3,
+}
+
+export enum RelayReg {
+    /**
+     * Read-write bool (uint8_t). Indicates whether the relay is currently on (closed).
+     *
+     * ```
+     * const [conducting] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Conducting = 0x1,
+
+    /**
+     * Constant Variant (uint32_t). Describes the type of relay used.
+     *
+     * ```
+     * const [variant] = jdunpack<[RelayVariant]>(buf, "u32")
+     * ```
+     */
+    Variant = 0x107,
+
+    /**
+     * Constant A uint16_t. Maximum current load
+     *
+     * ```
+     * const [maxCurrent] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    MaxCurrent = 0x180,
+
+    /**
+     * Constant V uint16_t. Maximum AC voltage allowed
+     *
+     * ```
+     * const [maxAcVoltage] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    MaxAcVoltage = 0xb5,
+
+    /**
+     * Constant V uint16_t. Maximum AC voltage allowed
+     *
+     * ```
+     * const [maxDcVoltage] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    MaxDcVoltage = 0xb6,
+}
+
+export enum RelayEvent {
+    /**
+     * Emitted when relay goes from ``off`` to ``on`` state.
+     */
+    On = 0x1,
+
+    /**
+     * Emitted when relay goes from ``on`` to ``off`` state.
+     */
+    Off = 0x2,
+}
+
 // Service: Role Manager
 export const SRV_ROLE_MANAGER = 0x119c3ad1
 export enum RoleManagerReg {
@@ -2486,12 +2554,12 @@ export enum SwitchReg {
 
 export enum SwitchEvent {
     /**
-     * Emitted when button goes from ``off`` to ``on``.
+     * Emitted when switch goes from ``off`` to ``on``.
      */
     On = 0x1,
 
     /**
-     * Emitted when button goes from ``on`` to ``off``.
+     * Emitted when switch goes from ``on`` to ``off``.
      */
     Off = 0x2,
 }

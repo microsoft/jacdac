@@ -1,6 +1,6 @@
 # Light level
 
-An analog sensor that measures luminosity level.
+A sensor that measures luminosity level.
 
     identifier: 0x17dc9a1c
     extends: _sensor

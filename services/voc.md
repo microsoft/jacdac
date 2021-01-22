@@ -16,11 +16,11 @@ Total volatile organic compound readings.
 
 Error on the reading data
 
-    const min_TVOC?: u22.10 ppm @ min_reading
+    const min_VOC?: u22.10 ppm @ min_reading
 
 Minimum measurable value
 
-    const max_TVOC?: u22.10 ppm @ max_reading
+    const max_VOC?: u22.10 ppm @ max_reading
 
 Minimum measurable value
 

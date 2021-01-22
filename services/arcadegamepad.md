@@ -3,7 +3,7 @@
     identifier: 0x1deaa06e
     extends: _sensor
 
-A gamepad with direction and action buttons for one players.
+A gamepad with direction and action buttons for one player.
 
 ## Registers
 

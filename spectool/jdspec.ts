@@ -111,6 +111,7 @@ export const secondaryUnitConverters: jdspec.SMap<{
     "cm": { name: "centimeter", unit: "m", scale: 1 / 100, offset: 0 },
     "km": { name: "kilometer", unit: "m", scale: 1000, offset: 0 },
     "km/h": { name: "kilometer per hour", unit: "m/s", scale: 1 / 3.6, offset: 0 },
+    "8ms": { name: "8 milliseconds", unit: "s", scale: 8 / 1000, offset: 0 },
 
     // compat with previous JACDAC versions
     "frac": { name: "ratio", unit: "/", scale: 1, offset: 0 },

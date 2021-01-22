@@ -2764,6 +2764,7 @@ export enum SwitchVariant { // uint32_t
     Tactile = 0x4,
     Toggle = 0x5,
     Proximity = 0x6,
+    Magnetic = 0x7,
 }
 
 export enum SwitchReg {

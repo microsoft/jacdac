@@ -8,27 +8,22 @@
  * Read-write bytes. Read or writes the state of the screen where pixel on/off state is 
  * stored as a bit, column by column. The column should be byte aligned.
  */
-#define JD_LED_MATRIX_CONTROLLER_REG_LEDS 0x80
+#define JD_LED_MATRIX_CONTROLLER_REG_LEDS JD_REG_VALUE
 
 /**
- * Read-write bool (uint8_t). Disables or enables the whole screen.
+ * Read-write uint8_t. Sets the general brightness of the LEDs. ``0`` turns off the screen.
  */
-#define JD_LED_MATRIX_CONTROLLER_REG_ENABLED 0x81
-
-/**
- * Read-write uint8_t. Sets the general brightness of the LEDs.
- */
-#define JD_LED_MATRIX_CONTROLLER_REG_BRIGHTNESS 0x82
+#define JD_LED_MATRIX_CONTROLLER_REG_BRIGHTNESS JD_REG_INTENSITY
 
 /**
  * Constant # uint16_t. Number of rows on the screen
  */
-#define JD_LED_MATRIX_CONTROLLER_REG_ROWS 0x83
+#define JD_LED_MATRIX_CONTROLLER_REG_ROWS 0x181
 
 /**
  * Constant # uint16_t. Number of columns on the screen
  */
-#define JD_LED_MATRIX_CONTROLLER_REG_COLUMNS 0x84
+#define JD_LED_MATRIX_CONTROLLER_REG_COLUMNS 0x182
 
 /**
  * No args. Shorthand command to clear all the LEDs on the screen.

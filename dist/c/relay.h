@@ -10,9 +10,9 @@
 #define JD_RELAY_VARIANT_REED 0x3
 
 /**
- * Read-write bool (uint8_t). Indicates whether the relay is currently on (closed).
+ * Read-write bool (uint8_t). Indicates whether the relay circuit is currently on (closed) or off (closed).
  */
-#define JD_RELAY_REG_CONDUCTING JD_REG_INTENSITY
+#define JD_RELAY_REG_CLOSED JD_REG_INTENSITY
 
 /**
  * Constant Variant (uint32_t). Describes the type of relay used.

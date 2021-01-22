@@ -89,10 +89,15 @@ typedef struct jd_system_event_report {
 #define JD_REG_MAX_READING 0x105
 
 /**
- * Read-only int32_t. The real value of whatever is measured is between `reading - reading_error` and `reading + reading_error`.
+ * Read-only uint32_t. The real value of whatever is measured is between `reading - reading_error` and `reading + reading_error`.
  * This register is often, but not always `const`.
  */
 #define JD_REG_READING_ERROR 0x106
+
+/**
+ * Constant uint32_t. Smallest, yet distinguishable change in reading.
+ */
+#define JD_REG_READING_RESOLUTION 0x108
 
 /**
  * Read-write int32_t. Thresholds for event generation for event generation for analog sensors.

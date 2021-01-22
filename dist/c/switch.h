@@ -11,6 +11,7 @@
 #define JD_SWITCH_VARIANT_TACTILE 0x4
 #define JD_SWITCH_VARIANT_TOGGLE 0x5
 #define JD_SWITCH_VARIANT_PROXIMITY 0x6
+#define JD_SWITCH_VARIANT_MAGNETIC 0x7
 
 /**
  * Read-only bool (uint8_t). Indicates whether the switch is currently active (on).

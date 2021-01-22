@@ -6,9 +6,9 @@ A switching relay.
 
 ## Registers
 
-    rw conducting: bool @ intensity
+    rw closed: bool @ intensity
 
-Indicates whether the relay is currently on (closed).
+Indicates whether the relay circuit is currently on (closed) or off (closed).
 
     enum Variant: u32 {
         Electromechanical = 1,

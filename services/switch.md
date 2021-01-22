@@ -17,7 +17,8 @@ Indicates whether the switch is currently active (on).
         PushButton = 3,
         Tactile = 4,
         Toggle = 5,
-        Proximity = 6
+        Proximity = 6,
+        Magnetic = 7,
     }
     const variant?: Variant @ variant
 

@@ -386,7 +386,7 @@ export enum ArcadeGamepadButton { // uint8_t
     A = 0x5,
     B = 0x6,
     Menu = 0x7,
-    MenuAlt = 0x8,
+    Select = 0x8,
     Reset = 0x9,
     Exit = 0xa,
 }

@@ -15,7 +15,7 @@ A gamepad with direction and action buttons for one player.
         A = 5
         B = 6
         Menu = 7
-        MenuAlt = 8
+        Select = 8
         Reset = 9        
         Exit = 10
     }

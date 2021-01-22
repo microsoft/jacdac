@@ -5,9 +5,25 @@
 #define JD_SERVICE_CLASS_VIBRATION_MOTOR  0x183fc4a2
 
 /**
- * Read-write ratio uint8_t. Rotation speed of the motor.
- * If only one rotation speed is supported, then `0` shell be off, and any other number on.
+ * Read-only ratio uint8_t. Rotation speed of the motor. If only one rotation speed is supported,
+ * then `0` shell be off, and any other number on. 
+ * Use the ``vibrate`` command to control the register.
  */
-#define JD_VIBRATION_MOTOR_REG_SPEED JD_REG_INTENSITY
+#define JD_VIBRATION_MOTOR_REG_SPEED JD_REG_READING
+
+/**
+ * Read-write bool (uint8_t). Determines if the vibration motor responds to vibrate commands.
+ */
+#define JD_VIBRATION_MOTOR_REG_ENABLED JD_REG_INTENSITY
+
+/**
+ * Starts a sequence of vibration and pauses.
+ */
+#define JD_VIBRATION_MOTOR_CMD_VIBRATE 0x80
+typedef struct jd_vibration_motor_vibrate {
+    uint8_t duration; // 8ms
+    uint8_t speed; // ratio
+} jd_vibration_motor_vibrate_t;
+
 
 #endif

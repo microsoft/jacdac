@@ -25,7 +25,7 @@ Number of columns in the matrix
 
     const labels? @ 0x182 {
         repeats:
-            label: string
+            label: string0
     }
 
 The characters printed on the keys if any, in indexing sequence.

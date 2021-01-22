@@ -29,7 +29,7 @@ typedef struct jd_matrix_keypad_pressed {
  */
 #define JD_MATRIX_KEYPAD_REG_LABELS 0x182
 typedef struct jd_matrix_keypad_labels {
-    char label[0][0];  // string
+    char label[0][0];  // string0
 } jd_matrix_keypad_labels_t;
 
 

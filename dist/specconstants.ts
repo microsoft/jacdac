@@ -1566,7 +1566,7 @@ export enum MatrixKeypadReg {
      * Constant. The characters printed on the keys if any, in indexing sequence.
      *
      * ```
-     * const [label] = jdunpack<[string[]]>(buf, "s[]")
+     * const [label] = jdunpack<[string[]]>(buf, "z[]")
      * ```
      */
     Labels = 0x182,
@@ -3000,19 +3000,19 @@ export enum VocReg {
      * Constant ppm u22.10 (uint32_t). Minimum measurable value
      *
      * ```
-     * const [min_TVOC] = jdunpack<[number]>(buf, "u22.10")
+     * const [min_VOC] = jdunpack<[number]>(buf, "u22.10")
      * ```
      */
-    Min_TVOC = 0x104,
+    Min_VOC = 0x104,
 
     /**
      * Constant ppm u22.10 (uint32_t). Minimum measurable value
      *
      * ```
-     * const [max_TVOC] = jdunpack<[number]>(buf, "u22.10")
+     * const [max_VOC] = jdunpack<[number]>(buf, "u22.10")
      * ```
      */
-    Max_TVOC = 0x105,
+    Max_VOC = 0x105,
 
     /**
      * Constant s uint32_t. Time required to achieve good sensor stability before measuring after long idle period.

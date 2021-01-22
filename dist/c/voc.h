@@ -17,12 +17,12 @@
 /**
  * Constant ppm u22.10 (uint32_t). Minimum measurable value
  */
-#define JD_VOC_REG_MIN_TVOC JD_REG_MIN_READING
+#define JD_VOC_REG_MIN_VOC JD_REG_MIN_READING
 
 /**
  * Constant ppm u22.10 (uint32_t). Minimum measurable value
  */
-#define JD_VOC_REG_MAX_TVOC JD_REG_MAX_READING
+#define JD_VOC_REG_MAX_VOC JD_REG_MAX_READING
 
 /**
  * Constant s uint32_t. Time required to achieve good sensor stability before measuring after long idle period.

@@ -1467,46 +1467,6 @@ export enum LightLevelReg {
     Variant = 0x107,
 }
 
-// Service: Line
-export const SRV_LINE = 0x126c4cb2
-
-export enum LineVariant { // uint8_t
-    InfraredDigital = 0x1,
-    InfraredAnalog = 0x2,
-}
-
-export enum LineReg {
-    /**
-     * Read-only ratio uint16_t. Reports the reflected brightness. It may be a digital value or, for some sensor, analog value.
-     *
-     * ```
-     * const [brightness] = jdunpack<[number]>(buf, "u16")
-     * ```
-     */
-    Brightness = 0x101,
-
-    /**
-     * Constant Variant (uint8_t). Type of physical sensor used
-     *
-     * ```
-     * const [variant] = jdunpack<[LineVariant]>(buf, "u8")
-     * ```
-     */
-    Variant = 0x107,
-}
-
-export enum LineEvent {
-    /**
-     * The sensor detected a transition from light to dark
-     */
-    Dark = 0x2,
-
-    /**
-     * The sensor detected a transition from dark to light
-     */
-    Light = 0x1,
-}
-
 // Service: Logger
 export const SRV_LOGGER = 0x12dc1fca
 
@@ -2509,6 +2469,46 @@ export enum RainGaugeReg {
      * ```
      */
     PrecipitationPrecision = 0x108,
+}
+
+// Service: Reflector light
+export const SRV_REFLECTOR_LIGHT = 0x126c4cb2
+
+export enum ReflectorLightVariant { // uint8_t
+    InfraredDigital = 0x1,
+    InfraredAnalog = 0x2,
+}
+
+export enum ReflectorLightReg {
+    /**
+     * Read-only ratio uint16_t. Reports the reflected brightness. It may be a digital value or, for some sensor, analog value.
+     *
+     * ```
+     * const [brightness] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    Brightness = 0x101,
+
+    /**
+     * Constant Variant (uint8_t). Type of physical sensor used
+     *
+     * ```
+     * const [variant] = jdunpack<[ReflectorLightVariant]>(buf, "u8")
+     * ```
+     */
+    Variant = 0x107,
+}
+
+export enum ReflectorLightEvent {
+    /**
+     * The sensor detected a transition from light to dark
+     */
+    Dark = 0x2,
+
+    /**
+     * The sensor detected a transition from dark to light
+     */
+    Light = 0x1,
 }
 
 // Service: Relay

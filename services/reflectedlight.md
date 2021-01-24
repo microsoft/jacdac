@@ -1,4 +1,4 @@
-# Line
+# Reflector light
 
 A sensor that detects light and dark surfaces, commonly used for line following robots.
 

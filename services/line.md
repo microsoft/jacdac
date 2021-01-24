@@ -1,20 +1,19 @@
-# Line tracking
+# Line
 
-A sensor that detects light and dark surfaces, typically used for line following robots.
+A sensor that detects light and dark surfaces, commonly used for line following robots.
 
     identifier: 0x126c4cb2
     extends: _sensor
 
 ## Registers
 
-    ro brightness: u8 / @ reading
+    ro brightness: u16 / @ reading
 
-Reports the detected brightness. It may be a digital value or, for some sensor, analog value.
+Reports the reflected brightness. It may be a digital value or, for some sensor, analog value.
 
     enum Variant: u8 {
         InfraredDigital = 1,
-        InfraredAnalog = 2,
-        InfraredAnalog5ch = 3
+        InfraredAnalog = 2
     }
     const variant?: Variant @ variant
 

@@ -1,0 +1,33 @@
+# Motion sensor
+
+A sensor, typically PIR, that detects object motion within a certain range
+
+    identifier: 0x1179a749
+    extends: _sensor
+
+## Registers
+
+    ro moving: bool @ reading
+
+Reports is movement is currently detected by the sensor.
+
+    const max_distance?: u16.16 m @ 0x180
+
+Maximum distance where objects can be detected.
+
+    const angle?: u16 ° @ 0x181
+
+Opening of the field of view
+
+    enum Variant: u8 {
+      PIR = 1
+    }
+    const variant?: Variant @ variant
+
+Type of physical sensor
+
+## Events
+
+   event movement @ 0x80 { }
+
+A movement was detected.

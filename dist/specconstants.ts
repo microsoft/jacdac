@@ -1895,6 +1895,51 @@ export enum MonoLightReg {
     MaxIterations = 0x81,
 }
 
+// Service: Motion sensor
+export const SRV_MOTION_SENSOR = 0x1179a749
+
+export enum MotionSensorVariant { // uint8_t
+    PIR = 0x1,
+}
+
+export enum MotionSensorReg {
+    /**
+     * Read-only bool (uint8_t). Reports is movement is currently detected by the sensor.
+     *
+     * ```
+     * const [moving] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Moving = 0x101,
+
+    /**
+     * Constant m u16.16 (uint32_t). Maximum distance where objects can be detected.
+     *
+     * ```
+     * const [maxDistance] = jdunpack<[number]>(buf, "u16.16")
+     * ```
+     */
+    MaxDistance = 0x180,
+
+    /**
+     * Constant ° uint16_t. Opening of the field of view
+     *
+     * ```
+     * const [angle] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    Angle = 0x181,
+
+    /**
+     * Constant Variant (uint8_t). Type of physical sensor
+     *
+     * ```
+     * const [variant] = jdunpack<[MotionSensorVariant]>(buf, "u8")
+     * ```
+     */
+    Variant = 0x107,
+}
+
 // Service: Motor
 export const SRV_MOTOR = 0x17004cd8
 export enum MotorReg {
@@ -2794,6 +2839,34 @@ export enum SettingsEvent {
     Change = 0x3,
 }
 
+// Service: Soil moisture
+export const SRV_SOIL_MOISTURE = 0x1d4aa3b3
+
+export enum SoilMoistureVariant { // uint8_t
+    Resistive = 0x1,
+    Capacitive = 0x2,
+}
+
+export enum SoilMoistureReg {
+    /**
+     * Read-only ratio uint16_t. Indicates the wetness of the soil, from ``dry`` to ``wet``.
+     *
+     * ```
+     * const [moisture] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    Moisture = 0x101,
+
+    /**
+     * Constant Variant (uint8_t). Describe the type of physical sensor.
+     *
+     * ```
+     * const [variant] = jdunpack<[SoilMoistureVariant]>(buf, "u8")
+     * ```
+     */
+    Variant = 0x107,
+}
+
 // Service: Switch
 export const SRV_SWITCH = 0x1ad29402
 
@@ -3006,14 +3079,36 @@ export enum TrafficLightReg {
 export const SRV_VIBRATION_MOTOR = 0x183fc4a2
 export enum VibrationMotorReg {
     /**
-     * Read-write ratio uint8_t. Rotation speed of the motor.
-     * If only one rotation speed is supported, then `0` shell be off, and any other number on.
+     * Read-only ratio uint8_t. Rotation speed of the motor. If only one rotation speed is supported,
+     * then `0` shell be off, and any other number on.
+     * Use the ``vibrate`` command to control the register.
      *
      * ```
      * const [speed] = jdunpack<[number]>(buf, "u8")
      * ```
      */
-    Speed = 0x1,
+    Speed = 0x101,
+
+    /**
+     * Read-write bool (uint8_t). Determines if the vibration motor responds to vibrate commands.
+     *
+     * ```
+     * const [enabled] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Enabled = 0x1,
+}
+
+export enum VibrationMotorCmd {
+    /**
+     * Starts a sequence of vibration and pauses.
+     *
+     * ```
+     * const [rest] = jdunpack<[([number, number])[]]>(buf, "r: u8 u8")
+     * const [duration, speed] = rest[0]
+     * ```
+     */
+    Vibrate = 0x80,
 }
 
 // Service: Volatile organic compound

@@ -21,10 +21,10 @@ Type of physical sensor used
 
 ## Events
 
-    event dark @ 0x80 {}
+    event dark @ inactive {}
 
 The sensor detected a transition from light to dark
 
-    event light @ 0x81 {}
+    event light @ active {}
 
 The sensor detected a transition from dark to light

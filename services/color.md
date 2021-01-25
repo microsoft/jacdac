@@ -8,9 +8,9 @@ Senses RGB colors
 ## Registers
 
     ro color @ reading {
-        red: u8
-        green: u8
-        blue: u8
+        red: u16 /
+        green: u16 /
+        blue: u16 /
     }
 
 Detected color in the RGB color space.

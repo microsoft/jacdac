@@ -71,6 +71,7 @@ export const unitDescription: jdspec.SMap<string> = {
     "rgb": "RGB color",
     "rpm": "revolutions per minute",
     "uv": "UV index",
+    "lux": "illuminance"
 }
 
 export const secondaryUnitConverters: jdspec.SMap<{

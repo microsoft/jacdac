@@ -652,6 +652,19 @@ export enum CodalMessageBusCmd {
     Send = 0x80,
 }
 
+// Service: Color
+export const SRV_COLOR = 0x1630d567
+export enum ColorReg {
+    /**
+     * Detected color in the RGB color space.
+     *
+     * ```
+     * const [red, green, blue] = jdunpack<[number, number, number]>(buf, "u16 u16 u16")
+     * ```
+     */
+    Color = 0x101,
+}
+
 // Service: Control
 export const SRV_CONTROL = 0x0
 

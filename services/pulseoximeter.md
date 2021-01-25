@@ -9,9 +9,9 @@ A sensor approximating the oxygen level.
 
 ## Registers
 
-    ro oxygen: i8.8 bpm @ reading
+    ro oxygen: i8.8 / @ reading
 
-The estimated oxygen level in blood. Negative value when the sensor cannot sense the rate.
+The estimated oxygen level in blood.
 
     ro oxygen_error?: u8.8 bpm @ error_reading
 

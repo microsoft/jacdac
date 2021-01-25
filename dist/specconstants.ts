@@ -2882,6 +2882,80 @@ export enum SoilMoistureReg {
     Variant = 0x107,
 }
 
+// Service: Speech synthesis
+export const SRV_SPEECH_SYNTHESIS = 0x1204d995
+export enum SpeechSynthesisReg {
+    /**
+     * Read-only bool (uint8_t). Reports if the engine is speaking.
+     *
+     * ```
+     * const [speaking] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Speaking = 0x101,
+
+    /**
+     * Read-write bool (uint8_t). Determines if the speech engine is in a non-paused state.
+     *
+     * ```
+     * const [enabled] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Enabled = 0x1,
+
+    /**
+     * Read-write string (bytes). Default language used for utterances.
+     *
+     * ```
+     * const [lang] = jdunpack<[string]>(buf, "s")
+     * ```
+     */
+    Lang = 0x80,
+
+    /**
+     * Read-write ratio uint8_t. Default volume for utterances
+     *
+     * ```
+     * const [volume] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Volume = 0x81,
+
+    /**
+     * Read-write ratio uint8_t. Default pitch for utterances
+     *
+     * ```
+     * const [pitch] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Pitch = 0x82,
+
+    /**
+     * Read-write ratio uint8_t. Default rate for utterances
+     *
+     * ```
+     * const [rate] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Rate = 0x83,
+}
+
+export enum SpeechSynthesisCmd {
+    /**
+     * Argument: text string (bytes). Adds an utterance to the utterance queue; it will be spoken when any other utterances queued before it have been spoken.
+     *
+     * ```
+     * const [text] = jdunpack<[string]>(buf, "s")
+     * ```
+     */
+    Speak = 0x80,
+
+    /**
+     * No args. Cancels all utterances from the utterance queue.
+     */
+    Cancel = 0x81,
+}
+
 // Service: Switch
 export const SRV_SWITCH = 0x1ad29402
 

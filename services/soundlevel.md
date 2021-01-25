@@ -7,15 +7,15 @@ A sound level detector sensor, gives a relative indication of the sound level.
 
 ## Registers
 
-    ro sound_level: u8 / @ reading
+    ro sound_level: u16 / @ reading
 
 The sound level detected by the microphone
 
-    rw loud_threshold: u8 @ low_threshold
+    rw loud_threshold: u16 @ low_threshold
 
 The sound level to trigger a loud event.
 
-    rw quiet_threshold: u8 @ high_threshold
+    rw quiet_threshold: u16 @ high_threshold
 
 The sound level to trigger a quite event.
 

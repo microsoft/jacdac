@@ -13,6 +13,7 @@ A two axis directional joystick
     }
 
 The direction of the joystick measure in two direction.
+If joystick is digital, then each direction will read as either `-0x8000`, `0x0`, or `0x7fff`.
 
     enum Variant : u8 {
         Thumb = 1

@@ -15,7 +15,7 @@
 #define JD_SPEECH_SYNTHESIS_REG_LANG 0x80
 
 /**
- * Read-write ratio uint8_t. Default volume for utterances
+ * Read-write ratio uint8_t. Default volume for utterances.
  */
 #define JD_SPEECH_SYNTHESIS_REG_VOLUME 0x81
 

@@ -2904,7 +2904,7 @@ export enum SpeechSynthesisReg {
     Lang = 0x80,
 
     /**
-     * Read-write ratio uint8_t. Default volume for utterances
+     * Read-write ratio uint8_t. Default volume for utterances.
      *
      * ```
      * const [volume] = jdunpack<[number]>(buf, "u8")

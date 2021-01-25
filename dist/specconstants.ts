@@ -2882,6 +2882,49 @@ export enum SoilMoistureReg {
     Variant = 0x107,
 }
 
+// Service: Sound level
+export const SRV_SOUND_LEVEL = 0x14ad1a5d
+export enum SoundLevelReg {
+    /**
+     * Read-only ratio uint16_t. The sound level detected by the microphone
+     *
+     * ```
+     * const [soundLevel] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    SoundLevel = 0x101,
+
+    /**
+     * Read-write uint16_t. The sound level to trigger a loud event.
+     *
+     * ```
+     * const [loudThreshold] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    LoudThreshold = 0x5,
+
+    /**
+     * Read-write uint16_t. The sound level to trigger a quite event.
+     *
+     * ```
+     * const [quietThreshold] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    QuietThreshold = 0x6,
+}
+
+export enum SoundLevelEvent {
+    /**
+     * Raised when a loud sound is detected
+     */
+    Loud = 0x1,
+
+    /**
+     * Raised when a period of quietness is detected
+     */
+    Quiet = 0x2,
+}
+
 // Service: Speech synthesis
 export const SRV_SPEECH_SYNTHESIS = 0x1204d995
 export enum SpeechSynthesisReg {

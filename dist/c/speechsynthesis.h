@@ -5,11 +5,6 @@
 #define JD_SERVICE_CLASS_SPEECH_SYNTHESIS  0x1204d995
 
 /**
- * Read-only bool (uint8_t). Reports if the engine is speaking.
- */
-#define JD_SPEECH_SYNTHESIS_REG_SPEAKING JD_REG_READING
-
-/**
  * Read-write bool (uint8_t). Determines if the speech engine is in a non-paused state.
  */
 #define JD_SPEECH_SYNTHESIS_REG_ENABLED JD_REG_INTENSITY

@@ -2886,15 +2886,6 @@ export enum SoilMoistureReg {
 export const SRV_SPEECH_SYNTHESIS = 0x1204d995
 export enum SpeechSynthesisReg {
     /**
-     * Read-only bool (uint8_t). Reports if the engine is speaking.
-     *
-     * ```
-     * const [speaking] = jdunpack<[number]>(buf, "u8")
-     * ```
-     */
-    Speaking = 0x101,
-
-    /**
      * Read-write bool (uint8_t). Determines if the speech engine is in a non-paused state.
      *
      * ```

@@ -6,10 +6,6 @@ A speech synthesizer
 
 ## Registers
 
-    ro speaking: bool @ reading
-
-Reports if the engine is speaking.
-
     rw enabled: bool @ intensity
 
 Determines if the speech engine is in a non-paused state.

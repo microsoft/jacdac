@@ -2471,6 +2471,30 @@ export enum RainGaugeReg {
     PrecipitationPrecision = 0x108,
 }
 
+// Service: Real time clock
+export const SRV_REAL_TIME_CLOCK = 0x1a8b1a28
+export enum RealTimeClockReg {
+    /**
+     * Current time in 24h representation. Default streaming period is 1 second.
+     *
+     * ```
+     * const [year, month, day, dayOfWeek, hour, min, sec] = jdunpack<[number, number, number, number, number, number, number]>(buf, "u16 u8 u8 u8 u8 u8 u8")
+     * ```
+     */
+    Now = 0x101,
+}
+
+export enum RealTimeClockCmd {
+    /**
+     * Sets the current day time on the clock.
+     *
+     * ```
+     * const [year, month, day, dayOfWeek, hour, min, sec] = jdunpack<[number, number, number, number, number, number, number]>(buf, "u16 u8 u8 u8 u8 u8 u8")
+     * ```
+     */
+    SetTime = 0x80,
+}
+
 // Service: Reflector light
 export const SRV_REFLECTOR_LIGHT = 0x126c4cb2
 

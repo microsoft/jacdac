@@ -865,6 +865,12 @@ export enum DistanceReg {
 
 // Service: Equivalent CO²
 export const SRV_E_CO2 = 0x169c9dc6
+
+export enum ECO2Variant { // uint8_t
+    VOC = 0x1,
+    NDIR = 0x2,
+}
+
 export enum ECO2Reg {
     /**
      * Read-only ppm u22.10 (uint32_t). Equivalent CO² (eCO²) readings.
@@ -910,6 +916,15 @@ export enum ECO2Reg {
      * ```
      */
     ConditioningPeriod = 0x180,
+
+    /**
+     * Constant Variant (uint8_t). Type of physical sensor and capabilities.
+     *
+     * ```
+     * const [variant] = jdunpack<[ECO2Variant]>(buf, "u8")
+     * ```
+     */
+    Variant = 0x107,
 }
 
 // Service: Humidity
@@ -2867,6 +2882,71 @@ export enum SoilMoistureReg {
     Variant = 0x107,
 }
 
+// Service: Speech synthesis
+export const SRV_SPEECH_SYNTHESIS = 0x1204d995
+export enum SpeechSynthesisReg {
+    /**
+     * Read-write bool (uint8_t). Determines if the speech engine is in a non-paused state.
+     *
+     * ```
+     * const [enabled] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Enabled = 0x1,
+
+    /**
+     * Read-write string (bytes). Default language used for utterances.
+     *
+     * ```
+     * const [lang] = jdunpack<[string]>(buf, "s")
+     * ```
+     */
+    Lang = 0x80,
+
+    /**
+     * Read-write ratio uint8_t. Default volume for utterances.
+     *
+     * ```
+     * const [volume] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Volume = 0x81,
+
+    /**
+     * Read-write u16.16 (uint32_t). Default pitch for utterances
+     *
+     * ```
+     * const [pitch] = jdunpack<[number]>(buf, "u16.16")
+     * ```
+     */
+    Pitch = 0x82,
+
+    /**
+     * Read-write u16.16 (uint32_t). Default rate for utterances
+     *
+     * ```
+     * const [rate] = jdunpack<[number]>(buf, "u16.16")
+     * ```
+     */
+    Rate = 0x83,
+}
+
+export enum SpeechSynthesisCmd {
+    /**
+     * Argument: text string (bytes). Adds an utterance to the utterance queue; it will be spoken when any other utterances queued before it have been spoken.
+     *
+     * ```
+     * const [text] = jdunpack<[string]>(buf, "s")
+     * ```
+     */
+    Speak = 0x80,
+
+    /**
+     * No args. Cancels all utterances from the utterance queue.
+     */
+    Cancel = 0x81,
+}
+
 // Service: Switch
 export const SRV_SWITCH = 0x1ad29402
 
@@ -2878,6 +2958,7 @@ export enum SwitchVariant { // uint32_t
     Toggle = 0x5,
     Proximity = 0x6,
     Magnetic = 0x7,
+    FootPedal = 0x8,
 }
 
 export enum SwitchReg {
@@ -3122,6 +3203,43 @@ export enum TVOCReg {
      * ```
      */
     ConditioningPeriod = 0x180,
+}
+
+// Service: UV index
+export const SRV_U_VINDEX = 0x1f6e0d90
+
+export enum UVIndexVariant { // uint8_t
+    UVA_UVB = 0x1,
+    Visible_IR = 0x2,
+}
+
+export enum UVIndexReg {
+    /**
+     * Read-only uv u16.16 (uint32_t). Ultraviolet index, typically refreshed every second.
+     *
+     * ```
+     * const [uvIndex] = jdunpack<[number]>(buf, "u16.16")
+     * ```
+     */
+    UvIndex = 0x101,
+
+    /**
+     * Read-only uv u16.16 (uint32_t). Error on the UV measure.
+     *
+     * ```
+     * const [uvIndexError] = jdunpack<[number]>(buf, "u16.16")
+     * ```
+     */
+    UvIndexError = 0x106,
+
+    /**
+     * Constant Variant (uint8_t). The type of physical sensor and capabilities.
+     *
+     * ```
+     * const [variant] = jdunpack<[UVIndexVariant]>(buf, "u8")
+     * ```
+     */
+    Variant = 0x107,
 }
 
 // Service: Vibration motor

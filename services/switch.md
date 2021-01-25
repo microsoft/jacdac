@@ -12,13 +12,14 @@ A switch, which keeps its position.
 Indicates whether the switch is currently active (on).
 
     enum Variant: u32 {
-        Slide = 1,
-        Tilt = 2,
-        PushButton = 3,
-        Tactile = 4,
-        Toggle = 5,
-        Proximity = 6,
-        Magnetic = 7,
+        Slide = 1
+        Tilt = 2
+        PushButton = 3
+        Tactile = 4
+        Toggle = 5
+        Proximity = 6
+        Magnetic = 7
+        FootPedal = 8
     }
     const variant?: Variant @ variant
 

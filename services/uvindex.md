@@ -11,6 +11,10 @@ The UV Index is a measure of the intensity of ultraviolet (UV) rays from the Sun
 
 Ultraviolet index, typically refreshed every second.
 
+    ro uv_index_error?: u16.16 uv @ reading_error
+
+Error on the UV measure.
+
     enum Variant: u8 {
         UVA_UVB = 1,
         Visible_IR = 2

@@ -70,6 +70,9 @@ export const unitDescription: jdspec.SMap<string> = {
     "hsv": "bit HSV color",
     "rgb": "RGB color",
     "rpm": "revolutions per minute",
+    "uv": "UV index",
+    "lux": "illuminance",
+    "bpm": "beats per minute"
 }
 
 export const secondaryUnitConverters: jdspec.SMap<{

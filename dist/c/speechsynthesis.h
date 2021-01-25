@@ -20,12 +20,12 @@
 #define JD_SPEECH_SYNTHESIS_REG_VOLUME 0x81
 
 /**
- * Read-write ratio uint8_t. Default pitch for utterances
+ * Read-write u16.16 (uint32_t). Default pitch for utterances
  */
 #define JD_SPEECH_SYNTHESIS_REG_PITCH 0x82
 
 /**
- * Read-write ratio uint8_t. Default rate for utterances
+ * Read-write u16.16 (uint32_t). Default rate for utterances
  */
 #define JD_SPEECH_SYNTHESIS_REG_RATE 0x83
 

@@ -2913,19 +2913,19 @@ export enum SpeechSynthesisReg {
     Volume = 0x81,
 
     /**
-     * Read-write ratio uint8_t. Default pitch for utterances
+     * Read-write u16.16 (uint32_t). Default pitch for utterances
      *
      * ```
-     * const [pitch] = jdunpack<[number]>(buf, "u8")
+     * const [pitch] = jdunpack<[number]>(buf, "u16.16")
      * ```
      */
     Pitch = 0x82,
 
     /**
-     * Read-write ratio uint8_t. Default rate for utterances
+     * Read-write u16.16 (uint32_t). Default rate for utterances
      *
      * ```
-     * const [rate] = jdunpack<[number]>(buf, "u8")
+     * const [rate] = jdunpack<[number]>(buf, "u16.16")
      * ```
      */
     Rate = 0x83,

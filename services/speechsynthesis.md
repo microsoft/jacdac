@@ -16,13 +16,13 @@ Default language used for utterances.
 
     rw volume?: u8 / @ 0x81
 
-Default volume for utterances
+Default volume for utterances.
 
-    rw pitch?: u8 / @ 0x82
+    rw pitch?: u16.16 { absolute_min=0, absolute_max=2 } @ 0x82
 
 Default pitch for utterances
 
-    rw rate?: u8 / @ 0x83
+    rw rate?: u16.16 { absolute_min=0.1, absolute_max=10 } @ 0x83
 
 Default rate for utterances
 

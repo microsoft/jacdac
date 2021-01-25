@@ -7,6 +7,10 @@ Measures light in Lux
 
 ## Registers
 
-    ro light: u16.16 lux { typical_min=0, typical_max=6555 } @ reading
+    ro light: u16.16 lux { typical_max=100000 } @ reading
 
 The amount of illuminance, as lumens per square metre.
+
+    ro light_error?: u16.16 lux @ reading_error
+
+Error on the reported sensor value.

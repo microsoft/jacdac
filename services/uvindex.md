@@ -7,7 +7,7 @@ The UV Index is a measure of the intensity of ultraviolet (UV) rays from the Sun
 
 ## Registers
 
-    ro uv_index: u16.16 uv { absolute_min=0, typical_max=11 } @ reading
+    ro uv_index: u16.16 uv { typical_max=11 } @ reading
 
 Ultraviolet index, typically refreshed every second.
 

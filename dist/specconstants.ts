@@ -1276,6 +1276,15 @@ export enum JoystickReg {
      * ```
      */
     Variant = 0x107,
+
+    /**
+     * Constant bool (uint8_t). Indicates if the joystick is digital, typically made of switches.
+     *
+     * ```
+     * const [digital] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Digital = 0x180,
 }
 
 // Service: Keyboard

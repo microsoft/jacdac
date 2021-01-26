@@ -25,4 +25,9 @@ typedef struct jd_joystick_direction {
  */
 #define JD_JOYSTICK_REG_VARIANT JD_REG_VARIANT
 
+/**
+ * Constant bool (uint8_t). Indicates if the joystick is digital, typically made of switches.
+ */
+#define JD_JOYSTICK_REG_DIGITAL 0x180
+
 #endif

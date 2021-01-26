@@ -23,3 +23,7 @@ If joystick is digital, then each direction will read as either `-0x8000`, `0x0`
     const variant?: Variant @ variant
 
 The type of physical joystick.
+
+    const digital?: bool @ 0x180
+
+Indicates if the joystick is digital, typically made of switches.

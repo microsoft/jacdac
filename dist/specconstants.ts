@@ -652,6 +652,19 @@ export enum CodalMessageBusCmd {
     Send = 0x80,
 }
 
+// Service: Color
+export const SRV_COLOR = 0x1630d567
+export enum ColorReg {
+    /**
+     * Detected color in the RGB color space.
+     *
+     * ```
+     * const [red, green, blue] = jdunpack<[number, number, number]>(buf, "u16 u16 u16")
+     * ```
+     */
+    Color = 0x101,
+}
+
 // Service: Control
 export const SRV_CONTROL = 0x0
 
@@ -865,6 +878,12 @@ export enum DistanceReg {
 
 // Service: Equivalent CO²
 export const SRV_E_CO2 = 0x169c9dc6
+
+export enum ECO2Variant { // uint8_t
+    VOC = 0x1,
+    NDIR = 0x2,
+}
+
 export enum ECO2Reg {
     /**
      * Read-only ppm u22.10 (uint32_t). Equivalent CO² (eCO²) readings.
@@ -910,6 +929,15 @@ export enum ECO2Reg {
      * ```
      */
     ConditioningPeriod = 0x180,
+
+    /**
+     * Constant Variant (uint8_t). Type of physical sensor and capabilities.
+     *
+     * ```
+     * const [variant] = jdunpack<[ECO2Variant]>(buf, "u8")
+     * ```
+     */
+    Variant = 0x107,
 }
 
 // Service: Humidity
@@ -932,6 +960,28 @@ export enum HumidityReg {
      * ```
      */
     HumidityError = 0x106,
+}
+
+// Service: Illuminance
+export const SRV_ILLUMINANCE = 0x1e6ecaf2
+export enum IlluminanceReg {
+    /**
+     * Read-only lux u22.10 (uint32_t). The amount of illuminance, as lumens per square metre.
+     *
+     * ```
+     * const [light] = jdunpack<[number]>(buf, "u22.10")
+     * ```
+     */
+    Light = 0x101,
+
+    /**
+     * Read-only lux u22.10 (uint32_t). Error on the reported sensor value.
+     *
+     * ```
+     * const [lightError] = jdunpack<[number]>(buf, "u22.10")
+     * ```
+     */
+    LightError = 0x106,
 }
 
 // Service: Azure IoT Hub
@@ -1196,6 +1246,45 @@ export enum IotHubEvent {
      * ```
      */
     DeviceboundStr = 0x82,
+}
+
+// Service: Joystick
+export const SRV_JOYSTICK = 0x1acb1890
+
+export enum JoystickVariant { // uint8_t
+    Thumb = 0x1,
+    ArcadeBall = 0x2,
+    ArcadeStick = 0x3,
+}
+
+export enum JoystickReg {
+    /**
+     * The direction of the joystick measure in two direction.
+     * If joystick is digital, then each direction will read as either `-0x8000`, `0x0`, or `0x7fff`.
+     *
+     * ```
+     * const [x, y] = jdunpack<[number, number]>(buf, "i16 i16")
+     * ```
+     */
+    Direction = 0x101,
+
+    /**
+     * Constant Variant (uint8_t). The type of physical joystick.
+     *
+     * ```
+     * const [variant] = jdunpack<[JoystickVariant]>(buf, "u8")
+     * ```
+     */
+    Variant = 0x107,
+
+    /**
+     * Constant bool (uint8_t). Indicates if the joystick is digital, typically made of switches.
+     *
+     * ```
+     * const [digital] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Digital = 0x180,
 }
 
 // Service: Keyboard
@@ -2891,6 +2980,114 @@ export enum SoilMoistureReg {
     Variant = 0x107,
 }
 
+// Service: Sound level
+export const SRV_SOUND_LEVEL = 0x14ad1a5d
+export enum SoundLevelReg {
+    /**
+     * Read-only ratio uint16_t. The sound level detected by the microphone
+     *
+     * ```
+     * const [soundLevel] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    SoundLevel = 0x101,
+
+    /**
+     * Read-write uint16_t. The sound level to trigger a loud event.
+     *
+     * ```
+     * const [loudThreshold] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    LoudThreshold = 0x5,
+
+    /**
+     * Read-write uint16_t. The sound level to trigger a quite event.
+     *
+     * ```
+     * const [quietThreshold] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    QuietThreshold = 0x6,
+}
+
+export enum SoundLevelEvent {
+    /**
+     * Raised when a loud sound is detected
+     */
+    Loud = 0x1,
+
+    /**
+     * Raised when a period of quietness is detected
+     */
+    Quiet = 0x2,
+}
+
+// Service: Speech synthesis
+export const SRV_SPEECH_SYNTHESIS = 0x1204d995
+export enum SpeechSynthesisReg {
+    /**
+     * Read-write bool (uint8_t). Determines if the speech engine is in a non-paused state.
+     *
+     * ```
+     * const [enabled] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Enabled = 0x1,
+
+    /**
+     * Read-write string (bytes). Language used for utterances as defined in https://www.ietf.org/rfc/bcp/bcp47.txt.
+     *
+     * ```
+     * const [lang] = jdunpack<[string]>(buf, "s")
+     * ```
+     */
+    Lang = 0x80,
+
+    /**
+     * Read-write ratio uint8_t. Volume for utterances.
+     *
+     * ```
+     * const [volume] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Volume = 0x81,
+
+    /**
+     * Read-write u16.16 (uint32_t). Pitch for utterances
+     *
+     * ```
+     * const [pitch] = jdunpack<[number]>(buf, "u16.16")
+     * ```
+     */
+    Pitch = 0x82,
+
+    /**
+     * Read-write u16.16 (uint32_t). Rate for utterances
+     *
+     * ```
+     * const [rate] = jdunpack<[number]>(buf, "u16.16")
+     * ```
+     */
+    Rate = 0x83,
+}
+
+export enum SpeechSynthesisCmd {
+    /**
+     * Argument: text string (bytes). Adds an utterance to the utterance queue; it will be spoken when any other utterances queued before it have been spoken.
+     *
+     * ```
+     * const [text] = jdunpack<[string]>(buf, "s")
+     * ```
+     */
+    Speak = 0x80,
+
+    /**
+     * No args. Cancels current utterance and all utterances from the utterance queue.
+     */
+    Cancel = 0x81,
+}
+
 // Service: Switch
 export const SRV_SWITCH = 0x1ad29402
 
@@ -2902,6 +3099,7 @@ export enum SwitchVariant { // uint32_t
     Toggle = 0x5,
     Proximity = 0x6,
     Magnetic = 0x7,
+    FootPedal = 0x8,
 }
 
 export enum SwitchReg {
@@ -3099,6 +3297,92 @@ export enum TrafficLightReg {
     Green = 0x82,
 }
 
+// Service: Total Volatile organic compound
+export const SRV_TVOC = 0x12a5b597
+export enum TVOCReg {
+    /**
+     * Read-only ppb u22.10 (uint32_t). Total volatile organic compound readings in parts per billion.
+     *
+     * ```
+     * const [tVOC] = jdunpack<[number]>(buf, "u22.10")
+     * ```
+     */
+    TVOC = 0x101,
+
+    /**
+     * Read-only ppb u22.10 (uint32_t). Error on the reading data
+     *
+     * ```
+     * const [tVOCError] = jdunpack<[number]>(buf, "u22.10")
+     * ```
+     */
+    TVOCError = 0x106,
+
+    /**
+     * Constant ppb u22.10 (uint32_t). Minimum measurable value
+     *
+     * ```
+     * const [min_TVOC] = jdunpack<[number]>(buf, "u22.10")
+     * ```
+     */
+    Min_TVOC = 0x104,
+
+    /**
+     * Constant ppb u22.10 (uint32_t). Minimum measurable value
+     *
+     * ```
+     * const [max_TVOC] = jdunpack<[number]>(buf, "u22.10")
+     * ```
+     */
+    Max_TVOC = 0x105,
+
+    /**
+     * Constant s uint32_t. Time required to achieve good sensor stability before measuring after long idle period.
+     *
+     * ```
+     * const [conditioningPeriod] = jdunpack<[number]>(buf, "u32")
+     * ```
+     */
+    ConditioningPeriod = 0x180,
+}
+
+// Service: UV index
+export const SRV_U_VINDEX = 0x1f6e0d90
+
+export enum UVIndexVariant { // uint8_t
+    UVA_UVB = 0x1,
+    Visible_IR = 0x2,
+}
+
+export enum UVIndexReg {
+    /**
+     * Read-only uv u16.16 (uint32_t). Ultraviolet index, typically refreshed every second.
+     *
+     * ```
+     * const [uvIndex] = jdunpack<[number]>(buf, "u16.16")
+     * ```
+     */
+    UvIndex = 0x101,
+
+    /**
+     * Read-only uv u16.16 (uint32_t). Error on the UV measure.
+     *
+     * ```
+     * const [uvIndexError] = jdunpack<[number]>(buf, "u16.16")
+     * ```
+     */
+    UvIndexError = 0x106,
+
+    /**
+     * Constant Variant (uint8_t). The type of physical sensor and capabilities.
+     *
+     * ```
+     * const [variant] = jdunpack<[UVIndexVariant]>(buf, "u8")
+     * ```
+     */
+    Variant = 0x107,
+}
+
 // Service: Vibration motor
 export const SRV_VIBRATION_MOTOR = 0x183fc4a2
 export enum VibrationMotorReg {
@@ -3133,55 +3417,6 @@ export enum VibrationMotorCmd {
      * ```
      */
     Vibrate = 0x80,
-}
-
-// Service: Volatile organic compound
-export const SRV_VOC = 0x12a5b597
-export enum VocReg {
-    /**
-     * Read-only ppm u22.10 (uint32_t). Total volatile organic compound readings.
-     *
-     * ```
-     * const [vOC] = jdunpack<[number]>(buf, "u22.10")
-     * ```
-     */
-    VOC = 0x101,
-
-    /**
-     * Read-only ppm u22.10 (uint32_t). Error on the reading data
-     *
-     * ```
-     * const [vOCError] = jdunpack<[number]>(buf, "u22.10")
-     * ```
-     */
-    VOCError = 0x106,
-
-    /**
-     * Constant ppm u22.10 (uint32_t). Minimum measurable value
-     *
-     * ```
-     * const [min_VOC] = jdunpack<[number]>(buf, "u22.10")
-     * ```
-     */
-    Min_VOC = 0x104,
-
-    /**
-     * Constant ppm u22.10 (uint32_t). Minimum measurable value
-     *
-     * ```
-     * const [max_VOC] = jdunpack<[number]>(buf, "u22.10")
-     * ```
-     */
-    Max_VOC = 0x105,
-
-    /**
-     * Constant s uint32_t. Time required to achieve good sensor stability before measuring after long idle period.
-     *
-     * ```
-     * const [conditioningPeriod] = jdunpack<[number]>(buf, "u32")
-     * ```
-     */
-    ConditioningPeriod = 0x180,
 }
 
 // Service: WIFI

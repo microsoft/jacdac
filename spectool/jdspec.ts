@@ -70,6 +70,9 @@ export const unitDescription: jdspec.SMap<string> = {
     "hsv": "bit HSV color",
     "rgb": "RGB color",
     "rpm": "revolutions per minute",
+    "uv": "UV index",
+    "lux": "illuminance",
+    "bpm": "beats per minute"
 }
 
 export const secondaryUnitConverters: jdspec.SMap<{
@@ -104,6 +107,7 @@ export const secondaryUnitConverters: jdspec.SMap<{
     "mm/h": { name: "millimeter per hour", unit: "m/s", scale: 1 / 3600000, offset: 0 },
     "m/h": { name: "meter per hour", unit: "m/s", scale: 1 / 3600, offset: 0 },
     "ppm": { name: "parts per million", unit: "/", scale: 1.00E-06, offset: 0 },
+    "ppb": { name: "parts per billion", unit: "/", scale: 1.00E-09, offset: 0 },
     "/100": { name: "percent", unit: "/", scale: 1 / 100, offset: 0 },
     "/1000": { name: "permille", unit: "/", scale: 1 / 1000, offset: 0 },
     "hPa": { name: "hectopascal", unit: "Pa", scale: 100, offset: 0 },

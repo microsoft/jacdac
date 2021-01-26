@@ -18,7 +18,7 @@ Language used for utterances as defined in https://www.ietf.org/rfc/bcp/bcp47.tx
 
 Volume for utterances.
 
-    rw pitch?: u16.16 { absolute_max=2 } @ 0x82
+    rw pitch? = 1: u16.16 { absolute_max=2 } @ 0x82
 
 Pitch for utterances
 

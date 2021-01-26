@@ -962,6 +962,28 @@ export enum HumidityReg {
     HumidityError = 0x106,
 }
 
+// Service: Illuminance
+export const SRV_ILLUMINANCE = 0x1e6ecaf2
+export enum IlluminanceReg {
+    /**
+     * Read-only lux u22.10 (uint32_t). The amount of illuminance, as lumens per square metre.
+     *
+     * ```
+     * const [light] = jdunpack<[number]>(buf, "u22.10")
+     * ```
+     */
+    Light = 0x101,
+
+    /**
+     * Read-only lux u22.10 (uint32_t). Error on the reported sensor value.
+     *
+     * ```
+     * const [lightError] = jdunpack<[number]>(buf, "u22.10")
+     * ```
+     */
+    LightError = 0x106,
+}
+
 // Service: Azure IoT Hub
 export const SRV_IOT_HUB = 0x19ed364c
 export enum IotHubCmd {
@@ -1224,6 +1246,36 @@ export enum IotHubEvent {
      * ```
      */
     DeviceboundStr = 0x82,
+}
+
+// Service: Joystick
+export const SRV_JOYSTICK = 0x1acb1890
+
+export enum JoystickVariant { // uint8_t
+    Thumb = 0x1,
+    ArcadeBall = 0x2,
+    ArcadeStick = 0x3,
+}
+
+export enum JoystickReg {
+    /**
+     * The direction of the joystick measure in two direction.
+     * If joystick is digital, then each direction will read as either `-0x8000`, `0x0`, or `0x7fff`.
+     *
+     * ```
+     * const [x, y] = jdunpack<[number, number]>(buf, "i16 i16")
+     * ```
+     */
+    Direction = 0x101,
+
+    /**
+     * Constant Variant (uint8_t). The type of physical joystick.
+     *
+     * ```
+     * const [variant] = jdunpack<[JoystickVariant]>(buf, "u8")
+     * ```
+     */
+    Variant = 0x107,
 }
 
 // Service: Keyboard

@@ -3003,7 +3003,7 @@ export enum SpeechSynthesisReg {
     Enabled = 0x1,
 
     /**
-     * Read-write string (bytes). Default language used for utterances.
+     * Read-write string (bytes). Language used for utterances as defined in https://www.ietf.org/rfc/bcp/bcp47.txt.
      *
      * ```
      * const [lang] = jdunpack<[string]>(buf, "s")
@@ -3012,7 +3012,7 @@ export enum SpeechSynthesisReg {
     Lang = 0x80,
 
     /**
-     * Read-write ratio uint8_t. Default volume for utterances.
+     * Read-write ratio uint8_t. Volume for utterances.
      *
      * ```
      * const [volume] = jdunpack<[number]>(buf, "u8")
@@ -3021,7 +3021,7 @@ export enum SpeechSynthesisReg {
     Volume = 0x81,
 
     /**
-     * Read-write u16.16 (uint32_t). Default pitch for utterances
+     * Read-write u16.16 (uint32_t). Pitch for utterances
      *
      * ```
      * const [pitch] = jdunpack<[number]>(buf, "u16.16")
@@ -3030,7 +3030,7 @@ export enum SpeechSynthesisReg {
     Pitch = 0x82,
 
     /**
-     * Read-write u16.16 (uint32_t). Default rate for utterances
+     * Read-write u16.16 (uint32_t). Rate for utterances
      *
      * ```
      * const [rate] = jdunpack<[number]>(buf, "u16.16")
@@ -3050,7 +3050,7 @@ export enum SpeechSynthesisCmd {
     Speak = 0x80,
 
     /**
-     * No args. Cancels all utterances from the utterance queue.
+     * No args. Cancels current utterance and all utterances from the utterance queue.
      */
     Cancel = 0x81,
 }

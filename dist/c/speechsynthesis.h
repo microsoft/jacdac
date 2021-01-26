@@ -10,22 +10,22 @@
 #define JD_SPEECH_SYNTHESIS_REG_ENABLED JD_REG_INTENSITY
 
 /**
- * Read-write string (bytes). Default language used for utterances.
+ * Read-write string (bytes). Language used for utterances as defined in https://www.ietf.org/rfc/bcp/bcp47.txt.
  */
 #define JD_SPEECH_SYNTHESIS_REG_LANG 0x80
 
 /**
- * Read-write ratio uint8_t. Default volume for utterances.
+ * Read-write ratio uint8_t. Volume for utterances.
  */
 #define JD_SPEECH_SYNTHESIS_REG_VOLUME 0x81
 
 /**
- * Read-write u16.16 (uint32_t). Default pitch for utterances
+ * Read-write u16.16 (uint32_t). Pitch for utterances
  */
 #define JD_SPEECH_SYNTHESIS_REG_PITCH 0x82
 
 /**
- * Read-write u16.16 (uint32_t). Default rate for utterances
+ * Read-write u16.16 (uint32_t). Rate for utterances
  */
 #define JD_SPEECH_SYNTHESIS_REG_RATE 0x83
 
@@ -35,7 +35,7 @@
 #define JD_SPEECH_SYNTHESIS_CMD_SPEAK 0x80
 
 /**
- * No args. Cancels all utterances from the utterance queue.
+ * No args. Cancels current utterance and all utterances from the utterance queue.
  */
 #define JD_SPEECH_SYNTHESIS_CMD_CANCEL 0x81
 

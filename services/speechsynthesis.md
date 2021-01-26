@@ -12,19 +12,19 @@ Determines if the speech engine is in a non-paused state.
 
     rw lang?: string @ 0x80
 
-Default language used for utterances.
+Language used for utterances as defined in https://www.ietf.org/rfc/bcp/bcp47.txt.
 
-    rw volume?: u8 / @ 0x81
+    rw volume? = 255: u8 / @ 0x81
 
-Default volume for utterances.
+Volume for utterances.
 
-    rw pitch?: u16.16 { absolute_min=0, absolute_max=2 } @ 0x82
+    rw pitch?: u16.16 { absolute_max=2 } @ 0x82
 
-Default pitch for utterances
+Pitch for utterances
 
-    rw rate?: u16.16 { absolute_min=0.1, absolute_max=10 } @ 0x83
+    rw rate? = 1: u16.16 { absolute_min=0.1, absolute_max=10 } @ 0x83
 
-Default rate for utterances
+Rate for utterances
 
 ## Commands
 
@@ -36,4 +36,4 @@ Adds an utterance to the utterance queue; it will be spoken when any other utter
 
     command cancel @ 0x81 {}
 
-Cancels all utterances from the utterance queue.
+Cancels current utterance and all utterances from the utterance queue.

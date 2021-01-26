@@ -5,7 +5,10 @@
 #define JD_SERVICE_CLASS_REAL_TIME_CLOCK  0x1a8b1a28
 
 /**
- * Current time in 24h representation. ``echo`` is the Unix epoch, seconds since ``1/1/1970``. 
+ * Current time in 24h representation. 
+ * * ``echo`` is the Unix epoch, seconds since ``1/1/1970``
+ * * ``date`` is day of the month, starting at ``1``
+ * * ``day`` is day of the week, starting at ``1`` as monday
  * Default streaming period is 1 second.
  */
 #define JD_REAL_TIME_CLOCK_REG_NOW JD_REG_READING
@@ -13,8 +16,8 @@ typedef struct jd_real_time_clock_now {
     uint32_t epoch;
     uint16_t year;
     uint8_t month;
+    uint8_t date;
     uint8_t day;
-    uint8_t reserved;
     uint8_t hour;
     uint8_t min;
     uint8_t sec;
@@ -39,8 +42,8 @@ typedef struct jd_real_time_clock_set_time {
     uint32_t epoch;
     uint16_t year;
     uint8_t month;
+    uint8_t date;
     uint8_t day;
-    uint8_t reserved;
     uint8_t hour;
     uint8_t min;
     uint8_t sec;

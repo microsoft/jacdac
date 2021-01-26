@@ -2564,11 +2564,14 @@ export enum RainGaugeReg {
 export const SRV_REAL_TIME_CLOCK = 0x1a8b1a28
 export enum RealTimeClockReg {
     /**
-     * Current time in 24h representation. ``echo`` is the Unix epoch, seconds since ``1/1/1970``.
+     * Current time in 24h representation.
+     * * ``echo`` is the Unix epoch, seconds since ``1/1/1970``
+     * * ``date`` is day of the month, starting at ``1``
+     * * ``day`` is day of the week, starting at ``1`` as monday
      * Default streaming period is 1 second.
      *
      * ```
-     * const [epoch, year, month, day, hour, min, sec] = jdunpack<[number, number, number, number, number, number, number]>(buf, "u32 u16 u8 u8 x[1] u8 u8 u8")
+     * const [epoch, year, month, date, day, hour, min, sec] = jdunpack<[number, number, number, number, number, number, number, number]>(buf, "u32 u16 u8 u8 u8 u8 u8 u8")
      * ```
      */
     Now = 0x101,
@@ -2597,7 +2600,7 @@ export enum RealTimeClockCmd {
      * Sets the current time and resets the error.
      *
      * ```
-     * const [epoch, year, month, day, hour, min, sec] = jdunpack<[number, number, number, number, number, number, number]>(buf, "u32 u16 u8 u8 x[1] u8 u8 u8")
+     * const [epoch, year, month, date, day, hour, min, sec] = jdunpack<[number, number, number, number, number, number, number, number]>(buf, "u32 u16 u8 u8 u8 u8 u8 u8")
      * ```
      */
     SetTime = 0x80,

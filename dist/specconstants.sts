@@ -2689,16 +2689,15 @@ namespace jacdac {
     export const enum RealTimeClockReg {
         /**
          * Current time in 24h representation.
-         * * ``echo`` is the Unix epoch, seconds since ``1/1/1970``
-         * * ``date`` is day of the month, starting at ``1``
-         * * ``day`` is day of the week, starting at ``1`` as monday
+         * * ``day_of_month`` is day of the month, starting at ``1``
+         * * ``day_of_week`` is day of the week, starting at ``1`` as monday
          * Default streaming period is 1 second.
          *
          * ```
-         * const [epoch, year, month, date, day, hour, min, sec] = jdunpack<[number, number, number, number, number, number, number, number]>(buf, "u32 u16 u8 u8 u8 u8 u8 u8")
+         * const [year, month, dayOfMonth, dayOfWeek, hour, min, sec] = jdunpack<[number, number, number, number, number, number, number]>(buf, "u16 u8 u8 u8 u8 u8 u8")
          * ```
          */
-        Now = 0x101,
+        LocalTime = 0x101,
 
         /**
          * Read-only s u16.16 (uint32_t). Time drift since the last call to the ``set_time`` command.
@@ -2733,7 +2732,7 @@ namespace jacdac {
          * Sets the current time and resets the error.
          *
          * ```
-         * const [epoch, year, month, date, day, hour, min, sec] = jdunpack<[number, number, number, number, number, number, number, number]>(buf, "u32 u16 u8 u8 u8 u8 u8 u8")
+         * const [year, month, dayOfMonth, dayOfWeek, hour, min, sec] = jdunpack<[number, number, number, number, number, number, number]>(buf, "u16 u8 u8 u8 u8 u8 u8")
          * ```
          */
         SetTime = 0x80,

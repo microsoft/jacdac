@@ -2562,6 +2562,13 @@ export enum RainGaugeReg {
 
 // Service: Real time clock
 export const SRV_REAL_TIME_CLOCK = 0x1a8b1a28
+
+export enum RealTimeClockVariant { // uint32_t
+    Computer = 0x1,
+    Crystal = 0x2,
+    Cuckoo = 0x3,
+}
+
 export enum RealTimeClockReg {
     /**
      * Current time in 24h representation.
@@ -2593,6 +2600,15 @@ export enum RealTimeClockReg {
      * ```
      */
     Precision = 0x180,
+
+    /**
+     * Constant Variant (uint32_t). The type of physical clock used by the sensor.
+     *
+     * ```
+     * const [variant] = jdunpack<[RealTimeClockVariant]>(buf, "u32")
+     * ```
+     */
+    Variant = 0x107,
 }
 
 export enum RealTimeClockCmd {

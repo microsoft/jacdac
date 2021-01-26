@@ -31,6 +31,15 @@ Time drift since the last call to the ``set_time`` command.
 
 Error on the clock, in parts per million of seconds.
 
+    enum Variant: u32 {
+        Computer = 1
+        Crystal = 2        
+        Cuckoo = 3
+    }
+    const variant?: Variant @ variant
+
+The type of physical clock used by the sensor.
+
 ## Commands
 
     command set_time @ 0x80 {

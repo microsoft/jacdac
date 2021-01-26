@@ -4,6 +4,11 @@
 
 #define JD_SERVICE_CLASS_REAL_TIME_CLOCK  0x1a8b1a28
 
+// enum Variant (uint32_t)
+#define JD_REAL_TIME_CLOCK_VARIANT_COMPUTER 0x1
+#define JD_REAL_TIME_CLOCK_VARIANT_CRYSTAL 0x2
+#define JD_REAL_TIME_CLOCK_VARIANT_CUCKOO 0x3
+
 /**
  * Current time in 24h representation. 
  * * ``echo`` is the Unix epoch, seconds since ``1/1/1970``
@@ -33,6 +38,11 @@ typedef struct jd_real_time_clock_now {
  * Constant ppm u16.16 (uint32_t). Error on the clock, in parts per million of seconds.
  */
 #define JD_REAL_TIME_CLOCK_REG_PRECISION 0x180
+
+/**
+ * Constant Variant (uint32_t). The type of physical clock used by the sensor.
+ */
+#define JD_REAL_TIME_CLOCK_REG_VARIANT JD_REG_VARIANT
 
 /**
  * Sets the current time and resets the error.

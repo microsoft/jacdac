@@ -4,7 +4,7 @@
 
 #define JD_SERVICE_CLASS_REAL_TIME_CLOCK  0x1a8b1a28
 
-// enum Variant (uint32_t)
+// enum Variant (uint8_t)
 #define JD_REAL_TIME_CLOCK_VARIANT_COMPUTER 0x1
 #define JD_REAL_TIME_CLOCK_VARIANT_CRYSTAL 0x2
 #define JD_REAL_TIME_CLOCK_VARIANT_CUCKOO 0x3
@@ -40,7 +40,7 @@ typedef struct jd_real_time_clock_now {
 #define JD_REAL_TIME_CLOCK_REG_PRECISION 0x180
 
 /**
- * Constant Variant (uint32_t). The type of physical clock used by the sensor.
+ * Constant Variant (uint8_t). The type of physical clock used by the sensor.
  */
 #define JD_REAL_TIME_CLOCK_REG_VARIANT JD_REG_VARIANT
 

@@ -31,7 +31,7 @@ Time drift since the last call to the ``set_time`` command.
 
 Error on the clock, in parts per million of seconds.
 
-    enum Variant: u32 {
+    enum Variant: u8 {
         Computer = 1
         Crystal = 2        
         Cuckoo = 3

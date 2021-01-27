@@ -8,7 +8,8 @@ A classic 7-segment display, with 4 dots and column.
 
     rw digits: bytes @ value
 
-Each byte encodes the display status of a digit using a ``GFEDCBA`` encoding.
+Each byte encodes the display status of a digit using a ``GFEDCBA`` encoding. 
+If incoming ``digits`` data is smaller than available, the remaining digits will be cleared. Thus, sending an empty ``digits`` payload clears the screen.
 
 ```
  - A -

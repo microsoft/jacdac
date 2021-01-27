@@ -24,4 +24,4 @@ Determines if the DMX bridge is active
         data: bytes
     }    
 
-Send a DMX packet, up to 512bytes long.
+Send a DMX packet, up to 513bytes long.

@@ -2621,15 +2621,15 @@ export enum RealTimeClockCmd {
     SetTime = 0x80,
 }
 
-// Service: Reflector light
-export const SRV_REFLECTOR_LIGHT = 0x126c4cb2
+// Service: Reflected light
+export const SRV_REFLECTED_LIGHT = 0x126c4cb2
 
-export enum ReflectorLightVariant { // uint8_t
+export enum ReflectedLightVariant { // uint8_t
     InfraredDigital = 0x1,
     InfraredAnalog = 0x2,
 }
 
-export enum ReflectorLightReg {
+export enum ReflectedLightReg {
     /**
      * Read-only ratio uint16_t. Reports the reflected brightness. It may be a digital value or, for some sensor, analog value.
      *
@@ -2643,13 +2643,13 @@ export enum ReflectorLightReg {
      * Constant Variant (uint8_t). Type of physical sensor used
      *
      * ```
-     * const [variant] = jdunpack<[ReflectorLightVariant]>(buf, "u8")
+     * const [variant] = jdunpack<[ReflectedLightVariant]>(buf, "u8")
      * ```
      */
     Variant = 0x107,
 }
 
-export enum ReflectorLightEvent {
+export enum ReflectedLightEvent {
     /**
      * The sensor detected a transition from light to dark
      */

@@ -1,7 +1,7 @@
-# Mono Light
+# LED
 
     identifier: 0x1fb57453
-    camel: monoLight
+    camel: led
 
 A controller for 1 or more LEDs connected in parallel.
 

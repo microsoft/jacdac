@@ -14,17 +14,14 @@ Are pipes the way to go?
 
 Determines if the DMX bridge is active
 
-    rw terminate?: bool @ 0x80
-
-If available, terminate the DMX circuit.
-
 ## Commands
 
-    command send @ 0x80 {
-        packet: pipe
+    command send @ 0x80 {}
+    report {
+        data_port: pipe_port
     }
-    pipe report packet {
-        channels: bytes
-    }
+    pipe command data_port {
+        data: bytes
+    }    
 
 Send a DMX packet, up to 512bytes long.

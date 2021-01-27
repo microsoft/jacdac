@@ -11,7 +11,7 @@
 #define JD_SEVEN_SEGMENT_DISPLAY_REG_DIGITS JD_REG_VALUE
 
 /**
- * Read-write uint8_t. Controls the brightness of the LEDs. ``0`` means off.
+ * Read-write ratio uint16_t. Controls the brightness of the LEDs. ``0`` means off.
  */
 #define JD_SEVEN_SEGMENT_DISPLAY_REG_BRIGHTNESS JD_REG_INTENSITY
 

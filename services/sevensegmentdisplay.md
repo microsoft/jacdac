@@ -23,7 +23,7 @@ If incoming ``digits`` data is smaller than available, the remaining digits will
  - D -   -
 ```
 
-    rw brightness: u8 @ intensity
+    rw brightness: u16 / @ intensity
 
 Controls the brightness of the LEDs. ``0`` means off.
 

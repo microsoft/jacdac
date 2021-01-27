@@ -3140,10 +3140,10 @@ namespace jacdac {
         Digits = 0x2,
 
         /**
-         * Read-write uint8_t. Controls the brightness of the LEDs. ``0`` means off.
+         * Read-write ratio uint16_t. Controls the brightness of the LEDs. ``0`` means off.
          *
          * ```
-         * const [brightness] = jdunpack<[number]>(buf, "u8")
+         * const [brightness] = jdunpack<[number]>(buf, "u16")
          * ```
          */
         Brightness = 0x1,

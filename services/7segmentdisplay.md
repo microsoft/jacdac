@@ -26,9 +26,9 @@ If incoming ``digits`` data is smaller than available, the remaining digits will
 
 Controls the brightness of the LEDs. ``0`` means off.
 
-    rw column_leds?: bool @ 0x80
+    rw double_leds?: bool @ 0x80
 
-Turn on or off the column leds in the middle of the segment. If the column leds is not supported, the value remains false.
+Turn on or off the column leds in of the segment. If the column leds is not supported, the value remains false.
 
     const digit_count? = 4: u8 @ 0x80
 

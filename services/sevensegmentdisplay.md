@@ -11,8 +11,8 @@ A 7-segment numeric display, with one or more digits.
 
 Each byte encodes the display status of a digit using, 
 where bit 0 encodes segment `A`, bit 1 encodes segments `B`, ..., bit 6 encodes segments `G`, and bit 7 encodes the decimal point (if present).
- f incoming ``digits`` data is smaller than `digit_count`, the remaining digits will be cleared.
- Thus, sending an empty ``digits`` payload clears the screen.
+If incoming ``digits`` data is smaller than `digit_count`, the remaining digits will be cleared.
+Thus, sending an empty ``digits`` payload clears the screen.
 
 ```text
  - A -

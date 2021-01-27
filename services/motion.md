@@ -1,4 +1,4 @@
-# Motion sensor
+# Motion
 
 A sensor, typically PIR, that detects object motion within a certain range
 

@@ -1944,14 +1944,14 @@ export enum MonoLightReg {
     MaxIterations = 0x81,
 }
 
-// Service: Motion sensor
-export const SRV_MOTION_SENSOR = 0x1179a749
+// Service: Motion
+export const SRV_MOTION = 0x1179a749
 
-export enum MotionSensorVariant { // uint8_t
+export enum MotionVariant { // uint8_t
     PIR = 0x1,
 }
 
-export enum MotionSensorReg {
+export enum MotionReg {
     /**
      * Read-only bool (uint8_t). Reports is movement is currently detected by the sensor.
      *
@@ -1983,7 +1983,7 @@ export enum MotionSensorReg {
      * Constant Variant (uint8_t). Type of physical sensor
      *
      * ```
-     * const [variant] = jdunpack<[MotionSensorVariant]>(buf, "u8")
+     * const [variant] = jdunpack<[MotionVariant]>(buf, "u8")
      * ```
      */
     Variant = 0x107,

@@ -18,16 +18,10 @@ The digit and dots displayed on the segment. If ``digit`` is outside ``0x0-0xf``
 
 Controls the brightness of the LEDs. ``0`` means off.
 
-    rw column: bool @ 0x80
+    rw column_leds: bool @ 0x80
 
-Show or hide the column. If the column is not supported, the value remains false.
+Turn on or off the column leds in the middle of the segment. If the column leds is not supported, the value remains false.
 
     const digit_count? = 4: u8 @ 0x80
 
 The number of digits available on the display.
-
-## Commands
-
-    command clear @ 0x80 {}
-
-Clears the display.

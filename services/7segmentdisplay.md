@@ -6,19 +6,19 @@ A classic 7-segment display, with 4 dots and column.
 
 ## Registers
 
-    rw digits: bytes @ value {
+    rw digits: bytes @ value
 
-Each byte encodes the display status of a digit. For each digit, each bit represents the on/off status of the LED section as follows:
+Each byte encodes the display status of a digit using a ``GFEDCBA`` encoding.
 
 ```
- - 0 -
+ - A -
  |   |
- 6   1
+ G   B
  |   |
- - 5 -
+ - F -
  |   |   -
- 4   2  |7|
- - 3 -   -
+ E   C  |DP|
+ - D -   -
 ```
 
     rw brightness: u8 @ intensity

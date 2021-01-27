@@ -6,19 +6,26 @@ A classic 7-segment display, with 4 dots and column.
 
 ## Registers
 
-    rw digits @ value {
-    repeats:
-        digit: u8
-        dot: bool
-    }
+    rw digits: bytes @ value {
 
-The digit and dots displayed on the segment. If ``digit`` is outside ``0x0-0xf``, nothing is displayed.
+Each byte encodes the display status of a digit. For each digit, each bit represents the on/off status of the LED section as follows:
+
+```
+ - 0 -
+ |   |
+ 6   1
+ |   |
+ - 5 -
+ |   |   -
+ 4   2  |7|
+ - 3 -   -
+```
 
     rw brightness: u8 @ intensity
 
 Controls the brightness of the LEDs. ``0`` means off.
 
-    rw column_leds: bool @ 0x80
+    rw column_leds?: bool @ 0x80
 
 Turn on or off the column leds in the middle of the segment. If the column leds is not supported, the value remains false.
 

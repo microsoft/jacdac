@@ -3384,7 +3384,7 @@ export enum TVOCReg {
 }
 
 // Service: UV index
-export const SRV_U_VINDEX = 0x1f6e0d90
+export const SRV_UVINDEX = 0x1f6e0d90
 
 export enum UVIndexVariant { // uint8_t
     UVA_UVB = 0x1,

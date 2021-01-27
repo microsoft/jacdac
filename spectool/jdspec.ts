@@ -701,7 +701,7 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
 
     function enumMember(words: string[]) {
         if (words[1] != "=" || words.length != 3)
-            error(`expecting: FILD_NAME = INTEGER`)
+            error(`expecting: FIELD_NAME = INTEGER`)
         enumInfo.members[normalizeName(words[0])] = parseIntCheck(words[2])
     }
 
@@ -758,7 +758,7 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
 
     function metadataMember(words: string[]) {
         if ((words[1] != "=" && words[1] != ":") || words.length != 3)
-            error(`expecting: FILD_NAME = VALUE or FIELD_NAME : VALUE`)
+            error(`expecting: FIELD_NAME = VALUE or FIELD_NAME : VALUE`)
         switch (words[0]) {
             case "extends":
                 processInclude(words[2])

@@ -2989,6 +2989,47 @@ export enum SettingsEvent {
     Change = 0x3,
 }
 
+// Service: 7-segment display
+export const SRV_SEVEN_SEGMENT_DISPLAY = 0x196158f7
+export enum SevenSegmentDisplayReg {
+    /**
+     * Read-write bytes. Each byte encodes the display status of a digit using a ``GFEDCBA`` encoding.
+     * If incoming ``digits`` data is smaller than available, the remaining digits will be cleared. Thus, sending an empty ``digits`` payload clears the screen.
+     *
+     * ```
+     * const [digits] = jdunpack<[Uint8Array]>(buf, "b")
+     * ```
+     */
+    Digits = 0x2,
+
+    /**
+     * Read-write uint8_t. Controls the brightness of the LEDs. ``0`` means off.
+     *
+     * ```
+     * const [brightness] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Brightness = 0x1,
+
+    /**
+     * Read-write bool (uint8_t). Turn on or off the column leds in of the segment. If the column leds is not supported, the value remains false.
+     *
+     * ```
+     * const [doubleDots] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    DoubleDots = 0x80,
+
+    /**
+     * Constant uint8_t. The number of digits available on the display.
+     *
+     * ```
+     * const [digitCount] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    DigitCount = 0x80,
+}
+
 // Service: Soil moisture
 export const SRV_SOIL_MOISTURE = 0x1d4aa3b3
 

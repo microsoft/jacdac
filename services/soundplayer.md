@@ -11,7 +11,7 @@ A device that can play various sounds stored locally. This service is typically 
 Global volume of the output. ``0`` means completely off. This volume is mixed with each play volumes.
 
     const supported_wav_format? @ 0x80 {
-        stereo: bool
+        num_channels: u8
         bit: u8
         max_sample_rate: u16 Hz
     }

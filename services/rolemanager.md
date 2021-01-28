@@ -9,6 +9,7 @@ Assign roles to devices on the JACDAC bus.
     ro all_roles_allocated: bool @ 0x181
 
 Indicates if all required roles have been allocated to devices.
+TODO is this needed?
 
 ## Commands
 
@@ -58,7 +59,6 @@ Return all roles stored internally.
     }
 
 List all roles required by the current program. `device_id` and `service_idx` are `0` if role is unbound.
-The `role` can be empty string, when a service is required under no specific name.
 
 ## Events
 

@@ -13,10 +13,6 @@ A sensor approximating the heart rate.
 
 The estimated heart rate.
 
-    rw connected: bool @ intensity
-
-A register that determines if the sensor is ready to measure data.
-
     ro heart_rate_error?: u16.16 bpm @ reading_error
 
 The estimated error on the reported sensor data.
@@ -31,13 +27,3 @@ The estimated error on the reported sensor data.
     const variant?: Variant @ variant
 
 The type of physical sensor
-
-## Events
-
-    event connect @ active {}
-
-The sensor is connected to the patient and ready to measure data.
-
-    event disconnect @ inactive {}
-
-The sensor was disconnected from the patient.

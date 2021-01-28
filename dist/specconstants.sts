@@ -146,18 +146,6 @@ namespace jacdac {
         HighThreshold = 0x6,
 
         /**
-         * Reports the current state or error status of the device. ``code`` is a standardized value from
-         * the JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device
-         * state. This report is typically not queried, when a device has an error, it will typically
-         * add this report in frame along with the announce packet.
-         *
-         * ```
-         * const [code, vendorCode] = jdunpack<[number, number]>(buf, "u16 u16")
-         * ```
-         */
-        StatusCode = 0x103,
-
-        /**
          * Constant ms uint32_t. Preferred default streaming interval for sensor in milliseconds.
          *
          * ```
@@ -191,7 +179,7 @@ namespace jacdac {
         Inactive = 0x2,
 
         /**
-         * Notifies that the internal state of the service changed.
+         * Notifies that the some state of the service changed.
          */
         //% block="change"
         Change = 0x3,
@@ -200,10 +188,20 @@ namespace jacdac {
 }
 namespace jacdac {
     // Service: Base service
+
+    export const enum BaseStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
     export const enum BaseReg {
         /**
          * Reports the current state or error status of the device. ``code`` is a standardized value from
-         * the JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device
+         * the JACDAC status/error codes. ``vendor_code`` is any vendor specific error code describing the device
          * state. This report is typically not queried, when a device has an error, it will typically
          * add this report in frame along with the announce packet.
          *
@@ -214,9 +212,31 @@ namespace jacdac {
         StatusCode = 0x103,
     }
 
+    export const enum BaseEvent {
+        /**
+         * Notifies that the status code of the service changed.
+         *
+         * ```
+         * const [code, vendorCode] = jdunpack<[number, number]>(buf, "u16 u16")
+         * ```
+         */
+        //% block="status code changed"
+        StatusCodeChanged = 0x4,
+    }
+
 }
 namespace jacdac {
     // Service: Sensor
+
+    export const enum SensorStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
     export const enum SensorReg {
         /**
          * Read-write uint8_t. Asks device to stream a given number of samples
@@ -251,6 +271,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: Accelerometer
     export const SRV_ACCELEROMETER = 0x1f140409
+
+    export const enum AccelerometerStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
     export const enum AccelerometerReg {
         /**
          * Indicates the current forces acting on accelerometer.
@@ -341,6 +371,16 @@ namespace jacdac {
     // Service: Sensor Aggregator
     export const SRV_SENSOR_AGGREGATOR = 0x1d90e1c5
 
+    export const enum SensorAggregatorStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
+
     export const enum SensorAggregatorSampleType { // uint8_t
         U8 = 0x8,
         I8 = 0x88,
@@ -404,6 +444,16 @@ namespace jacdac {
     // Service: Arcade Gamepad
     export const SRV_ARCADE_GAMEPAD = 0x1deaa06e
 
+    export const enum ArcadeGamepadStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
+
     export const enum ArcadeGamepadButton { // uint8_t
         Left = 0x1,
         Up = 0x2,
@@ -465,6 +515,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: Barometer
     export const SRV_BAROMETER = 0x1e117cea
+
+    export const enum BarometerStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
     export const enum BarometerReg {
         /**
          * Read-only hPa u22.10 (uint32_t). The air pressure.
@@ -489,6 +549,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: Bootloader
     export const SRV_BOOTLOADER = 0x1ffa9948
+
+    export const enum BootloaderStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
 
     export const enum BootloaderError { // uint32_t
         NoError = 0x0,
@@ -552,6 +622,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: Button
     export const SRV_BUTTON = 0x1473a263
+
+    export const enum ButtonStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
     export const enum ButtonReg {
         /**
          * Read-only bool (uint8_t). Indicates whether the button is currently active (pressed).
@@ -593,6 +673,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: Buzzer
     export const SRV_BUZZER = 0x1b57b1d7
+
+    export const enum BuzzerStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
     export const enum BuzzerReg {
         /**
          * Read-write ratio uint8_t. The volume (duty cycle) of the buzzer.
@@ -622,6 +712,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: Character Screen
     export const SRV_CHARACTER_SCREEN = 0x1f37c56a
+
+    export const enum CharacterScreenStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
 
     export const enum CharacterScreenVariant { // uint8_t
         LCD = 0x1,
@@ -685,6 +785,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: CODAL Message Bus
     export const SRV_CODAL_MESSAGE_BUS = 0x16ad7cd5
+
+    export const enum CodalMessageBusStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
     export const enum CodalMessageBusCmd {
         /**
          * Sends a new event on the message bus.
@@ -700,6 +810,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: Color
     export const SRV_COLOR = 0x1630d567
+
+    export const enum ColorStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
     export const enum ColorReg {
         /**
          * Detected color in the RGB color space.
@@ -715,6 +835,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: Control
     export const SRV_CONTROL = 0x0
+
+    export const enum ControlStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
 
     export const enum ControlAnnounceFlags { // uint8_t
         SupportsACK = 0x1,
@@ -881,6 +1011,16 @@ namespace jacdac {
     // Service: Distance
     export const SRV_DISTANCE = 0x141a6b8a
 
+    export const enum DistanceStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
+
     export const enum DistanceVariant { // uint32_t
         Ultrasonic = 0x1,
         Infrared = 0x2,
@@ -930,6 +1070,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: Equivalent CO²
     export const SRV_E_CO2 = 0x169c9dc6
+
+    export const enum ECO2StatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
 
     export const enum ECO2Variant { // uint8_t
         VOC = 0x1,
@@ -996,6 +1146,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: Humidity
     export const SRV_HUMIDITY = 0x16c810b8
+
+    export const enum HumidityStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
     export const enum HumidityReg {
         /**
          * Read-only %RH u22.10 (uint32_t). The relative humidity in percentage of full water saturation.
@@ -1020,6 +1180,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: Illuminance
     export const SRV_ILLUMINANCE = 0x1e6ecaf2
+
+    export const enum IlluminanceStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
     export const enum IlluminanceReg {
         /**
          * Read-only lux u22.10 (uint32_t). The amount of illuminance, as lumens per square metre.
@@ -1044,6 +1214,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: Azure IoT Hub
     export const SRV_IOT_HUB = 0x19ed364c
+
+    export const enum IotHubStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
     export const enum IotHubCmd {
         /**
          * No args. Try connecting using currently set `connection_string`.
@@ -1314,6 +1494,16 @@ namespace jacdac {
     // Service: Joystick
     export const SRV_JOYSTICK = 0x1acb1890
 
+    export const enum JoystickStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
+
     export const enum JoystickVariant { // uint8_t
         Thumb = 0x1,
         ArcadeBall = 0x2,
@@ -1355,6 +1545,16 @@ namespace jacdac {
     // Service: Keyboard
     export const SRV_KEYBOARD = 0x18b05b6a
 
+    export const enum KeyboardStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
+
     export const enum KeyboardModifiers { // uint8_t
         LeftControl = 0xe0,
         LeftShift = 0xe1,
@@ -1394,6 +1594,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: LED
     export const SRV_LED = 0x1fb57453
+
+    export const enum LedStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
     export const enum LedReg {
         /**
          * Read-write ratio uint16_t. Set the luminosity of the strip. The value is used to scale `start_intensity` in `steps` register.
@@ -1458,6 +1668,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: LED Matrix Controller
     export const SRV_LED_MATRIX_CONTROLLER = 0x1d35e393
+
+    export const enum LedMatrixControllerStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
     export const enum LedMatrixControllerReg {
         /**
          * Read-write bytes. Read or writes the state of the screen where pixel on/off state is
@@ -1508,6 +1728,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: LED Matrix Display
     export const SRV_LED_MATRIX_DISPLAY = 0x110d154b
+
+    export const enum LedMatrixDisplayStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
     export const enum LedMatrixDisplayReg {
         /**
          * Read-only bytes. Streams the state of the screen where pixel on/off state is
@@ -1551,6 +1781,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: LED Pixel
     export const SRV_LED_PIXEL = 0x126f00e0
+
+    export const enum LedPixelStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
 
     export const enum LedPixelLightType { // uint8_t
         WS2812B_GRB = 0x0,
@@ -1667,6 +1907,16 @@ namespace jacdac {
     // Service: Light level
     export const SRV_LIGHT_LEVEL = 0x17dc9a1c
 
+    export const enum LightLevelStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
+
     export const enum LightLevelVariant { // uint8_t
         PhotoResistor = 0x1,
         LEDMatrix = 0x2,
@@ -1697,6 +1947,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: Logger
     export const SRV_LOGGER = 0x12dc1fca
+
+    export const enum LoggerStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
 
     export const enum LoggerPriority { // uint8_t
         Debug = 0x0,
@@ -1763,6 +2023,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: Matrix Keypad
     export const SRV_MATRIX_KEYPAD = 0x13062dc8
+
+    export const enum MatrixKeypadStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
     export const enum MatrixKeypadReg {
         /**
          * Read-only. The coordinate of the button currently pressed. Keys are zero-indexed from left to right, top to bottom:
@@ -1848,6 +2118,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: Microphone
     export const SRV_MICROPHONE = 0x113dac86
+
+    export const enum MicrophoneStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
     export const enum MicrophoneCmd {
         /**
          * The samples will be streamed back over the `samples` pipe.
@@ -1878,6 +2158,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: Model Runner
     export const SRV_MODEL_RUNNER = 0x140f9a78
+
+    export const enum ModelRunnerStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
 
     export const enum ModelRunnerModelFormat { // uint32_t
         TFLite = 0x334c4654,
@@ -2036,6 +2326,16 @@ namespace jacdac {
     // Service: Motion
     export const SRV_MOTION = 0x1179a749
 
+    export const enum MotionStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
+
     export const enum MotionVariant { // uint8_t
         PIR = 0x1,
     }
@@ -2082,6 +2382,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: Motor
     export const SRV_MOTOR = 0x17004cd8
+
+    export const enum MotorStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
     export const enum MotorReg {
         /**
          * Read-write ratio int16_t. PWM duty cycle of the motor. Use negative/positive values to run the motor forwards and backwards.
@@ -2126,6 +2436,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: Mouse
     export const SRV_MOUSE = 0x1885dc1c
+
+    export const enum MouseStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
 
     export const enum MouseButton { // uint16_t
         Right = 0x1,
@@ -2178,6 +2498,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: Multitouch
     export const SRV_MULTITOUCH = 0x18d55e2b
+
+    export const enum MultitouchStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
     export const enum MultitouchReg {
         /**
          * Read-only. Capacitance of channels. The capacitance is continuously calibrated, and a value of `0` indicates
@@ -2250,6 +2580,16 @@ namespace jacdac {
     // Service: Potentiometer
     export const SRV_POTENTIOMETER = 0x1f274746
 
+    export const enum PotentiometerStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
+
     export const enum PotentiometerVariant { // uint32_t
         Slider = 0x1,
         Rotary = 0x2,
@@ -2279,6 +2619,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: Power
     export const SRV_POWER = 0x1fa4c95a
+
+    export const enum PowerStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
     export const enum PowerReg {
         /**
          * Read-write bool (uint8_t). Turn the power to the bus on/off.
@@ -2405,6 +2755,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: Protocol Test
     export const SRV_PROTO_TEST = 0x16c7466a
+
+    export const enum ProtoTestStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
     export const enum ProtoTestReg {
         /**
          * Read-write bool (uint8_t). A read write bool register.
@@ -2655,6 +3015,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: Rain gauge
     export const SRV_RAIN_GAUGE = 0x13734c95
+
+    export const enum RainGaugeStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
     export const enum RainGaugeReg {
         /**
          * Read-only mm u16.16 (uint32_t). Total precipitation recorded so far.
@@ -2679,6 +3049,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: Real time clock
     export const SRV_REAL_TIME_CLOCK = 0x1a8b1a28
+
+    export const enum RealTimeClockStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
 
     export const enum RealTimeClockVariant { // uint8_t
         Computer = 0x1,
@@ -2743,6 +3123,16 @@ namespace jacdac {
     // Service: Reflected light
     export const SRV_REFLECTED_LIGHT = 0x126c4cb2
 
+    export const enum ReflectedLightStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
+
     export const enum ReflectedLightVariant { // uint8_t
         InfraredDigital = 0x1,
         InfraredAnalog = 0x2,
@@ -2786,6 +3176,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: Relay
     export const SRV_RELAY = 0x183fe656
+
+    export const enum RelayStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
 
     export const enum RelayVariant { // uint32_t
         Electromechanical = 0x1,
@@ -2840,6 +3240,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: Role Manager
     export const SRV_ROLE_MANAGER = 0x119c3ad1
+
+    export const enum RoleManagerStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
     export const enum RoleManagerReg {
         /**
          * Read-only bool (uint8_t). Indicates if all required roles have been allocated to devices.
@@ -2929,6 +3339,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: Rotary encoder
     export const SRV_ROTARY_ENCODER = 0x10fa29c9
+
+    export const enum RotaryEncoderStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
     export const enum RotaryEncoderReg {
         /**
          * Read-only # int32_t. Upon device reset starts at `0` (regardless of the shaft position).
@@ -2954,6 +3374,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: Servo
     export const SRV_SERVO = 0x12fc9103
+
+    export const enum ServoStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
 
     export const enum ServoVariant { // uint32_t
         PositionalRotation = 0x1,
@@ -3041,6 +3471,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: Settings
     export const SRV_SETTINGS = 0x1107dc4a
+
+    export const enum SettingsStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
     export const enum SettingsCmd {
         /**
          * Argument: key string (bytes). Get the value of given setting. If no such entry exists, the value returned is empty.
@@ -3128,6 +3568,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: 7-segment display
     export const SRV_SEVEN_SEGMENT_DISPLAY = 0x196158f7
+
+    export const enum SevenSegmentDisplayStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
     export const enum SevenSegmentDisplayReg {
         /**
          * Read-write bytes. Each byte encodes the display status of a digit using,
@@ -3184,6 +3634,16 @@ namespace jacdac {
     // Service: Soil moisture
     export const SRV_SOIL_MOISTURE = 0x1d4aa3b3
 
+    export const enum SoilMoistureStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
+
     export const enum SoilMoistureVariant { // uint8_t
         Resistive = 0x1,
         Capacitive = 0x2,
@@ -3213,6 +3673,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: Sound level
     export const SRV_SOUND_LEVEL = 0x14ad1a5d
+
+    export const enum SoundLevelStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
     export const enum SoundLevelReg {
         /**
          * Read-only ratio uint16_t. The sound level detected by the microphone
@@ -3260,6 +3730,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: Speech synthesis
     export const SRV_SPEECH_SYNTHESIS = 0x1204d995
+
+    export const enum SpeechSynthesisStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
     export const enum SpeechSynthesisReg {
         /**
          * Read-write bool (uint8_t). Determines if the speech engine is in a non-paused state.
@@ -3328,6 +3808,16 @@ namespace jacdac {
     // Service: Switch
     export const SRV_SWITCH = 0x1ad29402
 
+    export const enum SwitchStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
+
     export const enum SwitchVariant { // uint32_t
         Slide = 0x1,
         Tilt = 0x2,
@@ -3387,6 +3877,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: TCP
     export const SRV_TCP = 0x1b43b70b
+
+    export const enum TcpStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
 
     export const enum TcpTcpError { // int32_t
         InvalidCommand = 0x1,
@@ -3454,6 +3954,16 @@ namespace jacdac {
     // Service: Thermometer
     export const SRV_THERMOMETER = 0x1421bac7
 
+    export const enum ThermometerStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
+
     export const enum ThermometerVariant { // uint32_t
         Outdoor = 0x1,
         Indoor = 0x2,
@@ -3513,6 +4023,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: Traffic Light
     export const SRV_TRAFFIC_LIGHT = 0x15c38d9b
+
+    export const enum TrafficLightStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
     export const enum TrafficLightReg {
         /**
          * Read-write bool (uint8_t). The on/off state of the red light.
@@ -3546,6 +4066,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: Total Volatile organic compound
     export const SRV_TVOC = 0x12a5b597
+
+    export const enum TVOCStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
     export const enum TVOCReg {
         /**
          * Read-only ppb u22.10 (uint32_t). Total volatile organic compound readings in parts per billion.
@@ -3598,6 +4128,16 @@ namespace jacdac {
     // Service: UV index
     export const SRV_UVINDEX = 0x1f6e0d90
 
+    export const enum UVIndexStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
+
     export const enum UVIndexVariant { // uint8_t
         UVA_UVB = 0x1,
         Visible_IR = 0x2,
@@ -3636,6 +4176,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: Vibration motor
     export const SRV_VIBRATION_MOTOR = 0x183fc4a2
+
+    export const enum VibrationMotorStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
     export const enum VibrationMotorReg {
         /**
          * Read-only ratio uint8_t. Rotation speed of the motor. If only one rotation speed is supported,
@@ -3674,6 +4224,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: WIFI
     export const SRV_WIFI = 0x18aae1fa
+
+    export const enum WifiStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
 
     export const enum WifiAPFlags { // uint32_t
         HasPassword = 0x1,
@@ -3752,6 +4312,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: Wind direction
     export const SRV_WIND_DIRECTION = 0x186be92b
+
+    export const enum WindDirectionStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
     export const enum WindDirectionReg {
         /**
          * Read-only uint16_t. The direction of the wind.
@@ -3785,6 +4355,16 @@ namespace jacdac {
 namespace jacdac {
     // Service: Wind speed
     export const SRV_WIND_SPEED = 0x1b591bbf
+
+    export const enum WindSpeedStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
     export const enum WindSpeedReg {
         /**
          * Read-only m/s u16.16 (uint32_t). The velocity of the wind.

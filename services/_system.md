@@ -107,16 +107,6 @@ Smallest, yet distinguishable change in reading.
 
 Thresholds for event generation for event generation for analog sensors.
 
-    ro status_code @ 0x103 {
-        code: u16
-        vendor_code: u16
-    }
-
-Reports the current state or error status of the device. ``code`` is a standardized value from 
-the JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device
-state. This report is typically not queried, when a device has an error, it will typically
-add this report in frame along with the announce packet.
-
     const streaming_preferred_interval: u32 ms @ 0x102
 
 Preferred default streaming interval for sensor in milliseconds.
@@ -142,4 +132,4 @@ Notifies that the service has been dis-activated.
 
     event change @ 0x03 { }
 
-Notifies that the internal state of the service changed.
+Notifies that the some state of the service changed.

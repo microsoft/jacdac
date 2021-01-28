@@ -142,28 +142,28 @@ typedef struct jd_system_status_code {
 
 
 /**
+ * Notifies that the service has been activated (eg. button pressed, network connected, etc.)
+ */
+#define JD_EV_ACTIVE 0x11
+
+/**
+ * Notifies that the service has been dis-activated.
+ */
+#define JD_EV_INACTIVE 0x12
+
+/**
+ * Notifies that the some state of the service changed.
+ */
+#define JD_EV_CHANGE 0x13
+
+/**
  * Notifies that the status code of the service changed.
  */
-#define JD_EV_STATUS_CODE_CHANGED 0x4
+#define JD_EV_STATUS_CODE_CHANGED 0x14
 typedef struct jd_system_status_code_changed {
     uint16_t code;  // StatusCodes
     uint16_t vendor_code;
 } jd_system_status_code_changed_t;
 
-
-/**
- * Notifies that the service has been activated (eg. button pressed, network connected, etc.)
- */
-#define JD_EV_ACTIVE 0x1
-
-/**
- * Notifies that the service has been dis-activated.
- */
-#define JD_EV_INACTIVE 0x2
-
-/**
- * Notifies that the some state of the service changed.
- */
-#define JD_EV_CHANGE 0x3
 
 #endif

@@ -144,17 +144,17 @@ typedef struct jd_system_status_code {
 /**
  * Notifies that the service has been activated (eg. button pressed, network connected, etc.)
  */
-#define JD_EV_ACTIVE 0x11
+#define JD_EV_ACTIVE 0x1
 
 /**
  * Notifies that the service has been dis-activated.
  */
-#define JD_EV_INACTIVE 0x12
+#define JD_EV_INACTIVE 0x2
 
 /**
  * Notifies that the some state of the service changed.
  */
-#define JD_EV_CHANGE 0x13
+#define JD_EV_CHANGE 0x3
 
 /**
  * Notifies that the status code of the service changed.

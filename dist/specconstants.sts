@@ -192,19 +192,19 @@ namespace jacdac {
          * Notifies that the service has been activated (eg. button pressed, network connected, etc.)
          */
         //% block="active"
-        Active = 0x11,
+        Active = 0x1,
 
         /**
          * Notifies that the service has been dis-activated.
          */
         //% block="inactive"
-        Inactive = 0x12,
+        Inactive = 0x2,
 
         /**
          * Notifies that the some state of the service changed.
          */
         //% block="change"
-        Change = 0x13,
+        Change = 0x3,
 
         /**
          * Notifies that the status code of the service changed.
@@ -480,7 +480,7 @@ namespace jacdac {
          * ```
          */
         //% block="down"
-        Down = 0x11,
+        Down = 0x1,
 
         /**
          * Argument: button Button (uint8_t). Emitted when button goes from active to inactive.
@@ -490,7 +490,7 @@ namespace jacdac {
          * ```
          */
         //% block="up"
-        Up = 0x12,
+        Up = 0x2,
     }
 
 }
@@ -600,13 +600,13 @@ namespace jacdac {
          * Emitted when button goes from inactive (`pressed == 0`) to active.
          */
         //% block="down"
-        Down = 0x11,
+        Down = 0x1,
 
         /**
          * Emitted when button goes from active (`pressed == 1`) to inactive.
          */
         //% block="up"
-        Up = 0x12,
+        Up = 0x2,
 
         /**
          * Emitted together with `up` when the press time was not longer than 500ms.
@@ -1843,7 +1843,7 @@ namespace jacdac {
          * ```
          */
         //% block="down"
-        Down = 0x11,
+        Down = 0x1,
 
         /**
          * Argument: uint8_t. Emitted when a key, at the given index, goes from active (`pressed == 1`) to inactive.
@@ -1853,7 +1853,7 @@ namespace jacdac {
          * ```
          */
         //% block="up"
-        Up = 0x12,
+        Up = 0x2,
 
         /**
          * Argument: uint8_t. Emitted together with `up` when the press time was not longer than 500ms.
@@ -2232,7 +2232,7 @@ namespace jacdac {
          * ```
          */
         //% block="touch"
-        Touch = 0x11,
+        Touch = 0x1,
 
         /**
          * Argument: channel uint32_t. Emitted when an input is no longer touched.
@@ -2242,7 +2242,7 @@ namespace jacdac {
          * ```
          */
         //% block="release"
-        Release = 0x12,
+        Release = 0x2,
 
         /**
          * Argument: channel uint32_t. Emitted when an input is briefly touched. TODO Not implemented.
@@ -2805,13 +2805,13 @@ namespace jacdac {
          * The sensor detected a transition from light to dark
          */
         //% block="dark"
-        Dark = 0x12,
+        Dark = 0x2,
 
         /**
          * The sensor detected a transition from dark to light
          */
         //% block="light"
-        Light = 0x11,
+        Light = 0x1,
     }
 
 }
@@ -2859,13 +2859,13 @@ namespace jacdac {
          * Emitted when relay goes from ``off`` to ``on`` state.
          */
         //% block="on"
-        On = 0x11,
+        On = 0x1,
 
         /**
          * Emitted when relay goes from ``on`` to ``off`` state.
          */
         //% block="off"
-        Off = 0x12,
+        Off = 0x2,
     }
 
 }
@@ -2954,7 +2954,7 @@ namespace jacdac {
          * Emit notifying that the internal state of the service changed.
          */
         //% block="change"
-        Change = 0x13,
+        Change = 0x3,
     }
 
 }
@@ -3153,7 +3153,7 @@ namespace jacdac {
          * Notifies that some setting have been modified.
          */
         //% block="change"
-        Change = 0x13,
+        Change = 0x3,
     }
 
 }
@@ -3279,13 +3279,13 @@ namespace jacdac {
          * Raised when a loud sound is detected
          */
         //% block="loud"
-        Loud = 0x11,
+        Loud = 0x1,
 
         /**
          * Raised when a period of quietness is detected
          */
         //% block="quiet"
-        Quiet = 0x12,
+        Quiet = 0x2,
     }
 
 }
@@ -3406,13 +3406,13 @@ namespace jacdac {
          * Emitted when switch goes from ``off`` to ``on``.
          */
         //% block="on"
-        On = 0x11,
+        On = 0x1,
 
         /**
          * Emitted when switch goes from ``on`` to ``off``.
          */
         //% block="off"
-        Off = 0x12,
+        Off = 0x2,
     }
 
 }
@@ -3771,13 +3771,13 @@ namespace jacdac {
          * Emitted upon successful join and IP address assignment.
          */
         //% block="got ip"
-        GotIp = 0x11,
+        GotIp = 0x1,
 
         /**
          * Emitted when disconnected from network.
          */
         //% block="lost ip"
-        LostIp = 0x12,
+        LostIp = 0x2,
     }
 
 }

@@ -190,17 +190,17 @@ export enum SystemEvent {
     /**
      * Notifies that the service has been activated (eg. button pressed, network connected, etc.)
      */
-    Active = 0x11,
+    Active = 0x1,
 
     /**
      * Notifies that the service has been dis-activated.
      */
-    Inactive = 0x12,
+    Inactive = 0x2,
 
     /**
      * Notifies that the some state of the service changed.
      */
-    Change = 0x13,
+    Change = 0x3,
 
     /**
      * Notifies that the status code of the service changed.
@@ -451,7 +451,7 @@ export enum ArcadeGamepadEvent {
      * const [button] = jdunpack<[ArcadeGamepadButton]>(buf, "u8")
      * ```
      */
-    Down = 0x11,
+    Down = 0x1,
 
     /**
      * Argument: button Button (uint8_t). Emitted when button goes from active to inactive.
@@ -460,7 +460,7 @@ export enum ArcadeGamepadEvent {
      * const [button] = jdunpack<[ArcadeGamepadButton]>(buf, "u8")
      * ```
      */
-    Up = 0x12,
+    Up = 0x2,
 }
 
 // Service: Barometer
@@ -563,12 +563,12 @@ export enum ButtonEvent {
     /**
      * Emitted when button goes from inactive (`pressed == 0`) to active.
      */
-    Down = 0x11,
+    Down = 0x1,
 
     /**
      * Emitted when button goes from active (`pressed == 1`) to inactive.
      */
-    Up = 0x12,
+    Up = 0x2,
 
     /**
      * Emitted together with `up` when the press time was not longer than 500ms.
@@ -1761,7 +1761,7 @@ export enum MatrixKeypadEvent {
      * const [down] = jdunpack<[number]>(buf, "u8")
      * ```
      */
-    Down = 0x11,
+    Down = 0x1,
 
     /**
      * Argument: uint8_t. Emitted when a key, at the given index, goes from active (`pressed == 1`) to inactive.
@@ -1770,7 +1770,7 @@ export enum MatrixKeypadEvent {
      * const [up] = jdunpack<[number]>(buf, "u8")
      * ```
      */
-    Up = 0x12,
+    Up = 0x2,
 
     /**
      * Argument: uint8_t. Emitted together with `up` when the press time was not longer than 500ms.
@@ -2134,7 +2134,7 @@ export enum MultitouchEvent {
      * const [channel] = jdunpack<[number]>(buf, "u32")
      * ```
      */
-    Touch = 0x11,
+    Touch = 0x1,
 
     /**
      * Argument: channel uint32_t. Emitted when an input is no longer touched.
@@ -2143,7 +2143,7 @@ export enum MultitouchEvent {
      * const [channel] = jdunpack<[number]>(buf, "u32")
      * ```
      */
-    Release = 0x12,
+    Release = 0x2,
 
     /**
      * Argument: channel uint32_t. Emitted when an input is briefly touched. TODO Not implemented.
@@ -2683,12 +2683,12 @@ export enum ReflectedLightEvent {
     /**
      * The sensor detected a transition from light to dark
      */
-    Dark = 0x12,
+    Dark = 0x2,
 
     /**
      * The sensor detected a transition from dark to light
      */
-    Light = 0x11,
+    Light = 0x1,
 }
 
 // Service: Relay
@@ -2733,12 +2733,12 @@ export enum RelayEvent {
     /**
      * Emitted when relay goes from ``off`` to ``on`` state.
      */
-    On = 0x11,
+    On = 0x1,
 
     /**
      * Emitted when relay goes from ``on`` to ``off`` state.
      */
-    Off = 0x12,
+    Off = 0x2,
 }
 
 // Service: Role Manager
@@ -2824,7 +2824,7 @@ export enum RoleManagerEvent {
     /**
      * Emit notifying that the internal state of the service changed.
      */
-    Change = 0x13,
+    Change = 0x3,
 }
 
 // Service: Rotary encoder
@@ -3016,7 +3016,7 @@ export enum SettingsEvent {
     /**
      * Notifies that some setting have been modified.
      */
-    Change = 0x13,
+    Change = 0x3,
 }
 
 // Service: 7-segment display
@@ -3135,12 +3135,12 @@ export enum SoundLevelEvent {
     /**
      * Raised when a loud sound is detected
      */
-    Loud = 0x11,
+    Loud = 0x1,
 
     /**
      * Raised when a period of quietness is detected
      */
-    Quiet = 0x12,
+    Quiet = 0x2,
 }
 
 // Service: Speech synthesis
@@ -3256,12 +3256,12 @@ export enum SwitchEvent {
     /**
      * Emitted when switch goes from ``off`` to ``on``.
      */
-    On = 0x11,
+    On = 0x1,
 
     /**
      * Emitted when switch goes from ``on`` to ``off``.
      */
-    Off = 0x12,
+    Off = 0x2,
 }
 
 // Service: TCP
@@ -3605,12 +3605,12 @@ export enum WifiEvent {
     /**
      * Emitted upon successful join and IP address assignment.
      */
-    GotIp = 0x11,
+    GotIp = 0x1,
 
     /**
      * Emitted when disconnected from network.
      */
-    LostIp = 0x12,
+    LostIp = 0x2,
 }
 
 // Service: Wind direction

@@ -31,7 +31,7 @@ Starts playing a sounds with a specific volume.
         sounds_port: pipe
     }
     pipe report sounds_pipe {
-       duration: u16 s
+       duration: u32 ms
        name: string
     }
 

@@ -6,12 +6,13 @@ A sensor approximating the oxygen level.
 
     identifier: 0x14ad1a5d
     extends: _sensor
+
 ## Registers
 
-    ro oxygen: u16 / @ reading
+    ro oxygen: u16.16 % { typical_min=80, typical_max=100 } @ reading
 
 The estimated oxygen level in blood.
 
-    ro oxygen_error?: u16 / bpm @ reading_error
+    ro oxygen_error?: u16.16 % @ reading_error
 
 The estimated error on the reported sensor data.

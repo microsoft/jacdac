@@ -2154,10 +2154,10 @@ export enum PotentiometerVariant { // uint32_t
 
 export enum PotentiometerReg {
     /**
-     * Read-only ratio uint16_t. The relative position of the slider between `0x0000` and `0xffff`.
+     * Read-only ratio u0.16 (uint16_t). The relative position of the slider between `0x0000` and `0xffff`.
      *
      * ```
-     * const [position] = jdunpack<[number]>(buf, "u16")
+     * const [position] = jdunpack<[number]>(buf, "u0.16")
      * ```
      */
     Position = 0x101,

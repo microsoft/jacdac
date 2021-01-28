@@ -7,7 +7,7 @@ A controller for 1 or more RGB LEDs connected in parallel.
 
 ## Animation steps
 
-Animations are described using pairs of HSV and duration, similarly to the LED service.
+Animations are described using pairs of HSV and duration, similarly to the `status_light` register in the control service.
 
 ## Registers
 

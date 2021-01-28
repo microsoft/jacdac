@@ -2,21 +2,12 @@
 #ifndef _JACDAC_SPEC_BASE_H
 #define _JACDAC_SPEC_BASE_H 1
 
-// enum StatusCodes (uint16_t)
-#define JD_STATUS_CODES_READY 0x0
-#define JD_STATUS_CODES_INITIALIZING 0x1
-#define JD_STATUS_CODES_CALIBRATING 0x2
-#define JD_STATUS_CODES_SLEEPING 0x3
-#define JD_STATUS_CODES_WAITING_FOR_INPUT 0x4
-#define JD_STATUS_CODES_CALIBRATION_NEEDED 0x64
-
 /**
  * Reports the current state or error status of the device. ``code`` is a standardized value from 
  * the JACDAC status/error codes. ``vendor_code`` is any vendor specific error code describing the device
  * state. This report is typically not queried, when a device has an error, it will typically
  * add this report in frame along with the announce packet.
  */
-#define JD_REG_STATUS_CODE 0x103
 typedef struct jd_base_status_code {
     uint16_t code;
     uint16_t vendor_code;
@@ -26,7 +17,6 @@ typedef struct jd_base_status_code {
 /**
  * Notifies that the status code of the service changed.
  */
-#define JD_EV_STATUS_CODE_CHANGED 0x4
 typedef struct jd_base_status_code_changed {
     uint16_t code;
     uint16_t vendor_code;

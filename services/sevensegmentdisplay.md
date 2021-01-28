@@ -24,7 +24,7 @@ Thus, sending an empty ``digits`` payload clears the screen.
  - D -   -
 ```
 
-    rw brightness: u16 / @ intensity
+    rw brightness: u0.16 / @ intensity
 
 Controls the brightness of the LEDs. ``0`` means off.
 

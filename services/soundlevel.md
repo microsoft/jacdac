@@ -7,7 +7,7 @@ A sound level detector sensor, gives a relative indication of the sound level.
 
 ## Registers
 
-    ro sound_level: u16 / @ reading
+    ro sound_level: u0.16 / @ reading
 
 The sound level detected by the microphone
 

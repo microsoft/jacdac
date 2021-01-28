@@ -9,9 +9,9 @@
  */
 #define JD_COLOR_REG_COLOR JD_REG_READING
 typedef struct jd_color_color {
-    uint16_t red; // ratio
-    uint16_t green; // ratio
-    uint16_t blue; // ratio
+    uint16_t red;  // ratio u0.16
+    uint16_t green;  // ratio u0.16
+    uint16_t blue;  // ratio u0.16
 } jd_color_color_t;
 
 

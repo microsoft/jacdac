@@ -34,10 +34,10 @@ The type of physical sensor
 
 ## Events
 
-    event active @ active {}
+    event connect @ active {}
 
 The sensor is connected to the patient and ready to measure data.
 
-    event inactive @ inactive {}
+    event disconnect @ inactive {}
 
 The sensor was disconnected from the patient.

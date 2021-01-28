@@ -12,7 +12,7 @@ Global volume of the output. ``0`` means completely off. This volume is mixed wi
 
     const supported_wav_format? @ 0x80 {
         num_channels: u8
-        bit: u8
+        bits_per_sample: u8
         max_sample_rate: u16 Hz
     }
 

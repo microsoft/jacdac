@@ -14,7 +14,7 @@ Determines if the speech engine is in a non-paused state.
 
 Language used for utterances as defined in https://www.ietf.org/rfc/bcp/bcp47.txt.
 
-    rw volume? = 255: u0.8 / @ 0x81
+    rw volume? = 1: u0.8 / @ 0x81
 
 Volume for utterances.
 

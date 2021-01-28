@@ -12,6 +12,6 @@ A sensor approximating the oxygen level.
 
 The estimated oxygen level in blood.
 
-    ro oxygen_error?: u16 bpm @ error_reading
+    ro oxygen_error?: u16 / bpm @ reading_error
 
 The estimated error on the reported sensor data.

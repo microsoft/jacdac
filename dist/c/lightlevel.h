@@ -10,7 +10,7 @@
 #define JD_LIGHT_LEVEL_VARIANT_AMBIENT 0x3
 
 /**
- * Read-only ratio uint16_t. Detect light level
+ * Read-only ratio u0.16 (uint16_t). Detect light level
  */
 #define JD_LIGHT_LEVEL_REG_LIGHT_LEVEL JD_REG_READING
 

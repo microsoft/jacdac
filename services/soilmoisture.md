@@ -7,7 +7,7 @@ A soil moisture sensor.
 
 ## Registers
 
-    ro moisture: u16 / @ reading
+    ro moisture: u0.16 / @ reading
 
 Indicates the wetness of the soil, from ``dry`` to ``wet``.
 

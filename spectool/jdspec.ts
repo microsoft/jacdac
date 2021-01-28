@@ -603,6 +603,10 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
 
         let shift = typeShift || undefined
         if (unit == "/") {
+            // / units should be used with ui0. data
+            if (!/^(u0|i1)\.\d+$/.test(tp))
+                error(`fraction unit must be used with u0.yyy or i1.yyy data types (got ${tp})`)
+
             shift = Math.abs(storage) * 8
             if (storage < 0)
                 shift -= 1
@@ -816,7 +820,7 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
                 info.enums[k] = ie;
             })
         const innerPackets = clone(inner.packets
-            .filter(pkt => !info.packets.find(ipkt => ipkt.identifier === pkt.identifier)));
+            .filter(pkt => !info.packets.find(ipkt => ipkt.kind === pkt.kind && ipkt.identifier === pkt.identifier)));
         innerPackets.forEach(pkt => pkt.derived = name)
         info.packets = [...info.packets, ...innerPackets]
         if (inner.highCommands)

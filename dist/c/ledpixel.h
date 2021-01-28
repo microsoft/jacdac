@@ -16,13 +16,13 @@
 #define JD_LED_PIXEL_VARIANT_JEWEL 0x4
 
 /**
- * Read-write ratio uint8_t. Set the luminosity of the strip.
+ * Read-write ratio u0.8 (uint8_t). Set the luminosity of the strip.
  * At `0` the power to the strip is completely shut down.
  */
 #define JD_LED_PIXEL_REG_BRIGHTNESS JD_REG_INTENSITY
 
 /**
- * Read-only ratio uint8_t. This is the luminosity actually applied to the strip.
+ * Read-only ratio u0.8 (uint8_t). This is the luminosity actually applied to the strip.
  * May be lower than `brightness` if power-limited by the `max_power` register.
  * It will rise slowly (few seconds) back to `brightness` is limits are no longer required.
  */

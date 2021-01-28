@@ -2,28 +2,42 @@
 
 A sensor approximating the heart rate. 
 
-**JACDAC is NOT suitable for medical devices and should NOT be used in any kind of device to diagnose or treat any medical conditions.**
-
-    identifer: 0x166c6dc4
+    identifier: 0x166c6dc4
     extends: _sensor
+
+**JACDAC is NOT suitable for medical devices and should NOT be used in any kind of device to diagnose or treat any medical conditions.**
 
 ## Registers
 
-    ro heart_rate: i16.16 bpm @ reading
+    ro heart_rate: u16.16 bpm @ reading
 
-The estimated heart rate. Negative value when the sensor cannot sense the rate.
+The estimated heart rate.
 
-    ro heart_rate_error?: u16.16 bpm @ error_reading
+    rw connected: bool @ intensity
+
+A register that determines if the sensor is ready to measure data.
+
+    ro heart_rate_error?: u16.16 bpm @ reading_error
 
 The estimated error on the reported sensor data.
 
     enum Variant: u32 {
-        Finger,
-        Chest,
-        Wrist,
-        Pump,
-        WebCam
+        Finger = 1
+        Chest = 2
+        Wrist = 3
+        Pump = 4
+        WebCam = 5
     }
     const variant?: Variant @ variant
 
 The type of physical sensor
+
+## Events
+
+    event active @ active {}
+
+The sensor is connected to the patient and ready to measure data.
+
+    event inactive @ inactive {}
+
+The sensor was disconnected from the patient.

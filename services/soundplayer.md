@@ -6,7 +6,7 @@ A device that can play various sounds stored locally. This service is typically 
 
 ## Registers
 
-    rw volume: u16 @ intensity
+    rw volume: u16 / @ intensity
 
 Global volume of the output. ``0`` means completely off. This volume is mixed with each play volumes.
 

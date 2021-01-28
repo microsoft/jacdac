@@ -840,7 +840,7 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
     }
 
     function warn(msg: string) {
-        if (info.camelName == "system" || info.camelName == "base")
+        if (info.camelName == "system")
             return // no warnings in _system
         if (errors.some(e => e.line == lineNo && e.message == msg))
             return

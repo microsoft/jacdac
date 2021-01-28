@@ -1,4 +1,14 @@
 // Service: Common registers and commands
+
+export enum SystemStatusCodes { // uint16_t
+    Ready = 0x0,
+    Initializing = 0x1,
+    Calibrating = 0x2,
+    Sleeping = 0x3,
+    WaitingForInput = 0x4,
+    CalibrationNeeded = 0x64,
+}
+
 export enum SystemCmd {
     /**
      * No args. Enumeration data for control service; service-specific advertisement data otherwise.
@@ -162,9 +172,30 @@ export enum SystemReg {
      * ```
      */
     Variant = 0x107,
+
+    /**
+     * Reports the current state or error status of the device. ``code`` is a standardized value from
+     * the JACDAC status/error codes. ``vendor_code`` is any vendor specific error code describing the device
+     * state. This report is typically not queried, when a device has an error, it will typically
+     * add this report in frame along with the announce packet.
+     *
+     * ```
+     * const [code, vendorCode] = jdunpack<[SystemStatusCodes, number]>(buf, "u16 u16")
+     * ```
+     */
+    StatusCode = 0x103,
 }
 
 export enum SystemEvent {
+    /**
+     * Notifies that the status code of the service changed.
+     *
+     * ```
+     * const [code, vendorCode] = jdunpack<[SystemStatusCodes, number]>(buf, "u16 u16")
+     * ```
+     */
+    StatusCodeChanged = 0x4,
+
     /**
      * Notifies that the service has been activated (eg. button pressed, network connected, etc.)
      */
@@ -182,16 +213,6 @@ export enum SystemEvent {
 }
 
 // Service: Base service
-
-export enum BaseStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 export enum BaseReg {
     /**
      * Reports the current state or error status of the device. ``code`` is a standardized value from
@@ -218,16 +239,6 @@ export enum BaseEvent {
 }
 
 // Service: Sensor
-
-export enum SensorStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 export enum SensorReg {
     /**
      * Read-write uint8_t. Asks device to stream a given number of samples
@@ -260,16 +271,6 @@ export enum SensorReg {
 
 // Service: Accelerometer
 export const SRV_ACCELEROMETER = 0x1f140409
-
-export enum AccelerometerStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 export enum AccelerometerReg {
     /**
      * Indicates the current forces acting on accelerometer.
@@ -346,16 +347,6 @@ export enum AccelerometerEvent {
 // Service: Sensor Aggregator
 export const SRV_SENSOR_AGGREGATOR = 0x1d90e1c5
 
-export enum SensorAggregatorStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
-
 export enum SensorAggregatorSampleType { // uint8_t
     U8 = 0x8,
     I8 = 0x88,
@@ -417,16 +408,6 @@ export enum SensorAggregatorReg {
 // Service: Arcade Gamepad
 export const SRV_ARCADE_GAMEPAD = 0x1deaa06e
 
-export enum ArcadeGamepadStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
-
 export enum ArcadeGamepadButton { // uint8_t
     Left = 0x1,
     Up = 0x2,
@@ -484,16 +465,6 @@ export enum ArcadeGamepadEvent {
 
 // Service: Barometer
 export const SRV_BAROMETER = 0x1e117cea
-
-export enum BarometerStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 export enum BarometerReg {
     /**
      * Read-only hPa u22.10 (uint32_t). The air pressure.
@@ -516,16 +487,6 @@ export enum BarometerReg {
 
 // Service: Bootloader
 export const SRV_BOOTLOADER = 0x1ffa9948
-
-export enum BootloaderStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 
 export enum BootloaderError { // uint32_t
     NoError = 0x0,
@@ -587,16 +548,6 @@ export enum BootloaderCmd {
 
 // Service: Button
 export const SRV_BUTTON = 0x1473a263
-
-export enum ButtonStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 export enum ButtonReg {
     /**
      * Read-only bool (uint8_t). Indicates whether the button is currently active (pressed).
@@ -632,16 +583,6 @@ export enum ButtonEvent {
 
 // Service: Buzzer
 export const SRV_BUZZER = 0x1b57b1d7
-
-export enum BuzzerStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 export enum BuzzerReg {
     /**
      * Read-write ratio u0.8 (uint8_t). The volume (duty cycle) of the buzzer.
@@ -669,16 +610,6 @@ export enum BuzzerCmd {
 
 // Service: Character Screen
 export const SRV_CHARACTER_SCREEN = 0x1f37c56a
-
-export enum CharacterScreenStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 
 export enum CharacterScreenVariant { // uint8_t
     LCD = 0x1,
@@ -740,16 +671,6 @@ export enum CharacterScreenReg {
 
 // Service: CODAL Message Bus
 export const SRV_CODAL_MESSAGE_BUS = 0x16ad7cd5
-
-export enum CodalMessageBusStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 export enum CodalMessageBusCmd {
     /**
      * Sends a new event on the message bus.
@@ -763,16 +684,6 @@ export enum CodalMessageBusCmd {
 
 // Service: Color
 export const SRV_COLOR = 0x1630d567
-
-export enum ColorStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 export enum ColorReg {
     /**
      * Detected color in the RGB color space.
@@ -786,16 +697,6 @@ export enum ColorReg {
 
 // Service: Control
 export const SRV_CONTROL = 0x0
-
-export enum ControlStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 
 export enum ControlAnnounceFlags { // uint8_t
     SupportsACK = 0x1,
@@ -960,16 +861,6 @@ export enum ControlReg {
 // Service: Distance
 export const SRV_DISTANCE = 0x141a6b8a
 
-export enum DistanceStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
-
 export enum DistanceVariant { // uint32_t
     Ultrasonic = 0x1,
     Infrared = 0x2,
@@ -1017,16 +908,6 @@ export enum DistanceReg {
 
 // Service: Equivalent CO²
 export const SRV_E_CO2 = 0x169c9dc6
-
-export enum ECO2StatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 
 export enum ECO2Variant { // uint8_t
     VOC = 0x1,
@@ -1091,16 +972,6 @@ export enum ECO2Reg {
 
 // Service: Humidity
 export const SRV_HUMIDITY = 0x16c810b8
-
-export enum HumidityStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 export enum HumidityReg {
     /**
      * Read-only %RH u22.10 (uint32_t). The relative humidity in percentage of full water saturation.
@@ -1123,16 +994,6 @@ export enum HumidityReg {
 
 // Service: Illuminance
 export const SRV_ILLUMINANCE = 0x1e6ecaf2
-
-export enum IlluminanceStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 export enum IlluminanceReg {
     /**
      * Read-only lux u22.10 (uint32_t). The amount of illuminance, as lumens per square metre.
@@ -1155,16 +1016,6 @@ export enum IlluminanceReg {
 
 // Service: Azure IoT Hub
 export const SRV_IOT_HUB = 0x19ed364c
-
-export enum IotHubStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 export enum IotHubCmd {
     /**
      * No args. Try connecting using currently set `connection_string`.
@@ -1430,16 +1281,6 @@ export enum IotHubEvent {
 // Service: Joystick
 export const SRV_JOYSTICK = 0x1acb1890
 
-export enum JoystickStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
-
 export enum JoystickVariant { // uint8_t
     Thumb = 0x1,
     ArcadeBall = 0x2,
@@ -1479,16 +1320,6 @@ export enum JoystickReg {
 // Service: Keyboard
 export const SRV_KEYBOARD = 0x18b05b6a
 
-export enum KeyboardStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
-
 export enum KeyboardModifiers { // uint8_t
     LeftControl = 0xe0,
     LeftShift = 0xe1,
@@ -1526,16 +1357,6 @@ export enum KeyboardCmd {
 
 // Service: LED
 export const SRV_LED = 0x1fb57453
-
-export enum LedStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 export enum LedReg {
     /**
      * Read-write ratio u0.16 (uint16_t). Set the luminosity of the strip. The value is used to scale `start_intensity` in `steps` register.
@@ -1598,16 +1419,6 @@ export enum LedReg {
 
 // Service: LED Matrix Controller
 export const SRV_LED_MATRIX_CONTROLLER = 0x1d35e393
-
-export enum LedMatrixControllerStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 export enum LedMatrixControllerReg {
     /**
      * Read-write bytes. Read or writes the state of the screen where pixel on/off state is
@@ -1656,16 +1467,6 @@ export enum LedMatrixControllerCmd {
 
 // Service: LED Matrix Display
 export const SRV_LED_MATRIX_DISPLAY = 0x110d154b
-
-export enum LedMatrixDisplayStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 export enum LedMatrixDisplayReg {
     /**
      * Read-only bytes. Streams the state of the screen where pixel on/off state is
@@ -1707,16 +1508,6 @@ export enum LedMatrixDisplayReg {
 
 // Service: LED Pixel
 export const SRV_LED_PIXEL = 0x126f00e0
-
-export enum LedPixelStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 
 export enum LedPixelLightType { // uint8_t
     WS2812B_GRB = 0x0,
@@ -1831,16 +1622,6 @@ export enum LedPixelCmd {
 // Service: Light level
 export const SRV_LIGHT_LEVEL = 0x17dc9a1c
 
-export enum LightLevelStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
-
 export enum LightLevelVariant { // uint8_t
     PhotoResistor = 0x1,
     LEDMatrix = 0x2,
@@ -1869,16 +1650,6 @@ export enum LightLevelReg {
 
 // Service: Logger
 export const SRV_LOGGER = 0x12dc1fca
-
-export enum LoggerStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 
 export enum LoggerPriority { // uint8_t
     Debug = 0x0,
@@ -1943,16 +1714,6 @@ export enum LoggerCmd {
 
 // Service: Matrix Keypad
 export const SRV_MATRIX_KEYPAD = 0x13062dc8
-
-export enum MatrixKeypadStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 export enum MatrixKeypadReg {
     /**
      * Read-only. The coordinate of the button currently pressed. Keys are zero-indexed from left to right, top to bottom:
@@ -2032,16 +1793,6 @@ export enum MatrixKeypadEvent {
 
 // Service: Microphone
 export const SRV_MICROPHONE = 0x113dac86
-
-export enum MicrophoneStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 export enum MicrophoneCmd {
     /**
      * The samples will be streamed back over the `samples` pipe.
@@ -2070,16 +1821,6 @@ export enum MicrophoneReg {
 
 // Service: Model Runner
 export const SRV_MODEL_RUNNER = 0x140f9a78
-
-export enum ModelRunnerStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 
 export enum ModelRunnerModelFormat { // uint32_t
     TFLite = 0x334c4654,
@@ -2236,16 +1977,6 @@ export enum ModelRunnerReg {
 // Service: Motion
 export const SRV_MOTION = 0x1179a749
 
-export enum MotionStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
-
 export enum MotionVariant { // uint8_t
     PIR = 0x1,
 }
@@ -2290,16 +2021,6 @@ export enum MotionReg {
 
 // Service: Motor
 export const SRV_MOTOR = 0x17004cd8
-
-export enum MotorStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 export enum MotorReg {
     /**
      * Read-write ratio i1.15 (int16_t). PWM duty cycle of the motor. Use negative/positive values to run the motor forwards and backwards.
@@ -2342,16 +2063,6 @@ export enum MotorReg {
 
 // Service: Mouse
 export const SRV_MOUSE = 0x1885dc1c
-
-export enum MouseStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 
 export enum MouseButton { // uint16_t
     Right = 0x1,
@@ -2402,16 +2113,6 @@ export enum MouseCmd {
 
 // Service: Multitouch
 export const SRV_MULTITOUCH = 0x18d55e2b
-
-export enum MultitouchStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 export enum MultitouchReg {
     /**
      * Read-only. Capacitance of channels. The capacitance is continuously calibrated, and a value of `0` indicates
@@ -2476,16 +2177,6 @@ export enum MultitouchEvent {
 // Service: Potentiometer
 export const SRV_POTENTIOMETER = 0x1f274746
 
-export enum PotentiometerStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
-
 export enum PotentiometerVariant { // uint32_t
     Slider = 0x1,
     Rotary = 0x2,
@@ -2513,16 +2204,6 @@ export enum PotentiometerReg {
 
 // Service: Power
 export const SRV_POWER = 0x1fa4c95a
-
-export enum PowerStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 export enum PowerReg {
     /**
      * Read-write bool (uint8_t). Turn the power to the bus on/off.
@@ -2647,16 +2328,6 @@ export enum PowerCmd {
 
 // Service: Protocol Test
 export const SRV_PROTO_TEST = 0x16c7466a
-
-export enum ProtoTestStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 export enum ProtoTestReg {
     /**
      * Read-write bool (uint8_t). A read write bool register.
@@ -2899,16 +2570,6 @@ export enum ProtoTestCmd {
 
 // Service: Rain gauge
 export const SRV_RAIN_GAUGE = 0x13734c95
-
-export enum RainGaugeStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 export enum RainGaugeReg {
     /**
      * Read-only mm u16.16 (uint32_t). Total precipitation recorded so far.
@@ -2931,16 +2592,6 @@ export enum RainGaugeReg {
 
 // Service: Real time clock
 export const SRV_REAL_TIME_CLOCK = 0x1a8b1a28
-
-export enum RealTimeClockStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 
 export enum RealTimeClockVariant { // uint8_t
     Computer = 0x1,
@@ -3003,16 +2654,6 @@ export enum RealTimeClockCmd {
 // Service: Reflected light
 export const SRV_REFLECTED_LIGHT = 0x126c4cb2
 
-export enum ReflectedLightStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
-
 export enum ReflectedLightVariant { // uint8_t
     InfraredDigital = 0x1,
     InfraredAnalog = 0x2,
@@ -3052,16 +2693,6 @@ export enum ReflectedLightEvent {
 
 // Service: Relay
 export const SRV_RELAY = 0x183fe656
-
-export enum RelayStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 
 export enum RelayVariant { // uint32_t
     Electromechanical = 0x1,
@@ -3112,16 +2743,6 @@ export enum RelayEvent {
 
 // Service: Role Manager
 export const SRV_ROLE_MANAGER = 0x119c3ad1
-
-export enum RoleManagerStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 export enum RoleManagerReg {
     /**
      * Read-only bool (uint8_t). Indicates if all required roles have been allocated to devices.
@@ -3208,16 +2829,6 @@ export enum RoleManagerEvent {
 
 // Service: Rotary encoder
 export const SRV_ROTARY_ENCODER = 0x10fa29c9
-
-export enum RotaryEncoderStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 export enum RotaryEncoderReg {
     /**
      * Read-only # int32_t. Upon device reset starts at `0` (regardless of the shaft position).
@@ -3241,16 +2852,6 @@ export enum RotaryEncoderReg {
 
 // Service: Servo
 export const SRV_SERVO = 0x12fc9103
-
-export enum ServoStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 
 export enum ServoVariant { // uint32_t
     PositionalRotation = 0x1,
@@ -3336,16 +2937,6 @@ export enum ServoReg {
 
 // Service: Settings
 export const SRV_SETTINGS = 0x1107dc4a
-
-export enum SettingsStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 export enum SettingsCmd {
     /**
      * Argument: key string (bytes). Get the value of given setting. If no such entry exists, the value returned is empty.
@@ -3430,16 +3021,6 @@ export enum SettingsEvent {
 
 // Service: 7-segment display
 export const SRV_SEVEN_SEGMENT_DISPLAY = 0x196158f7
-
-export enum SevenSegmentDisplayStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 export enum SevenSegmentDisplayReg {
     /**
      * Read-write bytes. Each byte encodes the display status of a digit using,
@@ -3494,16 +3075,6 @@ export enum SevenSegmentDisplayReg {
 // Service: Soil moisture
 export const SRV_SOIL_MOISTURE = 0x1d4aa3b3
 
-export enum SoilMoistureStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
-
 export enum SoilMoistureVariant { // uint8_t
     Resistive = 0x1,
     Capacitive = 0x2,
@@ -3531,16 +3102,6 @@ export enum SoilMoistureReg {
 
 // Service: Sound level
 export const SRV_SOUND_LEVEL = 0x14ad1a5d
-
-export enum SoundLevelStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 export enum SoundLevelReg {
     /**
      * Read-only ratio u0.16 (uint16_t). The sound level detected by the microphone
@@ -3584,16 +3145,6 @@ export enum SoundLevelEvent {
 
 // Service: Speech synthesis
 export const SRV_SPEECH_SYNTHESIS = 0x1204d995
-
-export enum SpeechSynthesisStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 export enum SpeechSynthesisReg {
     /**
      * Read-write bool (uint8_t). Determines if the speech engine is in a non-paused state.
@@ -3660,16 +3211,6 @@ export enum SpeechSynthesisCmd {
 // Service: Switch
 export const SRV_SWITCH = 0x1ad29402
 
-export enum SwitchStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
-
 export enum SwitchVariant { // uint32_t
     Slide = 0x1,
     Tilt = 0x2,
@@ -3725,16 +3266,6 @@ export enum SwitchEvent {
 
 // Service: TCP
 export const SRV_TCP = 0x1b43b70b
-
-export enum TcpStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 
 export enum TcpTcpError { // int32_t
     InvalidCommand = 0x1,
@@ -3800,16 +3331,6 @@ export enum TcpPipeCmd {
 // Service: Thermometer
 export const SRV_THERMOMETER = 0x1421bac7
 
-export enum ThermometerStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
-
 export enum ThermometerVariant { // uint32_t
     Outdoor = 0x1,
     Indoor = 0x2,
@@ -3867,16 +3388,6 @@ export enum ThermometerReg {
 
 // Service: Traffic Light
 export const SRV_TRAFFIC_LIGHT = 0x15c38d9b
-
-export enum TrafficLightStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 export enum TrafficLightReg {
     /**
      * Read-write bool (uint8_t). The on/off state of the red light.
@@ -3908,16 +3419,6 @@ export enum TrafficLightReg {
 
 // Service: Total Volatile organic compound
 export const SRV_TVOC = 0x12a5b597
-
-export enum TVOCStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 export enum TVOCReg {
     /**
      * Read-only ppb u22.10 (uint32_t). Total volatile organic compound readings in parts per billion.
@@ -3968,16 +3469,6 @@ export enum TVOCReg {
 // Service: UV index
 export const SRV_UVINDEX = 0x1f6e0d90
 
-export enum UVIndexStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
-
 export enum UVIndexVariant { // uint8_t
     UVA_UVB = 0x1,
     Visible_IR = 0x2,
@@ -4014,16 +3505,6 @@ export enum UVIndexReg {
 
 // Service: Vibration motor
 export const SRV_VIBRATION_MOTOR = 0x183fc4a2
-
-export enum VibrationMotorStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 export enum VibrationMotorReg {
     /**
      * Read-only ratio u0.8 (uint8_t). Rotation speed of the motor. If only one rotation speed is supported,
@@ -4060,16 +3541,6 @@ export enum VibrationMotorCmd {
 
 // Service: WIFI
 export const SRV_WIFI = 0x18aae1fa
-
-export enum WifiStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 
 export enum WifiAPFlags { // uint32_t
     HasPassword = 0x1,
@@ -4144,16 +3615,6 @@ export enum WifiEvent {
 
 // Service: Wind direction
 export const SRV_WIND_DIRECTION = 0x186be92b
-
-export enum WindDirectionStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 export enum WindDirectionReg {
     /**
      * Read-only uint16_t. The direction of the wind.
@@ -4185,16 +3646,6 @@ export enum WindDirectionReg {
 
 // Service: Wind speed
 export const SRV_WIND_SPEED = 0x1b591bbf
-
-export enum WindSpeedStatusCodes { // uint16_t
-    Ready = 0x0,
-    Initializing = 0x1,
-    Calibrating = 0x2,
-    Sleeping = 0x3,
-    WaitingForInput = 0x4,
-    CalibrationNeeded = 0x64,
-}
-
 export enum WindSpeedReg {
     /**
      * Read-only m/s u16.16 (uint32_t). The velocity of the wind.

@@ -159,7 +159,7 @@ typedef struct jd_system_status_code {
 /**
  * Notifies that the status code of the service changed.
  */
-#define JD_EV_STATUS_CODE_CHANGED 0x14
+#define JD_EV_STATUS_CODE_CHANGED 0x4
 typedef struct jd_system_status_code_changed {
     uint16_t code;  // StatusCodes
     uint16_t vendor_code;

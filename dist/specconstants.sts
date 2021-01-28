@@ -214,7 +214,7 @@ namespace jacdac {
          * ```
          */
         //% block="status code changed"
-        StatusCodeChanged = 0x14,
+        StatusCodeChanged = 0x4,
     }
 
 }
@@ -243,7 +243,7 @@ namespace jacdac {
          * ```
          */
         //% block="status code changed"
-        StatusCodeChanged = 0x14,
+        StatusCodeChanged = 0x4,
     }
 
 }

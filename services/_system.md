@@ -143,19 +143,19 @@ Events codes are 8-bit and are subdivided as follows:
 * Events `0x00-0x7f` - common to all services
 * Events `0x80-0xff` - defined per-service
 
-    event active @ 0x11 { }
+    event active @ 0x01 { }
 
 Notifies that the service has been activated (eg. button pressed, network connected, etc.)
 
-    event inactive @ 0x12 { }
+    event inactive @ 0x02 { }
 
 Notifies that the service has been dis-activated.
 
-    event change @ 0x13 { }
+    event change @ 0x03 { }
 
 Notifies that the some state of the service changed.
 
-    event status_code_changed? @ 0x14 {
+    event status_code_changed? @ 0x04 {
         code: StatusCodes
         vendor_code: u16
     }

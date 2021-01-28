@@ -209,7 +209,7 @@ export enum SystemEvent {
      * const [code, vendorCode] = jdunpack<[SystemStatusCodes, number]>(buf, "u16 u16")
      * ```
      */
-    StatusCodeChanged = 0x14,
+    StatusCodeChanged = 0x4,
 }
 
 // Service: Base service
@@ -235,7 +235,7 @@ export enum BaseEvent {
      * const [code, vendorCode] = jdunpack<[number, number]>(buf, "u16 u16")
      * ```
      */
-    StatusCodeChanged = 0x14,
+    StatusCodeChanged = 0x4,
 }
 
 // Service: Sensor

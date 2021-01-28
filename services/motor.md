@@ -6,7 +6,7 @@ A bi-directional DC motor.
 
 ## Registers
 
-    rw duty: i0.16 / @ value
+    rw duty: i1.15 / @ value
 
 PWM duty cycle of the motor. Use negative/positive values to run the motor forwards and backwards.
 Positive is recommended to be clockwise rotation and negative counterclockwise. A duty of ``0`` 

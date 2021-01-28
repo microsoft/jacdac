@@ -1326,7 +1326,7 @@ namespace jacdac {
          * If joystick is digital, then each direction will read as either `-0x8000`, `0x0`, or `0x7fff`.
          *
          * ```
-         * const [x, y] = jdunpack<[number, number]>(buf, "i0.16 i0.16")
+         * const [x, y] = jdunpack<[number, number]>(buf, "i1.15 i1.15")
          * ```
          */
         Direction = 0x101,
@@ -2084,12 +2084,12 @@ namespace jacdac {
     export const SRV_MOTOR = 0x17004cd8
     export const enum MotorReg {
         /**
-         * Read-write ratio i0.16 (int16_t). PWM duty cycle of the motor. Use negative/positive values to run the motor forwards and backwards.
+         * Read-write ratio i1.15 (int16_t). PWM duty cycle of the motor. Use negative/positive values to run the motor forwards and backwards.
          * Positive is recommended to be clockwise rotation and negative counterclockwise. A duty of ``0``
          * while ``enabled`` acts as brake.
          *
          * ```
-         * const [duty] = jdunpack<[number]>(buf, "i0.16")
+         * const [duty] = jdunpack<[number]>(buf, "i1.15")
          * ```
          */
         Duty = 0x2,

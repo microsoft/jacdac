@@ -8,8 +8,8 @@ A two axis directional joystick
 ## Registers
 
     ro direction @ reading {
-        x: i0.16 /
-        y: i0.16 /
+        x: i1.15 /
+        y: i1.15 /
     }
 
 The direction of the joystick measure in two direction.

@@ -15,8 +15,8 @@
  */
 #define JD_JOYSTICK_REG_DIRECTION JD_REG_READING
 typedef struct jd_joystick_direction {
-    int16_t x;  // ratio i0.16
-    int16_t y;  // ratio i0.16
+    int16_t x;  // ratio i1.15
+    int16_t y;  // ratio i1.15
 } jd_joystick_direction_t;
 
 

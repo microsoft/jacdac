@@ -5,7 +5,7 @@
 #define JD_SERVICE_CLASS_LED  0x1fb57453
 
 /**
- * Read-write ratio uint16_t. Set the luminosity of the strip. The value is used to scale `start_intensity` in `steps` register.
+ * Read-write ratio u0.16 (uint16_t). Set the luminosity of the strip. The value is used to scale `start_intensity` in `steps` register.
  * At `0` the power to the strip is completely shut down.
  */
 #define JD_LED_REG_BRIGHTNESS JD_REG_INTENSITY
@@ -26,7 +26,7 @@
  */
 #define JD_LED_REG_STEPS 0x82
 typedef struct jd_led_steps {
-    uint16_t start_intensity; // ratio
+    uint16_t start_intensity;  // ratio u0.16
     uint16_t duration; // ms
 } jd_led_steps_t;
 

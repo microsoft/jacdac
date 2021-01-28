@@ -67,12 +67,12 @@ number, and followed by 3 bytes of color.
 
 ## Registers
 
-    rw brightness = 15: u8 / @ intensity
+    rw brightness = 15: u0.8 / @ intensity
 
 Set the luminosity of the strip.
 At `0` the power to the strip is completely shut down.
 
-    ro actual_brightness: u8 / @ 0x180
+    ro actual_brightness: u0.8 / @ 0x180
 
 This is the luminosity actually applied to the strip.
 May be lower than `brightness` if power-limited by the `max_power` register.

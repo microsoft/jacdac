@@ -9,7 +9,7 @@
 #define JD_REFLECTED_LIGHT_VARIANT_INFRARED_ANALOG 0x2
 
 /**
- * Read-only ratio uint16_t. Reports the reflected brightness. It may be a digital value or, for some sensor, analog value.
+ * Read-only ratio u0.16 (uint16_t). Reports the reflected brightness. It may be a digital value or, for some sensor, analog value.
  */
 #define JD_REFLECTED_LIGHT_REG_BRIGHTNESS JD_REG_READING
 

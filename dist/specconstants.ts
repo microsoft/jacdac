@@ -397,7 +397,7 @@ export enum ArcadeGamepadReg {
      * `pressure` should be `0xff` for digital buttons, and proportional for analog ones.
      *
      * ```
-     * const [rest] = jdunpack<[([ArcadeGamepadButton, number])[]]>(buf, "r: u8 u8")
+     * const [rest] = jdunpack<[([ArcadeGamepadButton, number])[]]>(buf, "r: u8 u0.8")
      * const [button, pressure] = rest[0]
      * ```
      */
@@ -555,10 +555,10 @@ export enum ButtonEvent {
 export const SRV_BUZZER = 0x1b57b1d7
 export enum BuzzerReg {
     /**
-     * Read-write ratio uint8_t. The volume (duty cycle) of the buzzer.
+     * Read-write ratio u0.8 (uint8_t). The volume (duty cycle) of the buzzer.
      *
      * ```
-     * const [volume] = jdunpack<[number]>(buf, "u8")
+     * const [volume] = jdunpack<[number]>(buf, "u0.8")
      * ```
      */
     Volume = 0x1,
@@ -659,7 +659,7 @@ export enum ColorReg {
      * Detected color in the RGB color space.
      *
      * ```
-     * const [red, green, blue] = jdunpack<[number, number, number]>(buf, "u16 u16 u16")
+     * const [red, green, blue] = jdunpack<[number, number, number]>(buf, "u0.16 u0.16 u0.16")
      * ```
      */
     Color = 0x101,
@@ -1263,7 +1263,7 @@ export enum JoystickReg {
      * If joystick is digital, then each direction will read as either `-0x8000`, `0x0`, or `0x7fff`.
      *
      * ```
-     * const [x, y] = jdunpack<[number, number]>(buf, "i16 i16")
+     * const [x, y] = jdunpack<[number, number]>(buf, "i0.16 i0.16")
      * ```
      */
     Direction = 0x101,
@@ -1329,11 +1329,11 @@ export enum KeyboardCmd {
 export const SRV_LED = 0x1fb57453
 export enum LedReg {
     /**
-     * Read-write ratio uint16_t. Set the luminosity of the strip. The value is used to scale `start_intensity` in `steps` register.
+     * Read-write ratio u0.16 (uint16_t). Set the luminosity of the strip. The value is used to scale `start_intensity` in `steps` register.
      * At `0` the power to the strip is completely shut down.
      *
      * ```
-     * const [brightness] = jdunpack<[number]>(buf, "u16")
+     * const [brightness] = jdunpack<[number]>(buf, "u0.16")
      * ```
      */
     Brightness = 0x1,
@@ -1361,7 +1361,7 @@ export enum LedReg {
      * Step with `duration == 0` is treated as an end marker.
      *
      * ```
-     * const [rest] = jdunpack<[([number, number])[]]>(buf, "r: u16 u16")
+     * const [rest] = jdunpack<[([number, number])[]]>(buf, "r: u0.16 u16")
      * const [startIntensity, duration] = rest[0]
      * ```
      */
@@ -1495,22 +1495,22 @@ export enum LedPixelVariant { // uint32_t
 
 export enum LedPixelReg {
     /**
-     * Read-write ratio uint8_t. Set the luminosity of the strip.
+     * Read-write ratio u0.8 (uint8_t). Set the luminosity of the strip.
      * At `0` the power to the strip is completely shut down.
      *
      * ```
-     * const [brightness] = jdunpack<[number]>(buf, "u8")
+     * const [brightness] = jdunpack<[number]>(buf, "u0.8")
      * ```
      */
     Brightness = 0x1,
 
     /**
-     * Read-only ratio uint8_t. This is the luminosity actually applied to the strip.
+     * Read-only ratio u0.8 (uint8_t). This is the luminosity actually applied to the strip.
      * May be lower than `brightness` if power-limited by the `max_power` register.
      * It will rise slowly (few seconds) back to `brightness` is limits are no longer required.
      *
      * ```
-     * const [actualBrightness] = jdunpack<[number]>(buf, "u8")
+     * const [actualBrightness] = jdunpack<[number]>(buf, "u0.8")
      * ```
      */
     ActualBrightness = 0x180,
@@ -1600,10 +1600,10 @@ export enum LightLevelVariant { // uint8_t
 
 export enum LightLevelReg {
     /**
-     * Read-only ratio uint16_t. Detect light level
+     * Read-only ratio u0.16 (uint16_t). Detect light level
      *
      * ```
-     * const [lightLevel] = jdunpack<[number]>(buf, "u16")
+     * const [lightLevel] = jdunpack<[number]>(buf, "u0.16")
      * ```
      */
     LightLevel = 0x101,
@@ -1993,12 +1993,12 @@ export enum MotionReg {
 export const SRV_MOTOR = 0x17004cd8
 export enum MotorReg {
     /**
-     * Read-write ratio int16_t. PWM duty cycle of the motor. Use negative/positive values to run the motor forwards and backwards.
+     * Read-write ratio i0.16 (int16_t). PWM duty cycle of the motor. Use negative/positive values to run the motor forwards and backwards.
      * Positive is recommended to be clockwise rotation and negative counterclockwise. A duty of ``0``
      * while ``enabled`` acts as brake.
      *
      * ```
-     * const [duty] = jdunpack<[number]>(buf, "i16")
+     * const [duty] = jdunpack<[number]>(buf, "i0.16")
      * ```
      */
     Duty = 0x2,
@@ -2154,7 +2154,7 @@ export enum PotentiometerVariant { // uint32_t
 
 export enum PotentiometerReg {
     /**
-     * Read-only ratio u0.16 (uint16_t). The relative position of the slider between `0x0000` and `0xffff`.
+     * Read-only ratio u0.16 (uint16_t). The relative position of the slider between `0` and `1`.
      *
      * ```
      * const [position] = jdunpack<[number]>(buf, "u0.16")
@@ -2222,10 +2222,10 @@ export enum PowerReg {
     BatteryVoltage = 0x180,
 
     /**
-     * Read-only ratio uint16_t. Fraction of charge in the battery.
+     * Read-only ratio u0.16 (uint16_t). Fraction of charge in the battery.
      *
      * ```
-     * const [batteryCharge] = jdunpack<[number]>(buf, "u16")
+     * const [batteryCharge] = jdunpack<[number]>(buf, "u0.16")
      * ```
      */
     BatteryCharge = 0x182,
@@ -2631,10 +2631,10 @@ export enum ReflectedLightVariant { // uint8_t
 
 export enum ReflectedLightReg {
     /**
-     * Read-only ratio uint16_t. Reports the reflected brightness. It may be a digital value or, for some sensor, analog value.
+     * Read-only ratio u0.16 (uint16_t). Reports the reflected brightness. It may be a digital value or, for some sensor, analog value.
      *
      * ```
-     * const [brightness] = jdunpack<[number]>(buf, "u16")
+     * const [brightness] = jdunpack<[number]>(buf, "u0.16")
      * ```
      */
     Brightness = 0x101,
@@ -3005,10 +3005,10 @@ export enum SevenSegmentDisplayReg {
     Digits = 0x2,
 
     /**
-     * Read-write ratio uint16_t. Controls the brightness of the LEDs. ``0`` means off.
+     * Read-write ratio u0.16 (uint16_t). Controls the brightness of the LEDs. ``0`` means off.
      *
      * ```
-     * const [brightness] = jdunpack<[number]>(buf, "u16")
+     * const [brightness] = jdunpack<[number]>(buf, "u0.16")
      * ```
      */
     Brightness = 0x1,
@@ -3052,10 +3052,10 @@ export enum SoilMoistureVariant { // uint8_t
 
 export enum SoilMoistureReg {
     /**
-     * Read-only ratio uint16_t. Indicates the wetness of the soil, from ``dry`` to ``wet``.
+     * Read-only ratio u0.16 (uint16_t). Indicates the wetness of the soil, from ``dry`` to ``wet``.
      *
      * ```
-     * const [moisture] = jdunpack<[number]>(buf, "u16")
+     * const [moisture] = jdunpack<[number]>(buf, "u0.16")
      * ```
      */
     Moisture = 0x101,
@@ -3074,10 +3074,10 @@ export enum SoilMoistureReg {
 export const SRV_SOUND_LEVEL = 0x14ad1a5d
 export enum SoundLevelReg {
     /**
-     * Read-only ratio uint16_t. The sound level detected by the microphone
+     * Read-only ratio u0.16 (uint16_t). The sound level detected by the microphone
      *
      * ```
-     * const [soundLevel] = jdunpack<[number]>(buf, "u16")
+     * const [soundLevel] = jdunpack<[number]>(buf, "u0.16")
      * ```
      */
     SoundLevel = 0x101,
@@ -3135,10 +3135,10 @@ export enum SpeechSynthesisReg {
     Lang = 0x80,
 
     /**
-     * Read-write ratio uint8_t. Volume for utterances.
+     * Read-write ratio u0.8 (uint8_t). Volume for utterances.
      *
      * ```
-     * const [volume] = jdunpack<[number]>(buf, "u8")
+     * const [volume] = jdunpack<[number]>(buf, "u0.8")
      * ```
      */
     Volume = 0x81,
@@ -3477,12 +3477,12 @@ export enum UVIndexReg {
 export const SRV_VIBRATION_MOTOR = 0x183fc4a2
 export enum VibrationMotorReg {
     /**
-     * Read-only ratio uint8_t. Rotation speed of the motor. If only one rotation speed is supported,
+     * Read-only ratio u0.8 (uint8_t). Rotation speed of the motor. If only one rotation speed is supported,
      * then `0` shell be off, and any other number on.
      * Use the ``vibrate`` command to control the register.
      *
      * ```
-     * const [speed] = jdunpack<[number]>(buf, "u8")
+     * const [speed] = jdunpack<[number]>(buf, "u0.8")
      * ```
      */
     Speed = 0x101,
@@ -3502,7 +3502,7 @@ export enum VibrationMotorCmd {
      * Starts a sequence of vibration and pauses.
      *
      * ```
-     * const [rest] = jdunpack<[([number, number])[]]>(buf, "r: u8 u8")
+     * const [rest] = jdunpack<[([number, number])[]]>(buf, "r: u8 u0.8")
      * const [duration, speed] = rest[0]
      * ```
      */

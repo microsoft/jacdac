@@ -5,7 +5,7 @@
 #define JD_SERVICE_CLASS_SOUND_LEVEL  0x14ad1a5d
 
 /**
- * Read-only ratio uint16_t. The sound level detected by the microphone
+ * Read-only ratio u0.16 (uint16_t). The sound level detected by the microphone
  */
 #define JD_SOUND_LEVEL_REG_SOUND_LEVEL JD_REG_READING
 

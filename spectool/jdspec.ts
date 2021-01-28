@@ -604,8 +604,8 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
         let shift = typeShift || undefined
         if (unit == "/") {
             // / units should be used with ui0. data
-            if (!/^(u|i)0\.$/.test(tp))
-                error("fraction unit must be used with u0.yyy or i0.yyy data types")
+            if (!/^(u|i)0\.\d+$/.test(tp))
+                error(`fraction unit must be used with u0.yyy or i0.yyy data types (got ${tp})`)
 
             shift = Math.abs(storage) * 8
             if (storage < 0)

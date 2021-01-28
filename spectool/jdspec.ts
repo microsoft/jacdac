@@ -820,7 +820,7 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
                 info.enums[k] = ie;
             })
         const innerPackets = clone(inner.packets
-            .filter(pkt => !info.packets.find(ipkt => ipkt.identifier === pkt.identifier)));
+            .filter(pkt => !info.packets.find(ipkt => ipkt.kind === pkt.kind && ipkt.identifier === pkt.identifier)));
         innerPackets.forEach(pkt => pkt.derived = name)
         info.packets = [...info.packets, ...innerPackets]
         if (inner.highCommands)

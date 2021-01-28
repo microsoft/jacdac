@@ -9,7 +9,7 @@ A sensor approximating the heart rate.
 
 ## Registers
 
-    ro heart_rate: u16.16 bpm @ reading
+    ro heart_rate: u16.16 bpm { typical_min=30, typical_max=200 } @ reading
 
 The estimated heart rate.
 

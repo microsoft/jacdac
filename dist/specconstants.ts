@@ -1442,7 +1442,7 @@ export enum LedReg {
      * const [ledCount] = jdunpack<[number]>(buf, "u16")
      * ```
      */
-    LedCount = 0x82,
+    LedCount = 0x83,
 
     /**
      * Constant nm uint16_t. If monochrome LED, specifies the wave length of the LED.
@@ -1451,7 +1451,7 @@ export enum LedReg {
      * const [waveLength] = jdunpack<[number]>(buf, "u16")
      * ```
      */
-    WaveLength = 0x83,
+    WaveLength = 0x84,
 
     /**
      * Constant mcd uint16_t. The luminous intensity of the LED, in micro candella.
@@ -1460,7 +1460,7 @@ export enum LedReg {
      * const [luminousIntensity] = jdunpack<[number]>(buf, "u16")
      * ```
      */
-    LuminousIntensity = 0x84,
+    LuminousIntensity = 0x85,
 
     /**
      * Constant Variant (uint32_t). The physical type of LED.

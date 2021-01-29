@@ -36,17 +36,17 @@ typedef struct jd_led_steps {
 /**
  * Constant uint16_t. If known, specifies the number of LEDs in parallel on this device.
  */
-#define JD_LED_REG_LED_COUNT 0x82
+#define JD_LED_REG_LED_COUNT 0x83
 
 /**
  * Constant nm uint16_t. If monochrome LED, specifies the wave length of the LED.
  */
-#define JD_LED_REG_WAVE_LENGTH 0x83
+#define JD_LED_REG_WAVE_LENGTH 0x84
 
 /**
  * Constant mcd uint16_t. The luminous intensity of the LED, in micro candella.
  */
-#define JD_LED_REG_LUMINOUS_INTENSITY 0x84
+#define JD_LED_REG_LUMINOUS_INTENSITY 0x85
 
 /**
  * Constant Variant (uint32_t). The physical type of LED.

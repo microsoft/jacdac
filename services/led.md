@@ -27,15 +27,15 @@ is specified.
 
 Limit the power drawn by the light-strip (and controller).
 
-    const led_count?: u16 @ 0x82
+    const led_count?: u16 @ 0x83
 
 If known, specifies the number of LEDs in parallel on this device.
 
-    const wave_length?: u16 nm { typical_min=365, typical_max=885 } @ 0x83
+    const wave_length?: u16 nm { typical_min=365, typical_max=885 } @ 0x84
 
 If monochrome LED, specifies the wave length of the LED.
 
-    const luminous_intensity?: u16 mcd { typical_min=10, typical_max=5000 } @ 0x84
+    const luminous_intensity?: u16 mcd { typical_min=10, typical_max=5000 } @ 0x85
 
 The luminous intensity of the LED, in micro candella.
 

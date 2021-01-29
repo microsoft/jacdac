@@ -1,13 +1,9 @@
-# RGB LED
+# LED
 
     identifier: 0x1e3048f8
     camel: led
 
-A controller for 1 or more RGB LEDs connected in parallel.
-
-## Animation steps
-
-Animations are described using pairs of HSV and duration, similarly to the `status_light` register in the control service.
+A controller for 1 or more monochrome or RGB LEDs connected in parallel.
 
 ## Registers
 
@@ -16,35 +12,34 @@ Animations are described using pairs of HSV and duration, similarly to the `stat
 Set the luminosity of the strip. The value is used to scale `start_intensity` in `steps` register.
 At `0` the power to the strip is completely shut down.
 
-    rw max_power = 100: u16 mA @ max_power
-
-Limit the power drawn by the light-strip (and controller).
-
-    const max_steps: u8 @ 0x180
-
-Maximum number of steps allowed in animation definition. This determines the size of the `steps` register.
-
     rw steps @ 0x82 {
         repeats:
             hue: u8
             saturation: u8
             value: u8
-            padding: u8
-            duration: u16
+            duration: u8 8ms
     }
 
-The steps of current animation. Setting this also sets `current_iteration` to `0`.
-Step with `duration == 0` is treated as an end marker.
+Animations are described using pairs of brightness value and duration, similarly to the `status_light` register in the control service. They repeat infinitely until another animation
+is specified.
 
-    rw current_iteration: u16 @ 0x80
+    rw max_power? = 100: u16 mA @ max_power
 
-Currently excecuting iteration of animation. Can be set to `0` to restart current animation.
-If `current_iteration > max_iterations`, then no animation is currently running.
-
-    rw max_iterations = 0xffff: u16 @ 0x81
-
-The animation will be repeated `max_iterations + 1` times.
+Limit the power drawn by the light-strip (and controller).
 
     const led_count?: u16 @ 0x82
 
 If known, specifies the number of LEDs in parallel on this device.
+
+    const led_hues?: bytes @ 0x83
+
+Hues of the LEDs strips, each byte is a hue value.
+
+    enum Variant: u32 {
+        ThroughHole = 1
+        SMD = 2
+        Power = 3
+    }
+    const variant?: Variant @ variant
+
+The physical type of LED.

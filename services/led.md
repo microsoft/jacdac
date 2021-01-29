@@ -31,9 +31,13 @@ Limit the power drawn by the light-strip (and controller).
 
 If known, specifies the number of LEDs in parallel on this device.
 
-    const led_hues?: bytes @ 0x83
+    const wave_length?: u16 nm @ 0x83
 
-Hues of the LEDs strips, each byte is a hue value.
+If monochrome LED, specifies the wave length of the LED.
+
+    const luminous_intensity?: u16 mcd @ 0x84
+
+The luminous intensity of the LED, in micro candella.
 
     enum Variant: u32 {
         ThroughHole = 1

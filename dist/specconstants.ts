@@ -1445,13 +1445,22 @@ export enum LedReg {
     LedCount = 0x82,
 
     /**
-     * Constant bytes. Hues of the LEDs strips, each byte is a hue value.
+     * Constant nm uint16_t. If monochrome LED, specifies the wave length of the LED.
      *
      * ```
-     * const [ledHues] = jdunpack<[Uint8Array]>(buf, "b")
+     * const [waveLength] = jdunpack<[number]>(buf, "u16")
      * ```
      */
-    LedHues = 0x83,
+    WaveLength = 0x83,
+
+    /**
+     * Constant mcd uint16_t. The luminous intensity of the LED, in micro candella.
+     *
+     * ```
+     * const [luminousIntensity] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    LuminousIntensity = 0x84,
 
     /**
      * Constant Variant (uint32_t). The physical type of LED.

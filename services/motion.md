@@ -7,7 +7,7 @@ A sensor, typically PIR, that detects object motion within a certain range
 
 ## Registers
 
-    ro moving: bool @ reading
+    ro moving: bool { preferred_interval=1000 } @ reading
 
 Reports is movement is currently detected by the sensor.
 

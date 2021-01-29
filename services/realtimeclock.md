@@ -8,7 +8,7 @@ Real time clock to support collecting data with precise time stamps.
 ## Registers
 
     ro local_time @ reading {
-        year: u16
+        year: u16 { preferred_interval=1000 }
         month: u8 { absolute_min=1, absolute_max=12 }
         day_of_month: u8 { absolute_min=1, absolute_max=31 }
         day_of_week: u8 { absolute_min=1, absolute_max=7 }

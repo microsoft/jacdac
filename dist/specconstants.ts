@@ -118,8 +118,8 @@ export enum SystemReg {
     MaxReading = 0x105,
 
     /**
-     * Read-only uint32_t. The real value of whatever is measured is between `reading - reading_error` and `reading + reading_error`.
-     * This register is often, but not always `const`.
+     * Read-only uint32_t. The real value of whatever is measured is between `reading - reading_error` and `reading + reading_error`. It should be computed from the internal state of the sensor. This register is often, but not always `const`. If the register value is modified,
+     * send a report in the same frame of the ``reading`` report.
      *
      * ```
      * const [readingError] = jdunpack<[number]>(buf, "u32")

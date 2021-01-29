@@ -2,7 +2,12 @@
 #ifndef _JACDAC_SPEC_LED_H
 #define _JACDAC_SPEC_LED_H 1
 
-#define JD_SERVICE_CLASS_LED  0x1fb57453
+#define JD_SERVICE_CLASS_LED  0x1e3048f8
+
+// enum Variant (uint32_t)
+#define JD_LED_VARIANT_THROUGH_HOLE 0x1
+#define JD_LED_VARIANT_SMD 0x2
+#define JD_LED_VARIANT_POWER 0x3
 
 /**
  * Read-write ratio u0.16 (uint16_t). Set the luminosity of the strip. The value is used to scale `start_intensity` in `steps` register.
@@ -11,35 +16,41 @@
 #define JD_LED_REG_BRIGHTNESS JD_REG_INTENSITY
 
 /**
+ * Animations are described using pairs of brightness value and duration, similarly to the `status_light` register in the control service. They repeat infinitely until another animation
+ * is specified.
+ */
+#define JD_LED_REG_STEPS 0x82
+typedef struct jd_led_steps {
+    uint8_t hue;
+    uint8_t saturation;
+    uint8_t value;
+    uint8_t duration; // 8ms
+} jd_led_steps_t;
+
+
+/**
  * Read-write mA uint16_t. Limit the power drawn by the light-strip (and controller).
  */
 #define JD_LED_REG_MAX_POWER JD_REG_MAX_POWER
 
 /**
- * Constant uint8_t. Maximum number of steps allowed in animation definition. This determines the size of the `steps` register.
+ * Constant uint16_t. If known, specifies the number of LEDs in parallel on this device.
  */
-#define JD_LED_REG_MAX_STEPS 0x180
+#define JD_LED_REG_LED_COUNT 0x83
 
 /**
- * The steps of current animation. Setting this also sets `current_iteration` to `0`.
- * Step with `duration == 0` is treated as an end marker.
+ * Constant nm uint16_t. If monochrome LED, specifies the wave length of the LED.
  */
-#define JD_LED_REG_STEPS 0x82
-typedef struct jd_led_steps {
-    uint16_t start_intensity;  // ratio u0.16
-    uint16_t duration; // ms
-} jd_led_steps_t;
-
+#define JD_LED_REG_WAVE_LENGTH 0x84
 
 /**
- * Read-write uint16_t. Currently excecuting iteration of animation. Can be set to `0` to restart current animation.
- * If `current_iteration > max_iterations`, then no animation is currently running.
+ * Constant mcd uint16_t. The luminous intensity of the LED, in micro candella.
  */
-#define JD_LED_REG_CURRENT_ITERATION 0x80
+#define JD_LED_REG_LUMINOUS_INTENSITY 0x85
 
 /**
- * Read-write uint16_t. The animation will be repeated `max_iterations + 1` times.
+ * Constant Variant (uint32_t). The physical type of LED.
  */
-#define JD_LED_REG_MAX_ITERATIONS 0x81
+#define JD_LED_REG_VARIANT JD_REG_VARIANT
 
 #endif

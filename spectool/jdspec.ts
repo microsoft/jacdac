@@ -72,7 +72,8 @@ export const unitDescription: jdspec.SMap<string> = {
     "rpm": "revolutions per minute",
     "uv": "UV index",
     "lux": "illuminance",
-    "bpm": "beats per minute"
+    "bpm": "beats per minute",
+    "mcd": "micro candella"
 }
 
 export const secondaryUnitConverters: jdspec.SMap<{
@@ -116,6 +117,7 @@ export const secondaryUnitConverters: jdspec.SMap<{
     "km": { name: "kilometer", unit: "m", scale: 1000, offset: 0 },
     "km/h": { name: "kilometer per hour", unit: "m/s", scale: 1 / 3.6, offset: 0 },
     "8ms": { name: "8 milliseconds", unit: "s", scale: 8 / 1000, offset: 0 },
+    "nm": { name: "nanometer", unit: "m", scale: 1e-9, offset: 0 },
 
     // compat with previous JACDAC versions
     "frac": { name: "ratio", unit: "/", scale: 1, offset: 0 },

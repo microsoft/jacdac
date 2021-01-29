@@ -1,23 +1,9 @@
 # LED
 
-    identifier: 0x1fb57453
+    identifier: 0x1e3048f8
     camel: led
 
-A controller for 1 or more LEDs connected in parallel.
-
-## Animation steps
-
-Animations are described using pairs of intensity and duration.
-For example, the following animation
-`(0, 10ms), (0.5, 5ms), (0.5, 10ms), (1, 5ms), (0, 7ms), (0, 0ms)`
-will gradually rise the intensity `0 - 0.5` in 10ms,
-then, it will keep it steady for at `0.5` for 5ms,
-then it will rise it again `0.5 - 1` over 10ms,
-drop `1 - 0` in 5ms,
-and keep it at 0 for 7ms more.
-Any entry with duration of 0ms is considered to be end-marker.
-
-To get steady glow at `x`, use animation of `(x, 60000ms), (x, 0ms)` and keep `max_iterations` at `0xffff`.
+A controller for 1 or more monochrome or RGB LEDs connected in parallel.
 
 ## Registers
 
@@ -26,28 +12,38 @@ To get steady glow at `x`, use animation of `(x, 60000ms), (x, 0ms)` and keep `m
 Set the luminosity of the strip. The value is used to scale `start_intensity` in `steps` register.
 At `0` the power to the strip is completely shut down.
 
-    rw max_power = 100: u16 mA @ max_power
+    rw steps @ 0x82 {
+        repeats:
+            hue: u8
+            saturation: u8
+            value: u8
+            duration: u8 8ms
+    }
+
+Animations are described using pairs of brightness value and duration, similarly to the `status_light` register in the control service. They repeat infinitely until another animation
+is specified.
+
+    rw max_power? = 100: u16 mA @ max_power
 
 Limit the power drawn by the light-strip (and controller).
 
-    const max_steps: u8 @ 0x180
+    const led_count?: u16 @ 0x83
 
-Maximum number of steps allowed in animation definition. This determines the size of the `steps` register.
+If known, specifies the number of LEDs in parallel on this device.
 
-    rw steps @ 0x82 {
-        repeats:
-            start_intensity: u0.16 /
-            duration: u16 ms
+    const wave_length?: u16 nm { typical_min=365, typical_max=885 } @ 0x84
+
+If monochrome LED, specifies the wave length of the LED.
+
+    const luminous_intensity?: u16 mcd { typical_min=10, typical_max=5000 } @ 0x85
+
+The luminous intensity of the LED, in micro candella.
+
+    enum Variant: u32 {
+        ThroughHole = 1
+        SMD = 2
+        Power = 3
     }
+    const variant?: Variant @ variant
 
-The steps of current animation. Setting this also sets `current_iteration` to `0`.
-Step with `duration == 0` is treated as an end marker.
-
-    rw current_iteration: u16 @ 0x80
-
-Currently excecuting iteration of animation. Can be set to `0` to restart current animation.
-If `current_iteration > max_iterations`, then no animation is currently running.
-
-    rw max_iterations = 0xffff: u16 @ 0x81
-
-The animation will be repeated `max_iterations + 1` times.
+The physical type of LED.

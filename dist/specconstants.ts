@@ -1391,7 +1391,14 @@ export enum KeyboardCmd {
 }
 
 // Service: LED
-export const SRV_LED = 0x1fb57453
+export const SRV_LED = 0x1e3048f8
+
+export enum LedVariant { // uint32_t
+    ThroughHole = 0x1,
+    SMD = 0x2,
+    Power = 0x3,
+}
+
 export enum LedReg {
     /**
      * Read-write ratio u0.16 (uint16_t). Set the luminosity of the strip. The value is used to scale `start_intensity` in `steps` register.
@@ -1404,6 +1411,17 @@ export enum LedReg {
     Brightness = 0x1,
 
     /**
+     * Animations are described using pairs of brightness value and duration, similarly to the `status_light` register in the control service. They repeat infinitely until another animation
+     * is specified.
+     *
+     * ```
+     * const [rest] = jdunpack<[([number, number, number, number])[]]>(buf, "r: u8 u8 u8 u8")
+     * const [hue, saturation, value, duration] = rest[0]
+     * ```
+     */
+    Steps = 0x82,
+
+    /**
      * Read-write mA uint16_t. Limit the power drawn by the light-strip (and controller).
      *
      * ```
@@ -1413,43 +1431,40 @@ export enum LedReg {
     MaxPower = 0x7,
 
     /**
-     * Constant uint8_t. Maximum number of steps allowed in animation definition. This determines the size of the `steps` register.
+     * Constant uint16_t. If known, specifies the number of LEDs in parallel on this device.
      *
      * ```
-     * const [maxSteps] = jdunpack<[number]>(buf, "u8")
+     * const [ledCount] = jdunpack<[number]>(buf, "u16")
      * ```
      */
-    MaxSteps = 0x180,
+    LedCount = 0x83,
 
     /**
-     * The steps of current animation. Setting this also sets `current_iteration` to `0`.
-     * Step with `duration == 0` is treated as an end marker.
+     * Constant nm uint16_t. If monochrome LED, specifies the wave length of the LED.
      *
      * ```
-     * const [rest] = jdunpack<[([number, number])[]]>(buf, "r: u0.16 u16")
-     * const [startIntensity, duration] = rest[0]
+     * const [waveLength] = jdunpack<[number]>(buf, "u16")
      * ```
      */
-    Steps = 0x82,
+    WaveLength = 0x84,
 
     /**
-     * Read-write uint16_t. Currently excecuting iteration of animation. Can be set to `0` to restart current animation.
-     * If `current_iteration > max_iterations`, then no animation is currently running.
+     * Constant mcd uint16_t. The luminous intensity of the LED, in micro candella.
      *
      * ```
-     * const [currentIteration] = jdunpack<[number]>(buf, "u16")
+     * const [luminousIntensity] = jdunpack<[number]>(buf, "u16")
      * ```
      */
-    CurrentIteration = 0x80,
+    LuminousIntensity = 0x85,
 
     /**
-     * Read-write uint16_t. The animation will be repeated `max_iterations + 1` times.
+     * Constant Variant (uint32_t). The physical type of LED.
      *
      * ```
-     * const [maxIterations] = jdunpack<[number]>(buf, "u16")
+     * const [variant] = jdunpack<[LedVariant]>(buf, "u32")
      * ```
      */
-    MaxIterations = 0x81,
+    Variant = 0x107,
 }
 
 // Service: LED Matrix Controller

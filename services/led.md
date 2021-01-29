@@ -9,7 +9,7 @@ A controller for 1 or more monochrome or RGB LEDs connected in parallel.
 
     rw brightness: u0.16 / @ intensity
 
-Set the luminosity of the strip. The value is used to scale `start_intensity` in `steps` register.
+Set the luminosity of the strip. The value is used to scale `value` in `steps` register.
 At `0` the power to the strip is completely shut down.
 
     rw steps @ 0x82 {
@@ -20,8 +20,13 @@ At `0` the power to the strip is completely shut down.
             duration: u8 8ms
     }
 
-Animations are described using pairs of brightness value and duration, similarly to the `status_light` register in the control service. They repeat infinitely until another animation
-is specified.
+Animations are described using pairs of color description and duration, 
+similarly to the `status_light` register in the control service.
+They repeat indefinitely until another animation is specified.
+For monochrome LEDs, the hue and saturation are ignored.
+A specification `(red, 80ms), (blue, 40ms), (blue, 0ms), (yellow, 80ms)`
+means to start with red, cross-fade to blue over 80ms, stay blue for 40ms,
+change to yellow, and cross-fade back to red in 80ms.
 
     rw max_power? = 100: u16 mA @ max_power
 
@@ -37,12 +42,13 @@ If monochrome LED, specifies the wave length of the LED.
 
     const luminous_intensity?: u16 mcd { typical_min=10, typical_max=5000 } @ 0x85
 
-The luminous intensity of the LED, in micro candella.
+The luminous intensity of the LED, at full value, in micro candella.
 
     enum Variant: u32 {
         ThroughHole = 1
         SMD = 2
         Power = 3
+        Bead = 4
     }
     const variant?: Variant @ variant
 

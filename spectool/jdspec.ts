@@ -641,6 +641,11 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
                     case "absoluteMax":
                         (field as any)[tok] = parseVal()
                         break
+                    case "preferredInterval":
+                        if ((packetInfo as any)[tok] !== undefined)
+                            error(`field ${tok} already set`);
+                        (packetInfo as any)[tok] = parseVal()
+                        break;
                     default:
                         error("unknown constraint: " + tok)
                         break

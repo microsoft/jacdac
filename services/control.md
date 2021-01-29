@@ -79,11 +79,11 @@ Typically the same as `firmware_identifier` unless device was flashed by hand; t
 
 A string describing firmware version; typically semver.
 
-    ro mcu_temperature?: i16 °C { typical_min = -10, typical_max = 150 } @ 0x182
+    ro mcu_temperature?: i16 °C { preferred_interval=60000, typical_min = -10, typical_max = 150 } @ 0x182
 
 MCU temperature in degrees Celsius (approximate).
 
-    ro uptime?: u64 us @ 0x186
+    ro uptime?: u64 us { preferred_interval=60000 } @ 0x186
 
 Number of microseconds since boot.
 

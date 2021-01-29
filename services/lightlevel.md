@@ -7,7 +7,7 @@ A sensor that measures luminosity level.
 
 ## Registers
 
-    ro light_level: u16 / @ reading
+    ro light_level: u0.16 / @ reading
 
 Detect light level
 

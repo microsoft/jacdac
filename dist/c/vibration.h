@@ -5,7 +5,7 @@
 #define JD_SERVICE_CLASS_VIBRATION_MOTOR  0x183fc4a2
 
 /**
- * Read-only ratio uint8_t. Rotation speed of the motor. If only one rotation speed is supported,
+ * Read-only ratio u0.8 (uint8_t). Rotation speed of the motor. If only one rotation speed is supported,
  * then `0` shell be off, and any other number on. 
  * Use the ``vibrate`` command to control the register.
  */
@@ -22,7 +22,7 @@
 #define JD_VIBRATION_MOTOR_CMD_VIBRATE 0x80
 typedef struct jd_vibration_motor_vibrate {
     uint8_t duration; // 8ms
-    uint8_t speed; // ratio
+    uint8_t speed;  // ratio u0.8
 } jd_vibration_motor_vibrate_t;
 
 

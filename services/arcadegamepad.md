@@ -22,7 +22,7 @@ A gamepad with direction and action buttons for one player.
     ro buttons @ reading {
     repeats:
         button: Button
-        pressure: u8 /
+        pressure: u0.8 /
     }
 
 Indicates which buttons are currently active (pressed).

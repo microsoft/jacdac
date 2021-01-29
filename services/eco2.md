@@ -8,7 +8,7 @@ Measures equivalent CO² levels.
 
 ## Registers
 
-    ro e_CO2: u22.10 ppm { typical_min=400, typical_max=8192 }  @ reading
+    ro e_CO2: u22.10 ppm { typical_min=400, typical_max=8192, preferred_interval=1000 }  @ reading
 
 Equivalent CO² (eCO²) readings.
 

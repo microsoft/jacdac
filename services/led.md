@@ -11,7 +11,7 @@ Animations are described using pairs of HSV and duration, similarly to the `stat
 
 ## Registers
 
-    rw brightness: u16 / @ intensity
+    rw brightness: u0.16 / @ intensity
 
 Set the luminosity of the strip. The value is used to scale `start_intensity` in `steps` register.
 At `0` the power to the strip is completely shut down.

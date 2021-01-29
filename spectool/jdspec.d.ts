@@ -291,6 +291,11 @@ declare namespace jdspec {
          * This register supports the JACDAC infrastructure and is not meant to be reported outside the JACDAC bus.
          */
         internal?: boolean;
+
+        /**
+         * For registers, preffere interval (ms) to refresh the register
+         */
+        preferredInterval?: number;
     }
 
     /**

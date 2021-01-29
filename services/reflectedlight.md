@@ -7,7 +7,7 @@ A sensor that detects light and dark surfaces, commonly used for line following 
 
 ## Registers
 
-    ro brightness: u16 / @ reading
+    ro brightness: u0.16 / @ reading
 
 Reports the reflected brightness. It may be a digital value or, for some sensor, analog value.
 

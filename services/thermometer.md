@@ -9,7 +9,7 @@ A thermometer measuring outside environment.
 
 Default streaming interval is 1s.
 
-    ro temperature: i22.10 °C @ reading
+    ro temperature: i22.10 °C { preferred_interval=1000 } @ reading
 
 The temperature.
 

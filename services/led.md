@@ -47,4 +47,4 @@ The animation will be repeated `max_iterations + 1` times.
 
     const led_count?: u16 @ 0x82
 
-If know, specifies the number of LEDs in parallel on this device.
+If known, specifies the number of LEDs in parallel on this device.

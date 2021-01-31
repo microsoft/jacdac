@@ -8,16 +8,22 @@
 #define JD_LED_VARIANT_THROUGH_HOLE 0x1
 #define JD_LED_VARIANT_SMD 0x2
 #define JD_LED_VARIANT_POWER 0x3
+#define JD_LED_VARIANT_BEAD 0x4
 
 /**
- * Read-write ratio u0.16 (uint16_t). Set the luminosity of the strip. The value is used to scale `start_intensity` in `steps` register.
+ * Read-write ratio u0.16 (uint16_t). Set the luminosity of the strip. The value is used to scale `value` in `steps` register.
  * At `0` the power to the strip is completely shut down.
  */
 #define JD_LED_REG_BRIGHTNESS JD_REG_INTENSITY
 
 /**
- * Animations are described using pairs of brightness value and duration, similarly to the `status_light` register in the control service. They repeat infinitely until another animation
- * is specified.
+ * Animations are described using pairs of color description and duration, 
+ * similarly to the `status_light` register in the control service.
+ * They repeat indefinitely until another animation is specified.
+ * For monochrome LEDs, the hue and saturation are ignored.
+ * A specification `(red, 80ms), (blue, 40ms), (blue, 0ms), (yellow, 80ms)`
+ * means to start with red, cross-fade to blue over 80ms, stay blue for 40ms,
+ * change to yellow, and cross-fade back to red in 80ms.
  */
 #define JD_LED_REG_STEPS 0x82
 typedef struct jd_led_steps {
@@ -44,7 +50,7 @@ typedef struct jd_led_steps {
 #define JD_LED_REG_WAVE_LENGTH 0x84
 
 /**
- * Constant mcd uint16_t. The luminous intensity of the LED, in micro candella.
+ * Constant mcd uint16_t. The luminous intensity of the LED, at full value, in micro candella.
  */
 #define JD_LED_REG_LUMINOUS_INTENSITY 0x85
 

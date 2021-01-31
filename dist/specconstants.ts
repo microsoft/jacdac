@@ -669,19 +669,6 @@ export enum CharacterScreenReg {
     Columns = 0x181,
 }
 
-// Service: CODAL Message Bus
-export const SRV_CODAL_MESSAGE_BUS = 0x16ad7cd5
-export enum CodalMessageBusCmd {
-    /**
-     * Sends a new event on the message bus.
-     *
-     * ```
-     * const [id, event] = jdunpack<[number, number]>(buf, "u16 u16")
-     * ```
-     */
-    Send = 0x80,
-}
-
 // Service: Color
 export const SRV_COLOR = 0x1630d567
 export enum ColorReg {
@@ -1003,6 +990,94 @@ export enum HeartRateReg {
      * ```
      */
     Variant = 0x107,
+}
+
+// Service: HID Keyboard
+export const SRV_HID_KEYBOARD = 0x18b05b6a
+
+export enum HidKeyboardModifiers { // uint8_t
+    LeftControl = 0xe0,
+    LeftShift = 0xe1,
+    LeftAlt = 0xe2,
+    LeftGUID = 0xe3,
+    RightControl = 0xe4,
+    RightShift = 0xe5,
+    RightAlt = 0xe6,
+    RightGUID = 0xe7,
+}
+
+
+export enum HidKeyboardAction { // uint8_t
+    Press = 0x0,
+    Up = 0x1,
+    Down = 0x2,
+}
+
+export enum HidKeyboardCmd {
+    /**
+     * Presses a key or a sequence of keys down.
+     *
+     * ```
+     * const [rest] = jdunpack<[([number, HidKeyboardModifiers, HidKeyboardAction])[]]>(buf, "r: u16 u8 u8")
+     * const [selector, modifiers, action] = rest[0]
+     * ```
+     */
+    Key = 0x80,
+
+    /**
+     * No args. Clears all pressed keys.
+     */
+    Clear = 0x81,
+}
+
+// Service: HID Mouse
+export const SRV_HID_MOUSE = 0x1885dc1c
+
+export enum HidMouseButton { // uint16_t
+    Right = 0x1,
+    Middle = 0x4,
+    Left = 0x2,
+}
+
+
+export enum HidMouseButtonEvent { // uint8_t
+    Up = 0x1,
+    Down = 0x2,
+    Click = 0x3,
+    DoubleClick = 0x4,
+}
+
+export enum HidMouseCmd {
+    /**
+     * Sets the up/down state of one or more buttons.
+     * A ``Click`` is the same as ``Down`` followed by ``Up`` after 100ms.
+     * A ``DoubleClick`` is two clicks with ``150ms`` gap between them (that is, ``100ms`` first click, ``150ms`` gap, ``100ms`` second click).
+     *
+     * ```
+     * const [buttons, event] = jdunpack<[HidMouseButton, HidMouseButtonEvent]>(buf, "u16 u8")
+     * ```
+     */
+    SetButton = 0x80,
+
+    /**
+     * Moves the mouse by the distance specified.
+     * If the time is positive, it specifies how long to make the move.
+     *
+     * ```
+     * const [dx, dy, time] = jdunpack<[number, number, number]>(buf, "i16 i16 u16")
+     * ```
+     */
+    Move = 0x81,
+
+    /**
+     * Turns the wheel up or down. Positive if scrolling up.
+     * If the time is positive, it specifies how long to make the move.
+     *
+     * ```
+     * const [dy, time] = jdunpack<[number, number]>(buf, "i16 u16")
+     * ```
+     */
+    Wheel = 0x82,
 }
 
 // Service: Humidity
@@ -1352,44 +1427,6 @@ export enum JoystickReg {
     Digital = 0x180,
 }
 
-// Service: Keyboard
-export const SRV_KEYBOARD = 0x18b05b6a
-
-export enum KeyboardModifiers { // uint8_t
-    LeftControl = 0xe0,
-    LeftShift = 0xe1,
-    LeftAlt = 0xe2,
-    LeftGUID = 0xe3,
-    RightControl = 0xe4,
-    RightShift = 0xe5,
-    RightAlt = 0xe6,
-    RightGUID = 0xe7,
-}
-
-
-export enum KeyboardAction { // uint8_t
-    Press = 0x0,
-    Up = 0x1,
-    Down = 0x2,
-}
-
-export enum KeyboardCmd {
-    /**
-     * Presses a key or a sequence of keys down.
-     *
-     * ```
-     * const [rest] = jdunpack<[([number, KeyboardModifiers, KeyboardAction])[]]>(buf, "r: u16 u8 u8")
-     * const [selector, modifiers, action] = rest[0]
-     * ```
-     */
-    Key = 0x80,
-
-    /**
-     * No args. Clears all pressed keys.
-     */
-    Clear = 0x81,
-}
-
 // Service: LED
 export const SRV_LED = 0x1e3048f8
 
@@ -1397,11 +1434,12 @@ export enum LedVariant { // uint32_t
     ThroughHole = 0x1,
     SMD = 0x2,
     Power = 0x3,
+    Bead = 0x4,
 }
 
 export enum LedReg {
     /**
-     * Read-write ratio u0.16 (uint16_t). Set the luminosity of the strip. The value is used to scale `start_intensity` in `steps` register.
+     * Read-write ratio u0.16 (uint16_t). Set the luminosity of the strip. The value is used to scale `value` in `steps` register.
      * At `0` the power to the strip is completely shut down.
      *
      * ```
@@ -1411,8 +1449,13 @@ export enum LedReg {
     Brightness = 0x1,
 
     /**
-     * Animations are described using pairs of brightness value and duration, similarly to the `status_light` register in the control service. They repeat infinitely until another animation
-     * is specified.
+     * Animations are described using pairs of color description and duration,
+     * similarly to the `status_light` register in the control service.
+     * They repeat indefinitely until another animation is specified.
+     * For monochrome LEDs, the hue and saturation are ignored.
+     * A specification `(red, 80ms), (blue, 40ms), (blue, 0ms), (yellow, 80ms)`
+     * means to start with red, cross-fade to blue over 80ms, stay blue for 40ms,
+     * change to yellow, and cross-fade back to red in 80ms.
      *
      * ```
      * const [rest] = jdunpack<[([number, number, number, number])[]]>(buf, "r: u8 u8 u8 u8")
@@ -1449,7 +1492,7 @@ export enum LedReg {
     WaveLength = 0x84,
 
     /**
-     * Constant mcd uint16_t. The luminous intensity of the LED, in micro candella.
+     * Constant mcd uint16_t. The luminous intensity of the LED, at full value, in micro candella.
      *
      * ```
      * const [luminousIntensity] = jdunpack<[number]>(buf, "u16")
@@ -2109,56 +2152,6 @@ export enum MotorReg {
      * ```
      */
     LoadSpeed = 0x181,
-}
-
-// Service: Mouse
-export const SRV_MOUSE = 0x1885dc1c
-
-export enum MouseButton { // uint16_t
-    Right = 0x1,
-    Middle = 0x4,
-    Left = 0x2,
-}
-
-
-export enum MouseButtonEvent { // uint8_t
-    Up = 0x1,
-    Down = 0x2,
-    Click = 0x3,
-    DoubleClick = 0x4,
-}
-
-export enum MouseCmd {
-    /**
-     * Sets the up/down state of one or more buttons.
-     * A ``Click`` is the same as ``Down`` followed by ``Up`` after 100ms.
-     * A ``DoubleClick`` is two clicks with ``150ms`` gap between them (that is, ``100ms`` first click, ``150ms`` gap, ``100ms`` second click).
-     *
-     * ```
-     * const [buttons, event] = jdunpack<[MouseButton, MouseButtonEvent]>(buf, "u16 u8")
-     * ```
-     */
-    SetButton = 0x80,
-
-    /**
-     * Moves the mouse by the distance specified.
-     * If the time is positive, it specifies how long to make the move.
-     *
-     * ```
-     * const [dx, dy, time] = jdunpack<[number, number, number]>(buf, "i16 i16 u16")
-     * ```
-     */
-    Move = 0x81,
-
-    /**
-     * Turns the wheel up or down. Positive if scrolling up.
-     * If the time is positive, it specifies how long to make the move.
-     *
-     * ```
-     * const [dy, time] = jdunpack<[number, number]>(buf, "i16 u16")
-     * ```
-     */
-    Wheel = 0x82,
 }
 
 // Service: Multitouch
@@ -3192,6 +3185,48 @@ export enum SoundLevelEvent {
      */
     Quiet = 0x2,
 }
+
+// Service: Sound player
+export const SRV_SOUND_PLAYER = 0x1403d338
+export enum SoundPlayerReg {
+    /**
+     * Read-write ratio u0.16 (uint16_t). Global volume of the output. ``0`` means completely off. This volume is mixed with each play volumes.
+     *
+     * ```
+     * const [volume] = jdunpack<[number]>(buf, "u0.16")
+     * ```
+     */
+    Volume = 0x1,
+}
+
+export enum SoundPlayerCmd {
+    /**
+     * Starts playing a sounds with a specific volume.
+     *
+     * ```
+     * const [volume, name] = jdunpack<[number, string]>(buf, "u0.16 s")
+     * ```
+     */
+    Play = 0x80,
+
+    /**
+     * Argument: sounds_port pipe (bytes). Returns the list of sounds available to play.
+     *
+     * ```
+     * const [soundsPort] = jdunpack<[Uint8Array]>(buf, "b[12]")
+     * ```
+     */
+    Sounds = 0x81,
+}
+
+
+/**
+ * pipe_report SoundsPipe
+ * ```
+ * const [duration, name] = jdunpack<[number, string]>(buf, "u32 s")
+ * ```
+ */
+
 
 // Service: Speech synthesis
 export const SRV_SPEECH_SYNTHESIS = 0x1204d995

@@ -715,21 +715,6 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: CODAL Message Bus
-    export const SRV_CODAL_MESSAGE_BUS = 0x16ad7cd5
-    export const enum CodalMessageBusCmd {
-        /**
-         * Sends a new event on the message bus.
-         *
-         * ```
-         * const [id, event] = jdunpack<[number, number]>(buf, "u16 u16")
-         * ```
-         */
-        Send = 0x80,
-    }
-
-}
-namespace jacdac {
     // Service: Color
     export const SRV_COLOR = 0x1630d567
     export const enum ColorReg {
@@ -1059,6 +1044,98 @@ namespace jacdac {
          * ```
          */
         Variant = 0x107,
+    }
+
+}
+namespace jacdac {
+    // Service: HID Keyboard
+    export const SRV_HID_KEYBOARD = 0x18b05b6a
+
+    export const enum HidKeyboardModifiers { // uint8_t
+        LeftControl = 0xe0,
+        LeftShift = 0xe1,
+        LeftAlt = 0xe2,
+        LeftGUID = 0xe3,
+        RightControl = 0xe4,
+        RightShift = 0xe5,
+        RightAlt = 0xe6,
+        RightGUID = 0xe7,
+    }
+
+
+    export const enum HidKeyboardAction { // uint8_t
+        Press = 0x0,
+        Up = 0x1,
+        Down = 0x2,
+    }
+
+    export const enum HidKeyboardCmd {
+        /**
+         * Presses a key or a sequence of keys down.
+         *
+         * ```
+         * const [rest] = jdunpack<[([number, HidKeyboardModifiers, HidKeyboardAction])[]]>(buf, "r: u16 u8 u8")
+         * const [selector, modifiers, action] = rest[0]
+         * ```
+         */
+        Key = 0x80,
+
+        /**
+         * No args. Clears all pressed keys.
+         */
+        Clear = 0x81,
+    }
+
+}
+namespace jacdac {
+    // Service: HID Mouse
+    export const SRV_HID_MOUSE = 0x1885dc1c
+
+    export const enum HidMouseButton { // uint16_t
+        Right = 0x1,
+        Middle = 0x4,
+        Left = 0x2,
+    }
+
+
+    export const enum HidMouseButtonEvent { // uint8_t
+        Up = 0x1,
+        Down = 0x2,
+        Click = 0x3,
+        DoubleClick = 0x4,
+    }
+
+    export const enum HidMouseCmd {
+        /**
+         * Sets the up/down state of one or more buttons.
+         * A ``Click`` is the same as ``Down`` followed by ``Up`` after 100ms.
+         * A ``DoubleClick`` is two clicks with ``150ms`` gap between them (that is, ``100ms`` first click, ``150ms`` gap, ``100ms`` second click).
+         *
+         * ```
+         * const [buttons, event] = jdunpack<[HidMouseButton, HidMouseButtonEvent]>(buf, "u16 u8")
+         * ```
+         */
+        SetButton = 0x80,
+
+        /**
+         * Moves the mouse by the distance specified.
+         * If the time is positive, it specifies how long to make the move.
+         *
+         * ```
+         * const [dx, dy, time] = jdunpack<[number, number, number]>(buf, "i16 i16 u16")
+         * ```
+         */
+        Move = 0x81,
+
+        /**
+         * Turns the wheel up or down. Positive if scrolling up.
+         * If the time is positive, it specifies how long to make the move.
+         *
+         * ```
+         * const [dy, time] = jdunpack<[number, number]>(buf, "i16 u16")
+         * ```
+         */
+        Wheel = 0x82,
     }
 
 }
@@ -1421,46 +1498,6 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Keyboard
-    export const SRV_KEYBOARD = 0x18b05b6a
-
-    export const enum KeyboardModifiers { // uint8_t
-        LeftControl = 0xe0,
-        LeftShift = 0xe1,
-        LeftAlt = 0xe2,
-        LeftGUID = 0xe3,
-        RightControl = 0xe4,
-        RightShift = 0xe5,
-        RightAlt = 0xe6,
-        RightGUID = 0xe7,
-    }
-
-
-    export const enum KeyboardAction { // uint8_t
-        Press = 0x0,
-        Up = 0x1,
-        Down = 0x2,
-    }
-
-    export const enum KeyboardCmd {
-        /**
-         * Presses a key or a sequence of keys down.
-         *
-         * ```
-         * const [rest] = jdunpack<[([number, KeyboardModifiers, KeyboardAction])[]]>(buf, "r: u16 u8 u8")
-         * const [selector, modifiers, action] = rest[0]
-         * ```
-         */
-        Key = 0x80,
-
-        /**
-         * No args. Clears all pressed keys.
-         */
-        Clear = 0x81,
-    }
-
-}
-namespace jacdac {
     // Service: LED
     export const SRV_LED = 0x1e3048f8
 
@@ -1468,11 +1505,12 @@ namespace jacdac {
         ThroughHole = 0x1,
         SMD = 0x2,
         Power = 0x3,
+        Bead = 0x4,
     }
 
     export const enum LedReg {
         /**
-         * Read-write ratio u0.16 (uint16_t). Set the luminosity of the strip. The value is used to scale `start_intensity` in `steps` register.
+         * Read-write ratio u0.16 (uint16_t). Set the luminosity of the strip. The value is used to scale `value` in `steps` register.
          * At `0` the power to the strip is completely shut down.
          *
          * ```
@@ -1482,8 +1520,13 @@ namespace jacdac {
         Brightness = 0x1,
 
         /**
-         * Animations are described using pairs of brightness value and duration, similarly to the `status_light` register in the control service. They repeat infinitely until another animation
-         * is specified.
+         * Animations are described using pairs of color description and duration,
+         * similarly to the `status_light` register in the control service.
+         * They repeat indefinitely until another animation is specified.
+         * For monochrome LEDs, the hue and saturation are ignored.
+         * A specification `(red, 80ms), (blue, 40ms), (blue, 0ms), (yellow, 80ms)`
+         * means to start with red, cross-fade to blue over 80ms, stay blue for 40ms,
+         * change to yellow, and cross-fade back to red in 80ms.
          *
          * ```
          * const [rest] = jdunpack<[([number, number, number, number])[]]>(buf, "r: u8 u8 u8 u8")
@@ -1520,7 +1563,7 @@ namespace jacdac {
         WaveLength = 0x84,
 
         /**
-         * Constant mcd uint16_t. The luminous intensity of the LED, in micro candella.
+         * Constant mcd uint16_t. The luminous intensity of the LED, at full value, in micro candella.
          *
          * ```
          * const [luminousIntensity] = jdunpack<[number]>(buf, "u16")
@@ -2204,58 +2247,6 @@ namespace jacdac {
          * ```
          */
         LoadSpeed = 0x181,
-    }
-
-}
-namespace jacdac {
-    // Service: Mouse
-    export const SRV_MOUSE = 0x1885dc1c
-
-    export const enum MouseButton { // uint16_t
-        Right = 0x1,
-        Middle = 0x4,
-        Left = 0x2,
-    }
-
-
-    export const enum MouseButtonEvent { // uint8_t
-        Up = 0x1,
-        Down = 0x2,
-        Click = 0x3,
-        DoubleClick = 0x4,
-    }
-
-    export const enum MouseCmd {
-        /**
-         * Sets the up/down state of one or more buttons.
-         * A ``Click`` is the same as ``Down`` followed by ``Up`` after 100ms.
-         * A ``DoubleClick`` is two clicks with ``150ms`` gap between them (that is, ``100ms`` first click, ``150ms`` gap, ``100ms`` second click).
-         *
-         * ```
-         * const [buttons, event] = jdunpack<[MouseButton, MouseButtonEvent]>(buf, "u16 u8")
-         * ```
-         */
-        SetButton = 0x80,
-
-        /**
-         * Moves the mouse by the distance specified.
-         * If the time is positive, it specifies how long to make the move.
-         *
-         * ```
-         * const [dx, dy, time] = jdunpack<[number, number, number]>(buf, "i16 i16 u16")
-         * ```
-         */
-        Move = 0x81,
-
-        /**
-         * Turns the wheel up or down. Positive if scrolling up.
-         * If the time is positive, it specifies how long to make the move.
-         *
-         * ```
-         * const [dy, time] = jdunpack<[number, number]>(buf, "i16 u16")
-         * ```
-         */
-        Wheel = 0x82,
     }
 
 }
@@ -3339,6 +3330,50 @@ namespace jacdac {
         //% block="quiet"
         Quiet = 0x2,
     }
+
+}
+namespace jacdac {
+    // Service: Sound player
+    export const SRV_SOUND_PLAYER = 0x1403d338
+    export const enum SoundPlayerReg {
+        /**
+         * Read-write ratio u0.16 (uint16_t). Global volume of the output. ``0`` means completely off. This volume is mixed with each play volumes.
+         *
+         * ```
+         * const [volume] = jdunpack<[number]>(buf, "u0.16")
+         * ```
+         */
+        Volume = 0x1,
+    }
+
+    export const enum SoundPlayerCmd {
+        /**
+         * Starts playing a sounds with a specific volume.
+         *
+         * ```
+         * const [volume, name] = jdunpack<[number, string]>(buf, "u0.16 s")
+         * ```
+         */
+        Play = 0x80,
+
+        /**
+         * Argument: sounds_port pipe (bytes). Returns the list of sounds available to play.
+         *
+         * ```
+         * const [soundsPort] = jdunpack<[Buffer]>(buf, "b[12]")
+         * ```
+         */
+        Sounds = 0x81,
+    }
+
+
+    /**
+     * pipe_report SoundsPipe
+     * ```
+     * const [duration, name] = jdunpack<[number, string]>(buf, "u32 s")
+     * ```
+     */
+
 
 }
 namespace jacdac {

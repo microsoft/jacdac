@@ -2,7 +2,7 @@
 
 A device that can play various sounds stored locally. This service is typically paired with a ``storage`` service for storing sounds.
 
-    identifier: 0x1e3048f8
+    identifier: 0x1403d338
 
 ## Registers
 

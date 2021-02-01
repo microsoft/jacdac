@@ -22,15 +22,15 @@ typedef struct jd_sound_player_play {
 /**
  * Argument: sounds_port pipe (bytes). Returns the list of sounds available to play.
  */
-#define JD_SOUND_PLAYER_CMD_SOUNDS 0x81
+#define JD_SOUND_PLAYER_CMD_LIST_SOUNDS 0x81
 
 /**
  * Returns the list of sounds available to play.
  */
-typedef struct jd_sound_player_sounds_pipe {
+typedef struct jd_sound_player_list_sounds_pipe {
     uint32_t duration; // ms
     char name[0];  // string
-} jd_sound_player_sounds_pipe_t;
+} jd_sound_player_list_sounds_pipe_t;
 
 
 #endif

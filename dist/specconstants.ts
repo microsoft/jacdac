@@ -3238,12 +3238,12 @@ export enum SoundPlayerCmd {
      * const [soundsPort] = jdunpack<[Uint8Array]>(buf, "b[12]")
      * ```
      */
-    Sounds = 0x81,
+    ListSounds = 0x81,
 }
 
 
 /**
- * pipe_report SoundsPipe
+ * pipe_report ListSoundsPipe
  * ```
  * const [duration, name] = jdunpack<[number, string]>(buf, "u32 s")
  * ```

@@ -19,10 +19,10 @@ Global volume of the output. ``0`` means completely off. This volume is mixed wi
 
 Starts playing a sounds with a specific volume.
 
-    command sounds @ 0x81 {
+    command list_sounds @ 0x81 {
         sounds_port: pipe
     }
-    pipe report sounds_pipe {
+    pipe report list_sounds_pipe {
        duration: u32 ms
        name: string
     }

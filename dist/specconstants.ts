@@ -3624,6 +3624,35 @@ export enum VibrationMotorCmd {
     Vibrate = 0x80,
 }
 
+// Service: Water level sensor LED
+export const SRV_WATER_LEVEL_SENSOR_LED = 0x147b62ed
+
+export enum WaterLevelSensorLEDVariant { // uint32_t
+    Resistive = 0x1,
+    ContactPhotoElectric = 0x2,
+    NonContactPhotoElectric = 0x3,
+}
+
+export enum WaterLevelSensorLEDReg {
+    /**
+     * Read-write ratio u0.16 (uint16_t). The reported water level.
+     *
+     * ```
+     * const [level] = jdunpack<[number]>(buf, "u0.16")
+     * ```
+     */
+    Level = 0x1,
+
+    /**
+     * Constant Variant (uint32_t). The type of physical sensor.
+     *
+     * ```
+     * const [variant] = jdunpack<[WaterLevelSensorLEDVariant]>(buf, "u32")
+     * ```
+     */
+    Variant = 0x107,
+}
+
 // Service: WIFI
 export const SRV_WIFI = 0x18aae1fa
 

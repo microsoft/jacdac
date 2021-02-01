@@ -1,5 +1,12 @@
 // Service: Common registers and commands
 
+export enum SystemReadingThreshold { // uint8_t
+    Neutral = 0x1,
+    Low = 0x2,
+    High = 0x3,
+}
+
+
 export enum SystemStatusCodes { // uint16_t
     Ready = 0x0,
     Initializing = 0x1,
@@ -220,6 +227,11 @@ export enum SystemEvent {
      * Notifies that the high threshold has been crossed
      */
     High = 0x6,
+
+    /**
+     * Notifies that the threshold is back between ``low`` and ``high``.
+     */
+    Neutral = 0x7,
 }
 
 // Service: Base service

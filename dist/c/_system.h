@@ -2,6 +2,11 @@
 #ifndef _JACDAC_SPEC_SYSTEM_H
 #define _JACDAC_SPEC_SYSTEM_H 1
 
+// enum ReadingThreshold (uint8_t)
+#define JD_READING_THRESHOLD_NEUTRAL 0x1
+#define JD_READING_THRESHOLD_LOW 0x2
+#define JD_READING_THRESHOLD_HIGH 0x3
+
 // enum StatusCodes (uint16_t)
 #define JD_STATUS_CODES_READY 0x0
 #define JD_STATUS_CODES_INITIALIZING 0x1
@@ -175,5 +180,10 @@ typedef struct jd_system_status_code_changed {
  * Notifies that the high threshold has been crossed
  */
 #define JD_EV_HIGH 0x6
+
+/**
+ * Notifies that the threshold is back between ``low`` and ``high``.
+ */
+#define JD_EV_NEUTRAL 0x7
 
 #endif

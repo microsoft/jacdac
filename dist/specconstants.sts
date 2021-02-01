@@ -1,6 +1,13 @@
 namespace jacdac {
     // Service: Common registers and commands
 
+    export const enum SystemReadingThreshold { // uint8_t
+        Neutral = 0x1,
+        Low = 0x2,
+        High = 0x3,
+    }
+
+
     export const enum SystemStatusCodes { // uint16_t
         Ready = 0x0,
         Initializing = 0x1,
@@ -227,6 +234,12 @@ namespace jacdac {
          */
         //% block="high"
         High = 0x6,
+
+        /**
+         * Notifies that the threshold is back between ``low`` and ``high``.
+         */
+        //% block="neutral"
+        Neutral = 0x7,
     }
 
 }

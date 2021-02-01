@@ -102,6 +102,11 @@ send a report in the same frame of the ``reading`` report.
 
 Smallest, yet distinguishable change in reading.
 
+    enum ReadingThreshold: u8 {
+        Neutral = 1
+        Low = 2
+        High = 3
+    }
     rw low_threshold: i32 @ 0x05
 
 Threshold when reading data gets low and triggers a ``low``.
@@ -172,3 +177,7 @@ Notifies that the low threshold has been crossed
     event high @ 0x06 {}
 
 Notifies that the high threshold has been crossed
+
+    event neutral @ 0x07 {}
+
+Notifies that the threshold is back between ``low`` and ``high``.

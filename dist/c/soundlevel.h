@@ -10,23 +10,23 @@
 #define JD_SOUND_LEVEL_REG_SOUND_LEVEL JD_REG_READING
 
 /**
- * Read-write uint16_t. The sound level to trigger a loud event.
+ * Read-write ratio u0.16 (uint16_t). The sound level to trigger a loud event.
  */
 #define JD_SOUND_LEVEL_REG_LOUD_THRESHOLD JD_REG_LOW_THRESHOLD
 
 /**
- * Read-write uint16_t. The sound level to trigger a quite event.
+ * Read-write ratio u0.16 (uint16_t). The sound level to trigger a quite event.
  */
 #define JD_SOUND_LEVEL_REG_QUIET_THRESHOLD JD_REG_HIGH_THRESHOLD
 
 /**
  * Raised when a loud sound is detected
  */
-#define JD_SOUND_LEVEL_EV_LOUD JD_EV_ACTIVE
+#define JD_SOUND_LEVEL_EV_LOUD JD_EV_HIGH
 
 /**
  * Raised when a period of quietness is detected
  */
-#define JD_SOUND_LEVEL_EV_QUIET JD_EV_INACTIVE
+#define JD_SOUND_LEVEL_EV_QUIET JD_EV_LOW
 
 #endif

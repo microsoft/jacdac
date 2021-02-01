@@ -137,7 +137,7 @@ export enum SystemReg {
     ReadingResolution = 0x108,
 
     /**
-     * Read-write int32_t. Thresholds for event generation for event generation for analog sensors.
+     * Read-write int32_t. Threshold when reading data gets low and triggers a ``low``.
      *
      * ```
      * const [lowThreshold] = jdunpack<[number]>(buf, "i32")
@@ -146,7 +146,7 @@ export enum SystemReg {
     LowThreshold = 0x5,
 
     /**
-     * Read-write int32_t. Thresholds for event generation for event generation for analog sensors.
+     * Read-write int32_t. Thresholds when reading data gets high and triggers a ``high`` event.
      *
      * ```
      * const [highThreshold] = jdunpack<[number]>(buf, "i32")
@@ -210,6 +210,16 @@ export enum SystemEvent {
      * ```
      */
     StatusCodeChanged = 0x4,
+
+    /**
+     * Notifies that the low threshold has been crossed
+     */
+    Low = 0x5,
+
+    /**
+     * Notifies that the high threshold has been crossed
+     */
+    High = 0x6,
 }
 
 // Service: Base service
@@ -3651,6 +3661,36 @@ export enum WaterLevelReg {
      * ```
      */
     Variant = 0x107,
+
+    /**
+     * Read-write ratio u0.16 (uint16_t). Threshold when reading data gets low and triggers a ``low``.
+     *
+     * ```
+     * const [lowThreshold] = jdunpack<[number]>(buf, "u0.16")
+     * ```
+     */
+    LowThreshold = 0x5,
+
+    /**
+     * Read-write ratio u0.16 (uint16_t). Thresholds when reading data gets high and triggers a ``high`` event.
+     *
+     * ```
+     * const [highThreshold] = jdunpack<[number]>(buf, "u0.16")
+     * ```
+     */
+    HighThreshold = 0x6,
+}
+
+export enum WaterLevelEvent {
+    /**
+     * Notifies that the low threshold has been crossed
+     */
+    Low = 0x5,
+
+    /**
+     * Notifies that the high threshold has been crossed
+     */
+    High = 0x6,
 }
 
 // Service: WIFI

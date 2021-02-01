@@ -19,4 +19,24 @@
  */
 #define JD_WATER_LEVEL_REG_VARIANT JD_REG_VARIANT
 
+/**
+ * Read-write ratio u0.16 (uint16_t). Threshold when reading data gets low and triggers a ``low``.
+ */
+#define JD_WATER_LEVEL_REG_LOW_THRESHOLD JD_REG_LOW_THRESHOLD
+
+/**
+ * Read-write ratio u0.16 (uint16_t). Thresholds when reading data gets high and triggers a ``high`` event.
+ */
+#define JD_WATER_LEVEL_REG_HIGH_THRESHOLD JD_REG_HIGH_THRESHOLD
+
+/**
+ * Notifies that the low threshold has been crossed
+ */
+#define JD_WATER_LEVEL_EV_LOW JD_EV_LOW
+
+/**
+ * Notifies that the high threshold has been crossed
+ */
+#define JD_WATER_LEVEL_EV_HIGH JD_EV_HIGH
+
 #endif

@@ -108,12 +108,12 @@ typedef struct jd_system_event_report {
 #define JD_REG_READING_RESOLUTION 0x108
 
 /**
- * Read-write int32_t. Thresholds for event generation for event generation for analog sensors.
+ * Read-write int32_t. Threshold when reading data gets low and triggers a ``low``.
  */
 #define JD_REG_LOW_THRESHOLD 0x5
 
 /**
- * Read-write int32_t. Thresholds for event generation for event generation for analog sensors.
+ * Read-write int32_t. Thresholds when reading data gets high and triggers a ``high`` event.
  */
 #define JD_REG_HIGH_THRESHOLD 0x6
 
@@ -165,5 +165,15 @@ typedef struct jd_system_status_code_changed {
     uint16_t vendor_code;
 } jd_system_status_code_changed_t;
 
+
+/**
+ * Notifies that the low threshold has been crossed
+ */
+#define JD_EV_LOW 0x5
+
+/**
+ * Notifies that the high threshold has been crossed
+ */
+#define JD_EV_HIGH 0x6
 
 #endif

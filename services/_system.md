@@ -103,9 +103,12 @@ send a report in the same frame of the ``reading`` report.
 Smallest, yet distinguishable change in reading.
 
     rw low_threshold: i32 @ 0x05
+
+Threshold when reading data gets low and triggers a ``low``.
+
     rw high_threshold: i32 @ 0x06
 
-Thresholds for event generation for event generation for analog sensors.
+Thresholds when reading data gets high and triggers a ``high`` event.
 
     const streaming_preferred_interval: u32 ms @ 0x102
 
@@ -155,9 +158,17 @@ Notifies that the service has been dis-activated.
 
 Notifies that the some state of the service changed.
 
-    event status_code_changed? @ 0x04 {
+    event status_code_changed @ 0x04 {
         code: StatusCodes
         vendor_code: u16
     }
 
 Notifies that the status code of the service changed.
+
+    event low @ 0x05 {}
+
+Notifies that the low threshold has been crossed
+
+    event high @ 0x06 {}
+
+Notifies that the high threshold has been crossed

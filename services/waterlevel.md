@@ -1,4 +1,4 @@
-# Water level sensor LED
+# Water level
 
     identifier: 0x147b62ed
     extends: _sensor
@@ -7,7 +7,7 @@ A sensor that measures liquid/water level.
 
 ## Registers
 
-    rw level: u0.16 / @ intensity
+    ro level: u0.16 / @ reading
 
 The reported water level.
 

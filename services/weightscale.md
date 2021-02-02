@@ -15,7 +15,7 @@ The reported weight.
 
 The estimate error on the reported reading.
 
-    rw zero_offset: u22.10 g 0x80
+    rw zero_offset?: u22.10 g 0x80
     
 Calibrated zero offset error on the scale, i.e. the measured weight when nothing is on the scale.
 You do not need to subtract that from the reading, it has already been done.

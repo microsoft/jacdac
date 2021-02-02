@@ -5,12 +5,12 @@
 #define JD_SERVICE_CLASS_PULSE_OXIMETER  0x10bb4eb6
 
 /**
- * Read-only % u16.16 (uint32_t). The estimated oxygen level in blood.
+ * Read-only % u8.8 (uint16_t). The estimated oxygen level in blood.
  */
 #define JD_PULSE_OXIMETER_REG_OXYGEN JD_REG_READING
 
 /**
- * Read-only % u16.16 (uint32_t). The estimated error on the reported sensor data.
+ * Read-only % u8.8 (uint16_t). The estimated error on the reported sensor data.
  */
 #define JD_PULSE_OXIMETER_REG_OXYGEN_ERROR JD_REG_READING_ERROR
 

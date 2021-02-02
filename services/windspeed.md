@@ -7,7 +7,7 @@ A sensor that measures wind speed.
 
 ## Registers
 
-    ro wind_speed: u16.16 m/s @ reading
+    ro wind_speed: u16.16 m/s { preferred_interval=60000 } @ reading
 
 The velocity of the wind.
 

@@ -20,7 +20,7 @@ The estimate error on the reported reading.
 Calibrated zero offset error on the scale, i.e. the measured weight when nothing is on the scale.
 You do not need to subtract that from the reading, it has already been done.
 
-    rw gain: u16.16 g 0x81
+    rw gain?: u16.16 0x81
     
 Calibrated gain on the weight scale error.
 

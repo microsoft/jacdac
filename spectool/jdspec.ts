@@ -110,6 +110,7 @@ export const secondaryUnitConverters: jdspec.SMap<{
     "ppm": { name: "parts per million", unit: "/", scale: 1.00E-06, offset: 0 },
     "ppb": { name: "parts per billion", unit: "/", scale: 1.00E-09, offset: 0 },
     "/100": { name: "percent", unit: "/", scale: 1 / 100, offset: 0 },
+    "%": { name: "percent", unit: "/", scale: 1 / 100, offset: 0 },
     "/1000": { name: "permille", unit: "/", scale: 1 / 1000, offset: 0 },
     "hPa": { name: "hectopascal", unit: "Pa", scale: 100, offset: 0 },
     "mm": { name: "millimeter", unit: "m", scale: 1 / 1000, offset: 0 },

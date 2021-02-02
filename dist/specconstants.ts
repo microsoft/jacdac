@@ -3185,36 +3185,6 @@ export enum SoilMoistureReg {
      * ```
      */
     Variant = 0x107,
-
-    /**
-     * Read-write ratio u0.16 (uint16_t). Threshold when reading data gets low and triggers a ``dry`` event.
-     *
-     * ```
-     * const [dryThreshold] = jdunpack<[number]>(buf, "u0.16")
-     * ```
-     */
-    DryThreshold = 0x5,
-
-    /**
-     * Read-write ratio u0.16 (uint16_t). Thresholds when reading data gets high and triggers a ``wet`` event.
-     *
-     * ```
-     * const [wetThreshold] = jdunpack<[number]>(buf, "u0.16")
-     * ```
-     */
-    WetThreshold = 0x6,
-}
-
-export enum SoilMoistureEvent {
-    /**
-     * Notifies that the dry threshold has been crossed
-     */
-    Dry = 0x5,
-
-    /**
-     * Notifies that the wet threshold has been crossed
-     */
-    Wet = 0x6,
 }
 
 // Service: Sound level

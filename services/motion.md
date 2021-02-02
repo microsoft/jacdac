@@ -28,6 +28,6 @@ Type of physical sensor
 
 ## Events
 
-   event movement @ 0x80 { }
+   event movement @ active { }
 
 A movement was detected.

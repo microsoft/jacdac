@@ -9,7 +9,7 @@ A Global Positioning Device. NMEA message reference at https://www.sparkfun.com/
 ## Registers
 
     ro position @ reading {
-        time: u32 utc_time
+        timestamp: u32 utc_time
         latitude: i12.20 ° { absolute_min=-90, absolute_max=90 }
         longitude: i12.20 ° { absolute_min=-180, absolute_max=180 }
     }

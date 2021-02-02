@@ -19,6 +19,10 @@ The estimate error on the reported reading.
     
 Calibrated zero offset error on the scale, i.e. the measured weight when nothing is on the scale.
 
+    rw gain: u16.16g 0x81
+    
+Calibrated gain on the weight scale error.
+
     enum Variant: u32 {
         LoadCell = 1
     }
@@ -32,7 +36,7 @@ The type of physical scale
 
 Call this command when there is nothing on the scale. If supported, the module should save the calibration data.
 
-    command calibrate_factor @ 0x81 {
+    command calibrate_gain @ 0x81 {
         weight: u16.16 g
     }
 

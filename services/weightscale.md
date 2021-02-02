@@ -25,7 +25,9 @@ You do not need to subtract that from the reading, it has already been done.
 Calibrated gain on the weight scale error.
 
     enum Variant: u32 {
-        LoadCell = 1
+        Body = 1
+        Food = 2
+        Jewelry = 3
     }
     const variant?: Variant @ variant
 

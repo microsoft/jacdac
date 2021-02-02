@@ -1,7 +1,6 @@
 # RFID Reader
 
     identifier: 0x1247aec2
-    extends: _sensor
 
 A reader of RFID tags.
 

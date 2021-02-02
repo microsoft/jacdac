@@ -20,34 +20,34 @@ It's best to ignore this (unless debugging), and use events.
 
 Most events include the channel number of the input.
 
-    event touch @ 0x01 {
+    event touch @ active {
         channel: u32
     }
 
 Emitted when an input is touched.
 
-    event release @ 0x02 {
+    event release @ inactive {
         channel: u32
     }
 
 Emitted when an input is no longer touched.
 
-    event tap @ 0x03 {
+    event tap @ 0x80 {
         channel: u32
     }
 
 Emitted when an input is briefly touched. TODO Not implemented.
 
-    event long_press @ 0x04 {
+    event long_press @ 0x81 {
         channel: u32
     }
 
 Emitted when an input is touched for longer than 500ms. TODO Not implemented.
 
-    event swipe_pos @ 0x10
+    event swipe_pos @ 0x90
 
 Emitted when input channels are successively touched in order of increasing channel numbers.
 
-    event swipe_neg @ 0x11
+    event swipe_neg @ 0x91
 
 Emitted when input channels are successively touched in order of decreasing channel numbers.

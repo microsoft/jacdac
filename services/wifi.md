@@ -29,27 +29,34 @@ Discovery and connection to WiFi networks. Separate TCP service is used for data
         rssi: i8 {typical_min = -100, typical_max = -20}
         channel: u8 {typical_min = 1, typical_max = 13}
         bssid: u8[6]
-        ssid: string
+        ssid: string {maxBytes = 33}
     }
 
 Initiate search for WiFi networks. Results are returned via pipe, one entry per packet.
 
     command connect @ 0x81 {
-        ssid: string
+        ssid: string0
+        password?: string0
     }
 
-Connect to named network. Password can be appended after ssid. Both strings have to be NUL-terminated.
+Connect to named network.
 
     command disconnect @ 0x82 {}
 
 Disconnect from current WiFi network if any.
 
-## Event
+## Registers
 
-    event got_ip @ 0x01
+    ro connected: bool @ 0x180
+
+Indicates whether or not we currently have an IP address assigned.
+
+## Events
+
+    event got_ip @ active
 
 Emitted upon successful join and IP address assignment.
 
-    event lost_ip @ 0x02
+    event lost_ip @ inactive
 
 Emitted when disconnected from network.

@@ -4,7 +4,7 @@
     status: experimental
     camel: hidKeyboard
     
-Control a HID keyboard.
+Control a HID keyboard. This service cannot be simulated.
 
 The codes for the key (selectors) is defined in the [HID Keyboard
 specification](https://usb.org/sites/default/files/hut1_21.pdf), chapter 10 Keyboard/Keypad Page, page 81.

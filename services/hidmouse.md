@@ -4,7 +4,7 @@
     status: experimental
     camel: hidMouse
 
-Control a HID mouse.
+Control a HID mouse. This service cannot be simulated.
 
 ## Commands
 

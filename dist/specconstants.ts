@@ -427,9 +427,15 @@ export enum SensorAggregatorReg {
     CurrentSample = 0x101,
 }
 
-// Service: Pressure Button
-export const SRV_PRESSURE_BUTTON = 0x1865adc9
-export enum PressureButtonReg {
+// Service: Analog Button
+export const SRV_ANALOG_BUTTON = 0x1865adc9
+
+export enum AnalogButtonVariant { // uint32_t
+    Pressure = 0x1,
+    Capacitive = 0x2,
+}
+
+export enum AnalogButtonReg {
     /**
      * Read-only ratio u0.16 (uint16_t). Indicates the current pressure (``force``) on the button.
      *
@@ -440,16 +446,34 @@ export enum PressureButtonReg {
     Pressure = 0x101,
 
     /**
-     * Read-write ratio u0.16 (uint16_t). Indicates the lower threshold and upper threshold for the ``down`` and ``up`` events.
+     * Read-write ratio u0.16 (uint16_t). Indicates the lower threshold and upper threshold for ``up`` event.
      *
      * ```
-     * const [threshold] = jdunpack<[number]>(buf, "u0.16")
+     * const [lowThreshold] = jdunpack<[number]>(buf, "u0.16")
      * ```
      */
-    Threshold = 0x6,
+    LowThreshold = 0x5,
+
+    /**
+     * Read-write ratio u0.16 (uint16_t). Indicates the lower threshold and upper threshold for the ``down`` event.
+     *
+     * ```
+     * const [highThreshold] = jdunpack<[number]>(buf, "u0.16")
+     * ```
+     */
+    HighThreshold = 0x6,
+
+    /**
+     * Constant Variant (uint32_t). The type of physical button.
+     *
+     * ```
+     * const [variant] = jdunpack<[AnalogButtonVariant]>(buf, "u32")
+     * ```
+     */
+    Variant = 0x107,
 }
 
-export enum PressureButtonEvent {
+export enum AnalogButtonEvent {
     /**
      * Emitted when button goes from inactive (pressure less than threshold) to active.
      */
@@ -459,16 +483,6 @@ export enum PressureButtonEvent {
      * Emitted when button goes from active (pressure higher than threshold) to inactive.
      */
     Up = 0x2,
-
-    /**
-     * Emitted together with `up` when the press time was not longer than 500ms.
-     */
-    Click = 0x80,
-
-    /**
-     * Emitted together with `up` when the press time was more than 500ms.
-     */
-    LongClick = 0x81,
 }
 
 // Service: Arcade Gamepad

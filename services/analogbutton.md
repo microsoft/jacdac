@@ -1,4 +1,4 @@
-# Pressure Button
+# Analog Button
 
     identifier: 0x1865adc9
     extends: _sensor
@@ -11,9 +11,21 @@ A simple pressure sensitive push-button.
 
 Indicates the current pressure (``force``) on the button.
 
-    rw threshold: u0.16 / @ high_threshold
+    rw low_threshold: u0.16 / @ low_threshold
     
-Indicates the lower threshold and upper threshold for the ``down`` and ``up`` events.
+Indicates the lower threshold and upper threshold for ``up`` event.
+
+    rw high_threshold: u0.16 / @ high_threshold
+    
+Indicates the lower threshold and upper threshold for the ``down`` event.
+
+    enum Variant: u32 {
+        Pressure = 1
+        Capacitive = 2
+    }
+    const variant?: Variant @ variant
+
+The type of physical button.
 
 ## Events
 

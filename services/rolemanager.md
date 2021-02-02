@@ -1,15 +1,25 @@
 # Role Manager
 
-    identifier: 0x1
+    identifier: 0x1e4b7e66
 
-Assign roles to devices on the JACDAC bus.
+Assign roles to services on the JACDAC bus.
+
+Internally, the role manager stores a mapping from from `(device_id, service_idx)` to role name.
+Users refer to services by using role names (eg., they instantiate an accelerometer client with a given role name).
+Each client has a role, and roles are unique to clients
+(ie., one should not have both a gyro and accelerometer service with role `left_leg`).
+
+Role names can be hierarchical, using slash character as a separator.
+Examples: `left_leg/acc`, `left_leg/gyro`, `right_leg/acc`.
+If two roles share the prefix before first slash, it should be used as a hint that the services
+should be co-located on a single device
+(eg., here the `left_leg` "location" is expected to have both an accelerometer and a gyro service on a single device).
 
 ## Registers
 
     ro all_roles_allocated: bool @ 0x181
 
 Indicates if all required roles have been allocated to devices.
-TODO is this needed?
 
 ## Commands
 

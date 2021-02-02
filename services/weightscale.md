@@ -21,8 +21,12 @@ Calibrated zero offset error on the scale, i.e. the measured weight when nothing
 You do not need to subtract that from the reading, it has already been done.
 
     rw gain?: u16.16 0x81
-    
+
 Calibrated gain on the weight scale error.
+
+    rw max_weight?: u22.10 g @ max_reading
+
+Maximum supported weight on the scale.
 
     enum Variant: u32 {
         Body = 1

@@ -2633,6 +2633,28 @@ export enum ProtoTestCmd {
  */
 
 
+// Service: Pulse Oximeter
+export const SRV_PULSE_OXIMETER = 0x10bb4eb6
+export enum PulseOximeterReg {
+    /**
+     * Read-only % u16.16 (uint32_t). The estimated oxygen level in blood.
+     *
+     * ```
+     * const [oxygen] = jdunpack<[number]>(buf, "u16.16")
+     * ```
+     */
+    Oxygen = 0x101,
+
+    /**
+     * Read-only % u16.16 (uint32_t). The estimated error on the reported sensor data.
+     *
+     * ```
+     * const [oxygenError] = jdunpack<[number]>(buf, "u16.16")
+     * ```
+     */
+    OxygenError = 0x106,
+}
+
 // Service: Rain gauge
 export const SRV_RAIN_GAUGE = 0x13734c95
 export enum RainGaugeReg {

@@ -563,6 +563,27 @@ export enum PowerReg {
     KeepOnPulsePeriod = 0x81,
 }
 
+// Service: Pressure Button
+export const SRV_PRESSURE_BUTTON = 0x1865adc9
+export enum PressureButtonReg {
+    /**
+     * Indicates the current pressure (``force`` and ``velocity``) on the button.
+     * The ``velocity`` can be useful to approximate the intensity of the button press.
+     */
+    Pressure = 0x101,
+    
+    /** Indicates the lower threshold and upper threshold for the ``down`` and ``up`` events. */
+    Threshold = 0x80,
+}
+
+export enum PressureButtonEvent {
+    /** Emitted when pressure goes below the ``down`` threshhold */
+    Down = 0x1,
+    
+    /** Emitted when button goes from aboce the ``up`` threshold */
+    Up = 0x2,
+}
+
 // Service: PWM Light
 export const SRV_PWM_LIGHT = 0x1fb57453
 export enum PwmLightReg {

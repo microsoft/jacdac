@@ -3882,29 +3882,29 @@ namespace jacdac {
 
     export const enum WeightScaleReg {
         /**
-         * Read-only g u22.10 (uint32_t). The reported weight.
+         * Read-only kg u16.16 (uint32_t). The reported weight.
          *
          * ```
-         * const [weight] = jdunpack<[number]>(buf, "u22.10")
+         * const [weight] = jdunpack<[number]>(buf, "u16.16")
          * ```
          */
         Weight = 0x101,
 
         /**
-         * Read-only g u22.10 (uint32_t). The estimate error on the reported reading.
+         * Read-only kg u16.16 (uint32_t). The estimate error on the reported reading.
          *
          * ```
-         * const [weightError] = jdunpack<[number]>(buf, "u22.10")
+         * const [weightError] = jdunpack<[number]>(buf, "u16.16")
          * ```
          */
         WeightError = 0x106,
 
         /**
-         * Read-write g u22.10 (uint32_t). Calibrated zero offset error on the scale, i.e. the measured weight when nothing is on the scale.
+         * Read-write kg u16.16 (uint32_t). Calibrated zero offset error on the scale, i.e. the measured weight when nothing is on the scale.
          * You do not need to subtract that from the reading, it has already been done.
          *
          * ```
-         * const [zeroOffset] = jdunpack<[number]>(buf, "u22.10")
+         * const [zeroOffset] = jdunpack<[number]>(buf, "u16.16")
          * ```
          */
         ZeroOffset = 0x80,
@@ -3919,10 +3919,10 @@ namespace jacdac {
         Gain = 0x81,
 
         /**
-         * Constant g u22.10 (uint32_t). Maximum supported weight on the scale.
+         * Constant kg u16.16 (uint32_t). Maximum supported weight on the scale.
          *
          * ```
-         * const [maxWeight] = jdunpack<[number]>(buf, "u22.10")
+         * const [maxWeight] = jdunpack<[number]>(buf, "u16.16")
          * ```
          */
         MaxWeight = 0x105,

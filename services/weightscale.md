@@ -7,15 +7,15 @@ A weight measuring sensor.
 
 ## Registers
 
-    ro weight: u22.10 g @ reading
+    ro weight: u16.16 kg @ reading
 
 The reported weight.
 
-    ro weight_error?: u22.10 g @ reading_error
+    ro weight_error?: u16.16 kg @ reading_error
 
 The estimate error on the reported reading.
 
-    rw zero_offset?: u22.10 g @ 0x80
+    rw zero_offset?: u16.16 kg @ 0x80
     
 Calibrated zero offset error on the scale, i.e. the measured weight when nothing is on the scale.
 You do not need to subtract that from the reading, it has already been done.
@@ -24,7 +24,7 @@ You do not need to subtract that from the reading, it has already been done.
 
 Calibrated gain on the weight scale error.
 
-    const max_weight?: u22.10 g @ max_reading
+    const max_weight?: u16.16 kg @ max_reading
 
 Maximum supported weight on the scale.
 

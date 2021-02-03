@@ -10,17 +10,17 @@
 #define JD_WEIGHT_SCALE_VARIANT_JEWELRY 0x3
 
 /**
- * Read-only g u22.10 (uint32_t). The reported weight.
+ * Read-only kg u16.16 (uint32_t). The reported weight.
  */
 #define JD_WEIGHT_SCALE_REG_WEIGHT JD_REG_READING
 
 /**
- * Read-only g u22.10 (uint32_t). The estimate error on the reported reading.
+ * Read-only kg u16.16 (uint32_t). The estimate error on the reported reading.
  */
 #define JD_WEIGHT_SCALE_REG_WEIGHT_ERROR JD_REG_READING_ERROR
 
 /**
- * Read-write g u22.10 (uint32_t). Calibrated zero offset error on the scale, i.e. the measured weight when nothing is on the scale.
+ * Read-write kg u16.16 (uint32_t). Calibrated zero offset error on the scale, i.e. the measured weight when nothing is on the scale.
  * You do not need to subtract that from the reading, it has already been done.
  */
 #define JD_WEIGHT_SCALE_REG_ZERO_OFFSET 0x80
@@ -31,7 +31,7 @@
 #define JD_WEIGHT_SCALE_REG_GAIN 0x81
 
 /**
- * Constant g u22.10 (uint32_t). Maximum supported weight on the scale.
+ * Constant kg u16.16 (uint32_t). Maximum supported weight on the scale.
  */
 #define JD_WEIGHT_SCALE_REG_MAX_WEIGHT JD_REG_MAX_READING
 

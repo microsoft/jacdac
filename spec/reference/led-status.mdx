@@ -1,0 +1,44 @@
+---
+title: LED status
+---
+
+# LED status
+
+JACDAC supports a status LED to convey various status of the module and protocols.
+
+## Startup
+
+lights at 100% for 270ms, then 5.9% for rest of 530ms, 
+then goes into application that turns it on full for 200ms
+
+<StatusLEDAnimation status="startup" />
+
+## Connected
+
+Synchronized fast blink 50us every 500ms
+
+<StatusLEDAnimation status="connected" />
+
+## Identify
+
+50ms every 150ms (50 on, 100 off) seven times (i.e. for 1 second)
+
+<StatusLEDAnimation status="identify" />
+
+## Disconnected 
+
+5ms every 250ms
+
+<StatusLEDAnimation status="disconnected" />
+
+## Panic
+
+fast blink 70ms on, 70ms off - 30 times (4.2 seconds) before a reboot
+
+<StatusLEDAnimation status="panic" />
+
+## Bootloader
+
+every 524ms it changes from 5.9% and 1.6% (i.e. 1 sec duty cycle)
+
+<StatusLEDAnimation status="bootloader" />

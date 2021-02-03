@@ -28,6 +28,14 @@ Calibrated gain on the weight scale error.
 
 Maximum supported weight on the scale.
 
+    const min_weight?: u16.16 kg @ min_reading
+
+Minimum recommend weight on the scale.
+
+    const weight_resolution?: u16.16 kg @ reading_resolution
+
+Smallest, yet distinguishable change in reading.
+
     enum Variant: u32 {
         Body = 1
         Food = 2

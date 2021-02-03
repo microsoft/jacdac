@@ -36,6 +36,16 @@
 #define JD_WEIGHT_SCALE_REG_MAX_WEIGHT JD_REG_MAX_READING
 
 /**
+ * Constant kg u16.16 (uint32_t). Minimum recommend weight on the scale.
+ */
+#define JD_WEIGHT_SCALE_REG_MIN_WEIGHT JD_REG_MIN_READING
+
+/**
+ * Constant kg u16.16 (uint32_t). Smallest, yet distinguishable change in reading.
+ */
+#define JD_WEIGHT_SCALE_REG_WEIGHT_RESOLUTION JD_REG_READING_RESOLUTION
+
+/**
  * Constant Variant (uint32_t). The type of physical scale
  */
 #define JD_WEIGHT_SCALE_REG_VARIANT JD_REG_VARIANT

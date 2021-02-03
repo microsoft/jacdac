@@ -3928,6 +3928,24 @@ namespace jacdac {
         MaxWeight = 0x105,
 
         /**
+         * Constant kg u16.16 (uint32_t). Minimum recommend weight on the scale.
+         *
+         * ```
+         * const [minWeight] = jdunpack<[number]>(buf, "u16.16")
+         * ```
+         */
+        MinWeight = 0x104,
+
+        /**
+         * Constant kg u16.16 (uint32_t). Smallest, yet distinguishable change in reading.
+         *
+         * ```
+         * const [weightResolution] = jdunpack<[number]>(buf, "u16.16")
+         * ```
+         */
+        WeightResolution = 0x108,
+
+        /**
          * Constant Variant (uint32_t). The type of physical scale
          *
          * ```

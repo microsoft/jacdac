@@ -1,6 +1,6 @@
 # Gyroscope
 
-    identifier: 0x1d4aa3b3
+    identifier: 0x1e1b06f2
     extends: _sensor
 
 A 3-axis gyroscope.
@@ -8,22 +8,17 @@ A 3-axis gyroscope.
 ## Registers
 
     ro rotation_rates @ reading {
-        x: i12.4 °/s
-        y: i12.4 °/s
-        z: i12.4 °/s
+        x: i16.16 °/s
+        y: i16.16 °/s
+        z: i16.16 °/s
     }
 
 Indicates the current forces acting on accelerometer.
 
-    ro rotation_rates_error: i12.4 @ reading_error
+    ro rotation_rates_error?: i16.16 °/s @ reading_error
 
 Error on the reading value.
 
-    enum RotationRateRange: u8 {
-        Slow = 1,
-        Medium = 2,
-        Fast = 2
-    }
-    rw rotation_rate_range?: RotationRateRange @ 0x80
+    rw max_rate?: i16.16 °/s @ 0x80
 
-Configures the range of range of rotation rates. Typically, ``slow`` is ``250 °/s``, ``medium``, is ``500 °/s`` and ``fast`` is ``2000 °/s``.
+Configures the range of range of rotation rates.

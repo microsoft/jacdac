@@ -1,22 +1,22 @@
-# GPS
+# Satellite Navigation System
 
     identifier: 0x19dd6136
     extends: _sensor
-    camel: gps
+    camel: satnav
 
-A Global Positioning Device. NMEA message reference at https://www.sparkfun.com/datasheets/GPS/NMEA%20Reference%20Manual-Rev2.1-Dec07.pdf.
+A satellite-based navigation system like GPS, Gallileo, ...
 
 ## Registers
 
     ro position @ reading {
-        timestamp: u32 utc_time
-        latitude: i12.20 ° { absolute_min=-90, absolute_max=90 }
-        longitude: i12.20 ° { absolute_min=-180, absolute_max=180 }
+        timestamp: u64 ms
+        latitude: i9.23 ° { absolute_min=-90, absolute_max=90 }
+        longitude: i9.23 ° { absolute_min=-180, absolute_max=180 }
     }
 
 Reported position and time of position.
 
-    rw enabled?: bool @ intensity
+    rw enabled: bool @ intensity
 
 Turns on or off the GPS antenna.
 
@@ -41,18 +41,14 @@ Turns on or off the GPS antenna.
          differential_reference_station: u16
      }
 
-GPS fix information extracted from a GGA message.
+Fix information extracted from a GGA message.
 
 ## Event
 
-    event change @ change
+    event fix_available @ active
 
-The reported position was updated.
-
-    event active @ active
-
-The GPS is enabled and ready to receive position data.
+The module is enabled and ready to receive position data.
 
     event inactive @ inactive
 
-The GPS module is disabled or lost connection with satellites.
+The module is disabled or lost connection with satellites.

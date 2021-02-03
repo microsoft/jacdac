@@ -15,16 +15,16 @@ The reported weight.
 
 The estimate error on the reported reading.
 
-    rw zero_offset?: u22.10 g 0x80
+    rw zero_offset?: u22.10 g @ 0x80
     
 Calibrated zero offset error on the scale, i.e. the measured weight when nothing is on the scale.
 You do not need to subtract that from the reading, it has already been done.
 
-    rw gain?: u16.16 0x81
+    rw gain?: u16.16 @ 0x81
 
 Calibrated gain on the weight scale error.
 
-    rw max_weight?: u22.10 g @ max_reading
+    const max_weight?: u22.10 g @ max_reading
 
 Maximum supported weight on the scale.
 

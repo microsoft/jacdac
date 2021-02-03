@@ -3871,6 +3871,90 @@ namespace jacdac {
 
 }
 namespace jacdac {
+    // Service: Weight Scale
+    export const SRV_WEIGHT_SCALE = 0x1f4d5040
+
+    export const enum WeightScaleVariant { // uint32_t
+        Body = 0x1,
+        Food = 0x2,
+        Jewelry = 0x3,
+    }
+
+    export const enum WeightScaleReg {
+        /**
+         * Read-only g u22.10 (uint32_t). The reported weight.
+         *
+         * ```
+         * const [weight] = jdunpack<[number]>(buf, "u22.10")
+         * ```
+         */
+        Weight = 0x101,
+
+        /**
+         * Read-only g u22.10 (uint32_t). The estimate error on the reported reading.
+         *
+         * ```
+         * const [weightError] = jdunpack<[number]>(buf, "u22.10")
+         * ```
+         */
+        WeightError = 0x106,
+
+        /**
+         * Read-write g u22.10 (uint32_t). Calibrated zero offset error on the scale, i.e. the measured weight when nothing is on the scale.
+         * You do not need to subtract that from the reading, it has already been done.
+         *
+         * ```
+         * const [zeroOffset] = jdunpack<[number]>(buf, "u22.10")
+         * ```
+         */
+        ZeroOffset = 0x80,
+
+        /**
+         * Read-write u16.16 (uint32_t). Calibrated gain on the weight scale error.
+         *
+         * ```
+         * const [gain] = jdunpack<[number]>(buf, "u16.16")
+         * ```
+         */
+        Gain = 0x81,
+
+        /**
+         * Constant g u22.10 (uint32_t). Maximum supported weight on the scale.
+         *
+         * ```
+         * const [maxWeight] = jdunpack<[number]>(buf, "u22.10")
+         * ```
+         */
+        MaxWeight = 0x105,
+
+        /**
+         * Constant Variant (uint32_t). The type of physical scale
+         *
+         * ```
+         * const [variant] = jdunpack<[WeightScaleVariant]>(buf, "u32")
+         * ```
+         */
+        Variant = 0x107,
+    }
+
+    export const enum WeightScaleCmd {
+        /**
+         * No args. Call this command when there is nothing on the scale. If supported, the module should save the calibration data.
+         */
+        CalibrateZeroOffset = 0x80,
+
+        /**
+         * Argument: weight g u22.10 (uint32_t). Call this command with the weight of the thing on the scale.
+         *
+         * ```
+         * const [weight] = jdunpack<[number]>(buf, "u22.10")
+         * ```
+         */
+        CalibrateGain = 0x81,
+    }
+
+}
+namespace jacdac {
     // Service: WIFI
     export const SRV_WIFI = 0x18aae1fa
 

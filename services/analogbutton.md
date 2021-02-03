@@ -11,11 +11,11 @@ A simple pressure sensitive push-button.
 
 Indicates the current pressure (``force``) on the button.
 
-    rw inactive_threshold?: u0.16 / @ low_threshold
+    rw inactive_threshold: u0.16 / @ low_threshold
     
 Indicates the lower threshold for ``inactive`` events.
 
-    rw active_threshold?: u0.16 / @ high_threshold
+    rw active_threshold: u0.16 / @ high_threshold
     
 Indicates the threshold for ``active`` events.
 

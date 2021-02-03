@@ -2828,6 +2828,48 @@ export enum RelayEvent {
     Off = 0x2,
 }
 
+// Service: RFID Reader
+export const SRV_R_FIDREADER = 0x1247aec2
+export enum RFIDReaderReg {
+    /**
+     * Read-only bytes. UID of the card being read by the reader.
+     *
+     * ```
+     * const [cardUid] = jdunpack<[Uint8Array]>(buf, "b")
+     * ```
+     */
+    CardUid = 0x101,
+
+    /**
+     * Read-write bool (uint8_t). Turns on/off the RFID reader.
+     *
+     * ```
+     * const [enabled] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Enabled = 0x1,
+
+    /**
+     * Read-write ratio u0.8 (uint8_t). Tunes the antenna amplification gain.
+     *
+     * ```
+     * const [antennaGain] = jdunpack<[number]>(buf, "u0.8")
+     * ```
+     */
+    AntennaGain = 0x80,
+}
+
+export enum RFIDReaderEvent {
+    /**
+     * Argument: card_uid bytes. Raised when a new RFID tag is read. Note that the UID of a card can not be used as an unique identification for security related projects.
+     *
+     * ```
+     * const [cardUid] = jdunpack<[Uint8Array]>(buf, "b")
+     * ```
+     */
+    CardAvailable = 0x80,
+}
+
 // Service: Role Manager
 export const SRV_ROLE_MANAGER = 0x1e4b7e66
 export enum RoleManagerReg {

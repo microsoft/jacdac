@@ -385,22 +385,22 @@ export enum AnalogButtonReg {
     Pressure = 0x101,
 
     /**
-     * Read-write ratio u0.16 (uint16_t). Indicates the lower threshold and upper threshold for ``up`` event.
+     * Read-write ratio u0.16 (uint16_t). Indicates the lower threshold for ``inactive`` events.
      *
      * ```
-     * const [lowThreshold] = jdunpack<[number]>(buf, "u0.16")
+     * const [inactiveThreshold] = jdunpack<[number]>(buf, "u0.16")
      * ```
      */
-    LowThreshold = 0x5,
+    InactiveThreshold = 0x5,
 
     /**
-     * Read-write ratio u0.16 (uint16_t). Indicates the lower threshold and upper threshold for the ``down`` event.
+     * Read-write ratio u0.16 (uint16_t). Indicates the threshold for ``active`` events.
      *
      * ```
-     * const [highThreshold] = jdunpack<[number]>(buf, "u0.16")
+     * const [activeThreshold] = jdunpack<[number]>(buf, "u0.16")
      * ```
      */
-    HighThreshold = 0x6,
+    ActiveThreshold = 0x6,
 
     /**
      * Constant Variant (uint32_t). The type of physical button.
@@ -416,12 +416,12 @@ export enum AnalogButtonEvent {
     /**
      * Emitted when button goes from inactive (pressure less than threshold) to active.
      */
-    Down = 0x1,
+    Active = 0x1,
 
     /**
      * Emitted when button goes from active (pressure higher than threshold) to inactive.
      */
-    Up = 0x2,
+    Inactive = 0x2,
 }
 
 // Service: Arcade Gamepad

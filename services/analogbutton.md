@@ -11,13 +11,13 @@ A simple pressure sensitive push-button.
 
 Indicates the current pressure (``force``) on the button.
 
-    rw low_threshold: u0.16 / @ low_threshold
+    rw inactive_threshold?: u0.16 / @ low_threshold
     
-Indicates the lower threshold and upper threshold for ``up`` event.
+Indicates the lower threshold for ``inactive`` events.
 
-    rw high_threshold: u0.16 / @ high_threshold
+    rw active_threshold?: u0.16 / @ high_threshold
     
-Indicates the lower threshold and upper threshold for the ``down`` event.
+Indicates the threshold for ``active`` events.
 
     enum Variant: u32 {
         Pressure = 1
@@ -29,10 +29,10 @@ The type of physical button.
 
 ## Events
 
-    event down @ active
+    event active @ active
 
 Emitted when button goes from inactive (pressure less than threshold) to active.
 
-    event up @ inactive
+    event inactive @ inactive
 
 Emitted when button goes from active (pressure higher than threshold) to inactive.

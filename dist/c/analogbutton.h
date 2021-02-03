@@ -14,14 +14,14 @@
 #define JD_ANALOG_BUTTON_REG_PRESSURE JD_REG_READING
 
 /**
- * Read-write ratio u0.16 (uint16_t). Indicates the lower threshold and upper threshold for ``up`` event.
+ * Read-write ratio u0.16 (uint16_t). Indicates the lower threshold for ``inactive`` events.
  */
-#define JD_ANALOG_BUTTON_REG_LOW_THRESHOLD JD_REG_LOW_THRESHOLD
+#define JD_ANALOG_BUTTON_REG_INACTIVE_THRESHOLD JD_REG_LOW_THRESHOLD
 
 /**
- * Read-write ratio u0.16 (uint16_t). Indicates the lower threshold and upper threshold for the ``down`` event.
+ * Read-write ratio u0.16 (uint16_t). Indicates the threshold for ``active`` events.
  */
-#define JD_ANALOG_BUTTON_REG_HIGH_THRESHOLD JD_REG_HIGH_THRESHOLD
+#define JD_ANALOG_BUTTON_REG_ACTIVE_THRESHOLD JD_REG_HIGH_THRESHOLD
 
 /**
  * Constant Variant (uint32_t). The type of physical button.
@@ -31,11 +31,11 @@
 /**
  * Emitted when button goes from inactive (pressure less than threshold) to active.
  */
-#define JD_ANALOG_BUTTON_EV_DOWN JD_EV_ACTIVE
+#define JD_ANALOG_BUTTON_EV_ACTIVE JD_EV_ACTIVE
 
 /**
  * Emitted when button goes from active (pressure higher than threshold) to inactive.
  */
-#define JD_ANALOG_BUTTON_EV_UP JD_EV_INACTIVE
+#define JD_ANALOG_BUTTON_EV_INACTIVE JD_EV_INACTIVE
 
 #endif

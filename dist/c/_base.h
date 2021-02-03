@@ -4,7 +4,7 @@
 
 /**
  * Reports the current state or error status of the device. ``code`` is a standardized value from 
- * the JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device
+ * the JACDAC status/error codes. ``vendor_code`` is any vendor specific error code describing the device
  * state. This report is typically not queried, when a device has an error, it will typically
  * add this report in frame along with the announce packet.
  */
@@ -12,6 +12,15 @@ typedef struct jd_base_status_code {
     uint16_t code;
     uint16_t vendor_code;
 } jd_base_status_code_t;
+
+
+/**
+ * Notifies that the status code of the service changed.
+ */
+typedef struct jd_base_status_code_changed {
+    uint16_t code;
+    uint16_t vendor_code;
+} jd_base_status_code_changed_t;
 
 
 #endif

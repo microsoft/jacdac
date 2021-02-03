@@ -1,9 +1,10 @@
-# Mouse
+# HID Mouse
 
     identifier: 0x1885dc1c
     status: experimental
+    camel: hidMouse
 
-Control a device that acts as a mouse.
+Control a HID mouse. This service cannot be simulated.
 
 ## Commands
 

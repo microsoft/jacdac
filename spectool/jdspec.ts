@@ -70,6 +70,10 @@ export const unitDescription: jdspec.SMap<string> = {
     "hsv": "bit HSV color",
     "rgb": "RGB color",
     "rpm": "revolutions per minute",
+    "uv": "UV index",
+    "lux": "illuminance",
+    "bpm": "beats per minute",
+    "mcd": "micro candella"
 }
 
 export const secondaryUnitConverters: jdspec.SMap<{
@@ -104,13 +108,17 @@ export const secondaryUnitConverters: jdspec.SMap<{
     "mm/h": { name: "millimeter per hour", unit: "m/s", scale: 1 / 3600000, offset: 0 },
     "m/h": { name: "meter per hour", unit: "m/s", scale: 1 / 3600, offset: 0 },
     "ppm": { name: "parts per million", unit: "/", scale: 1.00E-06, offset: 0 },
+    "ppb": { name: "parts per billion", unit: "/", scale: 1.00E-09, offset: 0 },
     "/100": { name: "percent", unit: "/", scale: 1 / 100, offset: 0 },
+    "%": { name: "percent", unit: "/", scale: 1 / 100, offset: 0 },
     "/1000": { name: "permille", unit: "/", scale: 1 / 1000, offset: 0 },
     "hPa": { name: "hectopascal", unit: "Pa", scale: 100, offset: 0 },
     "mm": { name: "millimeter", unit: "m", scale: 1 / 1000, offset: 0 },
     "cm": { name: "centimeter", unit: "m", scale: 1 / 100, offset: 0 },
     "km": { name: "kilometer", unit: "m", scale: 1000, offset: 0 },
     "km/h": { name: "kilometer per hour", unit: "m/s", scale: 1 / 3.6, offset: 0 },
+    "8ms": { name: "8 milliseconds", unit: "s", scale: 8 / 1000, offset: 0 },
+    "nm": { name: "nanometer", unit: "m", scale: 1e-9, offset: 0 },
 
     // compat with previous JACDAC versions
     "frac": { name: "ratio", unit: "/", scale: 1, offset: 0 },
@@ -598,6 +606,10 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
 
         let shift = typeShift || undefined
         if (unit == "/") {
+            // / units should be used with ui0. data
+            if (!/^(u0|i1)\.\d+$/.test(tp))
+                error(`fraction unit must be used with u0.yyy or i1.yyy data types (got ${tp})`)
+
             shift = Math.abs(storage) * 8
             if (storage < 0)
                 shift -= 1
@@ -632,6 +644,11 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
                     case "absoluteMax":
                         (field as any)[tok] = parseVal()
                         break
+                    case "preferredInterval":
+                        if ((packetInfo as any)[tok] !== undefined)
+                            error(`field ${tok} already set`);
+                        (packetInfo as any)[tok] = parseVal()
+                        break;
                     default:
                         error("unknown constraint: " + tok)
                         break
@@ -696,7 +713,7 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
 
     function enumMember(words: string[]) {
         if (words[1] != "=" || words.length != 3)
-            error(`expecting: FILD_NAME = INTEGER`)
+            error(`expecting: FIELD_NAME = INTEGER`)
         enumInfo.members[normalizeName(words[0])] = parseIntCheck(words[2])
     }
 
@@ -753,7 +770,7 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
 
     function metadataMember(words: string[]) {
         if ((words[1] != "=" && words[1] != ":") || words.length != 3)
-            error(`expecting: FILD_NAME = VALUE or FIELD_NAME : VALUE`)
+            error(`expecting: FIELD_NAME = VALUE or FIELD_NAME : VALUE`)
         switch (words[0]) {
             case "extends":
                 processInclude(words[2])
@@ -811,7 +828,7 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
                 info.enums[k] = ie;
             })
         const innerPackets = clone(inner.packets
-            .filter(pkt => !info.packets.find(ipkt => ipkt.identifier === pkt.identifier)));
+            .filter(pkt => !info.packets.find(ipkt => ipkt.kind === pkt.kind && ipkt.identifier === pkt.identifier)));
         innerPackets.forEach(pkt => pkt.derived = name)
         info.packets = [...info.packets, ...innerPackets]
         if (inner.highCommands)

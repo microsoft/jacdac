@@ -9,7 +9,7 @@ A sensor measuring air pressure of outside environment.
 
 Default streaming interval is 1s.
 
-    ro pressure: u22.10 hPa { absolute_min = 300, absolute_max = 1100, typical_min = 940, typical_max = 1040 } @ reading
+    ro pressure: u22.10 hPa { absolute_min = 300, absolute_max = 1100, typical_min = 940, typical_max = 1040, preferred_interval=60000 } @ reading
 
 The air pressure.
 

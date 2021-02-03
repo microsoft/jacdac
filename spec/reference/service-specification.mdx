@@ -108,6 +108,13 @@ ro core_temperature @ 0x180 {
 The last register, to specify the sensivity of the sensor, is optional.
 This is denoted by adding a `?` after the register name.
 
+You can specify a preferred interval for refreshing the register in the specification
+as for the ``mcu_temperature`` register in the control service.
+
+```
+ro mcu_temperature?: i16 °C { preferred_interval=60000, typical_min = -10, typical_max = 150 } @ 0x182
+```
+
 ### Rocket Commands
 
 ```markdown
@@ -253,7 +260,7 @@ Such a format can be expressed using `repeats:` label, as in the following examp
         delay: u16 ms
     repeats:
         nozzle_id: u8
-        throttle: u8 /
+        throttle: u0.8 /
     }
 
 Set throttle on specific nozzles, after specified delay.

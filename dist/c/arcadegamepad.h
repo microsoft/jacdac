@@ -23,7 +23,7 @@
 #define JD_ARCADE_GAMEPAD_REG_BUTTONS JD_REG_READING
 typedef struct jd_arcade_gamepad_buttons {
     uint8_t button;  // Button
-    uint8_t pressure; // ratio
+    uint8_t pressure;  // ratio u0.8
 } jd_arcade_gamepad_buttons_t;
 
 

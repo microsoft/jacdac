@@ -1103,6 +1103,11 @@ export function camelize(name: string) {
     return name[0].toLowerCase() + name.slice(1).replace(/_([a-z])/g, (_, l) => l.toUpperCase())
 }
 
+export function capitalize(name: string) {
+    if (!name) return name;
+    return name[0].toUpperCase() + name.slice(1);
+}
+
 function upperCamel(name: string) {
     name = camelize(name)
     if (!name?.length) return name

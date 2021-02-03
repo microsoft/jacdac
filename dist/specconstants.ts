@@ -366,6 +366,64 @@ export enum AccelerometerEvent {
     Force_8g = 0x8a,
 }
 
+// Service: Analog Button
+export const SRV_ANALOG_BUTTON = 0x1865adc9
+
+export enum AnalogButtonVariant { // uint32_t
+    Pressure = 0x1,
+    Capacitive = 0x2,
+}
+
+export enum AnalogButtonReg {
+    /**
+     * Read-only ratio u0.16 (uint16_t). Indicates the current pressure (``force``) on the button.
+     *
+     * ```
+     * const [pressure] = jdunpack<[number]>(buf, "u0.16")
+     * ```
+     */
+    Pressure = 0x101,
+
+    /**
+     * Read-write ratio u0.16 (uint16_t). Indicates the lower threshold for ``inactive`` events.
+     *
+     * ```
+     * const [inactiveThreshold] = jdunpack<[number]>(buf, "u0.16")
+     * ```
+     */
+    InactiveThreshold = 0x5,
+
+    /**
+     * Read-write ratio u0.16 (uint16_t). Indicates the threshold for ``active`` events.
+     *
+     * ```
+     * const [activeThreshold] = jdunpack<[number]>(buf, "u0.16")
+     * ```
+     */
+    ActiveThreshold = 0x6,
+
+    /**
+     * Constant Variant (uint32_t). The type of physical button.
+     *
+     * ```
+     * const [variant] = jdunpack<[AnalogButtonVariant]>(buf, "u32")
+     * ```
+     */
+    Variant = 0x107,
+}
+
+export enum AnalogButtonEvent {
+    /**
+     * Emitted when button goes from inactive (pressure less than threshold) to active.
+     */
+    Active = 0x1,
+
+    /**
+     * Emitted when button goes from active (pressure higher than threshold) to inactive.
+     */
+    Inactive = 0x2,
+}
+
 // Service: Arcade Gamepad
 export const SRV_ARCADE_GAMEPAD = 0x1deaa06e
 

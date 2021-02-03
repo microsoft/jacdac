@@ -6,39 +6,35 @@ title: LED status
 
 JACDAC supports a status LED to convey various status of the module and protocols.
 
-## Startup
-
-lights at 100% for 270ms, then 5.9% for rest of 530ms, 
-then goes into application that turns it on full for 200ms
-
 <StatusLEDAnimation status="startup" />
 
-## Connected
+On startup, the LED lights up at 100% for 270ms, then 5.9% for rest of 530ms, 
+then goes into application that turns it on full for 200ms.
 
-Synchronized fast blink 50us every 500ms
+<StatusLEDAnimation status="connected" count={3} />
 
-<StatusLEDAnimation status="connected" />
+When connected, all modules on the JACDAC bus do a fast blink (50us) every 500ms.
 
-## Identify
-
-50ms every 150ms (50 on, 100 off) seven times (i.e. for 1 second)
+This is the happy state, everything is working.
 
 <StatusLEDAnimation status="identify" />
 
-## Disconnected 
-
-5ms every 250ms
+When you ask a device to identify itself, it will start a blinking sequence 
+50ms every 150ms (50 on, 100 off) seven times (i.e. for 1 second).
 
 <StatusLEDAnimation status="disconnected" />
 
-## Panic
+When the device does not receive any JACDAC packet for some time, 
+it enters the **disconnected** mode and blinks 5ms every 250ms.
 
-fast blink 70ms on, 70ms off - 30 times (4.2 seconds) before a reboot
+* check that the cable is properly secured on your module
+* check that the other modules are in connected mode as well
 
 <StatusLEDAnimation status="panic" />
 
-## Bootloader
-
-every 524ms it changes from 5.9% and 1.6% (i.e. 1 sec duty cycle)
+If the firmware crashes, it will enter **panic** mode
+and do a fast blink 70ms on, 70ms off - 30 times (4.2 seconds) before a reboot.
 
 <StatusLEDAnimation status="bootloader" />
+
+Every 524ms it changes from 5.9% and 1.6% (i.e. 1 sec duty cycle)

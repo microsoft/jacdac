@@ -1529,11 +1529,11 @@ export enum LedReg {
     Variant = 0x107,
 }
 
-// Service: LED Matrix Controller
-export const SRV_LED_MATRIX_CONTROLLER = 0x1d35e393
-export enum LedMatrixControllerReg {
+// Service: LED Matrix
+export const SRV_LEDMATRIX = 0x110d154b
+export enum LEDMatrixReg {
     /**
-     * Read-write bytes. Read or writes the state of the screen where pixel on/off state is
+     * Read-write bytes. The state of the screen where pixel on/off state is
      * stored as a bit, column by column. The column should be byte aligned.
      *
      * ```
@@ -1543,61 +1543,13 @@ export enum LedMatrixControllerReg {
     Leds = 0x2,
 
     /**
-     * Read-write uint8_t. Sets the general brightness of the LEDs. ``0`` turns off the screen.
+     * Read-write ratio u0.8 (uint8_t). Reads the general brightness of the LEDs. ``0`` when the screen is off.
      *
      * ```
-     * const [brightness] = jdunpack<[number]>(buf, "u8")
+     * const [brightness] = jdunpack<[number]>(buf, "u0.8")
      * ```
      */
     Brightness = 0x1,
-
-    /**
-     * Constant # uint16_t. Number of rows on the screen
-     *
-     * ```
-     * const [rows] = jdunpack<[number]>(buf, "u16")
-     * ```
-     */
-    Rows = 0x181,
-
-    /**
-     * Constant # uint16_t. Number of columns on the screen
-     *
-     * ```
-     * const [columns] = jdunpack<[number]>(buf, "u16")
-     * ```
-     */
-    Columns = 0x182,
-}
-
-export enum LedMatrixControllerCmd {
-    /**
-     * No args. Shorthand command to clear all the LEDs on the screen.
-     */
-    Clear = 0x80,
-}
-
-// Service: LED Matrix Display
-export const SRV_LED_MATRIX_DISPLAY = 0x110d154b
-export enum LedMatrixDisplayReg {
-    /**
-     * Read-only bytes. Streams the state of the screen where pixel on/off state is
-     * stored as a bit, column by column. The column should be byte aligned.
-     *
-     * ```
-     * const [leds] = jdunpack<[Uint8Array]>(buf, "b")
-     * ```
-     */
-    Leds = 0x101,
-
-    /**
-     * Read-only uint8_t. Reads the general brightness of the LEDs. ``0`` when the screen is off.
-     *
-     * ```
-     * const [brightness] = jdunpack<[number]>(buf, "u8")
-     * ```
-     */
-    Brightness = 0x180,
 
     /**
      * Constant # uint16_t. Number of rows on the screen

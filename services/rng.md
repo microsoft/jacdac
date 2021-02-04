@@ -18,7 +18,7 @@ A command that generates a random buffer with the given length.
 The response to this command is delayed when there isn't enough entropy available (similar to `/dev/random`).
 
     enum Variant: u32 {
-         TRNG = 1
+         Hardware = 1
          WebCrypto = 2
     }
     const variant?: Variant @ variant

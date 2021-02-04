@@ -145,6 +145,10 @@ the Jacdac status/error codes. ``vendor_code`` is any vendor specific error code
 state. This report is typically not queried, when a device has an error, it will typically
 add this report in frame along with the announce packet.
 
+    const instanceName?: string @ 0x108
+
+A friendly name that describes the role of this service instance in the device.
+
 ## Events
 
 Events codes are 8-bit and are subdivided as follows:

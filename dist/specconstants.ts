@@ -1616,6 +1616,7 @@ export enum LedPixelVariant { // uint32_t
     Ring = 0x2,
     Stick = 0x3,
     Jewel = 0x4,
+    Matrix = 0x5,
 }
 
 export enum LedPixelReg {

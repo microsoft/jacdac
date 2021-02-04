@@ -115,7 +115,8 @@ Setting to `0` means to repeat forever.
         Strip = 1,
         Ring = 2,
         Stick = 3,
-        Jewel = 4
+        Jewel = 4,
+        Matrix = 5
     }
     const variant: Variant @ variant
 

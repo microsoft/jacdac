@@ -14,6 +14,7 @@
 #define JD_LED_PIXEL_VARIANT_RING 0x2
 #define JD_LED_PIXEL_VARIANT_STICK 0x3
 #define JD_LED_PIXEL_VARIANT_JEWEL 0x4
+#define JD_LED_PIXEL_VARIANT_MATRIX 0x5
 
 /**
  * Read-write ratio u0.8 (uint8_t). Set the luminosity of the strip.

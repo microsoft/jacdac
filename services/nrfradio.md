@@ -1,6 +1,7 @@
-# NRF Radio
+# bit:radio
 
     identifier: 0x1ac986cf
+    camel: bitRadio
 
 ## Registers
 

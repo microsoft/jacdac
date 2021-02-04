@@ -1737,14 +1737,23 @@ namespace jacdac {
         /**
          * Read-write uint16_t. Specifies the number of pixels in the strip.
          * Controllers which are sold with lights should default to the correct length
-         * and could not allow change.
-         * Increasing length at runtime leads to ineffective use of memory and may lead to controller reboot.
+         * and could not allow change. Increasing length at runtime leads to ineffective use of memory and may lead to controller reboot.
          *
          * ```
          * const [numPixels] = jdunpack<[number]>(buf, "u16")
          * ```
          */
         NumPixels = 0x81,
+
+        /**
+         * Read-write uint16_t. If the LED pixel strip is a matrix, specifies the number of columns. Otherwise, a square shape is assumed. Controllers which are sold with lights should default to the correct length
+         * and could not allow change. Increasing length at runtime leads to ineffective use of memory and may lead to controller reboot.
+         *
+         * ```
+         * const [numColumns] = jdunpack<[number]>(buf, "u16")
+         * ```
+         */
+        NumColumns = 0x83,
 
         /**
          * Read-write mA uint16_t. Limit the power drawn by the light-strip (and controller).

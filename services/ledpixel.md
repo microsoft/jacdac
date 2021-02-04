@@ -93,8 +93,12 @@ and could not allow change.
 
 Specifies the number of pixels in the strip.
 Controllers which are sold with lights should default to the correct length
-and could not allow change.
-Increasing length at runtime leads to ineffective use of memory and may lead to controller reboot.
+and could not allow change. Increasing length at runtime leads to ineffective use of memory and may lead to controller reboot.
+
+    rw num_columns?: u16 @ 0x83
+
+If the LED pixel strip is a matrix, specifies the number of columns. Otherwise, a square shape is assumed. Controllers which are sold with lights should default to the correct length
+and could not allow change. Increasing length at runtime leads to ineffective use of memory and may lead to controller reboot.
 
     rw max_power = 200: u16 mA @ max_power
 

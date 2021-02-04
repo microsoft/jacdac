@@ -16,6 +16,13 @@ A satellite-based navigation system like GPS, Gallileo, ...
 
 Reported position and time of position.
 
+    ro position_error @ reading_error {
+        latitude: u9.23 °
+        longitude: u9.23 °
+    }
+
+Estimated absolute error on 
+
     rw enabled: bool @ intensity
 
 Turns on or off the GPS antenna.

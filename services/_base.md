@@ -22,3 +22,7 @@ add this report in frame along with the announce packet.
     }
 
 Notifies that the status code of the service changed.
+
+    const instance_name?: string @ 0x108
+
+A friendly name that describes the role of this service instance in the device.

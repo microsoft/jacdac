@@ -28,3 +28,7 @@ Emitted together with `up` when the press time was not longer than 500ms.
     event long_click @ 0x81
 
 Emitted together with `up` when the press time was more than 500ms.
+
+    event hold @ 0x82
+
+Emitted after the button is held for 1500ms. Hold events are followed by a separate up event.

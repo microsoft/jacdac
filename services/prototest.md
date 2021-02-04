@@ -4,7 +4,7 @@
     camel: protoTest
 
 This is test service to validate the protocol packet transmissions between the browser and a MCU.
-Use this page if you developing JACDAC HDK for a new platform.
+Use this page if you developing Jacdac HDK for a new platform.
 
 ### Test procedure
 

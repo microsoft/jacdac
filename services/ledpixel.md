@@ -7,14 +7,14 @@ A controller for strips of individually controlled RGB LEDs.
 
 ## Light programs
 
-Realistically, with 1 mbit JACDAC, we can transmit under 2k of data per animation frame (at 20fps).
+Realistically, with 1 mbit Jacdac, we can transmit under 2k of data per animation frame (at 20fps).
 If transmitting raw data that would be around 500 pixels, which is not enough for many
 installations and it would completely clog the network.
 
 Thus, light service defines a domain-specific language for describing light animations
 and efficiently transmitting them over wire.
 
-Light commands are not JACDAC commands.
+Light commands are not Jacdac commands.
 Light commands are efficiently encoded as sequences of bytes and typically sent as payload
 of `run` command.
 

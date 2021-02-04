@@ -288,7 +288,7 @@ declare namespace jdspec {
         hasReport?: boolean;
 
         /**
-         * This register supports the JACDAC infrastructure and is not meant to be reported outside the JACDAC bus.
+         * This register supports the Jacdac infrastructure and is not meant to be reported outside the Jacdac bus.
          */
         internal?: boolean;
 
@@ -463,7 +463,7 @@ declare namespace jdspec {
     }
 
     /**
- * Information about MakeCode support for a JACDAC service
+ * Information about MakeCode support for a Jacdac service
  */
     export interface MakeCodeServiceInfo {
         /**

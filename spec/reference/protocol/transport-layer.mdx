@@ -5,13 +5,13 @@ order: 8
 
 ## Transport Layer
 
-A device's presence/absence on the bus is signified by the presence/absence of advertising packets containing its device identifier, which should be sent every 500 milliseconds. If a client of a JACDAC device does not receive an advertisement from the device for several advertisement periods (1-2 seconds), it should assume the device has left the bus. If the device rejoins the bus, it may present a different list of services. In fact, devices are free to change the list of services they advertise at any time.
+A device's presence/absence on the bus is signified by the presence/absence of advertising packets containing its device identifier, which should be sent every 500 milliseconds. If a client of a Jacdac device does not receive an advertisement from the device for several advertisement periods (1-2 seconds), it should assume the device has left the bus. If the device rejoins the bus, it may present a different list of services. In fact, devices are free to change the list of services they advertise at any time.
 
-## JACDAC frames, packets and service indices
+## Jacdac frames, packets and service indices
 
-A JACDAC frame contains a list of JACDAC packets (of length at least one), which all share the same device identifier and flags (see the logical description of a JACDAC packet below). The frame also contains a cyclic redundancy code (CRC). If the device identifier of the frame matches the device's identifier, then the device sends an acknowledgement containing the frame's CRC (JD_SERVICE_NUMBER_CRC_ACK).
+A Jacdac frame contains a list of Jacdac packets (of length at least one), which all share the same device identifier and flags (see the logical description of a Jacdac packet below). The frame also contains a cyclic redundancy code (CRC). If the device identifier of the frame matches the device's identifier, then the device sends an acknowledgement containing the frame's CRC (JD_SERVICE_NUMBER_CRC_ACK).
 
-A JACDAC packet is described by the following structure:
+A Jacdac packet is described by the following structure:
 
 ```c
 struct {
@@ -24,7 +24,7 @@ struct {
 }
 ```
 
-The above structure omits the details about physical transmission of JACDAC packets over the wire and the packing of multiple packets within frames. For more information, see [the single wire serial protocol](../physical-layer/sws).
+The above structure omits the details about physical transmission of Jacdac packets over the wire and the packing of multiple packets within frames. For more information, see [the single wire serial protocol](../physical-layer/sws).
 
 A device will generally maintain device-specific state for each of the services that it supports. This state should be kept in an array, where each array entry contains the service class and (a pointer to) the device-specific state for that service. When a device advertises its service classes they are presented in the same order as in the list.  This allows clients of the device to refer to one of its services by list index (`service_index`, an 8 bit quantity) instead of service class (a 32 bit quantity). The zero index (service number) is reserved for the control service. 
 
@@ -41,7 +41,7 @@ If the third bit of `flags` is set (_multicast commands_), then the low order 32
 | `0x01` | if set, the `device_identifier` is the recipient of command; if clear, the `device_identifier` is the sender of a report;
 | `0x02` | if set, an ACK should be issued with CRC |
 | `0x04` | if set, the device_identifier contains target service class number (multicast) |
-| `0x80` | if set, the packet comes from JACDAC vNext and should be ignored by the current implementation |
+| `0x80` | if set, the packet comes from Jacdac vNext and should be ignored by the current implementation |
 
 ## Acks
 
@@ -64,7 +64,7 @@ They should indicate that in their advertisement packet.
 Pipes are application-level mechanism for establishing reliable one- and two-way
 point-to-point data links.
 
-Typical packet loss in JACDAC networks is well under 1%.
+Typical packet loss in Jacdac networks is well under 1%.
 Anything that can withstand such packet loss **should not** be done over a pipe,
 as pipes have quite big overhead.
 
@@ -130,7 +130,7 @@ Pipes should be considered closed when the device at the other end resets.
 TODO: Zero-length pipe commands can be sent as keep-alive packets.
 Is this needed?
 
-Note that pipes are transmit streams of JACDAC packets, not streams of bytes.
+Note that pipes are transmit streams of Jacdac packets, not streams of bytes.
 They should not be recombined at any layer in the implementation.
 For example, a command that returns a list of things can send each thing in a separate
 pipe packet, without any additional info about how to chunk the data

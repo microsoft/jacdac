@@ -120,7 +120,7 @@ export const secondaryUnitConverters: jdspec.SMap<{
     "8ms": { name: "8 milliseconds", unit: "s", scale: 8 / 1000, offset: 0 },
     "nm": { name: "nanometer", unit: "m", scale: 1e-9, offset: 0 },
 
-    // compat with previous JACDAC versions
+    // compat with previous Jacdac versions
     "frac": { name: "ratio", unit: "/", scale: 1, offset: 0 },
     "us": { name: "micro seconds", unit: "s", scale: 1e-6, offset: 0 },
     "mWh": { name: "micro watt-hour", unit: "J", scale: 3.6e-3, offset: 0 },

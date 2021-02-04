@@ -2,7 +2,7 @@
 
     identifier: 0x1e4b7e66
 
-Assign roles to services on the JACDAC bus.
+Assign roles to services on the Jacdac bus.
 
 Internally, the role manager stores a mapping from from `(device_id, service_idx)` to role name.
 Users refer to services by using role names (eg., they instantiate an accelerometer client with a given role name).

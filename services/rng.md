@@ -3,7 +3,7 @@
     identifier: 0x1789f0a2
     camel: rng
 
-A service that generates random numbers using, where entropy is sourced from physical processes.
+A service that generates random number using entropy sourced from physical processes.
 
 ## Commands
 
@@ -15,12 +15,12 @@ A service that generates random numbers using, where entropy is sourced from phy
     }
 
 A command that generates a random buffer with the given length.
-The response to this command is delayed when there isn't enough entropy available (similar to `/dev/random`).
 
     enum Variant: u32 {
-         Hardware = 1
-         WebCrypto = 2
+         Quantum = 1
+         ADCNoise = 2
+         WebCrypto = 3
     }
     const variant?: Variant @ variant
 
-The type of algorithm/technique used to generate the number
+The type of algorithm/technique used to generate the number.

@@ -191,6 +191,15 @@ export enum SystemReg {
      * ```
      */
     StatusCode = 0x103,
+
+    /**
+     * Constant string (bytes). A friendly name that describes the role of this service instance in the device.
+     *
+     * ```
+     * const [instanceName] = jdunpack<[string]>(buf, "s")
+     * ```
+     */
+    InstanceName = 0x109,
 }
 
 export enum SystemEvent {
@@ -247,6 +256,18 @@ export enum BaseReg {
      * ```
      */
     StatusCode = 0x103,
+
+    /**
+     * Constant string (bytes). A friendly name that describes the role of this service instance in the device.
+     * It often corresponds to what's printed on the device:
+     * for example, `A` for button A, or `S0` for servo channel 0.
+     * Words like `left` should be avoided because of localization issues (unless they are printed on the device).
+     *
+     * ```
+     * const [instanceName] = jdunpack<[string]>(buf, "s")
+     * ```
+     */
+    InstanceName = 0x109,
 }
 
 export enum BaseEvent {

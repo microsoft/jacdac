@@ -147,6 +147,11 @@ typedef struct jd_system_status_code {
 
 
 /**
+ * Constant string (bytes). A friendly name that describes the role of this service instance in the device.
+ */
+#define JD_REG_INSTANCE_NAME 0x109
+
+/**
  * Notifies that the service has been activated (eg. button pressed, network connected, etc.)
  */
 #define JD_EV_ACTIVE 0x1

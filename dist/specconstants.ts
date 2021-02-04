@@ -2871,6 +2871,48 @@ export enum RelayEvent {
     Off = 0x2,
 }
 
+// Service: Random Number Generator
+export const SRV_RNG = 0x1789f0a2
+
+export enum RngVariant { // uint32_t
+    Quantum = 0x1,
+    ADCNoise = 0x2,
+    WebCrypto = 0x3,
+}
+
+export enum RngCmd {
+    /**
+     * Argument: length uint8_t. A command that generates a random buffer with the given length.
+     * This never blocks for a long time.
+     *
+     * ```
+     * const [length] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Random = 0x80,
+
+    /**
+     * report Random
+     * ```
+     * const [data] = jdunpack<[Uint8Array]>(buf, "b")
+     * ```
+     */
+}
+
+export enum RngReg {
+    /**
+     * Constant Variant (uint32_t). The type of algorithm/technique used to generate the number.
+     * `Quantum` refers to dedicated hardware device generating random noise due to quantum effects.
+     * `ADCNoise` is the noise from quick readings of analog-digital converter, which reads temperature of the MCU or some floating pin.
+     * `WebCrypto` refers is used in simulators, where the source of randomness comes from an advanced operating system.
+     *
+     * ```
+     * const [variant] = jdunpack<[RngVariant]>(buf, "u32")
+     * ```
+     */
+    Variant = 0x107,
+}
+
 // Service: Role Manager
 export const SRV_ROLE_MANAGER = 0x1e4b7e66
 export enum RoleManagerReg {

@@ -26,3 +26,6 @@ Notifies that the status code of the service changed.
     const instance_name?: string @ instance_name
 
 A friendly name that describes the role of this service instance in the device.
+It often corresponds to what's printed on the device:
+for example, `A` for button A, or `S0` for servo channel 0.
+Words like `left` should be avoided because of localization issues (unless they are printed on the device).

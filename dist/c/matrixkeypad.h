@@ -4,6 +4,12 @@
 
 #define JD_SERVICE_CLASS_MATRIX_KEYPAD  0x13062dc8
 
+// enum Variant (uint32_t)
+#define JD_MATRIX_KEYPAD_VARIANT_MEMBRANE 0x1
+#define JD_MATRIX_KEYPAD_VARIANT_KEYBOARD 0x2
+#define JD_MATRIX_KEYPAD_VARIANT_ELASTOMER 0x3
+#define JD_MATRIX_KEYPAD_VARIANT_ELASTOMER_LEDPIXEL 0x4
+
 /**
  * Read-only. The coordinate of the button currently pressed. Keys are zero-indexed from left to right, top to bottom:
  * ``row = index / columns``, ``column = index % columns``.
@@ -32,6 +38,13 @@ typedef struct jd_matrix_keypad_labels {
     char label[0][0];  // string0
 } jd_matrix_keypad_labels_t;
 
+
+/**
+ * Constant Variant (uint32_t). The type of physical keypad. If the variant is ``ElastomerLEDPixel``
+ * and the next service on the device is a ``LEDPixel`` service, it is considered
+ * as the service controlling the LED pixel on the keypad.
+ */
+#define JD_MATRIX_KEYPAD_REG_VARIANT JD_REG_VARIANT
 
 /**
  * Argument: uint8_t. Emitted when a key, at the given index, goes from inactive (`pressed == 0`) to active.

@@ -5,6 +5,16 @@
 #define JD_SERVICE_CLASS_ROLE_MANAGER  0x1e4b7e66
 
 /**
+ * Read-write bool (uint8_t). Normally, if some roles are unfilled, and there are idle services that can fulfill them,
+ * the brain device will assign roles (bind) automatically.
+ * Such automatic assignment happens every second or so, and is trying to be smart about 
+ * co-locating roles that share "host" (part before first slash),
+ * as well as reasonably stable assignments.
+ * Once user start assigning roles manually using this service, auto-binding should be disabled to avoid confusion.
+ */
+#define JD_ROLE_MANAGER_REG_AUTO_BIND 0x80
+
+/**
  * Read-only bool (uint8_t). Indicates if all required roles have been allocated to devices.
  */
 #define JD_ROLE_MANAGER_REG_ALL_ROLES_ALLOCATED 0x181

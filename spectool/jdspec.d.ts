@@ -163,6 +163,11 @@ declare namespace jdspec {
          * Specifies the stability status of this service.
          */
         status: StabilityStatus;
+
+        /**
+         * Markdown sources
+         */
+        source: string;
     }
 
     /**

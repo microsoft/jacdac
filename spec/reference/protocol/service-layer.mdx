@@ -75,10 +75,13 @@ Reports are packets sent by a service as a response to a command. They can also 
 The layout of a report depends on its purpose:
 *  __Register reports__ must always contain the register values requested in the original command packet, but for actions, the format is left up to the service creator to define.
 * __Actions reports__ can either contain a pre-determined number of bytes as defined in the service specification or bear no operation.
+* __Events__ are emitted independently by a service without prompting. 
+Some services may offer an interface to configure which events are emitted. Events are discussed in details in the next section.
 
-A third type of report is an __Event__. Events are emitted independently by a service without prompting. Some services may offer an interface to configure which events are emitted.
+#### Events
 
 Events have a specially-constructed operation code:
+
 | Bits | Function 
 |------|----------------------
 | 15   | Always set for events

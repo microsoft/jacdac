@@ -7,12 +7,21 @@ A controller for 1 or more monochrome or RGB LEDs connected in parallel.
 
 ## Registers
 
+    rw color @ 0x80 {
+        red: u8
+        green: u8
+        blue: u8
+    }
+
+Sets or gets the color on the LED. Settings the color cancels any animation running on the light.
+
     rw brightness: u0.16 / @ intensity
 
 Set the luminosity of the strip. The value is used to scale `value` in `steps` register.
 At `0` the power to the strip is completely shut down.
 
-    rw steps @ 0x82 {
+    rw animation @ 0x82 {
+        repetitions: u16
         repeats:
             hue: u8
             saturation: u8
@@ -22,7 +31,7 @@ At `0` the power to the strip is completely shut down.
 
 Animations are described using pairs of color description and duration, 
 similarly to the `status_light` register in the control service.
-They repeat indefinitely until another animation is specified.
+`repetation` as 0 is considered infinite.
 For monochrome LEDs, the hue and saturation are ignored.
 A specification `(red, 80ms), (blue, 40ms), (blue, 0ms), (yellow, 80ms)`
 means to start with red, cross-fade to blue over 80ms, stay blue for 40ms,

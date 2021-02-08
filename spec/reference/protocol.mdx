@@ -5,13 +5,23 @@ order: 1
 
 # Protocol Specification
 
-Jacdac (Joint Asynchronous Communication; Device Agnostic Control) is a new protocol designed 
+Jacdac is a new protocol designed 
 to make it easier to connect low cost microcontrollers and sensors together. 
 Jacdac is not only designed for easier physical connectivity, 
 it is an entire hardware and software stack that bridges the world of the low cost 
 microcontroller to the web browser and beyond.
 
-A Jacdac device is any device that  generates its own unique [device identifier](./device-identity) and implements the Jacdac protocol. The protocol consists of three core layers:
+* novel 3-wire cable and connector
+* bus topology
+* device discovery and service advertisement
+* standardized service abstraction
+* full stack from 8bit MCU to web development
+
+## Overview
+
+A Jacdac device is any device that generates its own unique [device identifier](./device-identity) 
+and implements the Jacdac protocol. 
+The protocol consists of three core layers:
 
 1. The [service layer](./service-layer)––How Jacdac devices share hardware 
 or software resources with one another.
@@ -19,8 +29,6 @@ or software resources with one another.
 to and from services and applications.
 3. The [physical layer](./physical-layer)––Transmits and receives packets from other 
 Jacdac devices.
-
-## Overview
 
 ### Service Layer
 

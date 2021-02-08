@@ -12,18 +12,18 @@ Turns on or off the detection of barcodes.
 
     enum Format: u32 {
         Aztec = 1
-        Code_128 = 2
-        Code_39 = 3
-        Code_93 = 4
+        Code128 = 2
+        Code39 = 3
+        Code93 = 4
         Codabar = 5
-        Data_matrix = 6
-        Ean_13 = 8
-        Ean_8 = 9
-        Itf = 10
+        DataMatrix = 6
+        Ean13 = 8
+        Ean8 = 9
+        ITF = 10
         Pdf417 = 11
-        Qr_code = 12
-        Upc_a = 13
-        Upc_e = 14
+        QrCode = 12
+        UpcA = 13
+        UpcE = 14
     }
     const formats? @ 0x80 {
         repeats:

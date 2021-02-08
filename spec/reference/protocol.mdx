@@ -11,13 +11,13 @@ Jacdac is not only designed for easier physical connectivity,
 it is an entire hardware and software stack that bridges the world of the low cost 
 microcontroller to the web browser and beyond.
 
-A Jacdac device is any device that  generates its own unique [device identifier](./protocol/device-identity) and implements the Jacdac protocol. The protocol consists of three core layers:
+A Jacdac device is any device that  generates its own unique [device identifier](./device-identity) and implements the Jacdac protocol. The protocol consists of three core layers:
 
-1. The [service layer](./protocol/service-layer)––How Jacdac devices share hardware 
+1. The [service layer](./service-layer)––How Jacdac devices share hardware 
 or software resources with one another.
-2. The [transport layer](./protocol/transport-layer)––Responsible for reliably routing packets 
+2. The [transport layer](./transport-layer)––Responsible for reliably routing packets 
 to and from services and applications.
-3. The [physical layer](./protocol/physical-layer)––Transmits and receives packets from other 
+3. The [physical layer](./physical-layer)––Transmits and receives packets from other 
 Jacdac devices.
 
 ### Service Layer
@@ -31,7 +31,7 @@ can replace one another without having to recompile user applications. For examp
 two different models of accelerometer hardware can replace each other 
 because they share the same software interface. 
 
-* [Read more about the service layer](./protocol/service-layer)
+* [Read more about the service layer](./service-layer)
 
 Any device that hosts a service must also run the control service. 
 The control service is responsible for advertising any services a device 
@@ -63,7 +63,7 @@ Pipes on the other hand set up a point to point connection between devices,
 and every packet is acknowledged and received using a sliding window approach. 
 Only the most capable devices are expected to support pipes.
 
-* [Read more about the transport layer.](./protocol/transport-layer)
+* [Read more about the transport layer.](./transport-layer)
 
 ### Physical Layer
 
@@ -73,5 +73,5 @@ Frames contain one or more packets, and packets contain a service command or rep
 Frames also have addressing metadata embedded inside them that the transport 
 layer uses to route packets correctly.
 
-[Read more about the physical layer.](./protocol/physical-layer)
+[Read more about the physical layer.](./physical-layer)
 

@@ -388,37 +388,58 @@ over that pipe.
 
 ## Physical Layer
 
-The responsibility of the physical layer is to send/receive a byte buffer (representing a Jacdac frame from the [transport layer](../transport-layer)) over a particular media. Currently, we have implemented:
+The responsibility of the physical layer is to send/receive a byte buffer 
+(representing a Jacdac frame from the transport layer 
+over a particular media. Currently, we have implemented:
 
-- [Single Wire Serial](./sws) connects microcontrollers to each other using UART
-- Web USB
-
-Future implementations:
-
-- Bluetooth
-- Micro:bit radio
+- Single Wire Serial connects microcontrollers to each other using UART
+- Web USB: micro-controller to web browser
 
 ### Single Wire Serial (SWS)
 
 Jacdac requires devices have a microcontroller with UART, Timer, and GPIO interrupt capabilities.
 
-![An image depicting a Jacdac transmission. A Jacdac transmission begins with a start pulse of 11-14 us, a inter lo data spacing of minimally 40 us before data commences. A Jacdac transmission ends with an end pulse of 11-14 us.](../../../images/jacdac-activity.png)
+![An image depicting a Jacdac transmission. A Jacdac transmission begins with a start pulse of 11-14 us, a inter lo data spacing of minimally 40 us before data commences. A Jacdac transmission ends with an end pulse of 11-14 us.](../images/jacdac-activity.png)
 
-For communication Jacdac SWS reuses the often forgotten RS232 (UART) peripheral, common to many microcontrollers. Devices operate the UART peripheral in half-duplex mode and are connected together to form a single bus. This bus requires a common data and ground line to be shared between devices.
+For communication Jacdac SWS reuses the often forgotten RS232 (UART) peripheral, 
+common to many microcontrollers. Devices operate the UART peripheral in half-duplex mode 
+and are connected together to form a single bus. 
+This bus requires a common data and ground line to be shared between devices.
 
-Like with standard UART, a logical one is represented as 3.3V and a logical 0 as 0V. Data bytes are 10 bits long and are composed of 1 start bit, 8 data bits, and one stop bit. Jacdac devices must only communicate at 1 Mbaud and when no data is being transmitted, the bus must read as a logical one (3.3V).
+Like with standard UART, a logical one is represented as 3.3V and a logical 0 as 0V. 
+Data bytes are 10 bits long and are composed of 1 start bit, 8 data bits, and one stop bit. 
+Jacdac devices must only communicate at 1 Mbaud and when no data is being transmitted, 
+the bus must read as a logical one (3.3V).
 
-In Jacdac SWS, any device can initiate a transmission at any time. Because of this, devices must assert control over the bus before sending any data. This is where Jacdac differs from half-duplex UART–––devices must assert control over the bus by pulsing the line low before transmitting any data. This low pulse is known as the start pulse and must be between 11 and 15 microseconds in duration. This duration is recognised as a break condition on most UART hardware.
+In Jacdac SWS, any device can initiate a transmission at any time. B
+ecause of this, devices must assert control over the bus before sending any data. 
+This is where Jacdac differs from half-duplex UART–––devices must assert control over the bus 
+by pulsing the line low before transmitting any data. This low pulse is known as the start pulse 
+and must be between 11 and 15 microseconds in duration. This duration is recognised 
+as a break condition on most UART hardware.
 
-When the start pulse is over, devices have minimally 40 microseconds to configure IO registers to receive UART data. If no data byte is received within 100 microseconds, an error condition must be triggered and devices must wait for the bus to return to an idle state. This means that the first data byte must commence at 89 microseconds after the completion of the start pulse in order to be specification compliant.
+When the start pulse is over, devices have minimally 40 microseconds to configure IO registers 
+to receive UART data. If no data byte is received within 100 microseconds, 
+an error condition must be triggered and devices must wait for the bus to return to an idle state. 
+This means that the first data byte must commence at 89 microseconds 
+after the completion of the start pulse in order to be specification compliant.
 
-After the transmitter has sent the data portion of a frame, it must then pulse the line low one final time to signal the end of a transmission. The duration of this end pulse is between 11 and 15 microseconds so to trigger another UART break condition. The end pulse can come immediately after the last data byte, but it must occur within 80 microseconds of the last data byte. If it does not, an error condition is generated.
+After the transmitter has sent the data portion of a frame, it must then pulse 
+the line low one final time to signal the end of a transmission. 
+The duration of this end pulse is between 11 and 15 microseconds so to trigger 
+another UART break condition. The end pulse can come immediately after the last data byte, 
+but it must occur within 80 microseconds of the last data byte. If it does not, 
+an error condition is generated.
 
-A small amount of time must pass before another transmission can begin. Devices must wait minimally 100 microseconds plus a randomly generated backoff value so that multiple devices do not initiate transmission at precisely the same time. It is therefore extremely important that all devices have some randomness in their transmission sequence to reduce the likelihood of data loss.
+A small amount of time must pass before another transmission can begin. 
+Devices must wait minimally 100 microseconds plus a randomly generated backoff value 
+so that multiple devices do not initiate transmission at precisely the same time. 
+It is therefore extremely important that all devices have some randomness in their transmission sequence
+ to reduce the likelihood of data loss.
 
 A complete Jacdac transmission and the beginning of another are captured in the image below.
 
-![An image depicting a Jacdac transmission. A Jacdac transmission begins with a start pulse of 11-14 us, a inter lo data spacing of minimally 40 us before data commences. A Jacdac transmission ends with an end pulse of 11-14 us.](../../../images/jacdac-activity.png)
+![An image depicting a Jacdac transmission. A Jacdac transmission begins with a start pulse of 11-14 us, a inter lo data spacing of minimally 40 us before data commences. A Jacdac transmission ends with an end pulse of 11-14 us.](../images/jacdac-activity.png)
 
 #### Hardware requirements
 
@@ -469,7 +490,7 @@ Jacdac has been implemented on the following 32-bit ARM processors:
 
 The image and table below captures key timings of Jacdac SWS.
 
-![An image depicting a Jacdac transmission with portions of the signal labelled, A-F.](../../../images/jacdac-proto-timings.png)
+![An image depicting a Jacdac transmission with portions of the signal labelled, A-F.](../images/jacdac-proto-timings.png)
 
 | Identifier 	| Name 	| Duration min/max (us) 	|
 |------------	|-------------	|----------	|
@@ -482,7 +503,7 @@ The image and table below captures key timings of Jacdac SWS.
 
 The state machine below encapsulates how these timings should be used during frame reception:
 
-![An image depicting the state machine to be used when receiving a Jacdac packet. Whenever any timing is exceeded, the device should wait for the frame-to-frame gap to elapse before listening for another packet.](../../../images/jacdac-state-diagram.png)
+![An image depicting the state machine to be used when receiving a Jacdac packet. Whenever any timing is exceeded, the device should wait for the frame-to-frame gap to elapse before listening for another packet.](../images/jacdac-state-diagram.png)
 
 
 #### Frames

@@ -806,7 +806,7 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
                     error("unknown status");
                 break;
             case "tags":
-                info.tags.concat(words.slice(2))
+                info.tags = info.tags.concat(words.slice(2))
                 break;
             default:
                 error("unknown metadata field: " + words[0])

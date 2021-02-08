@@ -5,35 +5,73 @@ order: 4
 
 ## Protocol Specification
 
-Jacdac (Joint Asynchronous Communication; Device Agnostic Control) is a new protocol designed to make it easier to connect low cost microcontrollers and sensors together. Jacdac is not only designed for easier physical connectivity, it is an entire hardware and software stack that bridges the world of the low cost microcontroller to the web browser and beyond.
+Jacdac (Joint Asynchronous Communication; Device Agnostic Control) is a new protocol designed 
+to make it easier to connect low cost microcontrollers and sensors together. 
+Jacdac is not only designed for easier physical connectivity, 
+it is an entire hardware and software stack that bridges the world of the low cost 
+microcontroller to the web browser and beyond.
 
-A Jacdac device is any device that  generates its own unique [device identifier](./device-identity) and implements the Jacdac protocol. The protocol consists of three core layers:
+A Jacdac device is any device that  generates its own unique [device identifier](./protocol/device-identity) and implements the Jacdac protocol. The protocol consists of three core layers:
 
-1. The [service layer](./service-layer)––How Jacdac devices share hardware or software resources with one another.
-2. The [transport layer](./transport-layer)––Responsible for reliably routing packets to and from services and applications.
-3. The [physical layer](./physical-layer)––Transmits and receives packets from other Jacdac devices.
+1. The [service layer](./protocol/service-layer)––How Jacdac devices share hardware 
+or software resources with one another.
+2. The [transport layer](./protocol/transport-layer)––Responsible for reliably routing packets 
+to and from services and applications.
+3. The [physical layer](./protocol/physical-layer)––Transmits and receives packets from other 
+Jacdac devices.
 
 ### Service Layer
 
-The way Jacdac devices share resources with other devices on the bus are through __services__. Services provide abstract, standardized interfaces that can be used to interact with physical hardware resources (e.g. an accelerometer) or pure virtual resources (e.g. the state of a video game). This abstraction brings plug-and-play dynamism to Jacdac so that devices with different hardware, but the same overall functionality, can replace one another without having to recompile user applications. For example, two different models of accelerometer hardware can replace each other because they share the same software interface. [Read more about the service layer](./service-layer)
+The way Jacdac devices share resources with other devices on the bus are through __services__. 
+Services provide abstract, standardized interfaces that can be used to interact with 
+physical hardware resources (e.g. an accelerometer) or pure virtual resources 
+(e.g. the state of a video game). This abstraction brings plug-and-play dynamism to 
+Jacdac so that devices with different hardware, but the same overall functionality, 
+can replace one another without having to recompile user applications. For example, 
+two different models of accelerometer hardware can replace each other 
+because they share the same software interface. 
 
-Any device that hosts a service must also run the control service. The control service is responsible for advertising any services a device is running every 500 milliseconds. Like any other service, the packets emitted by the control service are standardized. There also a set of common commands that must be implemented by Jacdac devices that operate services, including functionality like `reset` and `time since boot`.
+* [Read more about the service layer](./protocol/service-layer)
 
-Most Jacdac users will never need to write a service: the major use case is for users to write applications that interact with Jacdac devices and services. Using Jacdac in microcontroller applications is incredibly easy and only requires a software stack that has a compatible Jacdac physical layer.
+Any device that hosts a service must also run the control service. 
+The control service is responsible for advertising any services a device 
+is running every 500 milliseconds. Like any other service, 
+the packets emitted by the control service are standardized. 
+There also a set of common commands that must be implemented by Jacdac devices that operate services, 
+including functionality like `reset` and `time since boot`.
 
-Services are registered in the [service catalog](/services) and described by [service specifications](/reference/specificatin/service-specification).
+Most Jacdac users will never need to write a service: the major use case is for users 
+to write applications that interact with Jacdac devices and services. 
+Using Jacdac in microcontroller applications is incredibly easy and only 
+requires a software stack that has a compatible Jacdac physical layer.
+
+Services are registered in the [service catalog](/services) 
+and described by [service specifications](/reference/specification/service-specification).
 
 ### Transport Layer
 
-Whenever a frame is received by the physical layer, the transport layer divides that frame into data packets and forwards them to the appropriate service or user application. At this point, services and applications can use packets to perform actions based on new data.
+Whenever a frame is received by the physical layer, the transport layer 
+divides that frame into data packets and forwards them to the appropriate service 
+or user application. At this point, services and applications can use packets 
+to perform actions based on new data.
 
-In many cases it is important that data is received by a specific device. Jacdac supports this mechanism using acknowledgements and pipes. Acknowledgements are incredibly simple and require receiving devices to recognise that a frame has successfully been received. Pipes on the other hand set up a point to point connection between devices, and every packet is acknowledged and received using a sliding window approach. Only the most capable devices are expected to support pipes.
+In many cases it is important that data is received by a specific device. 
+Jacdac supports this mechanism using acknowledgements and pipes. 
+Acknowledgements are incredibly simple and require receiving devices 
+to recognise that a frame has successfully been received. 
+Pipes on the other hand set up a point to point connection between devices, 
+and every packet is acknowledged and received using a sliding window approach. 
+Only the most capable devices are expected to support pipes.
 
-[Read more about the transport layer.](./transport-layer)
+* [Read more about the transport layer.](./protocol/transport-layer)
 
 ### Physical Layer
 
-There can be many various physical layer implementations responsible for sending frames across a wired or wireless communication medium. Frames contain one or more packets, and packets contain a service command or report. Frames also have addressing metadata embedded inside them that the transport layer uses to route packets correctly.
+There can be many various physical layer implementations responsible 
+for sending frames across a wired or wireless communication medium. 
+Frames contain one or more packets, and packets contain a service command or report. 
+Frames also have addressing metadata embedded inside them that the transport 
+layer uses to route packets correctly.
 
-[Read more about the physical layer.](./physical-layer)
+[Read more about the physical layer.](./protocol/physical-layer)
 

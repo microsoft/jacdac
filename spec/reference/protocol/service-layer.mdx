@@ -5,9 +5,20 @@ order: 7
 
 ## Service Layer
 
-The way Jacdac devices share resources with other devices on the bus are through __services__. Services provide abstract, standardized interfaces that can be used to interact with physical hardware resources (e.g. an accelerometer) or pure virtual resources (e.g. the state of a video game). This abstraction brings plug-and-play dynamism to Jacdac so that devices with different hardware, but the same overall functionality, can replace one another without having to recompile user applications. For example, two different models of accelerometer hardware can replace each other because they share the same software interface.
+The way Jacdac devices share resources with other devices on the bus are through __services__. 
+Services provide abstract, standardized interfaces that can be used to interact with 
+physical hardware resources (e.g. an accelerometer) or pure virtual resources 
+(e.g. the state of a video game). This abstraction brings plug-and-play dynamism to 
+Jacdac so that devices with different hardware, but the same overall functionality, 
+can replace one another without having to recompile user applications. 
+For example, two different models of accelerometer hardware can replace each other 
+because they share the same software interface.
 
-Services act on __commands__ and optionally respond with __reports__. Reports can also be emitted separately from a service without prompting from another device. This interface is specified in a [custom markdown language](../../service-specification) that lists the possible commands and reports that a service can consume and emit. Specifications can also inherit from other specifications. An example of this can be seen in the [sensor specification](../../../services/_sensor). Jacdac sensors inherit commands and reports from this specification, creating a set of base functionality for _all_ sensors.
+Services act on __commands__ and optionally respond with __reports__. 
+Reports can also be emitted separately from a service without prompting from another device. 
+This interface is specified in a [custom markdown language](../../service-specification) 
+that lists the possible commands and reports that a service can consume and emit. 
+Specifications can also inherit from other specifications. An example of this can be seen in the [sensor specification](../../../services/_sensor). Jacdac sensors inherit commands and reports from this specification, creating a set of base functionality for _all_ sensors.
 
 A service is globally and uniquely identified by its service class, which should be found in the [service catalog](../../../services). For example, the service class of the [button service](../../../services/button) is `0x1473a263`, as specified in the button's [service specification](https://github.com/microsoft/jacdac/blob/main/services/button.md) in the GitHub repository that contains the registered services. (In contrast, the `service_index` field in the Jacdac packet is an index into the list of services advertised by a device. The control service has both service class 0 and service number 0.)
 
@@ -123,15 +134,4 @@ The control service also offers a set of common commands that can be used to que
 
 The implementation complexity of the control service scales with respect to the number of services a device implements. For instance, it is very simple to process packets for a single user service (in addition to the control service), but complexity increases as more services are added. This flexibility is a benefit as it allows ultra low-cost microcontrollers to be used in simple devices.
 
-#### Commands
-
-- `JD_CMD_ADVERTISEMENT_DATA`:
-- `JD_CMD_CTRL_IDENTIFY`:
-- `JD_CMD_CTRL_RESET`:
-- `JD_CMD_GET_REG |` 
-   - `JD_REG_CTRL_DEVICE_DESCRIPTION`:
-   - `JD_REG_CTRL_FIRMWARE_VERSION`:
-   - `JD_REG_CTRL_DEVICE_CLASS`:
-   - `JD_REG_CTRL_BL_DEVICE_CLASS`:
-   - `JD_REG_CTRL_MICROS_SINCE_BOOT`:
 

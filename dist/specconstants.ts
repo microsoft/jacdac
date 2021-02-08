@@ -727,6 +727,35 @@ export enum ColorReg {
     Color = 0x101,
 }
 
+// Service: Compass
+export const SRV_COMPASS = 0x15b7b9bf
+export enum CompassReg {
+    /**
+     * Read-only uint16_t. The heading with respect to the magnetic north.
+     *
+     * ```
+     * const [heading] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    Heading = 0x101,
+
+    /**
+     * Read-only ° uint16_t. Error on the heading reading
+     *
+     * ```
+     * const [headingError] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    HeadingError = 0x106,
+}
+
+export enum CompassCmd {
+    /**
+     * No args. Starts a calibration sequence for the compass.
+     */
+    Calibrate = 0x2,
+}
+
 // Service: Control
 export const SRV_CONTROL = 0x0
 

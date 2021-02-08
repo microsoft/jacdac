@@ -6,6 +6,7 @@ A sensor approximating the oxygen level.
 
     identifier: 0x10bb4eb6
     extends: _sensor
+    tags: biometric
 
 ## Registers
 

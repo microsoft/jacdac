@@ -168,6 +168,11 @@ declare namespace jdspec {
          * Markdown sources
          */
         source: string;
+
+        /**
+         * General purpose tags
+         */
+        tags: string[];
     }
 
     /**

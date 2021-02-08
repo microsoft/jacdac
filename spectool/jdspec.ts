@@ -201,7 +201,8 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
         classIdentifier: 0,
         enums: {},
         packets: [],
-        source: filecontent
+        source: filecontent,
+        tags: []
     }
 
     let backticksType = ""
@@ -803,6 +804,9 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
                     info.status = <any>words[2];
                 else
                     error("unknown status");
+                break;
+            case "tags":
+                info.tags.concat(words.slice(2))
                 break;
             default:
                 error("unknown metadata field: " + words[0])

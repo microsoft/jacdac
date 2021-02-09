@@ -5,7 +5,7 @@ order: 2
 
 ## Service Specification
 
-A service specification describes the three main types of JACDAC packets that a service recognizes: registers, commands, and events.  
+A service specification describes the three main types of Jacdac packets that a service recognizes: registers, commands, and events.  
 
 Service specifications are written in a literate form of markdown, for consumption by both human and machine. The formal specification fragments, given as markdown code sections, are interleaved with English specification text. The code sections can be in triple backticks or with the 4 leading spaces (examples in this document only use the leading spaces form).
 
@@ -107,6 +107,35 @@ ro core_temperature @ 0x180 {
 
 The last register, to specify the sensivity of the sensor, is optional.
 This is denoted by adding a `?` after the register name.
+
+You can specify a preferred interval for refreshing the register in the specification
+as for the ``mcu_temperature`` register in the control service.
+
+```
+ro mcu_temperature?: i16 °C { preferred_interval=60000, typical_min = -10, typical_max = 150 } @ 0x182
+```
+
+### Pack Format
+
+Format strings are space-separated sequences of type descriptions.
+All numbers are understood to be little endian.
+The following type descriptions are supported:
+
+* `u8`, `u16`, `u32` - unsigned, 1, 2, and 4 bytes long respectively
+* `i8`, `i16`, `i32` - similar, but signed
+* `b` - buffer until the end of input (has to be last)
+* `s` - similar, but utf-8 encoded string
+* `z` - NUL-terminated utf-8 string
+* `b[10]` - 10 byte buffer (10 is just an example, here and below)
+* `s[10]` - 10 byte utf-8 string; trailing NUL bytes (if any) are removed
+* `x[10]` - 10 bytes of padding
+
+There is one more token, `r:`. The type descriptions following it are repeated in order
+until the input buffer is exhausted.
+When unpacking, fields after `r:` are repeated as an array of tuples.
+
+In case there's only a single field repeating,
+it's also possible to append `[]` to its type, to get an array of values.
 
 ### Rocket Commands
 
@@ -253,7 +282,7 @@ Such a format can be expressed using `repeats:` label, as in the following examp
         delay: u16 ms
     repeats:
         nozzle_id: u8
-        throttle: u8 /
+        throttle: u0.8 /
     }
 
 Set throttle on specific nozzles, after specified delay.
@@ -370,3 +399,25 @@ The final zero-length packet, before closing the pipe, is optional.
 
 Both `segmented:` and `multi-segmented:` are currently only supported in `pipe report` and `pipe command`,
 with a single field of type `bytes`.
+
+## LED Animation
+
+Jacdac supports a simple encoding for basic LED animations. It is used in the [control service](/services/control)
+``status_light`` register and also in the [led service](/services/led).
+
+```
+    rw status_light ... {
+        repeats:
+            hue: u8
+            saturation: u8
+            value: u8
+            duration8: u8 8ms
+    }
+```
+
+Specifies a status light animation sequence on a colored or monochrome LED.
+``hue``, ``saturation``, ``value`` are the components of an HSV color
+and ``duration8`` is the duration of transition to the next color in the array, in units of ``8ms``. Module with monochrome LED can ignore ``hue``, ``saturation`` and use ``value``. The animation is played in a loop.
+Set the register to empty buffer to disable the animation.
+
+* Design your animation using the [LED Animation designer](/tools/led-animation-designer).

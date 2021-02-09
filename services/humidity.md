@@ -2,6 +2,7 @@
 
     identifier: 0x16c810b8
     extends: _sensor
+    tags: environment
 
 A sensor measuring humidity of outside environment.
 
@@ -9,7 +10,7 @@ A sensor measuring humidity of outside environment.
 
 Default streaming interval is 1s.
 
-    ro humidity: u22.10 %RH {typical_max = 100} @ reading
+    ro humidity: u22.10 %RH { typical_max = 100, preferred_interval=5000 } @ reading
 
 The relative humidity in percentage of full water saturation.
 

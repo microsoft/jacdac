@@ -31,7 +31,7 @@
 #define JD_POWER_REG_BATTERY_VOLTAGE 0x180
 
 /**
- * Read-only ratio uint16_t. Fraction of charge in the battery.
+ * Read-only ratio u0.16 (uint16_t). Fraction of charge in the battery.
  */
 #define JD_POWER_REG_BATTERY_CHARGE 0x182
 

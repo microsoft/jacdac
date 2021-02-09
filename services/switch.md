@@ -12,12 +12,14 @@ A switch, which keeps its position.
 Indicates whether the switch is currently active (on).
 
     enum Variant: u32 {
-        Slide = 1,
-        Tilt = 2,
-        PushButton = 3,
-        Tactile = 4,
-        Toggle = 5,
+        Slide = 1
+        Tilt = 2
+        PushButton = 3
+        Tactile = 4
+        Toggle = 5
         Proximity = 6
+        Magnetic = 7
+        FootPedal = 8
     }
     const variant?: Variant @ variant
 
@@ -32,8 +34,8 @@ For example, some light switches in staircases have such a capability.
 
     event on @ active
 
-Emitted when button goes from ``off`` to ``on``.
+Emitted when switch goes from ``off`` to ``on``.
 
     event off @ inactive
 
-Emitted when button goes from ``on`` to ``off``.
+Emitted when switch goes from ``on`` to ``off``.

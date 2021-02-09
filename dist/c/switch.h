@@ -11,6 +11,8 @@
 #define JD_SWITCH_VARIANT_TACTILE 0x4
 #define JD_SWITCH_VARIANT_TOGGLE 0x5
 #define JD_SWITCH_VARIANT_PROXIMITY 0x6
+#define JD_SWITCH_VARIANT_MAGNETIC 0x7
+#define JD_SWITCH_VARIANT_FOOT_PEDAL 0x8
 
 /**
  * Read-only bool (uint8_t). Indicates whether the switch is currently active (on).
@@ -29,12 +31,12 @@
 #define JD_SWITCH_REG_AUTO_OFF_DELAY 0x180
 
 /**
- * Emitted when button goes from ``off`` to ``on``.
+ * Emitted when switch goes from ``off`` to ``on``.
  */
 #define JD_SWITCH_EV_ON JD_EV_ACTIVE
 
 /**
- * Emitted when button goes from ``on`` to ``off``.
+ * Emitted when switch goes from ``on`` to ``off``.
  */
 #define JD_SWITCH_EV_OFF JD_EV_INACTIVE
 

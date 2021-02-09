@@ -19,7 +19,7 @@ microcontroller to the web browser and beyond.
 
 ## Overview
 
-A Jacdac device is any device that generates its own unique [device identifier](#deviceIdentity) 
+A Jacdac device is any device that generates its own unique [device identifier](#device-identity) 
 and implements the Jacdac protocol.  The protocol consists of three core layers, described below,
 with link to more detail.
 
@@ -49,7 +49,7 @@ requires a software stack that has a compatible Jacdac physical layer.
 Services are registered in the [service catalog](/services) 
 and described by [service specifications](/reference/specification/service-specification).
 
-* [Read more about the service layer](#serviceLayer)
+* [Read more about the service layer](#service-layer)
 
 ### Transport layer: responsible for reliably routing packets to and from services and applications
 
@@ -66,7 +66,7 @@ Pipes on the other hand set up a point to point connection between devices,
 and every packet is acknowledged and received using a sliding window approach. 
 Only the most capable devices are expected to support pipes.
 
-* [Read more about the transport layer.](#transportLayer)
+* [Read more about the transport layer.](#transport-layer)
 
 ### Physical layer: transmits/receives packets to/from other Jacdac devices
 
@@ -76,9 +76,7 @@ Frames contain one or more packets, and packets contain a service command or rep
 Frames also have addressing metadata embedded inside them that the transport 
 layer uses to route packets correctly.
 
-* [Read more about the physical layer.](#physicalLayer)
-
-<a name="deviceIdentity"></a>
+* [Read more about the physical layer.](#physical-layer)
 
 ## Device Identity
 
@@ -103,8 +101,6 @@ If we consider one trillion Jacdac networks size of 200 devices with randomly ch
 the probability of a JDID collision in at least one of the networks is 0.1%. 
 On the other hand, with 32 bit IDs and 2000 networks, the collision probability in any of them is already 1%, 
 and with 200k networks it's more than 60%.
-
-<a name="serviceLayer"></a>
 
 ## Service Layer
 
@@ -237,8 +233,7 @@ The control service also offers a set of common commands that can be used to que
 
 The implementation complexity of the control service scales with respect to the number of services a device implements. For instance, it is very simple to process packets for a single user service (in addition to the control service), but complexity increases as more services are added. This flexibility is a benefit as it allows ultra low-cost microcontrollers to be used in simple devices.
 
-<a name="transportLayer"></a> 
-### Transport Layer
+## Transport Layer
 
 A device's presence/absence on the bus is signified by the presence/absence of advertising packets containing its device identifier, which should be sent every 500 milliseconds. If a client of a Jacdac device does not receive an advertisement from the device for several advertisement periods (1-2 seconds), it should assume the device has left the bus. If the device rejoins the bus, it may present a different list of services. In fact, devices are free to change the list of services they advertise at any time.
 
@@ -381,8 +376,6 @@ These events a normally just broadcast on the bus, using standard command `0x001
 
 For reliable event delivery, a pipe can be established, and events delivered
 over that pipe.
-
-<a name="physicalLayer"></a>
 
 ## Physical Layer
 

@@ -1882,6 +1882,36 @@ export enum LoggerCmd {
     Error = 0x83,
 }
 
+// Service: Magnetometer
+export const SRV_MAGNETO = 0x13029088
+export enum MagnetoReg {
+    /**
+     * Indicates the current magnetic field on magnetometer.
+     *
+     * ```
+     * const [x, y, z] = jdunpack<[number, number, number]>(buf, "i32 i32 i32")
+     * ```
+     */
+    Forces = 0x101,
+
+    /**
+     * Error on the readings.
+     *
+     * ```
+     * const [x, y, z] = jdunpack<[number, number, number]>(buf, "i32 i32 i32")
+     * ```
+     */
+    ForcesError = 0x106,
+}
+
+export enum MagnetoCmd {
+    /**
+     * No args. Forces a calibration sequence where the user/device
+     * might have to rotate to be calibrated.
+     */
+    Calibrate = 0x2,
+}
+
 // Service: Matrix Keypad
 export const SRV_MATRIX_KEYPAD = 0x13062dc8
 

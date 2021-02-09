@@ -249,7 +249,8 @@ export enum BaseReg {
      * Reports the current state or error status of the device. ``code`` is a standardized value from
      * the Jacdac status/error codes. ``vendor_code`` is any vendor specific error code describing the device
      * state. This report is typically not queried, when a device has an error, it will typically
-     * add this report in frame along with the announce packet.
+     * add this report in frame along with the announce packet. If a service implements this register,
+     * it should also support the ``status_code_changed`` event defined below.
      *
      * ```
      * const [code, vendorCode] = jdunpack<[number, number]>(buf, "u16 u16")
@@ -738,6 +739,15 @@ export enum CompassReg {
      * ```
      */
     Heading = 0x101,
+
+    /**
+     * Read-write bool (uint8_t). Turn on or off the sensor. Turning on the sensor may start a calibration sequence.
+     *
+     * ```
+     * const [enabled] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Enabled = 0x1,
 
     /**
      * Read-only ° uint16_t. Error on the heading reading
@@ -3667,6 +3677,67 @@ export enum TcpPipeCmd {
  */
 
 
+// Service: Thermocouple
+export const SRV_THERMOCOUPLE = 0x143ac061
+
+export enum ThermocoupleVariant { // uint32_t
+    TypeK = 0x1,
+    TypeJ = 0x2,
+    TypeT = 0x3,
+    TypeE = 0x4,
+    TypeN = 0x5,
+    TypeS = 0x6,
+    TypeR = 0x7,
+    TypeB = 0x8,
+}
+
+export enum ThermocoupleReg {
+    /**
+     * Read-only °C i22.10 (int32_t). The temperature.
+     *
+     * ```
+     * const [temperature] = jdunpack<[number]>(buf, "i22.10")
+     * ```
+     */
+    Temperature = 0x101,
+
+    /**
+     * Constant °C i22.10 (int32_t). Lowest temperature that can be reported.
+     *
+     * ```
+     * const [minTemperature] = jdunpack<[number]>(buf, "i22.10")
+     * ```
+     */
+    MinTemperature = 0x104,
+
+    /**
+     * Constant °C i22.10 (int32_t). Highest temperature that can be reported.
+     *
+     * ```
+     * const [maxTemperature] = jdunpack<[number]>(buf, "i22.10")
+     * ```
+     */
+    MaxTemperature = 0x105,
+
+    /**
+     * Read-only °C u22.10 (uint32_t). The real temperature is between `temperature - temperature_error` and `temperature + temperature_error`.
+     *
+     * ```
+     * const [temperatureError] = jdunpack<[number]>(buf, "u22.10")
+     * ```
+     */
+    TemperatureError = 0x106,
+
+    /**
+     * Constant Variant (uint32_t). Specifies the type of thermometer.
+     *
+     * ```
+     * const [variant] = jdunpack<[ThermocoupleVariant]>(buf, "u32")
+     * ```
+     */
+    Variant = 0x107,
+}
+
 // Service: Thermometer
 export const SRV_THERMOMETER = 0x1421bac7
 
@@ -3674,8 +3745,6 @@ export enum ThermometerVariant { // uint32_t
     Outdoor = 0x1,
     Indoor = 0x2,
     Body = 0x3,
-    HeatProbe = 0x4,
-    Thermocouple = 0x5,
 }
 
 export enum ThermometerReg {

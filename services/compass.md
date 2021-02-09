@@ -11,6 +11,10 @@ A sensor that measures the heading.
 
 The heading with respect to the magnetic north.
 
+    rw enabled: bool @ intensity
+
+Turn on or off the sensor. Turning on the sensor may start a calibration sequence.
+
     ro heading_error?: u16 ° @ reading_error
 
 Error on the heading reading

@@ -1,10 +1,10 @@
-# Thermometer
+# Thermocouple
 
-    identifier: 0x1421bac7
+    identifier: 0x143ac061
     extends: _sensor
     tags: environment
 
-A thermometer measuring outside or inside environment.
+A thermocouple using a heat probe to gather temperatures.
 
 ## Registers
 
@@ -25,9 +25,14 @@ Highest temperature that can be reported.
 The real temperature is between `temperature - temperature_error` and `temperature + temperature_error`.
 
     enum Variant: u32 {
-        Outdoor = 1,
-        Indoor = 2,
-        Body = 3,
+        TypeK = 1
+        TypeJ = 2
+        TypeT = 3
+        TypeE = 4
+        TypeN = 5
+        TypeS = 6
+        TypeR = 7
+        TypeB = 8
     }
     const variant: Variant @ variant
 

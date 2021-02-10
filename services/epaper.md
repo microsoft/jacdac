@@ -29,11 +29,9 @@ The type of screen and number of bits per pixels. Monochrome = 1bit, Grayscale4 
 
 ## Commands
 
-    command paint @ 0x80 {
-        colors: pipe
-    }
-    pipe report colors {
-        colors: bytes
-    }
+    command paint @ 0x80 { }
+    report {
+        pixels: pipe_port
+    }    
     
 Refreshes the display, in a column first layout, columns must be aligned. Sending an empty buffer clears the screen.

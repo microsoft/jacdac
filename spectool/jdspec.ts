@@ -119,6 +119,7 @@ export const secondaryUnitConverters: jdspec.SMap<{
     "km/h": { name: "kilometer per hour", unit: "m/s", scale: 1 / 3.6, offset: 0 },
     "8ms": { name: "8 milliseconds", unit: "s", scale: 8 / 1000, offset: 0 },
     "nm": { name: "nanometer", unit: "m", scale: 1e-9, offset: 0 },
+    "nT": { name: "nano Tesla", unit: "T", scale: 1e9, offset: 0},
 
     // compat with previous Jacdac versions
     "frac": { name: "ratio", unit: "/", scale: 1, offset: 0 },

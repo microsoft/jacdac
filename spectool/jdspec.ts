@@ -1129,6 +1129,11 @@ export function dashify(name: string) {
     return snakify(name.replace(/^_+/, '')).replace(/_/g, '-').toLowerCase();
 }
 
+export function humanify(name: string) {
+    return name?.replace(/([a-z])([A-Z])/g, (_, a, b) => a + " " + b)
+        .replace(/(-|_)/g, " ");
+}
+
 function addComment(pkt: jdspec.PacketInfo) {
     let comment = ""
 
@@ -1265,7 +1270,7 @@ export function packFormat(sinfo: jdspec.ServiceSpec, pkt: jdspec.PacketInfo): s
     return fmt.join(" ");
 }
 
-function packInfo(info: jdspec.ServiceSpec, pkt: jdspec.PacketInfo, isStatic: boolean) {
+export function packInfo(info: jdspec.ServiceSpec, pkt: jdspec.PacketInfo, isStatic: boolean) {
     const vars: string[] = []
     const vartp: string[] = []
     let fmt = ""
@@ -1319,7 +1324,11 @@ function packInfo(info: jdspec.ServiceSpec, pkt: jdspec.PacketInfo, isStatic: bo
 
     buffers = buffers.replace(/\n*$/, "")
 
-    return buffers
+    return {
+        buffers,
+        names: vars,
+        types: vartp
+    }
 }
 
 function memberSize(fld: jdspec.PacketMember) {
@@ -1350,7 +1359,7 @@ function toTypescript(info: jdspec.ServiceSpec, staticTypeScript: boolean) {
             continue
 
         const cmt = addComment(pkt)
-        let pack = pkt.fields.length ? packInfo(info, pkt, staticTypeScript) : ""
+        let pack = pkt.fields.length ? packInfo(info, pkt, staticTypeScript).buffers : ""
 
         let inner = "Cmd"
         if (isRegister(pkt.kind))

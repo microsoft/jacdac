@@ -1,5 +1,5 @@
 /// <reference path="jdspec.d.ts" />
-import { converters, dashify, normalizeDeviceSpecification, parseServiceSpecificationMarkdownToJSON, snakify } from "./jdspec"
+import { camelize, capitalize, converters, dashify, humanify, normalizeDeviceSpecification, packInfo, parseServiceSpecificationMarkdownToJSON, snakify } from "./jdspec"
 
 declare var process: any;
 declare var require: any;
@@ -16,6 +16,69 @@ function values<T>(o: jdspec.SMap<T>): T[] {
     for (let k of Object.keys(o))
         r.push(o[k])
     return r
+}
+
+function toPxtJson(spec: jdspec.ServiceSpec) {
+    const { shortId, notes } = spec;
+    return JSON.stringify({
+        "name": `jacdac-${shortId}`,
+        "version": "0.0.0",
+        "description": notes["short"],
+        "files": [
+            "constants.ts",
+            "client.ts"
+        ],
+        "testFiles": [
+            "test.ts"
+        ],
+        "supportedTargets": [
+            "arcade",
+            "microbit",
+            "maker"
+        ],
+        "dependencies": {
+            "core": "*",
+            "jacdac": "github:microsoft/pxt-jacdac"
+        },
+        "testDependencies": {
+            "nucleo-f411re": "*"
+        }
+    }, null, 4);
+}
+
+function toMakeCodeClient(spec: jdspec.ServiceSpec) {
+    const { shortId, name, camelName, packets } = spec;
+    const Reading = 0x101;
+    const registers = packets.filter(pkt => !pkt.derived && (pkt.kind === 'ro' || pkt.kind === 'rw' || pkt.kind === 'const'));
+    const sensor = registers.some(reg => reg.identifier === Reading);
+
+    return `namespace modules {
+    //% fixedInstances
+    export class ${capitalize(camelName)}Client extends jacdac.${sensor ? "Sensor" : ""}Client {
+        constructor(role: string) {
+            super(jacdac.SRV_${shortId.toUpperCase()}, role);
+        }
+    
+${registers.map(reg => {
+        const { names, types } = packInfo(spec, reg, true);
+        const array = types.length > 1
+        return `/**
+* ${reg.description || ""}
+*/
+//% blockId=jacdac${shortId}${reg.identifier.toString(16)} block="%sensor ${humanify(reg.name).toLowerCase()}"
+//% group="${name}"
+${camelize(reg.name)}(): ${array ? `[${types}]` : types} {
+    // ${names}
+    const values = jacdac.jdunpack<[${types}]>(this.${reg.identifier === Reading ? "state" : "???"} , "${reg.packFormat}")
+    return values${!array && " && values[0]"};
+}
+`;
+    }).join("")}            
+    }
+
+    //% fixedInstance whenUsed
+    export const humidity = new HumidityClient("humidity");
+}`;
 }
 
 function processSpec(dn: string) {
@@ -38,7 +101,7 @@ function processSpec(dn: string) {
     const mkcdir = path.join(outp, "makecode")
     mkdir(mkcdir)
 
-    const fmtStats: { [index: string]: number;} = {};
+    const fmtStats: { [index: string]: number; } = {};
     const concats: jdspec.SMap<string> = {}
     const markdowns: jdspec.ServiceMarkdownSpec[] = [];
     for (let fn of files) {
@@ -79,7 +142,10 @@ function processSpec(dn: string) {
                 const srvdir = path.join(mkcdir, dashify(json.camelName))
                 mkdir(srvdir);
                 fs.writeFileSync(path.join(srvdir, "constants.ts"), convResult)
-            }    
+                // generate project file and client template
+                fs.writeFileSync(path.join(srvdir, "pxt.json"), toPxtJson(json));
+                fs.writeFileSync(path.join(srvdir, "client.ts"), toMakeCodeClient(json));
+            }
         }
     }
 
@@ -88,7 +154,7 @@ function processSpec(dn: string) {
     fs.writeFileSync(path.join(outp, "specconstants.ts"), concats["ts"])
     fs.writeFileSync(path.join(outp, "specconstants.sts"), concats["sts"])
 
-    const fms = Object.keys(fmtStats).sort((l,r) => -fmtStats[l] + fmtStats[r])
+    const fms = Object.keys(fmtStats).sort((l, r) => -fmtStats[l] + fmtStats[r])
     console.log(fms.map(fmt => `${fmt}: ${fmtStats[fmt]}`))
 }
 

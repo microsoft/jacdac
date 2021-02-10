@@ -62,16 +62,20 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
 ${registers.map(reg => {
         const { names, types } = packInfo(spec, reg, true);
         const array = types.length > 1
-        return `/**
-* ${reg.description || ""}
-*/
-//% blockId=jacdac${shortId}${reg.identifier.toString(16)} block="%sensor ${humanify(reg.name).toLowerCase()}"
-//% group="${name}"
-${camelize(reg.name)}(): ${array ? `[${types}]` : types} {
-    // ${names}
-    const values = jacdac.jdunpack<[${types}]>(this.${reg.identifier === Reading ? "state" : "???"} , "${reg.packFormat}")
-    return values${!array && " && values[0]"};
-}
+        const useServiceName = reg.identifier === Reading && camelize(reg.name) === spec.camelName;
+        const name = useServiceName ? "reading" : camelize(reg.name);
+        
+        return `    /**
+    * ${reg.description || ""}
+    */
+    //% blockId=jacdac${shortId}${reg.identifier.toString(16)} block="%sensor ${humanify(reg.name).toLowerCase()}"
+    //% group="${name}"
+    get ${name}(): ${array ? `[${types}]` : types} {
+        // ${names}
+        const values = jacdac.jdunpack<[${types}]>(this.${reg.identifier === Reading ? "state" : "???"} , "${reg.packFormat}")
+        return values${!array && " && values[0]"};
+    }
+
 `;
     }).join("")}            
     }

@@ -15,6 +15,7 @@ A 3-axis magnetometer.
     }
 
 Indicates the current magnetic field on magnetometer.
+For reference: `1 mgauss` is `100 nT` (and `1 gauss` is `100 000 nT`).
 
     ro forces_error? @ reading_error {
         x: i32 nT

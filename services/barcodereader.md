@@ -10,7 +10,7 @@ A device that reads various barcodes, like QR codes. For the web, see [BarcodeDe
     
 Turns on or off the detection of barcodes.
 
-    enum Format: u32 {
+    enum Format: u8 {
         Aztec = 1
         Code128 = 2
         Code39 = 3

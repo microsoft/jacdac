@@ -36,7 +36,7 @@ Reports the list of supported barcode formats, as documented in https://develope
 
     event detect @ active {
         format: Format
-        data: bytes 
+        data: string
     }
     
 Raised when a bar code is detected and decoded. If the reader detects multiple codes, it will issue multiple events.

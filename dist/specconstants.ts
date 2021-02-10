@@ -783,10 +783,10 @@ export enum ColorReg {
 export const SRV_COMPASS = 0x15b7b9bf
 export enum CompassReg {
     /**
-     * Read-only uint16_t. The heading with respect to the magnetic north.
+     * Read-only u16.16 (uint32_t). The heading with respect to the magnetic north.
      *
      * ```
-     * const [heading] = jdunpack<[number]>(buf, "u16")
+     * const [heading] = jdunpack<[number]>(buf, "u16.16")
      * ```
      */
     Heading = 0x101,
@@ -801,10 +801,10 @@ export enum CompassReg {
     Enabled = 0x1,
 
     /**
-     * Read-only ° uint16_t. Error on the heading reading
+     * Read-only ° u16.16 (uint32_t). Error on the heading reading
      *
      * ```
-     * const [headingError] = jdunpack<[number]>(buf, "u16")
+     * const [headingError] = jdunpack<[number]>(buf, "u16.16")
      * ```
      */
     HeadingError = 0x106,

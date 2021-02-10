@@ -6,6 +6,7 @@
 
 /**
  * Indicates the current magnetic field on magnetometer.
+ * For reference: `1 mgauss` is `100 nT` (and `1 gauss` is `100 000 nT`).
  */
 #define JD_MAGNETO_REG_FORCES JD_REG_READING
 typedef struct jd_magneto_forces {

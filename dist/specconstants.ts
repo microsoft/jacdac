@@ -1938,6 +1938,7 @@ export const SRV_MAGNETO = 0x13029088
 export enum MagnetoReg {
     /**
      * Indicates the current magnetic field on magnetometer.
+     * For reference: `1 mgauss` is `100 nT` (and `1 gauss` is `100 000 nT`).
      *
      * ```
      * const [x, y, z] = jdunpack<[number, number, number]>(buf, "i32 i32 i32")

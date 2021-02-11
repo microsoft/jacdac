@@ -9,19 +9,19 @@
  */
 #define JD_GYROSCOPE_REG_ROTATION_RATES JD_REG_READING
 typedef struct jd_gyroscope_rotation_rates {
-    int32_t x;  // °/s i16.16
-    int32_t y;  // °/s i16.16
-    int32_t z;  // °/s i16.16
+    int32_t x;  // °/s i12.20
+    int32_t y;  // °/s i12.20
+    int32_t z;  // °/s i12.20
 } jd_gyroscope_rotation_rates_t;
 
 
 /**
- * Read-only °/s i16.16 (int32_t). Error on the reading value.
+ * Read-only °/s i12.20 (int32_t). Error on the reading value.
  */
 #define JD_GYROSCOPE_REG_ROTATION_RATES_ERROR JD_REG_READING_ERROR
 
 /**
- * Read-write °/s i16.16 (int32_t). Configures the range of range of rotation rates.
+ * Read-write °/s i12.20 (int32_t). Configures the range of range of rotation rates.
  */
 #define JD_GYROSCOPE_REG_MAX_RATE 0x80
 

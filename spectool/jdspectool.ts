@@ -98,7 +98,7 @@ ${regs.map(reg => {
         const { types } = packInfo(spec, reg, true, true);
         const { fields } = reg;
         const isReading = reg.identifier === Reading;
-
+        const fieldName = `this._${isReading ? "reading" : camelize(reg.name)}`;
         return fields.map((field, fieldi) => {
             const name = field.name === "_" ? reg.name : field.name
             return `
@@ -108,7 +108,7 @@ ${regs.map(reg => {
         //% group="${group}" blockSetVariable=myModule
         //% blockCombine block="${humanify(name)}" callInDebugger
         get ${camelize(name)}(): ${types[fieldi]} {
-            const values = this${isReading ? "" : `._${camelize(reg.name)}`}.values() as any[];
+            const values = ${fieldName}.pauseUntilValues() as any[];
             return ${field.type === "bool" ? "!!" : ""}values[${fieldi}];
         }${reg.kind === "rw" ? `
         /**
@@ -117,9 +117,9 @@ ${regs.map(reg => {
         //% group="${group}" blockSetVariable=myModule
         //% blockCombine block="${humanify(name)}" callInDebugger
         set ${camelize(name)}(value: ${types[fieldi]}) {
-            const values = this${isReading ? "" : `._${camelize(reg.name)}`}.values() as any[];
+            const values = ${fieldName}.values as any[];
             values[${fieldi}] = ${field.type === "bool" ? "value ? 1 : 0" : "value"};
-            this._${camelize(reg.name)}.setValues(values as [${types}]);
+            ${fieldName}.values = values as [${types}];
         }` : ""}`
         }).join("")
     }).join("")} 
@@ -128,8 +128,9 @@ ${events.map((event) => {
         /**
          * ${(event.description || "").split('\n').join('\n        * ')}
          */
+        //% blockId=jacdac_on_${spec.shortId}_${event.name}
         //% block="${humanify(event.name)}" blockSetVariable=myModule
-        //% group="${group}" blockCombine
+        //% group="${group}"
         on${capitalize(camelize(event.name))}(handler: () => void) {
             this.registerEvent(jacdac.${capitalize(spec.camelName)}Event.${capitalize(camelize(event.name))}, handler);
         }`;

@@ -158,8 +158,8 @@ function processSpec(dn: string) {
                 mkdir(srvdir);
                 fs.writeFileSync(path.join(srvdir, "constants.ts"), convResult)
                 // generate project file and client template
-                fs.writeFileSync(path.join(srvdir, "pxt.json"), toPxtJson(json));
-                fs.writeFileSync(path.join(srvdir, "client.ts"), toMakeCodeClient(json));
+                fs.writeFileSync(path.join(srvdir, "pxt.d.json"), toPxtJson(json));
+                fs.writeFileSync(path.join(srvdir, "client.d.ts"), toMakeCodeClient(json));
             }
         }
     }

@@ -240,7 +240,7 @@ function processSpec(dn: string) {
     fs.writeFileSync(path.join(outp, "specconstants.ts"), concats["ts"])
     fs.writeFileSync(path.join(outp, "specconstants.sts"), concats["sts"])
     if (fs.existsSync(pxtJacdacDir)) // only available locally
-        fs.writeFileSync(path.join(outp, "makecode-extensions.json"), JSON.stringify(mkcdServices, null, 2));
+        fs.writeFileSync(path.join(outp, "../makecode-extensions.json"), JSON.stringify(mkcdServices, null, 2));
 
     const fms = Object.keys(fmtStats).sort((l, r) => -fmtStats[l] + fmtStats[r])
     console.log(fms.map(fmt => `${fmt}: ${fmtStats[fmt]}`))

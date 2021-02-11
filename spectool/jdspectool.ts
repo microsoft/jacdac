@@ -70,6 +70,7 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
         ctorArgs.push(`"${reading.packFormat}"`)
     }
     const className = `${capitalize(camelName)}Client`
+    const group = spec.name;
 
     return `namespace modules {
     /**
@@ -92,7 +93,7 @@ ${registers.filter(reg => reg.identifier === Reading).map(reg => {
         * ${(reg.description || "").split('\n').join('\n        * ')}
         */
         //% blockId=jacdac${shortId}_${reg.identifier.toString(16)}_${fieldi}
-        //% group="${name}" blockSetVariable=myModule
+        //% group="${group}" blockSetVariable=myModule
         //% blockCombine block="${name}" callInDebugger
         get ${camelize(name)}(): ${types[fieldi]} {
             const values = ${isReading ? "this.values()" : `jacdac.jdunpack<[${types}]>(this.??? , "${reg.packFormat}")`} as any[];

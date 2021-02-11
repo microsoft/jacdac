@@ -26,7 +26,7 @@ function toPxtJson(spec: jdspec.ServiceSpec) {
         "description": notes["short"],
         "files": [
             "constants.ts",
-            "client.ts"
+            "client.g.ts"
         ],
         "testFiles": [
             "test.ts"
@@ -61,15 +61,16 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
         baseType = `SensorClient<[${types}]>`
         ctorArgs.push(`"${reading.packFormat}"`)
     }
+    const className = `${capitalize(camelName)}Client`
 
     return `namespace modules {
     //% fixedInstances
-    export class ${capitalize(camelName)}Client extends jacdac.${baseType} {
+    export class ${className} extends jacdac.${baseType} {
         constructor(role: string) {
             super(${ctorArgs.join(", ")});
         }
     
-${registers.map(reg => {
+${registers.filter(reg => reg.identifier === Reading).map(reg => {
         const { names, types } = packInfo(spec, reg, true);
         const array = types.length > 1
         const isReading = reg.identifier === Reading ;
@@ -84,7 +85,7 @@ ${registers.map(reg => {
         ${name}(): ${array ? `[${types}]` : types} {
             // ${names}
             const values = ${isReading ? "this.values()" : `jacdac.jdunpack<[${types}]>(this.??? , "${reg.packFormat}")`};
-            return values${!array && " && values[0]"};
+            return values${array ? "" : " && values[0]"};
         }
 
 `;
@@ -92,7 +93,7 @@ ${registers.map(reg => {
     }
 
     //% fixedInstance whenUsed
-    export const humidity = new HumidityClient("humidity");
+    export const ${spec.camelName} = new ${className}("${humanify(spec.camelName)}");
 }`;
 }
 
@@ -158,8 +159,9 @@ function processSpec(dn: string) {
                 mkdir(srvdir);
                 fs.writeFileSync(path.join(srvdir, "constants.ts"), convResult)
                 // generate project file and client template
-                fs.writeFileSync(path.join(srvdir, "pxt.d.json"), toPxtJson(json));
-                fs.writeFileSync(path.join(srvdir, "client.d.ts"), toMakeCodeClient(json));
+                fs.writeFileSync(path.join(srvdir, "pxt.json"), toPxtJson(json));
+                fs.writeFileSync(path.join(srvdir, "client.g.ts"), toMakeCodeClient(json));
+                fs.writeFileSync(path.join(srvdir, "test.ts"), "// rename this file to test.ts and add tests here");
             }
         }
     }

@@ -107,7 +107,8 @@ ${regs.map(reg => {
         */
         //% group="${group}" blockSetVariable=myModule
         //% blockCombine block="${humanify(name)}" callInDebugger
-        get ${camelize(name)}(): ${types[fieldi]} {
+        get ${camelize(name)}(): ${types[fieldi]} {${isReading ? `
+            this.setStreaming(true);` : ""}            
             const values = ${fieldName}.pauseUntilValues() as any[];
             return ${field.type === "bool" ? "!!" : ""}values[${fieldi}];
         }${reg.kind === "rw" ? `

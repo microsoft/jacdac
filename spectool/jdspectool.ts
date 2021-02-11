@@ -50,31 +50,42 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
     const { shortId, name, camelName, packets } = spec;
     const Reading = 0x101;
     const registers = packets.filter(pkt => !pkt.derived && (pkt.kind === 'ro' || pkt.kind === 'rw' || pkt.kind === 'const'));
-    const sensor = registers.some(reg => reg.identifier === Reading);
+    let baseType = "Client";
+    const ctorArgs = [
+        `jacdac.SRV_${shortId.toUpperCase()}`,
+        `role`
+    ]
+    const reading = registers.find(reg => reg.identifier === Reading);
+    if (reading) {
+        const { names, types } = packInfo(spec, reading, true);
+        baseType = `SensorClient<[${types}]>`
+        ctorArgs.push(`"${reading.packFormat}"`)
+    }
 
     return `namespace modules {
     //% fixedInstances
-    export class ${capitalize(camelName)}Client extends jacdac.${sensor ? "Sensor" : ""}Client {
+    export class ${capitalize(camelName)}Client extends jacdac.${baseType} {
         constructor(role: string) {
-            super(jacdac.SRV_${shortId.toUpperCase()}, role);
+            super(${ctorArgs.join(", ")});
         }
     
 ${registers.map(reg => {
         const { names, types } = packInfo(spec, reg, true);
         const array = types.length > 1
-        const useServiceName = reg.identifier === Reading && camelize(reg.name) === spec.camelName;
+        const isReading = reg.identifier === Reading ;
+        const useServiceName = isReading && camelize(reg.name) === spec.camelName;
         const name = useServiceName ? "reading" : camelize(reg.name);
         
-        return `    /**
-    * ${reg.description || ""}
-    */
-    //% blockId=jacdac${shortId}${reg.identifier.toString(16)} block="%sensor ${humanify(reg.name).toLowerCase()}"
-    //% group="${name}"
-    get ${name}(): ${array ? `[${types}]` : types} {
-        // ${names}
-        const values = jacdac.jdunpack<[${types}]>(this.${reg.identifier === Reading ? "state" : "???"} , "${reg.packFormat}")
-        return values${!array && " && values[0]"};
-    }
+        return `        /**
+        * ${reg.description || ""}
+        */
+        //% blockId=jacdac${shortId}${reg.identifier.toString(16)} block="%sensor ${humanify(reg.name).toLowerCase()}"
+        //% group="${name}"
+        ${name}(): ${array ? `[${types}]` : types} {
+            // ${names}
+            const values = ${isReading ? "this.values()" : `jacdac.jdunpack<[${types}]>(this.??? , "${reg.packFormat}")`};
+            return values${!array && " && values[0]"};
+        }
 
 `;
     }).join("")}            

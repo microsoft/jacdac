@@ -32,15 +32,15 @@ change to yellow, and cross-fade back to red in 80ms.
 
 Limit the power drawn by the light-strip (and controller).
 
-    const led_count?: u16 @ 0x83
+    const led_count?: u16 @ 0x180
 
 If known, specifies the number of LEDs in parallel on this device.
 
-    const wave_length?: u16 nm { typical_min=365, typical_max=885 } @ 0x84
+    const wave_length?: u16 nm { typical_min=365, typical_max=885 } @ 0x181
 
 If monochrome LED, specifies the wave length of the LED.
 
-    const luminous_intensity?: u16 mcd { typical_min=10, typical_max=5000 } @ 0x85
+    const luminous_intensity?: u16 mcd { typical_min=10, typical_max=5000 } @ 0x182
 
 The luminous intensity of the LED, at full value, in micro candella.
 

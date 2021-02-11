@@ -27,7 +27,7 @@
 /**
  * Constant. Reports the list of supported barcode formats, as documented in https://developer.mozilla.org/en-US/docs/Web/API/Barcode_Detection_API.
  */
-#define JD_BARCODE_READER_REG_FORMATS 0x80
+#define JD_BARCODE_READER_REG_FORMATS 0x180
 typedef struct jd_barcode_reader_formats {
     uint8_t format[0];  // Format
 } jd_barcode_reader_formats_t;

@@ -25,7 +25,7 @@ Turns on or off the detection of barcodes.
         UpcA = 13
         UpcE = 14
     }
-    const formats? @ 0x80 {
+    const formats? @ 0x180 {
         repeats:
             format: Format;  
     }

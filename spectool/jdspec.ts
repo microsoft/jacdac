@@ -178,7 +178,18 @@ const identifierRanges: { [index: string]: [number, number][] } = {
         [0x200, 0xeff], // custom
         [0xf00, 0xfff], // impl
     ],
+    "const": [
+        [0x100, 0x17f],
+        [0x180, 0x1ff],
+        [0x200, 0xeff], // custom
+        [0xf00, 0xfff], // impl
+    ],
     "command": [
+        [0x000, 0x07f],
+        [0x080, 0xeff],
+        [0xf00, 0xfff],
+    ],
+    "report": [
         [0x000, 0x07f],
         [0x080, 0xeff],
         [0xf00, 0xfff],

@@ -19,6 +19,10 @@ Indicates whether the relay circuit is currently on (closed) or off (closed).
 
 Describes the type of relay used.
 
+    const max_switching_current?: u16 A @ 0x180
+
+Maximum switching current for a resistive load.
+
 ## Events
 
     event on @ active
@@ -28,7 +32,3 @@ Emitted when relay goes from ``off`` to ``on`` state.
     event off @ inactive
 
 Emitted when relay goes from ``on`` to ``off`` state.
-
-    const max_switching_current?: u16 A @ 0x180
-
-Maximum switching current for a resistive load.

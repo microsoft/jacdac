@@ -426,11 +426,18 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
         packetInfo = null
     }
 
+    function forceSection(sectionId: string) {
+        if (noteId != sectionId) {
+            error(`this is only allowed in ## ${sectionId} not in ## ${noteId}`)
+        }
+    }
+
     function startPacket(words: string[]) {
         checkBraces(null)
         const kindSt = words.shift()
         let kind: jdspec.PacketKind = "command"
         if (kindSt == "meta") {
+            forceSection("commands")
             let w2 = words.shift()
             if (w2 == "pipe")
                 w2 = words.shift()
@@ -439,6 +446,7 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
             else
                 error("invalid token after meta")
         } else if (kindSt == "pipe") {
+            forceSection("commands")
             let w2 = words.shift()
             if (w2 == "report" || w2 == "command")
                 kind = ("pipe_" + w2) as any
@@ -529,20 +537,24 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
             switch (kind) {
                 case "const":
                 case "ro":
+                    forceSection("registers")
                     isSystem = 0x100 <= v && v <= 0x17f
                     isUser = 0x180 <= v && v <= 0x1ff
                     break
                 case "rw":
+                    forceSection("registers")
                     isSystem = 0x00 <= v && v <= 0x7f
                     isUser = 0x80 <= v && v <= 0xff
                     break
                 case "report":
                 case "command":
+                    forceSection("commands")
                     isSystem = 0x00 <= v && v <= 0x7f
                     isUser = 0x80 <= v && v <= 0xff
                     isHigh = 0x100 <= v && v <= 0xeff
                     break
                 case "event":
+                    forceSection("events")
                     isSystem = 0x00 <= v && v <= 0x7f
                     isUser = 0x80 <= v && v <= 0xff
                     break

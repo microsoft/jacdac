@@ -20,6 +20,8 @@ which is periodically re-seeded with entropy coming from some hardware source.
 A command that generates a random buffer with the given length.
 This never blocks for a long time.
 
+## Registers
+
     enum Variant: u32 {
          Quantum = 1
          ADCNoise = 2

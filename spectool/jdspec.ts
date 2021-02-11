@@ -575,6 +575,47 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
         }
     }
 
+    function rangeCheck(tp: string, v: number) {
+        const [storage, type, typeShift] = normalizeStorageType(tp)
+
+        if (isNaN(v))
+            return v // error already reported
+
+        if (storage == 0) {
+            error(`numeric values like ${v} not allowed for ${tp}`)
+            return v
+        }
+
+        if (v < 0 && storage > 0) {
+            error(`negative values like ${v} not allowed for ${tp}`)
+            return v
+        }
+
+        if (Math.floor(v) != v && typeShift == 0) {
+            error(`only integer values allowed for ${tp}; got ${v}`)
+            return v
+        }
+
+        let bits = storage < 0 ? -storage * 8 - 1 : storage * 8
+        bits -= (typeShift || 0)
+        // don't use bitshift to allow for more than 32 bits
+        let max = 1
+        while (bits--)
+            max *= 2
+        if (-v == max) {
+            // OK - min_int
+        } else if (max == 1 && v == 1) {
+            // we make an exception for u0.8 being set to 1
+        } else {
+            if (Math.abs(v) >= max) {
+                error(`value ${v} is out of range for ${tp}`)
+                return v
+            }
+        }
+
+        return v
+    }
+
     function packetField(words: string[]) {
         if (words.length == 2 && (words[0] == "repeats" || words[0] == "segmented" || words[0] == "multi-segmented")) {
             nextModifier = words[0]
@@ -589,7 +630,7 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
             op = words.shift()
         }
         if (op == "=") {
-            defaultValue = parseIntCheck(words.shift())
+            defaultValue = parseIntCheck(words.shift(), true)
             op = words.shift()
         }
 
@@ -606,6 +647,9 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
             unit = normalizeUnit(tok)
             tok = words.shift()
         }
+
+        if (defaultValue !== undefined)
+            rangeCheck(tp, defaultValue)
 
         let shift = typeShift || undefined
         if (unit == "/") {
@@ -641,16 +685,18 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
                 tok = camelize(tok)
                 switch (tok) {
                     case "maxBytes":
+                        (field as any)[tok] = rangeCheck("u8", parseVal())
+                        break
                     case "typicalMin":
                     case "typicalMax":
                     case "absoluteMin":
                     case "absoluteMax":
-                        (field as any)[tok] = parseVal()
+                        (field as any)[tok] = rangeCheck(tp, parseVal())
                         break
                     case "preferredInterval":
                         if ((packetInfo as any)[tok] !== undefined)
                             error(`field ${tok} already set`);
-                        (packetInfo as any)[tok] = parseVal()
+                        (packetInfo as any)[tok] = rangeCheck("u32", parseVal())
                         break;
                     default:
                         error("unknown constraint: " + tok)
@@ -717,7 +763,7 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
     function enumMember(words: string[]) {
         if (words[1] != "=" || words.length != 3)
             error(`expecting: FIELD_NAME = INTEGER`)
-        enumInfo.members[normalizeName(words[0])] = parseIntCheck(words[2])
+        enumInfo.members[normalizeName(words[0])] = rangeCheck(canonicalType(enumInfo.storage), parseIntCheck(words[2]))
     }
 
     function parseIntCheck(w: string, allowFloat = false) {

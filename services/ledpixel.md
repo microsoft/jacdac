@@ -67,7 +67,7 @@ number, and followed by 3 bytes of color.
 
 ## Registers
 
-    rw brightness: u0.8 / @ intensity
+    rw brightness = 0.05: u0.8 / @ intensity
 
 Set the luminosity of the strip.
 At `0` the power to the strip is completely shut down.

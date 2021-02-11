@@ -109,7 +109,7 @@ ${regs.map(reg => {
         //% blockCombine block="${humanify(name)}" callInDebugger
         get ${camelize(name)}(): ${types[fieldi]} {
             const values = this${isReading ? "" : `._${camelize(reg.name)}`}.values() as any[];
-            return ${field.type === "bool" ? "!!(" : ""}values.length > 0 && values[${fieldi}]${field.type === "bool" ? ")" : ""};
+            return ${field.type === "bool" ? "!!" : ""}values[${fieldi}];
         }${reg.kind === "rw" ? `
         /**
         * ${(reg.description || "").split('\n').join('\n        * ')}

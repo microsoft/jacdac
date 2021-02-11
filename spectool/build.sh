@@ -10,4 +10,5 @@ cp ../services/generated/services*.json ../dist/
 cp ../services/generated/c/*.h ../dist/c/
 cp ../services/generated/*.ts ../dist/
 cp ../services/generated/*.sts ../dist/
-cp ../services/generated/makecode-extensions.json ..
+cp ../services/generated/*-extensions.json ..
+

@@ -54,6 +54,9 @@ function toPxtJson(spec: jdspec.ServiceSpec) {
 function toMakeCodeClient(spec: jdspec.ServiceSpec) {
     const { shortId, name, camelName, packets } = spec;
     const Reading = 0x101;
+    const Intensity = 0x1;
+    const Value = 0x2;
+
     const registers = packets.filter(pkt => !pkt.derived && (pkt.kind === 'ro' || pkt.kind === 'rw' || pkt.kind === 'const'));
     let baseType = "Client";
     const ctorArgs = [
@@ -79,7 +82,7 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
         }
     
 ${registers.filter(reg => reg.identifier === Reading).map(reg => {
-        const { names, types } = packInfo(spec, reg, true);
+        const { types } = packInfo(spec, reg, true);
         const { fields } = reg;
         const isReading = reg.identifier === Reading;
 

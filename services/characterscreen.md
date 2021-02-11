@@ -1,6 +1,7 @@
 # Character Screen
 
     identifier: 0x1f37c56a
+    tags: display
 
 A screen that displays characters.
 

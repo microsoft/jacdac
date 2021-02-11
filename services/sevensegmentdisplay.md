@@ -2,6 +2,7 @@
 
     identifier: 0x196158f7
     camel:sevenSegmentDisplay
+    tags: display
 
 A 7-segment numeric display, with one or more digits.
 

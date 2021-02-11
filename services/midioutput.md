@@ -2,6 +2,7 @@
 
     identifier: 0x1a848cd7
     camel: midiOutput
+    tags: sound
 
 A MIDI output device.
 

@@ -2,6 +2,7 @@
 
     identifier: 0x110d154b
     camel: ledMatrix
+    tags: display
 
 A rectangular monochrome LED matrix controller.
 

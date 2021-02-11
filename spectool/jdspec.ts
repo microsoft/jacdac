@@ -377,6 +377,27 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
         if (packetInfo.packed)
             warn(`you may want to use explicit padding in ${packetInfo.name}`)
 
+        let repeats = false
+        let hadzero = false
+        for (const p of packetInfo.fields) {
+            if (hadzero) {
+                error(`field ${p.name} in ${packetInfo.kind} ${packetInfo.name} follows a variable-sized field`)
+                break
+            }
+            if (p.startRepeats) {
+                if (repeats)
+                    error(`repeats: can only be specified once; in ${packetInfo.kind} ${packetInfo.name}`)
+                repeats = true
+            }
+            if (p.storage == 0 && p.type != "string0") {
+                if (repeats) {
+                    error(`variable-sized field ${p.name} in ${packetInfo.kind} ${packetInfo.name} cannot repeat`)
+                    break
+                }
+                hadzero = true
+            }
+        }
+
         const pid = packetInfo.identifier;
         const ranges = identifierRanges[packetInfo.kind];
         if (packetInfo.name != "set_register"

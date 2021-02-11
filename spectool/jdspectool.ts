@@ -57,13 +57,20 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
     const Intensity = 0x1;
     const Value = 0x2;
 
-    const registers = packets.filter(pkt => !pkt.derived && (pkt.kind === 'ro' || pkt.kind === 'rw' || pkt.kind === 'const'));
+    const registers = packets
+        .filter(pkt => !pkt.derived && (pkt.kind === 'ro' || pkt.kind === 'rw' || pkt.kind === 'const'));
     let baseType = "Client";
     const ctorArgs = [
         `jacdac.SRV_${snakify(spec.camelName).toUpperCase()}`,
         `role`
     ]
     const reading = registers.find(reg => reg.identifier === Reading);
+    const intensity = registers.find(reg => reg.identifier == Intensity);
+    const value = registers.find(reg => reg.identifier === Value);
+    const regs = [reading, intensity, value].filter(r => !!r);
+    const events = packets.filter(pkt => !pkt.derived && pkt.kind === "event");
+
+    // use sensor base class if reading present
     if (reading) {
         const { names, types } = packInfo(spec, reading, true);
         baseType = `SensorClient<[${types}]>`
@@ -78,33 +85,66 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
      **/
     //% fixedInstances blockGap=8
     export class ${className} extends jacdac.${baseType} {
-        constructor(role: string) {
+${regs.filter(reg => reg.identifier !== Reading).map(reg => `
+            private readonly _${camelize(reg.name)} : jacdac.RegisterClient<[${packInfo(spec, reg, false).types}]>;`)}            
+
+            constructor(role: string) {
             super(${ctorArgs.join(", ")});
+${regs.filter(reg => reg.identifier !== Reading).map(reg => `
+            this._${camelize(reg.name)} = this.addRegister(jacdac.${capitalize(spec.camelName)}Reg.${capitalize(reg.name)}, "${reg.packFormat}");`)}            
         }
     
-${registers.filter(reg => reg.identifier === Reading).map(reg => {
+${regs.map(reg => {
         const { types } = packInfo(spec, reg, true);
         const { fields } = reg;
         const isReading = reg.identifier === Reading;
 
         return fields.map((field, fieldi) => {
             const name = field.name === "_" ? reg.name : field.name
-            return `        /**
+            return `
+        /**
         * ${(reg.description || "").split('\n').join('\n        * ')}
         */
-        //% blockId=jacdac${shortId}_${reg.identifier.toString(16)}_${fieldi}
         //% group="${group}" blockSetVariable=myModule
         //% blockCombine block="${humanify(name)}" callInDebugger
         get ${camelize(name)}(): ${types[fieldi]} {
-            const values = ${isReading ? "this.values()" : `jacdac.jdunpack<[${types}]>(this.??? , "${reg.packFormat}")`} as any[];
+            const values = this${isReading ? "" : `._${camelize(reg.name)}`}.values() as any[];
             return values && values.length > 0 && values[${fieldi}];
-        }
-
-`;
+        }`;
         }).join("")
-    }).join("")}            
-    }
+    }).join("")}     
+${regs.filter(reg => reg.kind === "rw").map(reg => {
+        const { types } = packInfo(spec, reg, true);
+        const { fields } = reg;
+        const isReading = reg.identifier === Reading;
 
+        return fields.map((field, fieldi) => {
+            const name = field.name === "_" ? reg.name : field.name
+            return `
+        /**
+        * ${(reg.description || "").split('\n').join('\n        * ')}
+        */
+        //% group="${group}" blockSetVariable=myModule
+        //% blockCombine block="${humanify(name)}" callInDebugger
+        set ${camelize(name)}(value: ${types[fieldi]}) {
+            const values = this${isReading ? "" : `._${camelize(reg.name)}`}.values() as any[];
+            values[${fieldi}] = value;
+            this._${camelize(reg.name)}.setValues(values as [${types}]);
+        }`;
+        }).join("")
+    }).join("")}     
+${events.map((event) => {
+        return `
+        /**
+         * ${(event.description || "").split('\n').join('\n        * ')}
+         */
+        //% block="${humanify(event.name)}" blockSetVariable=myModule
+        //% group="${group}" blockCombine
+        on${capitalize(camelize(event.name))}(handler: () => void) {
+            this.registerEvent(jacdac.${capitalize(spec.camelName)}Event.${capitalize(camelize(event.name))}, handler);
+        }`;
+    }).join("")}
+    }
     //% fixedInstance whenUsed
     export const ${spec.camelName} = new ${className}("${humanify(spec.camelName)}");
 }`;

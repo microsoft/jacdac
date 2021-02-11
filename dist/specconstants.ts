@@ -730,6 +730,15 @@ export enum CharacterScreenReg {
     Message = 0x2,
 
     /**
+     * Read-write ratio u0.8 (uint8_t). Brightness of the screen. `0` means off.
+     *
+     * ```
+     * const [brightness] = jdunpack<[number]>(buf, "u0.8")
+     * ```
+     */
+    Brightness = 0x1,
+
+    /**
      * Constant Variant (uint8_t). Describes the type of character LED screen.
      *
      * ```

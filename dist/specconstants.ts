@@ -1036,37 +1036,37 @@ export enum ECO2Reg {
      * Read-only ppm u22.10 (uint32_t). Equivalent CO₂ (eCO₂) readings.
      *
      * ```
-     * const [e_CO2] = jdunpack<[number]>(buf, "u22.10")
+     * const [eCO2] = jdunpack<[number]>(buf, "u22.10")
      * ```
      */
-    E_CO2 = 0x101,
+    ECO2 = 0x101,
 
     /**
      * Read-only ppm u22.10 (uint32_t). Error on the reading value.
      *
      * ```
-     * const [e_CO2Error] = jdunpack<[number]>(buf, "u22.10")
+     * const [eCO2Error] = jdunpack<[number]>(buf, "u22.10")
      * ```
      */
-    E_CO2Error = 0x106,
+    ECO2Error = 0x106,
 
     /**
      * Constant ppm u22.10 (uint32_t). Minimum measurable value
      *
      * ```
-     * const [minE_CO2] = jdunpack<[number]>(buf, "u22.10")
+     * const [minECO2] = jdunpack<[number]>(buf, "u22.10")
      * ```
      */
-    MinE_CO2 = 0x104,
+    MinECO2 = 0x104,
 
     /**
      * Constant ppm u22.10 (uint32_t). Minimum measurable value
      *
      * ```
-     * const [maxE_CO2] = jdunpack<[number]>(buf, "u22.10")
+     * const [maxECO2] = jdunpack<[number]>(buf, "u22.10")
      * ```
      */
-    MaxE_CO2 = 0x105,
+    MaxECO2 = 0x105,
 
     /**
      * Constant s uint32_t. Time required to achieve good sensor stability before measuring after long idle period.
@@ -1934,8 +1934,8 @@ export enum LoggerCmd {
 }
 
 // Service: Magnetometer
-export const SRV_MAGNETO = 0x13029088
-export enum MagnetoReg {
+export const SRV_MAGNETOMETER = 0x13029088
+export enum MagnetometerReg {
     /**
      * Indicates the current magnetic field on magnetometer.
      * For reference: `1 mgauss` is `100 nT` (and `1 gauss` is `100 000 nT`).
@@ -1956,7 +1956,7 @@ export enum MagnetoReg {
     ForcesError = 0x106,
 }
 
-export enum MagnetoCmd {
+export enum MagnetometerCmd {
     /**
      * No args. Forces a calibration sequence where the user/device
      * might have to rotate to be calibrated.
@@ -3909,7 +3909,7 @@ export enum TrafficLightReg {
 
 // Service: Total Volatile organic compound
 export const SRV_TVOC = 0x12a5b597
-export enum TVOCReg {
+export enum TvocReg {
     /**
      * Read-only ppb u22.10 (uint32_t). Total volatile organic compound readings in parts per billion.
      *
@@ -3932,19 +3932,19 @@ export enum TVOCReg {
      * Constant ppb u22.10 (uint32_t). Minimum measurable value
      *
      * ```
-     * const [min_TVOC] = jdunpack<[number]>(buf, "u22.10")
+     * const [minTVOC] = jdunpack<[number]>(buf, "u22.10")
      * ```
      */
-    Min_TVOC = 0x104,
+    MinTVOC = 0x104,
 
     /**
      * Constant ppb u22.10 (uint32_t). Minimum measurable value
      *
      * ```
-     * const [max_TVOC] = jdunpack<[number]>(buf, "u22.10")
+     * const [maxTVOC] = jdunpack<[number]>(buf, "u22.10")
      * ```
      */
-    Max_TVOC = 0x105,
+    MaxTVOC = 0x105,
 
     /**
      * Constant s uint32_t. Time required to achieve good sensor stability before measuring after long idle period.

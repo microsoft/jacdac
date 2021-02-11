@@ -2,7 +2,6 @@
 
     identifier: 0x13029088
     extends: _sensor
-    camel: magneto
 
 A 3-axis magnetometer.
 

@@ -19,7 +19,7 @@ Indicates whether the relay circuit is currently on (closed) or off (closed).
 
 Describes the type of relay used.
 
-    const max_switching_current?: u16 A @ 0x180
+    const max_switching_current?: u32 mA @ 0x180
 
 Maximum switching current for a resistive load.
 

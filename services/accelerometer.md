@@ -8,12 +8,21 @@ A 3-axis accelerometer.
 ## Registers
 
     ro forces @ reading {
-        x: i6.10 g
-        y: i6.10 g
-        z: i6.10 g
+        x: i12.20 g
+        y: i12.20 g
+        z: i12.20 g
     }
 
 Indicates the current forces acting on accelerometer.
+
+    ro forces_error?: i12.20 g @ reading_error
+
+Error on the reading value.
+
+    rw max_force?: i12.20 g @ 0x80
+
+Configures the range forces detected.
+Read-back after setting to get current value.
 
 ## Events
 

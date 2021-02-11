@@ -170,7 +170,7 @@ function processSpec(dn: string) {
                 if (mkcdclient 
                     && !/^_/.test(json.shortId)
                     && makecodBuiltins.indexOf(json.shortId) < 0) {
-                    fs.writeFileSync(path.join(srvdir, "pxt.json"), toPxtJson(json));
+                    fs.writeFileSync(path.join(srvdir, "pxt.g.json"), toPxtJson(json));
                     fs.writeFileSync(path.join(srvdir, "client.g.ts"), mkcdclient);
                 }
             }

@@ -92,7 +92,7 @@ ${registers.filter(reg => reg.identifier === Reading).map(reg => {
         * ${(reg.description || "").split('\n').join('\n        * ')}
         */
         //% blockId=jacdac${shortId}_${reg.identifier.toString(16)}_${fieldi}
-        //% group="${name}"
+        //% group="${name}" blockSetVariable=myModule
         //% blockCombine block="${name}" callInDebugger
         get ${camelize(name)}(): ${types[fieldi]} {
             const values = ${isReading ? "this.values()" : `jacdac.jdunpack<[${types}]>(this.??? , "${reg.packFormat}")`} as any[];

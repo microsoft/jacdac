@@ -119,7 +119,7 @@ export const secondaryUnitConverters: jdspec.SMap<{
     "km/h": { name: "kilometer per hour", unit: "m/s", scale: 1 / 3.6, offset: 0 },
     "8ms": { name: "8 milliseconds", unit: "s", scale: 8 / 1000, offset: 0 },
     "nm": { name: "nanometer", unit: "m", scale: 1e-9, offset: 0 },
-    "nT": { name: "nano Tesla", unit: "T", scale: 1e9, offset: 0},
+    "nT": { name: "nano Tesla", unit: "T", scale: 1e9, offset: 0 },
 
     // compat with previous Jacdac versions
     "frac": { name: "ratio", unit: "/", scale: 1, offset: 0 },
@@ -882,6 +882,8 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
             const len = a + b
             if (!(len == 8 || len == 16 || len == 32 || len == 64))
                 error(`fixed point ${tp} can't be ${len} bits`)
+            if (a == 0 && m[1] == "i")
+                error(`fixed point ${tp} can't be i0.X; has to be at least i1.X`)
             return [(m[1] == "i" ? -1 : 1) * (len >> 3), tp2, b]
         }
 

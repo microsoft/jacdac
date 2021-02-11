@@ -1677,8 +1677,8 @@ export enum LedReg {
 }
 
 // Service: LED Matrix
-export const SRV_LEDMATRIX = 0x110d154b
-export enum LEDMatrixReg {
+export const SRV_LED_MATRIX = 0x110d154b
+export enum LedMatrixReg {
     /**
      * Read-write bytes. The state of the screen where pixel on/off state is
      * stored as a bit, column by column. The column should be byte aligned.
@@ -2091,8 +2091,8 @@ export enum MicrophoneReg {
 }
 
 // Service: MIDI output
-export const SRV_M_IDIOUTPUT = 0x1a848cd7
-export enum MIDIOutputReg {
+export const SRV_MIDI_OUTPUT = 0x1a848cd7
+export enum MidiOutputReg {
     /**
      * Read-write bool (uint8_t). Opens or closes the port to the MIDI device
      *
@@ -2103,7 +2103,7 @@ export enum MIDIOutputReg {
     Enabled = 0x1,
 }
 
-export enum MIDIOutputCmd {
+export enum MidiOutputCmd {
     /**
      * No args. Clears any pending send data that has not yet been sent from the MIDIOutput's queue.
      */
@@ -3957,14 +3957,14 @@ export enum TVOCReg {
 }
 
 // Service: UV index
-export const SRV_UVINDEX = 0x1f6e0d90
+export const SRV_UV_INDEX = 0x1f6e0d90
 
-export enum UVIndexVariant { // uint8_t
+export enum UvIndexVariant { // uint8_t
     UVA_UVB = 0x1,
     Visible_IR = 0x2,
 }
 
-export enum UVIndexReg {
+export enum UvIndexReg {
     /**
      * Read-only uv u16.16 (uint32_t). Ultraviolet index, typically refreshed every second.
      *
@@ -3987,7 +3987,7 @@ export enum UVIndexReg {
      * Constant Variant (uint8_t). The type of physical sensor and capabilities.
      *
      * ```
-     * const [variant] = jdunpack<[UVIndexVariant]>(buf, "u8")
+     * const [variant] = jdunpack<[UvIndexVariant]>(buf, "u8")
      * ```
      */
     Variant = 0x107,

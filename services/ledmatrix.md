@@ -1,7 +1,7 @@
 # LED Matrix
 
     identifier: 0x110d154b
-    camel: LEDMatrix
+    camel: ledMatrix
 
 A rectangular monochrome LED matrix controller.
 

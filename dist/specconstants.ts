@@ -3001,10 +3001,10 @@ export enum RelayReg {
     Variant = 0x107,
 
     /**
-     * Constant A uint16_t. Maximum switching current for a resistive load.
+     * Constant mA uint32_t. Maximum switching current for a resistive load.
      *
      * ```
-     * const [maxSwitchingCurrent] = jdunpack<[number]>(buf, "u16")
+     * const [maxSwitchingCurrent] = jdunpack<[number]>(buf, "u32")
      * ```
      */
     MaxSwitchingCurrent = 0x180,

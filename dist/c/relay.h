@@ -20,7 +20,7 @@
 #define JD_RELAY_REG_VARIANT JD_REG_VARIANT
 
 /**
- * Constant A uint16_t. Maximum switching current for a resistive load.
+ * Constant mA uint32_t. Maximum switching current for a resistive load.
  */
 #define JD_RELAY_REG_MAX_SWITCHING_CURRENT 0x180
 

@@ -129,6 +129,7 @@ function processSpec(dn: string) {
     // generate makecode file structure
     const mkcdir = path.join(outp, "makecode")
     mkdir(mkcdir)
+    const mkcdServices: jdspec.MakeCodeServiceInfo[] = []
 
     const fmtStats: { [index: string]: number; } = {};
     const concats: jdspec.SMap<string> = {}
@@ -153,6 +154,25 @@ function processSpec(dn: string) {
             .forEach(fmt => fmtStats[fmt] = (fmtStats[fmt] || 0) + 1);
 
         reportErrors(json.errors, dn, fn)
+
+        // check if there is a makecode project folder for this service
+        const mkcdsrvdirname = dashify(json.camelName);
+        const mkcdpxtjson = path.join(dn, "..", "..", "pxt-jacdac", mkcdsrvdirname, "pxt.json");
+        const hasMakeCodeProject = fs.existsSync(mkcdpxtjson)
+        console.log(`check exists ${mkcdpxtjson}: ${hasMakeCodeProject}`)
+
+        if (hasMakeCodeProject) {
+            mkcdServices.push({
+                service: json.shortId,
+                client: {
+                    name: `jacdac-${mkcdsrvdirname}`,
+                    repo: `microsoft/pxt-jacdac/${mkcdsrvdirname}`,
+                    qName: `modules.${capitalize(json.camelName)}Client`,
+                    default: `modules.${json.camelName}`
+                }
+            })
+        }
+
         const cnv = converters()
         for (let n of Object.keys(cnv)) {
             const convResult = cnv[n](json)
@@ -169,14 +189,15 @@ function processSpec(dn: string) {
 
             if (n === "sts") {
                 const mkcdclient = toMakeCodeClient(json);
-                const srvdir = path.join(mkcdir, dashify(json.camelName))
+                const srvdir = path.join(mkcdir, mkcdsrvdirname)
                 mkdir(srvdir);
                 fs.writeFileSync(path.join(srvdir, "constants.ts"), convResult)
                 // generate project file and client template
                 if (mkcdclient
                     && !/^_/.test(json.shortId)
                     && makecodBuiltins.indexOf(json.shortId) < 0) {
-                    fs.writeFileSync(path.join(srvdir, "pxt.g.json"), toPxtJson(json));
+                    if (!hasMakeCodeProject)
+                        fs.writeFileSync(path.join(srvdir, "pxt.g.json"), toPxtJson(json));
                     fs.writeFileSync(path.join(srvdir, "client.g.ts"), mkcdclient);
                 }
             }
@@ -187,6 +208,7 @@ function processSpec(dn: string) {
     fs.writeFileSync(path.join(outp, "services.json"), JSON.stringify(values(includes)), "utf-8")
     fs.writeFileSync(path.join(outp, "specconstants.ts"), concats["ts"])
     fs.writeFileSync(path.join(outp, "specconstants.sts"), concats["sts"])
+    fs.writeFileSync(path.join(outp, "services-makecode.json"), JSON.stringify(mkcdServices, null, 2));
 
     const fms = Object.keys(fmtStats).sort((l, r) => -fmtStats[l] + fmtStats[r])
     console.log(fms.map(fmt => `${fmt}: ${fmtStats[fmt]}`))

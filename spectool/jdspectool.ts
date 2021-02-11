@@ -170,9 +170,8 @@ function processSpec(dn: string) {
                 if (mkcdclient 
                     && !/^_/.test(json.shortId)
                     && makecodBuiltins.indexOf(json.shortId) < 0) {
-                    //fs.writeFileSync(path.join(srvdir, "pxt.json"), toPxtJson(json));
+                    fs.writeFileSync(path.join(srvdir, "pxt.json"), toPxtJson(json));
                     fs.writeFileSync(path.join(srvdir, "client.g.ts"), mkcdclient);
-                    fs.writeFileSync(path.join(srvdir, "test.ts"), "// rename this file to test.ts and add tests here");
                 }
             }
         }

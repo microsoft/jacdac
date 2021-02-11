@@ -95,8 +95,8 @@ ${registers.filter(reg => reg.identifier === Reading).map(reg => {
         //% group="${name}"
         //% blockCombine block="${name}" callInDebugger
         get ${camelize(name)}(): ${types[fieldi]} {
-            const values = ${isReading ? "this.values()" : `jacdac.jdunpack<[${types}]>(this.??? , "${reg.packFormat}")`};
-            return values && values[${fieldi}];
+            const values = ${isReading ? "this.values()" : `jacdac.jdunpack<[${types}]>(this.??? , "${reg.packFormat}")`} as any[];
+            return values && values.length > 0 && values[${fieldi}];
         }
 
 `;

@@ -1,6 +1,7 @@
 # MIDI output
 
     identifier: 0x1a848cd7
+    camel: midiOutput
 
 A MIDI output device.
 

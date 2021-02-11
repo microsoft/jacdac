@@ -10,6 +10,11 @@ const builtins = [
     "logger",
     "rolemanager"
 ]
+const makecodBuiltins = [
+    "bootloader",
+    "logger",
+    "control"
+]
 
 function values<T>(o: jdspec.SMap<T>): T[] {
     let r: T[] = []
@@ -52,11 +57,13 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
     const registers = packets.filter(pkt => !pkt.derived && (pkt.kind === 'ro' || pkt.kind === 'rw' || pkt.kind === 'const'));
     let baseType = "Client";
     const ctorArgs = [
-        `jacdac.SRV_${shortId.toUpperCase()}`,
+        `jacdac.SRV_${snakify(spec.camelName).toLocaleUpperCase()}`,
         `role`
     ]
     const reading = registers.find(reg => reg.identifier === Reading);
     if (reading) {
+        if (reading.fields.length > 1)
+            return undefined;
         const { names, types } = packInfo(spec, reading, true);
         baseType = `SensorClient<[${types}]>`
         ctorArgs.push(`"${reading.packFormat}"`)
@@ -73,16 +80,16 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
 ${registers.filter(reg => reg.identifier === Reading).map(reg => {
         const { names, types } = packInfo(spec, reg, true);
         const array = types.length > 1
-        const isReading = reg.identifier === Reading ;
+        const isReading = reg.identifier === Reading;
         const useServiceName = isReading && camelize(reg.name) === spec.camelName;
         const name = useServiceName ? "reading" : camelize(reg.name);
-        
+
         return `        /**
-        * ${reg.description || ""}
+        * ${(reg.description || "").split('\n').join('\n        * ')}
         */
         //% blockId=jacdac${shortId}${reg.identifier.toString(16)} block="%sensor ${humanify(reg.name).toLowerCase()}"
         //% group="${name}"
-        ${name}(): ${array ? `[${types}]` : types} {
+        get ${name}(): ${array ? `[${types}]` : types} {
             // ${names}
             const values = ${isReading ? "this.values()" : `jacdac.jdunpack<[${types}]>(this.??? , "${reg.packFormat}")`};
             return values${array ? "" : " && values[0]"};
@@ -155,13 +162,18 @@ function processSpec(dn: string) {
             concats[n] += convResult
 
             if (n === "sts") {
+                const mkcdclient = toMakeCodeClient(json);
                 const srvdir = path.join(mkcdir, dashify(json.camelName))
                 mkdir(srvdir);
                 fs.writeFileSync(path.join(srvdir, "constants.ts"), convResult)
                 // generate project file and client template
-                fs.writeFileSync(path.join(srvdir, "pxt.json"), toPxtJson(json));
-                fs.writeFileSync(path.join(srvdir, "client.g.ts"), toMakeCodeClient(json));
-                fs.writeFileSync(path.join(srvdir, "test.ts"), "// rename this file to test.ts and add tests here");
+                if (mkcdclient 
+                    && !/^_/.test(json.shortId)
+                    && makecodBuiltins.indexOf(json.shortId) < 0) {
+                    //fs.writeFileSync(path.join(srvdir, "pxt.json"), toPxtJson(json));
+                    fs.writeFileSync(path.join(srvdir, "client.g.ts"), mkcdclient);
+                    fs.writeFileSync(path.join(srvdir, "test.ts"), "// rename this file to test.ts and add tests here");
+                }
             }
         }
     }

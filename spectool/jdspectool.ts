@@ -72,7 +72,7 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
 
     // use sensor base class if reading present
     if (reading) {
-        const { names, types } = packInfo(spec, reading, true);
+        const { types } = packInfo(spec, reading, true, true);
         baseType = `SensorClient<[${types}]>`
         ctorArgs.push(`"${reading.packFormat}"`)
     }
@@ -86,16 +86,16 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
     //% fixedInstances blockGap=8
     export class ${className} extends jacdac.${baseType} {
 ${regs.filter(reg => reg.identifier !== Reading).map(reg => `
-            private readonly _${camelize(reg.name)} : jacdac.RegisterClient<[${packInfo(spec, reg, false).types}]>;`).join("")}            
+            private readonly _${camelize(reg.name)} : jacdac.RegisterClient<[${packInfo(spec, reg, true, true).types}]>;`).join("")}            
 
             constructor(role: string) {
             super(${ctorArgs.join(", ")});
 ${regs.filter(reg => reg.identifier !== Reading).map(reg => `
-            this._${camelize(reg.name)} = this.addRegister(jacdac.${capitalize(spec.camelName)}Reg.${capitalize(reg.name)}, "${reg.packFormat}");`).join("")}            
+            this._${camelize(reg.name)} = this.addRegister<[${packInfo(spec, reg, true, true).types}]>(jacdac.${capitalize(spec.camelName)}Reg.${capitalize(reg.name)}, "${reg.packFormat}");`).join("")}            
         }
     
 ${regs.map(reg => {
-        const { types } = packInfo(spec, reg, true);
+        const { types } = packInfo(spec, reg, true, true);
         const { fields } = reg;
         const isReading = reg.identifier === Reading;
 
@@ -109,18 +109,8 @@ ${regs.map(reg => {
         //% blockCombine block="${humanify(name)}" callInDebugger
         get ${camelize(name)}(): ${types[fieldi]} {
             const values = this${isReading ? "" : `._${camelize(reg.name)}`}.values() as any[];
-            return values && values.length > 0 && values[${fieldi}];
-        }`;
-        }).join("")
-    }).join("")}     
-${regs.filter(reg => reg.kind === "rw").map(reg => {
-        const { types } = packInfo(spec, reg, true);
-        const { fields } = reg;
-        const isReading = reg.identifier === Reading;
-
-        return fields.map((field, fieldi) => {
-            const name = field.name === "_" ? reg.name : field.name
-            return `
+            return ${field.type === "bool" ? "!!(" : ""}values.length > 0 && values[${fieldi}]${field.type === "bool" ? ")" : ""};
+        }${reg.kind === "rw" ? `
         /**
         * ${(reg.description || "").split('\n').join('\n        * ')}
         */
@@ -128,11 +118,11 @@ ${regs.filter(reg => reg.kind === "rw").map(reg => {
         //% blockCombine block="${humanify(name)}" callInDebugger
         set ${camelize(name)}(value: ${types[fieldi]}) {
             const values = this${isReading ? "" : `._${camelize(reg.name)}`}.values() as any[];
-            values[${fieldi}] = value;
+            values[${fieldi}] = ${field.type === "bool" ? "value ? 1 : 0" : "value"};
             this._${camelize(reg.name)}.setValues(values as [${types}]);
-        }`;
+        }` : ""}`
         }).join("")
-    }).join("")}     
+    }).join("")} 
 ${events.map((event) => {
         return `
         /**

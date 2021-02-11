@@ -1293,7 +1293,7 @@ ${code.replace(/^\n+/, '').replace(/\n+$/, '')}
 `
 }
 
-function packFormatForField(info: jdspec.ServiceSpec, fld: jdspec.PacketMember) {
+function packFormatForField(info: jdspec.ServiceSpec, fld: jdspec.PacketMember, useBooleans?: boolean) {
     const sz = memberSize(fld)
     const szSuff = sz ? `[${sz}]` : ``
     let tsType = "number"
@@ -1330,6 +1330,8 @@ function packFormatForField(info: jdspec.ServiceSpec, fld: jdspec.PacketMember) 
             case "bool":
                 // TODO native bool support
                 fmt = "u8"
+                if(useBooleans)
+                    tsType = "boolean"
                 break
             default:
                 return null
@@ -1346,7 +1348,7 @@ function packFormatForField(info: jdspec.ServiceSpec, fld: jdspec.PacketMember) 
  * @param pkt 
  * TODO fix this
  */
-export function packFormat(sinfo: jdspec.ServiceSpec, pkt: jdspec.PacketInfo): string {
+export function packFormat(sinfo: jdspec.ServiceSpec, pkt: jdspec.PacketInfo, useBooleans?: boolean): string {
     if (pkt.packed || !pkt.fields?.length)
         return undefined;
 
@@ -1354,7 +1356,7 @@ export function packFormat(sinfo: jdspec.ServiceSpec, pkt: jdspec.PacketInfo): s
     for (const fld of pkt.fields) {
         if (fld.startRepeats)
             fmt.push("r:")
-        const ff = packFormatForField(sinfo, fld);
+        const ff = packFormatForField(sinfo, fld, useBooleans);
         if (!ff)
             return undefined;
         fmt.push(ff.fmt)
@@ -1363,7 +1365,7 @@ export function packFormat(sinfo: jdspec.ServiceSpec, pkt: jdspec.PacketInfo): s
     return fmt.join(" ");
 }
 
-export function packInfo(info: jdspec.ServiceSpec, pkt: jdspec.PacketInfo, isStatic: boolean) {
+export function packInfo(info: jdspec.ServiceSpec, pkt: jdspec.PacketInfo, isStatic: boolean, useBooleans?: boolean) {
     const vars: string[] = []
     const vartp: string[] = []
     let fmt = ""
@@ -1384,7 +1386,7 @@ export function packInfo(info: jdspec.ServiceSpec, pkt: jdspec.PacketInfo, isSta
             }
         }
         const varname = camelize(fld.name == "_" ? pkt.name : fld.name)
-        const f0 = packFormatForField(info, fld)
+        const f0 = packFormatForField(info, fld, useBooleans)
         if (!f0 || /(reserved|padding)/.test(fld.name)) {
             if (!f0)
                 console.log(`${pkt.name}/${fld.name} - can't get format for '${fld.type}'`)

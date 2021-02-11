@@ -130,6 +130,7 @@ function processSpec(dn: string) {
     const mkcdir = path.join(outp, "makecode")
     mkdir(mkcdir)
     const mkcdServices: jdspec.MakeCodeServiceInfo[] = []
+    const pxtJacdacDir = path.join(dn, "..", "..", "pxt-jacdac");
 
     const fmtStats: { [index: string]: number; } = {};
     const concats: jdspec.SMap<string> = {}
@@ -157,7 +158,7 @@ function processSpec(dn: string) {
 
         // check if there is a makecode project folder for this service
         const mkcdsrvdirname = dashify(json.camelName);
-        const mkcdpxtjson = path.join(dn, "..", "..", "pxt-jacdac", mkcdsrvdirname, "pxt.json");
+        const mkcdpxtjson = path.join(pxtJacdacDir, mkcdsrvdirname, "pxt.json");
         const hasMakeCodeProject = fs.existsSync(mkcdpxtjson)
         console.log(`check exists ${mkcdpxtjson}: ${hasMakeCodeProject}`)
 
@@ -208,7 +209,8 @@ function processSpec(dn: string) {
     fs.writeFileSync(path.join(outp, "services.json"), JSON.stringify(values(includes)), "utf-8")
     fs.writeFileSync(path.join(outp, "specconstants.ts"), concats["ts"])
     fs.writeFileSync(path.join(outp, "specconstants.sts"), concats["sts"])
-    fs.writeFileSync(path.join(outp, "services-makecode.json"), JSON.stringify(mkcdServices, null, 2));
+    if (fs.existsSync(pxtJacdacDir)) // only available locally
+        fs.writeFileSync(path.join(outp, "makecode-extensions.json"), JSON.stringify(mkcdServices, null, 2));
 
     const fms = Object.keys(fmtStats).sort((l, r) => -fmtStats[l] + fmtStats[r])
     console.log(fms.map(fmt => `${fmt}: ${fmtStats[fmt]}`))

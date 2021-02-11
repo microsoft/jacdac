@@ -36,6 +36,15 @@
     }
   },
   {
+    "service": "characterscreen",
+    "client": {
+      "name": "jacdac-character-screen",
+      "repo": "microsoft/pxt-jacdac/character-screen",
+      "qName": "modules.CharacterScreenClient",
+      "default": "modules.characterScreen"
+    }
+  },
+  {
     "service": "compass",
     "client": {
       "name": "jacdac-compass",

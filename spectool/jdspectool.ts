@@ -86,12 +86,12 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
     //% fixedInstances blockGap=8
     export class ${className} extends jacdac.${baseType} {
 ${regs.filter(reg => reg.identifier !== Reading).map(reg => `
-            private readonly _${camelize(reg.name)} : jacdac.RegisterClient<[${packInfo(spec, reg, false).types}]>;`)}            
+            private readonly _${camelize(reg.name)} : jacdac.RegisterClient<[${packInfo(spec, reg, false).types}]>;`).join("")}            
 
             constructor(role: string) {
             super(${ctorArgs.join(", ")});
 ${regs.filter(reg => reg.identifier !== Reading).map(reg => `
-            this._${camelize(reg.name)} = this.addRegister(jacdac.${capitalize(spec.camelName)}Reg.${capitalize(reg.name)}, "${reg.packFormat}");`)}            
+            this._${camelize(reg.name)} = this.addRegister(jacdac.${capitalize(spec.camelName)}Reg.${capitalize(reg.name)}, "${reg.packFormat}");`).join("")}            
         }
     
 ${regs.map(reg => {

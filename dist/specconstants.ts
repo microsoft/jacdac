@@ -320,10 +320,29 @@ export enum AccelerometerReg {
      * Indicates the current forces acting on accelerometer.
      *
      * ```
-     * const [x, y, z] = jdunpack<[number, number, number]>(buf, "i6.10 i6.10 i6.10")
+     * const [x, y, z] = jdunpack<[number, number, number]>(buf, "i12.20 i12.20 i12.20")
      * ```
      */
     Forces = 0x101,
+
+    /**
+     * Read-only g i12.20 (int32_t). Error on the reading value.
+     *
+     * ```
+     * const [forcesError] = jdunpack<[number]>(buf, "i12.20")
+     * ```
+     */
+    ForcesError = 0x106,
+
+    /**
+     * Read-write g i12.20 (int32_t). Configures the range forces detected.
+     * Read-back after setting to get current value.
+     *
+     * ```
+     * const [maxForce] = jdunpack<[number]>(buf, "i12.20")
+     * ```
+     */
+    MaxForce = 0x80,
 }
 
 export enum AccelerometerEvent {
@@ -1103,25 +1122,25 @@ export enum GyroscopeReg {
      * Indicates the current forces acting on accelerometer.
      *
      * ```
-     * const [x, y, z] = jdunpack<[number, number, number]>(buf, "i16.16 i16.16 i16.16")
+     * const [x, y, z] = jdunpack<[number, number, number]>(buf, "i12.20 i12.20 i12.20")
      * ```
      */
     RotationRates = 0x101,
 
     /**
-     * Read-only °/s i16.16 (int32_t). Error on the reading value.
+     * Read-only °/s i12.20 (int32_t). Error on the reading value.
      *
      * ```
-     * const [rotationRatesError] = jdunpack<[number]>(buf, "i16.16")
+     * const [rotationRatesError] = jdunpack<[number]>(buf, "i12.20")
      * ```
      */
     RotationRatesError = 0x106,
 
     /**
-     * Read-write °/s i16.16 (int32_t). Configures the range of range of rotation rates.
+     * Read-write °/s i12.20 (int32_t). Configures the range of range of rotation rates.
      *
      * ```
-     * const [maxRate] = jdunpack<[number]>(buf, "i16.16")
+     * const [maxRate] = jdunpack<[number]>(buf, "i12.20")
      * ```
      */
     MaxRate = 0x80,

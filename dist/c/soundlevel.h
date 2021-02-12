@@ -10,6 +10,11 @@
 #define JD_SOUND_LEVEL_REG_SOUND_LEVEL JD_REG_READING
 
 /**
+ * Read-write bool (uint8_t). Turn on or off the sensor.
+ */
+#define JD_SOUND_LEVEL_REG_ENABLED JD_REG_INTENSITY
+
+/**
  * Read-write ratio u0.16 (uint16_t). The sound level to trigger a loud event.
  */
 #define JD_SOUND_LEVEL_REG_LOUD_THRESHOLD JD_REG_LOW_THRESHOLD

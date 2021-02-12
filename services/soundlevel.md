@@ -12,6 +12,10 @@ A sound level detector sensor, gives a relative indication of the sound level.
 
 The sound level detected by the microphone
 
+    rw enabled: bool @ intensity
+
+Turn on or off the sensor.
+
     rw loud_threshold: u0.16 / @ low_threshold
 
 The sound level to trigger a loud event.

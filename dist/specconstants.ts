@@ -3530,6 +3530,15 @@ export enum SoundLevelReg {
     SoundLevel = 0x101,
 
     /**
+     * Read-write bool (uint8_t). Turn on or off the sensor.
+     *
+     * ```
+     * const [enabled] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Enabled = 0x1,
+
+    /**
      * Read-write ratio u0.16 (uint16_t). The sound level to trigger a loud event.
      *
      * ```

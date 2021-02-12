@@ -213,7 +213,6 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
         classIdentifier: 0,
         enums: {},
         packets: [],
-        source: filecontent,
         tags: []
     }
 

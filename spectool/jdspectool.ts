@@ -51,6 +51,10 @@ function toPxtJson(spec: jdspec.ServiceSpec) {
     }, null, 4);
 }
 
+function pick(...values: number[]) {
+    return values?.find(x => x !== undefined);
+}
+
 function toMakeCodeClient(spec: jdspec.ServiceSpec) {
     const { shortId, name, camelName, packets } = spec;
     const Reading = 0x101;
@@ -99,15 +103,24 @@ ${regs.map(reg => {
         const { fields } = reg;
         const isReading = reg.identifier === Reading;
         const fieldName = `this._${isReading ? "reading" : camelize(reg.name)}`;
+        const enabled = reg.identifier === Intensity
+            && reg.name === "enabled"
+            && reg.fields.length === 1
+            && reg.fields[0].type === "bool"
         return fields.map((field, fieldi) => {
             const name = field.name === "_" ? reg.name : field.name
+            const min = pick(field.typicalMin, field.absoluteMin, field.unit === "/" ? (field.type[0] === "i" ? -1 : 0) : undefined)
+            const max = pick(field.typicalMax, field.absoluteMax, field.unit === "/" ? 1 : undefined)
+            const defl = field.defaultValue;
+
             return `
         /**
         * ${(reg.description || "").split('\n').join('\n        * ')}
         */
-        //% group="${group}" blockSetVariable=myModule
-        //% blockCombine block="${humanify(name)}" callInDebugger
-        get ${camelize(name)}(): ${types[fieldi]} {${isReading ? `
+        //% ${`blockId=jacdac_${shortId}_${reg.name}_${field.name}_get`}
+        //% group="${group}"
+        //% block="%${shortId} ${humanify(name)}" callInDebugger
+        ${camelize(name)}(): ${types[fieldi]} {${isReading ? `
             this.setStreaming(true);` : ""}            
             const values = ${fieldName}.pauseUntilValues() as any[];
             return ${field.type === "bool" ? "!!" : ""}values[${fieldi}];
@@ -115,9 +128,12 @@ ${regs.map(reg => {
         /**
         * ${(reg.description || "").split('\n').join('\n        * ')}
         */
-        //% group="${group}" blockSetVariable=myModule
-        //% blockCombine block="${humanify(name)}" callInDebugger
-        set ${camelize(name)}(value: ${types[fieldi]}) {
+        //% ${`blockId=jacdac_${shortId}_${reg.name}_${field.name}_set`}
+        //% group="${group}"${min !== undefined ? ` value.min=${min}` : ''}${max !== undefined ? ` value.max=${max}` : ''}${defl !== undefined ? ` value.defl=${defl}` : ""}
+        //% block="${enabled
+                            ? `set %${shortId} %value=toggleOnOff`
+                            : `set %${shortId} ${humanify(name)} to %value`}"
+        set${capitalize(camelize(name))}(value: ${types[fieldi]}) {
             const values = ${fieldName}.values as any[];
             values[${fieldi}] = ${field.type === "bool" ? "value ? 1 : 0" : "value"};
             ${fieldName}.values = values as [${types}];

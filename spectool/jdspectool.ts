@@ -55,6 +55,18 @@ function pick(...values: number[]) {
     return values?.find(x => x !== undefined);
 }
 
+// add as needed
+const reservedJsWords: { [index: string]: boolean } = { 
+    "switch": true
+};
+
+function tsify(name: string) {
+    if (reservedJsWords[name]) {
+        return name + "_"
+    }
+    return name;
+}
+
 function toMakeCodeClient(spec: jdspec.ServiceSpec) {
     const { shortId, name, camelName, packets } = spec;
     const Reading = 0x101;
@@ -155,7 +167,7 @@ ${events.map((event) => {
     }).join("")}
     }
     //% fixedInstance whenUsed
-    export const ${spec.camelName} = new ${className}("${humanify(spec.camelName)}");
+    export const ${tsify(spec.camelName)} = new ${className}("${humanify(spec.camelName)}");
 }`;
 }
 

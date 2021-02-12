@@ -3668,9 +3668,9 @@ export enum SpeechSynthesisCmd {
 }
 
 // Service: Switch
-export const SRV_SWITCH = 0x1ad29402
+export const SRV_SWITCH_BUTTON = 0x1ad29402
 
-export enum SwitchVariant { // uint32_t
+export enum SwitchButtonVariant { // uint32_t
     Slide = 0x1,
     Tilt = 0x2,
     PushButton = 0x3,
@@ -3681,7 +3681,7 @@ export enum SwitchVariant { // uint32_t
     FootPedal = 0x8,
 }
 
-export enum SwitchReg {
+export enum SwitchButtonReg {
     /**
      * Read-only bool (uint8_t). Indicates whether the switch is currently active (on).
      *
@@ -3695,7 +3695,7 @@ export enum SwitchReg {
      * Constant Variant (uint32_t). Describes the type of switch used.
      *
      * ```
-     * const [variant] = jdunpack<[SwitchVariant]>(buf, "u32")
+     * const [variant] = jdunpack<[SwitchButtonVariant]>(buf, "u32")
      * ```
      */
     Variant = 0x107,
@@ -3711,7 +3711,7 @@ export enum SwitchReg {
     AutoOffDelay = 0x180,
 }
 
-export enum SwitchEvent {
+export enum SwitchButtonEvent {
     /**
      * Emitted when switch goes from ``off`` to ``on``.
      */

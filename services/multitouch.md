@@ -2,6 +2,7 @@
 
     identifier: 0x18d55e2b
     extends: _sensor
+    tags: button
 
 A capacitive touch sensor with multiple inputs.
 

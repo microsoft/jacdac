@@ -1,6 +1,7 @@
 # Microphone
 
     identifier: 0x113dac86
+    tags: sound
 
 A single-channel microphone.
 

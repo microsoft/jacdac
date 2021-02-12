@@ -2,6 +2,7 @@
 
     identifier: 0x1f274746
     extends: _sensor
+    tags: slider
 
 A slider or rotary potentiometer.
 

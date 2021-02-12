@@ -2,6 +2,7 @@
 
      identifier: 0x14ad1a5d
      extends: _sensor
+     tags: sound
 
 A sound level detector sensor, gives a relative indication of the sound level.
 

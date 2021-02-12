@@ -2,6 +2,7 @@
 
     identifier: 0x13062dc8
     extends: _sensor
+    tags: button
 
 A matrix of buttons connected as a keypad
 

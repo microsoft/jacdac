@@ -81,7 +81,7 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
         ctorArgs.push(`"${reading.packFormat}"`)
     }
     const className = `${capitalize(camelName)}Client`
-    const group = spec.name;
+    const group = capitalize(spec.tags?.[0] || spec.name);
 
     return `namespace modules {
     /**

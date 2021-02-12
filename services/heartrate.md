@@ -4,6 +4,7 @@ A sensor approximating the heart rate.
 
     identifier: 0x166c6dc4
     extends: _sensor
+    tags: biometric
 
 **Jacdac is NOT suitable for medical devices and should NOT be used in any kind of device to diagnose or treat any medical conditions.**
 

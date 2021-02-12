@@ -2,6 +2,8 @@
 
     identifier: 0x1ad29402
     extends: _sensor
+    camel: switchButton
+    tags: button
 
 A switch, which keeps its position.
 

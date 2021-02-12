@@ -18,7 +18,7 @@ The estimated heart rate.
 
 The estimated error on the reported sensor data.
 
-    enum Variant: u32 {
+    enum Variant: u8 {
         Finger = 1
         Chest = 2
         Wrist = 3

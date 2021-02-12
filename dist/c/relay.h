@@ -4,7 +4,7 @@
 
 #define JD_SERVICE_CLASS_RELAY  0x183fe656
 
-// enum Variant (uint32_t)
+// enum Variant (uint8_t)
 #define JD_RELAY_VARIANT_ELECTROMECHANICAL 0x1
 #define JD_RELAY_VARIANT_SOLID_STATE 0x2
 #define JD_RELAY_VARIANT_REED 0x3
@@ -15,7 +15,7 @@
 #define JD_RELAY_REG_CLOSED JD_REG_INTENSITY
 
 /**
- * Constant Variant (uint32_t). Describes the type of relay used.
+ * Constant Variant (uint8_t). Describes the type of relay used.
  */
 #define JD_RELAY_REG_VARIANT JD_REG_VARIANT
 

@@ -22,7 +22,7 @@ This never blocks for a long time.
 
 ## Registers
 
-    enum Variant: u32 {
+    enum Variant: u8 {
          Quantum = 1
          ADCNoise = 2
          WebCrypto = 3

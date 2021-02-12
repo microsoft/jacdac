@@ -410,7 +410,7 @@ export enum AccelerometerEvent {
 // Service: Analog Button
 export const SRV_ANALOG_BUTTON = 0x1865adc9
 
-export enum AnalogButtonVariant { // uint32_t
+export enum AnalogButtonVariant { // uint8_t
     Pressure = 0x1,
     Capacitive = 0x2,
 }
@@ -444,10 +444,10 @@ export enum AnalogButtonReg {
     ActiveThreshold = 0x6,
 
     /**
-     * Constant Variant (uint32_t). The type of physical button.
+     * Constant Variant (uint8_t). The type of physical button.
      *
      * ```
-     * const [variant] = jdunpack<[AnalogButtonVariant]>(buf, "u32")
+     * const [variant] = jdunpack<[AnalogButtonVariant]>(buf, "u8")
      * ```
      */
     Variant = 0x107,
@@ -1006,7 +1006,7 @@ export enum ControlReg {
 // Service: Distance
 export const SRV_DISTANCE = 0x141a6b8a
 
-export enum DistanceVariant { // uint32_t
+export enum DistanceVariant { // uint8_t
     Ultrasonic = 0x1,
     Infrared = 0x2,
     LiDAR = 0x3,
@@ -1042,10 +1042,10 @@ export enum DistanceReg {
     MaxRange = 0x105,
 
     /**
-     * Constant Variant (uint32_t). Determines the type of sensor used.
+     * Constant Variant (uint8_t). Determines the type of sensor used.
      *
      * ```
-     * const [variant] = jdunpack<[DistanceVariant]>(buf, "u32")
+     * const [variant] = jdunpack<[DistanceVariant]>(buf, "u8")
      * ```
      */
     Variant = 0x107,
@@ -1149,7 +1149,7 @@ export enum GyroscopeReg {
 // Service: Heart Rate
 export const SRV_HEART_RATE = 0x166c6dc4
 
-export enum HeartRateVariant { // uint32_t
+export enum HeartRateVariant { // uint8_t
     Finger = 0x1,
     Chest = 0x2,
     Wrist = 0x3,
@@ -1177,10 +1177,10 @@ export enum HeartRateReg {
     HeartRateError = 0x106,
 
     /**
-     * Constant Variant (uint32_t). The type of physical sensor
+     * Constant Variant (uint8_t). The type of physical sensor
      *
      * ```
-     * const [variant] = jdunpack<[HeartRateVariant]>(buf, "u32")
+     * const [variant] = jdunpack<[HeartRateVariant]>(buf, "u8")
      * ```
      */
     Variant = 0x107,
@@ -1624,7 +1624,7 @@ export enum JoystickReg {
 // Service: LED
 export const SRV_LED = 0x1e3048f8
 
-export enum LedVariant { // uint32_t
+export enum LedVariant { // uint8_t
     ThroughHole = 0x1,
     SMD = 0x2,
     Power = 0x3,
@@ -1695,10 +1695,10 @@ export enum LedReg {
     LuminousIntensity = 0x182,
 
     /**
-     * Constant Variant (uint32_t). The physical type of LED.
+     * Constant Variant (uint8_t). The physical type of LED.
      *
      * ```
-     * const [variant] = jdunpack<[LedVariant]>(buf, "u32")
+     * const [variant] = jdunpack<[LedVariant]>(buf, "u8")
      * ```
      */
     Variant = 0x107,
@@ -1755,7 +1755,7 @@ export enum LedPixelLightType { // uint8_t
 }
 
 
-export enum LedPixelVariant { // uint32_t
+export enum LedPixelVariant { // uint8_t
     Strip = 0x1,
     Ring = 0x2,
     Stick = 0x3,
@@ -1848,10 +1848,10 @@ export enum LedPixelReg {
     NumRepeats = 0x82,
 
     /**
-     * Constant Variant (uint32_t). Specifies the shape of the light strip.
+     * Constant Variant (uint8_t). Specifies the shape of the light strip.
      *
      * ```
-     * const [variant] = jdunpack<[LedPixelVariant]>(buf, "u32")
+     * const [variant] = jdunpack<[LedPixelVariant]>(buf, "u8")
      * ```
      */
     Variant = 0x107,
@@ -1995,7 +1995,7 @@ export enum MagnetometerCmd {
 // Service: Matrix Keypad
 export const SRV_MATRIX_KEYPAD = 0x13062dc8
 
-export enum MatrixKeypadVariant { // uint32_t
+export enum MatrixKeypadVariant { // uint8_t
     Membrane = 0x1,
     Keyboard = 0x2,
     Elastomer = 0x3,
@@ -2041,12 +2041,12 @@ export enum MatrixKeypadReg {
     Labels = 0x182,
 
     /**
-     * Constant Variant (uint32_t). The type of physical keypad. If the variant is ``ElastomerLEDPixel``
+     * Constant Variant (uint8_t). The type of physical keypad. If the variant is ``ElastomerLEDPixel``
      * and the next service on the device is a ``LEDPixel`` service, it is considered
      * as the service controlling the LED pixel on the keypad.
      *
      * ```
-     * const [variant] = jdunpack<[MatrixKeypadVariant]>(buf, "u32")
+     * const [variant] = jdunpack<[MatrixKeypadVariant]>(buf, "u8")
      * ```
      */
     Variant = 0x107,
@@ -2455,7 +2455,7 @@ export enum MultitouchEvent {
 // Service: Potentiometer
 export const SRV_POTENTIOMETER = 0x1f274746
 
-export enum PotentiometerVariant { // uint32_t
+export enum PotentiometerVariant { // uint8_t
     Slider = 0x1,
     Rotary = 0x2,
 }
@@ -2471,10 +2471,10 @@ export enum PotentiometerReg {
     Position = 0x101,
 
     /**
-     * Constant Variant (uint32_t). Specifies the physical layout of the potentiometer.
+     * Constant Variant (uint8_t). Specifies the physical layout of the potentiometer.
      *
      * ```
-     * const [variant] = jdunpack<[PotentiometerVariant]>(buf, "u32")
+     * const [variant] = jdunpack<[PotentiometerVariant]>(buf, "u8")
      * ```
      */
     Variant = 0x107,
@@ -2994,7 +2994,7 @@ export enum ReflectedLightEvent {
 // Service: Relay
 export const SRV_RELAY = 0x183fe656
 
-export enum RelayVariant { // uint32_t
+export enum RelayVariant { // uint8_t
     Electromechanical = 0x1,
     SolidState = 0x2,
     Reed = 0x3,
@@ -3011,10 +3011,10 @@ export enum RelayReg {
     Closed = 0x1,
 
     /**
-     * Constant Variant (uint32_t). Describes the type of relay used.
+     * Constant Variant (uint8_t). Describes the type of relay used.
      *
      * ```
-     * const [variant] = jdunpack<[RelayVariant]>(buf, "u32")
+     * const [variant] = jdunpack<[RelayVariant]>(buf, "u8")
      * ```
      */
     Variant = 0x107,
@@ -3044,7 +3044,7 @@ export enum RelayEvent {
 // Service: Random Number Generator
 export const SRV_RNG = 0x1789f0a2
 
-export enum RngVariant { // uint32_t
+export enum RngVariant { // uint8_t
     Quantum = 0x1,
     ADCNoise = 0x2,
     WebCrypto = 0x3,
@@ -3071,13 +3071,13 @@ export enum RngCmd {
 
 export enum RngReg {
     /**
-     * Constant Variant (uint32_t). The type of algorithm/technique used to generate the number.
+     * Constant Variant (uint8_t). The type of algorithm/technique used to generate the number.
      * `Quantum` refers to dedicated hardware device generating random noise due to quantum effects.
      * `ADCNoise` is the noise from quick readings of analog-digital converter, which reads temperature of the MCU or some floating pin.
      * `WebCrypto` refers is used in simulators, where the source of randomness comes from an advanced operating system.
      *
      * ```
-     * const [variant] = jdunpack<[RngVariant]>(buf, "u32")
+     * const [variant] = jdunpack<[RngVariant]>(buf, "u8")
      * ```
      */
     Variant = 0x107,
@@ -3270,7 +3270,7 @@ export enum SensorAggregatorReg {
 // Service: Servo
 export const SRV_SERVO = 0x12fc9103
 
-export enum ServoVariant { // uint32_t
+export enum ServoVariant { // uint8_t
     PositionalRotation = 0x1,
     Linear = 0x2,
 }
@@ -3340,13 +3340,13 @@ export enum ServoReg {
     MaxPulse = 0x85,
 
     /**
-     * Constant Variant (uint32_t). Specifies the type of servo motor.
+     * Constant Variant (uint8_t). Specifies the type of servo motor.
      * * Positional Rotation Servos: Positional servos can rotate the shaft in about half of the circle,
      * with features to avoid over-rotating. Most servo have a range of 180° but some allow 270° or 360°.
      * * Linear Servos: linear servos are also like a positional servo, but with additional gears to the adjust the output from circular to back-and-forth.
      *
      * ```
-     * const [variant] = jdunpack<[ServoVariant]>(buf, "u32")
+     * const [variant] = jdunpack<[ServoVariant]>(buf, "u8")
      * ```
      */
     Variant = 0x107,
@@ -3697,7 +3697,7 @@ export enum SpeechSynthesisCmd {
 // Service: Switch
 export const SRV_SWITCH = 0x1ad29402
 
-export enum SwitchVariant { // uint32_t
+export enum SwitchVariant { // uint8_t
     Slide = 0x1,
     Tilt = 0x2,
     PushButton = 0x3,
@@ -3719,10 +3719,10 @@ export enum SwitchReg {
     Active = 0x101,
 
     /**
-     * Constant Variant (uint32_t). Describes the type of switch used.
+     * Constant Variant (uint8_t). Describes the type of switch used.
      *
      * ```
-     * const [variant] = jdunpack<[SwitchVariant]>(buf, "u32")
+     * const [variant] = jdunpack<[SwitchVariant]>(buf, "u8")
      * ```
      */
     Variant = 0x107,
@@ -3817,7 +3817,7 @@ export enum TcpPipeCmd {
 // Service: Thermocouple
 export const SRV_THERMOCOUPLE = 0x143ac061
 
-export enum ThermocoupleVariant { // uint32_t
+export enum ThermocoupleVariant { // uint8_t
     TypeK = 0x1,
     TypeJ = 0x2,
     TypeT = 0x3,
@@ -3866,10 +3866,10 @@ export enum ThermocoupleReg {
     TemperatureError = 0x106,
 
     /**
-     * Constant Variant (uint32_t). Specifies the type of thermometer.
+     * Constant Variant (uint8_t). Specifies the type of thermometer.
      *
      * ```
-     * const [variant] = jdunpack<[ThermocoupleVariant]>(buf, "u32")
+     * const [variant] = jdunpack<[ThermocoupleVariant]>(buf, "u8")
      * ```
      */
     Variant = 0x107,
@@ -3878,7 +3878,7 @@ export enum ThermocoupleReg {
 // Service: Thermometer
 export const SRV_THERMOMETER = 0x1421bac7
 
-export enum ThermometerVariant { // uint32_t
+export enum ThermometerVariant { // uint8_t
     Outdoor = 0x1,
     Indoor = 0x2,
     Body = 0x3,
@@ -3922,10 +3922,10 @@ export enum ThermometerReg {
     TemperatureError = 0x106,
 
     /**
-     * Constant Variant (uint32_t). Specifies the type of thermometer.
+     * Constant Variant (uint8_t). Specifies the type of thermometer.
      *
      * ```
-     * const [variant] = jdunpack<[ThermometerVariant]>(buf, "u32")
+     * const [variant] = jdunpack<[ThermometerVariant]>(buf, "u8")
      * ```
      */
     Variant = 0x107,
@@ -4087,7 +4087,7 @@ export enum VibrationMotorCmd {
 // Service: Water level
 export const SRV_WATER_LEVEL = 0x147b62ed
 
-export enum WaterLevelVariant { // uint32_t
+export enum WaterLevelVariant { // uint8_t
     Resistive = 0x1,
     ContactPhotoElectric = 0x2,
     NonContactPhotoElectric = 0x3,
@@ -4104,10 +4104,10 @@ export enum WaterLevelReg {
     Level = 0x101,
 
     /**
-     * Constant Variant (uint32_t). The type of physical sensor.
+     * Constant Variant (uint8_t). The type of physical sensor.
      *
      * ```
-     * const [variant] = jdunpack<[WaterLevelVariant]>(buf, "u32")
+     * const [variant] = jdunpack<[WaterLevelVariant]>(buf, "u8")
      * ```
      */
     Variant = 0x107,
@@ -4116,7 +4116,7 @@ export enum WaterLevelReg {
 // Service: Weight Scale
 export const SRV_WEIGHT_SCALE = 0x1f4d5040
 
-export enum WeightScaleVariant { // uint32_t
+export enum WeightScaleVariant { // uint8_t
     Body = 0x1,
     Food = 0x2,
     Jewelry = 0x3,
@@ -4188,10 +4188,10 @@ export enum WeightScaleReg {
     WeightResolution = 0x108,
 
     /**
-     * Constant Variant (uint32_t). The type of physical scale
+     * Constant Variant (uint8_t). The type of physical scale
      *
      * ```
-     * const [variant] = jdunpack<[WeightScaleVariant]>(buf, "u32")
+     * const [variant] = jdunpack<[WeightScaleVariant]>(buf, "u8")
      * ```
      */
     Variant = 0x107,

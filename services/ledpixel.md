@@ -116,7 +116,7 @@ How many times to repeat the program passed in `run` command.
 Should be set before the `run` command.
 Setting to `0` means to repeat forever.
 
-    enum Variant: u32 {
+    enum Variant: u8 {
         Strip = 1,
         Ring = 2,
         Stick = 3,

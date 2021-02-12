@@ -12,7 +12,7 @@ A switch, which keeps its position.
 
 Indicates whether the switch is currently active (on).
 
-    enum Variant: u32 {
+    enum Variant: u8 {
         Slide = 1
         Tilt = 2
         PushButton = 3

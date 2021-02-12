@@ -31,7 +31,7 @@ Number of columns in the matrix
 
 The characters printed on the keys if any, in indexing sequence.
 
-    enum Variant: u32 {
+    enum Variant: u8 {
         Membrane = 1
         Keyboard = 2
         Elastomer = 3

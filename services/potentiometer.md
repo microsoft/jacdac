@@ -12,7 +12,7 @@ A slider or rotary potentiometer.
 
 The relative position of the slider between `0` and `1`.
 
-    enum Variant: u32 {
+    enum Variant: u8 {
         Slider = 1,
         Rotary = 2,
     }

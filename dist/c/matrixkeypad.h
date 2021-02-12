@@ -4,7 +4,7 @@
 
 #define JD_SERVICE_CLASS_MATRIX_KEYPAD  0x13062dc8
 
-// enum Variant (uint32_t)
+// enum Variant (uint8_t)
 #define JD_MATRIX_KEYPAD_VARIANT_MEMBRANE 0x1
 #define JD_MATRIX_KEYPAD_VARIANT_KEYBOARD 0x2
 #define JD_MATRIX_KEYPAD_VARIANT_ELASTOMER 0x3
@@ -40,7 +40,7 @@ typedef struct jd_matrix_keypad_labels {
 
 
 /**
- * Constant Variant (uint32_t). The type of physical keypad. If the variant is ``ElastomerLEDPixel``
+ * Constant Variant (uint8_t). The type of physical keypad. If the variant is ``ElastomerLEDPixel``
  * and the next service on the device is a ``LEDPixel`` service, it is considered
  * as the service controlling the LED pixel on the keypad.
  */

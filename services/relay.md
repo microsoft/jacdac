@@ -10,7 +10,7 @@ A switching relay.
 
 Indicates whether the relay circuit is currently on (closed) or off (closed).
 
-    enum Variant: u32 {
+    enum Variant: u8 {
         Electromechanical = 1,
         SolidState = 2,
         Reed = 3

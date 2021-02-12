@@ -4,7 +4,7 @@
 
 #define JD_SERVICE_CLASS_WATER_LEVEL  0x147b62ed
 
-// enum Variant (uint32_t)
+// enum Variant (uint8_t)
 #define JD_WATER_LEVEL_VARIANT_RESISTIVE 0x1
 #define JD_WATER_LEVEL_VARIANT_CONTACT_PHOTO_ELECTRIC 0x2
 #define JD_WATER_LEVEL_VARIANT_NON_CONTACT_PHOTO_ELECTRIC 0x3
@@ -15,7 +15,7 @@
 #define JD_WATER_LEVEL_REG_LEVEL JD_REG_READING
 
 /**
- * Constant Variant (uint32_t). The type of physical sensor.
+ * Constant Variant (uint8_t). The type of physical sensor.
  */
 #define JD_WATER_LEVEL_REG_VARIANT JD_REG_VARIANT
 

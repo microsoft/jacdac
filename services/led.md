@@ -45,7 +45,7 @@ If monochrome LED, specifies the wave length of the LED.
 
 The luminous intensity of the LED, at full value, in micro candella.
 
-    enum Variant: u32 {
+    enum Variant: u8 {
         ThroughHole = 1
         SMD = 2
         Power = 3

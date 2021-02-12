@@ -4,7 +4,7 @@
 
 #define JD_SERVICE_CLASS_LED  0x1e3048f8
 
-// enum Variant (uint32_t)
+// enum Variant (uint8_t)
 #define JD_LED_VARIANT_THROUGH_HOLE 0x1
 #define JD_LED_VARIANT_SMD 0x2
 #define JD_LED_VARIANT_POWER 0x3
@@ -55,7 +55,7 @@ typedef struct jd_led_steps {
 #define JD_LED_REG_LUMINOUS_INTENSITY 0x182
 
 /**
- * Constant Variant (uint32_t). The physical type of LED.
+ * Constant Variant (uint8_t). The physical type of LED.
  */
 #define JD_LED_REG_VARIANT JD_REG_VARIANT
 

@@ -36,7 +36,7 @@ Highest angle that can be set.
 
 The length of pulse corresponding to highest angle.
 
-    enum Variant: u32 {
+    enum Variant: u8 {
         PositionalRotation = 1,
         Linear = 2,
     }

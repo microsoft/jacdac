@@ -24,7 +24,7 @@ Highest temperature that can be reported.
 
 The real temperature is between `temperature - temperature_error` and `temperature + temperature_error`.
 
-    enum Variant: u32 {
+    enum Variant: u8 {
         Outdoor = 1,
         Indoor = 2,
         Body = 3,

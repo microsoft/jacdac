@@ -24,7 +24,7 @@ Highest temperature that can be reported.
 
 The real temperature is between `temperature - temperature_error` and `temperature + temperature_error`.
 
-    enum Variant: u32 {
+    enum Variant: u8 {
         TypeK = 1
         TypeJ = 2
         TypeT = 3

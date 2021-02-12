@@ -36,7 +36,7 @@ Minimum recommend weight on the scale.
 
 Smallest, yet distinguishable change in reading.
 
-    enum Variant: u32 {
+    enum Variant: u8 {
         Body = 1
         Food = 2
         Jewelry = 3

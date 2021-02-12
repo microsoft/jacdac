@@ -4,7 +4,7 @@
 
 #define JD_SERVICE_CLASS_THERMOCOUPLE  0x143ac061
 
-// enum Variant (uint32_t)
+// enum Variant (uint8_t)
 #define JD_THERMOCOUPLE_VARIANT_TYPE_K 0x1
 #define JD_THERMOCOUPLE_VARIANT_TYPE_J 0x2
 #define JD_THERMOCOUPLE_VARIANT_TYPE_T 0x3
@@ -35,7 +35,7 @@
 #define JD_THERMOCOUPLE_REG_TEMPERATURE_ERROR JD_REG_READING_ERROR
 
 /**
- * Constant Variant (uint32_t). Specifies the type of thermometer.
+ * Constant Variant (uint8_t). Specifies the type of thermometer.
  */
 #define JD_THERMOCOUPLE_REG_VARIANT JD_REG_VARIANT
 

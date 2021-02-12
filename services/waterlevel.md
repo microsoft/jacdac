@@ -11,7 +11,7 @@ A sensor that measures liquid/water level.
 
 The reported water level.
 
-    enum Variant: u32 {
+    enum Variant: u8 {
         Resistive = 1
         ContactPhotoElectric = 2
         NonContactPhotoElectric = 3

@@ -20,7 +20,7 @@ Indicates the lower threshold for ``inactive`` events.
     
 Indicates the threshold for ``active`` events.
 
-    enum Variant: u32 {
+    enum Variant: u8 {
         Pressure = 1
         Capacitive = 2
     }

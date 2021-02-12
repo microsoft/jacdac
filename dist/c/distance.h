@@ -4,7 +4,7 @@
 
 #define JD_SERVICE_CLASS_DISTANCE  0x141a6b8a
 
-// enum Variant (uint32_t)
+// enum Variant (uint8_t)
 #define JD_DISTANCE_VARIANT_ULTRASONIC 0x1
 #define JD_DISTANCE_VARIANT_INFRARED 0x2
 #define JD_DISTANCE_VARIANT_LI_DAR 0x3
@@ -26,7 +26,7 @@
 #define JD_DISTANCE_REG_MAX_RANGE JD_REG_MAX_READING
 
 /**
- * Constant Variant (uint32_t). Determines the type of sensor used.
+ * Constant Variant (uint8_t). Determines the type of sensor used.
  */
 #define JD_DISTANCE_REG_VARIANT JD_REG_VARIANT
 

@@ -134,6 +134,7 @@ ${regs.map(reg => {
                             ? `set %${shortId} %value=toggleOnOff`
                             : `set %${shortId} ${humanify(name)} to %value`}"
         set${capitalize(camelize(name))}(value: ${types[fieldi]}) {
+            this.start();
             const values = ${fieldName}.values as any[];
             values[${fieldi}] = ${field.type === "bool" ? "value ? 1 : 0" : "value"};
             ${fieldName}.values = values as [${types}];

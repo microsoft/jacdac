@@ -3304,22 +3304,40 @@ export enum ServoReg {
     Offset = 0x81,
 
     /**
-     * Constant ° i16.16 (int32_t). Lowest angle that can be set.
+     * Read-write ° i16.16 (int32_t). Lowest angle that can be set.
      *
      * ```
      * const [minAngle] = jdunpack<[number]>(buf, "i16.16")
      * ```
      */
-    MinAngle = 0x104,
+    MinAngle = 0x82,
 
     /**
-     * Constant ° i16.16 (int32_t). Highest angle that can be set.
+     * Read-write μs uint16_t. The length of pulse corresponding to lowest angle.
+     *
+     * ```
+     * const [minPulse] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    MinPulse = 0x83,
+
+    /**
+     * Read-write ° i16.16 (int32_t). Highest angle that can be set.
      *
      * ```
      * const [maxAngle] = jdunpack<[number]>(buf, "i16.16")
      * ```
      */
-    MaxAngle = 0x105,
+    MaxAngle = 0x84,
+
+    /**
+     * Read-write μs uint16_t. The length of pulse corresponding to highest angle.
+     *
+     * ```
+     * const [maxPulse] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    MaxPulse = 0x85,
 
     /**
      * Constant Variant (uint32_t). Specifies the type of servo motor.

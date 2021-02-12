@@ -24,14 +24,24 @@
 #define JD_SERVO_REG_OFFSET 0x81
 
 /**
- * Constant ° i16.16 (int32_t). Lowest angle that can be set.
+ * Read-write ° i16.16 (int32_t). Lowest angle that can be set.
  */
-#define JD_SERVO_REG_MIN_ANGLE JD_REG_MIN_READING
+#define JD_SERVO_REG_MIN_ANGLE 0x82
 
 /**
- * Constant ° i16.16 (int32_t). Highest angle that can be set.
+ * Read-write μs uint16_t. The length of pulse corresponding to lowest angle.
  */
-#define JD_SERVO_REG_MAX_ANGLE JD_REG_MAX_READING
+#define JD_SERVO_REG_MIN_PULSE 0x83
+
+/**
+ * Read-write ° i16.16 (int32_t). Highest angle that can be set.
+ */
+#define JD_SERVO_REG_MAX_ANGLE 0x84
+
+/**
+ * Read-write μs uint16_t. The length of pulse corresponding to highest angle.
+ */
+#define JD_SERVO_REG_MAX_PULSE 0x85
 
 /**
  * Constant Variant (uint32_t). Specifies the type of servo motor.

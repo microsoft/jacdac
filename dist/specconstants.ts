@@ -1294,6 +1294,24 @@ export enum HumidityReg {
      * ```
      */
     HumidityError = 0x106,
+
+    /**
+     * Constant °C u22.10 (uint32_t). Lowest humidity that can be reported.
+     *
+     * ```
+     * const [minHumidity] = jdunpack<[number]>(buf, "u22.10")
+     * ```
+     */
+    MinHumidity = 0x104,
+
+    /**
+     * Constant °C u22.10 (uint32_t). Highest humidity that can be reported.
+     *
+     * ```
+     * const [maxHumidity] = jdunpack<[number]>(buf, "u22.10")
+     * ```
+     */
+    MaxHumidity = 0x105,
 }
 
 // Service: Illuminance

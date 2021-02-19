@@ -687,7 +687,7 @@ export enum ButtonEvent {
     Click = 0x80,
 
     /**
-     * Emitted together with `up` when the press time was more than 500ms.
+     * Emitted after button is held for 500ms. Long click events are followed by a separate up event.
      */
     LongClick = 0x81,
 

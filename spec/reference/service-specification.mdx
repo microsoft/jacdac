@@ -7,7 +7,7 @@ order: 2
 
 A service specification describes the three main types of Jacdac packets that a service recognizes: registers, commands, and events.  
 
-Service specifications are written in a literate form of markdown, for consumption by both human and machine. The formal specification fragments, given as markdown code sections, are interleaved with English specification text. The code sections can be in triple backticks or with the 4 leading spaces (examples in this document only use the leading spaces form).
+Service specifications are written in a literate form of markdown, for consumption by both human and machine. The formal specification fragments, given as markdown code sections, are interleaved with English specification text. The code sections can be in triple backticks or with four (4) leading spaces (examples in this document only use the leading spaces form).
 
 The [Service Editor](/tools/service-editor) is an online editor for creating service specifications.
 The [jdspectool](https://github.com/microsoft/jacdac/tree/main/spectool) takes a service specification in markdown format and converts it to JSON.
@@ -25,7 +25,7 @@ Here's a simple example:
 A controller for a liquid-propelled rocket.
 ```
 
-The first line specifies the name of the service (`name` in JSON format). We then assign the service a unique identifier (`classIdentifier` in JSON format) and give a single line description of the service.
+The first line (header) specifies the name of the service (`name` in JSON format). We then assign the service a unique identifier (`classIdentifier` in JSON format) and give a single line description of the service.
 These identifers are always of the form `0x1-------`.
 If you're just defining a new service, you can use the random generator below or specify it as `1` or other invalid value
 and the jdspectool will suggest a valid random identifier.
@@ -93,7 +93,7 @@ The third register (`num_nozzles`) is unit-less and constant, at least until the
 The fourth register is current acceleration.
 The `i16.16` type is signed 32 bit integer, where the value is shifted by 16 bits.
 That is, the last 16 bits is the fractional part.
-Similarly, a `i22.10` would also be a 32 bit integers, where the value if shifted by 10 bits.
+Similarly, a `i22.10` would also be a 32 bit integer, where the value is shifted by 10 bits.
 
 The register also has three fields.
 In fact, the `core_temperature` could be also expressed using the more verbose syntax,
@@ -105,7 +105,7 @@ ro core_temperature @ 0x180 {
 }
 ```
 
-The last register, to specify the sensivity of the sensor, is optional.
+The last register, `max_acceleration`, that specifies the sensitivity of the sensor, is optional.
 This is denoted by adding a `?` after the register name.
 
 You can specify a preferred interval for refreshing the register in the specification
@@ -125,7 +125,7 @@ The following type descriptions are supported:
 * `i8`, `i16`, `i32` - similar, but signed
 * `b` - buffer until the end of input (has to be last)
 * `s` - similar, but utf-8 encoded string
-* `z` - NUL-terminated utf-8 string
+* `z` - NULL-terminated utf-8 string
 * `b[10]` - 10 byte buffer (10 is just an example, here and below)
 * `s[10]` - 10 byte utf-8 string; trailing NUL bytes (if any) are removed
 * `x[10]` - 10 bytes of padding

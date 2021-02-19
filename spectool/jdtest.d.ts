@@ -19,6 +19,9 @@ declare namespace jdtest {
      * Service test.
      */
     interface ServiceTest {
+
+        description: string;
+
         /**
          * the service that this file targets
          */
@@ -43,17 +46,27 @@ declare namespace jdtest {
 
     interface Command {
         kind: CommandKind;
-        message: string;
+        message?: string;
         condition?: Condition;
-        trace?: string[];
+        trace?: Trace;
     }
 
     interface Condition {
-        comparison: ComparisonKind;
-        left: string;
-        right: string;
+        left: Value;
+        op: ComparisonKind;
+        right: Value;
     }
 
-    type CommandKind = "prompt" | "ask" | "check" | "observe"
+    interface Value {
+        negate?: boolean;
+        id?: string;
+        const?: number;
+    }
+
+    interface Trace {
+
+    }
+
+    type CommandKind = "say" | "ask" | "check" | "observe" | "changes" | "establish"
     type ComparisonKind = "eq" | "ne" | "lt" | "gt" | "le" | "ge"
 }

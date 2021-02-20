@@ -3,7 +3,7 @@
 
 import * as utils from "./utils";
 
-// we parse a test with respect to an an existing ServiceSpec
+// we parse a test with respect to an existing ServiceSpec
 export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: jdspec.ServiceSpec, filename = ""): jdtest.ServiceTest {
     filecontent = (filecontent || "").replace(/\r/g, "")
     let info: jdtest.ServiceTest = {
@@ -33,7 +33,6 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
         info.errors = errors
 
     return info;
-
 
     function processLine(line: string) {
         if (backticksType) {

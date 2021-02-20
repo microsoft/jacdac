@@ -1,5 +1,8 @@
 /// <reference path="jdspec.d.ts" />
+/// <reference path="jdtest.d.ts" />
+
 import { camelize, capitalize, converters, dashify, humanify, normalizeDeviceSpecification, packInfo, parseServiceSpecificationMarkdownToJSON, snakify } from "./jdspec"
+import { parseSpecificationTestMarkdownToJSON } from "./jdtest"
 
 declare var process: any;
 declare var require: any;
@@ -216,6 +219,17 @@ function processSpec(dn: string) {
             .forEach(fmt => fmtStats[fmt] = (fmtStats[fmt] || 0) + 1);
 
         reportErrors(json.errors, dn, fn)
+
+        // check if there is a test for this service
+        if (fs.existsSync(path.join(dn,"test",fn))) {
+            const testCont = readString(path.join(dn,"test"),fn)
+            const testJson = parseSpecificationTestMarkdownToJSON(testCont, json)
+            reportErrors(testJson.errors, path.join(dn,"test"), fn)
+ 
+            const cfn = path.join(outp, json, fn.slice(0, -3) + ".test.json");
+            fs.writeFileSync(cfn, JSON.stringify(testJson, null, 2))
+            console.log(`written ${cfn}`)
+        }
 
         // check if there is a makecode project folder for this service
         const mkcdsrvdirname = dashify(json.camelName);

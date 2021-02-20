@@ -142,7 +142,6 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
         }
     }
 
-    // TODO: also need to deal with enums
     function getValue(w: string): jdtest.Value {
         let info: jdtest.Value = {}
         info.negate = false

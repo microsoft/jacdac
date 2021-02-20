@@ -221,10 +221,10 @@ function processSpec(dn: string) {
         reportErrors(json.errors, dn, fn)
 
         // check if there is a test for this service
-        if (fs.existsSync(path.join(dn,"test",fn))) {
-            const testCont = readString(path.join(dn,"test"),fn)
+        if (fs.existsSync(path.join(dn,"tests",fn))) {
+            const testCont = readString(path.join(dn,"tests"),fn)
             const testJson = parseSpecificationTestMarkdownToJSON(testCont, json)
-            reportErrors(testJson.errors, path.join(dn,"test"), fn)
+            reportErrors(testJson.errors, path.join(dn,"tests"), fn)
  
             const cfn = path.join(outp, json, fn.slice(0, -3) + ".test.json");
             fs.writeFileSync(cfn, JSON.stringify(testJson, null, 2))

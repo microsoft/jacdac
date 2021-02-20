@@ -226,7 +226,7 @@ function processSpec(dn: string) {
             const testJson = parseSpecificationTestMarkdownToJSON(testCont, json)
             reportErrors(testJson.errors, path.join(dn,"tests"), fn)
  
-            const cfn = path.join(outp, json, fn.slice(0, -3) + ".test.json");
+            const cfn = path.join(outp, "json", fn.slice(0, -3) + ".test.json");
             fs.writeFileSync(cfn, JSON.stringify(testJson, null, 2))
             console.log(`written ${cfn}`)
         }

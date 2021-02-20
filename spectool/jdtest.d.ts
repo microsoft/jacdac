@@ -26,7 +26,7 @@ declare namespace jdtest {
          * the service that this file targets
          */
 
-        service: jdspec.ServiceSpec;
+        service: number;
 
         /**
          * the set of independent tests for the service

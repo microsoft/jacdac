@@ -6,7 +6,7 @@ export function isRegister(pkt: jdspec.PacketInfo) {
 
 export function lookupRegister(spec: jdspec.ServiceSpec, id: string) {
     return spec.packets.find(pkt => isRegister(pkt) && 
-        pkt.identifierName === id)
+        pkt.name === id)
 }
 
 export function lookupField(pkt: jdspec.PacketInfo, field: string) {

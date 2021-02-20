@@ -7,6 +7,8 @@
     say press reset button 
     check position == 0
 
+basic tests
+
     establish position == 0
     say turn knob clockwise
     check position > 0
@@ -14,6 +16,8 @@
     establish position == 0
     say turn knob counter-clockwise
     check position < 0
+
+turning each direction works
 
     establish position == 0
     say turn one complete rotation clockwise

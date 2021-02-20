@@ -7,8 +7,8 @@ import * as utils from "./utils";
 export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: jdspec.ServiceSpec, filename = ""): jdtest.ServiceTest {
     filecontent = (filecontent || "").replace(/\r/g, "")
     let info: jdtest.ServiceTest = {
-        description: "experimental",
-        service: spec,
+        description: null,
+        service: spec.classIdentifier,
         tests: []
     }
 
@@ -16,9 +16,8 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
     let errors: jdspec.Diagnostic[] = []
     let lineNo = 0
     let currentTest: jdtest.UnitTest = null;
+    let description: string = null;
     let testsToDescribe: jdtest.UnitTest[] = null;
-    let currentCommand: jdtest.Command = null;
-    let nextModifier: "" | "segmented" | "multi-segmented" | "repeats" = ""
 
     try {
         for (let line of filecontent.split(/\n/)) {
@@ -66,15 +65,20 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
             if (testsToDescribe) {
                 for (const iface of testsToDescribe)
                     iface.description += line + "\n"
+            } else {
+                if (line || description) {
+                    if (!description)
+                        description = ""
+                    description += line + "\n"
+                }
             }
-            if (!currentTest)
+            if (currentTest)
                 finishTest();
         } else {
-            if (testsToDescribe && testsToDescribe[0].description)
+            if (testsToDescribe && testsToDescribe[0].description != "")
                 testsToDescribe = null
             const expanded = line
                 .replace(/\/\/.*/, "")
-                .replace(/[\?@:=,\{\};]/g, s => " " + s + " ")
                 .trim()
             if (!expanded)
                 return
@@ -105,11 +109,13 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
         if (!currentTest) {
             currentTest = {
                 description: "",
-                commands: [{ kind: cmd }]
+                commands: [command]
             }
             if (!testsToDescribe)
                 testsToDescribe = []
             testsToDescribe.push(currentTest)
+        } else {
+            currentTest.commands.push(command);
         }
         switch (cmd) {
             case "say": 
@@ -151,7 +157,7 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
         try {
             info.const = utils.parseIntCheck(spec, w, true)
         } catch (e) {
-            error(e.message);
+            // error(e.message);
             try {
                 let r = utils.getRegister(spec, w);
                 info.id = r.pkt.name;

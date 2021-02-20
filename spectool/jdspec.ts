@@ -1,5 +1,7 @@
 /// <reference path="jdspec.d.ts" />
 
+import * as utils from "./utils";
+
 export const DEVICE_IMAGE_WIDTH = 600
 export const DEVICE_IMAGE_HEIGHT = 450
 
@@ -810,35 +812,14 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
     }
 
     function parseIntCheck(w: string, allowFloat = false) {
-        if (/^-?0x[a-f\d_]+$/i.test(w) || /^-?[\d_]+$/.test(w)) {
-            const v = parseInt(w.replace(/_/g, "")) // allow for 0x3fff_ffff syntax
-            if (isNaN(v))
-                error("can't parse int: " + w)
-            return v
+        try {
+            return utils.parseIntCheck(info, w, allowFloat)
+        } catch (e) {
+            error(e.message)
+            return 0;
         }
-
-        if (allowFloat && /^-?\d*(\.\d*)?(e(-?)\d+)?$/.test(w)) {
-            const v = parseFloat(w)
-            if (isNaN(v))
-                error("can't parse float: " + w)
-            return v
-        }
-
-        const ww = w.split(/\./)
-        if (ww.length != 2) {
-            error(`expecting int or enum member here`)
-            return 0
-        }
-        const en = info.enums[ww[0]]
-        if (!en) {
-            error(`${ww[0]} is not an enum type`)
-            return 0
-        }
-        if (!en.members.hasOwnProperty(ww[1]))
-            error(`${ww[1]} is not a member of ${ww[0]}`)
-        return en.members[ww[1]] || 0
     }
-
+ 
     function looksRandom(n: number) {
         const s = n.toString(16)
         const h = "0123456789abcdef"

@@ -178,13 +178,13 @@ Note that `report` syntax skips name and command code - these are copied from th
 
 Also note that `0x80` command code is used, which is the same as the register code for 
 `oxygen_delay`.
-This is allowed, as register codes occupy separate namespace from command codes -
+This is allowed, as register codes occupy a separate namespace from command codes -
 register codes combined with masks of `0x1000` or `0x2000` form command codes
 for getting or setting registers.
 Again, `_system.md` has ranges for allowed command codes.
 
-The next command doesn't have a associated report.
-The sender can still ask for ACK.
+The next command doesn't have an associated report.
+The sender can still ask for an ACK.
 It could have been equivalently specified with the short form as:
 
 ```
@@ -252,15 +252,13 @@ Emitted when button goes from active (`pressed == 1`) to inactive.
 All registers from the `_sensor.md` will be included (meaning `stream_samples` and `streaming_interval`).
 Similarly, all commands and events would be included (but there are none).
 
-The address of `pressed` register is specified as `@ reading`, meaning the
-address of the `reading` register in `_system.md`.
+The address of `pressed` register is specified as `@ reading`, meaning the address of the `reading` register in `_system.md`.
 Services cannot extend `_system.md`, because it includes a large number of packets that are
 never all present at the same time in a regular service.
 All services implicitly extend `_base.md` though.
 However, the names of these packets can be used in place of addresses.
 In fact, this is the only way to refer to the addresses in the system range:
-if the example used `@ 0x101` instead of `@ reading`, the jdspectool would
-generate an error.
+if the example used `@ 0x101` instead of `@ reading`, the jdspectool would generate an error.
 
 ## Other features
 
@@ -309,15 +307,14 @@ Any data field should be annoted with its unit, to allow better interpretation o
 
 ### Pipes
 
-Pipes are application-level mechanism for establishing reliable one- and two-way point-to-point data links.
+Pipes are an application-level mechanism for establishing reliable one- and two-way point-to-point data links.
 
 Typical applications where pipes should be used:
 * a WiFi service, where the pipe represents a TCP connection
 * when a response to a command doesn't fit in one packet (eg. WiFi scan results)
 
 Pipes are typically established using commands and reports.
-The sink of the pipe needs to provide its device identifier (if not already present elsewhere)
-and a port number.
+The sink of the pipe needs to provide its device identifier (if not already present elsewhere) and a port number.
 For example:
 
 ```markdown

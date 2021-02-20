@@ -1,6 +1,8 @@
 /// <reference path="jdspec.d.ts" />
 /// <reference path="jdtest.d.ts" />
 
+import * as utils from "./utils";
+
 // we parse a test with respect to an an existing ServiceSpec
 export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: jdspec.ServiceSpec, filename = ""): jdtest.ServiceTest {
     filecontent = (filecontent || "").replace(/\r/g, "")
@@ -31,6 +33,7 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
         info.errors = errors
 
     return info;
+
 
     function processLine(line: string) {
         if (backticksType) {
@@ -90,7 +93,7 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
                     processCommand(words)
                     break
                 default:
-                    break
+                    error(`Expected a command: ${cmd} is unknown`)
             }
         }
     }
@@ -110,20 +113,27 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
             testsToDescribe.push(currentTest)
         }
         switch (cmd) {
-            case "changes":
-                let r = getRegister(words[1]);
-                break
             case "say": 
             case "ask":
                 command.message = words.slice(1).join(" ");
                 break
-            case "observe":
-                let r = getRegister(words[1]);
-                // trace
+            case "changes":
+            case "observe": {
+                try {
+                    let r = utils.getRegister(spec, words[1]);
+                    command.expr = { left: { id: r.pkt.name }}
+                    command.expr.left.field = r.fld?.name;
+                    if (cmd == "observe") {
+                        // TODO: parse the trace
+                    }
+                } catch (e) {
+                    error(e.message)
+                }
                 break
+            }
             case "check":
             case "establish":
-                command.condition = {
+                command.expr = {
                     left: getValue(words[1]),
                     op: getOperator(words[2]),
                     right: getValue(words[3])
@@ -132,14 +142,7 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
         }
     }
 
-    function getRegister(w:string): string {
-        if (/^\w+$/.test(w) || /^\w+\.\w+$/.test(w)) {
-            // TODO: lookup in the spec
-            // info.id = w;
-        } 
-        return null;
-    }
-
+    // TODO: also need to deal with enums
     function getValue(w: string): jdtest.Value {
         let info: jdtest.Value = {}
         info.negate = false
@@ -147,10 +150,17 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
             info.negate = true;
             w = w.slice(1);
         }
-        let r = getRegister(w);
-        // resolve constant
-        if (r == null) {
-            // check for constant
+        try {
+            info.const = utils.parseIntCheck(spec, w, true)
+        } catch (e) {
+            error(e.message);
+            try {
+                let r = utils.getRegister(spec, w);
+                info.id = r.pkt.name;
+                info.field = r.fld?.name;
+            } catch (e) {
+                error(e.message)
+            }
         }
         return info;
     }

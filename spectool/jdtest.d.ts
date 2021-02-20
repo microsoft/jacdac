@@ -47,19 +47,20 @@ declare namespace jdtest {
     interface Command {
         kind: CommandKind;
         message?: string;
-        condition?: Condition;
+        expr?: Expression;
         trace?: Trace;
     }
 
-    interface Condition {
+    interface Expression {
         left: Value;
-        op: ComparisonKind;
-        right: Value;
+        op?: ComparisonKind;
+        right?: Value;
     }
 
     interface Value {
         negate?: boolean;
         id?: string;
+        field?: string;
         const?: number;
     }
 

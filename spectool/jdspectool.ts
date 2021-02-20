@@ -199,6 +199,7 @@ function processSpec(dn: string) {
     const fmtStats: { [index: string]: number; } = {};
     const concats: jdspec.SMap<string> = {}
     const markdowns: jdspec.ServiceMarkdownSpec[] = [];
+    const tests: jdtest.ServiceTest[] = []
     for (let fn of files) {
         if (!/\.md$/.test(fn) || fn[0] == ".")
             continue
@@ -225,8 +226,9 @@ function processSpec(dn: string) {
             const testCont = readString(path.join(dn,"tests"),fn)
             const testJson = parseSpecificationTestMarkdownToJSON(testCont, json)
             reportErrors(testJson.errors, path.join(dn,"tests"), fn)
+            tests.push(testJson);
  
-            const cfn = path.join(outp, "json", fn.slice(0, -3) + ".test.json");
+            const cfn = path.join(outp, "json", fn.slice(0, -3) + ".test");
             fs.writeFileSync(cfn, JSON.stringify(testJson, null, 2))
             console.log(`written ${cfn}`)
         }
@@ -282,6 +284,7 @@ function processSpec(dn: string) {
 
     fs.writeFileSync(path.join(outp, "services-sources.json"), JSON.stringify(markdowns), "utf-8")
     fs.writeFileSync(path.join(outp, "services.json"), JSON.stringify(values(includes)), "utf-8")
+    fs.writeFileSync(path.join(outp, "tests.json"), JSON.stringify(tests), "utf-8")
     fs.writeFileSync(path.join(outp, "specconstants.ts"), concats["ts"])
     fs.writeFileSync(path.join(outp, "specconstants.sts"), concats["sts"])
     if (fs.existsSync(pxtJacdacDir)) // only available locally

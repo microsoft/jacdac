@@ -27,6 +27,8 @@ turning each direction works
     say turn one complete rotation counter-clockwise
     check position == -clicks_per_turn
 
+one complete rotation
+
     establish position == 0
     say slowly turn clockwise one complete rotation
     observe position 0...clicks_per_turn
@@ -34,6 +36,8 @@ turning each direction works
     establish position == 0
     say slowly turn counter-clockwise one complete rotation
     observe position 0...-clicks_per_turn
+
+one complete rotation, slowly
 
     establish position == 0
     say note physical position, quickly turn clockwise one complete rotation

@@ -16,7 +16,6 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
     let errors: jdspec.Diagnostic[] = []
     let lineNo = 0
     let currentTest: jdtest.UnitTest = null;
-    let description: string = null;
     let testsToDescribe: jdtest.UnitTest[] = null;
 
     try {
@@ -65,17 +64,11 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
             if (testsToDescribe) {
                 for (const iface of testsToDescribe)
                     iface.description += line + "\n"
-            } else {
-                if (line || description) {
-                    if (!description)
-                        description = ""
-                    description += line + "\n"
-                }
             }
             if (currentTest)
                 finishTest();
         } else {
-            if (testsToDescribe && testsToDescribe[0].description != "")
+            if (testsToDescribe && testsToDescribe[0].description)
                 testsToDescribe = null
             const expanded = line
                 .replace(/\/\/.*/, "")
@@ -109,14 +102,13 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
         if (!currentTest) {
             currentTest = {
                 description: "",
-                commands: [command]
+                commands: []
             }
             if (!testsToDescribe)
                 testsToDescribe = []
             testsToDescribe.push(currentTest)
-        } else {
-            currentTest.commands.push(command);
         }
+        currentTest.commands.push(command);
         switch (cmd) {
             case "say": 
             case "ask":

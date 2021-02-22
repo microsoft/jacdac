@@ -39,7 +39,7 @@ export function getRegister(spec: jdspec.ServiceSpec, w:string): RegField {
     return ret;
 }
 
-export function parseIntCheck(spec: jdspec.ServiceSpec, w: string, allowFloat = false) {
+export function parseIntFloat(spec: jdspec.ServiceSpec, w: string, allowFloat = false) {
     if (/^-?0x[a-f\d_]+$/i.test(w) || /^-?[\d_]+$/.test(w)) {
         const v = parseInt(w.replace(/_/g, "")) // allow for 0x3fff_ffff syntax
         if (isNaN(v))

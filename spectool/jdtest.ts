@@ -1,14 +1,14 @@
 /// <reference path="jdspec.d.ts" />
 /// <reference path="jdtest.d.ts" />
 
-import * as utils from "./utils";
+import { parseIntFloat, getRegister } from "./utils";
 
 // we parse a test with respect to an existing ServiceSpec
 export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: jdspec.ServiceSpec, filename = ""): jdtest.ServiceTest {
     filecontent = (filecontent || "").replace(/\r/g, "")
     let info: jdtest.ServiceTest = {
         description: null,
-        service: spec.classIdentifier,
+        serviceClassIdentifier: spec.classIdentifier,
         tests: []
     }
 
@@ -90,8 +90,8 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
     }
 
     function processCommand(words: string[])  {
-        let cmd = <jdtest.CommandKind>words[0]
-        let command: jdtest.Command = {
+        let cmd = <jdtest.ServiceTestCommandKind>words[0]
+        let command: jdtest.ServiceTestCommand = {
             kind: cmd
         }
         if (!currentTest) {
@@ -112,7 +112,7 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
             case "changes":
             case "observe": {
                 try {
-                    let r = utils.getRegister(spec, words[1]);
+                    let r = getRegister(spec, words[1]);
                     command.expr = { left: { id: r.pkt.name }}
                     command.expr.left.field = r.fld?.name;
                     if (cmd == "observe") {
@@ -134,19 +134,19 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
         }
     }
 
-    function getValue(w: string): jdtest.Value {
-        let info: jdtest.Value = {}
+    function getValue(w: string): jdtest.ServiceTestValue {
+        let info: jdtest.ServiceTestValue = {}
         info.negate = false
         if (/^-/.test(w)) {
             info.negate = true;
             w = w.slice(1);
         }
         try {
-            info.const = utils.parseIntCheck(spec, w, true)
+            info.const = parseIntFloat(spec, w, true)
         } catch (e) {
             // error(e.message);
             try {
-                let r = utils.getRegister(spec, w);
+                let r = getRegister(spec, w);
                 info.id = r.pkt.name;
                 info.field = r.fld?.name;
             } catch (e) {
@@ -156,7 +156,7 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
         return info;
     }
 
-    function getOperator(op: string): jdtest.ComparisonKind {
+    function getOperator(op: string): jdtest.ServiceTestComparisonKind {
         switch(op) {
             case "==": return "eq";
             case "!=": return "ne";

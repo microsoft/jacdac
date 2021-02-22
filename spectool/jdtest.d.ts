@@ -7,7 +7,7 @@ declare namespace jdtest {
         /**
          * associated service
          */
-        classIdentifier: number;
+        serviceClassIdentifier: number;
 
         /**
          * Markdown source
@@ -26,7 +26,7 @@ declare namespace jdtest {
          * the service that this file targets
          */
 
-        service: number;
+        serviceClassIdentifier: number;
 
         /**
          * the set of independent tests for the service
@@ -41,33 +41,33 @@ declare namespace jdtest {
 
     interface UnitTest {
         description: string;
-        commands: Command[];
+        commands: ServiceTestCommand[];
     }
 
-    interface Command {
-        kind: CommandKind;
+    interface ServiceTestCommand {
+        kind: ServiceTestCommandKind;
         message?: string;
-        expr?: Expression;
-        trace?: Trace;
+        expr?: ServiceTestExpression;
+        trace?: ServiceTestTrace;
     }
 
-    interface Expression {
-        left: Value;
-        op?: ComparisonKind;
-        right?: Value;
+    interface ServiceTestExpression {
+        left: ServiceTestValue;
+        op?: ServiceTestComparisonKind;
+        right?: ServiceTestValue;
     }
 
-    interface Value {
+    interface ServiceTestValue {
         negate?: boolean;
         id?: string;
         field?: string;
         const?: number;
     }
 
-    interface Trace {
+    interface ServiceTestTrace {
 
     }
 
-    type CommandKind = "say" | "ask" | "check" | "observe" | "changes" | "establish"
-    type ComparisonKind = "eq" | "ne" | "lt" | "gt" | "le" | "ge"
+    type ServiceTestCommandKind = "say" | "ask" | "check" | "observe" | "changes" | "establish"
+    type ServiceTestComparisonKind = "eq" | "ne" | "lt" | "gt" | "le" | "ge"
 }

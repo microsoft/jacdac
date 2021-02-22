@@ -222,8 +222,9 @@ function processSpec(dn: string) {
         reportErrors(json.errors, dn, fn)
 
         // check if there is a test for this service
-        if (fs.existsSync(path.join(dn,"tests",fn))) {
-            const testCont = readString(path.join(dn,"tests"),fn)
+        const testFile = path.join(dn,"tests",fn)
+        if (fs.existsSync(testFile)) {
+            const testCont = readString(testFile,"")
             const testJson = parseSpecificationTestMarkdownToJSON(testCont, json)
             reportErrors(testJson.errors, path.join(dn,"tests"), fn)
             tests.push(testJson);
@@ -284,7 +285,7 @@ function processSpec(dn: string) {
 
     fs.writeFileSync(path.join(outp, "services-sources.json"), JSON.stringify(markdowns), "utf-8")
     fs.writeFileSync(path.join(outp, "services.json"), JSON.stringify(values(includes)), "utf-8")
-    fs.writeFileSync(path.join(outp, "tests.json"), JSON.stringify(tests), "utf-8")
+    fs.writeFileSync(path.join(outp, "services-tests.json"), JSON.stringify(tests), "utf-8")
     fs.writeFileSync(path.join(outp, "specconstants.ts"), concats["ts"])
     fs.writeFileSync(path.join(outp, "specconstants.sts"), concats["sts"])
     if (fs.existsSync(pxtJacdacDir)) // only available locally

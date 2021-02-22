@@ -1,6 +1,6 @@
 /// <reference path="jdspec.d.ts" />
 
-import * as utils from "./utils";
+import { parseIntFloat } from "./utils";
 
 export const DEVICE_IMAGE_WIDTH = 600
 export const DEVICE_IMAGE_HEIGHT = 450
@@ -813,7 +813,7 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
 
     function parseIntCheck(w: string, allowFloat = false) {
         try {
-            return utils.parseIntCheck(info, w, allowFloat)
+            return parseIntFloat(info, w, allowFloat)
         } catch (e) {
             error(e.message)
             return 0;

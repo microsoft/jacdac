@@ -1,5 +1,8 @@
 /// <reference path="jdspec.d.ts" />
+/// <reference path="jdtest.d.ts" />
+
 import { camelize, capitalize, converters, dashify, humanify, normalizeDeviceSpecification, packInfo, parseServiceSpecificationMarkdownToJSON, snakify } from "./jdspec"
+import { parseSpecificationTestMarkdownToJSON } from "./jdtest"
 
 declare var process: any;
 declare var require: any;
@@ -196,6 +199,7 @@ function processSpec(dn: string) {
     const fmtStats: { [index: string]: number; } = {};
     const concats: jdspec.SMap<string> = {}
     const markdowns: jdspec.ServiceMarkdownSpec[] = [];
+    const tests: jdtest.ServiceTest[] = []
     for (let fn of files) {
         if (!/\.md$/.test(fn) || fn[0] == ".")
             continue
@@ -216,6 +220,19 @@ function processSpec(dn: string) {
             .forEach(fmt => fmtStats[fmt] = (fmtStats[fmt] || 0) + 1);
 
         reportErrors(json.errors, dn, fn)
+
+        // check if there is a test for this service
+        const testFile = path.join(dn,"tests",fn)
+        if (fs.existsSync(testFile)) {
+            const testCont = readString(testFile,"")
+            const testJson = parseSpecificationTestMarkdownToJSON(testCont, json)
+            reportErrors(testJson.errors, path.join(dn,"tests"), fn)
+            tests.push(testJson);
+ 
+            const cfn = path.join(outp, "json", fn.slice(0, -3) + ".test");
+            fs.writeFileSync(cfn, JSON.stringify(testJson, null, 2))
+            console.log(`written ${cfn}`)
+        }
 
         // check if there is a makecode project folder for this service
         const mkcdsrvdirname = dashify(json.camelName);
@@ -268,6 +285,7 @@ function processSpec(dn: string) {
 
     fs.writeFileSync(path.join(outp, "services-sources.json"), JSON.stringify(markdowns), "utf-8")
     fs.writeFileSync(path.join(outp, "services.json"), JSON.stringify(values(includes)), "utf-8")
+    fs.writeFileSync(path.join(outp, "services-tests.json"), JSON.stringify(tests), "utf-8")
     fs.writeFileSync(path.join(outp, "specconstants.ts"), concats["ts"])
     fs.writeFileSync(path.join(outp, "specconstants.sts"), concats["sts"])
     if (fs.existsSync(pxtJacdacDir)) // only available locally

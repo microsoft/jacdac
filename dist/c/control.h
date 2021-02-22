@@ -122,6 +122,7 @@ typedef struct jd_control_flood_ping_report {
  */
 #define JD_CONTROL_REG_STATUS_LIGHT 0x81
 typedef struct jd_control_status_light {
+    uint16_t repetitions;
     uint8_t hue;
     uint8_t saturation;
     uint8_t value;

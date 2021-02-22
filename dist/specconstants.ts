@@ -996,7 +996,7 @@ export enum ControlReg {
      * Typically, up to 8 steps (repeats) are supported.
      *
      * ```
-     * const [rest] = jdunpack<[([number, number, number, number])[]]>(buf, "r: u8 u8 u8 u8")
+     * const [repetitions, rest] = jdunpack<[number, ([number, number, number, number])[]]>(buf, "u16 r: u8 u8 u8 u8")
      * const [hue, saturation, value, duration8] = rest[0]
      * ```
      */
@@ -1663,18 +1663,18 @@ export enum LedReg {
     /**
      * Animations are described using pairs of color description and duration,
      * similarly to the `status_light` register in the control service.
-     * They repeat indefinitely until another animation is specified.
+     * `repetition` as ``0`` is considered infinite.
      * For monochrome LEDs, the hue and saturation are ignored.
      * A specification `(red, 80ms), (blue, 40ms), (blue, 0ms), (yellow, 80ms)`
      * means to start with red, cross-fade to blue over 80ms, stay blue for 40ms,
      * change to yellow, and cross-fade back to red in 80ms.
      *
      * ```
-     * const [rest] = jdunpack<[([number, number, number, number])[]]>(buf, "r: u8 u8 u8 u8")
+     * const [repetitions, rest] = jdunpack<[number, ([number, number, number, number])[]]>(buf, "u16 r: u8 u8 u8 u8")
      * const [hue, saturation, value, duration] = rest[0]
      * ```
      */
-    Steps = 0x82,
+    Animation = 0x82,
 
     /**
      * Read-write mA uint16_t. Limit the power drawn by the light-strip (and controller).
@@ -3566,13 +3566,37 @@ export enum SoundLevelReg {
     SoundLevel = 0x101,
 
     /**
-     * Read-write bool (uint8_t). Turn on or off the sensor.
+     * Read-write bool (uint8_t). Turn on or off the microphone.
      *
      * ```
      * const [enabled] = jdunpack<[number]>(buf, "u8")
      * ```
      */
     Enabled = 0x1,
+
+    /**
+     * Read-write dB int16_t. The minimum power value considered by the sensor.
+     * If both ``min_decibels`` and ``max_decibels`` are supported,
+     * the volume in deciment can be linearly interpolated between
+     * ``[min_decibels, max_decibels]``.
+     *
+     * ```
+     * const [minDecibels] = jdunpack<[number]>(buf, "i16")
+     * ```
+     */
+    MinDecibels = 0x81,
+
+    /**
+     * Read-write dB int16_t. The maximum power value considered by the sensor.
+     * If both ``min_decibels`` and ``max_decibels`` are supported,
+     * the volume in deciment can be linearly interpolated between
+     * ``[min_decibels, max_decibels]``.
+     *
+     * ```
+     * const [maxDecibels] = jdunpack<[number]>(buf, "i16")
+     * ```
+     */
+    MaxDecibels = 0x82,
 
     /**
      * Read-write ratio u0.16 (uint16_t). The sound level to trigger a loud event.
@@ -3646,6 +3670,66 @@ export enum SoundPlayerCmd {
  * ```
  */
 
+
+// Service: Sound Spectrum
+export const SRV_SOUND_SPECTRUM = 0x157abc1e
+export enum SoundSpectrumReg {
+    /**
+     * Read-only bytes. The computed frequency data.
+     *
+     * ```
+     * const [frequencyBins] = jdunpack<[Uint8Array]>(buf, "b")
+     * ```
+     */
+    FrequencyBins = 0x101,
+
+    /**
+     * Read-write bool (uint8_t). Turns on/off the micropohone.
+     *
+     * ```
+     * const [enabled] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Enabled = 0x1,
+
+    /**
+     * Read-write uint8_t. The size of the FFT to be used to determine the frequency domain.
+     * Must be a power of 2.
+     *
+     * ```
+     * const [fftSize] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    FftSize = 0x80,
+
+    /**
+     * Read-write dB int16_t. The minimum power value in the scaling range for the FFT analysis data
+     *
+     * ```
+     * const [minDecibels] = jdunpack<[number]>(buf, "i16")
+     * ```
+     */
+    MinDecibels = 0x81,
+
+    /**
+     * Read-write dB int16_t. The maximum power value in the scaling range for the FFT analysis data
+     *
+     * ```
+     * const [maxDecibels] = jdunpack<[number]>(buf, "i16")
+     * ```
+     */
+    MaxDecibels = 0x82,
+
+    /**
+     * Read-write ratio u0.8 (uint8_t). The averaging constant with the last analysis frame.
+     * If ``0`` is set, there is no averaging done, whereas a value of ``1`` means "overlap the previous and current buffer quite a lot while computing the value".
+     *
+     * ```
+     * const [smoothingTimeConstant] = jdunpack<[number]>(buf, "u0.8")
+     * ```
+     */
+    SmoothingTimeConstant = 0x83,
+}
 
 // Service: Speech synthesis
 export const SRV_SPEECH_SYNTHESIS = 0x1204d995

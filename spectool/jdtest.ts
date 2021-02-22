@@ -16,7 +16,7 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
     let errors: jdspec.Diagnostic[] = []
     let lineNo = 0
     let currentTest: jdtest.UnitTest = null;
-    let testsToDescribe: jdtest.UnitTest[] = null;
+    let testHeading: string = ""
 
     try {
         for (let line of filecontent.split(/\n/)) {
@@ -53,23 +53,18 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
         if (!interpret) {
             const m = /^(#+)\s*(.*)/.exec(line)
             if (m) {
-                testsToDescribe = null;
+                testHeading = "";
                 let [_full, hd, cont] = m
                 cont = cont.trim()
                 if (hd == "#" && !info.description) {
                     info.description = cont
-                    line = ""
+                } else if (hd =="##") {
+                    testHeading = cont;
                 }
-            }
-            if (testsToDescribe) {
-                for (const iface of testsToDescribe)
-                    iface.description += line + "\n"
             }
             if (currentTest)
                 finishTest();
         } else {
-            if (testsToDescribe && testsToDescribe[0].description)
-                testsToDescribe = null
             const expanded = line
                 .replace(/\/\/.*/, "")
                 .trim()
@@ -100,13 +95,13 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
             kind: cmd
         }
         if (!currentTest) {
+            if (!testHeading)
+                error("every test must have a description via ##")
             currentTest = {
-                description: "",
+                description: testHeading,
                 commands: []
             }
-            if (!testsToDescribe)
-                testsToDescribe = []
-            testsToDescribe.push(currentTest)
+            testHeading = "";
         }
         currentTest.commands.push(command);
         switch (cmd) {

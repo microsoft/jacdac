@@ -3,6 +3,7 @@
 A microphone that computes the sound specturm
 
     identifier: 0x157abc1e
+    extends: _sensor
 
 ## Registers
 

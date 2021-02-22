@@ -8,14 +8,6 @@ A controller for 1 or more monochrome or RGB LEDs connected in parallel.
 
 ## Registers
 
-    rw color @ 0x80 {
-        red: u8
-        green: u8
-        blue: u8
-    }
-
-Sets or gets the color on the LED. Settings the color cancels any animation running on the light.
-
     rw brightness: u0.16 / @ intensity
 
 Set the luminosity of the strip. The value is used to scale `value` in `steps` register.

@@ -1,11 +1,12 @@
 #  Pulse Oximeter
 
+    identifier: 0x10bb4eb6
+    extends: _sensor
+    tags: biometric
+
 A sensor approximating the oxygen level. 
 
 **Jacdac is not suitable for medical devices and should NOT be used in any kind of device to diagnose or treat any medical conditions.**
-
-    identifier: 0x10bb4eb6
-    extends: _sensor
 
 ## Registers
 

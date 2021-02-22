@@ -19,7 +19,7 @@ Minimum measurable distance
 
 Maximum measurable distance
 
-    enum Variant: u32 {
+    enum Variant: u8 {
         Ultrasonic = 1,
         Infrared = 2,
         LiDAR = 3,

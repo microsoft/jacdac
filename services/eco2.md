@@ -5,6 +5,7 @@ Measures equivalent CO₂ levels.
     identifier: 0x169c9dc6
     extends: _sensor
     camel: eCO2
+    tags: environment
 
 ## Registers
 

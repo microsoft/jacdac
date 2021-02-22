@@ -4,7 +4,7 @@
 
 #define JD_SERVICE_CLASS_SWITCH  0x1ad29402
 
-// enum Variant (uint32_t)
+// enum Variant (uint8_t)
 #define JD_SWITCH_VARIANT_SLIDE 0x1
 #define JD_SWITCH_VARIANT_TILT 0x2
 #define JD_SWITCH_VARIANT_PUSH_BUTTON 0x3
@@ -20,7 +20,7 @@
 #define JD_SWITCH_REG_ACTIVE JD_REG_READING
 
 /**
- * Constant Variant (uint32_t). Describes the type of switch used.
+ * Constant Variant (uint8_t). Describes the type of switch used.
  */
 #define JD_SWITCH_REG_VARIANT JD_REG_VARIANT
 

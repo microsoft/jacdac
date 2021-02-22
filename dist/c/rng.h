@@ -4,7 +4,7 @@
 
 #define JD_SERVICE_CLASS_RNG  0x1789f0a2
 
-// enum Variant (uint32_t)
+// enum Variant (uint8_t)
 #define JD_RNG_VARIANT_QUANTUM 0x1
 #define JD_RNG_VARIANT_ADCNOISE 0x2
 #define JD_RNG_VARIANT_WEB_CRYPTO 0x3
@@ -20,7 +20,7 @@
  */
 
 /**
- * Constant Variant (uint32_t). The type of algorithm/technique used to generate the number.
+ * Constant Variant (uint8_t). The type of algorithm/technique used to generate the number.
  * `Quantum` refers to dedicated hardware device generating random noise due to quantum effects.
  * `ADCNoise` is the noise from quick readings of analog-digital converter, which reads temperature of the MCU or some floating pin.
  * `WebCrypto` refers is used in simulators, where the source of randomness comes from an advanced operating system.

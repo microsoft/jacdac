@@ -9,7 +9,7 @@
 #define JD_LED_PIXEL_LIGHT_TYPE_APA102 0x10
 #define JD_LED_PIXEL_LIGHT_TYPE_SK9822 0x11
 
-// enum Variant (uint32_t)
+// enum Variant (uint8_t)
 #define JD_LED_PIXEL_VARIANT_STRIP 0x1
 #define JD_LED_PIXEL_VARIANT_RING 0x2
 #define JD_LED_PIXEL_VARIANT_STICK 0x3
@@ -68,7 +68,7 @@
 #define JD_LED_PIXEL_REG_NUM_REPEATS 0x82
 
 /**
- * Constant Variant (uint32_t). Specifies the shape of the light strip.
+ * Constant Variant (uint8_t). Specifies the shape of the light strip.
  */
 #define JD_LED_PIXEL_REG_VARIANT JD_REG_VARIANT
 

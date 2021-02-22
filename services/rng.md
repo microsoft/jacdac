@@ -3,7 +3,7 @@
     identifier: 0x1789f0a2
     camel: rng
 
-A service that generates random numbers using entropy sourced from physical processes.
+Generates random numbers using entropy sourced from physical processes.
 
 This typically uses a cryptographical pseudo-random number generator (for example [Fortuna](https://en.wikipedia.org/wiki/Fortuna_(PRNG))),
 which is periodically re-seeded with entropy coming from some hardware source.
@@ -20,7 +20,9 @@ which is periodically re-seeded with entropy coming from some hardware source.
 A command that generates a random buffer with the given length.
 This never blocks for a long time.
 
-    enum Variant: u32 {
+## Registers
+
+    enum Variant: u8 {
          Quantum = 1
          ADCNoise = 2
          WebCrypto = 3

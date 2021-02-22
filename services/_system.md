@@ -3,6 +3,7 @@
     camel: system
 
 This file describes common register and command codes.
+
 These are defined in ranges separate from the per-service ones.
 No service actually derives from this file, but services can include packets
 defined here.

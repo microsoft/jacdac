@@ -2,6 +2,7 @@
 
     identifier: 0x126f00e0
     camel: ledPixel
+    tags: light
 
 A controller for strips of individually controlled RGB LEDs.
 
@@ -67,7 +68,7 @@ number, and followed by 3 bytes of color.
 
 ## Registers
 
-    rw brightness: u0.8 / @ intensity
+    rw brightness = 0.05: u0.8 / @ intensity
 
 Set the luminosity of the strip.
 At `0` the power to the strip is completely shut down.
@@ -115,7 +116,7 @@ How many times to repeat the program passed in `run` command.
 Should be set before the `run` command.
 Setting to `0` means to repeat forever.
 
-    enum Variant: u32 {
+    enum Variant: u8 {
         Strip = 1,
         Ring = 2,
         Stick = 3,

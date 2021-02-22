@@ -4,7 +4,7 @@
 
 #define JD_SERVICE_CLASS_ANALOG_BUTTON  0x1865adc9
 
-// enum Variant (uint32_t)
+// enum Variant (uint8_t)
 #define JD_ANALOG_BUTTON_VARIANT_PRESSURE 0x1
 #define JD_ANALOG_BUTTON_VARIANT_CAPACITIVE 0x2
 
@@ -24,7 +24,7 @@
 #define JD_ANALOG_BUTTON_REG_ACTIVE_THRESHOLD JD_REG_HIGH_THRESHOLD
 
 /**
- * Constant Variant (uint32_t). The type of physical button.
+ * Constant Variant (uint8_t). The type of physical button.
  */
 #define JD_ANALOG_BUTTON_REG_VARIANT JD_REG_VARIANT
 

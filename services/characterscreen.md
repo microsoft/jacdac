@@ -1,6 +1,7 @@
 # Character Screen
 
     identifier: 0x1f37c56a
+    tags: display
 
 A screen that displays characters.
 
@@ -9,6 +10,10 @@ A screen that displays characters.
     rw message: string @ value
 
 Text to show. Use `\n` to break lines.
+
+    rw brightness: u0.8 / @ intensity
+
+Brightness of the screen. `0` means off.
 
     enum Variant : u8 {
         LCD = 1,

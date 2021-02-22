@@ -4,11 +4,12 @@ Measures equivalent Total Volatile Organic Compound levels.
 
     identifier: 0x12a5b597
     extends: _sensor
-    camel: TVOC
+    camel: tvoc
+    tags: environment
 
 ## Registers
 
-     ro TVOC: u22.10 ppb { absolute_min=0, typical_max=1187 }  @ reading
+    ro TVOC: u22.10 ppb { absolute_min=0, typical_max=1187 }  @ reading
 
 Total volatile organic compound readings in parts per billion.
 

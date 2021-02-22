@@ -2,6 +2,7 @@
 
     identifier: 0x1473a263
     extends: _sensor
+    tags: button
 
 A push-button, which returns to inactive position when not operated anymore.
 
@@ -27,7 +28,7 @@ Emitted together with `up` when the press time was not longer than 500ms.
 
     event long_click @ 0x81
 
-Emitted together with `up` when the press time was more than 500ms.
+Emitted after button is held for 500ms. Long click events are followed by a separate up event.
 
     event hold @ 0x82
 

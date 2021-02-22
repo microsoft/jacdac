@@ -2,12 +2,11 @@
 
     identifier: 0x1421bac7
     extends: _sensor
+    tags: environment
 
-A thermometer measuring outside environment.
+A thermometer measuring outside or inside environment.
 
 ## Registers
-
-Default streaming interval is 1s.
 
     ro temperature: i22.10 °C { preferred_interval=1000 } @ reading
 
@@ -25,12 +24,10 @@ Highest temperature that can be reported.
 
 The real temperature is between `temperature - temperature_error` and `temperature + temperature_error`.
 
-    enum Variant: u32 {
+    enum Variant: u8 {
         Outdoor = 1,
         Indoor = 2,
         Body = 3,
-        HeatProbe = 4,
-        Thermocouple = 5,
     }
     const variant: Variant @ variant
 

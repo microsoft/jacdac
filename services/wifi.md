@@ -2,6 +2,7 @@
 
     identifier: 0x18aae1fa
     camel: wifi
+    tags: iot
 
 Discovery and connection to WiFi networks. Separate TCP service is used for data transfer.
 

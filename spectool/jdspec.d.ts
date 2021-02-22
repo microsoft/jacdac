@@ -165,9 +165,9 @@ declare namespace jdspec {
         status: StabilityStatus;
 
         /**
-         * Markdown sources
+         * General purpose tags
          */
-        source: string;
+        tags: string[];
     }
 
     /**

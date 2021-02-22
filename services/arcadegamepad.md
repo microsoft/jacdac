@@ -2,6 +2,7 @@
 
     identifier: 0x1deaa06e
     extends: _sensor
+    tags: button
 
 A gamepad with direction and action buttons for one player.
 

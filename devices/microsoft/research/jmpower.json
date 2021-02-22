@@ -2,7 +2,7 @@
     "id": "microsoft-research-jmpower",
     "name": "JM Power",
     "company": "Microsoft Research",
-    "description": "Lets you supply power to JACDAC network from a MicroUSB connection (eg. a USB battery pack).",
+    "description": "Lets you supply power to Jacdac network from a MicroUSB connection (eg. a USB battery pack).",
     "repo": "https://github.com/microsoft/jacdac-stm32x0",
     "link": "https://github.com/microsoft/jacdac-stm32x0",
     "services": [

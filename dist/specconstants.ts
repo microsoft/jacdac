@@ -996,7 +996,7 @@ export enum ControlReg {
      * Typically, up to 8 steps (repeats) are supported.
      *
      * ```
-     * const [rest] = jdunpack<[([number, number, number, number])[]]>(buf, "r: u8 u8 u8 u8")
+     * const [repetitions, rest] = jdunpack<[number, ([number, number, number, number])[]]>(buf, "u16 r: u8 u8 u8 u8")
      * const [hue, saturation, value, duration8] = rest[0]
      * ```
      */

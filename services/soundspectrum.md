@@ -1,9 +1,10 @@
 # Sound Spectrum
 
-A microphone that computes the sound specturm
-
     identifier: 0x157abc1e
     extends: _sensor
+    tags: sound
+
+A microphone that analyzes the sound specturm
 
 ## Registers
 
@@ -18,6 +19,7 @@ Turns on/off the micropohone.
     rw fft_size: u8 { absolute_max=232 } @ 0x80
     
 The size of the FFT to be used to determine the frequency domain.
+Must be a power of 2.
 
     rw min_decibels: i16 dB @ 0x81
     

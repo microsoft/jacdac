@@ -24,7 +24,7 @@ At `0` the power to the strip is completely shut down.
 
 Animations are described using pairs of color description and duration, 
 similarly to the `status_light` register in the control service.
-`repetation` as 0 is considered infinite.
+`repetition` as ``0`` is considered infinite.
 For monochrome LEDs, the hue and saturation are ignored.
 A specification `(red, 80ms), (blue, 40ms), (blue, 0ms), (yellow, 80ms)`
 means to start with red, cross-fade to blue over 80ms, stay blue for 40ms,

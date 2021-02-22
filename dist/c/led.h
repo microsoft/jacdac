@@ -19,19 +19,20 @@
 /**
  * Animations are described using pairs of color description and duration, 
  * similarly to the `status_light` register in the control service.
- * They repeat indefinitely until another animation is specified.
+ * `repetition` as ``0`` is considered infinite.
  * For monochrome LEDs, the hue and saturation are ignored.
  * A specification `(red, 80ms), (blue, 40ms), (blue, 0ms), (yellow, 80ms)`
  * means to start with red, cross-fade to blue over 80ms, stay blue for 40ms,
  * change to yellow, and cross-fade back to red in 80ms.
  */
-#define JD_LED_REG_STEPS 0x82
-typedef struct jd_led_steps {
+#define JD_LED_REG_ANIMATION 0x82
+typedef struct jd_led_animation {
+    uint16_t repetitions;
     uint8_t hue;
     uint8_t saturation;
     uint8_t value;
     uint8_t duration; // 8ms
-} jd_led_steps_t;
+} jd_led_animation_t;
 
 
 /**

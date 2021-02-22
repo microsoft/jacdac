@@ -1,17 +1,23 @@
 # Rotary encoder manual tests
 
+test1
+
     say turn the knob back and forth
     changes position
+
+test2
 
     establish position != 0
     say press reset button 
     check position == 0
 
-basic tests
+clockwise
 
     establish position == 0
     say turn knob clockwise
     check position > 0
+
+counter-clockwise
 
     establish position == 0
     say turn knob counter-clockwise

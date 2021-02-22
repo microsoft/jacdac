@@ -3566,13 +3566,37 @@ export enum SoundLevelReg {
     SoundLevel = 0x101,
 
     /**
-     * Read-write bool (uint8_t). Turn on or off the sensor.
+     * Read-write bool (uint8_t). Turn on or off the microphone.
      *
      * ```
      * const [enabled] = jdunpack<[number]>(buf, "u8")
      * ```
      */
     Enabled = 0x1,
+
+    /**
+     * Read-write dB int16_t. The minimum power value considered by the sensor.
+     * If both ``min_decibels`` and ``max_decibels`` are supported,
+     * the volume in deciment can be linearly interpolated between
+     * ``[min_decibels, max_decibels]``.
+     *
+     * ```
+     * const [minDecibels] = jdunpack<[number]>(buf, "i16")
+     * ```
+     */
+    MinDecibels = 0x81,
+
+    /**
+     * Read-write dB int16_t. The maximum power value considered by the sensor.
+     * If both ``min_decibels`` and ``max_decibels`` are supported,
+     * the volume in deciment can be linearly interpolated between
+     * ``[min_decibels, max_decibels]``.
+     *
+     * ```
+     * const [maxDecibels] = jdunpack<[number]>(buf, "i16")
+     * ```
+     */
+    MaxDecibels = 0x82,
 
     /**
      * Read-write ratio u0.16 (uint16_t). The sound level to trigger a loud event.

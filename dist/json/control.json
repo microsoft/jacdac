@@ -1,0 +1,433 @@
+{
+  "name": "Control",
+  "status": "experimental",
+  "shortId": "control",
+  "camelName": "control",
+  "shortName": "control",
+  "extends": [
+    "_base"
+  ],
+  "notes": {
+    "short": "Control service is always service index `0`.\nIt handles actions common to all services on a device."
+  },
+  "classIdentifier": 0,
+  "enums": {
+    "AnnounceFlags": {
+      "name": "AnnounceFlags",
+      "storage": 1,
+      "isFlags": true,
+      "members": {
+        "SupportsACK": 1
+      }
+    }
+  },
+  "packets": [
+    {
+      "kind": "const",
+      "name": "instance_name",
+      "identifier": 265,
+      "description": "A friendly name that describes the role of this service instance in the device.\nIt often corresponds to what's printed on the device:\nfor example, `A` for button A, or `S0` for servo channel 0.\nWords like `left` should be avoided because of localization issues (unless they are printed on the device).",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "optional": true,
+      "identifierName": "instance_name",
+      "packFormat": "s",
+      "derived": "_base"
+    },
+    {
+      "kind": "ro",
+      "name": "status_code",
+      "identifier": 259,
+      "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe Jacdac status/error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the announce packet. If a service implements this register,\nit should also support the ``status_code_changed`` event defined below.",
+      "fields": [
+        {
+          "name": "code",
+          "unit": "",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "vendor_code",
+          "unit": "",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "identifierName": "status_code",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
+    {
+      "kind": "event",
+      "name": "status_code_changed",
+      "identifier": 4,
+      "description": "Notifies that the status code of the service changed.",
+      "fields": [
+        {
+          "name": "code",
+          "unit": "",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "vendor_code",
+          "unit": "",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "identifierName": "status_code_changed",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
+    {
+      "kind": "command",
+      "name": "services",
+      "identifier": 0,
+      "description": "The `restart_counter` starts at `0x1` and increments by one until it reaches `0xf`, then it stays at `0xf`.\nIf this number ever goes down, it indicates that the device restarted.\nThe upper 4 bits of `restart_counter` are reserved.\n`service_class` indicates class identifier for each service index (service index `0` is always control, so it's\nskipped in this enumeration).\n`packet_count` indicates the number of packets sent by the current device since last announce,\nincluding the current announce packet (it is always 0 if this feature is not supported).\nThe command form can be used to induce report, which is otherwise broadcast every 500ms.",
+      "fields": [],
+      "identifierName": "announce",
+      "hasReport": true
+    },
+    {
+      "kind": "report",
+      "name": "services",
+      "identifier": 0,
+      "description": "The `restart_counter` starts at `0x1` and increments by one until it reaches `0xf`, then it stays at `0xf`.\nIf this number ever goes down, it indicates that the device restarted.\nThe upper 4 bits of `restart_counter` are reserved.\n`service_class` indicates class identifier for each service index (service index `0` is always control, so it's\nskipped in this enumeration).\n`packet_count` indicates the number of packets sent by the current device since last announce,\nincluding the current announce packet (it is always 0 if this feature is not supported).\nThe command form can be used to induce report, which is otherwise broadcast every 500ms.",
+      "fields": [
+        {
+          "name": "restart_counter",
+          "unit": "",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "flags",
+          "unit": "",
+          "type": "AnnounceFlags",
+          "storage": 1
+        },
+        {
+          "name": "packet_count",
+          "unit": "",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "reserved",
+          "unit": "",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "service_class",
+          "unit": "",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true,
+          "startRepeats": true
+        }
+      ],
+      "secondary": true,
+      "packFormat": "u8 u8 u8 u8 r: u32"
+    },
+    {
+      "kind": "command",
+      "name": "noop",
+      "identifier": 128,
+      "description": "Do nothing. Always ignored. Can be used to test ACKs.",
+      "fields": []
+    },
+    {
+      "kind": "command",
+      "name": "identify",
+      "identifier": 129,
+      "description": "Blink an LED or otherwise draw user's attention.",
+      "fields": [],
+      "optional": true
+    },
+    {
+      "kind": "command",
+      "name": "reset",
+      "identifier": 130,
+      "description": "Reset device. ACK may or may not be sent.",
+      "fields": [],
+      "optional": true
+    },
+    {
+      "kind": "command",
+      "name": "flood_ping",
+      "identifier": 131,
+      "description": "The device will respond `num_responses` times, as fast as it can, setting the `counter` field in the report\nto `start_counter`, then `start_counter + 1`, ..., and finally `start_counter + num_responses - 1`.\nThe `dummy_payload` is `size` bytes long and contains bytes `0, 1, 2, ...`.",
+      "fields": [
+        {
+          "name": "num_responses",
+          "unit": "",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        },
+        {
+          "name": "start_counter",
+          "unit": "",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        },
+        {
+          "name": "size",
+          "unit": "B",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "hasReport": true,
+      "packFormat": "u32 u32 u8"
+    },
+    {
+      "kind": "report",
+      "name": "flood_ping",
+      "identifier": 131,
+      "description": "The device will respond `num_responses` times, as fast as it can, setting the `counter` field in the report\nto `start_counter`, then `start_counter + 1`, ..., and finally `start_counter + num_responses - 1`.\nThe `dummy_payload` is `size` bytes long and contains bytes `0, 1, 2, ...`.",
+      "fields": [
+        {
+          "name": "counter",
+          "unit": "",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        },
+        {
+          "name": "dummy_payload",
+          "unit": "",
+          "type": "bytes",
+          "storage": 0,
+          "isSimpleType": true
+        }
+      ],
+      "secondary": true,
+      "packFormat": "u32 b"
+    },
+    {
+      "kind": "rw",
+      "name": "reset_in",
+      "identifier": 128,
+      "description": "When set to value other than `0`, it asks the device to reset after specified number of microseconds.\nThis is typically used to implement watchdog functionality, where a brain device sets `reset_in` to\nsay 1.6s every 0.5s.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "us",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "packFormat": "u32"
+    },
+    {
+      "kind": "const",
+      "name": "device_description",
+      "identifier": 384,
+      "description": "Identifies the type of hardware (eg., ACME Corp. Servo X-42 Rev C)",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "optional": true,
+      "packFormat": "s"
+    },
+    {
+      "kind": "const",
+      "name": "firmware_identifier",
+      "identifier": 385,
+      "description": "A numeric code for the string above; used to identify firmware images and devices.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true,
+          "absoluteMin": 805306368,
+          "absoluteMax": 1073741823
+        }
+      ],
+      "optional": true,
+      "packFormat": "u32"
+    },
+    {
+      "kind": "const",
+      "name": "bootloader_firmware_identifier",
+      "identifier": 388,
+      "description": "Typically the same as `firmware_identifier` unless device was flashed by hand; the bootloader will respond to that code.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true,
+          "absoluteMin": 805306368,
+          "absoluteMax": 1073741823
+        }
+      ],
+      "optional": true,
+      "packFormat": "u32"
+    },
+    {
+      "kind": "const",
+      "name": "firmware_version",
+      "identifier": 389,
+      "description": "A string describing firmware version; typically semver.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "optional": true,
+      "packFormat": "s"
+    },
+    {
+      "kind": "ro",
+      "name": "mcu_temperature",
+      "identifier": 386,
+      "description": "MCU temperature in degrees Celsius (approximate).",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "°C",
+          "type": "i16",
+          "storage": -2,
+          "isSimpleType": true,
+          "typicalMin": -10,
+          "typicalMax": 150
+        }
+      ],
+      "optional": true,
+      "preferredInterval": 60000,
+      "packFormat": "i16"
+    },
+    {
+      "kind": "ro",
+      "name": "uptime",
+      "identifier": 390,
+      "description": "Number of microseconds since boot.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "us",
+          "type": "u64",
+          "storage": 8,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "preferredInterval": 60000,
+      "packFormat": "u64"
+    },
+    {
+      "kind": "const",
+      "name": "device_url",
+      "identifier": 391,
+      "description": "Request the information web site for this device",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "optional": true,
+      "packFormat": "s"
+    },
+    {
+      "kind": "const",
+      "name": "firmware_url",
+      "identifier": 392,
+      "description": "URL with machine-readable metadata information about updating device firmware",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "optional": true,
+      "packFormat": "s"
+    },
+    {
+      "kind": "rw",
+      "name": "status_light",
+      "identifier": 129,
+      "description": "Specifies a status light animation sequence on a colored or monochrome LED\nusing the [LED animation format](/spec/led-animation).\nTypically, up to 8 steps (repeats) are supported.\n\nThe status light is also used by Jacdac software stack to indicate various status mode\nand this animation may be overridden when those modes are enabled.",
+      "fields": [
+        {
+          "name": "repetitions",
+          "unit": "",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "hue",
+          "unit": "",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true,
+          "startRepeats": true
+        },
+        {
+          "name": "saturation",
+          "unit": "",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "value",
+          "unit": "",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "duration8",
+          "unit": "8ms",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "packFormat": "u16 r: u8 u8 u8 u8"
+    }
+  ],
+  "tags": []
+}

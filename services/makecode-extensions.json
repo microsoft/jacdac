@@ -279,6 +279,15 @@
     }
   },
   {
+    "service": "solenoid",
+    "client": {
+      "name": "jacdac-solenoid",
+      "repo": "microsoft/pxt-jacdac/solenoid",
+      "qName": "modules.SolenoidClient",
+      "default": "modules.solenoid"
+    }
+  },
+  {
     "service": "tcp",
     "client": {
       "name": "jacdac-tcp",

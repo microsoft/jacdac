@@ -8,14 +8,12 @@ Generates random numbers using entropy sourced from physical processes.
 This typically uses a cryptographical pseudo-random number generator (for example [Fortuna](https://en.wikipedia.org/wiki/Fortuna_(PRNG))),
 which is periodically re-seeded with entropy coming from some hardware source.
 
-## Commands
+## Registers
 
     ro random: bytes @ reading
 
 A register that returns a 64 bytes random buffer on every request.
 This never blocks for a long time. If you need additional random bytes, keep querying the register.
-
-## Registers
 
     enum Variant: u8 {
          Quantum = 1

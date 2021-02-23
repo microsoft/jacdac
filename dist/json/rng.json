@@ -94,39 +94,20 @@
       "derived": "_base"
     },
     {
-      "kind": "command",
+      "kind": "ro",
       "name": "random",
-      "identifier": 128,
-      "description": "A command that generates a random buffer with the given length.\nThis never blocks for a long time.",
+      "identifier": 257,
+      "description": "A register that returns a 64 bytes random buffer on every request.\nThis never blocks for a long time. If you need additional random bytes, keep querying the register.",
       "fields": [
         {
-          "name": "length",
-          "unit": "",
-          "type": "u8",
-          "storage": 1,
-          "isSimpleType": true,
-          "absoluteMax": 128,
-          "absoluteMin": 0
-        }
-      ],
-      "hasReport": true,
-      "packFormat": "u8"
-    },
-    {
-      "kind": "report",
-      "name": "random",
-      "identifier": 128,
-      "description": "A command that generates a random buffer with the given length.\nThis never blocks for a long time.",
-      "fields": [
-        {
-          "name": "data",
+          "name": "_",
           "unit": "",
           "type": "bytes",
           "storage": 0,
           "isSimpleType": true
         }
       ],
-      "secondary": true,
+      "identifierName": "reading",
       "packFormat": "b"
     },
     {

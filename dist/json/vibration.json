@@ -84,23 +84,6 @@
       "derived": "_base"
     },
     {
-      "kind": "ro",
-      "name": "speed",
-      "identifier": 257,
-      "description": "Rotation speed of the motor. If only one rotation speed is supported,\nthen `0` shell be off, and any other number on. \nUse the ``vibrate`` command to control the register.",
-      "fields": [
-        {
-          "name": "_",
-          "unit": "/",
-          "shift": 8,
-          "type": "u0.8",
-          "storage": 1
-        }
-      ],
-      "identifierName": "reading",
-      "packFormat": "u0.8"
-    },
-    {
       "kind": "rw",
       "name": "enabled",
       "identifier": 1,
@@ -120,7 +103,7 @@
       "kind": "command",
       "name": "vibrate",
       "identifier": 128,
-      "description": "Starts a sequence of vibration and pauses.",
+      "description": "Starts a sequence of vibration and pauses. To stop any existing vibration, send an empty payload.",
       "fields": [
         {
           "name": "duration",

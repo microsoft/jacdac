@@ -10,7 +10,7 @@ which is periodically re-seeded with entropy coming from some hardware source.
 
 ## Commands
 
-    ro random: bytes @ 0x80
+    ro random: bytes @ reading
 
 A register that returns a 128 bytes random buffer on every request.
 This never blocks for a long time. If you need additional random bytes, keep querying the register.

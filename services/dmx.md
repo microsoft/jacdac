@@ -16,12 +16,8 @@ Determines if the DMX bridge is active
 
 ## Commands
 
-    command send @ 0x80 {}
-    report {
-        data_port: pipe_port
+    command send @ 0x80 {
+        channels: bytes
     }
-    pipe command data_port {
-        data: bytes
-    }    
 
-Send a DMX packet, up to 513bytes long, including the start code.
+Send a DMX packet, up to 236bytes long, including the start code.

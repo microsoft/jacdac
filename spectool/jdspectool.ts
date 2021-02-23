@@ -179,7 +179,7 @@ ${events.map((event) => {
 ${toMetaComments(
             `group="${group}"`,
             `blockId=jacdac_on_${spec.shortId}_${event.name}`,
-            `block="${humanify(event.name)}"`,
+            `block="on %${shortId} ${humanify(event.name)}"`,
             `blockSetVariable=myModule`,
         )}
         on${capitalize(camelize(event.name))}(handler: () => void) {

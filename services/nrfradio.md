@@ -3,6 +3,8 @@
     identifier: 0x1ac986cf
     camel: bitRadio
 
+Support for sending and receiving packets using the [Bit Radio protocol](https://github.com/microsoft/pxt-common-packages/blob/master/libs/radio/docs/reference/radio.md), typically used between micro:bit devices.
+
 ## Registers
 
     rw enabled: bool @ intensity

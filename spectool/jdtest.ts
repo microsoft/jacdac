@@ -1,7 +1,7 @@
 /// <reference path="jdspec.d.ts" />
 /// <reference path="jdtest.d.ts" />
 
-import { parseIntFloat, getRegister } from "./utils";
+import { parseIntFloat, getRegister } from "./jdutils";
 
 // we parse a test with respect to an existing ServiceSpec
 export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: jdspec.ServiceSpec, filename = ""): jdtest.ServiceTest {

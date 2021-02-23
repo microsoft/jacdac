@@ -1,6 +1,6 @@
 /// <reference path="jdspec.d.ts" />
 
-import { parseIntFloat } from "./utils";
+import { parseIntFloat } from "./jdutils";
 
 export const DEVICE_IMAGE_WIDTH = 600
 export const DEVICE_IMAGE_HEIGHT = 450
@@ -819,7 +819,7 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
             return 0;
         }
     }
- 
+
     function looksRandom(n: number) {
         const s = n.toString(16)
         const h = "0123456789abcdef"
@@ -1179,7 +1179,7 @@ function toH(info: jdspec.ServiceSpec) {
 export function camelize(name: string) {
     if (!name) return name;
     return name[0].toLowerCase() + name.slice(1).replace(/_([a-z0-9])/ig, (_, l) => l.toUpperCase())
-        
+
 }
 
 export function capitalize(name: string) {
@@ -1312,7 +1312,7 @@ function packFormatForField(info: jdspec.ServiceSpec, fld: jdspec.PacketMember, 
             case "bool":
                 // TODO native bool support
                 fmt = "u8"
-                if(useBooleans)
+                if (useBooleans)
                     tsType = "boolean"
                 break
             default:

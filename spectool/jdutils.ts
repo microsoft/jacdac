@@ -5,7 +5,7 @@ export function isRegister(pkt: jdspec.PacketInfo) {
 }
 
 export function lookupRegister(spec: jdspec.ServiceSpec, id: string) {
-    return spec.packets.find(pkt => isRegister(pkt) && 
+    return spec.packets.find(pkt => isRegister(pkt) &&
         pkt.name === id)
 }
 
@@ -13,21 +13,21 @@ export function lookupField(pkt: jdspec.PacketInfo, field: string) {
     return pkt.fields.find(member => member.name === field)
 }
 
-export interface RegField { 
-    pkt: jdspec.PacketInfo, 
+export interface RegField {
+    pkt: jdspec.PacketInfo,
     fld?: jdspec.PacketMember
-} 
+}
 
-export function getRegister(spec: jdspec.ServiceSpec, w:string): RegField {
-    let ret: RegField = { pkt: null } 
+export function getRegister(spec: jdspec.ServiceSpec, w: string): RegField {
+    let ret: RegField = { pkt: null }
     if (/^\w+$/.test(w)) {
-        ret.pkt = lookupRegister(spec,w);
+        ret.pkt = lookupRegister(spec, w);
         if (!ret.pkt) {
             throw new Error(`no register ${w} found in service ${spec.shortName}`)
         }
     } else if (/^\w+\.\w+$/.test(w)) {
         const [reg, field] = /^(\w+)\.(\w+)$/.exec(w);
-        ret.pkt = lookupRegister(spec,reg);
+        ret.pkt = lookupRegister(spec, reg);
         if (!ret.pkt) {
             throw new Error(`no register ${reg} found in service ${spec.shortName}`)
         } else {

@@ -1,0 +1,450 @@
+{
+  "name": "Common registers and commands",
+  "status": "experimental",
+  "shortId": "_system",
+  "camelName": "system",
+  "shortName": "system",
+  "extends": [],
+  "notes": {
+    "short": "This file describes common register and command codes.\n\nThese are defined in ranges separate from the per-service ones.\nNo service actually derives from this file, but services can include packets\ndefined here.\nTheir code is listed as say `@ intensity` and not `@ 0x01` (the spectool enforces that).",
+    "commands": "Command codes are subdivided as follows:\n* Commands `0x000-0x07f` - common to all services\n* Commands `0x080-0xeff` - defined per-service\n* Commands `0xf00-0xfff` - reserved for implementation\n\nCommands follow.",
+    "registers": "Register codes are subdivided as follows:\n* Registers `0x001-0x07f` - r/w common to all services\n* Registers `0x080-0x0ff` - r/w defined per-service\n* Registers `0x100-0x17f` - r/o common to all services\n* Registers `0x180-0x1ff` - r/o defined per-service\n* Registers `0x200-0xeff` - custom, defined per-service\n* Registers `0xf00-0xfff` - reserved for implementation, should not be seen on the wire\n\nThe types listed are typical. Check spec for particular service for exact type,\nand a service-specific name for a register (eg. `value` could be `pulse_length`).\nAll registers default to `0` unless otherwise indicated.",
+    "events": "Events codes are 8-bit and are subdivided as follows:\n* Events `0x00-0x7f` - common to all services\n* Events `0x80-0xff` - defined per-service"
+  },
+  "classIdentifier": 536870897,
+  "enums": {
+    "ReadingThreshold": {
+      "name": "ReadingThreshold",
+      "storage": 1,
+      "members": {
+        "Neutral": 1,
+        "Low": 2,
+        "High": 3
+      }
+    },
+    "StatusCodes": {
+      "name": "StatusCodes",
+      "storage": 2,
+      "members": {
+        "Ready": 0,
+        "Initializing": 1,
+        "Calibrating": 2,
+        "Sleeping": 3,
+        "WaitingForInput": 4,
+        "CalibrationNeeded": 100
+      }
+    }
+  },
+  "packets": [
+    {
+      "kind": "command",
+      "name": "announce",
+      "identifier": 0,
+      "description": "Enumeration data for control service; service-specific advertisement data otherwise.\nControl broadcasts it automatically every 500ms, but other service have to be queried to provide it.",
+      "fields": [],
+      "hasReport": true
+    },
+    {
+      "kind": "report",
+      "name": "announce",
+      "identifier": 0,
+      "description": "Enumeration data for control service; service-specific advertisement data otherwise.\nControl broadcasts it automatically every 500ms, but other service have to be queried to provide it.",
+      "fields": [],
+      "secondary": true
+    },
+    {
+      "kind": "command",
+      "name": "get_register",
+      "identifier": 4096,
+      "description": "Registers number `N` is fetched by issuing command `0x1000 | N`.\nThe report format is the same as the format of the register.",
+      "fields": [],
+      "hasReport": true
+    },
+    {
+      "kind": "report",
+      "name": "get_register",
+      "identifier": 4096,
+      "description": "Registers number `N` is fetched by issuing command `0x1000 | N`.\nThe report format is the same as the format of the register.",
+      "fields": [],
+      "secondary": true
+    },
+    {
+      "kind": "command",
+      "name": "set_register",
+      "identifier": 8192,
+      "description": "Registers number `N` is set by issuing command `0x2000 | N`, with the format\nthe same as the format of the register.",
+      "fields": []
+    },
+    {
+      "kind": "report",
+      "name": "event",
+      "identifier": 1,
+      "description": "Event from sensor or a broadcast service.",
+      "fields": [
+        {
+          "name": "event_id",
+          "unit": "",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        },
+        {
+          "name": "event_argument",
+          "unit": "",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u32 u32"
+    },
+    {
+      "kind": "command",
+      "name": "calibrate",
+      "identifier": 2,
+      "description": "Request to calibrate a sensor. The report indicates the calibration is done.",
+      "fields": [],
+      "hasReport": true
+    },
+    {
+      "kind": "report",
+      "name": "calibrate",
+      "identifier": 2,
+      "description": "Request to calibrate a sensor. The report indicates the calibration is done.",
+      "fields": [],
+      "secondary": true
+    },
+    {
+      "kind": "rw",
+      "name": "intensity",
+      "identifier": 1,
+      "description": "This is either binary on/off (0 or non-zero), or can be gradual (eg. brightness of an RGB LED strip).",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u32"
+    },
+    {
+      "kind": "rw",
+      "name": "value",
+      "identifier": 2,
+      "description": "The primary value of actuator (eg. servo pulse length, or motor duty cycle).",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "i32",
+          "storage": -4,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "i32"
+    },
+    {
+      "kind": "rw",
+      "name": "max_power",
+      "identifier": 7,
+      "description": "Limit the power drawn by the service, in mA.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "mA",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true,
+          "defaultValue": 500,
+          "typicalMax": 500,
+          "typicalMin": 0
+        }
+      ],
+      "packFormat": "u16"
+    },
+    {
+      "kind": "rw",
+      "name": "streaming_samples",
+      "identifier": 3,
+      "description": "Asks device to stream a given number of samples\n(clients will typically write `255` to this register every second or so, while streaming is required).",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u8"
+    },
+    {
+      "kind": "rw",
+      "name": "streaming_interval",
+      "identifier": 4,
+      "description": "Period between packets of data when streaming in milliseconds.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "ms",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true,
+          "defaultValue": 100
+        }
+      ],
+      "packFormat": "u32"
+    },
+    {
+      "kind": "ro",
+      "name": "reading",
+      "identifier": 257,
+      "description": "Read-only value of the sensor, also reported in streaming.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "i32",
+          "storage": -4,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "i32"
+    },
+    {
+      "kind": "const",
+      "name": "min_reading",
+      "identifier": 260,
+      "description": "The lowest value that can be reported by the sensor.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "i32",
+          "storage": -4,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "i32"
+    },
+    {
+      "kind": "const",
+      "name": "max_reading",
+      "identifier": 261,
+      "description": "The highest value that can be reported by the sensor.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "i32",
+          "storage": -4,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "i32"
+    },
+    {
+      "kind": "ro",
+      "name": "reading_error",
+      "identifier": 262,
+      "description": "The real value of whatever is measured is between `reading - reading_error` and `reading + reading_error`. It should be computed from the internal state of the sensor. This register is often, but not always `const`. If the register value is modified,\nsend a report in the same frame of the ``reading`` report.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u32"
+    },
+    {
+      "kind": "const",
+      "name": "reading_resolution",
+      "identifier": 264,
+      "description": "Smallest, yet distinguishable change in reading.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u32"
+    },
+    {
+      "kind": "rw",
+      "name": "low_threshold",
+      "identifier": 5,
+      "description": "Threshold when reading data gets low and triggers a ``low``.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "i32",
+          "storage": -4,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "i32"
+    },
+    {
+      "kind": "rw",
+      "name": "high_threshold",
+      "identifier": 6,
+      "description": "Thresholds when reading data gets high and triggers a ``high`` event.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "i32",
+          "storage": -4,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "i32"
+    },
+    {
+      "kind": "const",
+      "name": "streaming_preferred_interval",
+      "identifier": 258,
+      "description": "Preferred default streaming interval for sensor in milliseconds.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "ms",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u32"
+    },
+    {
+      "kind": "const",
+      "name": "variant",
+      "identifier": 263,
+      "description": "The hardware variant of the service.\nFor services which support this, there's an enum defining the meaning.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u32"
+    },
+    {
+      "kind": "ro",
+      "name": "status_code",
+      "identifier": 259,
+      "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe Jacdac status/error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the announce packet.",
+      "fields": [
+        {
+          "name": "code",
+          "unit": "",
+          "type": "StatusCodes",
+          "storage": 2
+        },
+        {
+          "name": "vendor_code",
+          "unit": "",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "packFormat": "u16 u16"
+    },
+    {
+      "kind": "const",
+      "name": "instance_name",
+      "identifier": 265,
+      "description": "A friendly name that describes the role of this service instance in the device.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "optional": true,
+      "packFormat": "s"
+    },
+    {
+      "kind": "event",
+      "name": "active",
+      "identifier": 1,
+      "description": "Notifies that the service has been activated (eg. button pressed, network connected, etc.)",
+      "fields": []
+    },
+    {
+      "kind": "event",
+      "name": "inactive",
+      "identifier": 2,
+      "description": "Notifies that the service has been dis-activated.",
+      "fields": []
+    },
+    {
+      "kind": "event",
+      "name": "change",
+      "identifier": 3,
+      "description": "Notifies that the some state of the service changed.",
+      "fields": []
+    },
+    {
+      "kind": "event",
+      "name": "status_code_changed",
+      "identifier": 4,
+      "description": "Notifies that the status code of the service changed.",
+      "fields": [
+        {
+          "name": "code",
+          "unit": "",
+          "type": "StatusCodes",
+          "storage": 2
+        },
+        {
+          "name": "vendor_code",
+          "unit": "",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u16 u16"
+    },
+    {
+      "kind": "event",
+      "name": "low",
+      "identifier": 5,
+      "description": "Notifies that the low threshold has been crossed",
+      "fields": []
+    },
+    {
+      "kind": "event",
+      "name": "high",
+      "identifier": 6,
+      "description": "Notifies that the high threshold has been crossed",
+      "fields": []
+    },
+    {
+      "kind": "event",
+      "name": "neutral",
+      "identifier": 7,
+      "description": "Notifies that the threshold is back between ``low`` and ``high``.",
+      "fields": []
+    }
+  ],
+  "tags": []
+}

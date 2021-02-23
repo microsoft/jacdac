@@ -2,12 +2,13 @@
 
     identifier: 0x13734c95
     extends: _sensor
+    tags: environment
 
 Measures the amount of liquid precipitation over an area in a predefined period of time.
 
 ## Registers
 
-    ro precipitation: u16.16 mm @ reading
+    ro precipitation: u16.16 mm { preferred_interval=60000 } @ reading
 
 Total precipitation recorded so far.
 

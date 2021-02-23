@@ -1,0 +1,163 @@
+{
+  "name": "Barcode reader",
+  "status": "experimental",
+  "shortId": "barcodereader",
+  "camelName": "barcodeReader",
+  "shortName": "barcodeReader",
+  "extends": [
+    "_base"
+  ],
+  "notes": {
+    "short": "A device that reads various barcodes, like QR codes. For the web, see [BarcodeDetector](https://developer.mozilla.org/en-US/docs/Web/API/BarcodeDetector)."
+  },
+  "classIdentifier": 477339244,
+  "enums": {
+    "Format": {
+      "name": "Format",
+      "storage": 1,
+      "members": {
+        "Aztec": 1,
+        "Code128": 2,
+        "Code39": 3,
+        "Code93": 4,
+        "Codabar": 5,
+        "DataMatrix": 6,
+        "Ean13": 8,
+        "Ean8": 9,
+        "ITF": 10,
+        "Pdf417": 11,
+        "QrCode": 12,
+        "UpcA": 13,
+        "UpcE": 14
+      }
+    }
+  },
+  "packets": [
+    {
+      "kind": "const",
+      "name": "instance_name",
+      "identifier": 265,
+      "description": "A friendly name that describes the role of this service instance in the device.\nIt often corresponds to what's printed on the device:\nfor example, `A` for button A, or `S0` for servo channel 0.\nWords like `left` should be avoided because of localization issues (unless they are printed on the device).",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "optional": true,
+      "identifierName": "instance_name",
+      "packFormat": "s",
+      "derived": "_base"
+    },
+    {
+      "kind": "ro",
+      "name": "status_code",
+      "identifier": 259,
+      "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe Jacdac status/error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the announce packet. If a service implements this register,\nit should also support the ``status_code_changed`` event defined below.",
+      "fields": [
+        {
+          "name": "code",
+          "unit": "",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "vendor_code",
+          "unit": "",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "identifierName": "status_code",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
+    {
+      "kind": "event",
+      "name": "status_code_changed",
+      "identifier": 4,
+      "description": "Notifies that the status code of the service changed.",
+      "fields": [
+        {
+          "name": "code",
+          "unit": "",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "vendor_code",
+          "unit": "",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "identifierName": "status_code_changed",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
+    {
+      "kind": "rw",
+      "name": "enabled",
+      "identifier": 1,
+      "description": "Turns on or off the detection of barcodes.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "bool",
+          "storage": 1
+        }
+      ],
+      "identifierName": "intensity",
+      "packFormat": "u8"
+    },
+    {
+      "kind": "const",
+      "name": "formats",
+      "identifier": 384,
+      "description": "Reports the list of supported barcode formats, as documented in https://developer.mozilla.org/en-US/docs/Web/API/Barcode_Detection_API.",
+      "fields": [
+        {
+          "name": "format",
+          "unit": "",
+          "type": "Format",
+          "storage": 1,
+          "startRepeats": true
+        }
+      ],
+      "optional": true,
+      "packFormat": "r: u8"
+    },
+    {
+      "kind": "event",
+      "name": "detect",
+      "identifier": 1,
+      "description": "Raised when a bar code is detected and decoded. If the reader detects multiple codes, it will issue multiple events.\nIn case of numeric barcodes, the `data` field should contain the ASCII (which is the same as UTF8 in that case) representation of the number.",
+      "fields": [
+        {
+          "name": "format",
+          "unit": "",
+          "type": "Format",
+          "storage": 1
+        },
+        {
+          "name": "data",
+          "unit": "",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "identifierName": "active",
+      "packFormat": "u8 s"
+    }
+  ],
+  "tags": []
+}

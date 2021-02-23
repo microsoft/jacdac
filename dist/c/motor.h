@@ -5,7 +5,7 @@
 #define JD_SERVICE_CLASS_MOTOR  0x17004cd8
 
 /**
- * Read-write ratio int16_t. PWM duty cycle of the motor. Use negative/positive values to run the motor forwards and backwards.
+ * Read-write ratio i1.15 (int16_t). PWM duty cycle of the motor. Use negative/positive values to run the motor forwards and backwards.
  * Positive is recommended to be clockwise rotation and negative counterclockwise. A duty of ``0`` 
  * while ``enabled`` acts as brake.
  */

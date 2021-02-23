@@ -1,5 +1,22 @@
 namespace jacdac {
     // Service: Common registers and commands
+
+    export const enum SystemReadingThreshold { // uint8_t
+        Neutral = 0x1,
+        Low = 0x2,
+        High = 0x3,
+    }
+
+
+    export const enum SystemStatusCodes { // uint16_t
+        Ready = 0x0,
+        Initializing = 0x1,
+        Calibrating = 0x2,
+        Sleeping = 0x3,
+        WaitingForInput = 0x4,
+        CalibrationNeeded = 0x64,
+    }
+
     export const enum SystemCmd {
         /**
          * No args. Enumeration data for control service; service-specific advertisement data otherwise.
@@ -109,8 +126,8 @@ namespace jacdac {
         MaxReading = 0x105,
 
         /**
-         * Read-only uint32_t. The real value of whatever is measured is between `reading - reading_error` and `reading + reading_error`.
-         * This register is often, but not always `const`.
+         * Read-only uint32_t. The real value of whatever is measured is between `reading - reading_error` and `reading + reading_error`. It should be computed from the internal state of the sensor. This register is often, but not always `const`. If the register value is modified,
+         * send a report in the same frame of the ``reading`` report.
          *
          * ```
          * const [readingError] = jdunpack<[number]>(buf, "u32")
@@ -128,7 +145,7 @@ namespace jacdac {
         ReadingResolution = 0x108,
 
         /**
-         * Read-write int32_t. Thresholds for event generation for event generation for analog sensors.
+         * Read-write int32_t. Threshold when reading data gets low and triggers a ``low``.
          *
          * ```
          * const [lowThreshold] = jdunpack<[number]>(buf, "i32")
@@ -137,25 +154,13 @@ namespace jacdac {
         LowThreshold = 0x5,
 
         /**
-         * Read-write int32_t. Thresholds for event generation for event generation for analog sensors.
+         * Read-write int32_t. Thresholds when reading data gets high and triggers a ``high`` event.
          *
          * ```
          * const [highThreshold] = jdunpack<[number]>(buf, "i32")
          * ```
          */
         HighThreshold = 0x6,
-
-        /**
-         * Reports the current state or error status of the device. ``code`` is a standardized value from
-         * the JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device
-         * state. This report is typically not queried, when a device has an error, it will typically
-         * add this report in frame along with the announce packet.
-         *
-         * ```
-         * const [code, vendorCode] = jdunpack<[number, number]>(buf, "u16 u16")
-         * ```
-         */
-        StatusCode = 0x103,
 
         /**
          * Constant ms uint32_t. Preferred default streaming interval for sensor in milliseconds.
@@ -175,6 +180,27 @@ namespace jacdac {
          * ```
          */
         Variant = 0x107,
+
+        /**
+         * Reports the current state or error status of the device. ``code`` is a standardized value from
+         * the Jacdac status/error codes. ``vendor_code`` is any vendor specific error code describing the device
+         * state. This report is typically not queried, when a device has an error, it will typically
+         * add this report in frame along with the announce packet.
+         *
+         * ```
+         * const [code, vendorCode] = jdunpack<[jacdac.SystemStatusCodes, number]>(buf, "u16 u16")
+         * ```
+         */
+        StatusCode = 0x103,
+
+        /**
+         * Constant string (bytes). A friendly name that describes the role of this service instance in the device.
+         *
+         * ```
+         * const [instanceName] = jdunpack<[string]>(buf, "s")
+         * ```
+         */
+        InstanceName = 0x109,
     }
 
     export const enum SystemEvent {
@@ -191,10 +217,38 @@ namespace jacdac {
         Inactive = 0x2,
 
         /**
-         * Notifies that the internal state of the service changed.
+         * Notifies that the some state of the service changed.
          */
         //% block="change"
         Change = 0x3,
+
+        /**
+         * Notifies that the status code of the service changed.
+         *
+         * ```
+         * const [code, vendorCode] = jdunpack<[jacdac.SystemStatusCodes, number]>(buf, "u16 u16")
+         * ```
+         */
+        //% block="status code changed"
+        StatusCodeChanged = 0x4,
+
+        /**
+         * Notifies that the low threshold has been crossed
+         */
+        //% block="low"
+        Low = 0x5,
+
+        /**
+         * Notifies that the high threshold has been crossed
+         */
+        //% block="high"
+        High = 0x6,
+
+        /**
+         * Notifies that the threshold is back between ``low`` and ``high``.
+         */
+        //% block="neutral"
+        Neutral = 0x7,
     }
 
 }
@@ -202,16 +256,41 @@ namespace jacdac {
     // Service: Base service
     export const enum BaseReg {
         /**
+         * Constant string (bytes). A friendly name that describes the role of this service instance in the device.
+         * It often corresponds to what's printed on the device:
+         * for example, `A` for button A, or `S0` for servo channel 0.
+         * Words like `left` should be avoided because of localization issues (unless they are printed on the device).
+         *
+         * ```
+         * const [instanceName] = jdunpack<[string]>(buf, "s")
+         * ```
+         */
+        InstanceName = 0x109,
+
+        /**
          * Reports the current state or error status of the device. ``code`` is a standardized value from
-         * the JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device
+         * the Jacdac status/error codes. ``vendor_code`` is any vendor specific error code describing the device
          * state. This report is typically not queried, when a device has an error, it will typically
-         * add this report in frame along with the announce packet.
+         * add this report in frame along with the announce packet. If a service implements this register,
+         * it should also support the ``status_code_changed`` event defined below.
          *
          * ```
          * const [code, vendorCode] = jdunpack<[number, number]>(buf, "u16 u16")
          * ```
          */
         StatusCode = 0x103,
+    }
+
+    export const enum BaseEvent {
+        /**
+         * Notifies that the status code of the service changed.
+         *
+         * ```
+         * const [code, vendorCode] = jdunpack<[number, number]>(buf, "u16 u16")
+         * ```
+         */
+        //% block="status code changed"
+        StatusCodeChanged = 0x4,
     }
 
 }
@@ -256,10 +335,29 @@ namespace jacdac {
          * Indicates the current forces acting on accelerometer.
          *
          * ```
-         * const [x, y, z] = jdunpack<[number, number, number]>(buf, "i6.10 i6.10 i6.10")
+         * const [x, y, z] = jdunpack<[number, number, number]>(buf, "i12.20 i12.20 i12.20")
          * ```
          */
         Forces = 0x101,
+
+        /**
+         * Read-only g i12.20 (int32_t). Error on the reading value.
+         *
+         * ```
+         * const [forcesError] = jdunpack<[number]>(buf, "i12.20")
+         * ```
+         */
+        ForcesError = 0x106,
+
+        /**
+         * Read-write g i12.20 (int32_t). Configures the range forces detected.
+         * Read-back after setting to get current value.
+         *
+         * ```
+         * const [maxForce] = jdunpack<[number]>(buf, "i12.20")
+         * ```
+         */
+        MaxForce = 0x80,
     }
 
     export const enum AccelerometerEvent {
@@ -315,88 +413,87 @@ namespace jacdac {
          * Emitted when force in any direction exceeds given threshold.
          */
         //% block="force 2g"
-        Force_2g = 0x8c,
+        Force2g = 0x8c,
 
         /**
          * Emitted when force in any direction exceeds given threshold.
          */
         //% block="force 3g"
-        Force_3g = 0x88,
+        Force3g = 0x88,
 
         /**
          * Emitted when force in any direction exceeds given threshold.
          */
         //% block="force 6g"
-        Force_6g = 0x89,
+        Force6g = 0x89,
 
         /**
          * Emitted when force in any direction exceeds given threshold.
          */
         //% block="force 8g"
-        Force_8g = 0x8a,
+        Force8g = 0x8a,
     }
 
 }
 namespace jacdac {
-    // Service: Sensor Aggregator
-    export const SRV_SENSOR_AGGREGATOR = 0x1d90e1c5
+    // Service: Analog Button
+    export const SRV_ANALOG_BUTTON = 0x1865adc9
 
-    export const enum SensorAggregatorSampleType { // uint8_t
-        U8 = 0x8,
-        I8 = 0x88,
-        U16 = 0x10,
-        I16 = 0x90,
-        U32 = 0x20,
-        I32 = 0xa0,
+    export const enum AnalogButtonVariant { // uint8_t
+        Pressure = 0x1,
+        Capacitive = 0x2,
     }
 
-    export const enum SensorAggregatorReg {
+    export const enum AnalogButtonReg {
         /**
-         * Set automatic input collection.
-         * These settings are stored in flash.
+         * Read-only ratio u0.16 (uint16_t). Indicates the current pressure (``force``) on the button.
          *
          * ```
-         * const [samplingInterval, samplesInWindow, rest] = jdunpack<[number, number, ([Buffer, number, number, number, SensorAggregatorSampleType, number])[]]>(buf, "u16 u16 x[4] r: b[8] u32 u8 u8 u8 i8")
-         * const [deviceId, serviceClass, serviceNum, sampleSize, sampleType, sampleShift] = rest[0]
+         * const [pressure] = jdunpack<[number]>(buf, "u0.16")
          * ```
          */
-        Inputs = 0x80,
+        Pressure = 0x101,
 
         /**
-         * Read-only uint32_t. Number of input samples collected so far.
+         * Read-write ratio u0.16 (uint16_t). Indicates the lower threshold for ``inactive`` events.
          *
          * ```
-         * const [numSamples] = jdunpack<[number]>(buf, "u32")
+         * const [inactiveThreshold] = jdunpack<[number]>(buf, "u0.16")
          * ```
          */
-        NumSamples = 0x180,
+        InactiveThreshold = 0x5,
 
         /**
-         * Read-only B uint8_t. Size of a single sample.
+         * Read-write ratio u0.16 (uint16_t). Indicates the threshold for ``active`` events.
          *
          * ```
-         * const [sampleSize] = jdunpack<[number]>(buf, "u8")
+         * const [activeThreshold] = jdunpack<[number]>(buf, "u0.16")
          * ```
          */
-        SampleSize = 0x181,
+        ActiveThreshold = 0x6,
 
         /**
-         * Read-write uint32_t. When set to `N`, will stream `N` samples as `current_sample` reading.
+         * Constant Variant (uint8_t). The type of physical button.
          *
          * ```
-         * const [streamingSamples] = jdunpack<[number]>(buf, "u32")
+         * const [variant] = jdunpack<[jacdac.AnalogButtonVariant]>(buf, "u8")
          * ```
          */
-        StreamingSamples = 0x81,
+        Variant = 0x107,
+    }
+
+    export const enum AnalogButtonEvent {
+        /**
+         * Emitted when button goes from inactive (pressure less than threshold) to active.
+         */
+        //% block="active"
+        Active = 0x1,
 
         /**
-         * Read-only bytes. Last collected sample.
-         *
-         * ```
-         * const [currentSample] = jdunpack<[Buffer]>(buf, "b")
-         * ```
+         * Emitted when button goes from active (pressure higher than threshold) to inactive.
          */
-        CurrentSample = 0x101,
+        //% block="inactive"
+        Inactive = 0x2,
     }
 
 }
@@ -423,7 +520,7 @@ namespace jacdac {
          * `pressure` should be `0xff` for digital buttons, and proportional for analog ones.
          *
          * ```
-         * const [rest] = jdunpack<[([ArcadeGamepadButton, number])[]]>(buf, "r: u8 u8")
+         * const [rest] = jdunpack<[([jacdac.ArcadeGamepadButton, number])[]]>(buf, "r: u8 u0.8")
          * const [button, pressure] = rest[0]
          * ```
          */
@@ -433,7 +530,7 @@ namespace jacdac {
          * Constant. Indicates number of players supported and which buttons are present on the controller.
          *
          * ```
-         * const [button] = jdunpack<[ArcadeGamepadButton[]]>(buf, "u8[]")
+         * const [button] = jdunpack<[jacdac.ArcadeGamepadButton[]]>(buf, "u8[]")
          * ```
          */
         AvailableButtons = 0x180,
@@ -444,7 +541,7 @@ namespace jacdac {
          * Argument: button Button (uint8_t). Emitted when button goes from inactive to active.
          *
          * ```
-         * const [button] = jdunpack<[ArcadeGamepadButton]>(buf, "u8")
+         * const [button] = jdunpack<[jacdac.ArcadeGamepadButton]>(buf, "u8")
          * ```
          */
         //% block="down"
@@ -454,11 +551,65 @@ namespace jacdac {
          * Argument: button Button (uint8_t). Emitted when button goes from active to inactive.
          *
          * ```
-         * const [button] = jdunpack<[ArcadeGamepadButton]>(buf, "u8")
+         * const [button] = jdunpack<[jacdac.ArcadeGamepadButton]>(buf, "u8")
          * ```
          */
         //% block="up"
         Up = 0x2,
+    }
+
+}
+namespace jacdac {
+    // Service: Barcode reader
+    export const SRV_BARCODE_READER = 0x1c739e6c
+
+    export const enum BarcodeReaderFormat { // uint8_t
+        Aztec = 0x1,
+        Code128 = 0x2,
+        Code39 = 0x3,
+        Code93 = 0x4,
+        Codabar = 0x5,
+        DataMatrix = 0x6,
+        Ean13 = 0x8,
+        Ean8 = 0x9,
+        ITF = 0xa,
+        Pdf417 = 0xb,
+        QrCode = 0xc,
+        UpcA = 0xd,
+        UpcE = 0xe,
+    }
+
+    export const enum BarcodeReaderReg {
+        /**
+         * Read-write bool (uint8_t). Turns on or off the detection of barcodes.
+         *
+         * ```
+         * const [enabled] = jdunpack<[number]>(buf, "u8")
+         * ```
+         */
+        Enabled = 0x1,
+
+        /**
+         * Constant. Reports the list of supported barcode formats, as documented in https://developer.mozilla.org/en-US/docs/Web/API/Barcode_Detection_API.
+         *
+         * ```
+         * const [format] = jdunpack<[jacdac.BarcodeReaderFormat[]]>(buf, "u8[]")
+         * ```
+         */
+        Formats = 0x180,
+    }
+
+    export const enum BarcodeReaderEvent {
+        /**
+         * Raised when a bar code is detected and decoded. If the reader detects multiple codes, it will issue multiple events.
+         * In case of numeric barcodes, the `data` field should contain the ASCII (which is the same as UTF8 in that case) representation of the number.
+         *
+         * ```
+         * const [format, data] = jdunpack<[jacdac.BarcodeReaderFormat, string]>(buf, "u8 s")
+         * ```
+         */
+        //% block="detect"
+        Detect = 0x1,
     }
 
 }
@@ -543,7 +694,7 @@ namespace jacdac {
         /**
          * report PageData
          * ```
-         * const [sessionId, pageError, pageAddress] = jdunpack<[number, BootloaderError, number]>(buf, "u32 u32 u32")
+         * const [sessionId, pageError, pageAddress] = jdunpack<[number, jacdac.BootloaderError, number]>(buf, "u32 u32 u32")
          * ```
          */
     }
@@ -583,10 +734,16 @@ namespace jacdac {
         Click = 0x80,
 
         /**
-         * Emitted together with `up` when the press time was more than 500ms.
+         * Emitted after button is held for 500ms. Long click events are followed by a separate up event.
          */
         //% block="long click"
         LongClick = 0x81,
+
+        /**
+         * Emitted after the button is held for 1500ms. Hold events are followed by a separate up event.
+         */
+        //% block="hold"
+        Hold = 0x82,
     }
 
 }
@@ -595,10 +752,10 @@ namespace jacdac {
     export const SRV_BUZZER = 0x1b57b1d7
     export const enum BuzzerReg {
         /**
-         * Read-write ratio uint8_t. The volume (duty cycle) of the buzzer.
+         * Read-write ratio u0.8 (uint8_t). The volume (duty cycle) of the buzzer.
          *
          * ```
-         * const [volume] = jdunpack<[number]>(buf, "u8")
+         * const [volume] = jdunpack<[number]>(buf, "u0.8")
          * ```
          */
         Volume = 0x1,
@@ -645,10 +802,19 @@ namespace jacdac {
         Message = 0x2,
 
         /**
+         * Read-write ratio u0.8 (uint8_t). Brightness of the screen. `0` means off.
+         *
+         * ```
+         * const [brightness] = jdunpack<[number]>(buf, "u0.8")
+         * ```
+         */
+        Brightness = 0x1,
+
+        /**
          * Constant Variant (uint8_t). Describes the type of character LED screen.
          *
          * ```
-         * const [variant] = jdunpack<[CharacterScreenVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.CharacterScreenVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -657,7 +823,7 @@ namespace jacdac {
          * Read-write TextDirection (uint8_t). Specifies the RTL or LTR direction of the text.
          *
          * ```
-         * const [textDirection] = jdunpack<[CharacterScreenTextDirection]>(buf, "u8")
+         * const [textDirection] = jdunpack<[jacdac.CharacterScreenTextDirection]>(buf, "u8")
          * ```
          */
         TextDirection = 0x82,
@@ -683,21 +849,6 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: CODAL Message Bus
-    export const SRV_CODAL_MESSAGE_BUS = 0x16ad7cd5
-    export const enum CodalMessageBusCmd {
-        /**
-         * Sends a new event on the message bus.
-         *
-         * ```
-         * const [id, event] = jdunpack<[number, number]>(buf, "u16 u16")
-         * ```
-         */
-        Send = 0x80,
-    }
-
-}
-namespace jacdac {
     // Service: Color
     export const SRV_COLOR = 0x1630d567
     export const enum ColorReg {
@@ -705,10 +856,50 @@ namespace jacdac {
          * Detected color in the RGB color space.
          *
          * ```
-         * const [red, green, blue] = jdunpack<[number, number, number]>(buf, "u16 u16 u16")
+         * const [red, green, blue] = jdunpack<[number, number, number]>(buf, "u0.16 u0.16 u0.16")
          * ```
          */
         Color = 0x101,
+    }
+
+}
+namespace jacdac {
+    // Service: Compass
+    export const SRV_COMPASS = 0x15b7b9bf
+    export const enum CompassReg {
+        /**
+         * Read-only u16.16 (uint32_t). The heading with respect to the magnetic north.
+         *
+         * ```
+         * const [heading] = jdunpack<[number]>(buf, "u16.16")
+         * ```
+         */
+        Heading = 0x101,
+
+        /**
+         * Read-write bool (uint8_t). Turn on or off the sensor. Turning on the sensor may start a calibration sequence.
+         *
+         * ```
+         * const [enabled] = jdunpack<[number]>(buf, "u8")
+         * ```
+         */
+        Enabled = 0x1,
+
+        /**
+         * Read-only ° u16.16 (uint32_t). Error on the heading reading
+         *
+         * ```
+         * const [headingError] = jdunpack<[number]>(buf, "u16.16")
+         * ```
+         */
+        HeadingError = 0x106,
+    }
+
+    export const enum CompassCmd {
+        /**
+         * No args. Starts a calibration sequence for the compass.
+         */
+        Calibrate = 0x2,
     }
 
 }
@@ -736,7 +927,7 @@ namespace jacdac {
         /**
          * report Services
          * ```
-         * const [restartCounter, flags, packetCount, serviceClass] = jdunpack<[number, ControlAnnounceFlags, number, number[]]>(buf, "u8 u8 u8 x[1] u32[]")
+         * const [restartCounter, flags, packetCount, serviceClass] = jdunpack<[number, jacdac.ControlAnnounceFlags, number, number[]]>(buf, "u8 u8 u8 x[1] u32[]")
          * ```
          */
 
@@ -859,17 +1050,12 @@ namespace jacdac {
         FirmwareUrl = 0x188,
 
         /**
-         * Specifies a status light animation sequence on a colored or monochrome LED.
-         * ``hue``, ``saturation``, ``value`` are the components of an HSV color
-         * and ``duration8`` is the duration of transition to the next color in the array, in units of ``8ms``.
-         * Module with monochrome LED can ignore ``hue``, ``saturation`` and use ``value``. The animation is played in a loop.
+         * Specifies a status light animation sequence on a colored or monochrome LED
+         * using the [LED animation format](/spec/led-animation).
          * Typically, up to 8 steps (repeats) are supported.
-         * Set the register to empty buffer to disable the animation.
-         * The status light is also used by JACDAC software stack to indicate various status mode
-         * and this animation may be overridden when those modes are enabled.
          *
          * ```
-         * const [rest] = jdunpack<[([number, number, number, number])[]]>(buf, "r: u8 u8 u8 u8")
+         * const [repetitions, rest] = jdunpack<[number, ([number, number, number, number])[]]>(buf, "u16 r: u8 u8 u8 u8")
          * const [hue, saturation, value, duration8] = rest[0]
          * ```
          */
@@ -881,7 +1067,7 @@ namespace jacdac {
     // Service: Distance
     export const SRV_DISTANCE = 0x141a6b8a
 
-    export const enum DistanceVariant { // uint32_t
+    export const enum DistanceVariant { // uint8_t
         Ultrasonic = 0x1,
         Infrared = 0x2,
         LiDAR = 0x3,
@@ -917,10 +1103,10 @@ namespace jacdac {
         MaxRange = 0x105,
 
         /**
-         * Constant Variant (uint32_t). Determines the type of sensor used.
+         * Constant Variant (uint8_t). Determines the type of sensor used.
          *
          * ```
-         * const [variant] = jdunpack<[DistanceVariant]>(buf, "u32")
+         * const [variant] = jdunpack<[jacdac.DistanceVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -928,7 +1114,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Equivalent CO²
+    // Service: Equivalent CO₂
     export const SRV_E_CO2 = 0x169c9dc6
 
     export const enum ECO2Variant { // uint8_t
@@ -938,40 +1124,40 @@ namespace jacdac {
 
     export const enum ECO2Reg {
         /**
-         * Read-only ppm u22.10 (uint32_t). Equivalent CO² (eCO²) readings.
+         * Read-only ppm u22.10 (uint32_t). Equivalent CO₂ (eCO₂) readings.
          *
          * ```
-         * const [e_CO2] = jdunpack<[number]>(buf, "u22.10")
+         * const [eCO2] = jdunpack<[number]>(buf, "u22.10")
          * ```
          */
-        E_CO2 = 0x101,
+        ECO2 = 0x101,
 
         /**
          * Read-only ppm u22.10 (uint32_t). Error on the reading value.
          *
          * ```
-         * const [e_CO2Error] = jdunpack<[number]>(buf, "u22.10")
+         * const [eCO2Error] = jdunpack<[number]>(buf, "u22.10")
          * ```
          */
-        E_CO2Error = 0x106,
+        ECO2Error = 0x106,
 
         /**
          * Constant ppm u22.10 (uint32_t). Minimum measurable value
          *
          * ```
-         * const [minE_CO2] = jdunpack<[number]>(buf, "u22.10")
+         * const [minECO2] = jdunpack<[number]>(buf, "u22.10")
          * ```
          */
-        MinE_CO2 = 0x104,
+        MinECO2 = 0x104,
 
         /**
          * Constant ppm u22.10 (uint32_t). Minimum measurable value
          *
          * ```
-         * const [maxE_CO2] = jdunpack<[number]>(buf, "u22.10")
+         * const [maxECO2] = jdunpack<[number]>(buf, "u22.10")
          * ```
          */
-        MaxE_CO2 = 0x105,
+        MaxECO2 = 0x105,
 
         /**
          * Constant s uint32_t. Time required to achieve good sensor stability before measuring after long idle period.
@@ -986,10 +1172,177 @@ namespace jacdac {
          * Constant Variant (uint8_t). Type of physical sensor and capabilities.
          *
          * ```
-         * const [variant] = jdunpack<[ECO2Variant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.ECO2Variant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
+    }
+
+}
+namespace jacdac {
+    // Service: Gyroscope
+    export const SRV_GYROSCOPE = 0x1e1b06f2
+    export const enum GyroscopeReg {
+        /**
+         * Indicates the current forces acting on accelerometer.
+         *
+         * ```
+         * const [x, y, z] = jdunpack<[number, number, number]>(buf, "i12.20 i12.20 i12.20")
+         * ```
+         */
+        RotationRates = 0x101,
+
+        /**
+         * Read-only °/s i12.20 (int32_t). Error on the reading value.
+         *
+         * ```
+         * const [rotationRatesError] = jdunpack<[number]>(buf, "i12.20")
+         * ```
+         */
+        RotationRatesError = 0x106,
+
+        /**
+         * Read-write °/s i12.20 (int32_t). Configures the range of range of rotation rates.
+         *
+         * ```
+         * const [maxRate] = jdunpack<[number]>(buf, "i12.20")
+         * ```
+         */
+        MaxRate = 0x80,
+    }
+
+}
+namespace jacdac {
+    // Service: Heart Rate
+    export const SRV_HEART_RATE = 0x166c6dc4
+
+    export const enum HeartRateVariant { // uint8_t
+        Finger = 0x1,
+        Chest = 0x2,
+        Wrist = 0x3,
+        Pump = 0x4,
+        WebCam = 0x5,
+    }
+
+    export const enum HeartRateReg {
+        /**
+         * Read-only bpm u16.16 (uint32_t). The estimated heart rate.
+         *
+         * ```
+         * const [heartRate] = jdunpack<[number]>(buf, "u16.16")
+         * ```
+         */
+        HeartRate = 0x101,
+
+        /**
+         * Read-only bpm u16.16 (uint32_t). The estimated error on the reported sensor data.
+         *
+         * ```
+         * const [heartRateError] = jdunpack<[number]>(buf, "u16.16")
+         * ```
+         */
+        HeartRateError = 0x106,
+
+        /**
+         * Constant Variant (uint8_t). The type of physical sensor
+         *
+         * ```
+         * const [variant] = jdunpack<[jacdac.HeartRateVariant]>(buf, "u8")
+         * ```
+         */
+        Variant = 0x107,
+    }
+
+}
+namespace jacdac {
+    // Service: HID Keyboard
+    export const SRV_HID_KEYBOARD = 0x18b05b6a
+
+    export const enum HidKeyboardModifiers { // uint8_t
+        LeftControl = 0xe0,
+        LeftShift = 0xe1,
+        LeftAlt = 0xe2,
+        LeftGUID = 0xe3,
+        RightControl = 0xe4,
+        RightShift = 0xe5,
+        RightAlt = 0xe6,
+        RightGUID = 0xe7,
+    }
+
+
+    export const enum HidKeyboardAction { // uint8_t
+        Press = 0x0,
+        Up = 0x1,
+        Down = 0x2,
+    }
+
+    export const enum HidKeyboardCmd {
+        /**
+         * Presses a key or a sequence of keys down.
+         *
+         * ```
+         * const [rest] = jdunpack<[([number, jacdac.HidKeyboardModifiers, jacdac.HidKeyboardAction])[]]>(buf, "r: u16 u8 u8")
+         * const [selector, modifiers, action] = rest[0]
+         * ```
+         */
+        Key = 0x80,
+
+        /**
+         * No args. Clears all pressed keys.
+         */
+        Clear = 0x81,
+    }
+
+}
+namespace jacdac {
+    // Service: HID Mouse
+    export const SRV_HID_MOUSE = 0x1885dc1c
+
+    export const enum HidMouseButton { // uint16_t
+        Right = 0x1,
+        Middle = 0x4,
+        Left = 0x2,
+    }
+
+
+    export const enum HidMouseButtonEvent { // uint8_t
+        Up = 0x1,
+        Down = 0x2,
+        Click = 0x3,
+        DoubleClick = 0x4,
+    }
+
+    export const enum HidMouseCmd {
+        /**
+         * Sets the up/down state of one or more buttons.
+         * A ``Click`` is the same as ``Down`` followed by ``Up`` after 100ms.
+         * A ``DoubleClick`` is two clicks with ``150ms`` gap between them (that is, ``100ms`` first click, ``150ms`` gap, ``100ms`` second click).
+         *
+         * ```
+         * const [buttons, event] = jdunpack<[jacdac.HidMouseButton, jacdac.HidMouseButtonEvent]>(buf, "u16 u8")
+         * ```
+         */
+        SetButton = 0x80,
+
+        /**
+         * Moves the mouse by the distance specified.
+         * If the time is positive, it specifies how long to make the move.
+         *
+         * ```
+         * const [dx, dy, time] = jdunpack<[number, number, number]>(buf, "i16 i16 u16")
+         * ```
+         */
+        Move = 0x81,
+
+        /**
+         * Turns the wheel up or down. Positive if scrolling up.
+         * If the time is positive, it specifies how long to make the move.
+         *
+         * ```
+         * const [dy, time] = jdunpack<[number, number]>(buf, "i16 u16")
+         * ```
+         */
+        Wheel = 0x82,
     }
 
 }
@@ -1014,6 +1367,24 @@ namespace jacdac {
          * ```
          */
         HumidityError = 0x106,
+
+        /**
+         * Constant °C u22.10 (uint32_t). Lowest humidity that can be reported.
+         *
+         * ```
+         * const [minHumidity] = jdunpack<[number]>(buf, "u22.10")
+         * ```
+         */
+        MinHumidity = 0x104,
+
+        /**
+         * Constant °C u22.10 (uint32_t). Highest humidity that can be reported.
+         *
+         * ```
+         * const [maxHumidity] = jdunpack<[number]>(buf, "u22.10")
+         * ```
+         */
+        MaxHumidity = 0x105,
     }
 
 }
@@ -1326,7 +1697,7 @@ namespace jacdac {
          * If joystick is digital, then each direction will read as either `-0x8000`, `0x0`, or `0x7fff`.
          *
          * ```
-         * const [x, y] = jdunpack<[number, number]>(buf, "i16 i16")
+         * const [x, y] = jdunpack<[number, number]>(buf, "i1.15 i1.15")
          * ```
          */
         Direction = 0x101,
@@ -1335,7 +1706,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). The type of physical joystick.
          *
          * ```
-         * const [variant] = jdunpack<[JoystickVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.JoystickVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -1352,51 +1723,96 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Keyboard
-    export const SRV_KEYBOARD = 0x18b05b6a
+    // Service: LED
+    export const SRV_LED = 0x1e3048f8
 
-    export const enum KeyboardModifiers { // uint8_t
-        LeftControl = 0xe0,
-        LeftShift = 0xe1,
-        LeftAlt = 0xe2,
-        LeftGUID = 0xe3,
-        RightControl = 0xe4,
-        RightShift = 0xe5,
-        RightAlt = 0xe6,
-        RightGUID = 0xe7,
+    export const enum LedVariant { // uint8_t
+        ThroughHole = 0x1,
+        SMD = 0x2,
+        Power = 0x3,
+        Bead = 0x4,
     }
 
-
-    export const enum KeyboardAction { // uint8_t
-        Press = 0x0,
-        Up = 0x1,
-        Down = 0x2,
-    }
-
-    export const enum KeyboardCmd {
+    export const enum LedReg {
         /**
-         * Presses a key or a sequence of keys down.
+         * Read-write ratio u0.16 (uint16_t). Set the luminosity of the strip. The value is used to scale `value` in `steps` register.
+         * At `0` the power to the strip is completely shut down.
          *
          * ```
-         * const [rest] = jdunpack<[([number, KeyboardModifiers, KeyboardAction])[]]>(buf, "r: u16 u8 u8")
-         * const [selector, modifiers, action] = rest[0]
+         * const [brightness] = jdunpack<[number]>(buf, "u0.16")
          * ```
          */
-        Key = 0x80,
+        Brightness = 0x1,
 
         /**
-         * No args. Clears all pressed keys.
+         * Animations are described using pairs of color description and duration,
+         * similarly to the `status_light` register in the control service.
+         * `repetition` as ``0`` is considered infinite.
+         * For monochrome LEDs, the hue and saturation are ignored.
+         * A specification `(red, 80ms), (blue, 40ms), (blue, 0ms), (yellow, 80ms)`
+         * means to start with red, cross-fade to blue over 80ms, stay blue for 40ms,
+         * change to yellow, and cross-fade back to red in 80ms.
+         *
+         * ```
+         * const [repetitions, rest] = jdunpack<[number, ([number, number, number, number])[]]>(buf, "u16 r: u8 u8 u8 u8")
+         * const [hue, saturation, value, duration] = rest[0]
+         * ```
          */
-        Clear = 0x81,
+        Animation = 0x82,
+
+        /**
+         * Read-write mA uint16_t. Limit the power drawn by the light-strip (and controller).
+         *
+         * ```
+         * const [maxPower] = jdunpack<[number]>(buf, "u16")
+         * ```
+         */
+        MaxPower = 0x7,
+
+        /**
+         * Constant uint16_t. If known, specifies the number of LEDs in parallel on this device.
+         *
+         * ```
+         * const [ledCount] = jdunpack<[number]>(buf, "u16")
+         * ```
+         */
+        LedCount = 0x180,
+
+        /**
+         * Constant nm uint16_t. If monochrome LED, specifies the wave length of the LED.
+         *
+         * ```
+         * const [waveLength] = jdunpack<[number]>(buf, "u16")
+         * ```
+         */
+        WaveLength = 0x181,
+
+        /**
+         * Constant mcd uint16_t. The luminous intensity of the LED, at full value, in micro candella.
+         *
+         * ```
+         * const [luminousIntensity] = jdunpack<[number]>(buf, "u16")
+         * ```
+         */
+        LuminousIntensity = 0x182,
+
+        /**
+         * Constant Variant (uint8_t). The physical type of LED.
+         *
+         * ```
+         * const [variant] = jdunpack<[jacdac.LedVariant]>(buf, "u8")
+         * ```
+         */
+        Variant = 0x107,
     }
 
 }
 namespace jacdac {
-    // Service: LED Matrix Controller
-    export const SRV_LED_MATRIX_CONTROLLER = 0x1d35e393
-    export const enum LedMatrixControllerReg {
+    // Service: LED Matrix
+    export const SRV_LED_MATRIX = 0x110d154b
+    export const enum LedMatrixReg {
         /**
-         * Read-write bytes. Read or writes the state of the screen where pixel on/off state is
+         * Read-write bytes. The state of the screen where pixel on/off state is
          * stored as a bit, column by column. The column should be byte aligned.
          *
          * ```
@@ -1406,63 +1822,13 @@ namespace jacdac {
         Leds = 0x2,
 
         /**
-         * Read-write uint8_t. Sets the general brightness of the LEDs. ``0`` turns off the screen.
+         * Read-write ratio u0.8 (uint8_t). Reads the general brightness of the LEDs. ``0`` when the screen is off.
          *
          * ```
-         * const [brightness] = jdunpack<[number]>(buf, "u8")
+         * const [brightness] = jdunpack<[number]>(buf, "u0.8")
          * ```
          */
         Brightness = 0x1,
-
-        /**
-         * Constant # uint16_t. Number of rows on the screen
-         *
-         * ```
-         * const [rows] = jdunpack<[number]>(buf, "u16")
-         * ```
-         */
-        Rows = 0x181,
-
-        /**
-         * Constant # uint16_t. Number of columns on the screen
-         *
-         * ```
-         * const [columns] = jdunpack<[number]>(buf, "u16")
-         * ```
-         */
-        Columns = 0x182,
-    }
-
-    export const enum LedMatrixControllerCmd {
-        /**
-         * No args. Shorthand command to clear all the LEDs on the screen.
-         */
-        Clear = 0x80,
-    }
-
-}
-namespace jacdac {
-    // Service: LED Matrix Display
-    export const SRV_LED_MATRIX_DISPLAY = 0x110d154b
-    export const enum LedMatrixDisplayReg {
-        /**
-         * Read-only bytes. Streams the state of the screen where pixel on/off state is
-         * stored as a bit, column by column. The column should be byte aligned.
-         *
-         * ```
-         * const [leds] = jdunpack<[Buffer]>(buf, "b")
-         * ```
-         */
-        Leds = 0x101,
-
-        /**
-         * Read-only uint8_t. Reads the general brightness of the LEDs. ``0`` when the screen is off.
-         *
-         * ```
-         * const [brightness] = jdunpack<[number]>(buf, "u8")
-         * ```
-         */
-        Brightness = 0x180,
 
         /**
          * Constant # uint16_t. Number of rows on the screen
@@ -1495,31 +1861,32 @@ namespace jacdac {
     }
 
 
-    export const enum LedPixelVariant { // uint32_t
+    export const enum LedPixelVariant { // uint8_t
         Strip = 0x1,
         Ring = 0x2,
         Stick = 0x3,
         Jewel = 0x4,
+        Matrix = 0x5,
     }
 
     export const enum LedPixelReg {
         /**
-         * Read-write ratio uint8_t. Set the luminosity of the strip.
+         * Read-write ratio u0.8 (uint8_t). Set the luminosity of the strip.
          * At `0` the power to the strip is completely shut down.
          *
          * ```
-         * const [brightness] = jdunpack<[number]>(buf, "u8")
+         * const [brightness] = jdunpack<[number]>(buf, "u0.8")
          * ```
          */
         Brightness = 0x1,
 
         /**
-         * Read-only ratio uint8_t. This is the luminosity actually applied to the strip.
+         * Read-only ratio u0.8 (uint8_t). This is the luminosity actually applied to the strip.
          * May be lower than `brightness` if power-limited by the `max_power` register.
          * It will rise slowly (few seconds) back to `brightness` is limits are no longer required.
          *
          * ```
-         * const [actualBrightness] = jdunpack<[number]>(buf, "u8")
+         * const [actualBrightness] = jdunpack<[number]>(buf, "u0.8")
          * ```
          */
         ActualBrightness = 0x180,
@@ -1530,7 +1897,7 @@ namespace jacdac {
          * and could not allow change.
          *
          * ```
-         * const [lightType] = jdunpack<[LedPixelLightType]>(buf, "u8")
+         * const [lightType] = jdunpack<[jacdac.LedPixelLightType]>(buf, "u8")
          * ```
          */
         LightType = 0x80,
@@ -1538,14 +1905,23 @@ namespace jacdac {
         /**
          * Read-write uint16_t. Specifies the number of pixels in the strip.
          * Controllers which are sold with lights should default to the correct length
-         * and could not allow change.
-         * Increasing length at runtime leads to ineffective use of memory and may lead to controller reboot.
+         * and could not allow change. Increasing length at runtime leads to ineffective use of memory and may lead to controller reboot.
          *
          * ```
          * const [numPixels] = jdunpack<[number]>(buf, "u16")
          * ```
          */
         NumPixels = 0x81,
+
+        /**
+         * Read-write uint16_t. If the LED pixel strip is a matrix, specifies the number of columns. Otherwise, a square shape is assumed. Controllers which are sold with lights should default to the correct length
+         * and could not allow change. Increasing length at runtime leads to ineffective use of memory and may lead to controller reboot.
+         *
+         * ```
+         * const [numColumns] = jdunpack<[number]>(buf, "u16")
+         * ```
+         */
+        NumColumns = 0x83,
 
         /**
          * Read-write mA uint16_t. Limit the power drawn by the light-strip (and controller).
@@ -1578,10 +1954,10 @@ namespace jacdac {
         NumRepeats = 0x82,
 
         /**
-         * Constant Variant (uint32_t). Specifies the shape of the light strip.
+         * Constant Variant (uint8_t). Specifies the shape of the light strip.
          *
          * ```
-         * const [variant] = jdunpack<[LedPixelVariant]>(buf, "u32")
+         * const [variant] = jdunpack<[jacdac.LedPixelVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -1611,10 +1987,10 @@ namespace jacdac {
 
     export const enum LightLevelReg {
         /**
-         * Read-only ratio uint16_t. Detect light level
+         * Read-only ratio u0.16 (uint16_t). Detect light level
          *
          * ```
-         * const [lightLevel] = jdunpack<[number]>(buf, "u16")
+         * const [lightLevel] = jdunpack<[number]>(buf, "u0.16")
          * ```
          */
         LightLevel = 0x101,
@@ -1623,7 +1999,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). The type of physical sensor.
          *
          * ```
-         * const [variant] = jdunpack<[LightLevelVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.LightLevelVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -1651,7 +2027,7 @@ namespace jacdac {
          * too verbose for them.
          *
          * ```
-         * const [minPriority] = jdunpack<[LoggerPriority]>(buf, "u8")
+         * const [minPriority] = jdunpack<[jacdac.LoggerPriority]>(buf, "u8")
          * ```
          */
         MinPriority = 0x80,
@@ -1697,8 +2073,49 @@ namespace jacdac {
 
 }
 namespace jacdac {
+    // Service: Magnetometer
+    export const SRV_MAGNETOMETER = 0x13029088
+    export const enum MagnetometerReg {
+        /**
+         * Indicates the current magnetic field on magnetometer.
+         * For reference: `1 mgauss` is `100 nT` (and `1 gauss` is `100 000 nT`).
+         *
+         * ```
+         * const [x, y, z] = jdunpack<[number, number, number]>(buf, "i32 i32 i32")
+         * ```
+         */
+        Forces = 0x101,
+
+        /**
+         * Error on the readings.
+         *
+         * ```
+         * const [x, y, z] = jdunpack<[number, number, number]>(buf, "i32 i32 i32")
+         * ```
+         */
+        ForcesError = 0x106,
+    }
+
+    export const enum MagnetometerCmd {
+        /**
+         * No args. Forces a calibration sequence where the user/device
+         * might have to rotate to be calibrated.
+         */
+        Calibrate = 0x2,
+    }
+
+}
+namespace jacdac {
     // Service: Matrix Keypad
     export const SRV_MATRIX_KEYPAD = 0x13062dc8
+
+    export const enum MatrixKeypadVariant { // uint8_t
+        Membrane = 0x1,
+        Keyboard = 0x2,
+        Elastomer = 0x3,
+        ElastomerLEDPixel = 0x4,
+    }
+
     export const enum MatrixKeypadReg {
         /**
          * Read-only. The coordinate of the button currently pressed. Keys are zero-indexed from left to right, top to bottom:
@@ -1736,6 +2153,17 @@ namespace jacdac {
          * ```
          */
         Labels = 0x182,
+
+        /**
+         * Constant Variant (uint8_t). The type of physical keypad. If the variant is ``ElastomerLEDPixel``
+         * and the next service on the device is a ``LEDPixel`` service, it is considered
+         * as the service controlling the LED pixel on the keypad.
+         *
+         * ```
+         * const [variant] = jdunpack<[jacdac.MatrixKeypadVariant]>(buf, "u8")
+         * ```
+         */
+        Variant = 0x107,
     }
 
     export const enum MatrixKeypadEvent {
@@ -1808,6 +2236,37 @@ namespace jacdac {
          * ```
          */
         SamplingPeriod = 0x80,
+    }
+
+}
+namespace jacdac {
+    // Service: MIDI output
+    export const SRV_MIDI_OUTPUT = 0x1a848cd7
+    export const enum MidiOutputReg {
+        /**
+         * Read-write bool (uint8_t). Opens or closes the port to the MIDI device
+         *
+         * ```
+         * const [enabled] = jdunpack<[number]>(buf, "u8")
+         * ```
+         */
+        Enabled = 0x1,
+    }
+
+    export const enum MidiOutputCmd {
+        /**
+         * No args. Clears any pending send data that has not yet been sent from the MIDIOutput's queue.
+         */
+        Clear = 0x80,
+
+        /**
+         * Argument: data bytes. Enqueues the message to be sent to the corresponding MIDI port
+         *
+         * ```
+         * const [data] = jdunpack<[Buffer]>(buf, "b")
+         * ```
+         */
+        Send = 0x81,
     }
 
 }
@@ -1942,7 +2401,7 @@ namespace jacdac {
          * The format is typically present as first or second little endian word of model file.
          *
          * ```
-         * const [format] = jdunpack<[ModelRunnerModelFormat]>(buf, "u32")
+         * const [format] = jdunpack<[jacdac.ModelRunnerModelFormat]>(buf, "u32")
          * ```
          */
         Format = 0x186,
@@ -1969,78 +2428,14 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Mono Light
-    export const SRV_MONO_LIGHT = 0x1fb57453
-    export const enum MonoLightReg {
-        /**
-         * Read-write ratio uint16_t. Set the luminosity of the strip. The value is used to scale `start_intensity` in `steps` register.
-         * At `0` the power to the strip is completely shut down.
-         *
-         * ```
-         * const [brightness] = jdunpack<[number]>(buf, "u16")
-         * ```
-         */
-        Brightness = 0x1,
+    // Service: Motion
+    export const SRV_MOTION = 0x1179a749
 
-        /**
-         * Read-write mA uint16_t. Limit the power drawn by the light-strip (and controller).
-         *
-         * ```
-         * const [maxPower] = jdunpack<[number]>(buf, "u16")
-         * ```
-         */
-        MaxPower = 0x7,
-
-        /**
-         * Constant uint8_t. Maximum number of steps allowed in animation definition. This determines the size of the `steps` register.
-         *
-         * ```
-         * const [maxSteps] = jdunpack<[number]>(buf, "u8")
-         * ```
-         */
-        MaxSteps = 0x180,
-
-        /**
-         * The steps of current animation. Setting this also sets `current_iteration` to `0`.
-         * Step with `duration == 0` is treated as an end marker.
-         *
-         * ```
-         * const [rest] = jdunpack<[([number, number])[]]>(buf, "r: u16 u16")
-         * const [startIntensity, duration] = rest[0]
-         * ```
-         */
-        Steps = 0x82,
-
-        /**
-         * Read-write uint16_t. Currently excecuting iteration of animation. Can be set to `0` to restart current animation.
-         * If `current_iteration > max_iterations`, then no animation is currently running.
-         *
-         * ```
-         * const [currentIteration] = jdunpack<[number]>(buf, "u16")
-         * ```
-         */
-        CurrentIteration = 0x80,
-
-        /**
-         * Read-write uint16_t. The animation will be repeated `max_iterations + 1` times.
-         *
-         * ```
-         * const [maxIterations] = jdunpack<[number]>(buf, "u16")
-         * ```
-         */
-        MaxIterations = 0x81,
-    }
-
-}
-namespace jacdac {
-    // Service: Motion sensor
-    export const SRV_MOTION_SENSOR = 0x1179a749
-
-    export const enum MotionSensorVariant { // uint8_t
+    export const enum MotionVariant { // uint8_t
         PIR = 0x1,
     }
 
-    export const enum MotionSensorReg {
+    export const enum MotionReg {
         /**
          * Read-only bool (uint8_t). Reports is movement is currently detected by the sensor.
          *
@@ -2072,7 +2467,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). Type of physical sensor
          *
          * ```
-         * const [variant] = jdunpack<[MotionSensorVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.MotionVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -2084,12 +2479,12 @@ namespace jacdac {
     export const SRV_MOTOR = 0x17004cd8
     export const enum MotorReg {
         /**
-         * Read-write ratio int16_t. PWM duty cycle of the motor. Use negative/positive values to run the motor forwards and backwards.
+         * Read-write ratio i1.15 (int16_t). PWM duty cycle of the motor. Use negative/positive values to run the motor forwards and backwards.
          * Positive is recommended to be clockwise rotation and negative counterclockwise. A duty of ``0``
          * while ``enabled`` acts as brake.
          *
          * ```
-         * const [duty] = jdunpack<[number]>(buf, "i16")
+         * const [duty] = jdunpack<[number]>(buf, "i1.15")
          * ```
          */
         Duty = 0x2,
@@ -2120,58 +2515,6 @@ namespace jacdac {
          * ```
          */
         LoadSpeed = 0x181,
-    }
-
-}
-namespace jacdac {
-    // Service: Mouse
-    export const SRV_MOUSE = 0x1885dc1c
-
-    export const enum MouseButton { // uint16_t
-        Right = 0x1,
-        Middle = 0x4,
-        Left = 0x2,
-    }
-
-
-    export const enum MouseButtonEvent { // uint8_t
-        Up = 0x1,
-        Down = 0x2,
-        Click = 0x3,
-        DoubleClick = 0x4,
-    }
-
-    export const enum MouseCmd {
-        /**
-         * Sets the up/down state of one or more buttons.
-         * A ``Click`` is the same as ``Down`` followed by ``Up`` after 100ms.
-         * A ``DoubleClick`` is two clicks with ``150ms`` gap between them (that is, ``100ms`` first click, ``150ms`` gap, ``100ms`` second click).
-         *
-         * ```
-         * const [buttons, event] = jdunpack<[MouseButton, MouseButtonEvent]>(buf, "u16 u8")
-         * ```
-         */
-        SetButton = 0x80,
-
-        /**
-         * Moves the mouse by the distance specified.
-         * If the time is positive, it specifies how long to make the move.
-         *
-         * ```
-         * const [dx, dy, time] = jdunpack<[number, number, number]>(buf, "i16 i16 u16")
-         * ```
-         */
-        Move = 0x81,
-
-        /**
-         * Turns the wheel up or down. Positive if scrolling up.
-         * If the time is positive, it specifies how long to make the move.
-         *
-         * ```
-         * const [dy, time] = jdunpack<[number, number]>(buf, "i16 u16")
-         * ```
-         */
-        Wheel = 0x82,
     }
 
 }
@@ -2250,26 +2593,26 @@ namespace jacdac {
     // Service: Potentiometer
     export const SRV_POTENTIOMETER = 0x1f274746
 
-    export const enum PotentiometerVariant { // uint32_t
+    export const enum PotentiometerVariant { // uint8_t
         Slider = 0x1,
         Rotary = 0x2,
     }
 
     export const enum PotentiometerReg {
         /**
-         * Read-only ratio uint16_t. The relative position of the slider between `0x0000` and `0xffff`.
+         * Read-only ratio u0.16 (uint16_t). The relative position of the slider between `0` and `1`.
          *
          * ```
-         * const [position] = jdunpack<[number]>(buf, "u16")
+         * const [position] = jdunpack<[number]>(buf, "u0.16")
          * ```
          */
         Position = 0x101,
 
         /**
-         * Constant Variant (uint32_t). Specifies the physical layout of the potentiometer.
+         * Constant Variant (uint8_t). Specifies the physical layout of the potentiometer.
          *
          * ```
-         * const [variant] = jdunpack<[PotentiometerVariant]>(buf, "u32")
+         * const [variant] = jdunpack<[jacdac.PotentiometerVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -2327,10 +2670,10 @@ namespace jacdac {
         BatteryVoltage = 0x180,
 
         /**
-         * Read-only ratio uint16_t. Fraction of charge in the battery.
+         * Read-only ratio u0.16 (uint16_t). Fraction of charge in the battery.
          *
          * ```
-         * const [batteryCharge] = jdunpack<[number]>(buf, "u16")
+         * const [batteryCharge] = jdunpack<[number]>(buf, "u0.16")
          * ```
          */
         BatteryCharge = 0x182,
@@ -2653,6 +2996,30 @@ namespace jacdac {
 
 }
 namespace jacdac {
+    // Service: Pulse Oximeter
+    export const SRV_PULSE_OXIMETER = 0x10bb4eb6
+    export const enum PulseOximeterReg {
+        /**
+         * Read-only % u8.8 (uint16_t). The estimated oxygen level in blood.
+         *
+         * ```
+         * const [oxygen] = jdunpack<[number]>(buf, "u8.8")
+         * ```
+         */
+        Oxygen = 0x101,
+
+        /**
+         * Read-only % u8.8 (uint16_t). The estimated error on the reported sensor data.
+         *
+         * ```
+         * const [oxygenError] = jdunpack<[number]>(buf, "u8.8")
+         * ```
+         */
+        OxygenError = 0x106,
+    }
+
+}
+namespace jacdac {
     // Service: Rain gauge
     export const SRV_RAIN_GAUGE = 0x13734c95
     export const enum RainGaugeReg {
@@ -2721,7 +3088,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). The type of physical clock used by the sensor.
          *
          * ```
-         * const [variant] = jdunpack<[RealTimeClockVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.RealTimeClockVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -2740,20 +3107,20 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Reflector light
-    export const SRV_REFLECTOR_LIGHT = 0x126c4cb2
+    // Service: Reflected light
+    export const SRV_REFLECTED_LIGHT = 0x126c4cb2
 
-    export const enum ReflectorLightVariant { // uint8_t
+    export const enum ReflectedLightVariant { // uint8_t
         InfraredDigital = 0x1,
         InfraredAnalog = 0x2,
     }
 
-    export const enum ReflectorLightReg {
+    export const enum ReflectedLightReg {
         /**
-         * Read-only ratio uint16_t. Reports the reflected brightness. It may be a digital value or, for some sensor, analog value.
+         * Read-only ratio u0.16 (uint16_t). Reports the reflected brightness. It may be a digital value or, for some sensor, analog value.
          *
          * ```
-         * const [brightness] = jdunpack<[number]>(buf, "u16")
+         * const [brightness] = jdunpack<[number]>(buf, "u0.16")
          * ```
          */
         Brightness = 0x101,
@@ -2762,13 +3129,13 @@ namespace jacdac {
          * Constant Variant (uint8_t). Type of physical sensor used
          *
          * ```
-         * const [variant] = jdunpack<[ReflectorLightVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.ReflectedLightVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
     }
 
-    export const enum ReflectorLightEvent {
+    export const enum ReflectedLightEvent {
         /**
          * The sensor detected a transition from light to dark
          */
@@ -2787,7 +3154,7 @@ namespace jacdac {
     // Service: Relay
     export const SRV_RELAY = 0x183fe656
 
-    export const enum RelayVariant { // uint32_t
+    export const enum RelayVariant { // uint8_t
         Electromechanical = 0x1,
         SolidState = 0x2,
         Reed = 0x3,
@@ -2804,19 +3171,19 @@ namespace jacdac {
         Closed = 0x1,
 
         /**
-         * Constant Variant (uint32_t). Describes the type of relay used.
+         * Constant Variant (uint8_t). Describes the type of relay used.
          *
          * ```
-         * const [variant] = jdunpack<[RelayVariant]>(buf, "u32")
+         * const [variant] = jdunpack<[jacdac.RelayVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
 
         /**
-         * Constant A uint16_t. Maximum switching current for a resistive load.
+         * Constant mA uint32_t. Maximum switching current for a resistive load.
          *
          * ```
-         * const [maxSwitchingCurrent] = jdunpack<[number]>(buf, "u16")
+         * const [maxSwitchingCurrent] = jdunpack<[number]>(buf, "u32")
          * ```
          */
         MaxSwitchingCurrent = 0x180,
@@ -2838,9 +3205,67 @@ namespace jacdac {
 
 }
 namespace jacdac {
+    // Service: Random Number Generator
+    export const SRV_RNG = 0x1789f0a2
+
+    export const enum RngVariant { // uint8_t
+        Quantum = 0x1,
+        ADCNoise = 0x2,
+        WebCrypto = 0x3,
+    }
+
+    export const enum RngCmd {
+        /**
+         * Argument: length uint8_t. A command that generates a random buffer with the given length.
+         * This never blocks for a long time.
+         *
+         * ```
+         * const [length] = jdunpack<[number]>(buf, "u8")
+         * ```
+         */
+        Random = 0x80,
+
+        /**
+         * report Random
+         * ```
+         * const [data] = jdunpack<[Buffer]>(buf, "b")
+         * ```
+         */
+    }
+
+    export const enum RngReg {
+        /**
+         * Constant Variant (uint8_t). The type of algorithm/technique used to generate the number.
+         * `Quantum` refers to dedicated hardware device generating random noise due to quantum effects.
+         * `ADCNoise` is the noise from quick readings of analog-digital converter, which reads temperature of the MCU or some floating pin.
+         * `WebCrypto` refers is used in simulators, where the source of randomness comes from an advanced operating system.
+         *
+         * ```
+         * const [variant] = jdunpack<[jacdac.RngVariant]>(buf, "u8")
+         * ```
+         */
+        Variant = 0x107,
+    }
+
+}
+namespace jacdac {
     // Service: Role Manager
-    export const SRV_ROLE_MANAGER = 0x119c3ad1
+    export const SRV_ROLE_MANAGER = 0x1e4b7e66
     export const enum RoleManagerReg {
+        /**
+         * Read-write bool (uint8_t). Normally, if some roles are unfilled, and there are idle services that can fulfill them,
+         * the brain device will assign roles (bind) automatically.
+         * Such automatic assignment happens every second or so, and is trying to be smart about
+         * co-locating roles that share "host" (part before first slash),
+         * as well as reasonably stable assignments.
+         * Once user start assigning roles manually using this service, auto-binding should be disabled to avoid confusion.
+         *
+         * ```
+         * const [autoBind] = jdunpack<[number]>(buf, "u8")
+         * ```
+         */
+        AutoBind = 0x80,
+
         /**
          * Read-only bool (uint8_t). Indicates if all required roles have been allocated to devices.
          *
@@ -2853,10 +3278,10 @@ namespace jacdac {
 
     export const enum RoleManagerCmd {
         /**
-         * Argument: device_id devid (uint64_t). Get the role corresponding to given device identifer. Returns empty string if unset.
+         * Get the role corresponding to given device identifer. Returns empty string if unset.
          *
          * ```
-         * const [deviceId] = jdunpack<[Buffer]>(buf, "b[8]")
+         * const [deviceId, serviceIdx] = jdunpack<[Buffer, number]>(buf, "b[8] u8")
          * ```
          */
         GetRole = 0x80,
@@ -2864,7 +3289,7 @@ namespace jacdac {
         /**
          * report GetRole
          * ```
-         * const [deviceId, role] = jdunpack<[Buffer, string]>(buf, "b[8] s")
+         * const [deviceId, serviceIdx, role] = jdunpack<[Buffer, number, string]>(buf, "b[8] u8 s")
          * ```
          */
 
@@ -2872,7 +3297,7 @@ namespace jacdac {
          * Set role. Can set to empty to remove role binding.
          *
          * ```
-         * const [deviceId, role] = jdunpack<[Buffer, string]>(buf, "b[8] s")
+         * const [deviceId, serviceIdx, role] = jdunpack<[Buffer, number, string]>(buf, "b[8] u8 s")
          * ```
          */
         SetRole = 0x81,
@@ -2892,7 +3317,7 @@ namespace jacdac {
         ListStoredRoles = 0x82,
 
         /**
-         * Argument: required_roles pipe (bytes). List all roles required by the current program. `device_id` is `0` if role is unbound.
+         * Argument: required_roles pipe (bytes). List all roles required by the current program. `device_id` and `service_idx` are `0` if role is unbound.
          *
          * ```
          * const [requiredRoles] = jdunpack<[Buffer]>(buf, "b[12]")
@@ -2905,14 +3330,14 @@ namespace jacdac {
     /**
      * pipe_report StoredRoles
      * ```
-     * const [deviceId, role] = jdunpack<[Buffer, string]>(buf, "b[8] s")
+     * const [deviceId, serviceIdx, role] = jdunpack<[Buffer, number, string]>(buf, "b[8] u8 s")
      * ```
      */
 
     /**
      * pipe_report RequiredRoles
      * ```
-     * const [deviceId, serviceClass, roles] = jdunpack<[Buffer, number, string]>(buf, "b[8] u32 s")
+     * const [deviceId, serviceClass, serviceIdx, role] = jdunpack<[Buffer, number, number, string]>(buf, "b[8] u32 u8 s")
      * ```
      */
 
@@ -2952,10 +3377,73 @@ namespace jacdac {
 
 }
 namespace jacdac {
+    // Service: Sensor Aggregator
+    export const SRV_SENSOR_AGGREGATOR = 0x1d90e1c5
+
+    export const enum SensorAggregatorSampleType { // uint8_t
+        U8 = 0x8,
+        I8 = 0x88,
+        U16 = 0x10,
+        I16 = 0x90,
+        U32 = 0x20,
+        I32 = 0xa0,
+    }
+
+    export const enum SensorAggregatorReg {
+        /**
+         * Set automatic input collection.
+         * These settings are stored in flash.
+         *
+         * ```
+         * const [samplingInterval, samplesInWindow, rest] = jdunpack<[number, number, ([Buffer, number, number, number, jacdac.SensorAggregatorSampleType, number])[]]>(buf, "u16 u16 x[4] r: b[8] u32 u8 u8 u8 i8")
+         * const [deviceId, serviceClass, serviceNum, sampleSize, sampleType, sampleShift] = rest[0]
+         * ```
+         */
+        Inputs = 0x80,
+
+        /**
+         * Read-only uint32_t. Number of input samples collected so far.
+         *
+         * ```
+         * const [numSamples] = jdunpack<[number]>(buf, "u32")
+         * ```
+         */
+        NumSamples = 0x180,
+
+        /**
+         * Read-only B uint8_t. Size of a single sample.
+         *
+         * ```
+         * const [sampleSize] = jdunpack<[number]>(buf, "u8")
+         * ```
+         */
+        SampleSize = 0x181,
+
+        /**
+         * Read-write uint32_t. When set to `N`, will stream `N` samples as `current_sample` reading.
+         *
+         * ```
+         * const [streamingSamples] = jdunpack<[number]>(buf, "u32")
+         * ```
+         */
+        StreamingSamples = 0x81,
+
+        /**
+         * Read-only bytes. Last collected sample.
+         *
+         * ```
+         * const [currentSample] = jdunpack<[Buffer]>(buf, "b")
+         * ```
+         */
+        CurrentSample = 0x101,
+    }
+
+}
+namespace jacdac {
     // Service: Servo
     export const SRV_SERVO = 0x12fc9103
 
-    export const enum ServoVariant { // uint32_t
+    export const enum ServoVariant { // uint8_t
         PositionalRotation = 0x1,
         Linear = 0x2,
     }
@@ -2989,31 +3477,49 @@ namespace jacdac {
         Offset = 0x81,
 
         /**
-         * Constant ° i16.16 (int32_t). Lowest angle that can be set.
+         * Read-write ° i16.16 (int32_t). Lowest angle that can be set.
          *
          * ```
          * const [minAngle] = jdunpack<[number]>(buf, "i16.16")
          * ```
          */
-        MinAngle = 0x104,
+        MinAngle = 0x82,
 
         /**
-         * Constant ° i16.16 (int32_t). Highest angle that can be set.
+         * Read-write μs uint16_t. The length of pulse corresponding to lowest angle.
+         *
+         * ```
+         * const [minPulse] = jdunpack<[number]>(buf, "u16")
+         * ```
+         */
+        MinPulse = 0x83,
+
+        /**
+         * Read-write ° i16.16 (int32_t). Highest angle that can be set.
          *
          * ```
          * const [maxAngle] = jdunpack<[number]>(buf, "i16.16")
          * ```
          */
-        MaxAngle = 0x105,
+        MaxAngle = 0x84,
 
         /**
-         * Constant Variant (uint32_t). Specifies the type of servo motor.
+         * Read-write μs uint16_t. The length of pulse corresponding to highest angle.
+         *
+         * ```
+         * const [maxPulse] = jdunpack<[number]>(buf, "u16")
+         * ```
+         */
+        MaxPulse = 0x85,
+
+        /**
+         * Constant Variant (uint8_t). Specifies the type of servo motor.
          * * Positional Rotation Servos: Positional servos can rotate the shaft in about half of the circle,
          * with features to avoid over-rotating. Most servo have a range of 180° but some allow 270° or 360°.
          * * Linear Servos: linear servos are also like a positional servo, but with additional gears to the adjust the output from circular to back-and-forth.
          *
          * ```
-         * const [variant] = jdunpack<[ServoVariant]>(buf, "u32")
+         * const [variant] = jdunpack<[jacdac.ServoVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -3126,6 +3632,61 @@ namespace jacdac {
 
 }
 namespace jacdac {
+    // Service: 7-segment display
+    export const SRV_SEVEN_SEGMENT_DISPLAY = 0x196158f7
+    export const enum SevenSegmentDisplayReg {
+        /**
+         * Read-write bytes. Each byte encodes the display status of a digit using,
+         * where bit 0 encodes segment `A`, bit 1 encodes segments `B`, ..., bit 6 encodes segments `G`, and bit 7 encodes the decimal point (if present).
+         * If incoming ``digits`` data is smaller than `digit_count`, the remaining digits will be cleared.
+         * Thus, sending an empty ``digits`` payload clears the screen.
+         *
+         * ```
+         * const [digits] = jdunpack<[Buffer]>(buf, "b")
+         * ```
+         */
+        Digits = 0x2,
+
+        /**
+         * Read-write ratio u0.16 (uint16_t). Controls the brightness of the LEDs. ``0`` means off.
+         *
+         * ```
+         * const [brightness] = jdunpack<[number]>(buf, "u0.16")
+         * ```
+         */
+        Brightness = 0x1,
+
+        /**
+         * Read-write bool (uint8_t). Turn on or off the column LEDs (separating minutes from hours, etc.) in of the segment.
+         * If the column LEDs is not supported, the value remains false.
+         *
+         * ```
+         * const [doubleDots] = jdunpack<[number]>(buf, "u8")
+         * ```
+         */
+        DoubleDots = 0x80,
+
+        /**
+         * Constant uint8_t. The number of digits available on the display.
+         *
+         * ```
+         * const [digitCount] = jdunpack<[number]>(buf, "u8")
+         * ```
+         */
+        DigitCount = 0x180,
+
+        /**
+         * Constant bool (uint8_t). True if decimal points are available (on all digits).
+         *
+         * ```
+         * const [decimalPoint] = jdunpack<[number]>(buf, "u8")
+         * ```
+         */
+        DecimalPoint = 0x181,
+    }
+
+}
+namespace jacdac {
     // Service: Soil moisture
     export const SRV_SOIL_MOISTURE = 0x1d4aa3b3
 
@@ -3136,10 +3697,10 @@ namespace jacdac {
 
     export const enum SoilMoistureReg {
         /**
-         * Read-only ratio uint16_t. Indicates the wetness of the soil, from ``dry`` to ``wet``.
+         * Read-only ratio u0.16 (uint16_t). Indicates the wetness of the soil, from ``dry`` to ``wet``.
          *
          * ```
-         * const [moisture] = jdunpack<[number]>(buf, "u16")
+         * const [moisture] = jdunpack<[number]>(buf, "u0.16")
          * ```
          */
         Moisture = 0x101,
@@ -3148,7 +3709,38 @@ namespace jacdac {
          * Constant Variant (uint8_t). Describe the type of physical sensor.
          *
          * ```
-         * const [variant] = jdunpack<[SoilMoistureVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.SoilMoistureVariant]>(buf, "u8")
+         * ```
+         */
+        Variant = 0x107,
+    }
+
+}
+namespace jacdac {
+    // Service: Solenoid
+    export const SRV_SOLENOID = 0x171723ca
+
+    export const enum SolenoidVariant { // uint8_t
+        PushPull = 0x1,
+        Valve = 0x2,
+        Latch = 0x3,
+    }
+
+    export const enum SolenoidReg {
+        /**
+         * Read-write bool (uint8_t). Indicates whether the solenoid is energized and pulled (on) or pushed (off).
+         *
+         * ```
+         * const [pulled] = jdunpack<[number]>(buf, "u8")
+         * ```
+         */
+        Pulled = 0x1,
+
+        /**
+         * Constant Variant (uint8_t). Describes the type of solenoid used.
+         *
+         * ```
+         * const [variant] = jdunpack<[jacdac.SolenoidVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -3160,28 +3752,61 @@ namespace jacdac {
     export const SRV_SOUND_LEVEL = 0x14ad1a5d
     export const enum SoundLevelReg {
         /**
-         * Read-only ratio uint16_t. The sound level detected by the microphone
+         * Read-only ratio u0.16 (uint16_t). The sound level detected by the microphone
          *
          * ```
-         * const [soundLevel] = jdunpack<[number]>(buf, "u16")
+         * const [soundLevel] = jdunpack<[number]>(buf, "u0.16")
          * ```
          */
         SoundLevel = 0x101,
 
         /**
-         * Read-write uint16_t. The sound level to trigger a loud event.
+         * Read-write bool (uint8_t). Turn on or off the microphone.
          *
          * ```
-         * const [loudThreshold] = jdunpack<[number]>(buf, "u16")
+         * const [enabled] = jdunpack<[number]>(buf, "u8")
+         * ```
+         */
+        Enabled = 0x1,
+
+        /**
+         * Read-write dB int16_t. The minimum power value considered by the sensor.
+         * If both ``min_decibels`` and ``max_decibels`` are supported,
+         * the volume in deciment can be linearly interpolated between
+         * ``[min_decibels, max_decibels]``.
+         *
+         * ```
+         * const [minDecibels] = jdunpack<[number]>(buf, "i16")
+         * ```
+         */
+        MinDecibels = 0x81,
+
+        /**
+         * Read-write dB int16_t. The maximum power value considered by the sensor.
+         * If both ``min_decibels`` and ``max_decibels`` are supported,
+         * the volume in deciment can be linearly interpolated between
+         * ``[min_decibels, max_decibels]``.
+         *
+         * ```
+         * const [maxDecibels] = jdunpack<[number]>(buf, "i16")
+         * ```
+         */
+        MaxDecibels = 0x82,
+
+        /**
+         * Read-write ratio u0.16 (uint16_t). The sound level to trigger a loud event.
+         *
+         * ```
+         * const [loudThreshold] = jdunpack<[number]>(buf, "u0.16")
          * ```
          */
         LoudThreshold = 0x5,
 
         /**
-         * Read-write uint16_t. The sound level to trigger a quite event.
+         * Read-write ratio u0.16 (uint16_t). The sound level to trigger a quite event.
          *
          * ```
-         * const [quietThreshold] = jdunpack<[number]>(buf, "u16")
+         * const [quietThreshold] = jdunpack<[number]>(buf, "u0.16")
          * ```
          */
         QuietThreshold = 0x6,
@@ -3192,13 +3817,118 @@ namespace jacdac {
          * Raised when a loud sound is detected
          */
         //% block="loud"
-        Loud = 0x1,
+        Loud = 0x6,
 
         /**
          * Raised when a period of quietness is detected
          */
         //% block="quiet"
-        Quiet = 0x2,
+        Quiet = 0x5,
+    }
+
+}
+namespace jacdac {
+    // Service: Sound player
+    export const SRV_SOUND_PLAYER = 0x1403d338
+    export const enum SoundPlayerReg {
+        /**
+         * Read-write ratio u0.16 (uint16_t). Global volume of the output. ``0`` means completely off. This volume is mixed with each play volumes.
+         *
+         * ```
+         * const [volume] = jdunpack<[number]>(buf, "u0.16")
+         * ```
+         */
+        Volume = 0x1,
+    }
+
+    export const enum SoundPlayerCmd {
+        /**
+         * Starts playing a sounds with a specific volume.
+         *
+         * ```
+         * const [volume, name] = jdunpack<[number, string]>(buf, "u0.16 s")
+         * ```
+         */
+        Play = 0x80,
+
+        /**
+         * Argument: sounds_port pipe (bytes). Returns the list of sounds available to play.
+         *
+         * ```
+         * const [soundsPort] = jdunpack<[Buffer]>(buf, "b[12]")
+         * ```
+         */
+        ListSounds = 0x81,
+    }
+
+
+    /**
+     * pipe_report ListSoundsPipe
+     * ```
+     * const [duration, name] = jdunpack<[number, string]>(buf, "u32 s")
+     * ```
+     */
+
+
+}
+namespace jacdac {
+    // Service: Sound Spectrum
+    export const SRV_SOUND_SPECTRUM = 0x157abc1e
+    export const enum SoundSpectrumReg {
+        /**
+         * Read-only bytes. The computed frequency data.
+         *
+         * ```
+         * const [frequencyBins] = jdunpack<[Buffer]>(buf, "b")
+         * ```
+         */
+        FrequencyBins = 0x101,
+
+        /**
+         * Read-write bool (uint8_t). Turns on/off the micropohone.
+         *
+         * ```
+         * const [enabled] = jdunpack<[number]>(buf, "u8")
+         * ```
+         */
+        Enabled = 0x1,
+
+        /**
+         * Read-write uint8_t. The power of 2 used as the size of the FFT to be used to determine the frequency domain.
+         *
+         * ```
+         * const [fftPow2Size] = jdunpack<[number]>(buf, "u8")
+         * ```
+         */
+        FftPow2Size = 0x80,
+
+        /**
+         * Read-write dB int16_t. The minimum power value in the scaling range for the FFT analysis data
+         *
+         * ```
+         * const [minDecibels] = jdunpack<[number]>(buf, "i16")
+         * ```
+         */
+        MinDecibels = 0x81,
+
+        /**
+         * Read-write dB int16_t. The maximum power value in the scaling range for the FFT analysis data
+         *
+         * ```
+         * const [maxDecibels] = jdunpack<[number]>(buf, "i16")
+         * ```
+         */
+        MaxDecibels = 0x82,
+
+        /**
+         * Read-write ratio u0.8 (uint8_t). The averaging constant with the last analysis frame.
+         * If ``0`` is set, there is no averaging done, whereas a value of ``1`` means "overlap the previous and current buffer quite a lot while computing the value".
+         *
+         * ```
+         * const [smoothingTimeConstant] = jdunpack<[number]>(buf, "u0.8")
+         * ```
+         */
+        SmoothingTimeConstant = 0x83,
     }
 
 }
@@ -3225,10 +3955,10 @@ namespace jacdac {
         Lang = 0x80,
 
         /**
-         * Read-write ratio uint8_t. Volume for utterances.
+         * Read-write ratio u0.8 (uint8_t). Volume for utterances.
          *
          * ```
-         * const [volume] = jdunpack<[number]>(buf, "u8")
+         * const [volume] = jdunpack<[number]>(buf, "u0.8")
          * ```
          */
         Volume = 0x81,
@@ -3273,7 +4003,7 @@ namespace jacdac {
     // Service: Switch
     export const SRV_SWITCH = 0x1ad29402
 
-    export const enum SwitchVariant { // uint32_t
+    export const enum SwitchVariant { // uint8_t
         Slide = 0x1,
         Tilt = 0x2,
         PushButton = 0x3,
@@ -3295,10 +4025,10 @@ namespace jacdac {
         Active = 0x101,
 
         /**
-         * Constant Variant (uint32_t). Describes the type of switch used.
+         * Constant Variant (uint8_t). Describes the type of switch used.
          *
          * ```
-         * const [variant] = jdunpack<[SwitchVariant]>(buf, "u32")
+         * const [variant] = jdunpack<[jacdac.SwitchVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -3372,7 +4102,7 @@ namespace jacdac {
          * Argument: error TcpError (int32_t). Reported when an error is encountered. Negative error codes come directly from the SSL implementation.
          *
          * ```
-         * const [error] = jdunpack<[TcpTcpError]>(buf, "i32")
+         * const [error] = jdunpack<[jacdac.TcpTcpError]>(buf, "i32")
          * ```
          */
         Error = 0x0,
@@ -3396,15 +4126,76 @@ namespace jacdac {
 
 }
 namespace jacdac {
+    // Service: Thermocouple
+    export const SRV_THERMOCOUPLE = 0x143ac061
+
+    export const enum ThermocoupleVariant { // uint8_t
+        TypeK = 0x1,
+        TypeJ = 0x2,
+        TypeT = 0x3,
+        TypeE = 0x4,
+        TypeN = 0x5,
+        TypeS = 0x6,
+        TypeR = 0x7,
+        TypeB = 0x8,
+    }
+
+    export const enum ThermocoupleReg {
+        /**
+         * Read-only °C i22.10 (int32_t). The temperature.
+         *
+         * ```
+         * const [temperature] = jdunpack<[number]>(buf, "i22.10")
+         * ```
+         */
+        Temperature = 0x101,
+
+        /**
+         * Constant °C i22.10 (int32_t). Lowest temperature that can be reported.
+         *
+         * ```
+         * const [minTemperature] = jdunpack<[number]>(buf, "i22.10")
+         * ```
+         */
+        MinTemperature = 0x104,
+
+        /**
+         * Constant °C i22.10 (int32_t). Highest temperature that can be reported.
+         *
+         * ```
+         * const [maxTemperature] = jdunpack<[number]>(buf, "i22.10")
+         * ```
+         */
+        MaxTemperature = 0x105,
+
+        /**
+         * Read-only °C u22.10 (uint32_t). The real temperature is between `temperature - temperature_error` and `temperature + temperature_error`.
+         *
+         * ```
+         * const [temperatureError] = jdunpack<[number]>(buf, "u22.10")
+         * ```
+         */
+        TemperatureError = 0x106,
+
+        /**
+         * Constant Variant (uint8_t). Specifies the type of thermometer.
+         *
+         * ```
+         * const [variant] = jdunpack<[jacdac.ThermocoupleVariant]>(buf, "u8")
+         * ```
+         */
+        Variant = 0x107,
+    }
+
+}
+namespace jacdac {
     // Service: Thermometer
     export const SRV_THERMOMETER = 0x1421bac7
 
-    export const enum ThermometerVariant { // uint32_t
+    export const enum ThermometerVariant { // uint8_t
         Outdoor = 0x1,
         Indoor = 0x2,
         Body = 0x3,
-        HeatProbe = 0x4,
-        Thermocouple = 0x5,
     }
 
     export const enum ThermometerReg {
@@ -3445,10 +4236,10 @@ namespace jacdac {
         TemperatureError = 0x106,
 
         /**
-         * Constant Variant (uint32_t). Specifies the type of thermometer.
+         * Constant Variant (uint8_t). Specifies the type of thermometer.
          *
          * ```
-         * const [variant] = jdunpack<[ThermometerVariant]>(buf, "u32")
+         * const [variant] = jdunpack<[jacdac.ThermometerVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -3491,7 +4282,7 @@ namespace jacdac {
 namespace jacdac {
     // Service: Total Volatile organic compound
     export const SRV_TVOC = 0x12a5b597
-    export const enum TVOCReg {
+    export const enum TvocReg {
         /**
          * Read-only ppb u22.10 (uint32_t). Total volatile organic compound readings in parts per billion.
          *
@@ -3514,19 +4305,19 @@ namespace jacdac {
          * Constant ppb u22.10 (uint32_t). Minimum measurable value
          *
          * ```
-         * const [min_TVOC] = jdunpack<[number]>(buf, "u22.10")
+         * const [minTVOC] = jdunpack<[number]>(buf, "u22.10")
          * ```
          */
-        Min_TVOC = 0x104,
+        MinTVOC = 0x104,
 
         /**
          * Constant ppb u22.10 (uint32_t). Minimum measurable value
          *
          * ```
-         * const [max_TVOC] = jdunpack<[number]>(buf, "u22.10")
+         * const [maxTVOC] = jdunpack<[number]>(buf, "u22.10")
          * ```
          */
-        Max_TVOC = 0x105,
+        MaxTVOC = 0x105,
 
         /**
          * Constant s uint32_t. Time required to achieve good sensor stability before measuring after long idle period.
@@ -3541,14 +4332,14 @@ namespace jacdac {
 }
 namespace jacdac {
     // Service: UV index
-    export const SRV_U_VINDEX = 0x1f6e0d90
+    export const SRV_UV_INDEX = 0x1f6e0d90
 
-    export const enum UVIndexVariant { // uint8_t
+    export const enum UvIndexVariant { // uint8_t
         UVA_UVB = 0x1,
         Visible_IR = 0x2,
     }
 
-    export const enum UVIndexReg {
+    export const enum UvIndexReg {
         /**
          * Read-only uv u16.16 (uint32_t). Ultraviolet index, typically refreshed every second.
          *
@@ -3571,7 +4362,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). The type of physical sensor and capabilities.
          *
          * ```
-         * const [variant] = jdunpack<[UVIndexVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.UvIndexVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -3582,17 +4373,6 @@ namespace jacdac {
     // Service: Vibration motor
     export const SRV_VIBRATION_MOTOR = 0x183fc4a2
     export const enum VibrationMotorReg {
-        /**
-         * Read-only ratio uint8_t. Rotation speed of the motor. If only one rotation speed is supported,
-         * then `0` shell be off, and any other number on.
-         * Use the ``vibrate`` command to control the register.
-         *
-         * ```
-         * const [speed] = jdunpack<[number]>(buf, "u8")
-         * ```
-         */
-        Speed = 0x101,
-
         /**
          * Read-write bool (uint8_t). Determines if the vibration motor responds to vibrate commands.
          *
@@ -3605,14 +4385,147 @@ namespace jacdac {
 
     export const enum VibrationMotorCmd {
         /**
-         * Starts a sequence of vibration and pauses.
+         * Starts a sequence of vibration and pauses. To stop any existing vibration, send an empty payload.
          *
          * ```
-         * const [rest] = jdunpack<[([number, number])[]]>(buf, "r: u8 u8")
+         * const [rest] = jdunpack<[([number, number])[]]>(buf, "r: u8 u0.8")
          * const [duration, speed] = rest[0]
          * ```
          */
         Vibrate = 0x80,
+    }
+
+}
+namespace jacdac {
+    // Service: Water level
+    export const SRV_WATER_LEVEL = 0x147b62ed
+
+    export const enum WaterLevelVariant { // uint8_t
+        Resistive = 0x1,
+        ContactPhotoElectric = 0x2,
+        NonContactPhotoElectric = 0x3,
+    }
+
+    export const enum WaterLevelReg {
+        /**
+         * Read-only ratio u0.16 (uint16_t). The reported water level.
+         *
+         * ```
+         * const [level] = jdunpack<[number]>(buf, "u0.16")
+         * ```
+         */
+        Level = 0x101,
+
+        /**
+         * Constant Variant (uint8_t). The type of physical sensor.
+         *
+         * ```
+         * const [variant] = jdunpack<[jacdac.WaterLevelVariant]>(buf, "u8")
+         * ```
+         */
+        Variant = 0x107,
+    }
+
+}
+namespace jacdac {
+    // Service: Weight Scale
+    export const SRV_WEIGHT_SCALE = 0x1f4d5040
+
+    export const enum WeightScaleVariant { // uint8_t
+        Body = 0x1,
+        Food = 0x2,
+        Jewelry = 0x3,
+    }
+
+    export const enum WeightScaleReg {
+        /**
+         * Read-only kg u16.16 (uint32_t). The reported weight.
+         *
+         * ```
+         * const [weight] = jdunpack<[number]>(buf, "u16.16")
+         * ```
+         */
+        Weight = 0x101,
+
+        /**
+         * Read-only kg u16.16 (uint32_t). The estimate error on the reported reading.
+         *
+         * ```
+         * const [weightError] = jdunpack<[number]>(buf, "u16.16")
+         * ```
+         */
+        WeightError = 0x106,
+
+        /**
+         * Read-write kg u16.16 (uint32_t). Calibrated zero offset error on the scale, i.e. the measured weight when nothing is on the scale.
+         * You do not need to subtract that from the reading, it has already been done.
+         *
+         * ```
+         * const [zeroOffset] = jdunpack<[number]>(buf, "u16.16")
+         * ```
+         */
+        ZeroOffset = 0x80,
+
+        /**
+         * Read-write u16.16 (uint32_t). Calibrated gain on the weight scale error.
+         *
+         * ```
+         * const [gain] = jdunpack<[number]>(buf, "u16.16")
+         * ```
+         */
+        Gain = 0x81,
+
+        /**
+         * Constant kg u16.16 (uint32_t). Maximum supported weight on the scale.
+         *
+         * ```
+         * const [maxWeight] = jdunpack<[number]>(buf, "u16.16")
+         * ```
+         */
+        MaxWeight = 0x105,
+
+        /**
+         * Constant kg u16.16 (uint32_t). Minimum recommend weight on the scale.
+         *
+         * ```
+         * const [minWeight] = jdunpack<[number]>(buf, "u16.16")
+         * ```
+         */
+        MinWeight = 0x104,
+
+        /**
+         * Constant kg u16.16 (uint32_t). Smallest, yet distinguishable change in reading.
+         *
+         * ```
+         * const [weightResolution] = jdunpack<[number]>(buf, "u16.16")
+         * ```
+         */
+        WeightResolution = 0x108,
+
+        /**
+         * Constant Variant (uint8_t). The type of physical scale
+         *
+         * ```
+         * const [variant] = jdunpack<[jacdac.WeightScaleVariant]>(buf, "u8")
+         * ```
+         */
+        Variant = 0x107,
+    }
+
+    export const enum WeightScaleCmd {
+        /**
+         * No args. Call this command when there is nothing on the scale. If supported, the module should save the calibration data.
+         */
+        CalibrateZeroOffset = 0x80,
+
+        /**
+         * Argument: weight g u22.10 (uint32_t). Call this command with the weight of the thing on the scale.
+         *
+         * ```
+         * const [weight] = jdunpack<[number]>(buf, "u22.10")
+         * ```
+         */
+        CalibrateGain = 0x81,
     }
 
 }
@@ -3663,7 +4576,7 @@ namespace jacdac {
     /**
      * pipe_report Results
      * ```
-     * const [flags, rssi, channel, bssid, ssid] = jdunpack<[WifiAPFlags, number, number, Buffer, string]>(buf, "u32 x[4] i8 u8 b[6] s[33]")
+     * const [flags, rssi, channel, bssid, ssid] = jdunpack<[jacdac.WifiAPFlags, number, number, Buffer, string]>(buf, "u32 x[4] i8 u8 b[6] s[33]")
      * ```
      */
 

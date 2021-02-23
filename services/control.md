@@ -79,11 +79,11 @@ Typically the same as `firmware_identifier` unless device was flashed by hand; t
 
 A string describing firmware version; typically semver.
 
-    ro mcu_temperature?: i16 °C { typical_min = -10, typical_max = 150 } @ 0x182
+    ro mcu_temperature?: i16 °C { preferred_interval=60000, typical_min = -10, typical_max = 150 } @ 0x182
 
 MCU temperature in degrees Celsius (approximate).
 
-    ro uptime?: u64 us @ 0x186
+    ro uptime?: u64 us { preferred_interval=60000 } @ 0x186
 
 Number of microseconds since boot.
 
@@ -96,18 +96,17 @@ Request the information web site for this device
 URL with machine-readable metadata information about updating device firmware
 
     rw status_light? @ 0x81 {
+        repetitions: u16
         repeats:
             hue: u8
             saturation: u8
             value: u8
-            duration8: u8
+            duration8: u8 8ms
     }
 
-Specifies a status light animation sequence on a colored or monochrome LED.
-``hue``, ``saturation``, ``value`` are the components of an HSV color
-and ``duration8`` is the duration of transition to the next color in the array, in units of ``8ms``.
-Module with monochrome LED can ignore ``hue``, ``saturation`` and use ``value``. The animation is played in a loop.
+Specifies a status light animation sequence on a colored or monochrome LED
+using the [LED animation format](/spec/led-animation).
 Typically, up to 8 steps (repeats) are supported.
-Set the register to empty buffer to disable the animation.
-The status light is also used by JACDAC software stack to indicate various status mode
+
+The status light is also used by Jacdac software stack to indicate various status mode
 and this animation may be overridden when those modes are enabled.

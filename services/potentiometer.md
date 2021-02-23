@@ -2,16 +2,17 @@
 
     identifier: 0x1f274746
     extends: _sensor
+    tags: slider
 
 A slider or rotary potentiometer.
 
 ## Registers
 
-    ro position: u16 / @ reading
+    ro position: u0.16 / @ reading
 
-The relative position of the slider between `0x0000` and `0xffff`.
+The relative position of the slider between `0` and `1`.
 
-    enum Variant: u32 {
+    enum Variant: u8 {
         Slider = 1,
         Rotary = 2,
     }

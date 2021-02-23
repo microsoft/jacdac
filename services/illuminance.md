@@ -1,9 +1,12 @@
 # Illuminance
 
-Measures light in Lux
-
     identifier: 0x1e6ecaf2
     extends: _sensor
+    tags: imaging
+
+Detects the amount of light falling onto a given surface area.
+
+Note that this is different from *luminance*, the amount of light that passes through, emits from, or reflects off an object.
 
 ## Registers
 

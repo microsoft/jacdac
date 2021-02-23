@@ -1,1 +1,1 @@
-This folder contains information relating to JACDAC hardware design and manufacture.
+This folder contains information relating to Jacdac hardware design and manufacture.

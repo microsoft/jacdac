@@ -2,19 +2,20 @@
 
     identifier: 0x126f00e0
     camel: ledPixel
+    tags: light
 
 A controller for strips of individually controlled RGB LEDs.
 
 ## Light programs
 
-Realistically, with 1 mbit JACDAC, we can transmit under 2k of data per animation frame (at 20fps).
+Realistically, with 1 mbit Jacdac, we can transmit under 2k of data per animation frame (at 20fps).
 If transmitting raw data that would be around 500 pixels, which is not enough for many
 installations and it would completely clog the network.
 
 Thus, light service defines a domain-specific language for describing light animations
 and efficiently transmitting them over wire.
 
-Light commands are not JACDAC commands.
+Light commands are not Jacdac commands.
 Light commands are efficiently encoded as sequences of bytes and typically sent as payload
 of `run` command.
 
@@ -67,12 +68,12 @@ number, and followed by 3 bytes of color.
 
 ## Registers
 
-    rw brightness = 15: u8 / @ intensity
+    rw brightness = 0.05: u0.8 / @ intensity
 
 Set the luminosity of the strip.
 At `0` the power to the strip is completely shut down.
 
-    ro actual_brightness: u8 / @ 0x180
+    ro actual_brightness: u0.8 / @ 0x180
 
 This is the luminosity actually applied to the strip.
 May be lower than `brightness` if power-limited by the `max_power` register.
@@ -93,8 +94,12 @@ and could not allow change.
 
 Specifies the number of pixels in the strip.
 Controllers which are sold with lights should default to the correct length
-and could not allow change.
-Increasing length at runtime leads to ineffective use of memory and may lead to controller reboot.
+and could not allow change. Increasing length at runtime leads to ineffective use of memory and may lead to controller reboot.
+
+    rw num_columns?: u16 @ 0x83
+
+If the LED pixel strip is a matrix, specifies the number of columns. Otherwise, a square shape is assumed. Controllers which are sold with lights should default to the correct length
+and could not allow change. Increasing length at runtime leads to ineffective use of memory and may lead to controller reboot.
 
     rw max_power = 200: u16 mA @ max_power
 
@@ -111,11 +116,12 @@ How many times to repeat the program passed in `run` command.
 Should be set before the `run` command.
 Setting to `0` means to repeat forever.
 
-    enum Variant: u32 {
+    enum Variant: u8 {
         Strip = 1,
         Ring = 2,
         Stick = 3,
-        Jewel = 4
+        Jewel = 4,
+        Matrix = 5
     }
     const variant: Variant @ variant
 

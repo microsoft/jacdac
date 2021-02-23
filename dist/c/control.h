@@ -116,21 +116,17 @@ typedef struct jd_control_flood_ping_report {
 #define JD_CONTROL_REG_FIRMWARE_URL 0x188
 
 /**
- * Specifies a status light animation sequence on a colored or monochrome LED.
- * ``hue``, ``saturation``, ``value`` are the components of an HSV color
- * and ``duration8`` is the duration of transition to the next color in the array, in units of ``8ms``.
- * Module with monochrome LED can ignore ``hue``, ``saturation`` and use ``value``. The animation is played in a loop.
+ * Specifies a status light animation sequence on a colored or monochrome LED
+ * using the [LED animation format](/spec/led-animation).
  * Typically, up to 8 steps (repeats) are supported.
- * Set the register to empty buffer to disable the animation.
- * The status light is also used by JACDAC software stack to indicate various status mode
- * and this animation may be overridden when those modes are enabled.
  */
 #define JD_CONTROL_REG_STATUS_LIGHT 0x81
 typedef struct jd_control_status_light {
+    uint16_t repetitions;
     uint8_t hue;
     uint8_t saturation;
     uint8_t value;
-    uint8_t duration8;
+    uint8_t duration8; // 8ms
 } jd_control_status_light_t;
 
 

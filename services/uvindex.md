@@ -4,6 +4,8 @@ The UV Index is a measure of the intensity of ultraviolet (UV) rays from the Sun
 
     identifier: 0x1f6e0d90
     extends: _sensor
+    camel: uvIndex
+    tags: environment
 
 ## Registers
 

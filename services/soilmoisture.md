@@ -2,12 +2,13 @@
 
     identifier: 0x1d4aa3b3
     extends: _sensor
+    tags: environment
 
 A soil moisture sensor.
 
 ## Registers
 
-    ro moisture: u16 / @ reading
+    ro moisture: u0.16 / { preferred_interval=1000 } @ reading
 
 Indicates the wetness of the soil, from ``dry`` to ``wet``.
 

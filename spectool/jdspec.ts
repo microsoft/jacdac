@@ -1,5 +1,7 @@
 /// <reference path="jdspec.d.ts" />
 
+import { parseIntFloat } from "./jdutils";
+
 export const DEVICE_IMAGE_WIDTH = 600
 export const DEVICE_IMAGE_HEIGHT = 450
 
@@ -72,7 +74,8 @@ export const unitDescription: jdspec.SMap<string> = {
     "rpm": "revolutions per minute",
     "uv": "UV index",
     "lux": "illuminance",
-    "bpm": "beats per minute"
+    "bpm": "beats per minute",
+    "mcd": "micro candella"
 }
 
 export const secondaryUnitConverters: jdspec.SMap<{
@@ -109,6 +112,7 @@ export const secondaryUnitConverters: jdspec.SMap<{
     "ppm": { name: "parts per million", unit: "/", scale: 1.00E-06, offset: 0 },
     "ppb": { name: "parts per billion", unit: "/", scale: 1.00E-09, offset: 0 },
     "/100": { name: "percent", unit: "/", scale: 1 / 100, offset: 0 },
+    "%": { name: "percent", unit: "/", scale: 1 / 100, offset: 0 },
     "/1000": { name: "permille", unit: "/", scale: 1 / 1000, offset: 0 },
     "hPa": { name: "hectopascal", unit: "Pa", scale: 100, offset: 0 },
     "mm": { name: "millimeter", unit: "m", scale: 1 / 1000, offset: 0 },
@@ -116,8 +120,10 @@ export const secondaryUnitConverters: jdspec.SMap<{
     "km": { name: "kilometer", unit: "m", scale: 1000, offset: 0 },
     "km/h": { name: "kilometer per hour", unit: "m/s", scale: 1 / 3.6, offset: 0 },
     "8ms": { name: "8 milliseconds", unit: "s", scale: 8 / 1000, offset: 0 },
+    "nm": { name: "nanometer", unit: "m", scale: 1e-9, offset: 0 },
+    "nT": { name: "nano Tesla", unit: "T", scale: 1e9, offset: 0 },
 
-    // compat with previous JACDAC versions
+    // compat with previous Jacdac versions
     "frac": { name: "ratio", unit: "/", scale: 1, offset: 0 },
     "us": { name: "micro seconds", unit: "s", scale: 1e-6, offset: 0 },
     "mWh": { name: "micro watt-hour", unit: "J", scale: 3.6e-3, offset: 0 },
@@ -174,7 +180,18 @@ const identifierRanges: { [index: string]: [number, number][] } = {
         [0x200, 0xeff], // custom
         [0xf00, 0xfff], // impl
     ],
+    "const": [
+        [0x100, 0x17f],
+        [0x180, 0x1ff],
+        [0x200, 0xeff], // custom
+        [0xf00, 0xfff], // impl
+    ],
     "command": [
+        [0x000, 0x07f],
+        [0x080, 0xeff],
+        [0xf00, 0xfff],
+    ],
+    "report": [
         [0x000, 0x07f],
         [0x080, 0xeff],
         [0xf00, 0xfff],
@@ -197,7 +214,8 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
         notes: {},
         classIdentifier: 0,
         enums: {},
-        packets: []
+        packets: [],
+        tags: []
     }
 
     let backticksType = ""
@@ -360,6 +378,27 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
         if (packetInfo.packed)
             warn(`you may want to use explicit padding in ${packetInfo.name}`)
 
+        let repeats = false
+        let hadzero = false
+        for (const p of packetInfo.fields) {
+            if (hadzero) {
+                error(`field ${p.name} in ${packetInfo.kind} ${packetInfo.name} follows a variable-sized field`)
+                break
+            }
+            if (p.startRepeats) {
+                if (repeats)
+                    error(`repeats: can only be specified once; in ${packetInfo.kind} ${packetInfo.name}`)
+                repeats = true
+            }
+            if (p.storage == 0 && p.type != "string0") {
+                if (repeats) {
+                    error(`variable-sized field ${p.name} in ${packetInfo.kind} ${packetInfo.name} cannot repeat`)
+                    break
+                }
+                hadzero = true
+            }
+        }
+
         const pid = packetInfo.identifier;
         const ranges = identifierRanges[packetInfo.kind];
         if (packetInfo.name != "set_register"
@@ -388,11 +427,18 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
         packetInfo = null
     }
 
+    function forceSection(sectionId: string) {
+        if (noteId != sectionId) {
+            error(`this is only allowed in ## ${sectionId} not in ## ${noteId}`)
+        }
+    }
+
     function startPacket(words: string[]) {
         checkBraces(null)
         const kindSt = words.shift()
         let kind: jdspec.PacketKind = "command"
         if (kindSt == "meta") {
+            forceSection("commands")
             let w2 = words.shift()
             if (w2 == "pipe")
                 w2 = words.shift()
@@ -401,6 +447,7 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
             else
                 error("invalid token after meta")
         } else if (kindSt == "pipe") {
+            forceSection("commands")
             let w2 = words.shift()
             if (w2 == "report" || w2 == "command")
                 kind = ("pipe_" + w2) as any
@@ -491,20 +538,24 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
             switch (kind) {
                 case "const":
                 case "ro":
+                    forceSection("registers")
                     isSystem = 0x100 <= v && v <= 0x17f
                     isUser = 0x180 <= v && v <= 0x1ff
                     break
                 case "rw":
+                    forceSection("registers")
                     isSystem = 0x00 <= v && v <= 0x7f
                     isUser = 0x80 <= v && v <= 0xff
                     break
                 case "report":
                 case "command":
+                    forceSection("commands")
                     isSystem = 0x00 <= v && v <= 0x7f
                     isUser = 0x80 <= v && v <= 0xff
                     isHigh = 0x100 <= v && v <= 0xeff
                     break
                 case "event":
+                    forceSection("events")
                     isSystem = 0x00 <= v && v <= 0x7f
                     isUser = 0x80 <= v && v <= 0xff
                     break
@@ -569,6 +620,47 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
         }
     }
 
+    function rangeCheck(tp: string, v: number) {
+        const [storage, type, typeShift] = normalizeStorageType(tp)
+
+        if (isNaN(v))
+            return v // error already reported
+
+        if (storage == 0) {
+            error(`numeric values like ${v} not allowed for ${tp}`)
+            return v
+        }
+
+        if (v < 0 && storage > 0) {
+            error(`negative values like ${v} not allowed for ${tp}`)
+            return v
+        }
+
+        if (Math.floor(v) != v && typeShift == 0) {
+            error(`only integer values allowed for ${tp}; got ${v}`)
+            return v
+        }
+
+        let bits = storage < 0 ? -storage * 8 - 1 : storage * 8
+        bits -= (typeShift || 0)
+        // don't use bitshift to allow for more than 32 bits
+        let max = 1
+        while (bits--)
+            max *= 2
+        if (-v == max) {
+            // OK - min_int
+        } else if (max == 1 && v == 1) {
+            // we make an exception for u0.8 being set to 1
+        } else {
+            if (Math.abs(v) >= max) {
+                error(`value ${v} is out of range for ${tp}`)
+                return v
+            }
+        }
+
+        return v
+    }
+
     function packetField(words: string[]) {
         if (words.length == 2 && (words[0] == "repeats" || words[0] == "segmented" || words[0] == "multi-segmented")) {
             nextModifier = words[0]
@@ -583,7 +675,7 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
             op = words.shift()
         }
         if (op == "=") {
-            defaultValue = parseIntCheck(words.shift())
+            defaultValue = parseIntCheck(words.shift(), true)
             op = words.shift()
         }
 
@@ -601,8 +693,15 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
             tok = words.shift()
         }
 
+        if (defaultValue !== undefined)
+            rangeCheck(tp, defaultValue)
+
         let shift = typeShift || undefined
         if (unit == "/") {
+            // / units should be used with ui0. data
+            if (!/^(u0|i1)\.\d+$/.test(tp))
+                error(`fraction unit must be used with u0.yyy or i1.yyy data types (got ${tp})`)
+
             shift = Math.abs(storage) * 8
             if (storage < 0)
                 shift -= 1
@@ -631,12 +730,19 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
                 tok = camelize(tok)
                 switch (tok) {
                     case "maxBytes":
+                        (field as any)[tok] = rangeCheck("u8", parseVal())
+                        break
                     case "typicalMin":
                     case "typicalMax":
                     case "absoluteMin":
                     case "absoluteMax":
-                        (field as any)[tok] = parseVal()
+                        (field as any)[tok] = rangeCheck(tp, parseVal())
                         break
+                    case "preferredInterval":
+                        if ((packetInfo as any)[tok] !== undefined)
+                            error(`field ${tok} already set`);
+                        (packetInfo as any)[tok] = rangeCheck("u32", parseVal())
+                        break;
                     default:
                         error("unknown constraint: " + tok)
                         break
@@ -701,38 +807,17 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
 
     function enumMember(words: string[]) {
         if (words[1] != "=" || words.length != 3)
-            error(`expecting: FILD_NAME = INTEGER`)
-        enumInfo.members[normalizeName(words[0])] = parseIntCheck(words[2])
+            error(`expecting: FIELD_NAME = INTEGER`)
+        enumInfo.members[normalizeName(words[0])] = rangeCheck(canonicalType(enumInfo.storage), parseIntCheck(words[2]))
     }
 
     function parseIntCheck(w: string, allowFloat = false) {
-        if (/^-?0x[a-f\d_]+$/i.test(w) || /^-?[\d_]+$/.test(w)) {
-            const v = parseInt(w.replace(/_/g, "")) // allow for 0x3fff_ffff syntax
-            if (isNaN(v))
-                error("can't parse int: " + w)
-            return v
+        try {
+            return parseIntFloat(info, w, allowFloat)
+        } catch (e) {
+            error(e.message)
+            return 0;
         }
-
-        if (allowFloat && /^-?\d*(\.\d*)?(e(-?)\d+)?$/.test(w)) {
-            const v = parseFloat(w)
-            if (isNaN(v))
-                error("can't parse float: " + w)
-            return v
-        }
-
-        const ww = w.split(/\./)
-        if (ww.length != 2) {
-            error(`expecting int or enum member here`)
-            return 0
-        }
-        const en = info.enums[ww[0]]
-        if (!en) {
-            error(`${ww[0]} is not an enum type`)
-            return 0
-        }
-        if (!en.members.hasOwnProperty(ww[1]))
-            error(`${ww[1]} is not a member of ${ww[0]}`)
-        return en.members[ww[1]] || 0
     }
 
     function looksRandom(n: number) {
@@ -758,7 +843,7 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
 
     function metadataMember(words: string[]) {
         if ((words[1] != "=" && words[1] != ":") || words.length != 3)
-            error(`expecting: FILD_NAME = VALUE or FIELD_NAME : VALUE`)
+            error(`expecting: FIELD_NAME = VALUE or FIELD_NAME : VALUE`)
         switch (words[0]) {
             case "extends":
                 processInclude(words[2])
@@ -791,6 +876,9 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
                 else
                     error("unknown status");
                 break;
+            case "tags":
+                info.tags = info.tags.concat(words.slice(2))
+                break;
             default:
                 error("unknown metadata field: " + words[0])
                 break
@@ -816,7 +904,7 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
                 info.enums[k] = ie;
             })
         const innerPackets = clone(inner.packets
-            .filter(pkt => !info.packets.find(ipkt => ipkt.identifier === pkt.identifier)));
+            .filter(pkt => !info.packets.find(ipkt => ipkt.kind === pkt.kind && ipkt.identifier === pkt.identifier)));
         innerPackets.forEach(pkt => pkt.derived = name)
         info.packets = [...info.packets, ...innerPackets]
         if (inner.highCommands)
@@ -864,6 +952,8 @@ export function parseServiceSpecificationMarkdownToJSON(filecontent: string, inc
             const len = a + b
             if (!(len == 8 || len == 16 || len == 32 || len == 64))
                 error(`fixed point ${tp} can't be ${len} bits`)
+            if (a == 0 && m[1] == "i")
+                error(`fixed point ${tp} can't be i0.X; has to be at least i1.X`)
             return [(m[1] == "i" ? -1 : 1) * (len >> 3), tp2, b]
         }
 
@@ -1088,7 +1178,13 @@ function toH(info: jdspec.ServiceSpec) {
 
 export function camelize(name: string) {
     if (!name) return name;
-    return name[0].toLowerCase() + name.slice(1).replace(/_([a-z])/g, (_, l) => l.toUpperCase())
+    return name[0].toLowerCase() + name.slice(1).replace(/_([a-z0-9])/ig, (_, l) => l.toUpperCase())
+
+}
+
+export function capitalize(name: string) {
+    if (!name) return name;
+    return name[0].toUpperCase() + name.slice(1);
 }
 
 function upperCamel(name: string) {
@@ -1104,6 +1200,11 @@ export function snakify(name: string) {
 export function dashify(name: string) {
     if (!name) return name;
     return snakify(name.replace(/^_+/, '')).replace(/_/g, '-').toLowerCase();
+}
+
+export function humanify(name: string) {
+    return name?.replace(/([a-z])([A-Z])/g, (_, a, b) => a + " " + b)
+        .replace(/(-|_)/g, " ");
 }
 
 function addComment(pkt: jdspec.PacketInfo) {
@@ -1172,7 +1273,7 @@ ${code.replace(/^\n+/, '').replace(/\n+$/, '')}
 `
 }
 
-function packFormatForField(info: jdspec.ServiceSpec, fld: jdspec.PacketMember) {
+function packFormatForField(info: jdspec.ServiceSpec, fld: jdspec.PacketMember, isStatic?: boolean, useBooleans?: boolean) {
     const sz = memberSize(fld)
     const szSuff = sz ? `[${sz}]` : ``
     let tsType = "number"
@@ -1184,6 +1285,8 @@ function packFormatForField(info: jdspec.ServiceSpec, fld: jdspec.PacketMember) 
     } else if (info.enums[fld.type]) {
         fmt = canonicalType(info.enums[fld.type].storage)
         tsType = upperCamel(info.camelName) + upperCamel(fld.type)
+        if (isStatic)
+            tsType = "jacdac." + tsType;
     } else {
         switch (fld.type) {
             case "string":
@@ -1209,6 +1312,8 @@ function packFormatForField(info: jdspec.ServiceSpec, fld: jdspec.PacketMember) 
             case "bool":
                 // TODO native bool support
                 fmt = "u8"
+                if (useBooleans)
+                    tsType = "boolean"
                 break
             default:
                 return null
@@ -1225,7 +1330,7 @@ function packFormatForField(info: jdspec.ServiceSpec, fld: jdspec.PacketMember) 
  * @param pkt 
  * TODO fix this
  */
-export function packFormat(sinfo: jdspec.ServiceSpec, pkt: jdspec.PacketInfo): string {
+export function packFormat(sinfo: jdspec.ServiceSpec, pkt: jdspec.PacketInfo, useBooleans?: boolean): string {
     if (pkt.packed || !pkt.fields?.length)
         return undefined;
 
@@ -1233,7 +1338,7 @@ export function packFormat(sinfo: jdspec.ServiceSpec, pkt: jdspec.PacketInfo): s
     for (const fld of pkt.fields) {
         if (fld.startRepeats)
             fmt.push("r:")
-        const ff = packFormatForField(sinfo, fld);
+        const ff = packFormatForField(sinfo, fld, false, useBooleans);
         if (!ff)
             return undefined;
         fmt.push(ff.fmt)
@@ -1242,7 +1347,7 @@ export function packFormat(sinfo: jdspec.ServiceSpec, pkt: jdspec.PacketInfo): s
     return fmt.join(" ");
 }
 
-function packInfo(info: jdspec.ServiceSpec, pkt: jdspec.PacketInfo, isStatic: boolean) {
+export function packInfo(info: jdspec.ServiceSpec, pkt: jdspec.PacketInfo, isStatic: boolean, useBooleans?: boolean) {
     const vars: string[] = []
     const vartp: string[] = []
     let fmt = ""
@@ -1263,7 +1368,7 @@ function packInfo(info: jdspec.ServiceSpec, pkt: jdspec.PacketInfo, isStatic: bo
             }
         }
         const varname = camelize(fld.name == "_" ? pkt.name : fld.name)
-        const f0 = packFormatForField(info, fld)
+        const f0 = packFormatForField(info, fld, isStatic, useBooleans)
         if (!f0 || /(reserved|padding)/.test(fld.name)) {
             if (!f0)
                 console.log(`${pkt.name}/${fld.name} - can't get format for '${fld.type}'`)
@@ -1296,7 +1401,11 @@ function packInfo(info: jdspec.ServiceSpec, pkt: jdspec.PacketInfo, isStatic: bo
 
     buffers = buffers.replace(/\n*$/, "")
 
-    return buffers
+    return {
+        buffers,
+        names: vars,
+        types: vartp
+    }
 }
 
 function memberSize(fld: jdspec.PacketMember) {
@@ -1327,7 +1436,7 @@ function toTypescript(info: jdspec.ServiceSpec, staticTypeScript: boolean) {
             continue
 
         const cmt = addComment(pkt)
-        let pack = pkt.fields.length ? packInfo(info, pkt, staticTypeScript) : ""
+        let pack = pkt.fields.length ? packInfo(info, pkt, staticTypeScript).buffers : ""
 
         let inner = "Cmd"
         if (isRegister(pkt.kind))

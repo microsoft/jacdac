@@ -4,10 +4,11 @@ A sensor that measures luminosity level.
 
     identifier: 0x17dc9a1c
     extends: _sensor
+    tags: imaging
 
 ## Registers
 
-    ro light_level: u16 / @ reading
+    ro light_level: u0.16 / @ reading
 
 Detect light level
 

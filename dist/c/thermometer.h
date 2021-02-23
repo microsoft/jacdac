@@ -4,12 +4,10 @@
 
 #define JD_SERVICE_CLASS_THERMOMETER  0x1421bac7
 
-// enum Variant (uint32_t)
+// enum Variant (uint8_t)
 #define JD_THERMOMETER_VARIANT_OUTDOOR 0x1
 #define JD_THERMOMETER_VARIANT_INDOOR 0x2
 #define JD_THERMOMETER_VARIANT_BODY 0x3
-#define JD_THERMOMETER_VARIANT_HEAT_PROBE 0x4
-#define JD_THERMOMETER_VARIANT_THERMOCOUPLE 0x5
 
 /**
  * Read-only °C i22.10 (int32_t). The temperature.
@@ -32,7 +30,7 @@
 #define JD_THERMOMETER_REG_TEMPERATURE_ERROR JD_REG_READING_ERROR
 
 /**
- * Constant Variant (uint32_t). Specifies the type of thermometer.
+ * Constant Variant (uint8_t). Specifies the type of thermometer.
  */
 #define JD_THERMOMETER_REG_VARIANT JD_REG_VARIANT
 

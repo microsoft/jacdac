@@ -6,12 +6,6 @@ A vibration motor.
 
 ## Registers
 
-    ro speed: u8 / @ reading
-
-Rotation speed of the motor. If only one rotation speed is supported,
-then `0` shell be off, and any other number on. 
-Use the ``vibrate`` command to control the register.
-
     rw enabled: bool @ intensity
 
 Determines if the vibration motor responds to vibrate commands.
@@ -21,7 +15,7 @@ Determines if the vibration motor responds to vibrate commands.
     command vibrate @ 0x80 {
     repeats:
         duration: u8 8ms,
-        speed: u8 /
+        speed: u0.8 /
     }
 
-Starts a sequence of vibration and pauses.
+Starts a sequence of vibration and pauses. To stop any existing vibration, send an empty payload.

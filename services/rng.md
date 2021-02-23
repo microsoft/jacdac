@@ -10,15 +10,10 @@ which is periodically re-seeded with entropy coming from some hardware source.
 
 ## Commands
 
-    command random @ 0x80 {
-        length: u8 { absolute_max=128 }
-    }
-    report random {
-        data: bytes
-    }
+    ro random: bytes @ 0x80
 
-A command that generates a random buffer with the given length.
-This never blocks for a long time.
+A register that returns a 128 bytes random buffer on every request.
+This never blocks for a long time. If you need additional random bytes, keep querying the register.
 
 ## Registers
 

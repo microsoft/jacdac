@@ -128,7 +128,7 @@ ${regs.map(reg => {
         const hasBlocks = reg.identifier == Reading || reg.identifier == Intensity || reg.identifier == Value;
 
         return fields.map((field, fieldi) => {
-            const name = field.name === "_" ? reg.name : field.name
+            const name = field.name === "_" ? reg.name : isReading ? field.name : `${reg.name}${capitalize(field.name)}`
             const min = pick(field.typicalMin, field.absoluteMin, field.unit === "/" ? (field.type[0] === "i" ? -1 : 0) : undefined)
             const max = pick(field.typicalMax, field.absoluteMax, field.unit === "/" ? 1 : undefined)
             const defl = field.defaultValue;

@@ -9,70 +9,81 @@
  */
 #define JD_ACCELEROMETER_REG_FORCES JD_REG_READING
 typedef struct jd_accelerometer_forces {
-    int16_t x;  // g i6.10
-    int16_t y;  // g i6.10
-    int16_t z;  // g i6.10
+    int32_t x;  // g i12.20
+    int32_t y;  // g i12.20
+    int32_t z;  // g i12.20
 } jd_accelerometer_forces_t;
 
 
 /**
- * Emitted when accelerometer is tilted in the given direction.
+ * Read-only g i12.20 (int32_t). Error on the reading value.
  */
-#define JD_ACCELEROMETER_EV_TILT_UP 0x1
+#define JD_ACCELEROMETER_REG_FORCES_ERROR JD_REG_READING_ERROR
+
+/**
+ * Read-write g i12.20 (int32_t). Configures the range forces detected.
+ * Read-back after setting to get current value.
+ */
+#define JD_ACCELEROMETER_REG_MAX_FORCE 0x80
 
 /**
  * Emitted when accelerometer is tilted in the given direction.
  */
-#define JD_ACCELEROMETER_EV_TILT_DOWN 0x2
+#define JD_ACCELEROMETER_EV_TILT_UP 0x81
 
 /**
  * Emitted when accelerometer is tilted in the given direction.
  */
-#define JD_ACCELEROMETER_EV_TILT_LEFT 0x3
+#define JD_ACCELEROMETER_EV_TILT_DOWN 0x82
 
 /**
  * Emitted when accelerometer is tilted in the given direction.
  */
-#define JD_ACCELEROMETER_EV_TILT_RIGHT 0x4
+#define JD_ACCELEROMETER_EV_TILT_LEFT 0x83
+
+/**
+ * Emitted when accelerometer is tilted in the given direction.
+ */
+#define JD_ACCELEROMETER_EV_TILT_RIGHT 0x84
 
 /**
  * Emitted when accelerometer is laying flat in the given direction.
  */
-#define JD_ACCELEROMETER_EV_FACE_UP 0x5
+#define JD_ACCELEROMETER_EV_FACE_UP 0x85
 
 /**
  * Emitted when accelerometer is laying flat in the given direction.
  */
-#define JD_ACCELEROMETER_EV_FACE_DOWN 0x6
+#define JD_ACCELEROMETER_EV_FACE_DOWN 0x86
 
 /**
  * Emitted when total force acting on accelerometer is much less than 1g.
  */
-#define JD_ACCELEROMETER_EV_FREEFALL 0x7
+#define JD_ACCELEROMETER_EV_FREEFALL 0x87
 
 /**
  * Emitted when forces change violently a few times.
  */
-#define JD_ACCELEROMETER_EV_SHAKE 0xb
+#define JD_ACCELEROMETER_EV_SHAKE 0x8b
 
 /**
  * Emitted when force in any direction exceeds given threshold.
  */
-#define JD_ACCELEROMETER_EV_FORCE_2G 0xc
+#define JD_ACCELEROMETER_EV_FORCE_2G 0x8c
 
 /**
  * Emitted when force in any direction exceeds given threshold.
  */
-#define JD_ACCELEROMETER_EV_FORCE_3G 0x8
+#define JD_ACCELEROMETER_EV_FORCE_3G 0x88
 
 /**
  * Emitted when force in any direction exceeds given threshold.
  */
-#define JD_ACCELEROMETER_EV_FORCE_6G 0x9
+#define JD_ACCELEROMETER_EV_FORCE_6G 0x89
 
 /**
  * Emitted when force in any direction exceeds given threshold.
  */
-#define JD_ACCELEROMETER_EV_FORCE_8G 0xa
+#define JD_ACCELEROMETER_EV_FORCE_8G 0x8a
 
 #endif

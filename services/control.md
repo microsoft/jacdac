@@ -57,6 +57,12 @@ The `dummy_payload` is `size` bytes long and contains bytes `0, 1, 2, ...`.
 
 ## Registers
 
+    rw reset_in? : u32 us @ 0x80
+
+When set to value other than `0`, it asks the device to reset after specified number of microseconds.
+This is typically used to implement watchdog functionality, where a brain device sets `reset_in` to
+say 1.6s every 0.5s.
+
     const device_description?: string @ 0x180
 
 Identifies the type of hardware (eg., ACME Corp. Servo X-42 Rev C)
@@ -73,11 +79,11 @@ Typically the same as `firmware_identifier` unless device was flashed by hand; t
 
 A string describing firmware version; typically semver.
 
-    ro mcu_temperature?: i16 C { typical_min = -10, typical_max = 150 } @ 0x182
+    ro mcu_temperature?: i16 °C { preferred_interval=60000, typical_min = -10, typical_max = 150 } @ 0x182
 
 MCU temperature in degrees Celsius (approximate).
 
-    ro uptime?: u64 us @ 0x186
+    ro uptime?: u64 us { preferred_interval=60000 } @ 0x186
 
 Number of microseconds since boot.
 
@@ -88,3 +94,19 @@ Request the information web site for this device
     const firmware_url?: string @ 0x188
 
 URL with machine-readable metadata information about updating device firmware
+
+    rw status_light? @ 0x81 {
+        repetitions: u16
+        repeats:
+            hue: u8
+            saturation: u8
+            value: u8
+            duration8: u8 8ms
+    }
+
+Specifies a status light animation sequence on a colored or monochrome LED
+using the [LED animation format](/spec/led-animation).
+Typically, up to 8 steps (repeats) are supported.
+
+The status light is also used by Jacdac software stack to indicate various status mode
+and this animation may be overridden when those modes are enabled.

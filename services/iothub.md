@@ -2,6 +2,7 @@
 
     identifier: 0x19ed364c
     camel: iotHub
+    tags: iot
 
 Send messages, receive commands, and work with device twins in Azure IoT Hub.
 
@@ -184,17 +185,17 @@ Something like `my-dev-007`; empty string when `connection_string` is not set.
 
 ## Events
 
-    event connected @ 0x01
+    event connected @ 0x80
 
 Emitted upon successful connection.
 
-    event connection_error @ 0x02 {
+    event connection_error @ 0x81 {
         reason: string
     }
 
 Emitted when connection was lost.
 
-    event devicebound_str @ 0x03 {
+    event devicebound_str @ 0x82 {
         msg: string0
     repeats:
         property_name: string0

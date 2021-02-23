@@ -70,6 +70,23 @@ declare namespace jdspec {
      */
     type StabilityStatus = "stable" | "experimental" | "deprecated";
 
+    interface ServiceMarkdownSpec {
+        /**
+         * Short identifier for the service, from file name.
+         */
+        shortId: string;
+
+        /**
+         * When written in hex, it has the form 0x1xxxxxxx (except for control service).
+         */
+        classIdentifier: number;
+
+        /**
+         * Markdown source
+         */
+        source: string;
+    }
+
     /**
      * Service specification.
      */
@@ -93,11 +110,6 @@ declare namespace jdspec {
          * Short identifier for the service, from file name.
          */
         shortId: string;
-
-        /**
-         * The full markdown source for the spec.
-         */
-        source?: string;
 
         /**
          * When written in hex, it has the form 0x1xxxxxxx (except for control service).
@@ -151,6 +163,11 @@ declare namespace jdspec {
          * Specifies the stability status of this service.
          */
         status: StabilityStatus;
+
+        /**
+         * General purpose tags
+         */
+        tags: string[];
     }
 
     /**
@@ -276,9 +293,14 @@ declare namespace jdspec {
         hasReport?: boolean;
 
         /**
-         * This register supports the JACDAC infrastructure and is not meant to be reported outside the JACDAC bus.
+         * This register supports the Jacdac infrastructure and is not meant to be reported outside the Jacdac bus.
          */
         internal?: boolean;
+
+        /**
+         * For registers, preffere interval (ms) to refresh the register
+         */
+        preferredInterval?: number;
     }
 
     /**
@@ -446,7 +468,7 @@ declare namespace jdspec {
     }
 
     /**
- * Information about MakeCode support for a JACDAC service
+ * Information about MakeCode support for a Jacdac service
  */
     export interface MakeCodeServiceInfo {
         /**

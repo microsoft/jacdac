@@ -1,0 +1,254 @@
+{
+  "name": "LED",
+  "status": "experimental",
+  "shortId": "led",
+  "camelName": "led",
+  "shortName": "led",
+  "extends": [
+    "_base"
+  ],
+  "notes": {
+    "short": "A controller for 1 or more monochrome or RGB LEDs connected in parallel."
+  },
+  "classIdentifier": 506480888,
+  "enums": {
+    "Variant": {
+      "name": "Variant",
+      "storage": 1,
+      "members": {
+        "ThroughHole": 1,
+        "SMD": 2,
+        "Power": 3,
+        "Bead": 4
+      }
+    }
+  },
+  "packets": [
+    {
+      "kind": "const",
+      "name": "instance_name",
+      "identifier": 265,
+      "description": "A friendly name that describes the role of this service instance in the device.\nIt often corresponds to what's printed on the device:\nfor example, `A` for button A, or `S0` for servo channel 0.\nWords like `left` should be avoided because of localization issues (unless they are printed on the device).",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "optional": true,
+      "identifierName": "instance_name",
+      "packFormat": "s",
+      "derived": "_base"
+    },
+    {
+      "kind": "ro",
+      "name": "status_code",
+      "identifier": 259,
+      "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe Jacdac status/error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the announce packet. If a service implements this register,\nit should also support the ``status_code_changed`` event defined below.",
+      "fields": [
+        {
+          "name": "code",
+          "unit": "",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "vendor_code",
+          "unit": "",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "identifierName": "status_code",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
+    {
+      "kind": "event",
+      "name": "status_code_changed",
+      "identifier": 4,
+      "description": "Notifies that the status code of the service changed.",
+      "fields": [
+        {
+          "name": "code",
+          "unit": "",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "vendor_code",
+          "unit": "",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "identifierName": "status_code_changed",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
+    {
+      "kind": "rw",
+      "name": "brightness",
+      "identifier": 1,
+      "description": "Set the luminosity of the strip. The value is used to scale `value` in `steps` register.\nAt `0` the power to the strip is completely shut down.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "/",
+          "shift": 16,
+          "type": "u0.16",
+          "storage": 2
+        }
+      ],
+      "identifierName": "intensity",
+      "packFormat": "u0.16"
+    },
+    {
+      "kind": "rw",
+      "name": "animation",
+      "identifier": 130,
+      "description": "Animations are described using pairs of color description and duration, \nsimilarly to the `status_light` register in the control service.\n`repetition` as ``0`` is considered infinite.\nFor monochrome LEDs, the hue and saturation are ignored.\nA specification `(red, 80ms), (blue, 40ms), (blue, 0ms), (yellow, 80ms)`\nmeans to start with red, cross-fade to blue over 80ms, stay blue for 40ms,\nchange to yellow, and cross-fade back to red in 80ms.",
+      "fields": [
+        {
+          "name": "repetitions",
+          "unit": "",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "hue",
+          "unit": "",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true,
+          "startRepeats": true
+        },
+        {
+          "name": "saturation",
+          "unit": "",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "value",
+          "unit": "",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "duration",
+          "unit": "8ms",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u16 r: u8 u8 u8 u8"
+    },
+    {
+      "kind": "rw",
+      "name": "max_power",
+      "identifier": 7,
+      "description": "Limit the power drawn by the light-strip (and controller).",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "mA",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true,
+          "defaultValue": 100
+        }
+      ],
+      "optional": true,
+      "identifierName": "max_power",
+      "packFormat": "u16"
+    },
+    {
+      "kind": "const",
+      "name": "led_count",
+      "identifier": 384,
+      "description": "If known, specifies the number of LEDs in parallel on this device.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "packFormat": "u16"
+    },
+    {
+      "kind": "const",
+      "name": "wave_length",
+      "identifier": 385,
+      "description": "If monochrome LED, specifies the wave length of the LED.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "nm",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true,
+          "typicalMin": 365,
+          "typicalMax": 885
+        }
+      ],
+      "optional": true,
+      "packFormat": "u16"
+    },
+    {
+      "kind": "const",
+      "name": "luminous_intensity",
+      "identifier": 386,
+      "description": "The luminous intensity of the LED, at full value, in micro candella.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "mcd",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true,
+          "typicalMin": 10,
+          "typicalMax": 5000
+        }
+      ],
+      "optional": true,
+      "packFormat": "u16"
+    },
+    {
+      "kind": "const",
+      "name": "variant",
+      "identifier": 263,
+      "description": "The physical type of LED.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "Variant",
+          "storage": 1
+        }
+      ],
+      "optional": true,
+      "identifierName": "variant",
+      "packFormat": "u8"
+    }
+  ],
+  "tags": [
+    "light"
+  ]
+}

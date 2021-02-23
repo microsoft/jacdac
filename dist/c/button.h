@@ -12,21 +12,26 @@
 /**
  * Emitted when button goes from inactive (`pressed == 0`) to active.
  */
-#define JD_BUTTON_EV_DOWN 0x1
+#define JD_BUTTON_EV_DOWN JD_EV_ACTIVE
 
 /**
  * Emitted when button goes from active (`pressed == 1`) to inactive.
  */
-#define JD_BUTTON_EV_UP 0x2
+#define JD_BUTTON_EV_UP JD_EV_INACTIVE
 
 /**
  * Emitted together with `up` when the press time was not longer than 500ms.
  */
-#define JD_BUTTON_EV_CLICK 0x3
+#define JD_BUTTON_EV_CLICK 0x80
 
 /**
- * Emitted together with `up` when the press time was more than 500ms.
+ * Emitted after button is held for 500ms. Long click events are followed by a separate up event.
  */
-#define JD_BUTTON_EV_LONG_CLICK 0x4
+#define JD_BUTTON_EV_LONG_CLICK 0x81
+
+/**
+ * Emitted after the button is held for 1500ms. Hold events are followed by a separate up event.
+ */
+#define JD_BUTTON_EV_HOLD 0x82
 
 #endif

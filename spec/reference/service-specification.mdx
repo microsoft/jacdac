@@ -5,9 +5,9 @@ order: 2
 
 ## Service Specification
 
-A service specification describes the three main types of JACDAC packets that a service recognizes: registers, commands, and events.  
+A service specification describes the three main types of Jacdac packets that a service recognizes: registers, commands, and events.  
 
-Service specifications are written in a literate form of markdown, for consumption by both human and machine. The formal specification fragments, given as markdown code sections, are interleaved with English specification text. The code sections can be in triple backticks or with the 4 leading spaces (examples in this document only use the leading spaces form).
+Service specifications are written in a literate form of markdown, for consumption by both human and machine. The formal specification fragments, given as markdown code sections, are interleaved with English specification text. The code sections can be in triple backticks or with four (4) leading spaces (examples in this document only use the leading spaces form).
 
 The [Service Editor](/tools/service-editor) is an online editor for creating service specifications.
 The [jdspectool](https://github.com/microsoft/jacdac/tree/main/spectool) takes a service specification in markdown format and converts it to JSON.
@@ -25,7 +25,7 @@ Here's a simple example:
 A controller for a liquid-propelled rocket.
 ```
 
-The first line specifies the name of the service (`name` in JSON format). We then assign the service a unique identifier (`classIdentifier` in JSON format) and give a single line description of the service.
+The first line (header) specifies the name of the service (`name` in JSON format). We then assign the service a unique identifier (`classIdentifier` in JSON format) and give a single line description of the service.
 These identifers are always of the form `0x1-------`.
 If you're just defining a new service, you can use the random generator below or specify it as `1` or other invalid value
 and the jdspectool will suggest a valid random identifier.
@@ -81,13 +81,11 @@ and is meant to be displayed along with every register description in various UI
 The first register we define (`oxygen_delay`) can be read and written. When the device restarts, its value is `100` (default values are
 typically `0` and in that case are not specified).
 The value is unsigned and 16 bit long, and is expressed in milliseconds.
-The register code is `0x80` (code ranges are specified in `_base.md`).
+The register code is `0x80` (code ranges are specified in `_system.md`).
 The text after the register definition ends up in `description` field in JSON.
 Neither the register name (nor description) is ever sent over wire (the same applies to commands and events).
 
 The next line specifies a read-only register (`core_temperature`), giving the current temperature in degrees Kelvin. A 32 bit value is used to avoid overflows.
-
-JACDAC supports units specified in [SenML](https://www.iana.org/assignments/senml/senml.xhtml).
 
 The third register (`num_nozzles`) is unit-less and constant, at least until the device resets
 (in the case of this service, the reset is usually quite spectacular).
@@ -95,7 +93,7 @@ The third register (`num_nozzles`) is unit-less and constant, at least until the
 The fourth register is current acceleration.
 The `i16.16` type is signed 32 bit integer, where the value is shifted by 16 bits.
 That is, the last 16 bits is the fractional part.
-Similarly, a `i22.10` would also be a 32 bit integers, where the value if shifted by 10 bits.
+Similarly, a `i22.10` would also be a 32 bit integer, where the value is shifted by 10 bits.
 
 The register also has three fields.
 In fact, the `core_temperature` could be also expressed using the more verbose syntax,
@@ -107,8 +105,37 @@ ro core_temperature @ 0x180 {
 }
 ```
 
-The last register, to specify the sensivity of the sensor, is optional.
+The last register, `max_acceleration`, that specifies the sensitivity of the sensor, is optional.
 This is denoted by adding a `?` after the register name.
+
+You can specify a preferred interval for refreshing the register in the specification
+as for the ``mcu_temperature`` register in the control service.
+
+```
+ro mcu_temperature?: i16 °C { preferred_interval=60000, typical_min = -10, typical_max = 150 } @ 0x182
+```
+
+### Pack Format
+
+Format strings are space-separated sequences of type descriptions.
+All numbers are understood to be little endian.
+The following type descriptions are supported:
+
+* `u8`, `u16`, `u32` - unsigned, 1, 2, and 4 bytes long respectively
+* `i8`, `i16`, `i32` - similar, but signed
+* `b` - buffer until the end of input (has to be last)
+* `s` - similar, but utf-8 encoded string
+* `z` - NULL-terminated utf-8 string
+* `b[10]` - 10 byte buffer (10 is just an example, here and below)
+* `s[10]` - 10 byte utf-8 string; trailing NUL bytes (if any) are removed
+* `x[10]` - 10 bytes of padding
+
+There is one more token, `r:`. The type descriptions following it are repeated in order
+until the input buffer is exhausted.
+When unpacking, fields after `r:` are repeated as an array of tuples.
+
+In case there's only a single field repeating,
+it's also possible to append `[]` to its type, to get an array of values.
 
 ### Rocket Commands
 
@@ -151,13 +178,13 @@ Note that `report` syntax skips name and command code - these are copied from th
 
 Also note that `0x80` command code is used, which is the same as the register code for 
 `oxygen_delay`.
-This is allowed, as register codes occupy separate namespace from command codes -
+This is allowed, as register codes occupy a separate namespace from command codes -
 register codes combined with masks of `0x1000` or `0x2000` form command codes
 for getting or setting registers.
-Again, `_base.md` has ranges for allowed command codes.
+Again, `_system.md` has ranges for allowed command codes.
 
-The next command doesn't have a associated report.
-The sender can still ask for ACK.
+The next command doesn't have an associated report.
+The sender can still ask for an ACK.
 It could have been equivalently specified with the short form as:
 
 ```
@@ -174,25 +201,19 @@ The empty braces `{ }` can also be skipped.
 ```markdown
 ## Events
 
-All events are emitted three times, to ensure good reception.
-
-    event take_off @ 0x01
+    event take_off @ 0x80
 
 Rockets leaves the launch pad.
 
-    event bird_in_nozzle @ 0x02 {
+    event bird_in_nozzle @ 0x81 {
         nozzle_id: u8
     }
 
 Indicates that nozzle is about to fail because of a forign object.
 ```
 
-First, there's a `note["events"]`.
-The strategy mentioned is valid, though this is better achieved with streams.
-
-The address space for events is separate from commands and registers, as they are nested
-inside of the `event` command.
-This 32 bit are available, it's recommended to stick to low numbers.
+The address space for events is separate from commands and registers.
+The range for user events is `0x80-0xff`.
 
 Many events have no arguments, like the `take_off` one.
 Arguments can be specified as for registers and commands.
@@ -219,11 +240,11 @@ Indicates whether the button is currently active (pressed).
 
 ## Events
 
-    event down @ 0x01
+    event down @ active
 
 Emitted when button goes from inactive (`pressed == 0`) to active.
 
-    event up @ 0x02
+    event up @ inactive
 
 Emitted when button goes from active (`pressed == 1`) to inactive.
 ```
@@ -231,14 +252,13 @@ Emitted when button goes from active (`pressed == 1`) to inactive.
 All registers from the `_sensor.md` will be included (meaning `stream_samples` and `streaming_interval`).
 Similarly, all commands and events would be included (but there are none).
 
-The address of `pressed` register is specified as `@ reading`, meaning the
-address of the `reading` register in `_base.md`.
-Services cannot extend `_base.md`, because it includes a large number of packets that are
+The address of `pressed` register is specified as `@ reading`, meaning the address of the `reading` register in `_system.md`.
+Services cannot extend `_system.md`, because it includes a large number of packets that are
 never all present at the same time in a regular service.
+All services implicitly extend `_base.md` though.
 However, the names of these packets can be used in place of addresses.
 In fact, this is the only way to refer to the addresses in the system range:
-if the example used `@ 0x101` instead of `@ reading`, the jdspectool would
-generate an error.
+if the example used `@ 0x101` instead of `@ reading`, the jdspectool would generate an error.
 
 ## Other features
 
@@ -260,7 +280,7 @@ Such a format can be expressed using `repeats:` label, as in the following examp
         delay: u16 ms
     repeats:
         nozzle_id: u8
-        throttle: u8 /
+        throttle: u0.8 /
     }
 
 Set throttle on specific nozzles, after specified delay.
@@ -281,20 +301,20 @@ Set brightness level on side lamps. Number of lamps depends on the rocket.
 
 ### Units
 
-The value of the register may have one of the unit or secondary defined in [SenML](https://tools.ietf.org/html/rfc8428),
-in addition to ``""`` (identifiers), ``"us"`` micro seconds, ``"mWh"`` milli watt-hours and ``"#"`` counts.
+Any data field should be annoted with its unit, to allow better interpretation of the data.
+
+<SpecificationUnitList />
 
 ### Pipes
 
-Pipes are application-level mechanism for establishing reliable one- and two-way point-to-point data links.
+Pipes are an application-level mechanism for establishing reliable one- and two-way point-to-point data links.
 
 Typical applications where pipes should be used:
 * a WiFi service, where the pipe represents a TCP connection
 * when a response to a command doesn't fit in one packet (eg. WiFi scan results)
 
 Pipes are typically established using commands and reports.
-The sink of the pipe needs to provide its device identifier (if not already present elsewhere)
-and a port number.
+The sink of the pipe needs to provide its device identifier (if not already present elsewhere) and a port number.
 For example:
 
 ```markdown
@@ -376,3 +396,25 @@ The final zero-length packet, before closing the pipe, is optional.
 
 Both `segmented:` and `multi-segmented:` are currently only supported in `pipe report` and `pipe command`,
 with a single field of type `bytes`.
+
+## LED Animation
+
+Jacdac supports a simple encoding for basic LED animations. It is used in the [control service](/services/control)
+``status_light`` register and also in the [led service](/services/led).
+
+```
+    rw status_light ... {
+        repeats:
+            hue: u8
+            saturation: u8
+            value: u8
+            duration8: u8 8ms
+    }
+```
+
+Specifies a status light animation sequence on a colored or monochrome LED.
+``hue``, ``saturation``, ``value`` are the components of an HSV color
+and ``duration8`` is the duration of transition to the next color in the array, in units of ``8ms``. Module with monochrome LED can ignore ``hue``, ``saturation`` and use ``value``. The animation is played in a loop.
+Set the register to empty buffer to disable the animation.
+
+* Design your animation using the [LED Animation designer](/tools/led-animation-designer).

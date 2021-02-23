@@ -69,6 +69,13 @@ typedef struct jd_control_flood_ping_report {
 
 
 /**
+ * Read-write μs uint32_t. When set to value other than `0`, it asks the device to reset after specified number of microseconds.
+ * This is typically used to implement watchdog functionality, where a brain device sets `reset_in` to
+ * say 1.6s every 0.5s.
+ */
+#define JD_CONTROL_REG_RESET_IN 0x80
+
+/**
  * Constant string (bytes). Identifies the type of hardware (eg., ACME Corp. Servo X-42 Rev C)
  */
 #define JD_CONTROL_REG_DEVICE_DESCRIPTION 0x180
@@ -107,5 +114,20 @@ typedef struct jd_control_flood_ping_report {
  * Constant string (bytes). URL with machine-readable metadata information about updating device firmware
  */
 #define JD_CONTROL_REG_FIRMWARE_URL 0x188
+
+/**
+ * Specifies a status light animation sequence on a colored or monochrome LED
+ * using the [LED animation format](/spec/led-animation).
+ * Typically, up to 8 steps (repeats) are supported.
+ */
+#define JD_CONTROL_REG_STATUS_LIGHT 0x81
+typedef struct jd_control_status_light {
+    uint16_t repetitions;
+    uint8_t hue;
+    uint8_t saturation;
+    uint8_t value;
+    uint8_t duration8; // 8ms
+} jd_control_status_light_t;
+
 
 #endif

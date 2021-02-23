@@ -2,6 +2,19 @@
 #ifndef _JACDAC_SPEC_SYSTEM_H
 #define _JACDAC_SPEC_SYSTEM_H 1
 
+// enum ReadingThreshold (uint8_t)
+#define JD_READING_THRESHOLD_NEUTRAL 0x1
+#define JD_READING_THRESHOLD_LOW 0x2
+#define JD_READING_THRESHOLD_HIGH 0x3
+
+// enum StatusCodes (uint16_t)
+#define JD_STATUS_CODES_READY 0x0
+#define JD_STATUS_CODES_INITIALIZING 0x1
+#define JD_STATUS_CODES_CALIBRATING 0x2
+#define JD_STATUS_CODES_SLEEPING 0x3
+#define JD_STATUS_CODES_WAITING_FOR_INPUT 0x4
+#define JD_STATUS_CODES_CALIBRATION_NEEDED 0x64
+
 /**
  * No args. Enumeration data for control service; service-specific advertisement data otherwise.
  * Control broadcasts it automatically every 500ms, but other service have to be queried to provide it.
@@ -79,27 +92,35 @@ typedef struct jd_system_event_report {
 #define JD_REG_READING 0x101
 
 /**
- * Read-write int32_t. Thresholds for event generation for event generation for analog sensors.
+ * Constant int32_t. The lowest value that can be reported by the sensor.
+ */
+#define JD_REG_MIN_READING 0x104
+
+/**
+ * Constant int32_t. The highest value that can be reported by the sensor.
+ */
+#define JD_REG_MAX_READING 0x105
+
+/**
+ * Read-only uint32_t. The real value of whatever is measured is between `reading - reading_error` and `reading + reading_error`. It should be computed from the internal state of the sensor. This register is often, but not always `const`. If the register value is modified,
+ * send a report in the same frame of the ``reading`` report.
+ */
+#define JD_REG_READING_ERROR 0x106
+
+/**
+ * Constant uint32_t. Smallest, yet distinguishable change in reading.
+ */
+#define JD_REG_READING_RESOLUTION 0x108
+
+/**
+ * Read-write int32_t. Threshold when reading data gets low and triggers a ``low``.
  */
 #define JD_REG_LOW_THRESHOLD 0x5
 
 /**
- * Read-write int32_t. Thresholds for event generation for event generation for analog sensors.
+ * Read-write int32_t. Thresholds when reading data gets high and triggers a ``high`` event.
  */
 #define JD_REG_HIGH_THRESHOLD 0x6
-
-/**
- * Reports the current state or error status of the device. ``code`` is a standardized value from 
- * the JACDAC error codes. ``vendor_code`` is any vendor specific error code describing the device
- * state. This report is typically not queried, when a device has an error, it will typically
- * add this report in frame along with the anounce packet.
- */
-#define JD_REG_STATUS_CODE 0x103
-typedef struct jd_system_status_code {
-    uint16_t code;
-    uint16_t vendor_code;
-} jd_system_status_code_t;
-
 
 /**
  * Constant ms uint32_t. Preferred default streaming interval for sensor in milliseconds.
@@ -107,8 +128,67 @@ typedef struct jd_system_status_code {
 #define JD_REG_STREAMING_PREFERRED_INTERVAL 0x102
 
 /**
- * Emit notifying that the internal state of the service changed.
+ * Constant uint32_t. The hardware variant of the service.
+ * For services which support this, there's an enum defining the meaning.
  */
-#define JD_EV_CHANGE 0x2
+#define JD_REG_VARIANT 0x107
+
+/**
+ * Reports the current state or error status of the device. ``code`` is a standardized value from 
+ * the Jacdac status/error codes. ``vendor_code`` is any vendor specific error code describing the device
+ * state. This report is typically not queried, when a device has an error, it will typically
+ * add this report in frame along with the announce packet.
+ */
+#define JD_REG_STATUS_CODE 0x103
+typedef struct jd_system_status_code {
+    uint16_t code;  // StatusCodes
+    uint16_t vendor_code;
+} jd_system_status_code_t;
+
+
+/**
+ * Constant string (bytes). A friendly name that describes the role of this service instance in the device.
+ */
+#define JD_REG_INSTANCE_NAME 0x109
+
+/**
+ * Notifies that the service has been activated (eg. button pressed, network connected, etc.)
+ */
+#define JD_EV_ACTIVE 0x1
+
+/**
+ * Notifies that the service has been dis-activated.
+ */
+#define JD_EV_INACTIVE 0x2
+
+/**
+ * Notifies that the some state of the service changed.
+ */
+#define JD_EV_CHANGE 0x3
+
+/**
+ * Notifies that the status code of the service changed.
+ */
+#define JD_EV_STATUS_CODE_CHANGED 0x4
+typedef struct jd_system_status_code_changed {
+    uint16_t code;  // StatusCodes
+    uint16_t vendor_code;
+} jd_system_status_code_changed_t;
+
+
+/**
+ * Notifies that the low threshold has been crossed
+ */
+#define JD_EV_LOW 0x5
+
+/**
+ * Notifies that the high threshold has been crossed
+ */
+#define JD_EV_HIGH 0x6
+
+/**
+ * Notifies that the threshold is back between ``low`` and ``high``.
+ */
+#define JD_EV_NEUTRAL 0x7
 
 #endif

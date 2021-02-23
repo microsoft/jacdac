@@ -2,11 +2,20 @@
 
     identifier: 0x183fc4a2
 
-Control a vibration motor.
+A vibration motor.
 
 ## Registers
 
-    rw speed: u8 / @ intensity
+    rw enabled: bool @ intensity
 
-Rotation speed of the motor.
-If only one rotation speed is supported, then `0` shell be off, and any other number on.
+Determines if the vibration motor responds to vibrate commands.
+
+## Commands
+
+    command vibrate @ 0x80 {
+    repeats:
+        duration: u8 8ms,
+        speed: u0.8 /
+    }
+
+Starts a sequence of vibration and pauses. To stop any existing vibration, send an empty payload.

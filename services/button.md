@@ -2,11 +2,9 @@
 
     identifier: 0x1473a263
     extends: _sensor
+    tags: button
 
-A simple push-button.
-
-Note: this service will stream readings while the button is pressed and shortly after it's released, even
-when `stream_samples == 0`. TODO remove this?
+A push-button, which returns to inactive position when not operated anymore.
 
 ## Registers
 
@@ -16,18 +14,22 @@ Indicates whether the button is currently active (pressed).
 
 ## Events
 
-    event down @ 0x01
+    event down @ active
 
 Emitted when button goes from inactive (`pressed == 0`) to active.
 
-    event up @ 0x02
+    event up @ inactive
 
 Emitted when button goes from active (`pressed == 1`) to inactive.
 
-    event click @ 0x03
+    event click @ 0x80
 
 Emitted together with `up` when the press time was not longer than 500ms.
 
-    event long_click @ 0x04
+    event long_click @ 0x81
 
-Emitted together with `up` when the press time was more than 500ms.
+Emitted after button is held for 500ms. Long click events are followed by a separate up event.
+
+    event hold @ 0x82
+
+Emitted after the button is held for 1500ms. Hold events are followed by a separate up event.

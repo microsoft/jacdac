@@ -2,12 +2,13 @@
 
     identifier: 0x1b57b1d7
     camel: buzzer
+    tags: sound
 
 A simple buzzer.
 
 ## Registers
 
-    rw volume = 255: u8 / @ intensity
+    rw volume = 1: u0.8 / @ intensity
 
 The volume (duty cycle) of the buzzer.
 

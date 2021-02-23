@@ -4,7 +4,7 @@
     camel: protoTest
 
 This is test service to validate the protocol packet transmissions between the browser and a MCU.
-Use this page if you developing JACDAC HDK for a new platform.
+Use this page if you are porting Jacdac to a new platform.
 
 ### Test procedure
 
@@ -170,7 +170,7 @@ A command to set rw_bytes. Returns the value.
         p_bytes: pipe
     }
     pipe report p_bytes {
-        bytes: bytes
+        byte: u8
     }
 
-A command to read the rw_bytes, byte per byte, as a pipe.
+A command to read the content of rw_bytes, byte per byte, as a pipe.

@@ -1,4 +1,4 @@
-# JACDAC specification tool
+# Jacdac specification tool
 
 The jdspectool takes a service specification in markdown format and converts it to JSON.
 

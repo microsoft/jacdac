@@ -44,7 +44,7 @@ typedef struct jd_arcade_screen_start_update {
 #define JD_ARCADE_SCREEN_CMD_SET_PIXELS 0x83
 
 /**
- * Read-write ratio uint8_t. Set backlight brightness.
+ * Read-write ratio u0.8 (uint8_t). Set backlight brightness.
  * If set to `0` the display may go to sleep.
  */
 #define JD_ARCADE_SCREEN_REG_BRIGHTNESS JD_REG_INTENSITY
@@ -56,9 +56,9 @@ typedef struct jd_arcade_screen_start_update {
  */
 #define JD_ARCADE_SCREEN_REG_PALETTE 0x80
 typedef struct jd_arcade_screen_palette {
-    uint8_t blue; // ratio
-    uint8_t green; // ratio
-    uint8_t red; // ratio
+    uint8_t blue;  // ratio u0.8
+    uint8_t green;  // ratio u0.8
+    uint8_t red;  // ratio u0.8
     uint8_t padding;
 } jd_arcade_screen_palette_t;
 

@@ -46,16 +46,16 @@ Set pixels in current window, according to current palette.
 
 ## Registers
 
-    rw brightness: u8 / @ intensity
+    rw brightness: u0.8 / @ intensity
 
 Set backlight brightness.
 If set to `0` the display may go to sleep.
 
     rw palette @ 0x80 {
     repeats:
-        blue: u8 /
-        green: u8 /
-        red: u8 /
+        blue: u0.8 /
+        green: u0.8 /
+        red: u0.8 /
         padding: u8
     }
 

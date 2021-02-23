@@ -59,7 +59,7 @@ function pick(...values: number[]) {
 }
 
 // add as needed
-const reservedJsWords: { [index: string]: boolean } = { 
+const reservedJsWords: { [index: string]: boolean } = {
     "switch": true
 };
 
@@ -86,6 +86,8 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
     const reading = registers.find(reg => reg.identifier === Reading);
     const regs = registers.filter(r => !!r);
     const events = packets.filter(pkt => !pkt.derived && pkt.kind === "event");
+    // TODO: pipes support
+    const commands = packets.filter(pkt => !pkt.derived && pkt.kind === "command" && pkt.fields.every(f => f.type !== "pipe"))
 
     // use sensor base class if reading present
     if (reading) {
@@ -135,11 +137,11 @@ ${regs.map(reg => {
         * ${(reg.description || "").split('\n').join('\n        * ')}
         */
 ${toMetaComments(
-    "callInDebugger", 
-    `group="${group}"`, 
-    hasBlocks && `block="%${shortId} ${humanify(name)}"`,
-    hasBlocks && `blockId=jacdac_${shortId}_${reg.name}_${field.name}_get`,
-)}
+                "callInDebugger",
+                `group="${group}"`,
+                hasBlocks && `block="%${shortId} ${humanify(name)}"`,
+                hasBlocks && `blockId=jacdac_${shortId}_${reg.name}_${field.name}_get`,
+            )}
         ${camelize(name)}(): ${types[fieldi]} {${isReading ? `
             this.setStreaming(true);` : `
             this.start();`}            
@@ -150,11 +152,16 @@ ${reg.kind === "rw" ? `
         /**
         * ${(reg.description || "").split('\n').join('\n        * ')}
         */
-        //% ${hasBlocks ? `blockId=jacdac_${shortId}_${reg.name}_${field.name}_set` : ''}
-        //% group="${group}"${min !== undefined ? ` value.min=${min}` : ''}${max !== undefined ? ` value.max=${max}` : ''}${defl !== undefined ? ` value.defl=${defl}` : ""}
-        //% block="${enabled
-                            ? `set %${shortId} %value=toggleOnOff`
-                            : `set %${shortId} ${humanify(name)} to %value`}"
+${toMetaComments(
+                `group="${group}"`,
+                hasBlocks && `blockId=jacdac_${shortId}_${reg.name}_${field.name}_set`,
+                hasBlocks && `block="${enabled
+                    ? `set %${shortId} %value=toggleOnOff`
+                    : `set %${shortId} ${humanify(name)} to %value`}"`,
+                min !== undefined && `value.min=${min}`,
+                max !== undefined && `value.max=${max}`,
+                defl !== undefined && `value.defl=${defl}`,
+            )}
         set${capitalize(camelize(name))}(value: ${types[fieldi]}) {
             this.start();
             const values = ${fieldName}.values as any[];
@@ -169,13 +176,37 @@ ${events.map((event) => {
         /**
          * ${(event.description || "").split('\n').join('\n        * ')}
          */
-        //% blockId=jacdac_on_${spec.shortId}_${event.name}
-        //% block="${humanify(event.name)}" blockSetVariable=myModule
-        //% group="${group}"
+${toMetaComments(
+            `group="${group}"`,
+            `blockId=jacdac_on_${spec.shortId}_${event.name}`,
+            `block="${humanify(event.name)}"`,
+            `blockSetVariable=myModule`,
+        )}
         on${capitalize(camelize(event.name))}(handler: () => void) {
             this.registerEvent(jacdac.${capitalize(spec.camelName)}Event.${capitalize(camelize(event.name))}, handler);
         }`;
     }).join("")}
+${commands.map(command => {
+        const { name } = command;
+        const { types } = packInfo(spec, command, true, true);
+        const { fields } = command;
+        const fnames = fields.map(f => camelize(f.name));
+        const cmd = `jacdac.${capitalize(spec.camelName)}Cmd.${capitalize(camelize(command.name))}`
+        const fmt = command.packFormat;
+        return `
+        /**
+        * ${(command.description || "").split('\n').join('\n        * ')}
+        */
+${toMetaComments(
+            `group="${group}"`,
+            `blockId=jacdac_${shortId}_${command.name}_cmd`,
+            `block="%${shortId} ${humanify(name)}"`,
+        )}
+        ${camelize(name)}(${fnames.map((fname,fieldi) => `${fname}: ${types[fieldi]}`).join(", ")}): void {
+            this.start();
+            this.sendCommand(jacdac.JDPacket.${types.length === 0 ? `onlyHeader(${cmd})` : `jdpacked(${cmd}, "${fmt}", [${fnames.join(", ")}])`})
+        }
+`}).join("")}    
     }
     //% fixedInstance whenUsed
     export const ${tsify(spec.camelName)} = new ${className}("${humanify(spec.camelName)}");
@@ -230,13 +261,13 @@ function processSpec(dn: string) {
         reportErrors(json.errors, dn, fn)
 
         // check if there is a test for this service
-        const testFile = path.join(dn,"tests",fn)
+        const testFile = path.join(dn, "tests", fn)
         if (fs.existsSync(testFile)) {
-            const testCont = readString(testFile,"")
+            const testCont = readString(testFile, "")
             const testJson = parseSpecificationTestMarkdownToJSON(testCont, json)
-            reportErrors(testJson.errors, path.join(dn,"tests"), fn)
+            reportErrors(testJson.errors, path.join(dn, "tests"), fn)
             tests.push(testJson);
- 
+
             const cfn = path.join(outp, "json", fn.slice(0, -3) + ".test");
             fs.writeFileSync(cfn, JSON.stringify(testJson, null, 2))
             console.log(`written ${cfn}`)

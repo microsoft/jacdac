@@ -15,10 +15,9 @@
 #define JD_SOUND_SPECTRUM_REG_ENABLED JD_REG_INTENSITY
 
 /**
- * Read-write uint8_t. The size of the FFT to be used to determine the frequency domain.
- * Must be a power of 2.
+ * Read-write uint8_t. The power of 2 used as the size of the FFT to be used to determine the frequency domain.
  */
-#define JD_SOUND_SPECTRUM_REG_FFT_SIZE 0x80
+#define JD_SOUND_SPECTRUM_REG_FFT_POW2_SIZE 0x80
 
 /**
  * Read-write dB int16_t. The minimum power value in the scaling range for the FFT analysis data

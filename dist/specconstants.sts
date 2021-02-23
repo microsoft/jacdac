@@ -3863,14 +3863,13 @@ namespace jacdac {
         Enabled = 0x1,
 
         /**
-         * Read-write uint8_t. The size of the FFT to be used to determine the frequency domain.
-         * Must be a power of 2.
+         * Read-write uint8_t. The power of 2 used as the size of the FFT to be used to determine the frequency domain.
          *
          * ```
-         * const [fftSize] = jdunpack<[number]>(buf, "u8")
+         * const [fftPow2Size] = jdunpack<[number]>(buf, "u8")
          * ```
          */
-        FftSize = 0x80,
+        FftPow2Size = 0x80,
 
         /**
          * Read-write dB int16_t. The minimum power value in the scaling range for the FFT analysis data

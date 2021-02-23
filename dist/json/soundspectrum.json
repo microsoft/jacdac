@@ -179,9 +179,9 @@
     },
     {
       "kind": "rw",
-      "name": "fft_size",
+      "name": "fft_pow2_size",
       "identifier": 128,
-      "description": "The size of the FFT to be used to determine the frequency domain.\nMust be a power of 2.",
+      "description": "The power of 2 used as the size of the FFT to be used to determine the frequency domain.",
       "fields": [
         {
           "name": "_",
@@ -189,9 +189,9 @@
           "type": "u8",
           "storage": 1,
           "isSimpleType": true,
-          "defaultValue": 64,
-          "absoluteMax": 128,
-          "absoluteMin": 0
+          "defaultValue": 5,
+          "absoluteMin": 2,
+          "absoluteMax": 7
         }
       ],
       "packFormat": "u8"

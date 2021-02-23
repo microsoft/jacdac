@@ -16,10 +16,9 @@ The computed frequency data.
 
 Turns on/off the micropohone.
 
-    rw fft_size = 64: u8 { absolute_max=128 } @ 0x80
+    rw fft_pow2_size = 5: u8 { absolute_min=2, absolute_max=7 } @ 0x80
     
-The size of the FFT to be used to determine the frequency domain.
-Must be a power of 2.
+The power of 2 used as the size of the FFT to be used to determine the frequency domain.
 
     rw min_decibels: i16 dB @ 0x81
     

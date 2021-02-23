@@ -3068,26 +3068,17 @@ export enum RngVariant { // uint8_t
     WebCrypto = 0x3,
 }
 
-export enum RngCmd {
+export enum RngReg {
     /**
-     * Argument: length uint8_t. A command that generates a random buffer with the given length.
-     * This never blocks for a long time.
+     * Read-only bytes. A register that returns a 64 bytes random buffer on every request.
+     * This never blocks for a long time. If you need additional random bytes, keep querying the register.
      *
      * ```
-     * const [length] = jdunpack<[number]>(buf, "u8")
+     * const [random] = jdunpack<[Uint8Array]>(buf, "b")
      * ```
      */
-    Random = 0x80,
+    Random = 0x101,
 
-    /**
-     * report Random
-     * ```
-     * const [data] = jdunpack<[Uint8Array]>(buf, "b")
-     * ```
-     */
-}
-
-export enum RngReg {
     /**
      * Constant Variant (uint8_t). The type of algorithm/technique used to generate the number.
      * `Quantum` refers to dedicated hardware device generating random noise due to quantum effects.

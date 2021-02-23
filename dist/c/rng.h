@@ -10,14 +10,10 @@
 #define JD_RNG_VARIANT_WEB_CRYPTO 0x3
 
 /**
- * Argument: length uint8_t. A command that generates a random buffer with the given length.
- * This never blocks for a long time.
+ * Read-only bytes. A register that returns a 64 bytes random buffer on every request.
+ * This never blocks for a long time. If you need additional random bytes, keep querying the register.
  */
-#define JD_RNG_CMD_RANDOM 0x80
-
-/**
- * Report: Argument: data bytes
- */
+#define JD_RNG_REG_RANDOM JD_REG_READING
 
 /**
  * Constant Variant (uint8_t). The type of algorithm/technique used to generate the number.

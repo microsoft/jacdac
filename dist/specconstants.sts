@@ -188,7 +188,7 @@ namespace jacdac {
          * add this report in frame along with the announce packet.
          *
          * ```
-         * const [code, vendorCode] = jdunpack<[SystemStatusCodes, number]>(buf, "u16 u16")
+         * const [code, vendorCode] = jdunpack<[jacdac.SystemStatusCodes, number]>(buf, "u16 u16")
          * ```
          */
         StatusCode = 0x103,
@@ -226,7 +226,7 @@ namespace jacdac {
          * Notifies that the status code of the service changed.
          *
          * ```
-         * const [code, vendorCode] = jdunpack<[SystemStatusCodes, number]>(buf, "u16 u16")
+         * const [code, vendorCode] = jdunpack<[jacdac.SystemStatusCodes, number]>(buf, "u16 u16")
          * ```
          */
         //% block="status code changed"
@@ -476,7 +476,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). The type of physical button.
          *
          * ```
-         * const [variant] = jdunpack<[AnalogButtonVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.AnalogButtonVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -520,7 +520,7 @@ namespace jacdac {
          * `pressure` should be `0xff` for digital buttons, and proportional for analog ones.
          *
          * ```
-         * const [rest] = jdunpack<[([ArcadeGamepadButton, number])[]]>(buf, "r: u8 u0.8")
+         * const [rest] = jdunpack<[([jacdac.ArcadeGamepadButton, number])[]]>(buf, "r: u8 u0.8")
          * const [button, pressure] = rest[0]
          * ```
          */
@@ -530,7 +530,7 @@ namespace jacdac {
          * Constant. Indicates number of players supported and which buttons are present on the controller.
          *
          * ```
-         * const [button] = jdunpack<[ArcadeGamepadButton[]]>(buf, "u8[]")
+         * const [button] = jdunpack<[jacdac.ArcadeGamepadButton[]]>(buf, "u8[]")
          * ```
          */
         AvailableButtons = 0x180,
@@ -541,7 +541,7 @@ namespace jacdac {
          * Argument: button Button (uint8_t). Emitted when button goes from inactive to active.
          *
          * ```
-         * const [button] = jdunpack<[ArcadeGamepadButton]>(buf, "u8")
+         * const [button] = jdunpack<[jacdac.ArcadeGamepadButton]>(buf, "u8")
          * ```
          */
         //% block="down"
@@ -551,7 +551,7 @@ namespace jacdac {
          * Argument: button Button (uint8_t). Emitted when button goes from active to inactive.
          *
          * ```
-         * const [button] = jdunpack<[ArcadeGamepadButton]>(buf, "u8")
+         * const [button] = jdunpack<[jacdac.ArcadeGamepadButton]>(buf, "u8")
          * ```
          */
         //% block="up"
@@ -593,7 +593,7 @@ namespace jacdac {
          * Constant. Reports the list of supported barcode formats, as documented in https://developer.mozilla.org/en-US/docs/Web/API/Barcode_Detection_API.
          *
          * ```
-         * const [format] = jdunpack<[BarcodeReaderFormat[]]>(buf, "u8[]")
+         * const [format] = jdunpack<[jacdac.BarcodeReaderFormat[]]>(buf, "u8[]")
          * ```
          */
         Formats = 0x180,
@@ -605,7 +605,7 @@ namespace jacdac {
          * In case of numeric barcodes, the `data` field should contain the ASCII (which is the same as UTF8 in that case) representation of the number.
          *
          * ```
-         * const [format, data] = jdunpack<[BarcodeReaderFormat, string]>(buf, "u8 s")
+         * const [format, data] = jdunpack<[jacdac.BarcodeReaderFormat, string]>(buf, "u8 s")
          * ```
          */
         //% block="detect"
@@ -694,7 +694,7 @@ namespace jacdac {
         /**
          * report PageData
          * ```
-         * const [sessionId, pageError, pageAddress] = jdunpack<[number, BootloaderError, number]>(buf, "u32 u32 u32")
+         * const [sessionId, pageError, pageAddress] = jdunpack<[number, jacdac.BootloaderError, number]>(buf, "u32 u32 u32")
          * ```
          */
     }
@@ -814,7 +814,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). Describes the type of character LED screen.
          *
          * ```
-         * const [variant] = jdunpack<[CharacterScreenVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.CharacterScreenVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -823,7 +823,7 @@ namespace jacdac {
          * Read-write TextDirection (uint8_t). Specifies the RTL or LTR direction of the text.
          *
          * ```
-         * const [textDirection] = jdunpack<[CharacterScreenTextDirection]>(buf, "u8")
+         * const [textDirection] = jdunpack<[jacdac.CharacterScreenTextDirection]>(buf, "u8")
          * ```
          */
         TextDirection = 0x82,
@@ -927,7 +927,7 @@ namespace jacdac {
         /**
          * report Services
          * ```
-         * const [restartCounter, flags, packetCount, serviceClass] = jdunpack<[number, ControlAnnounceFlags, number, number[]]>(buf, "u8 u8 u8 x[1] u32[]")
+         * const [restartCounter, flags, packetCount, serviceClass] = jdunpack<[number, jacdac.ControlAnnounceFlags, number, number[]]>(buf, "u8 u8 u8 x[1] u32[]")
          * ```
          */
 
@@ -1106,7 +1106,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). Determines the type of sensor used.
          *
          * ```
-         * const [variant] = jdunpack<[DistanceVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.DistanceVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -1172,7 +1172,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). Type of physical sensor and capabilities.
          *
          * ```
-         * const [variant] = jdunpack<[ECO2Variant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.ECO2Variant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -1247,7 +1247,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). The type of physical sensor
          *
          * ```
-         * const [variant] = jdunpack<[HeartRateVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.HeartRateVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -1281,7 +1281,7 @@ namespace jacdac {
          * Presses a key or a sequence of keys down.
          *
          * ```
-         * const [rest] = jdunpack<[([number, HidKeyboardModifiers, HidKeyboardAction])[]]>(buf, "r: u16 u8 u8")
+         * const [rest] = jdunpack<[([number, jacdac.HidKeyboardModifiers, jacdac.HidKeyboardAction])[]]>(buf, "r: u16 u8 u8")
          * const [selector, modifiers, action] = rest[0]
          * ```
          */
@@ -1319,7 +1319,7 @@ namespace jacdac {
          * A ``DoubleClick`` is two clicks with ``150ms`` gap between them (that is, ``100ms`` first click, ``150ms`` gap, ``100ms`` second click).
          *
          * ```
-         * const [buttons, event] = jdunpack<[HidMouseButton, HidMouseButtonEvent]>(buf, "u16 u8")
+         * const [buttons, event] = jdunpack<[jacdac.HidMouseButton, jacdac.HidMouseButtonEvent]>(buf, "u16 u8")
          * ```
          */
         SetButton = 0x80,
@@ -1706,7 +1706,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). The type of physical joystick.
          *
          * ```
-         * const [variant] = jdunpack<[JoystickVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.JoystickVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -1800,7 +1800,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). The physical type of LED.
          *
          * ```
-         * const [variant] = jdunpack<[LedVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.LedVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -1897,7 +1897,7 @@ namespace jacdac {
          * and could not allow change.
          *
          * ```
-         * const [lightType] = jdunpack<[LedPixelLightType]>(buf, "u8")
+         * const [lightType] = jdunpack<[jacdac.LedPixelLightType]>(buf, "u8")
          * ```
          */
         LightType = 0x80,
@@ -1957,7 +1957,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). Specifies the shape of the light strip.
          *
          * ```
-         * const [variant] = jdunpack<[LedPixelVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.LedPixelVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -1999,7 +1999,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). The type of physical sensor.
          *
          * ```
-         * const [variant] = jdunpack<[LightLevelVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.LightLevelVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -2027,7 +2027,7 @@ namespace jacdac {
          * too verbose for them.
          *
          * ```
-         * const [minPriority] = jdunpack<[LoggerPriority]>(buf, "u8")
+         * const [minPriority] = jdunpack<[jacdac.LoggerPriority]>(buf, "u8")
          * ```
          */
         MinPriority = 0x80,
@@ -2160,7 +2160,7 @@ namespace jacdac {
          * as the service controlling the LED pixel on the keypad.
          *
          * ```
-         * const [variant] = jdunpack<[MatrixKeypadVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.MatrixKeypadVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -2401,7 +2401,7 @@ namespace jacdac {
          * The format is typically present as first or second little endian word of model file.
          *
          * ```
-         * const [format] = jdunpack<[ModelRunnerModelFormat]>(buf, "u32")
+         * const [format] = jdunpack<[jacdac.ModelRunnerModelFormat]>(buf, "u32")
          * ```
          */
         Format = 0x186,
@@ -2467,7 +2467,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). Type of physical sensor
          *
          * ```
-         * const [variant] = jdunpack<[MotionVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.MotionVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -2612,7 +2612,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). Specifies the physical layout of the potentiometer.
          *
          * ```
-         * const [variant] = jdunpack<[PotentiometerVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.PotentiometerVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -3088,7 +3088,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). The type of physical clock used by the sensor.
          *
          * ```
-         * const [variant] = jdunpack<[RealTimeClockVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.RealTimeClockVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -3129,7 +3129,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). Type of physical sensor used
          *
          * ```
-         * const [variant] = jdunpack<[ReflectedLightVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.ReflectedLightVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -3174,7 +3174,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). Describes the type of relay used.
          *
          * ```
-         * const [variant] = jdunpack<[RelayVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.RelayVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -3241,7 +3241,7 @@ namespace jacdac {
          * `WebCrypto` refers is used in simulators, where the source of randomness comes from an advanced operating system.
          *
          * ```
-         * const [variant] = jdunpack<[RngVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.RngVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -3395,7 +3395,7 @@ namespace jacdac {
          * These settings are stored in flash.
          *
          * ```
-         * const [samplingInterval, samplesInWindow, rest] = jdunpack<[number, number, ([Buffer, number, number, number, SensorAggregatorSampleType, number])[]]>(buf, "u16 u16 x[4] r: b[8] u32 u8 u8 u8 i8")
+         * const [samplingInterval, samplesInWindow, rest] = jdunpack<[number, number, ([Buffer, number, number, number, jacdac.SensorAggregatorSampleType, number])[]]>(buf, "u16 u16 x[4] r: b[8] u32 u8 u8 u8 i8")
          * const [deviceId, serviceClass, serviceNum, sampleSize, sampleType, sampleShift] = rest[0]
          * ```
          */
@@ -3519,7 +3519,7 @@ namespace jacdac {
          * * Linear Servos: linear servos are also like a positional servo, but with additional gears to the adjust the output from circular to back-and-forth.
          *
          * ```
-         * const [variant] = jdunpack<[ServoVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.ServoVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -3709,7 +3709,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). Describe the type of physical sensor.
          *
          * ```
-         * const [variant] = jdunpack<[SoilMoistureVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.SoilMoistureVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -3997,7 +3997,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). Describes the type of switch used.
          *
          * ```
-         * const [variant] = jdunpack<[SwitchVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.SwitchVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -4071,7 +4071,7 @@ namespace jacdac {
          * Argument: error TcpError (int32_t). Reported when an error is encountered. Negative error codes come directly from the SSL implementation.
          *
          * ```
-         * const [error] = jdunpack<[TcpTcpError]>(buf, "i32")
+         * const [error] = jdunpack<[jacdac.TcpTcpError]>(buf, "i32")
          * ```
          */
         Error = 0x0,
@@ -4150,7 +4150,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). Specifies the type of thermometer.
          *
          * ```
-         * const [variant] = jdunpack<[ThermocoupleVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.ThermocoupleVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -4208,7 +4208,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). Specifies the type of thermometer.
          *
          * ```
-         * const [variant] = jdunpack<[ThermometerVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.ThermometerVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -4331,7 +4331,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). The type of physical sensor and capabilities.
          *
          * ```
-         * const [variant] = jdunpack<[UvIndexVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.UvIndexVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -4389,7 +4389,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). The type of physical sensor.
          *
          * ```
-         * const [variant] = jdunpack<[WaterLevelVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.WaterLevelVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -4475,7 +4475,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). The type of physical scale
          *
          * ```
-         * const [variant] = jdunpack<[WeightScaleVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.WeightScaleVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -4545,7 +4545,7 @@ namespace jacdac {
     /**
      * pipe_report Results
      * ```
-     * const [flags, rssi, channel, bssid, ssid] = jdunpack<[WifiAPFlags, number, number, Buffer, string]>(buf, "u32 x[4] i8 u8 b[6] s[33]")
+     * const [flags, rssi, channel, bssid, ssid] = jdunpack<[jacdac.WifiAPFlags, number, number, Buffer, string]>(buf, "u32 x[4] i8 u8 b[6] s[33]")
      * ```
      */
 

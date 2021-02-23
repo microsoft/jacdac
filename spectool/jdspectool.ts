@@ -84,9 +84,7 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
         `role`
     ]
     const reading = registers.find(reg => reg.identifier === Reading);
-    const intensity = registers.find(reg => reg.identifier == Intensity);
-    const value = registers.find(reg => reg.identifier === Value);
-    const regs = [reading, intensity, value].filter(r => !!r);
+    const regs = registers.filter(r => !!r);
     const events = packets.filter(pkt => !pkt.derived && pkt.kind === "event");
 
     // use sensor base class if reading present
@@ -97,6 +95,8 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
     }
     const className = `${capitalize(camelName)}Client`
     const group = capitalize(spec.tags?.[0] || spec.name);
+
+    const toMetaComments = (...lines: string[]) => lines.filter(l => !!l).map(l => "        //% " + l).join('\n');
 
     return `namespace modules {
     /**
@@ -110,7 +110,7 @@ ${regs.filter(reg => reg.identifier !== Reading).map(reg => `
             constructor(role: string) {
             super(${ctorArgs.join(", ")});
 ${regs.filter(reg => reg.identifier !== Reading).map(reg => `
-            this._${camelize(reg.name)} = this.addRegister<[${packInfo(spec, reg, true, true).types}]>(jacdac.${capitalize(spec.camelName)}Reg.${capitalize(reg.name)}, "${reg.packFormat}");`).join("")}            
+            this._${camelize(reg.name)} = this.addRegister<[${packInfo(spec, reg, true, true).types}]>(jacdac.${capitalize(spec.camelName)}Reg.${capitalize(camelize(reg.name))}, "${reg.packFormat}");`).join("")}            
         }
     
 ${regs.map(reg => {
@@ -122,6 +122,8 @@ ${regs.map(reg => {
             && reg.name === "enabled"
             && reg.fields.length === 1
             && reg.fields[0].type === "bool"
+        const hasBlocks = reg.identifier == Reading || reg.identifier == Intensity || reg.identifier == Value;
+
         return fields.map((field, fieldi) => {
             const name = field.name === "_" ? reg.name : field.name
             const min = pick(field.typicalMin, field.absoluteMin, field.unit === "/" ? (field.type[0] === "i" ? -1 : 0) : undefined)
@@ -132,18 +134,23 @@ ${regs.map(reg => {
         /**
         * ${(reg.description || "").split('\n').join('\n        * ')}
         */
-        //% ${`blockId=jacdac_${shortId}_${reg.name}_${field.name}_get`}
-        //% group="${group}"
-        //% block="%${shortId} ${humanify(name)}" callInDebugger
+${toMetaComments(
+    "callInDebugger", 
+    `group="${group}"`, 
+    hasBlocks && `block="%${shortId} ${humanify(name)}"`,
+    hasBlocks && `blockId=jacdac_${shortId}_${reg.name}_${field.name}_get`,
+)}
         ${camelize(name)}(): ${types[fieldi]} {${isReading ? `
-            this.setStreaming(true);` : ""}            
+            this.setStreaming(true);` : `
+            this.start();`}            
             const values = ${fieldName}.pauseUntilValues() as any[];
             return ${field.type === "bool" ? "!!" : ""}values[${fieldi}];
-        }${reg.kind === "rw" ? `
+        }
+${reg.kind === "rw" ? `
         /**
         * ${(reg.description || "").split('\n').join('\n        * ')}
         */
-        //% ${`blockId=jacdac_${shortId}_${reg.name}_${field.name}_set`}
+        //% ${hasBlocks ? `blockId=jacdac_${shortId}_${reg.name}_${field.name}_set` : ''}
         //% group="${group}"${min !== undefined ? ` value.min=${min}` : ''}${max !== undefined ? ` value.max=${max}` : ''}${defl !== undefined ? ` value.defl=${defl}` : ""}
         //% block="${enabled
                             ? `set %${shortId} %value=toggleOnOff`
@@ -153,7 +160,8 @@ ${regs.map(reg => {
             const values = ${fieldName}.values as any[];
             values[${fieldi}] = ${field.type === "bool" ? "value ? 1 : 0" : "value"};
             ${fieldName}.values = values as [${types}];
-        }` : ""}`
+        }
+` : ""}`
         }).join("")
     }).join("")} 
 ${events.map((event) => {

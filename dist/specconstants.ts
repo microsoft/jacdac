@@ -1051,6 +1051,30 @@ export enum DistanceReg {
     Variant = 0x107,
 }
 
+// Service: DMX
+export const SRV_DMX = 0x11cf8c05
+export enum DmxReg {
+    /**
+     * Read-write bool (uint8_t). Determines if the DMX bridge is active
+     *
+     * ```
+     * const [enabled] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Enabled = 0x1,
+}
+
+export enum DmxCmd {
+    /**
+     * Argument: channels bytes. Send a DMX packet, up to 236bytes long, including the start code.
+     *
+     * ```
+     * const [channels] = jdunpack<[Uint8Array]>(buf, "b")
+     * ```
+     */
+    Send = 0x80,
+}
+
 // Service: Equivalent CO₂
 export const SRV_E_CO2 = 0x169c9dc6
 

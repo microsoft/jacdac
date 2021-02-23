@@ -413,25 +413,25 @@ namespace jacdac {
          * Emitted when force in any direction exceeds given threshold.
          */
         //% block="force 2g"
-        Force_2g = 0x8c,
+        Force2g = 0x8c,
 
         /**
          * Emitted when force in any direction exceeds given threshold.
          */
         //% block="force 3g"
-        Force_3g = 0x88,
+        Force3g = 0x88,
 
         /**
          * Emitted when force in any direction exceeds given threshold.
          */
         //% block="force 6g"
-        Force_6g = 0x89,
+        Force6g = 0x89,
 
         /**
          * Emitted when force in any direction exceeds given threshold.
          */
         //% block="force 8g"
-        Force_8g = 0x8a,
+        Force8g = 0x8a,
     }
 
 }

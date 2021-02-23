@@ -99,6 +99,7 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
     const group = capitalize(spec.tags?.[0] || spec.name);
 
     const toMetaComments = (...lines: string[]) => lines.filter(l => !!l).map(l => "        //% " + l).join('\n');
+    let weight = 100;
 
     return `namespace modules {
     /**
@@ -107,9 +108,9 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
     //% fixedInstances blockGap=8
     export class ${className} extends jacdac.${baseType} {
 ${regs.filter(reg => reg.identifier !== Reading).map(reg => `
-            private readonly _${camelize(reg.name)} : jacdac.RegisterClient<[${packInfo(spec, reg, true, true).types}]>;`).join("")}            
+        private readonly _${camelize(reg.name)} : jacdac.RegisterClient<[${packInfo(spec, reg, true, true).types}]>;`).join("")}            
 
-            constructor(role: string) {
+        constructor(role: string) {
             super(${ctorArgs.join(", ")});
 ${regs.filter(reg => reg.identifier !== Reading).map(reg => `
             this._${camelize(reg.name)} = this.addRegister<[${packInfo(spec, reg, true, true).types}]>(jacdac.${capitalize(spec.camelName)}Reg.${capitalize(camelize(reg.name))}, "${reg.packFormat}");`).join("")}            
@@ -141,6 +142,7 @@ ${toMetaComments(
                 `group="${group}"`,
                 hasBlocks && `block="%${shortId} ${humanify(name)}"`,
                 hasBlocks && `blockId=jacdac_${shortId}_${reg.name}_${field.name}_get`,
+                `weight=${weight--}`,
             )}
         ${camelize(name)}(): ${types[fieldi]} {${isReading ? `
             this.setStreaming(true);` : `
@@ -158,6 +160,7 @@ ${toMetaComments(
                 hasBlocks && `block="${enabled
                     ? `set %${shortId} %value=toggleOnOff`
                     : `set %${shortId} ${humanify(name)} to %value`}"`,
+                `weight=${weight--}`,
                 min !== undefined && `value.min=${min}`,
                 max !== undefined && `value.max=${max}`,
                 defl !== undefined && `value.defl=${defl}`,
@@ -180,9 +183,9 @@ ${toMetaComments(
             `group="${group}"`,
             `blockId=jacdac_on_${spec.shortId}_${event.name}`,
             `block="on %${shortId} ${humanify(event.name)}"`,
-            `blockSetVariable=myModule`,
+            `weight=${weight--}`,
         )}
-        on${capitalize(camelize(event.name))}(handler: () => void) {
+        on${capitalize(camelize(event.name))}(handler: () => void): void {
             this.registerEvent(jacdac.${capitalize(spec.camelName)}Event.${capitalize(camelize(event.name))}, handler);
         }`;
     }).join("")}
@@ -201,8 +204,9 @@ ${toMetaComments(
             `group="${group}"`,
             `blockId=jacdac_${shortId}_${command.name}_cmd`,
             `block="%${shortId} ${humanify(name)}"`,
+            `weight=${weight--}`,
         )}
-        ${camelize(name)}(${fnames.map((fname,fieldi) => `${fname}: ${types[fieldi]}`).join(", ")}): void {
+        ${camelize(name)}(${fnames.map((fname, fieldi) => `${fname}: ${types[fieldi]}`).join(", ")}): void {
             this.start();
             this.sendCommand(jacdac.JDPacket.${types.length === 0 ? `onlyHeader(${cmd})` : `jdpacked(${cmd}, "${fmt}", [${fnames.join(", ")}])`})
         }

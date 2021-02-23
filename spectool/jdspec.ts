@@ -1178,7 +1178,7 @@ function toH(info: jdspec.ServiceSpec) {
 
 export function camelize(name: string) {
     if (!name) return name;
-    return name[0].toLowerCase() + name.slice(1).replace(/_([a-z])/ig, (_, l) => l.toUpperCase())
+    return name[0].toLowerCase() + name.slice(1).replace(/_([a-z0-9])/ig, (_, l) => l.toUpperCase())
         
 }
 

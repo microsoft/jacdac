@@ -389,22 +389,22 @@ export enum AccelerometerEvent {
     /**
      * Emitted when force in any direction exceeds given threshold.
      */
-    Force_2g = 0x8c,
+    Force2g = 0x8c,
 
     /**
      * Emitted when force in any direction exceeds given threshold.
      */
-    Force_3g = 0x88,
+    Force3g = 0x88,
 
     /**
      * Emitted when force in any direction exceeds given threshold.
      */
-    Force_6g = 0x89,
+    Force6g = 0x89,
 
     /**
      * Emitted when force in any direction exceeds given threshold.
      */
-    Force_8g = 0x8a,
+    Force8g = 0x8a,
 }
 
 // Service: Analog Button

@@ -270,6 +270,7 @@ function processSpec(dn: string) {
             const testCont = readString(testFile, "")
             const testJson = parseSpecificationTestMarkdownToJSON(testCont, json)
             reportErrors(testJson.errors, path.join(dn, "tests"), fn)
+            // TODO: if no errors, convert to TypeScript to check with tsc
             tests.push(testJson);
 
             const cfn = path.join(outp, "json", fn.slice(0, -3) + ".test");

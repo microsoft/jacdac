@@ -28,7 +28,7 @@
 typedef struct jd_wifi_results {
     uint32_t flags;  // APFlags
     uint32_t reserved;
-    int8_t rssi;
+    int8_t rssi; // dB
     uint8_t channel;
     uint8_t bssid[6];  // u8[6]
     char ssid[33];  // string

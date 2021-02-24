@@ -139,7 +139,7 @@
         },
         {
           "name": "rssi",
-          "unit": "",
+          "unit": "dB",
           "type": "i8",
           "storage": -1,
           "isSimpleType": true,

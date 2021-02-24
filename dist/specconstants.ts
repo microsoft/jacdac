@@ -662,6 +662,95 @@ export enum BarometerReg {
     PressureError = 0x106,
 }
 
+// Service: bit:radio
+export const SRV_BIT_RADIO = 0x1ac986cf
+export enum BitRadioReg {
+    /**
+     * Read-write bool (uint8_t). Turns on/off the radio antenna.
+     *
+     * ```
+     * const [enabled] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Enabled = 0x1,
+
+    /**
+     * Read-write uint8_t. Group used to filter packets
+     *
+     * ```
+     * const [group] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Group = 0x80,
+
+    /**
+     * Read-write uint8_t. Antenna power to increase or decrease range.
+     *
+     * ```
+     * const [transmissionPower] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    TransmissionPower = 0x81,
+}
+
+export enum BitRadioCmd {
+    /**
+     * Argument: message string (bytes). Sends a string payload as a radio message
+     *
+     * ```
+     * const [message] = jdunpack<[string]>(buf, "s[18]")
+     * ```
+     */
+    SendString = 0x80,
+
+    /**
+     * Sends a double precision number payload as a radio message
+     *
+     * ```
+     * const [value, name] = jdunpack<[number, string]>(buf, "f64 s[12]")
+     * ```
+     */
+    SendNumber = 0x81,
+
+    /**
+     * Argument: data bytes. Sends a payload of bytes as a radio message
+     *
+     * ```
+     * const [data] = jdunpack<[Uint8Array]>(buf, "b[18]")
+     * ```
+     */
+    SendBuffer = 0x82,
+}
+
+export enum BitRadioEvent {
+    /**
+     * Raised when a string packet is received
+     *
+     * ```
+     * const [time, deviceSerialNumber, rssi, message] = jdunpack<[number, number, number, string]>(buf, "u32 u32 i8 x[1] s")
+     * ```
+     */
+    StringReceived = 0x80,
+
+    /**
+     * Raised when a number packet is received
+     *
+     * ```
+     * const [time, deviceSerialNumber, rssi, value, name] = jdunpack<[number, number, number, number, string]>(buf, "u32 u32 i8 x[3] f64 s")
+     * ```
+     */
+    NumberReceived = 0x81,
+
+    /**
+     * Raised when a buffer packet is received
+     *
+     * ```
+     * const [time, deviceSerialNumber, rssi, data] = jdunpack<[number, number, number, Uint8Array]>(buf, "u32 u32 i8 x[1] b")
+     * ```
+     */
+    BufferReceived = 0x82,
+}
+
 // Service: Bootloader
 export const SRV_BOOTLOADER = 0x1ffa9948
 

@@ -2929,6 +2929,24 @@ export enum ProtoTestReg {
      * ```
      */
     RoI8U8U16I32 = 0x186,
+
+    /**
+     * A read write u8, string register.
+     *
+     * ```
+     * const [u8, string] = jdunpack<[number, string]>(buf, "u8 s")
+     * ```
+     */
+    RwU8String = 0x87,
+
+    /**
+     * A read only u8, string register.. Mirrors rw_u8_string.
+     *
+     * ```
+     * const [u8, string] = jdunpack<[number, string]>(buf, "u8 s")
+     * ```
+     */
+    RoU8String = 0x187,
 }
 
 export enum ProtoTestEvent {
@@ -2985,11 +3003,20 @@ export enum ProtoTestEvent {
      * ```
      */
     EI8U8U16I32 = 0x86,
+
+    /**
+     * An event raised when rw_u8_string is modified
+     *
+     * ```
+     * const [u8, string] = jdunpack<[number, string]>(buf, "u8 s")
+     * ```
+     */
+    EU8String = 0x87,
 }
 
 export enum ProtoTestCmd {
     /**
-     * Argument: bool bool (uint8_t). A command to set rw_bool. Returns the value.
+     * Argument: bool bool (uint8_t). A command to set rw_bool.
      *
      * ```
      * const [bool] = jdunpack<[number]>(buf, "u8")
@@ -2998,7 +3025,7 @@ export enum ProtoTestCmd {
     CBool = 0x81,
 
     /**
-     * Argument: u32 uint32_t. A command to set rw_u32. Returns the value.
+     * Argument: u32 uint32_t. A command to set rw_u32.
      *
      * ```
      * const [u32] = jdunpack<[number]>(buf, "u32")
@@ -3007,7 +3034,7 @@ export enum ProtoTestCmd {
     CU32 = 0x82,
 
     /**
-     * Argument: i32 int32_t. A command to set rw_i32. Returns the value.
+     * Argument: i32 int32_t. A command to set rw_i32.
      *
      * ```
      * const [i32] = jdunpack<[number]>(buf, "i32")
@@ -3016,7 +3043,7 @@ export enum ProtoTestCmd {
     CI32 = 0x83,
 
     /**
-     * Argument: string string (bytes). A command to set rw_string. Returns the value.
+     * Argument: string string (bytes). A command to set rw_string.
      *
      * ```
      * const [string] = jdunpack<[string]>(buf, "s")
@@ -3025,7 +3052,7 @@ export enum ProtoTestCmd {
     CString = 0x84,
 
     /**
-     * Argument: bytes bytes. A command to set rw_string. Returns the value.
+     * Argument: bytes bytes. A command to set rw_string.
      *
      * ```
      * const [bytes] = jdunpack<[Uint8Array]>(buf, "b")
@@ -3034,7 +3061,7 @@ export enum ProtoTestCmd {
     CBytes = 0x85,
 
     /**
-     * A command to set rw_bytes. Returns the value.
+     * A command to set rw_bytes.
      *
      * ```
      * const [i8, u8, u16, i32] = jdunpack<[number, number, number, number]>(buf, "i8 u8 u16 i32")
@@ -3043,13 +3070,22 @@ export enum ProtoTestCmd {
     CI8U8U16I32 = 0x86,
 
     /**
+     * A command to set rw_u8_string.
+     *
+     * ```
+     * const [u8, string] = jdunpack<[number, string]>(buf, "u8 s")
+     * ```
+     */
+    CU8String = 0x87,
+
+    /**
      * Argument: p_bytes pipe (bytes). A command to read the content of rw_bytes, byte per byte, as a pipe.
      *
      * ```
      * const [pBytes] = jdunpack<[Uint8Array]>(buf, "b[12]")
      * ```
      */
-    CReportPipe = 0x87,
+    CReportPipe = 0x90,
 }
 
 

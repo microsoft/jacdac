@@ -79,6 +79,26 @@ typedef struct jd_proto_test_ro_i8_u8_u16_i32 {
 
 
 /**
+ * A read write u8, string register.
+ */
+#define JD_PROTO_TEST_REG_RW_U8_STRING 0x87
+typedef struct jd_proto_test_rw_u8_string {
+    uint8_t u8;
+    char string[0];  // string
+} jd_proto_test_rw_u8_string_t;
+
+
+/**
+ * A read only u8, string register.. Mirrors rw_u8_string.
+ */
+#define JD_PROTO_TEST_REG_RO_U8_STRING 0x187
+typedef struct jd_proto_test_ro_u8_string {
+    uint8_t u8;
+    char string[0];  // string
+} jd_proto_test_ro_u8_string_t;
+
+
+/**
  * Argument: bool bool (uint8_t). An event raised when rw_bool is modified
  */
 #define JD_PROTO_TEST_EV_E_BOOL 0x81
@@ -116,32 +136,42 @@ typedef struct jd_proto_test_e_i8_u8_u16_i32 {
 
 
 /**
- * Argument: bool bool (uint8_t). A command to set rw_bool. Returns the value.
+ * An event raised when rw_u8_string is modified
+ */
+#define JD_PROTO_TEST_EV_E_U8_STRING 0x87
+typedef struct jd_proto_test_e_u8_string {
+    uint8_t u8;
+    char string[0];  // string
+} jd_proto_test_e_u8_string_t;
+
+
+/**
+ * Argument: bool bool (uint8_t). A command to set rw_bool.
  */
 #define JD_PROTO_TEST_CMD_C_BOOL 0x81
 
 /**
- * Argument: u32 uint32_t. A command to set rw_u32. Returns the value.
+ * Argument: u32 uint32_t. A command to set rw_u32.
  */
 #define JD_PROTO_TEST_CMD_C_U32 0x82
 
 /**
- * Argument: i32 int32_t. A command to set rw_i32. Returns the value.
+ * Argument: i32 int32_t. A command to set rw_i32.
  */
 #define JD_PROTO_TEST_CMD_C_I32 0x83
 
 /**
- * Argument: string string (bytes). A command to set rw_string. Returns the value.
+ * Argument: string string (bytes). A command to set rw_string.
  */
 #define JD_PROTO_TEST_CMD_C_STRING 0x84
 
 /**
- * Argument: bytes bytes. A command to set rw_string. Returns the value.
+ * Argument: bytes bytes. A command to set rw_string.
  */
 #define JD_PROTO_TEST_CMD_C_BYTES 0x85
 
 /**
- * A command to set rw_bytes. Returns the value.
+ * A command to set rw_bytes.
  */
 #define JD_PROTO_TEST_CMD_C_I8_U8_U16_I32 0x86
 typedef struct jd_proto_test_c_i8_u8_u16_i32 {
@@ -153,9 +183,19 @@ typedef struct jd_proto_test_c_i8_u8_u16_i32 {
 
 
 /**
+ * A command to set rw_u8_string.
+ */
+#define JD_PROTO_TEST_CMD_C_U8_STRING 0x87
+typedef struct jd_proto_test_c_u8_string {
+    uint8_t u8;
+    char string[0];  // string
+} jd_proto_test_c_u8_string_t;
+
+
+/**
  * Argument: p_bytes pipe (bytes). A command to read the content of rw_bytes, byte per byte, as a pipe.
  */
-#define JD_PROTO_TEST_CMD_C_REPORT_PIPE 0x87
+#define JD_PROTO_TEST_CMD_C_REPORT_PIPE 0x90
 
 /**
  * Argument: byte uint8_t. A command to read the content of rw_bytes, byte per byte, as a pipe.

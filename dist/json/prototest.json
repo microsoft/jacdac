@@ -316,6 +316,50 @@
       "packFormat": "i8 u8 u16 i32"
     },
     {
+      "kind": "rw",
+      "name": "rw_u8_string",
+      "identifier": 135,
+      "description": "A read write u8, string register.",
+      "fields": [
+        {
+          "name": "u8",
+          "unit": "",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "string",
+          "unit": "",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "packFormat": "u8 s"
+    },
+    {
+      "kind": "ro",
+      "name": "ro_u8_string",
+      "identifier": 391,
+      "description": "A read only u8, string register.. Mirrors rw_u8_string.",
+      "fields": [
+        {
+          "name": "u8",
+          "unit": "",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "string",
+          "unit": "",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "packFormat": "u8 s"
+    },
+    {
       "kind": "event",
       "name": "e_bool",
       "identifier": 129,
@@ -431,10 +475,32 @@
       "packFormat": "i8 u8 u16 i32"
     },
     {
+      "kind": "event",
+      "name": "e_u8_string",
+      "identifier": 135,
+      "description": "An event raised when rw_u8_string is modified",
+      "fields": [
+        {
+          "name": "u8",
+          "unit": "",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "string",
+          "unit": "",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "packFormat": "u8 s"
+    },
+    {
       "kind": "command",
       "name": "c_bool",
       "identifier": 129,
-      "description": "A command to set rw_bool. Returns the value.",
+      "description": "A command to set rw_bool.",
       "fields": [
         {
           "name": "bool",
@@ -449,7 +515,7 @@
       "kind": "command",
       "name": "c_u32",
       "identifier": 130,
-      "description": "A command to set rw_u32. Returns the value.",
+      "description": "A command to set rw_u32.",
       "fields": [
         {
           "name": "u32",
@@ -465,7 +531,7 @@
       "kind": "command",
       "name": "c_i32",
       "identifier": 131,
-      "description": "A command to set rw_i32. Returns the value.",
+      "description": "A command to set rw_i32.",
       "fields": [
         {
           "name": "i32",
@@ -481,7 +547,7 @@
       "kind": "command",
       "name": "c_string",
       "identifier": 132,
-      "description": "A command to set rw_string. Returns the value.",
+      "description": "A command to set rw_string.",
       "fields": [
         {
           "name": "string",
@@ -496,7 +562,7 @@
       "kind": "command",
       "name": "c_bytes",
       "identifier": 133,
-      "description": "A command to set rw_string. Returns the value.",
+      "description": "A command to set rw_string.",
       "fields": [
         {
           "name": "bytes",
@@ -512,7 +578,7 @@
       "kind": "command",
       "name": "c_i8_u8_u16_i32",
       "identifier": 134,
-      "description": "A command to set rw_bytes. Returns the value.",
+      "description": "A command to set rw_bytes.",
       "fields": [
         {
           "name": "i8",
@@ -547,8 +613,30 @@
     },
     {
       "kind": "command",
-      "name": "c_report_pipe",
+      "name": "c_u8_string",
       "identifier": 135,
+      "description": "A command to set rw_u8_string.",
+      "fields": [
+        {
+          "name": "u8",
+          "unit": "",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "string",
+          "unit": "",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "packFormat": "u8 s"
+    },
+    {
+      "kind": "command",
+      "name": "c_report_pipe",
+      "identifier": 144,
       "description": "A command to read the content of rw_bytes, byte per byte, as a pipe.",
       "fields": [
         {

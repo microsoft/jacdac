@@ -20,6 +20,11 @@
 #define JD_BIT_RADIO_REG_TRANSMISSION_POWER 0x81
 
 /**
+ * Read-write uint8_t. Change the transmission and reception band of the radio to the given channel.
+ */
+#define JD_BIT_RADIO_REG_FREQUENCY_BAND 0x82
+
+/**
  * Argument: message string (bytes). Sends a string payload as a radio message
  */
 #define JD_BIT_RADIO_CMD_SEND_STRING 0x80

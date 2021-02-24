@@ -135,6 +135,25 @@
       "packFormat": "u8"
     },
     {
+      "kind": "rw",
+      "name": "frequency_band",
+      "identifier": 130,
+      "description": "Change the transmission and reception band of the radio to the given channel.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true,
+          "defaultValue": 7,
+          "absoluteMax": 83,
+          "absoluteMin": 0
+        }
+      ],
+      "packFormat": "u8"
+    },
+    {
       "kind": "command",
       "name": "send_string",
       "identifier": 128,

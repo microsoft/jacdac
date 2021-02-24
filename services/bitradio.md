@@ -19,6 +19,10 @@ Group used to filter packets
 
 Antenna power to increase or decrease range.
 
+    rw frequency_band=7: u8 { absolute_max=83 } @ 0x82
+
+Change the transmission and reception band of the radio to the given channel.
+
 ## Commands
 
     command send_string @ 0x80 {

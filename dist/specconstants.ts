@@ -691,6 +691,15 @@ export enum BitRadioReg {
      * ```
      */
     TransmissionPower = 0x81,
+
+    /**
+     * Read-write uint8_t. Change the transmission and reception band of the radio to the given channel.
+     *
+     * ```
+     * const [frequencyBand] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    FrequencyBand = 0x82,
 }
 
 export enum BitRadioCmd {

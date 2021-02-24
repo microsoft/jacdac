@@ -63,6 +63,15 @@
     }
   },
   {
+    "service": "dmx",
+    "client": {
+      "name": "jacdac-dmx",
+      "repo": "microsoft/pxt-jacdac/dmx",
+      "qName": "modules.DmxClient",
+      "default": "modules.dmx"
+    }
+  },
+  {
     "service": "eco2",
     "client": {
       "name": "jacdac-e-co2",

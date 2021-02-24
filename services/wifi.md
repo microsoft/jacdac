@@ -27,10 +27,10 @@ Discovery and connection to WiFi networks. Separate TCP service is used for data
     pipe report results {
         flags: APFlags
         reserved: u32
-        rssi: i8 {typical_min = -100, typical_max = -20}
+        rssi: i8 dB {typical_min = -100, typical_max = -20}
         channel: u8 {typical_min = 1, typical_max = 13}
         bssid: u8[6]
-        ssid: string {maxBytes = 33}
+        ssid: string { max_bytes = 33}
     }
 
 Initiate search for WiFi networks. Results are returned via pipe, one entry per packet.

@@ -704,31 +704,40 @@ export enum BitRadioReg {
 
 export enum BitRadioCmd {
     /**
-     * Argument: message string (bytes). Sends a string payload as a radio message
+     * Argument: message string (bytes). Sends a string payload as a radio message, maximum 18 characters.
      *
      * ```
-     * const [message] = jdunpack<[string]>(buf, "s[18]")
+     * const [message] = jdunpack<[string]>(buf, "s")
      * ```
      */
     SendString = 0x80,
 
     /**
-     * Sends a double precision number payload as a radio message
+     * Argument: value f64 (uint64_t). Sends a double precision number payload as a radio message
      *
      * ```
-     * const [value, name] = jdunpack<[number, string]>(buf, "f64 s[12]")
+     * const [value] = jdunpack<[number]>(buf, "f64")
      * ```
      */
     SendNumber = 0x81,
 
     /**
+     * Sends a double precision number and a name payload as a radio message
+     *
+     * ```
+     * const [value, name] = jdunpack<[number, string]>(buf, "f64 s")
+     * ```
+     */
+    SendValue = 0x82,
+
+    /**
      * Argument: data bytes. Sends a payload of bytes as a radio message
      *
      * ```
-     * const [data] = jdunpack<[Uint8Array]>(buf, "b[18]")
+     * const [data] = jdunpack<[Uint8Array]>(buf, "b")
      * ```
      */
-    SendBuffer = 0x82,
+    SendBuffer = 0x83,
 }
 
 export enum BitRadioEvent {

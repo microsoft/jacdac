@@ -25,24 +25,29 @@
 #define JD_BIT_RADIO_REG_FREQUENCY_BAND 0x82
 
 /**
- * Argument: message string (bytes). Sends a string payload as a radio message
+ * Argument: message string (bytes). Sends a string payload as a radio message, maximum 18 characters.
  */
 #define JD_BIT_RADIO_CMD_SEND_STRING 0x80
 
 /**
- * Sends a double precision number payload as a radio message
+ * Argument: value f64 (uint64_t). Sends a double precision number payload as a radio message
  */
 #define JD_BIT_RADIO_CMD_SEND_NUMBER 0x81
-typedef struct jd_bit_radio_send_number {
+
+/**
+ * Sends a double precision number and a name payload as a radio message
+ */
+#define JD_BIT_RADIO_CMD_SEND_VALUE 0x82
+typedef struct jd_bit_radio_send_value {
     uint64_t value;  // f64
-    char name[12];  // string
-} jd_bit_radio_send_number_t;
+    char name[0];  // string
+} jd_bit_radio_send_value_t;
 
 
 /**
  * Argument: data bytes. Sends a payload of bytes as a radio message
  */
-#define JD_BIT_RADIO_CMD_SEND_BUFFER 0x82
+#define JD_BIT_RADIO_CMD_SEND_BUFFER 0x83
 
 /**
  * Raised when a string packet is received

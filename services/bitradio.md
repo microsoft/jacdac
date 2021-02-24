@@ -26,20 +26,26 @@ Change the transmission and reception band of the radio to the given channel.
 ## Commands
 
     command send_string @ 0x80 {
-        message: string { max_bytes: 18 }
+        message: string
     }
 
-Sends a string payload as a radio message
+Sends a string payload as a radio message, maximum 18 characters.
 
     command send_number @ 0x81 {
         value: f64
-        name: string { max_bytes: 12 }
     }
 
 Sends a double precision number payload as a radio message
 
-    command send_buffer @ 0x82 {
-        data: bytes { max_bytes: 18 }
+    command send_value @ 0x82 {
+        value: f64
+        name: string
+    }
+
+Sends a double precision number and a name payload as a radio message
+
+    command send_buffer @ 0x83 {
+        data: bytes
     }
 
 Sends a payload of bytes as a radio message

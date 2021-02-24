@@ -157,17 +157,16 @@
       "kind": "command",
       "name": "send_string",
       "identifier": 128,
-      "description": "Sends a string payload as a radio message",
+      "description": "Sends a string payload as a radio message, maximum 18 characters.",
       "fields": [
         {
           "name": "message",
           "unit": "",
           "type": "string",
-          "storage": 18,
-          "maxBytes": 18
+          "storage": 0
         }
       ],
-      "packFormat": "s[18]"
+      "packFormat": "s"
     },
     {
       "kind": "command",
@@ -181,33 +180,47 @@
           "isFloat": true,
           "type": "f64",
           "storage": 8
+        }
+      ],
+      "packFormat": "f64"
+    },
+    {
+      "kind": "command",
+      "name": "send_value",
+      "identifier": 130,
+      "description": "Sends a double precision number and a name payload as a radio message",
+      "fields": [
+        {
+          "name": "value",
+          "unit": "",
+          "isFloat": true,
+          "type": "f64",
+          "storage": 8
         },
         {
           "name": "name",
           "unit": "",
           "type": "string",
-          "storage": 12,
-          "maxBytes": 12
+          "storage": 0
         }
       ],
-      "packFormat": "f64 s[12]"
+      "packFormat": "f64 s"
     },
     {
       "kind": "command",
       "name": "send_buffer",
-      "identifier": 130,
+      "identifier": 131,
       "description": "Sends a payload of bytes as a radio message",
       "fields": [
         {
           "name": "data",
           "unit": "",
           "type": "bytes",
-          "storage": 18,
-          "isSimpleType": true,
-          "maxBytes": 18
+          "storage": 0,
+          "isSimpleType": true
         }
       ],
-      "packFormat": "b[18]"
+      "packFormat": "b"
     },
     {
       "kind": "event",

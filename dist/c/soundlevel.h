@@ -10,6 +10,27 @@
 #define JD_SOUND_LEVEL_REG_SOUND_LEVEL JD_REG_READING
 
 /**
+ * Read-write bool (uint8_t). Turn on or off the microphone.
+ */
+#define JD_SOUND_LEVEL_REG_ENABLED JD_REG_INTENSITY
+
+/**
+ * Read-write dB int16_t. The minimum power value considered by the sensor.
+ * If both ``min_decibels`` and ``max_decibels`` are supported,
+ * the volume in deciment can be linearly interpolated between
+ * ``[min_decibels, max_decibels]``.
+ */
+#define JD_SOUND_LEVEL_REG_MIN_DECIBELS 0x81
+
+/**
+ * Read-write dB int16_t. The maximum power value considered by the sensor.
+ * If both ``min_decibels`` and ``max_decibels`` are supported,
+ * the volume in deciment can be linearly interpolated between
+ * ``[min_decibels, max_decibels]``.
+ */
+#define JD_SOUND_LEVEL_REG_MAX_DECIBELS 0x82
+
+/**
  * Read-write ratio u0.16 (uint16_t). The sound level to trigger a loud event.
  */
 #define JD_SOUND_LEVEL_REG_LOUD_THRESHOLD JD_REG_LOW_THRESHOLD

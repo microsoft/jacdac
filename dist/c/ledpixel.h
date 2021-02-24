@@ -9,11 +9,12 @@
 #define JD_LED_PIXEL_LIGHT_TYPE_APA102 0x10
 #define JD_LED_PIXEL_LIGHT_TYPE_SK9822 0x11
 
-// enum Variant (uint32_t)
+// enum Variant (uint8_t)
 #define JD_LED_PIXEL_VARIANT_STRIP 0x1
 #define JD_LED_PIXEL_VARIANT_RING 0x2
 #define JD_LED_PIXEL_VARIANT_STICK 0x3
 #define JD_LED_PIXEL_VARIANT_JEWEL 0x4
+#define JD_LED_PIXEL_VARIANT_MATRIX 0x5
 
 /**
  * Read-write ratio u0.8 (uint8_t). Set the luminosity of the strip.
@@ -38,10 +39,15 @@
 /**
  * Read-write uint16_t. Specifies the number of pixels in the strip.
  * Controllers which are sold with lights should default to the correct length
- * and could not allow change.
- * Increasing length at runtime leads to ineffective use of memory and may lead to controller reboot.
+ * and could not allow change. Increasing length at runtime leads to ineffective use of memory and may lead to controller reboot.
  */
 #define JD_LED_PIXEL_REG_NUM_PIXELS 0x81
+
+/**
+ * Read-write uint16_t. If the LED pixel strip is a matrix, specifies the number of columns. Otherwise, a square shape is assumed. Controllers which are sold with lights should default to the correct length
+ * and could not allow change. Increasing length at runtime leads to ineffective use of memory and may lead to controller reboot.
+ */
+#define JD_LED_PIXEL_REG_NUM_COLUMNS 0x83
 
 /**
  * Read-write mA uint16_t. Limit the power drawn by the light-strip (and controller).
@@ -62,7 +68,7 @@
 #define JD_LED_PIXEL_REG_NUM_REPEATS 0x82
 
 /**
- * Constant Variant (uint32_t). Specifies the shape of the light strip.
+ * Constant Variant (uint8_t). Specifies the shape of the light strip.
  */
 #define JD_LED_PIXEL_REG_VARIANT JD_REG_VARIANT
 

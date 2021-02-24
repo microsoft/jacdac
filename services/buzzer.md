@@ -2,6 +2,7 @@
 
     identifier: 0x1b57b1d7
     camel: buzzer
+    tags: sound
 
 A simple buzzer.
 

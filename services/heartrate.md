@@ -4,8 +4,9 @@ A sensor approximating the heart rate.
 
     identifier: 0x166c6dc4
     extends: _sensor
+    tags: biometric
 
-**JACDAC is NOT suitable for medical devices and should NOT be used in any kind of device to diagnose or treat any medical conditions.**
+**Jacdac is NOT suitable for medical devices and should NOT be used in any kind of device to diagnose or treat any medical conditions.**
 
 ## Registers
 
@@ -17,7 +18,7 @@ The estimated heart rate.
 
 The estimated error on the reported sensor data.
 
-    enum Variant: u32 {
+    enum Variant: u8 {
         Finger = 1
         Chest = 2
         Wrist = 3

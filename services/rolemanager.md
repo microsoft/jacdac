@@ -2,7 +2,7 @@
 
     identifier: 0x1e4b7e66
 
-Assign roles to services on the JACDAC bus.
+Assign roles to services on the Jacdac bus.
 
 Internally, the role manager stores a mapping from from `(device_id, service_idx)` to role name.
 Users refer to services by using role names (eg., they instantiate an accelerometer client with a given role name).
@@ -16,6 +16,15 @@ should be co-located on a single device
 (eg., here the `left_leg` "location" is expected to have both an accelerometer and a gyro service on a single device).
 
 ## Registers
+
+    rw auto_bind = 1: bool @ 0x80
+
+Normally, if some roles are unfilled, and there are idle services that can fulfill them,
+the brain device will assign roles (bind) automatically.
+Such automatic assignment happens every second or so, and is trying to be smart about 
+co-locating roles that share "host" (part before first slash),
+as well as reasonably stable assignments.
+Once user start assigning roles manually using this service, auto-binding should be disabled to avoid confusion.
 
     ro all_roles_allocated: bool @ 0x181
 

@@ -25,8 +25,13 @@
 #define JD_BUTTON_EV_CLICK 0x80
 
 /**
- * Emitted together with `up` when the press time was more than 500ms.
+ * Emitted after button is held for 500ms. Long click events are followed by a separate up event.
  */
 #define JD_BUTTON_EV_LONG_CLICK 0x81
+
+/**
+ * Emitted after the button is held for 1500ms. Hold events are followed by a separate up event.
+ */
+#define JD_BUTTON_EV_HOLD 0x82
 
 #endif

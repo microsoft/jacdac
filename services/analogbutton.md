@@ -2,8 +2,9 @@
 
     identifier: 0x1865adc9
     extends: _sensor
+    tags: button
 
-A simple pressure sensitive push-button.
+A capacitive or pressure sensitive push-button.
 
 ## Registers
 
@@ -19,7 +20,7 @@ Indicates the lower threshold for ``inactive`` events.
     
 Indicates the threshold for ``active`` events.
 
-    enum Variant: u32 {
+    enum Variant: u8 {
         Pressure = 1
         Capacitive = 2
     }

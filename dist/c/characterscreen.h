@@ -18,6 +18,11 @@
 #define JD_CHARACTER_SCREEN_REG_MESSAGE JD_REG_VALUE
 
 /**
+ * Read-write ratio u0.8 (uint8_t). Brightness of the screen. `0` means off.
+ */
+#define JD_CHARACTER_SCREEN_REG_BRIGHTNESS JD_REG_INTENSITY
+
+/**
  * Constant Variant (uint8_t). Describes the type of character LED screen.
  */
 #define JD_CHARACTER_SCREEN_REG_VARIANT JD_REG_VARIANT

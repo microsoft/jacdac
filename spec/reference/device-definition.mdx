@@ -1,17 +1,17 @@
 ---
-order: 1
 title: Device definition
+order: 3
 ---
 
 ## Device definition
 
-The JACDAC project maintains a catalog of known [devices](/devices)
+The Jacdac project maintains a catalog of known [devices](/devices)
 in the https://github.com/microsoft/jacdac repository. 
-Any manufacturer of JACDAC device is encouraged to add their own *devices* to the catalog following the instructions below.
+Any manufacturer of Jacdac device is encouraged to add their own *devices* to the catalog following the instructions below.
 
 ## Catalog format
 
-The device catalog is stored as JSON and JPEG images, organized under the [JACDAC devices](https://github.com/microsoft/jacdac/tree/main/devices) folder.
+The device catalog is stored as JSON and JPEG images, organized under the [Jacdac devices](https://github.com/microsoft/jacdac/tree/main/devices) folder.
 Each company may create a new folder for their devices (or multiple folders for product families).
 
 ### Device specification
@@ -33,7 +33,7 @@ Each device file, (e.g. ``mydevice.md``), should be accompanied by a JPEG pictur
 
 Firmware updates can be hosted as **assets** on **releases** of GitHub repositories.
 Upon detecting a device with the specified firmware identifier, 
-JACDAC will automatically query the device catalog for the firmware repository, and download the latest firmware.
+Jacdac will automatically query the device catalog for the firmware repository, and download the latest firmware.
 
 * example [jacdac-stm32x0 releases](https://github.com/microsoft/jacdac-stm32x0/releases)
 

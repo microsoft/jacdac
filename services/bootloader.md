@@ -2,7 +2,7 @@
 
     identifier: 0x1ffa9948
 
-Allows flashing (reprogramming) devices over JACDAC.
+Allows flashing (reprogramming) devices over Jacdac.
 
 ## Commands
 

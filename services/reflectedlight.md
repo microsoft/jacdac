@@ -1,9 +1,10 @@
 # Reflected light
 
-A sensor that detects light and dark surfaces, commonly used for line following robots.
-
     identifier: 0x126c4cb2
     extends: _sensor
+    tags: imaging
+
+A sensor that detects light and dark surfaces, commonly used for line following robots.
 
 ## Registers
 

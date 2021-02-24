@@ -2,6 +2,7 @@
 
     identifier: 0x13062dc8
     extends: _sensor
+    tags: button
 
 A matrix of buttons connected as a keypad
 
@@ -30,6 +31,17 @@ Number of columns in the matrix
 
 The characters printed on the keys if any, in indexing sequence.
 
+    enum Variant: u8 {
+        Membrane = 1
+        Keyboard = 2
+        Elastomer = 3
+        ElastomerLEDPixel = 4
+    }
+    const variant?: Variant @ variant
+
+The type of physical keypad. If the variant is ``ElastomerLEDPixel``
+and the next service on the device is a ``LEDPixel`` service, it is considered
+as the service controlling the LED pixel on the keypad.
 ## Events
 
     event down: u8 @ active

@@ -4,7 +4,7 @@
 
 #define JD_SERVICE_CLASS_WEIGHT_SCALE  0x1f4d5040
 
-// enum Variant (uint32_t)
+// enum Variant (uint8_t)
 #define JD_WEIGHT_SCALE_VARIANT_BODY 0x1
 #define JD_WEIGHT_SCALE_VARIANT_FOOD 0x2
 #define JD_WEIGHT_SCALE_VARIANT_JEWELRY 0x3
@@ -46,7 +46,7 @@
 #define JD_WEIGHT_SCALE_REG_WEIGHT_RESOLUTION JD_REG_READING_RESOLUTION
 
 /**
- * Constant Variant (uint32_t). The type of physical scale
+ * Constant Variant (uint8_t). The type of physical scale
  */
 #define JD_WEIGHT_SCALE_REG_VARIANT JD_REG_VARIANT
 

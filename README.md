@@ -1,6 +1,6 @@
-# JACDAC Device and Service Catalogs
+# Jacdac Device and Service Catalogs
 
-Experience JACDAC at https://aka.ms/jacdac, where you will find tools for contributing to the catalogs of JACDAC modules and services.
+Experience Jacdac at https://aka.ms/jacdac, where you will find tools for contributing to the catalogs of Jacdac modules and services.
 
 ## Contributing
 

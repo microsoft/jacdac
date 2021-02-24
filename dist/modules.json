@@ -31,7 +31,7 @@
     "id": "microsoft-research-jmarcadecontrolsv2",
     "name": "JM Arcade Controls v2",
     "company": "Microsoft Research",
-    "description": "Lets you connect arcade buttons and joystick to a JACDAC network.",
+    "description": "Lets you connect arcade buttons and joystick to a Jacdac network.",
     "repo": "https://github.com/microsoft/jacdac-stm32x0",
     "link": "https://github.com/microsoft/jacdac-stm32x0",
     "services": [
@@ -74,7 +74,7 @@
     "id": "microsoft-research-jmgamepadv2",
     "name": "JM GamePad v2",
     "company": "Microsoft Research",
-    "description": "Lets you convert a plastic d-pad controller, so that it can be connected to a JACDAC network.",
+    "description": "Lets you convert a plastic d-pad controller, so that it can be connected to a Jacdac network.",
     "repo": "https://github.com/microsoft/jacdac-stm32x0",
     "link": "https://github.com/microsoft/jacdac-stm32x0",
     "services": [
@@ -88,7 +88,7 @@
     "id": "microsoft-research-jmmachinelearning",
     "name": "JM Machine Learning",
     "company": "Microsoft Research",
-    "description": "Lets you run machine learning models on data coming from JACDAC network.",
+    "description": "Lets you run machine learning models on data coming from Jacdac network.",
     "repo": "https://github.com/microsoft/pxt-tensorflow",
     "link": "https://github.com/microsoft/jacdac-stm32x0",
     "services": [
@@ -115,7 +115,7 @@
     "id": "microsoft-research-jmpower",
     "name": "JM Power",
     "company": "Microsoft Research",
-    "description": "Lets you supply power to JACDAC network from a MicroUSB connection (eg. a USB battery pack).",
+    "description": "Lets you supply power to Jacdac network from a MicroUSB connection (eg. a USB battery pack).",
     "repo": "https://github.com/microsoft/jacdac-stm32x0",
     "link": "https://github.com/microsoft/jacdac-stm32x0",
     "services": [

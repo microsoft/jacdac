@@ -4,6 +4,7 @@ set -e
 rm -rf ../services/generated
 tsc
 node built/jdspectool ../services
+tsc ../services/generated/tests/*.ts
 node built/jdspectool -d ../devices
 rm -f ../dist/c/*.h
 rm -f ../dist/json/*.json

@@ -75,9 +75,6 @@ function packetsToRegisters(packets: jdspec.PacketInfo[]) {
         .filter(pkt => !pkt.derived && (pkt.kind === 'ro' || pkt.kind === 'rw' || pkt.kind === 'const'))
 }
 
-// create a file to check syntax of expressions, if this file passes tsc
-// then toTestMonitorClient code will be fine
-
 function gatherLocals(serviceTest: jdtest.ServiceTest) {
     let locals: string[] = []
     serviceTest.tests.forEach(t => {
@@ -89,9 +86,8 @@ function gatherLocals(serviceTest: jdtest.ServiceTest) {
     return locals;
 }
 
-function exprToString(token: jdtest.ServiceTestToken) {
-    return (token.js ? token.js : "") + (token?.const ? token.const.toString() : "") + (token.id ? token.id : "");
-}
+// create a file to check syntax of expressions, if this file passes tsc
+// then toTestMonitorClient code will be fine
 
 function testSyntax(spec: jdspec.ServiceSpec, serviceTest: jdtest.ServiceTest) {
     const { shortId, name, camelName, packets } = spec;
@@ -110,24 +106,59 @@ ${serviceTest.tests.map(t => t.commands.map(c => `
         ${c.expr.map(exprToString).join(" ")};
 `).join("")).join("")}
     }`;
+    
+    function exprToString(token: jdtest.ServiceTestToken) {
+        return (token.js ? token.js : "") + (token?.const ? token.const.toString() : "") + (token.id ? token.id : "");
+    }
 }
 
-//  this should generate a JDClient that goes against export class RotaryEncoderClient extends jacdac.SensorClient<[number]> {
-// RotaryEncoderTest extends JDServiceClient
-// - constructor takes JDService
-// - 
-
-    // const positionRegister = service.register(RotaryEncoderReg.Position);
-    // const clicksPerTurnRegister = service.register(RotaryEncoderReg.ClicksPerTurn);
-    
-    // const [position = 0] = useRegisterUnpackedValue<[number]>(positionRegister);
-    // const [clicksPerTurn = 12] = useRegisterUnpackedValue<[number]>(clicksPerTurnRegister);
-
-// TODO: collect the let variables (get/set) and make them private to monitor class
-// - functions to evaluate expressions:
+// create a test monitor as a helper for manual tests
 
 function toTestMonitor(spec: jdspec.ServiceSpec, serviceTest: jdtest.ServiceTest) {
+    const { camelName, packets } = spec;
 
+    const registers = packetsToRegisters(packets);
+    const regs = registers.filter(r => !!r);
+    const locals = gatherLocals(serviceTest);
+    const capName = capitalize(camelName);
+    const className = `${capName}TestClient`
+
+    return `
+    import { JDService } from "../../../src/jdom/service"
+    import { JDServiceClient } from "../../../src/jdom/serviceclient"
+    import { JDRegister } from "../../../src/jdom/register"
+    import { useRegisterUnpackedValue } from "../../../docs/src/jacdac/useRegisterValue";
+    import { ${capName}Reg } from "../specconstants";
+
+    namespace tests {
+        export class ${className} extends JDServiceClient {
+${regs.map(reg => `
+            private reg_${reg.name}: JDRegister
+            private ${reg.name}: number;
+            `).join("")}            
+${locals.map(l => `
+            private ${l}: number = 0;`).join("")}  
+        
+            constructor(service: JDService) {
+                super(service);
+${regs.map(reg => `
+                this.reg_${reg.name} = service.register(${capName}Reg.${capitalize(camelize(reg.name))});
+                const [tmp_${reg.name}] = useRegisterUnpackedValue<[number]>(this.reg_${reg.name});
+                this.${reg.name} = tmp_${reg.name};
+                `).join("")}
+            }
+${serviceTest.tests.map((t,t_index) => t.commands.map((c,c_index) => `
+            public test${t_index}_cmd${c_index}() {
+                return ${c.expr.map(exprToString).join(" ")}
+            };
+            `
+            ).join("")).join("")}
+        }
+    }`;
+
+    function exprToString(token: jdtest.ServiceTestToken) {
+        return (token.js ? token.js : "") + (token?.const ? token.const.toString() : "") + (token.id ? `this.${token.id}` : "");
+    }
 }
 
 function toMakeCodeClient(spec: jdspec.ServiceSpec) {
@@ -331,11 +362,14 @@ function processSpec(dn: string) {
             const testCont = readString(testFile, "")
             const testJson = parseSpecificationTestMarkdownToJSON(testCont, json)
             reportErrors(testJson.errors, path.join(dn, "tests"), fn)
-            //if (testJson.errors?.length == 0) {
-                let tsSource = testSyntax(json, testJson);
-                fs.writeFileSync(path.join(outp, "checks", fn.slice(0,-3)+".ts"), tsSource);
-            //}
             tests.push(testJson);
+
+            // for error checking
+            let tsCheckSource = testSyntax(json, testJson);
+            fs.writeFileSync(path.join(outp, "checks", fn.slice(0,-3)+".ts"), tsCheckSource);
+            // for inclusion by jacdac-ts
+            let tsMonitorSource = toTestMonitor(json, testJson);
+            fs.writeFileSync(path.join(outp, "tests", fn.slice(0,-3)+".ts"), tsMonitorSource);
 
             const cfn = path.join(outp, "json", fn.slice(0, -3) + ".test");
             fs.writeFileSync(cfn, JSON.stringify(testJson, null, 2))

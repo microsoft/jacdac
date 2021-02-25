@@ -4,10 +4,6 @@
 
 #define JD_SERVICE_CLASS_SERVO  0x12fc9103
 
-// enum Variant (uint8_t)
-#define JD_SERVO_VARIANT_POSITIONAL_ROTATION 0x1
-#define JD_SERVO_VARIANT_LINEAR 0x2
-
 /**
  * Read-write ° i16.16 (int32_t). Specifies the angle of the arm.
  */
@@ -42,14 +38,6 @@
  * Read-write μs uint16_t. The length of pulse corresponding to highest angle.
  */
 #define JD_SERVO_REG_MAX_PULSE 0x85
-
-/**
- * Constant Variant (uint8_t). Specifies the type of servo motor.
- * * Positional Rotation Servos: Positional servos can rotate the shaft in about half of the circle,
- * with features to avoid over-rotating. Most servo have a range of 180° but some allow 270° or 360°.
- * * Linear Servos: linear servos are also like a positional servo, but with additional gears to the adjust the output from circular to back-and-forth.
- */
-#define JD_SERVO_REG_VARIANT JD_REG_VARIANT
 
 /**
  * Constant kg/cm u16.16 (uint32_t). The servo motor will stop rotating when it is trying to move a ``stall_torque`` weight at a radial distance of ``1.0`` cm.

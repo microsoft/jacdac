@@ -11,16 +11,7 @@
     "short": "Servo is a small motor with arm that can be pointing at a specific direction.\n\nThe `min/max_angle/pulse` may be read-only if the servo is permanently affixed to its Jacdac controller."
   },
   "classIdentifier": 318542083,
-  "enums": {
-    "Variant": {
-      "name": "Variant",
-      "storage": 1,
-      "members": {
-        "PositionalRotation": 1,
-        "Linear": 2
-      }
-    }
-  },
+  "enums": {},
   "packets": [
     {
       "kind": "const",
@@ -210,22 +201,6 @@
         }
       ],
       "packFormat": "u16"
-    },
-    {
-      "kind": "const",
-      "name": "variant",
-      "identifier": 263,
-      "description": "Specifies the type of servo motor.\n* Positional Rotation Servos: Positional servos can rotate the shaft in about half of the circle,\nwith features to avoid over-rotating. Most servo have a range of 180° but some allow 270° or 360°.\n* Linear Servos: linear servos are also like a positional servo, but with additional gears to the adjust the output from circular to back-and-forth.",
-      "fields": [
-        {
-          "name": "_",
-          "unit": "",
-          "type": "Variant",
-          "storage": 1
-        }
-      ],
-      "identifierName": "variant",
-      "packFormat": "u8"
     },
     {
       "kind": "const",

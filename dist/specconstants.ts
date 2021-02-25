@@ -582,7 +582,7 @@ export enum ArcadeScreenReg {
      * This register may be write-only.
      *
      * ```
-     * const [rest] = jdunpack<[([number, number, number])[]]>(buf, "r: u0.8 u0.8 u0.8 x[1]")
+     * const [rest] = jdunpack<[([number, number, number])[]]>(buf, "r: u8 u8 u8 x[1]")
      * const [blue, green, red] = rest[0]
      * ```
      */
@@ -3511,12 +3511,6 @@ export enum SensorAggregatorReg {
 
 // Service: Servo
 export const SRV_SERVO = 0x12fc9103
-
-export enum ServoVariant { // uint8_t
-    PositionalRotation = 0x1,
-    Linear = 0x2,
-}
-
 export enum ServoReg {
     /**
      * Read-write ° i16.16 (int32_t). Specifies the angle of the arm.
@@ -3580,18 +3574,6 @@ export enum ServoReg {
      * ```
      */
     MaxPulse = 0x85,
-
-    /**
-     * Constant Variant (uint8_t). Specifies the type of servo motor.
-     * * Positional Rotation Servos: Positional servos can rotate the shaft in about half of the circle,
-     * with features to avoid over-rotating. Most servo have a range of 180° but some allow 270° or 360°.
-     * * Linear Servos: linear servos are also like a positional servo, but with additional gears to the adjust the output from circular to back-and-forth.
-     *
-     * ```
-     * const [variant] = jdunpack<[ServoVariant]>(buf, "u8")
-     * ```
-     */
-    Variant = 0x107,
 
     /**
      * Constant kg/cm u16.16 (uint32_t). The servo motor will stop rotating when it is trying to move a ``stall_torque`` weight at a radial distance of ``1.0`` cm.

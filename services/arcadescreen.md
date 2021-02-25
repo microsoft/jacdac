@@ -53,9 +53,9 @@ If set to `0` the display may go to sleep.
 
     rw palette @ 0x80 {
     repeats:
-        blue: u0.8 /
-        green: u0.8 /
-        red: u0.8 /
+        blue: u8
+        green: u8
+        red: u8
         padding: u8
     }
 

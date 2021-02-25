@@ -219,25 +219,25 @@
       "fields": [
         {
           "name": "blue",
-          "unit": "/",
-          "shift": 8,
-          "type": "u0.8",
+          "unit": "",
+          "type": "u8",
           "storage": 1,
+          "isSimpleType": true,
           "startRepeats": true
         },
         {
           "name": "green",
-          "unit": "/",
-          "shift": 8,
-          "type": "u0.8",
-          "storage": 1
+          "unit": "",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
         },
         {
           "name": "red",
-          "unit": "/",
-          "shift": 8,
-          "type": "u0.8",
-          "storage": 1
+          "unit": "",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
         },
         {
           "name": "padding",
@@ -247,7 +247,7 @@
           "isSimpleType": true
         }
       ],
-      "packFormat": "r: u0.8 u0.8 u0.8 u8"
+      "packFormat": "r: u8 u8 u8 u8"
     }
   ],
   "tags": []

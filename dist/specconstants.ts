@@ -582,7 +582,7 @@ export enum ArcadeScreenReg {
      * This register may be write-only.
      *
      * ```
-     * const [rest] = jdunpack<[([number, number, number])[]]>(buf, "r: u0.8 u0.8 u0.8 x[1]")
+     * const [rest] = jdunpack<[([number, number, number])[]]>(buf, "r: u8 u8 u8 x[1]")
      * const [blue, green, red] = rest[0]
      * ```
      */

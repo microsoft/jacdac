@@ -1,6 +1,14 @@
 # Jacdac Device and Service Catalogs
 
-Experience Jacdac at https://aka.ms/jacdac, where you will find tools for contributing to the catalogs of Jacdac modules and services.
+**Jacdac** is a bus-based plug-and-play hardware/software stack 
+for **microcontrollers** and their peripherals (sensors/actuators), 
+with applications to rapid prototyping, making, and physical computing. 
+
+This repository contains the service specifications and device definitions.
+
+* Read online documentation at https://aka.ms/jacdac
+* Join the dicussions as https://github.com/microsoft/jacdac/discussions
+* File an issue at https://github.com/microsoft/jacdac/issues
 
 ## Contributing
 

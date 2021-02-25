@@ -75,73 +75,59 @@ function packetsToRegisters(packets: jdspec.PacketInfo[]) {
         .filter(pkt => !pkt.derived && (pkt.kind === 'ro' || pkt.kind === 'rw' || pkt.kind === 'const'))
 }
 
+// create a file to check syntax of expressions, if this file passes tsc
+// then toTestMonitorClient code will be fine
+
+function gatherLocals(serviceTest: jdtest.ServiceTest) {
+    let locals: string[] = []
+    serviceTest.tests.forEach(t => {
+        t.letVariables.forEach(l => {
+            if (locals.indexOf(l) < 0)
+                locals.push(l);
+        })
+    })
+    return locals;
+}
+
+function exprToString(token: jdtest.ServiceTestToken) {
+    return (token.js ? token.js : "") + (token?.const ? token.const.toString() : "") + (token.id ? token.id : "");
+}
+
+function testSyntax(spec: jdspec.ServiceSpec, serviceTest: jdtest.ServiceTest) {
+    const { shortId, name, camelName, packets } = spec;
+    const Reading = 0x101;
+
+    const registers = packetsToRegisters(packets);
+    const regs = registers.filter(r => !!r);
+    const locals = gatherLocals(serviceTest);
+
+    return `namespace test_syntax {
+${regs.map(reg => `
+        let ${reg.name} = 0;`).join("")}            
+${locals.map(l => `
+        let ${l} = 0;`).join("")}      
+${serviceTest.tests.map(t => t.commands.map(c => `
+        ${c.expr.map(exprToString).join(" ")};
+`).join("")).join("")}
+    }`;
+}
+
 //  this should generate a JDClient that goes against export class RotaryEncoderClient extends jacdac.SensorClient<[number]> {
 // RotaryEncoderTest extends JDServiceClient
 // - constructor takes JDService
 // - 
 
     // const positionRegister = service.register(RotaryEncoderReg.Position);
-    // const [position = 0] = useRegisterUnpackedValue<[number]>(positionRegister);
     // const clicksPerTurnRegister = service.register(RotaryEncoderReg.ClicksPerTurn);
+    
+    // const [position = 0] = useRegisterUnpackedValue<[number]>(positionRegister);
     // const [clicksPerTurn = 12] = useRegisterUnpackedValue<[number]>(clicksPerTurnRegister);
 
-// TODO: let variables (get/set)
+// TODO: collect the let variables (get/set) and make them private to monitor class
 // - functions to evaluate expressions:
 
-function toTestMonitorClient(spec: jdspec.ServiceSpec, serviceTest: jdtest.ServiceTest) {
-    const { shortId, name, camelName, packets } = spec;
-    const Reading = 0x101;
-    const Intensity = 0x1;
-    const Value = 0x2;
+function toTestMonitor(spec: jdspec.ServiceSpec, serviceTest: jdtest.ServiceTest) {
 
-    const registers = packetsToRegisters(packets);
-    let baseType = "Client";
-    const ctorArgs = [
-        `jacdac.SRV_${snakify(spec.camelName).toUpperCase()}`
-    ]
-    const regs = registers.filter(r => !!r);
-    const className = `${capitalize(camelName)}TestClient`
-    return `namespace tests {
-    export class ${className} extends jacdac.JDServiceClient {
-${regs.filter(reg => reg.identifier !== Reading).map(reg => `
-        private readonly _${camelize(reg.name)} : jacdac.RegisterClient<[${packInfo(spec, reg, true, true).types}]>;`).join("")}            
-
-        constructor(private service: JDService) {
-            super(service.device, ${ctorArgs.join(", ")});
-${regs.filter(reg => reg.identifier !== Reading).map(reg => `
-            this._${camelize(reg.name)} = this.addRegister<[${packInfo(spec, reg, true, true).types}]>(jacdac.${capitalize(spec.camelName)}Reg.${capitalize(camelize(reg.name))}, "${reg.packFormat}");`).join("")}            
-        }
-    
-${regs.map(reg => {
-        const { types } = packInfo(spec, reg, true, true);
-        const { fields } = reg;
-        const isReading = reg.identifier === Reading;
-        const fieldName = `this._${isReading ? "reading" : camelize(reg.name)}`;
-        return fields.map((field, fieldi) => {
-            const name = field.name === "_" ? reg.name : isReading ? field.name : `${reg.name}${capitalize(field.name)}`
-            const min = pick(field.typicalMin, field.absoluteMin, field.unit === "/" ? (field.type[0] === "i" ? -1 : 0) : undefined)
-            const max = pick(field.typicalMax, field.absoluteMax, field.unit === "/" ? 1 : undefined)
-            const defl = field.defaultValue;
-
-            return `
-        ${camelize(name)}(): ${types[fieldi]} {${isReading ? `
-            this.setStreaming(true);` : `
-            this.start();`}            
-            const values = ${fieldName}.pauseUntilValues() as any[];
-            return ${field.type === "bool" ? "!!" : ""}values[${fieldi}];
-        }
-${reg.kind === "rw" ? `
-        set${capitalize(camelize(name))}(value: ${types[fieldi]}) {
-            this.start();
-            const values = ${fieldName}.values as any[];
-            values[${fieldi}] = ${field.type === "bool" ? "value ? 1 : 0" : "value"};
-            ${fieldName}.values = values as [${types}];
-        }
-` : ""}`
-        }).join("")
-    }).join("")}  
-    }
-}`;
 }
 
 function toMakeCodeClient(spec: jdspec.ServiceSpec) {
@@ -305,6 +291,7 @@ function processSpec(dn: string) {
     mkdir(outp)
     for (let n of Object.keys(converters()))
         mkdir(path.join(outp, n))
+    mkdir(path.join(outp, "checks"))
     mkdir(path.join(outp, "tests"))
 
     // generate makecode file structure
@@ -345,8 +332,8 @@ function processSpec(dn: string) {
             const testJson = parseSpecificationTestMarkdownToJSON(testCont, json)
             reportErrors(testJson.errors, path.join(dn, "tests"), fn)
             //if (testJson.errors?.length == 0) {
-                let tsSource = toTestMonitorClient(json, testJson);
-                fs.writeFileSync(path.join(outp, "tests", fn.slice(0,-3)+".ts"), tsSource);
+                let tsSource = testSyntax(json, testJson);
+                fs.writeFileSync(path.join(outp, "checks", fn.slice(0,-3)+".ts"), tsSource);
             //}
             tests.push(testJson);
 

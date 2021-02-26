@@ -11,4 +11,30 @@ A simple domain-specific set of test constructs is made available for easy
 author of tests for the common cases, with an escape hatch to write TypeScript
 for more complex test scenarios.
 
+The markdown file must have a header (#) with a descriptive title. Each unit
+test starts with a subheader (##) and unique short description. A manual test
+generally starts with a prompt to the user, followed by a sequence of test
+commands. 
 
+## Test commands
+
+A test command is a single line JavaScript function call. We currently
+support the following calls.
+
+- ask(string): ask the user to give a Yes/No answer to question
+- check(expr): check if the given expr holds
+- changes(expr): check if the expression changes
+- increases(register,expr): check if the register increases in value by expr
+- decreases(register,expr): check if the register descreases in value by expr
+- rangesFromUpTo(register,startExpr,endExpr): check if register increases from startExpr to endExpr (and integer values in between)
+- rangesFromDownTo(register,startExpr,endExpr): check if register decreases from startExpr to endExpr (and integer values in between
+- reset()
+
+## Test expressions
+
+Most test expressions are just JavaScript expressions where identifiers 
+refer to elements of the service specification (e.g., registers). A few 
+special test functions are provided:
+- start(expr): the value of expr at the start of the unit test
+
+## Timing issues

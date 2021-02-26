@@ -1,7 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path="jdspec.d.ts" />
-
 import { parseIntFloat } from "./jdutils";
-import { lookupField } from "./jdutils";
 
 export const DEVICE_IMAGE_WIDTH = 600;
 export const DEVICE_IMAGE_HEIGHT = 450;
@@ -246,7 +245,7 @@ export function parseServiceSpecificationMarkdownToJSON(
     filename = ""
 ): jdspec.ServiceSpec {
     filecontent = (filecontent || "").replace(/\r/g, "");
-    let info: jdspec.ServiceSpec = {
+    const info: jdspec.ServiceSpec = {
         name: "",
         status: "experimental",
         shortId: filename.replace(/\.md$/, "").replace(/.*\//, ""),
@@ -280,7 +279,7 @@ export function parseServiceSpecificationMarkdownToJSON(
 
     try {
         if (includes["_system"] && includes["_base"]) processInclude("_base");
-        for (let line of filecontent.split(/\n/)) {
+        for (const line of filecontent.split(/\n/)) {
             lineNo++;
             processLine(line);
         }
@@ -500,7 +499,7 @@ export function parseServiceSpecificationMarkdownToJSON(
             else error("invalid token after meta");
         } else if (kindSt == "pipe") {
             forceSection("commands");
-            let w2 = words.shift();
+            const w2 = words.shift();
             if (w2 == "report" || w2 == "command") kind = ("pipe_" + w2) as any;
             else error("invalid token after pipe");
         } else {
@@ -746,7 +745,7 @@ export function parseServiceSpecificationMarkdownToJSON(
 
         if (op != ":") error("expecting ':'");
 
-        let tp = words.shift();
+        const tp = words.shift();
         const [storage, type, typeShift] = normalizeStorageType(tp);
         const isFloat = typeShift === null || undefined;
 
@@ -1039,7 +1038,7 @@ export function parseServiceSpecificationMarkdownToJSON(
     ): [jdspec.StorageType, string, number] {
         if (info.enums[tp]) return [info.enums[tp].storage, tp, 0];
         if (!tp) error("expecting type here");
-        let tp2 = tp.replace(/_t$/, "").toLowerCase();
+        const tp2 = tp.replace(/_t$/, "").toLowerCase();
         const m = /^([ui])(\d+)\.(\d+)$/.exec(tp2);
         if (m) {
             const a = parseIntCheck(m[2]);
@@ -1104,8 +1103,8 @@ export function parseServiceSpecificationMarkdownToJSON(
     function hasNaturalAlignment(iface: jdspec.PacketInfo) {
         let byteOffset = 0;
 
-        for (let m of iface.fields) {
-            let sz = memberSize(m);
+        for (const m of iface.fields) {
+            const sz = memberSize(m);
             if (sz == 0) continue;
             const pad = sz > 4 ? 4 : sz;
             if (!/^u8\[/.test(m.type) && byteOffset % pad != 0) return false;
@@ -1117,8 +1116,8 @@ export function parseServiceSpecificationMarkdownToJSON(
 }
 
 function values<T>(o: jdspec.SMap<T>): T[] {
-    let r: T[] = [];
-    for (let k of Object.keys(o)) r.push(o[k]);
+    const r: T[] = [];
+    for (const k of Object.keys(o)) r.push(o[k]);
     return r;
 }
 
@@ -1198,10 +1197,10 @@ function toH(info: jdspec.ServiceSpec) {
             info.classIdentifier
         )}\n`;
 
-    for (let en of values(info.enums).filter((en) => !en.derived)) {
+    for (const en of values(info.enums).filter((en) => !en.derived)) {
         const enPref = pref + toUpper(en.name);
         r += `\n// enum ${en.name} (${cStorage(en.storage)})\n`;
-        for (let k of Object.keys(en.members))
+        for (const k of Object.keys(en.members))
             r +=
                 "#define " +
                 enPref +
@@ -1233,7 +1232,7 @@ function toH(info: jdspec.ServiceSpec) {
             let val = toHex(pkt.identifier);
             if (pkt.identifierName)
                 val = "JD_" + inner + "_" + toUpper(pkt.identifierName);
-            let name = pref + inner + "_" + toUpper(pkt.name);
+            const name = pref + inner + "_" + toUpper(pkt.name);
             if (name != val) r += `#define ${name} ${val}\n`;
         }
 
@@ -1535,10 +1534,10 @@ function toTypescript(info: jdspec.ServiceSpec, staticTypeScript: boolean) {
             ).toLocaleUpperCase()} = ${toHex(info.classIdentifier)}\n`;
     }
     const pref = upperCamel(info.camelName);
-    for (let en of values(info.enums)) {
+    for (const en of values(info.enums)) {
         const enPref = pref + upperCamel(en.name);
         r += `\n${enumkw} ${enPref} { // ${cStorage(en.storage)}\n`;
-        for (let k of Object.keys(en.members))
+        for (const k of Object.keys(en.members))
             r += indent2 + k + " = " + toHex(en.members[k]) + ",\n";
         r += indent + "}\n\n";
     }
@@ -1548,7 +1547,7 @@ function toTypescript(info: jdspec.ServiceSpec, staticTypeScript: boolean) {
         if (pkt.derived) continue;
 
         const cmt = addComment(pkt);
-        let pack = pkt.fields.length
+        const pack = pkt.fields.length
             ? packInfo(info, pkt, staticTypeScript).buffers
             : "";
 
@@ -1571,7 +1570,7 @@ function toTypescript(info: jdspec.ServiceSpec, staticTypeScript: boolean) {
                     `${pkt.kind} ${upperCamel(pkt.name)}${wrapSnippet(pack)}`
                 );
         } else {
-            let val = toHex(pkt.identifier);
+            const val = toHex(pkt.identifier);
             if (staticTypeScript && pkt.kind === "event") {
                 meta = `//% block="${snakify(pkt.name).replace(/_/g, " ")}"\n`;
             }

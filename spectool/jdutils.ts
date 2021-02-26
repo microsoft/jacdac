@@ -1,14 +1,21 @@
+// eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path="jdspec.d.ts" />
 
-export function isRegister(pkt: jdspec.PacketInfo) {
+export function isRegister(pkt: jdspec.PacketInfo): boolean {
     return pkt && (pkt.kind == "const" || pkt.kind == "ro" || pkt.kind == "rw");
 }
 
-export function lookupRegister(spec: jdspec.ServiceSpec, id: string) {
+export function lookupRegister(
+    spec: jdspec.ServiceSpec,
+    id: string
+): jdspec.PacketInfo {
     return spec.packets.find((pkt) => isRegister(pkt) && pkt.name === id);
 }
 
-export function lookupField(pkt: jdspec.PacketInfo, field: string) {
+export function lookupField(
+    pkt: jdspec.PacketInfo,
+    field: string
+): jdspec.PacketMember {
     return pkt.fields.find((member) => member.name === field);
 }
 
@@ -18,7 +25,7 @@ export interface RegField {
 }
 
 export function getRegister(spec: jdspec.ServiceSpec, w: string): RegField {
-    let ret: RegField = { pkt: null };
+    const ret: RegField = { pkt: null };
     if (/^\w+$/.test(w)) {
         ret.pkt = lookupRegister(spec, w);
         if (!ret.pkt) {
@@ -48,7 +55,7 @@ export function parseIntFloat(
     spec: jdspec.ServiceSpec,
     w: string,
     allowFloat = false
-) {
+): number {
     if (/^-?0x[a-f\d_]+$/i.test(w) || /^-?[\d_]+$/.test(w)) {
         const v = parseInt(w.replace(/_/g, "")); // allow for 0x3fff_ffff syntax
         if (isNaN(v)) throw new Error("can't parse int: " + w);

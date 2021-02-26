@@ -5,6 +5,10 @@ export function isRegister(pkt: jdspec.PacketInfo): boolean {
     return pkt && (pkt.kind == "const" || pkt.kind == "ro" || pkt.kind == "rw");
 }
 
+export function packetsToRegisters(packets: jdspec.PacketInfo[]) {
+    return packets
+        .filter(pkt => !pkt.derived && isRegister(pkt))
+}
 export function lookupRegister(
     spec: jdspec.ServiceSpec,
     id: string
@@ -23,6 +27,7 @@ export interface RegField {
     pkt: jdspec.PacketInfo;
     fld?: jdspec.PacketMember;
 }
+
 
 export function getRegister(spec: jdspec.ServiceSpec, w: string): RegField {
     const ret: RegField = { pkt: null };

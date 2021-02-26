@@ -41,26 +41,19 @@ declare namespace jdtest {
 
     interface UnitTest {
         description: string;
+        letVariables: string[];
         commands: ServiceTestCommand[];
     }
 
     interface ServiceTestCommand {
         kind: ServiceTestCommandKind;
-        message?: string;
-        expr?: ServiceTestExpression;
-        trace?: ServiceTestTrace;
+        lhs?: string;
+        expr: ServiceTestToken[];
     }
 
-    interface ServiceTestExpression {
-        left: ServiceTestValue;
-        op?: ServiceTestComparisonKind;
-        right?: ServiceTestValue;
-    }
-
-    interface ServiceTestValue {
-        negate?: boolean;
-        id?: string;
-        field?: string;
+    interface ServiceTestToken {
+        js?: string;        // JavaScript token
+        id?: string;        // an id in the spec
         const?: number;
     }
 
@@ -68,6 +61,6 @@ declare namespace jdtest {
 
     }
 
-    type ServiceTestCommandKind = "say" | "ask" | "check" | "observe" | "changes" | "establish"
+    type ServiceTestCommandKind = "let" | "say" | "ask" | "check" | "observe" | "changes"
     type ServiceTestComparisonKind = "eq" | "ne" | "lt" | "gt" | "le" | "ge"
 }

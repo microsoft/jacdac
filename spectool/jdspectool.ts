@@ -15,6 +15,7 @@ import {
     snakify,
 } from "./jdspec";
 import { parseSpecificationTestMarkdownToJSON } from "./jdtest";
+import { packetsToRegisters } from "./jdutils"
 
 // eslint-disable-next-line no-var, @typescript-eslint/no-explicit-any
 declare var process: any;
@@ -76,11 +77,7 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
     const Intensity = 0x1;
     const Value = 0x2;
 
-    const registers = packets.filter(
-        (pkt) =>
-            !pkt.derived &&
-            (pkt.kind === "ro" || pkt.kind === "rw" || pkt.kind === "const")
-    );
+    const registers = packetsToRegisters(packets);
     let baseType = "Client";
     const ctorArgs = [
         `jacdac.SRV_${snakify(camelName).toUpperCase()}`,

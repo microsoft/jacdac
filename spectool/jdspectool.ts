@@ -2,7 +2,7 @@
 /// <reference path="jdtest.d.ts" />
 
 import { camelize, capitalize, converters, dashify, humanify, normalizeDeviceSpecification, packInfo, parseServiceSpecificationMarkdownToJSON, snakify } from "./jdspec"
-import { parseSpecificationTestMarkdownToJSON, testSyntax, toTestMonitor } from "./jdtest"
+import { parseSpecificationTestMarkdownToJSON } from "./jdtest"
 import { packetsToRegisters } from "./jdutils"
 
 declare var process: any;
@@ -233,8 +233,6 @@ function processSpec(dn: string) {
     mkdir(outp)
     for (let n of Object.keys(converters()))
         mkdir(path.join(outp, n))
-    mkdir(path.join(outp, "checks"))
-    mkdir(path.join(outp, "tests"))
 
     // generate makecode file structure
     const mkcdir = path.join(outp, "makecode")
@@ -274,13 +272,6 @@ function processSpec(dn: string) {
             const testJson = parseSpecificationTestMarkdownToJSON(testCont, json)
             reportErrors(testJson.errors, path.join(dn, "tests"), fn)
             tests.push(testJson);
-
-            // for error checking
-            let tsCheckSource = testSyntax(json, testJson);
-            fs.writeFileSync(path.join(outp, "checks", fn.slice(0,-3)+".ts"), tsCheckSource);
-            // for inclusion by jacdac-ts
-            let tsMonitorSource = toTestMonitor(json, testJson);
-            fs.writeFileSync(path.join(outp, "tests", fn.slice(0,-3)+".ts"), tsMonitorSource);
 
             const cfn = path.join(outp, "json", fn.slice(0, -3) + ".test");
             fs.writeFileSync(cfn, JSON.stringify(testJson, null, 2))

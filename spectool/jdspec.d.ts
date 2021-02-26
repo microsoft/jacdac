@@ -2,14 +2,107 @@
 declare namespace senml {
     const MIME_TYPE = "application/senml+json";
 
-    type Unit = "m" | "kg" | "g" | "s" | "A" | "K" | "cd" | "mol" | "Hz" | "rad" | "sr" | "N" | "Pa" | "J" | "W" | "C" | "V" | "F" | "Ohm"
-        | "S" | "Wb" | "T" | "H" | "Cel" | "lm" | "lx" | "Bq" | "Gy" | "Sv" | "kat" | "m2" | "m3" | "l" | "m/s" | "m/s2" | "m3/s" | "l/s"
-        | "W/m2" | "cd/m2" | "bit" | "bit/s" | "lat" | "lon" | "pH" | "dB" | "dBW" | "Bspl" | "count" | "/" | "%RH" | "%EL" | "EL"
-        | "1/s" | "1/min" | "beat/min" | "beats" | "S/m" | "B" | "VA" | "VAs" | "var" | "vars" | "J/m" | "kg/m3" | "deg";
+    type Unit =
+        | "m"
+        | "kg"
+        | "g"
+        | "s"
+        | "A"
+        | "K"
+        | "cd"
+        | "mol"
+        | "Hz"
+        | "rad"
+        | "sr"
+        | "N"
+        | "Pa"
+        | "J"
+        | "W"
+        | "C"
+        | "V"
+        | "F"
+        | "Ohm"
+        | "S"
+        | "Wb"
+        | "T"
+        | "H"
+        | "Cel"
+        | "lm"
+        | "lx"
+        | "Bq"
+        | "Gy"
+        | "Sv"
+        | "kat"
+        | "m2"
+        | "m3"
+        | "l"
+        | "m/s"
+        | "m/s2"
+        | "m3/s"
+        | "l/s"
+        | "W/m2"
+        | "cd/m2"
+        | "bit"
+        | "bit/s"
+        | "lat"
+        | "lon"
+        | "pH"
+        | "dB"
+        | "dBW"
+        | "Bspl"
+        | "count"
+        | "/"
+        | "%RH"
+        | "%EL"
+        | "EL"
+        | "1/s"
+        | "1/min"
+        | "beat/min"
+        | "beats"
+        | "S/m"
+        | "B"
+        | "VA"
+        | "VAs"
+        | "var"
+        | "vars"
+        | "J/m"
+        | "kg/m3"
+        | "deg";
 
-    type SecondaryUnit = "ms" | "min" | "h" | "MHz" | "kW" | "kVA" | "kvar" | "Ah" | "Wh" | "kWh"
-        | "varh" | "kvarh" | "kVAh" | "Wh/km" | "KiB" | "GB" | "Mbit/s" | "B/s" | "MB/s" | "mV" | "mA" | "dBm" | "ug/m3"
-        | "mm/h" | "m/h" | "ppm" | "/100" | "/1000" | "hPa" | "mm" | "cm" | "km" | "km/h";
+    type SecondaryUnit =
+        | "ms"
+        | "min"
+        | "h"
+        | "MHz"
+        | "kW"
+        | "kVA"
+        | "kvar"
+        | "Ah"
+        | "Wh"
+        | "kWh"
+        | "varh"
+        | "kvarh"
+        | "kVAh"
+        | "Wh/km"
+        | "KiB"
+        | "GB"
+        | "Mbit/s"
+        | "B/s"
+        | "MB/s"
+        | "mV"
+        | "mA"
+        | "dBm"
+        | "ug/m3"
+        | "mm/h"
+        | "m/h"
+        | "ppm"
+        | "/100"
+        | "/1000"
+        | "hPa"
+        | "mm"
+        | "cm"
+        | "km"
+        | "km/h";
 
     interface SenMLRecord {
         // Base Name
@@ -49,21 +142,21 @@ declare namespace senml {
 }
 
 declare namespace jdspec {
-    type SMap<T> = { [v: string]: T; }
+    type SMap<T> = { [v: string]: T };
 
     /**
      * How a type is stored in memory. Negative values signify signed integers, positive unsigned.
      * Magnitude is size in bytes. 0 means unspecified length (usually 'the rest of the packet').
      */
-    type StorageType = number
+    type StorageType = number;
 
     /**
      * Unit for a field.
-     * 
+     *
      * Many fields have no unit (e.g. they are identifiers); in that case empty string is used. Fields that represent counts use "#".
      * SenML (https://www.iana.org/assignments/senml/senml.xhtml) units and secondary unit are also supported.
      */
-    type Unit = "" | "us" | "mWh" | "#" | senml.Unit | senml.SecondaryUnit
+    type Unit = "" | "us" | "mWh" | "#" | senml.Unit | senml.SecondaryUnit;
 
     /**
      * Stability status of a feature
@@ -118,7 +211,7 @@ declare namespace jdspec {
 
         /**
          * List of extended service types (eg. 'sensor').
-         * 
+         *
          * This is for reference only. Inherited registers/commands/etc are included
          * in our packets object.
          */
@@ -126,14 +219,14 @@ declare namespace jdspec {
 
         /**
          * Various descriptions extracted from markdown.
-         * 
+         *
          * Keys can include:
          *   - short - short service description, after name, before any subsections
          *   - long - any remaining service description
          *   - events - note on top of ## Events section
          *   - registers - note on top of ## Registers section
          *   - commands - note on top of ## Commands section
-         * 
+         *
          * The idea for say registers note is to include it at the end of each register
          * description when displaying (maybe in smaller type).
          */
@@ -202,20 +295,29 @@ declare namespace jdspec {
 
     /**
      * Various ways of interfacing with a service.
-     * 
+     *
      * commands are sent to the service, which responds with reports.
-     * 
+     *
      * rw register maps to two commands: one for getting its value (along with corresponding report)
      * and one for setting the value.
-     * 
+     *
      * ro registers cannot be written.
-     * 
+     *
      * const registers cannot be written, and also don't change at least until reset.
-     * 
-     * events are passed inside of event report, and can be also piped via streams. 
+     *
+     * events are passed inside of event report, and can be also piped via streams.
      */
-    type PacketKind = "report" | "command" | "const" | "ro" | "rw" | "event"
-        | "pipe_command" | "pipe_report" | "meta_pipe_command" | "meta_pipe_report"
+    type PacketKind =
+        | "report"
+        | "command"
+        | "const"
+        | "ro"
+        | "rw"
+        | "event"
+        | "pipe_command"
+        | "pipe_report"
+        | "meta_pipe_command"
+        | "meta_pipe_report";
 
     /**
      * Spec for a report/command/register or event.
@@ -232,7 +334,7 @@ declare namespace jdspec {
         name: string;
 
         /**
-         * Kind of pipe this packet establishes or is valid on. 
+         * Kind of pipe this packet establishes or is valid on.
          */
         pipeType?: string;
 
@@ -254,7 +356,7 @@ declare namespace jdspec {
 
         /**
          * Binary layout of arguments of this packet (if any).
-         * 
+         *
          * Many interfaces will have only a single field, named "_" - the spec language
          * has a shorthand syntax for that.
          */
@@ -314,7 +416,7 @@ declare namespace jdspec {
 
         /**
          * Type specifying how to interpret data. All values are little endian.
-         * 
+         *
          * This can be one of:
          *   - u8, u16, u32, u64, i8, i16, i32, i64, bytes
          *   - name of an enum defined in the current service
@@ -468,8 +570,8 @@ declare namespace jdspec {
     }
 
     /**
- * Information about MakeCode support for a Jacdac service
- */
+     * Information about MakeCode support for a Jacdac service
+     */
     export interface MakeCodeServiceInfo {
         /**
          * Short id of the service
@@ -493,6 +595,6 @@ declare namespace jdspec {
              * Default fixed instance for this client
              */
             default?: string;
-        }
+        };
     }
 }

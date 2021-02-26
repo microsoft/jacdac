@@ -5,36 +5,28 @@
     import { useRegisterUnpackedValue } from "../../../docs/src/jacdac/useRegisterValue";
     import { SensorReg } from "../specconstants";
 
-    namespace tests {
-        export class SensorTestClient extends JDServiceClient {
+    export class SensorTestClient extends JDServiceClient {
 
-            private reg_streaming_samples: JDRegister
-            private streaming_samples: number;
-            
-            private reg_streaming_interval: JDRegister
-            private streaming_interval: number;
-            
-            private reg_streaming_preferred_interval: JDRegister
-            private streaming_preferred_interval: number;
-                        
-  
+        private streamingSamplesReg: JDRegister
+        private streamingSamples: number;
         
-            constructor(service: JDService) {
-                super(service);
+        private streamingIntervalReg: JDRegister
+        private streamingInterval: number;
+        
+        private streamingPreferredIntervalReg: JDRegister
+        private streamingPreferredInterval: number;
+                    
+  
+    
+        constructor(service: JDService) {
+            super(service);
 
-                this.reg_streaming_samples = service.register(SensorReg.StreamingSamples);
-                const [tmp_streaming_samples] = useRegisterUnpackedValue<[number]>(this.reg_streaming_samples);
-                this.streaming_samples = tmp_streaming_samples;
-                
-                this.reg_streaming_interval = service.register(SensorReg.StreamingInterval);
-                const [tmp_streaming_interval] = useRegisterUnpackedValue<[number]>(this.reg_streaming_interval);
-                this.streaming_interval = tmp_streaming_interval;
-                
-                this.reg_streaming_preferred_interval = service.register(SensorReg.StreamingPreferredInterval);
-                const [tmp_streaming_preferred_interval] = useRegisterUnpackedValue<[number]>(this.reg_streaming_preferred_interval);
-                this.streaming_preferred_interval = tmp_streaming_preferred_interval;
-                
-            }
-
+            this.streamingSamplesReg = service.register(SensorReg.StreamingSamples);
+            
+            this.streamingIntervalReg = service.register(SensorReg.StreamingInterval);
+            
+            this.streamingPreferredIntervalReg = service.register(SensorReg.StreamingPreferredInterval);
+            
         }
+
     }

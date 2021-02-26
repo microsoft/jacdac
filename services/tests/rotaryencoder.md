@@ -3,19 +3,22 @@
 ## position changes on knob turn
 
     say "turn the knob back and forth"
-    changes position
+    ask "did the position register's value change?"
+    // changes position
 
 ## clockwise turn registers positive
 
-    let save = position
+    //let save = position
     say "turn knob clockwise"
-    check position > save
+    ask "did the position register's value increase?"
+    //check position > save
 
 ## counter-clockwise turn registers negative
 
-    let save = position
+    //let save = position
     say "turn knob counter-clockwise"
-    check position < save
+    ask "did the position register's value decrease?"
+    //check position < save
 
 ## one rotation clockwise
 

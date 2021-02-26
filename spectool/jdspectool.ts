@@ -114,6 +114,9 @@ ${serviceTest.tests.map(t => t.commands.map(c => `
 
 // create a test monitor as a helper for manual tests
 
+// use reg.subscribe(CHANGE, () =>. ....) to listen for changes
+// await regchange(reg, v => v > 5), but need a hook for cancelling
+
 function toTestMonitor(spec: jdspec.ServiceSpec, serviceTest: jdtest.ServiceTest) {
     const { camelName, packets } = spec;
 
@@ -149,7 +152,8 @@ ${regs.map(reg => `
             }
 ${serviceTest.tests.map((t,t_index) => t.commands.map((c,c_index) => `
             public test${t_index}_cmd${c_index}() {
-                return ${c.expr.map(exprToString).join(" ")}
+                let expr = ${c.expr.map(exprToString).join(" ")};
+                ${(c.kind === "let") ? `this.${c.lhs} = expr;` : `return expr`}
             };
             `
             ).join("")).join("")}

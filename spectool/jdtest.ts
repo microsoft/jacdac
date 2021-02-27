@@ -5,6 +5,17 @@ import { parseIntFloat, getRegister, packetsToRegisters } from "./jdutils";
 import { camelize, capitalize } from "./jdspec"
 import { parse }  from "./jsep/jsep";
 
+export const testFunctions: jdtest.TestFunctionDescription[] = [
+    { id: "reset", prompt: "sends a reset command to the module"},
+    { id: "changes", prompt: "did the value of $1 change?"},
+    { id: "ask", prompt: ""},
+    { id: "check", prompt: ""},
+    { id: "increases", prompt: ""},
+    { id: "decreases", prompt: ""},
+    { id: "rangesFromUpTo", prompt: ""},
+    { id: "rangesFromDownTo", prompt: ""}
+]
+
 // we parse a test with respect to an existing ServiceSpec
 export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: jdspec.ServiceSpec, filename = ""): jdtest.ServiceTest {
     filecontent = (filecontent || "").replace(/\r/g, "")
@@ -17,8 +28,9 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
     let backticksType = ""
     let errors: jdspec.Diagnostic[] = []
     let lineNo = 0
-    let currentTest: jdtest.UnitTest = null;
+    let currentTest: jdtest.UnitTest = null
     let testHeading: string = ""
+    let testPrompt: string = ""
 
     try {
         for (let line of filecontent.split(/\n/)) {
@@ -58,7 +70,8 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
         if (!interpret) {
             const m = /^(#+)\s*(.*)/.exec(line)
             if (m) {
-                testHeading = "";
+                testHeading = ""
+                testPrompt = ""
                 let [_full, hd, cont] = m
                 cont = cont.trim()
                 if (hd == "#" && !info.description) {
@@ -67,7 +80,7 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
                     testHeading = cont;
                 }
             } else {
-                // TODO: gather test prompt
+                testPrompt += line;
             }
             if (currentTest)
                 finishTest();
@@ -87,17 +100,20 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
                 error("every test must have a description (via ##)")
             currentTest = {
                 description: testHeading,
-                prompt: "",
+                prompt: testPrompt,
                 commands: []
             }
-            testHeading = "";
+            testHeading = ""
+            testPrompt = ""
         }
         const call = /^([a-zA-Z]\w*)\(.*\)$/.exec(expanded);
         if (!call) {
             error("a command must be a call to a test function (JavaScript syntax)");
         }
         const [_full, callee] = call;
-        // TODO check that callee is in approved list
+        let index = testFunctions.findIndex(r => callee == r.id)
+        if (index < 0)
+            error(callee + " is not a registered test function.")
         let expr: jsep.CallExpression = <jsep.CallExpression>parse(expanded);
         if (!expr.callee) {
             error("a command must be a call expression in JavaScript syntax");

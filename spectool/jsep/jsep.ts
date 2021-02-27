@@ -1,16 +1,15 @@
+/// <reference path="./jsep.d.ts" />
+
 //     JavaScript Expression Parser (JSEP) <%= version %>
 //     JSEP may be freely distributed under the MIT License
 //     https://ericsmekens.github.io/jsep/
 
-/*global module: true, exports: true, console: true */
-(function (root) {
-	'use strict';
 	// Node Types
 	// ----------
 
 	// This is the full set of types that any JSEP node can be.
 	// Store them here to save space when minified
-	var COMPOUND = 'Compound',
+	const COMPOUND = 'Compound',
 		IDENTIFIER = 'Identifier',
 		MEMBER_EXP = 'MemberExpression',
 		LITERAL = 'Literal',
@@ -32,36 +31,34 @@
 		CBRACK_CODE = 93, // ]
 		QUMARK_CODE = 63, // ?
 		SEMCOL_CODE = 59, // ;
-		COLON_CODE  = 58, // :
+		COLON_CODE  = 58; // :
 
-		throwError = function(message, index) {
+	function throwError(message: string , index: number) {
 			var error = new Error(message + ' at character ' + index);
-			error.index = index;
-			error.description = message;
 			throw error;
-		},
+	}
 
 	// Operations
 	// ----------
 
 	// Set `t` to `true` to save space (when minified, not gzipped)
-		t = true,
+	const t = true
 	// Use a quickly-accessible map to store all of the unary operators
 	// Values are set to `true` (it really doesn't matter)
-		unary_ops = {'-': t, '!': t, '~': t, '+': t},
+	let unary_ops: any = {'-': t, '!': t, '~': t, '+': t}
 	// Also use a map for the binary operations but set their values to their
 	// binary precedence for quick reference:
 	// see [Order of operations](http://en.wikipedia.org/wiki/Order_of_operations#Programming_language)
-		binary_ops = {
+	let binary_ops: any = {
 			'||': 1, '&&': 2, '|': 3,  '^': 4,  '&': 5,
 			'==': 6, '!=': 6, '===': 6, '!==': 6,
 			'<': 7,  '>': 7,  '<=': 7,  '>=': 7,
 			'<<':8,  '>>': 8, '>>>': 8,
 			'+': 9, '-': 9,
 			'*': 10, '/': 10, '%': 10
-		},
+		}
 	// Get return the longest key length of any object
-		getMaxKeyLen = function(obj) {
+	function getMaxKeyLen(obj: any) {
 			var max_len = 0, len;
 			for(var key in obj) {
 				if((len = key.length) > max_len && obj.hasOwnProperty(key)) {
@@ -69,26 +66,27 @@
 				}
 			}
 			return max_len;
-		},
-		max_unop_len = getMaxKeyLen(unary_ops),
-		max_binop_len = getMaxKeyLen(binary_ops),
+		}
+	
+	let max_unop_len = getMaxKeyLen(unary_ops)
+	let max_binop_len = getMaxKeyLen(binary_ops)
 	// Literals
 	// ----------
 	// Store the values to return for the various literals we may encounter
-		literals = {
+	let literals: any = {
 			'true': true,
 			'false': false,
 			'null': null
-		},
+		}
 	// Except for `this`, which is special. This could be changed to something like `'self'` as well
-		this_str = 'this',
+	const this_str = 'this'
 	// Returns the precedence of a binary operator or `0` if it isn't a binary operator
-		binaryPrecedence = function(op_val) {
+	function binaryPrecedence(op_val: string) {
 			return binary_ops[op_val] || 0;
-		},
+	}
 	// Utility function (gets called from multiple places)
 	// Also note that `a && b` and `a || b` are *logical* expressions, not binary expressions
-		createBinaryExpression = function (operator, left, right) {
+	function createBinaryExpression(operator: string, left: jsep.Expression, right: jsep.Expression) {
 			var type = (operator === '||' || operator === '&&') ? LOGICAL_EXP : BINARY_EXP;
 			return {
 				type: type,
@@ -96,36 +94,38 @@
 				left: left,
 				right: right
 			};
-		},
+		}
 		// `ch` is a character code in the next three functions
-		isDecimalDigit = function(ch) {
+	const isDecimalDigit = function(ch: number) {
 			return (ch >= 48 && ch <= 57); // 0...9
-		},
-		isIdentifierStart = function(ch) {
+		}
+
+	const isIdentifierStart = function(ch: number) {
 			return (ch === 36) || (ch === 95) || // `$` and `_`
 					(ch >= 65 && ch <= 90) || // A...Z
 					(ch >= 97 && ch <= 122) || // a...z
                     (ch >= 128 && !binary_ops[String.fromCharCode(ch)]); // any non-ASCII that is not an operator
-		},
-		isIdentifierPart = function(ch) {
+		}
+
+	const isIdentifierPart = function(ch: number) {
 			return (ch === 36) || (ch === 95) || // `$` and `_`
 					(ch >= 65 && ch <= 90) || // A...Z
 					(ch >= 97 && ch <= 122) || // a...z
 					(ch >= 48 && ch <= 57) || // 0...9
                     (ch >= 128 && !binary_ops[String.fromCharCode(ch)]); // any non-ASCII that is not an operator
-		},
+		}
 
 		// Parsing
 		// -------
 		// `expr` is a string with the passed in expression
-		jsep = function(expr) {
+	export function parse(expr: string) {
 			// `index` stores the character number we are currently at while `length` is a constant
 			// All of the gobbles below will modify `index` as we move along
-			var index = 0,
+			let index = 0,
 				charAtFunc = expr.charAt,
 				charCodeAtFunc = expr.charCodeAt,
-				exprI = function(i) { return charAtFunc.call(expr, i); },
-				exprICode = function(i) { return charCodeAtFunc.call(expr, i); },
+				exprI = function(i:number) { return charAtFunc.call(expr, i); },
+				exprICode = function(i:number) { return charCodeAtFunc.call(expr, i); },
 				length = expr.length,
 
 				// Push `index` up to the next non-space character
@@ -138,8 +138,8 @@
 				},
 
 				// The main parsing function. Much of this code is dedicated to ternary expressions
-				gobbleExpression = function() {
-					var test = gobbleBinaryExpression(),
+				gobbleExpression = function():any {
+					let test = gobbleBinaryExpression(),
 						consequent, alternate;
 					gobbleSpaces();
 					if(exprICode(index) === QUMARK_CODE) {
@@ -195,8 +195,8 @@
 
 				// This function is responsible for gobbling an individual expression,
 				// e.g. `1`, `1+2`, `a+(b*2)-Math.sqrt(2)`
-				gobbleBinaryExpression = function() {
-					var ch_i, node, biop, prec, stack, biop_info, left, right, i, cur_biop;
+				gobbleBinaryExpression = function(): jsep.Expression {
+					let ch_i, node, biop:any, prec, stack, biop_info, left, right, i, cur_biop;
 
 					// First, try to get the leftmost thing
 					// Then, check to see if there's a binary operator operating on that leftmost thing
@@ -255,7 +255,7 @@
 
 				// An individual part of a binary expression:
 				// e.g. `foo.bar(baz)`, `1`, `"abc"`, `(a % 2)` (because it's in parenthesis)
-				gobbleToken = function() {
+				gobbleToken = function():any {
 					var ch, to_check, tc_len;
 
 					gobbleSpaces();
@@ -429,7 +429,7 @@
 				// `(` or `[` has already been gobbled, and gobbles expressions and commas
 				// until the terminator character `)` or `]` is encountered.
 				// e.g. `foo(bar, baz)`, `my_func()`, or `[bar, baz]`
-				gobbleArguments = function(termination) {
+				gobbleArguments = function(termination: any) {
 					var ch_i, args = [], node, closed = false;
 					var separator_count = 0;
 					while(index < length) {
@@ -579,20 +579,17 @@
 					body: nodes
 				};
 			}
-		};
+	}
 
-	// To be filled in by the template
-	jsep.version = '<%= version %>';
-	jsep.toString = function() { return 'JavaScript Expression Parser (JSEP) v' + jsep.version; };
 
 	/**
 	 * @method jsep.addUnaryOp
 	 * @param {string} op_name The name of the unary op to add
 	 * @return jsep
 	 */
-	jsep.addUnaryOp = function(op_name) {
+	export function addUnaryOp(op_name: string) {
 		max_unop_len = Math.max(op_name.length, max_unop_len);
-		unary_ops[op_name] = t; return this;
+		unary_ops[op_name] = t;
 	};
 
 	/**
@@ -601,10 +598,9 @@
 	 * @param {number} precedence The precedence of the binary op (can be a float)
 	 * @return jsep
 	 */
-	jsep.addBinaryOp = function(op_name, precedence) {
+	export function addBinaryOp(op_name: string, precedence: number) {
 		max_binop_len = Math.max(op_name.length, max_binop_len);
 		binary_ops[op_name] = precedence;
-		return this;
 	};
 
 	/**
@@ -613,9 +609,8 @@
 	 * @param {*} literal_value The value of the literal
 	 * @return jsep
 	 */
-	jsep.addLiteral = function(literal_name, literal_value) {
+	export function addLiteral(literal_name: string, literal_value: any) {
 		literals[literal_name] = literal_value;
-		return this;
 	};
 
 	/**
@@ -623,23 +618,20 @@
 	 * @param {string} op_name The name of the unary op to remove
 	 * @return jsep
 	 */
-	jsep.removeUnaryOp = function(op_name) {
+	export function removeUnaryOp(op_name: string) {
 		delete unary_ops[op_name];
 		if(op_name.length === max_unop_len) {
 			max_unop_len = getMaxKeyLen(unary_ops);
 		}
-		return this;
 	};
 
 	/**
 	 * @method jsep.removeAllUnaryOps
 	 * @return jsep
 	 */
-	jsep.removeAllUnaryOps = function() {
+	export function removeAllUnaryOps() {
 		unary_ops = {};
 		max_unop_len = 0;
-
-		return this;
 	};
 
 	/**
@@ -647,23 +639,20 @@
 	 * @param {string} op_name The name of the binary op to remove
 	 * @return jsep
 	 */
-	jsep.removeBinaryOp = function(op_name) {
+	export function removeBinaryOp(op_name: string) {
 		delete binary_ops[op_name];
 		if(op_name.length === max_binop_len) {
 			max_binop_len = getMaxKeyLen(binary_ops);
 		}
-		return this;
 	};
 
 	/**
 	 * @method jsep.removeAllBinaryOps
 	 * @return jsep
 	 */
-	jsep.removeAllBinaryOps = function() {
+	export function removeAllBinaryOps() {
 		binary_ops = {};
 		max_binop_len = 0;
-
-		return this;
 	};
 
 	/**
@@ -671,39 +660,14 @@
 	 * @param {string} literal_name The name of the literal to remove
 	 * @return jsep
 	 */
-	jsep.removeLiteral = function(literal_name) {
+	export function removeLiteral(literal_name: string) {
 		delete literals[literal_name];
-		return this;
 	};
 
 	/**
 	 * @method jsep.removeAllLiterals
 	 * @return jsep
 	 */
-	jsep.removeAllLiterals = function() {
+	export function removeAllLiterals() {
 		literals = {};
-
-		return this;
 	};
-
-	// In desktop environments, have a way to restore the old value for `jsep`
-	if (typeof exports === 'undefined') {
-		var old_jsep = root.jsep;
-		// The star of the show! It's a function!
-		root.jsep = jsep;
-		// And a courteous function willing to move out of the way for other similarly-named objects!
-		jsep.noConflict = function() {
-			if(root.jsep === jsep) {
-				root.jsep = old_jsep;
-			}
-			return jsep;
-		};
-	} else {
-		// In Node.JS environments
-		if (typeof module !== 'undefined' && module.exports) {
-			exports = module.exports = jsep;
-		} else {
-			exports.parse = jsep;
-		}
-	}
-}(this));

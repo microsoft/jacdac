@@ -33,12 +33,12 @@ turn one complete rotation counter-clockwise
 ## no missing value clockwise
 
 slowly turn clockwise one complete rotation
-    rangesFromUpTo(position, start(position), start(position) + clicks_per_turn ]
+    rangesFromUpTo(position, start(position), start(position) + clicks_per_turn)
 
 ## no missing value counter-clockwise
 
 slowly turn counter-clockwise one complete rotation
-    rangesFromDownTo(position, start(position), start(position) - clicks_per_turn ]
+    rangesFromDownTo(position, start(position), start(position) - clicks_per_turn)
 
 ## check physical position clockwise
 

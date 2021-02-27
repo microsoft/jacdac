@@ -3,6 +3,7 @@
 
 import { parseIntFloat, getRegister, packetsToRegisters } from "./jdutils";
 import { camelize, capitalize } from "./jdspec"
+import { parse }  from "./jsep/jsep";
 
 // we parse a test with respect to an existing ServiceSpec
 export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: jdspec.ServiceSpec, filename = ""): jdtest.ServiceTest {
@@ -91,10 +92,13 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
             }
             testHeading = "";
         }
-        if (!/^[a-zA-Z]\w+\(.*\))$/.exec(expanded)) {
-            error("a command must be a call expression in JavaScript syntax");
+        const call = /^([a-zA-Z]\w*)\(.*\)$/.exec(expanded);
+        if (!call) {
+            error("a command must be a call to a test function (JavaScript syntax)");
         }
-        let expr: jsep.CallExpression = <jsep.CallExpression>jsep.jsep(expanded);
+        const [_full, callee] = call;
+        // TODO check that callee is in approved list
+        let expr: jsep.CallExpression = <jsep.CallExpression>parse(expanded);
         if (!expr.callee) {
             error("a command must be a call expression in JavaScript syntax");
         } else {
@@ -106,6 +110,7 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
     // check expression
     // all calls are direct calls
 
+    /*
     function getValue(w: string): jdtest.ServiceTestToken {
         let info: jdtest.ServiceTestToken = {}
         try {
@@ -123,6 +128,7 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
         if (r.fld) info.id += ("." + r.fld.name);
         return info;
     }
+*/
 
     function finishTest()  {
         info.tests.push(currentTest);

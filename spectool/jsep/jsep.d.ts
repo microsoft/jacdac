@@ -83,7 +83,5 @@ declare namespace jsep {
 
         function removeUnaryOp(operatorName: string): void;
 
-        const version: string;
-
-        export function jsep(val: string | jsep.Expression): jsep.Expression;
+        export function parse(val: string | jsep.Expression): jsep.Expression;
 }

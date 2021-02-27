@@ -4,9 +4,10 @@
 
 import { parseIntFloat, getRegister, packetsToRegisters } from "./jdutils";
 import { camelize, capitalize } from "./jdspec"
-import { parse }  from "./jsep/jsep";
+import { JSONPath } from "jsonpath-plus"
+import { parse } from "./jsep/jsep"
 
-export const testCommandFunctions: jdtest.TestFunctionDescription[] = [
+const testCommandFunctions: jdtest.TestFunctionDescription[] = [
     { id: "reset", args:[], prompt: "sends a reset command to the module"},
     { id: "changes", args:["reg"], prompt: "did the value of $1 change?"},
     { id: "ask", args:["string"], prompt: ""},
@@ -19,7 +20,7 @@ export const testCommandFunctions: jdtest.TestFunctionDescription[] = [
     { id: "rangesFromDownTo", args:["reg", "number", "number"], prompt: ""}
 ]
 
-export const testExpressionFunctions: jdtest.TestFunctionDescription[] = [
+const testExpressionFunctions: jdtest.TestFunctionDescription[] = [
     { id: "start", args:["any"], prompt: "value at beginning of test" }
 ]
 
@@ -129,6 +130,15 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
             const expected = testCommandFunctions[index].args.length
             if (expected !== expr.arguments.length)
                 error(callee+" expects "+expected+" arguments; got "+expr.arguments.length)
+            expr.arguments.forEach(a => {
+                const callees: jsep.CallExpression[] = 
+                    <jsep.CallExpression[]>JSONPath({path: "$..*[?(@.type=='CallExpression')]", json: expr})
+                callees.forEach(callExpr => {
+                    if (callExpr.callee.type !== 'Identifier')
+                        error("all calls must be direct calls")
+                })
+            })
+
             // TODO: lookup all identifiers in spec and resolve constants
             // TODO: make sure all calls are direct calls to registered test functions
             currentTest.commands.push(expr);

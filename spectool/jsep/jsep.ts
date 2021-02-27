@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/triple-slash-reference */
 /// <reference path="./jsep.d.ts" />
 
-//     JavaScript Expression Parser (JSEP) <%= version %>
+//     JavaScript Expression Parser (JSEP)
 //     JSEP may be freely distributed under the MIT License
 //     https://ericsmekens.github.io/jsep/
 
@@ -34,8 +35,7 @@
 		COLON_CODE  = 58; // :
 
 	function throwError(message: string , index: number) {
-			var error = new Error(message + ' at character ' + index);
-			throw error;
+		throw new Error(message + ' at character ' + index)
 	}
 
 	// Operations
@@ -59,8 +59,8 @@
 		}
 	// Get return the longest key length of any object
 	function getMaxKeyLen(obj: any) {
-			var max_len = 0, len;
-			for(var key in obj) {
+			let max_len = 0, len;
+			for(const key in obj) {
 				if((len = key.length) > max_len && obj.hasOwnProperty(key)) {
 					max_len = len;
 				}
@@ -87,7 +87,7 @@
 	// Utility function (gets called from multiple places)
 	// Also note that `a && b` and `a || b` are *logical* expressions, not binary expressions
 	function createBinaryExpression(operator: string, left: jsep.Expression, right: jsep.Expression) {
-			var type = (operator === '||' || operator === '&&') ? LOGICAL_EXP : BINARY_EXP;
+			const type = (operator === '||' || operator === '&&') ? LOGICAL_EXP : BINARY_EXP;
 			return {
 				type: type,
 				operator: operator,
@@ -121,26 +121,26 @@
 	export function parse(expr: string) {
 			// `index` stores the character number we are currently at while `length` is a constant
 			// All of the gobbles below will modify `index` as we move along
-			let index = 0,
-				charAtFunc = expr.charAt,
+			let index = 0
+			const charAtFunc = expr.charAt,
 				charCodeAtFunc = expr.charCodeAt,
 				exprI = function(i:number) { return charAtFunc.call(expr, i); },
 				exprICode = function(i:number) { return charCodeAtFunc.call(expr, i); },
-				length = expr.length,
+				length = expr.length
 
 				// Push `index` up to the next non-space character
-				gobbleSpaces = function() {
-					var ch = exprICode(index);
+				const gobbleSpaces = function() {
+					let ch = exprICode(index);
 					// space or tab
 					while(ch === 32 || ch === 9 || ch === 10 || ch === 13) {
 						ch = exprICode(++index);
 					}
-				},
+				}
 
 				// The main parsing function. Much of this code is dedicated to ternary expressions
-				gobbleExpression = function():any {
-					let test = gobbleBinaryExpression(),
-						consequent, alternate;
+				const gobbleExpression = function():any {
+					const test = gobbleBinaryExpression()
+					let consequent, alternate;
 					gobbleSpaces();
 					if(exprICode(index) === QUMARK_CODE) {
 						// Ternary expression: test ? consequent : alternate
@@ -168,15 +168,15 @@
 					} else {
 						return test;
 					}
-				},
+				}
 
 				// Search for the operation portion of the string (e.g. `+`, `===`)
 				// Start by taking the longest possible binary operations (3 characters: `===`, `!==`, `>>>`)
 				// and move down from 3 to 2 to 1 character until a matching binary operation is found
 				// then, return that binary operation
-				gobbleBinaryOp = function() {
+				const gobbleBinaryOp = function() {
 					gobbleSpaces();
-					var biop, to_check = expr.substr(index, max_binop_len), tc_len = to_check.length;
+					let to_check = expr.substr(index, max_binop_len), tc_len = to_check.length;
 					while(tc_len > 0) {
 						// Don't accept a binary op when it is an identifier.
 						// Binary ops that start with a identifier-valid character must be followed
@@ -191,12 +191,12 @@
 						to_check = to_check.substr(0, --tc_len);
 					}
 					return false;
-				},
+				}
 
 				// This function is responsible for gobbling an individual expression,
 				// e.g. `1`, `1+2`, `a+(b*2)-Math.sqrt(2)`
-				gobbleBinaryExpression = function(): jsep.Expression {
-					let ch_i, node, biop:any, prec, stack, biop_info, left, right, i, cur_biop;
+				const gobbleBinaryExpression = function(): jsep.Expression {
+					let node, biop:any, prec, biop_info, left, right, i, cur_biop;
 
 					// First, try to get the leftmost thing
 					// Then, check to see if there's a binary operator operating on that leftmost thing
@@ -216,7 +216,7 @@
 					if(!right) {
 						throwError("Expected expression after " + biop, index);
 					}
-					stack = [left, biop_info, right];
+					const stack = [left, biop_info, right];
 
 					// Properly deal with precedence using [recursive descent](http://www.engr.mun.ca/~theo/Misc/exp_parsing.htm)
 					while((biop = gobbleBinaryOp())) {
@@ -251,15 +251,15 @@
 						i -= 2;
 					}
 					return node;
-				},
+				}
 
 				// An individual part of a binary expression:
 				// e.g. `foo.bar(baz)`, `1`, `"abc"`, `(a % 2)` (because it's in parenthesis)
-				gobbleToken = function():any {
-					var ch, to_check, tc_len;
+				const gobbleToken = function():any {
+					let to_check, tc_len;
 
 					gobbleSpaces();
-					ch = exprICode(index);
+					const ch = exprICode(index);
 
 					if(isDecimalDigit(ch) || ch === PERIOD_CODE) {
 						// Char code 46 is a dot `.` which can start off a numeric literal
@@ -298,11 +298,12 @@
 					}
 
 					return false;
-				},
+				}
+				
 				// Parse simple numeric literals: `12`, `3.4`, `.5`. Do this by using a string to
 				// keep track of everything in the numeric literal and then calling `parseFloat` on that string
-				gobbleNumericLiteral = function() {
-					var number = '', ch, chCode;
+				const gobbleNumericLiteral = function() {
+					let number = '', ch;
 					while(isDecimalDigit(exprICode(index))) {
 						number += exprI(index++);
 					}
@@ -331,7 +332,7 @@
 					}
 
 
-					chCode = exprICode(index);
+					const chCode = exprICode(index);
 					// Check to make sure this isn't a variable name that start with a number (123abc)
 					if(isIdentifierStart(chCode)) {
 						throwError('Variable names cannot start with a number (' +
@@ -345,12 +346,14 @@
 						value: parseFloat(number),
 						raw: number
 					};
-				},
+				}
 
 				// Parses a string literal, staring with single or double quotes with basic support for escape codes
 				// e.g. `"hello world"`, `'this is\nJSEP'`
-				gobbleStringLiteral = function() {
-					var str = '', quote = exprI(index++), closed = false, ch;
+				const gobbleStringLiteral = function() {
+					let str = ''
+					const quote = exprI(index++)
+					let closed = false, ch;
 
 					while(index < length) {
 						ch = exprI(index++);
@@ -383,14 +386,15 @@
 						value: str,
 						raw: quote + str + quote
 					};
-				},
+				}
 
 				// Gobbles only identifiers
 				// e.g.: `foo`, `_value`, `$x1`
 				// Also, this function checks if that identifier is a literal:
 				// (e.g. `true`, `false`, `null`) or `this`
-				gobbleIdentifier = function() {
-					var ch = exprICode(index), start = index, identifier;
+				const gobbleIdentifier = function() {
+					let ch = exprICode(index)
+					const start = index
 
 					if(isIdentifierStart(ch)) {
 						index++;
@@ -406,7 +410,7 @@
 							break;
 						}
 					}
-					identifier = expr.slice(start, index);
+					const identifier = expr.slice(start, index);
 
 					if(literals.hasOwnProperty(identifier)) {
 						return {
@@ -422,16 +426,18 @@
 							name: identifier
 						};
 					}
-				},
+				}
 
 				// Gobbles a list of arguments within the context of a function call
 				// or array literal. This function also assumes that the opening character
 				// `(` or `[` has already been gobbled, and gobbles expressions and commas
 				// until the terminator character `)` or `]` is encountered.
 				// e.g. `foo(bar, baz)`, `my_func()`, or `[bar, baz]`
-				gobbleArguments = function(termination: any) {
-					var ch_i, args = [], node, closed = false;
-					var separator_count = 0;
+				const gobbleArguments = function(termination: any) {
+					let ch_i
+					const args = []
+					let node, closed = false;
+					let separator_count = 0;
 					while(index < length) {
 						gobbleSpaces();
 						ch_i = exprICode(index);
@@ -450,7 +456,7 @@
 									throwError('Unexpected token ,', index);
 								}
 								else if(termination === CBRACK_CODE) {
-									for(var arg = args.length; arg< separator_count; arg++) {
+									for(let arg = args.length; arg< separator_count; arg++) {
 										args.push(null);
 									}
 								}
@@ -467,14 +473,14 @@
 						throwError('Expected ' + String.fromCharCode(termination), index);
 					}
 					return args;
-				},
+				}
 
 				// Gobble a non-literal variable name. This variable name may include properties
 				// e.g. `foo`, `bar.baz`, `foo['bar'].baz`
 				// It also gobbles function calls:
 				// e.g. `Math.acos(obj.angle)`
-				gobbleVariable = function() {
-					var ch_i, node;
+				const gobbleVariable = function() {
+					let ch_i, node;
 					ch_i = exprICode(index);
 
 					if(ch_i === OPAREN_CODE) {
@@ -519,16 +525,16 @@
 						ch_i = exprICode(index);
 					}
 					return node;
-				},
+				}
 
 				// Responsible for parsing a group of things within parentheses `()`
 				// This function assumes that it needs to gobble the opening parenthesis
 				// and then tries to gobble everything within that parenthesis, assuming
 				// that the next thing it should see is the close parenthesis. If not,
 				// then the expression probably doesn't have a `)`
-				gobbleGroup = function() {
+				const gobbleGroup = function() {
 					index++;
-					var node = gobbleExpression();
+					const node = gobbleExpression();
 					gobbleSpaces();
 					if(exprICode(index) === CPAREN_CODE) {
 						index++;
@@ -536,20 +542,21 @@
 					} else {
 						throwError('Unclosed (', index);
 					}
-				},
+				}
 
 				// Responsible for parsing Array literals `[1, 2, 3]`
 				// This function assumes that it needs to gobble the opening bracket
 				// and then tries to gobble the expressions as arguments.
-				gobbleArray = function() {
+				const gobbleArray = function() {
 					index++;
 					return {
 						type: ARRAY_EXP,
 						elements: gobbleArguments(CBRACK_CODE)
 					};
-				},
+				}
 
-				nodes = [], ch_i, node;
+			const nodes = []
+			let ch_i, node;
 
 			while(index < length) {
 				ch_i = exprICode(index);
@@ -585,7 +592,6 @@
 	/**
 	 * @method jsep.addUnaryOp
 	 * @param {string} op_name The name of the unary op to add
-	 * @return jsep
 	 */
 	export function addUnaryOp(op_name: string) {
 		max_unop_len = Math.max(op_name.length, max_unop_len);
@@ -596,7 +602,6 @@
 	 * @method jsep.addBinaryOp
 	 * @param {string} op_name The name of the binary op to add
 	 * @param {number} precedence The precedence of the binary op (can be a float)
-	 * @return jsep
 	 */
 	export function addBinaryOp(op_name: string, precedence: number) {
 		max_binop_len = Math.max(op_name.length, max_binop_len);
@@ -607,7 +612,6 @@
 	 * @method jsep.addLiteral
 	 * @param {string} literal_name The name of the literal to add
 	 * @param {*} literal_value The value of the literal
-	 * @return jsep
 	 */
 	export function addLiteral(literal_name: string, literal_value: any) {
 		literals[literal_name] = literal_value;
@@ -616,7 +620,6 @@
 	/**
 	 * @method jsep.removeUnaryOp
 	 * @param {string} op_name The name of the unary op to remove
-	 * @return jsep
 	 */
 	export function removeUnaryOp(op_name: string) {
 		delete unary_ops[op_name];
@@ -627,7 +630,6 @@
 
 	/**
 	 * @method jsep.removeAllUnaryOps
-	 * @return jsep
 	 */
 	export function removeAllUnaryOps() {
 		unary_ops = {};
@@ -637,7 +639,6 @@
 	/**
 	 * @method jsep.removeBinaryOp
 	 * @param {string} op_name The name of the binary op to remove
-	 * @return jsep
 	 */
 	export function removeBinaryOp(op_name: string) {
 		delete binary_ops[op_name];
@@ -648,7 +649,6 @@
 
 	/**
 	 * @method jsep.removeAllBinaryOps
-	 * @return jsep
 	 */
 	export function removeAllBinaryOps() {
 		binary_ops = {};
@@ -658,7 +658,6 @@
 	/**
 	 * @method jsep.removeLiteral
 	 * @param {string} literal_name The name of the literal to remove
-	 * @return jsep
 	 */
 	export function removeLiteral(literal_name: string) {
 		delete literals[literal_name];
@@ -666,7 +665,7 @@
 
 	/**
 	 * @method jsep.removeAllLiterals
-	 * @return jsep
+
 	 */
 	export function removeAllLiterals() {
 		literals = {};

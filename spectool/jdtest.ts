@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/triple-slash-reference */
 /// <reference path="jdspec.d.ts" />
 /// <reference path="./jsep/jsep.d.ts" />
 
@@ -5,35 +6,41 @@ import { parseIntFloat, getRegister, packetsToRegisters } from "./jdutils";
 import { camelize, capitalize } from "./jdspec"
 import { parse }  from "./jsep/jsep";
 
-export const testFunctions: jdtest.TestFunctionDescription[] = [
-    { id: "reset", prompt: "sends a reset command to the module"},
-    { id: "changes", prompt: "did the value of $1 change?"},
-    { id: "ask", prompt: ""},
-    { id: "check", prompt: ""},
-    { id: "increases", prompt: ""},
-    { id: "decreases", prompt: ""},
-    { id: "rangesFromUpTo", prompt: ""},
-    { id: "rangesFromDownTo", prompt: ""}
+export const testCommandFunctions: jdtest.TestFunctionDescription[] = [
+    { id: "reset", args:[], prompt: "sends a reset command to the module"},
+    { id: "changes", args:["reg"], prompt: "did the value of $1 change?"},
+    { id: "ask", args:["string"], prompt: ""},
+    { id: "check", args:["boolean"], prompt: ""},
+    { id: "increases", args:["reg"], prompt: ""},
+    { id: "decreases", args:["reg"], prompt: ""},
+    { id: "increasesBy", args:["reg","number"], prompt: ""},
+    { id: "decreasesBy", args:["reg","number"], prompt: ""},
+    { id: "rangesFromUpTo", args:["reg", "number", "number"], prompt: ""},
+    { id: "rangesFromDownTo", args:["reg", "number", "number"], prompt: ""}
+]
+
+export const testExpressionFunctions: jdtest.TestFunctionDescription[] = [
+    { id: "start", args:["any"], prompt: "value at beginning of test" }
 ]
 
 // we parse a test with respect to an existing ServiceSpec
 export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: jdspec.ServiceSpec, filename = ""): jdtest.ServiceTest {
     filecontent = (filecontent || "").replace(/\r/g, "")
-    let info: jdtest.ServiceTest = {
+    const info: jdtest.ServiceTest = {
         description: null,
         serviceClassIdentifier: spec.classIdentifier,
         tests: []
     }
 
     let backticksType = ""
-    let errors: jdspec.Diagnostic[] = []
+    const errors: jdspec.Diagnostic[] = []
     let lineNo = 0
     let currentTest: jdtest.UnitTest = null
-    let testHeading: string = ""
-    let testPrompt: string = ""
+    let testHeading = ""
+    let testPrompt = ""
 
     try {
-        for (let line of filecontent.split(/\n/)) {
+        for (const line of filecontent.split(/\n/)) {
             lineNo++
             processLine(line)
         }
@@ -108,17 +115,22 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
         }
         const call = /^([a-zA-Z]\w*)\(.*\)$/.exec(expanded);
         if (!call) {
-            error("a command must be a call to a test function (JavaScript syntax)");
+            error("a command must be a call to a registered test function (JavaScript syntax)");
         }
         const [_full, callee] = call;
-        let index = testFunctions.findIndex(r => callee == r.id)
+        const index = testCommandFunctions.findIndex(r => callee == r.id)
         if (index < 0)
             error(callee + " is not a registered test function.")
-        let expr: jsep.CallExpression = <jsep.CallExpression>parse(expanded);
+        const expr: jsep.CallExpression = <jsep.CallExpression>parse(expanded);
         if (!expr.callee) {
             error("a command must be a call expression in JavaScript syntax");
         } else {
-            // must be a direct call
+            // check arguments
+            const expected = testCommandFunctions[index].args.length
+            if (expected !== expr.arguments.length)
+                error(callee+" expects "+expected+" arguments; got "+expr.arguments.length)
+            // TODO: lookup all identifiers in spec and resolve constants
+            // TODO: make sure all calls are direct calls to registered test functions
             currentTest.commands.push(expr);
         }
     }

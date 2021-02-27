@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/triple-slash-reference */
 /// <reference path="jdspec.d.ts" />
 /// <reference path="./jsep/jsep.d.ts" />
 
@@ -48,6 +49,7 @@ declare namespace jdtest {
 
     interface TestFunctionDescription {
         id: string;
+        args: string[];
         prompt: string;
     }
 }

@@ -23,12 +23,12 @@ turn the knob counter-clockwise
 ## one rotation clockwise
 
 turn one complete rotation clockwise
-    increases(position, clicks_per_turn)
+    increasesBy(position, clicks_per_turn)
 
 ## one rotation counter-clockwise
 
 turn one complete rotation counter-clockwise
-    decreases(position, clicks_per_turn)
+    decreasesBy(position, clicks_per_turn)
 
 ## no missing value clockwise
 
@@ -43,13 +43,13 @@ slowly turn counter-clockwise one complete rotation
 ## check physical position clockwise
 
 note knob's physical position and quickly turn clockwise one complete rotation
-    increases(position, clicks_per_turn)
+    increasesBy(position, clicks_per_turn)
     ask("is the knob at the same physical position?")
 
 ## check physical position counter-clockwise
 
 note knob's physical position and quickly turn counter-clockwise one complete rotation
-    decreases(position, clicks_per_turn)
+    decreasesBy(position, clicks_per_turn)
     ask("is the knob at the same physical position?")
 
 

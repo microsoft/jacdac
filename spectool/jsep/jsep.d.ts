@@ -1,4 +1,4 @@
-//     JavaScript Expression Parser (JSEP) <%= version %>
+//     JavaScript Expression Parser (JSEP)
 //     JSEP may be freely distributed under the MIT License
 //     https://ericsmekens.github.io/jsep/
 

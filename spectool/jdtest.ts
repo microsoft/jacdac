@@ -1,13 +1,8 @@
 /// <reference path="jdspec.d.ts" />
-/// <reference path="jdtest.d.ts" />
+/// <reference path="./jsep/jsep.d.ts" />
 
 import { parseIntFloat, getRegister, packetsToRegisters } from "./jdutils";
 import { camelize, capitalize } from "./jdspec"
-
-const exprTokens = ["(", ")", "+", "-", "<", ">", "<=", ">=", "==", "/", 
-"*", "&&", "||", ",", "[", "]", "%", ">>", "<<", "&", "|",
-"^", "**", "~", ">>>", "!", "true", "false"
-]
 
 // we parse a test with respect to an existing ServiceSpec
 export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: jdspec.ServiceSpec, filename = ""): jdtest.ServiceTest {
@@ -70,6 +65,8 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
                 } else if (hd =="##") {
                     testHeading = cont;
                 }
+            } else {
+                // TODO: gather test prompt
             }
             if (currentTest)
                 finishTest();
@@ -79,105 +76,35 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
                 .trim()
             if (!expanded)
                 return
-            const words = expanded.split(/\s+/)
-            if (/^[;,]/.test(words[words.length - 1]))
-                words.pop()
-            let cmd = words[0]
-            switch (cmd) {
-                case "observe":
-                case "check":
-                case "ask":
-                case "say":
-                case "let":
-                case "changes":
-                    processCommand(words)
-                    break
-                default:
-                    error(`Expected a command: ${cmd} is unknown`)
-            }
+            processCommand(expanded)
         }
     }
 
-    function processCommand(words: string[])  {
-        let cmd = <jdtest.ServiceTestCommandKind>words[0]
-        let command: jdtest.ServiceTestCommand = {
-            kind: cmd,
-            expr: []
-        }
+    function processCommand(expanded: string)  {
         if (!currentTest) {
             if (!testHeading)
                 error("every test must have a description (via ##)")
             currentTest = {
                 description: testHeading,
-                letVariables: [],
+                prompt: "",
                 commands: []
             }
             testHeading = "";
         }
-        currentTest.commands.push(command);
-        switch (cmd) {
-            case "let":
-                command.lhs = words[1];
-                if (!/^[a-zA-Z]+\w*$/.exec(command.lhs))
-                    error(command.lhs + " is not a valid identifier");
-                if (currentTest.letVariables.indexOf(command.lhs) >= 0)
-                    error("variable "+command.lhs+" already declared in this test.")
-                try {
-                    let inSpec = getReg(words[1]);
-                    if (inSpec.id)
-                        error("variable "+command.lhs+" already declared in specification")
-                } catch (e) { 
-                    // nothing here
-                }
-                currentTest.letVariables.push(command.lhs)
-                if (words[2] != "=")
-                    error("missing = sign (let <var> = <expr>")
-                command.expr = processExpression(words.slice(3));
-                break;
-            case "say": 
-            case "ask":
-                let prompt = words.slice(1).join(" ");
-                if (/^".*"$/.exec(prompt))
-                    command.expr.push({js: prompt});
-                else
-                    error("say/ask must be followed by a string constant");
-                break
-            case "changes":
-            case "observe": {
-                try {
-                    command.lhs = getReg(words[1]).id;
-                    if (cmd == "observe") {
-                        command.expr = processExpression(words.slice(2));
-                    }
-                } catch (e) {
-                    error(e.message)
-                }
-                break
-            }
-            case "check":
-                command.expr = processExpression(words.slice(1));
-                break
+        if (!/^[a-zA-Z]\w+\(.*\))$/.exec(expanded)) {
+            error("a command must be a call expression in JavaScript syntax");
+        }
+        let expr: jsep.CallExpression = <jsep.CallExpression>jsep.jsep(expanded);
+        if (!expr.callee) {
+            error("a command must be a call expression in JavaScript syntax");
+        } else {
+            // must be a direct call
+            currentTest.commands.push(expr);
         }
     }
 
-    function processExpression(tokens: string[]): jdtest.ServiceTestToken[] {
-        let res: jdtest.ServiceTestToken[] = []
-        tokens.forEach(t => {
-            if (exprTokens.indexOf(t) == -1) {
-                try {
-                    res.push(getValue(t));
-                } catch (e) {
-                    if (currentTest.letVariables.indexOf(t) >= 0)
-                        res.push({id: t})
-                    else
-                        error(e.message)
-                }
-            } else {
-                res.push({js: t})
-            }
-        })
-        return res;
-    }
+    // check expression
+    // all calls are direct calls
 
     function getValue(w: string): jdtest.ServiceTestToken {
         let info: jdtest.ServiceTestToken = {}
@@ -209,15 +136,3 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
         errors.push({ file: filename, line: lineNo, message: msg })
     }
 }
-
-function gatherLocals(serviceTest: jdtest.ServiceTest) {
-    let locals: string[] = []
-    serviceTest.tests.forEach(t => {
-        t.letVariables.forEach(l => {
-            if (locals.indexOf(l) < 0)
-                locals.push(l);
-        })
-    })
-    return locals;
-}
-

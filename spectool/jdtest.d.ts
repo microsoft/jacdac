@@ -1,4 +1,5 @@
 /// <reference path="jdspec.d.ts" />
+/// <reference path="./jsep/jsep.d.ts" />
 
 declare namespace jdtest {
 
@@ -42,13 +43,7 @@ declare namespace jdtest {
     interface UnitTest {
         description: string;
         prompt: string;
-        manual: boolean;
-        commands: TestFunctionCall[];
-    }
-
-    interface TestFunctionCall {
-        id: string;
-        args: string[];
+        commands: jsep.CallExpression[];
     }
 
     interface TestFunctionDescription {

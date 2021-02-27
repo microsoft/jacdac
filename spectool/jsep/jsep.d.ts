@@ -2,9 +2,7 @@
 //     JSEP may be freely distributed under the MIT License
 //     https://ericsmekens.github.io/jsep/
 
-declare module 'jsep' {
-
-    namespace jsep {
+declare namespace jsep {
         export interface Expression {
             type: ExpressionType;
         }
@@ -86,9 +84,6 @@ declare module 'jsep' {
         function removeUnaryOp(operatorName: string): void;
 
         const version: string;
-    }
 
-    function jsep(val: string | jsep.Expression): jsep.Expression;
-
-    export = jsep;
+        export function jsep(val: string | jsep.Expression): jsep.Expression;
 }

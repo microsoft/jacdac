@@ -117,7 +117,7 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
         if (!call) {
             error("a command must be a call to a registered test function (JavaScript syntax)");
         }
-        const [_full, callee] = call;
+        const [ , callee] = call;
         const index = testCommandFunctions.findIndex(r => callee == r.id)
         if (index < 0)
             error(callee + " is not a registered test function.")
@@ -138,13 +138,26 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
                     const indexFun = testExpressionFunctions.findIndex(r => id == r.id)
                     if (indexFun < 0)
                         error(id + " is not a registered test function.")
-                    // check the arguments
+                    const expected = testCommandFunctions[indexFun].args.length
+                    if (expected !== callExpr.arguments.length)
+                        error(callee+" expects "+expected+" arguments; got "+callExpr.arguments.length)
                 })
             })
-            // now visit all (p,c), c an Identifier that is not a child of CallExpression or a MEMBER_EXP operator
-            const exprs = <jsep.Expression[]>JSONPath({path: "$..*[?(@.type!='CallExpression')]", json: expr})
-            exprs.forEach(e => {
-                // TODO: lookup all identifiers in spec and resolve constants (replacing Id with Const)
+            // now visit all (p,c), c an Identifier that is not a callee child of CallExpression 
+            // or a property child of a MemberExpression
+            const exprs = <jsep.Expression[]>JSONPath({path: "$..*[?(@.type=='Identifier')]^", json: expr})
+            exprs.forEach(parent => {
+                const ids = <jsep.Identifier[]>JSONPath({path: "$.*[?(@.type=='Identifier')]", json: parent})
+                ids.forEach(id => {
+                    if (parent.type === "CallExpression" && id !== (<jsep.CallExpression>parent).callee
+                        || parent.type === "MemberExpression" && id != (<jsep.MemberExpression>parent).property) {
+                            try {
+                                getRegister(spec, id.name)
+                            } catch (e) {
+                                error(id.name + " not found in specification")
+                            }
+                        }
+                })
             })
             currentTest.commands.push(expr);
         }
@@ -160,7 +173,6 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
         }
         return info;
     }
-
     function getReg(w: string) {
         let info: jdtest.ServiceTestToken = {}
         let r = getRegister(spec, w);

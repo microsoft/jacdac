@@ -81,9 +81,9 @@ export function parseIntFloat(
     if (!en) {
         throw new Error(`${ww[0]} is not an enum type`);
     }
+    // eslint-disable-next-line no-prototype-builtins
     if (!en.members.hasOwnProperty(ww[1]))
         throw new Error(`${ww[1]} is not a member of ${ww[0]}`);
     return en.members[ww[1]] || 0;
 }
 
-// TODO: lookup defaults

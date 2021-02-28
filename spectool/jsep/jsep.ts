@@ -1,3 +1,4 @@
+/* eslint-disable no-prototype-builtins */
 /* eslint-disable @typescript-eslint/triple-slash-reference */
 /// <reference path="./jsep.d.ts" />
 
@@ -596,7 +597,7 @@
 	export function addUnaryOp(op_name: string) {
 		max_unop_len = Math.max(op_name.length, max_unop_len);
 		unary_ops[op_name] = t;
-	};
+	}
 
 	/**
 	 * @method jsep.addBinaryOp
@@ -606,7 +607,7 @@
 	export function addBinaryOp(op_name: string, precedence: number) {
 		max_binop_len = Math.max(op_name.length, max_binop_len);
 		binary_ops[op_name] = precedence;
-	};
+	}
 
 	/**
 	 * @method jsep.addLiteral
@@ -615,7 +616,7 @@
 	 */
 	export function addLiteral(literal_name: string, literal_value: any) {
 		literals[literal_name] = literal_value;
-	};
+	}
 
 	/**
 	 * @method jsep.removeUnaryOp
@@ -626,7 +627,7 @@
 		if(op_name.length === max_unop_len) {
 			max_unop_len = getMaxKeyLen(unary_ops);
 		}
-	};
+	}
 
 	/**
 	 * @method jsep.removeAllUnaryOps
@@ -634,7 +635,7 @@
 	export function removeAllUnaryOps() {
 		unary_ops = {};
 		max_unop_len = 0;
-	};
+	}
 
 	/**
 	 * @method jsep.removeBinaryOp
@@ -645,7 +646,7 @@
 		if(op_name.length === max_binop_len) {
 			max_binop_len = getMaxKeyLen(binary_ops);
 		}
-	};
+	}
 
 	/**
 	 * @method jsep.removeAllBinaryOps
@@ -653,7 +654,7 @@
 	export function removeAllBinaryOps() {
 		binary_ops = {};
 		max_binop_len = 0;
-	};
+	}
 
 	/**
 	 * @method jsep.removeLiteral
@@ -661,7 +662,7 @@
 	 */
 	export function removeLiteral(literal_name: string) {
 		delete literals[literal_name];
-	};
+	}
 
 	/**
 	 * @method jsep.removeAllLiterals
@@ -669,4 +670,4 @@
 	 */
 	export function removeAllLiterals() {
 		literals = {};
-	};
+	}

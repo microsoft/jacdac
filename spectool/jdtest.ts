@@ -80,12 +80,11 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
             if (m) {
                 testHeading = ""
                 testPrompt = ""
-                let [_full, hd, cont] = m
-                cont = cont.trim()
+                const [ , hd, cont] = m
                 if (hd == "#" && !info.description) {
-                    info.description = cont
+                    info.description = cont.trim()
                 } else if (hd =="##") {
-                    testHeading = cont;
+                    testHeading = cont.trim();
                 }
             } else {
                 testPrompt += line;
@@ -130,23 +129,26 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
             const expected = testCommandFunctions[index].args.length
             if (expected !== expr.arguments.length)
                 error(callee+" expects "+expected+" arguments; got "+expr.arguments.length)
-            expr.arguments.forEach(a => {
-                const callees: jsep.CallExpression[] = 
-                    <jsep.CallExpression[]>JSONPath({path: "$..*[?(@.type=='CallExpression')]", json: expr})
+            expr.arguments.forEach(arg => {
+                const callees = <jsep.CallExpression[]> JSONPath({path: "$..*[?(@.type=='CallExpression')]", json: arg})
                 callees.forEach(callExpr => {
                     if (callExpr.callee.type !== 'Identifier')
                         error("all calls must be direct calls")
+                    const id = (<jsep.Identifier>callExpr.callee).name;
+                    const indexFun = testExpressionFunctions.findIndex(r => id == r.id)
+                    if (indexFun < 0)
+                        error(id + " is not a registered test function.")
+                    // check the arguments
                 })
             })
-
-            // TODO: lookup all identifiers in spec and resolve constants
-            // TODO: make sure all calls are direct calls to registered test functions
+            // now visit all (p,c), c an Identifier that is not a child of CallExpression or a MEMBER_EXP operator
+            const exprs = <jsep.Expression[]>JSONPath({path: "$..*[?(@.type!='CallExpression')]", json: expr})
+            exprs.forEach(e => {
+                // TODO: lookup all identifiers in spec and resolve constants (replacing Id with Const)
+            })
             currentTest.commands.push(expr);
         }
     }
-
-    // check expression
-    // all calls are direct calls
 
     /*
     function getValue(w: string): jdtest.ServiceTestToken {

@@ -73,7 +73,9 @@ declare namespace jsep {
             prefix: boolean;
         }
 
-        type ExpressionType = 'Compound' | 'Identifier' | 'MemberExpression' | 'Literal' | 'ThisExpression' | 'CallExpression' | 'UnaryExpression' | 'BinaryExpression' | 'LogicalExpression' | 'ConditionalExpression' | 'ArrayExpression';
+        type ExpressionType = 'Compound' | 'Identifier' | 'MemberExpression' | 'Literal' | 
+            'ThisExpression' | 'CallExpression' | 'UnaryExpression' | 'BinaryExpression' | 
+            'LogicalExpression' | 'ConditionalExpression' | 'ArrayExpression';
 
         function addBinaryOp(operatorName: string, precedence: number): void;
 

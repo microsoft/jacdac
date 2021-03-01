@@ -148,39 +148,37 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
             const exprs = <jsep.Expression[]>JSONPath({path: "$..*[?(@.type=='Identifier')]^", json: expr})
             exprs.forEach(parent => {
                 const ids = <jsep.Identifier[]>JSONPath({path: "$.*[?(@.type=='Identifier')]", json: parent})
-                ids.forEach(id => {
-                    if (parent.type === "CallExpression" && id !== (<jsep.CallExpression>parent).callee
-                        || parent.type === "MemberExpression" && id != (<jsep.MemberExpression>parent).property) {
-                            try {
-                                getRegister(spec, id.name)
-                            } catch (e) {
-                                error(id.name + " not found in specification")
-                            }
-                        }
-                })
+                ids.forEach(id => { lookupReplace(parent, id) })
             })
             currentTest.commands.push(expr);
         }
     }
 
-    /*
-    function getValue(w: string): jdtest.ServiceTestToken {
-        let info: jdtest.ServiceTestToken = {}
-        try {
-            info.const = parseIntFloat(spec, w, true)
-        } catch (e) {
-            return getReg(w);
+    function lookupReplace(parent: jsep.Expression, idChild: jsep.Identifier) {
+        if (parent.type === "CallExpression" && idChild !== (<jsep.CallExpression>parent).callee
+        || parent.type === "MemberExpression" && idChild != (<jsep.MemberExpression>parent).property) {
+            try {
+                try {
+                    const val = parseIntFloat(spec, idChild.name)
+                    const lit: jsep.Literal = {
+                        type: 'Literal',
+                        value: val,
+                        raw: val.toString()
+                    };
+                    // replace the Identifier by the (resolved) Literal
+                    Object.keys(parent).forEach((key:string) => {
+                        if (Object.getOwnPropertyDescriptor(parent,key) == idChild)
+                            Object.defineProperty(parent, key, lit);
+                    })
+                } catch(e) {
+                    getRegister(spec, idChild.name)
+                    // TODO: if parent is MemberExpression, continue to do lookup
+                }
+            } catch (e) {
+                error(idChild.name + " not found in specification")
+            }
         }
-        return info;
     }
-    function getReg(w: string) {
-        let info: jdtest.ServiceTestToken = {}
-        let r = getRegister(spec, w);
-        info.id = r.pkt.name;
-        if (r.fld) info.id += ("." + r.fld.name);
-        return info;
-    }
-*/
 
     function finishTest()  {
         info.tests.push(currentTest);

@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/triple-slash-reference */
 /// <reference path="jdspec.d.ts" />
+/// <reference path="jsep.d.ts" />
 
 declare namespace jdtest {
 
@@ -41,26 +43,13 @@ declare namespace jdtest {
 
     interface UnitTest {
         description: string;
-        letVariables: string[];
-        commands: ServiceTestCommand[];
+        prompt: string;
+        commands: jsep.CallExpression[];
     }
 
-    interface ServiceTestCommand {
-        kind: ServiceTestCommandKind;
-        lhs?: string;
-        expr: ServiceTestToken[];
+    interface TestFunctionDescription {
+        id: string;
+        args: string[];
+        prompt: string;
     }
-
-    interface ServiceTestToken {
-        js?: string;        // JavaScript token
-        id?: string;        // an id in the spec
-        const?: number;
-    }
-
-    interface ServiceTestTrace {
-
-    }
-
-    type ServiceTestCommandKind = "let" | "say" | "ask" | "check" | "observe" | "changes"
-    type ServiceTestComparisonKind = "eq" | "ne" | "lt" | "gt" | "le" | "ge"
 }

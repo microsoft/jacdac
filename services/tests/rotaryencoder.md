@@ -1,65 +1,57 @@
 # Rotary encoder tests
 
-## position changes on knob turn
+## reset test
 
-    say "turn the knob back and forth"
-    ask "did the position register's value change?"
-    // changes position
+reset test (automated)
+    reset()
+    check(position == 0)
 
-## clockwise turn registers positive
+## knob turn
 
-    //let save = position
-    say "turn knob clockwise"
-    ask "did the position register's value increase?"
-    //check position > save
+turn the knob back and forth
+    changes(position)
 
-## counter-clockwise turn registers negative
+## clockwise turn
 
-    //let save = position
-    say "turn knob counter-clockwise"
-    ask "did the position register's value decrease?"
-    //check position < save
+turn the knob clockwise
+    increases(position)
+
+## counter-clockwise turn
+
+turn the knob counter-clockwise
+    decreases(position)
 
 ## one rotation clockwise
 
-    let save = position
-    say "turn one complete rotation clockwise"
-    check position == save + clicks_per_turn
+turn one complete rotation clockwise
+    increasesBy(position, clicks_per_turn)
 
 ## one rotation counter-clockwise
 
-    let save = position
-    say "turn one complete rotation counter-clockwise"
-    check position == save - clicks_per_turn
+turn one complete rotation counter-clockwise
+    decreasesBy(position, clicks_per_turn)
 
 ## no missing value clockwise
 
-    let save = position
-    say "slowly turn clockwise one complete rotation"
-    observe position  [ save , save + clicks_per_turn ]
+slowly turn clockwise one complete rotation
+    rangesFromUpTo(position, start(position), start(position) + clicks_per_turn)
 
 ## no missing value counter-clockwise
 
-    let save = position
-    say "slowly turn counter-clockwise one complete rotation"
-    observe position [ save , save - clicks_per_turn ]
+slowly turn counter-clockwise one complete rotation
+    rangesFromDownTo(position, start(position), start(position) - clicks_per_turn)
 
 ## check physical position clockwise
 
-    let save = position
-    say "note knob's physical position"
-    say "quickly turn clockwise one complete rotation"
-    check position == save + clicks_per_turn
-    ask "is the knob at the same physical position?"
+note knob's physical position and quickly turn clockwise one complete rotation
+    increasesBy(position, clicks_per_turn)
+    ask("is the knob at the same physical position?")
 
 ## check physical position counter-clockwise
 
-    let save = position
-    say "note knob's physical position"
-    say "quickly turn counter-clockwise one complete rotation"
-    check position == save - clicks_per_turn
-    ask "is the knob at the same physical position?"
-
+note knob's physical position and quickly turn counter-clockwise one complete rotation
+    decreasesBy(position, clicks_per_turn)
+    ask("is the knob at the same physical position?")
 
 
 

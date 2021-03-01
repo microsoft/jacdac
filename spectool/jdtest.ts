@@ -1,31 +1,30 @@
+/* eslint-disable @typescript-eslint/triple-slash-reference */
 /// <reference path="jdspec.d.ts" />
 /// <reference path="jdtest.d.ts" />
 
-import { parseIntFloat, getRegister, packetsToRegisters } from "./jdutils";
-import { camelize, capitalize } from "./jdspec"
-
-const exprTokens = ["(", ")", "+", "-", "<", ">", "<=", ">=", "==", "/", 
-"*", "&&", "||", ",", "[", "]", "%", ">>", "<<", "&", "|",
-"^", "**", "~", ">>>", "!", "true", "false"
-]
+import { parseIntFloat, getRegister } from "./jdutils";
+import { JSONPath } from "jsonpath-plus"
+import { testCommandFunctions, testExpressionFunctions } from "./jdtestfuns"
+import jsep from "jsep";
 
 // we parse a test with respect to an existing ServiceSpec
 export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: jdspec.ServiceSpec, filename = ""): jdtest.ServiceTest {
     filecontent = (filecontent || "").replace(/\r/g, "")
-    let info: jdtest.ServiceTest = {
+    const info: jdtest.ServiceTest = {
         description: null,
         serviceClassIdentifier: spec.classIdentifier,
         tests: []
     }
 
     let backticksType = ""
-    let errors: jdspec.Diagnostic[] = []
+    const errors: jdspec.Diagnostic[] = []
     let lineNo = 0
-    let currentTest: jdtest.UnitTest = null;
-    let testHeading: string = ""
+    let currentTest: jdtest.UnitTest = null
+    let testHeading = ""
+    let testPrompt = ""
 
     try {
-        for (let line of filecontent.split(/\n/)) {
+        for (const line of filecontent.split(/\n/)) {
             lineNo++
             processLine(line)
         }
@@ -62,14 +61,16 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
         if (!interpret) {
             const m = /^(#+)\s*(.*)/.exec(line)
             if (m) {
-                testHeading = "";
-                let [_full, hd, cont] = m
-                cont = cont.trim()
+                testHeading = ""
+                testPrompt = ""
+                const [ , hd, cont] = m
                 if (hd == "#" && !info.description) {
-                    info.description = cont
+                    info.description = cont.trim()
                 } else if (hd =="##") {
-                    testHeading = cont;
+                    testHeading = cont.trim();
                 }
+            } else {
+                testPrompt += line;
             }
             if (currentTest)
                 finishTest();
@@ -79,122 +80,87 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
                 .trim()
             if (!expanded)
                 return
-            const words = expanded.split(/\s+/)
-            if (/^[;,]/.test(words[words.length - 1]))
-                words.pop()
-            let cmd = words[0]
-            switch (cmd) {
-                case "observe":
-                case "check":
-                case "ask":
-                case "say":
-                case "let":
-                case "changes":
-                    processCommand(words)
-                    break
-                default:
-                    error(`Expected a command: ${cmd} is unknown`)
-            }
+            processCommand(expanded)
         }
     }
 
-    function processCommand(words: string[])  {
-        let cmd = <jdtest.ServiceTestCommandKind>words[0]
-        let command: jdtest.ServiceTestCommand = {
-            kind: cmd,
-            expr: []
-        }
+    function processCommand(expanded: string)  {
         if (!currentTest) {
             if (!testHeading)
                 error("every test must have a description (via ##)")
             currentTest = {
                 description: testHeading,
-                letVariables: [],
+                prompt: testPrompt,
                 commands: []
             }
-            testHeading = "";
+            testHeading = ""
+            testPrompt = ""
         }
-        currentTest.commands.push(command);
-        switch (cmd) {
-            case "let":
-                command.lhs = words[1];
-                if (!/^[a-zA-Z]+\w*$/.exec(command.lhs))
-                    error(command.lhs + " is not a valid identifier");
-                if (currentTest.letVariables.indexOf(command.lhs) >= 0)
-                    error("variable "+command.lhs+" already declared in this test.")
+        const call = /^([a-zA-Z]\w*)\(.*\)$/.exec(expanded);
+        if (!call) {
+            error("a command must be a call to a registered test function (JavaScript syntax)");
+        }
+        const [ , callee] = call;
+        const index = testCommandFunctions.findIndex(r => callee == r.id)
+        if (index < 0)
+            error(callee + " is not a registered test function.")
+        const expr: jsep.CallExpression = <jsep.CallExpression>jsep(expanded);
+        if (!expr.callee) {
+            error("a command must be a call expression in JavaScript syntax");
+        } else {
+            // check arguments
+            const expected = testCommandFunctions[index].args.length
+            if (expected !== expr.arguments.length)
+                error(callee+" expects "+expected+" arguments; got "+expr.arguments.length)
+            expr.arguments.forEach(arg => {
+                const callees = <jsep.CallExpression[]> JSONPath({path: "$..*[?(@.type=='CallExpression')]", json: arg})
+                callees.forEach(callExpr => {
+                    if (callExpr.callee.type !== 'Identifier')
+                        error("all calls must be direct calls")
+                    const id = (<jsep.Identifier>callExpr.callee).name;
+                    const indexFun = testExpressionFunctions.findIndex(r => id == r.id)
+                    if (indexFun < 0)
+                        error(id + " is not a registered test function.")
+                    const expected = testCommandFunctions[indexFun].args.length
+                    if (expected !== callExpr.arguments.length)
+                        error(callee+" expects "+expected+" arguments; got "+callExpr.arguments.length)
+                })
+            })
+            // now visit all (p,c), c an Identifier that is not a callee child of CallExpression 
+            // or a property child of a MemberExpression
+            const exprs = <jsep.Expression[]>JSONPath({path: "$..*[?(@.type=='Identifier')]^", json: expr})
+            exprs.forEach(parent => {
+                const ids = <jsep.Identifier[]>JSONPath({path: "$.*[?(@.type=='Identifier')]", json: parent})
+                ids.forEach(id => { lookupReplace(parent, id) })
+            })
+            currentTest.commands.push(expr);
+        }
+    }
+
+    function lookupReplace(parent: jsep.Expression, idChild: jsep.Identifier) {
+        if (parent.type === "CallExpression" && idChild !== (<jsep.CallExpression>parent).callee
+        || parent.type === "MemberExpression" && idChild != (<jsep.MemberExpression>parent).property) {
+            try {
                 try {
-                    let inSpec = getReg(words[1]);
-                    if (inSpec.id)
-                        error("variable "+command.lhs+" already declared in specification")
-                } catch (e) { 
-                    // nothing here
+                    const val = parseIntFloat(spec, idChild.name)
+                    const lit: jsep.Literal = {
+                        type: 'Literal',
+                        value: val,
+                        raw: val.toString()
+                    };
+                    // replace the Identifier by the (resolved) Literal
+                    Object.keys(parent).forEach((key:string) => {
+                        if (Object.getOwnPropertyDescriptor(parent,key) == idChild)
+                            Object.defineProperty(parent, key, lit);
+                    })
+                } catch(e) {
+                    getRegister(spec, idChild.name)
+                    // TODO: if parent is MemberExpression, continue to do lookup
                 }
-                currentTest.letVariables.push(command.lhs)
-                if (words[2] != "=")
-                    error("missing = sign (let <var> = <expr>")
-                command.expr = processExpression(words.slice(3));
-                break;
-            case "say": 
-            case "ask":
-                let prompt = words.slice(1).join(" ");
-                if (/^".*"$/.exec(prompt))
-                    command.expr.push({js: prompt});
-                else
-                    error("say/ask must be followed by a string constant");
-                break
-            case "changes":
-            case "observe": {
-                try {
-                    command.lhs = getReg(words[1]).id;
-                    if (cmd == "observe") {
-                        command.expr = processExpression(words.slice(2));
-                    }
-                } catch (e) {
-                    error(e.message)
-                }
-                break
+            } catch (e) {
+                error(idChild.name + " not found in specification")
             }
-            case "check":
-                command.expr = processExpression(words.slice(1));
-                break
         }
-    }
-
-    function processExpression(tokens: string[]): jdtest.ServiceTestToken[] {
-        let res: jdtest.ServiceTestToken[] = []
-        tokens.forEach(t => {
-            if (exprTokens.indexOf(t) == -1) {
-                try {
-                    res.push(getValue(t));
-                } catch (e) {
-                    if (currentTest.letVariables.indexOf(t) >= 0)
-                        res.push({id: t})
-                    else
-                        error(e.message)
-                }
-            } else {
-                res.push({js: t})
-            }
-        })
-        return res;
-    }
-
-    function getValue(w: string): jdtest.ServiceTestToken {
-        let info: jdtest.ServiceTestToken = {}
-        try {
-            info.const = parseIntFloat(spec, w, true)
-        } catch (e) {
-            return getReg(w);
-        }
-        return info;
-    }
-
-    function getReg(w: string) {
-        let info: jdtest.ServiceTestToken = {}
-        let r = getRegister(spec, w);
-        info.id = r.pkt.name;
-        if (r.fld) info.id += ("." + r.fld.name);
-        return info;
     }
 
     function finishTest()  {
@@ -209,15 +175,3 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
         errors.push({ file: filename, line: lineNo, message: msg })
     }
 }
-
-function gatherLocals(serviceTest: jdtest.ServiceTest) {
-    let locals: string[] = []
-    serviceTest.tests.forEach(t => {
-        t.letVariables.forEach(l => {
-            if (locals.indexOf(l) < 0)
-                locals.push(l);
-        })
-    })
-    return locals;
-}
-

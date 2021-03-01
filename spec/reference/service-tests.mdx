@@ -6,7 +6,10 @@ order: 5
 ## Service Tests
 
 A service test is a markdown file that contains a number of unit tests for a
-given service.  The unit tests can be a mixture of automated and manual tests.
+given service. Use the [service test editor](/tools/service-test-editor/) to
+view, create and edit tests.
+
+The unit tests can be a mixture of automated and manual tests.
 A simple domain-specific set of test constructs is made available for easy
 authoring of tests for the common cases, with an escape hatch to write TypeScript
 for more complex test scenarios.
@@ -19,13 +22,21 @@ commands.
 ## Test commands
 
 A test command is a single line JavaScript function call, indented. We currently
-support the following calls.
+support the following calls.  Every call can have optional preceding markdown, which 
+should be separated by a blank line from the call. The following two test functions
+make use of this markdown in order to interact with the user for manual testing:
 
-- **ask**(*string*): ask the user to give a Yes/No answer to question
+- **say**(): prompt the user with the preceding markdown
+- **ask**(): ask the user to give a Yes/No answer to the question specified in preceding markdown
+
+The remaining test functions can be checked automatically with a manual fallback
+
 - **check**(*expr*): check if the *expr* evaluates true
 - **changes**(*expr*): check if the *expr* changes
-- **increases**(*register*,*expr*): check if *register* increases in value by *expr*
-- **decreases**(*register*,*expr*): check if *register* descreases in value by *expr*
+- **increases**(*register*): check if *register* increases in value
+- **decreases**(*register*): check if *register* descreases in value
+- **increasesBy**(*register*,*expr*): check if *register* increases in value by *expr*
+- **decreasesBy**(*register*,*expr*): check if *register* descreases in value by *expr*
 - **rangesFromUpTo**(*register*,*startExpr*,*endExpr*): check if register increases from startExpr to endExpr (and integer values in between)
 - **rangesFromDownTo**(*register*,*startExpr*,*endExpr*): check if register decreases from startExpr to endExpr (and integer values in between
 - **reset**()

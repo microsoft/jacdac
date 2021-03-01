@@ -105,7 +105,7 @@ URL with machine-readable metadata information about updating device firmware
     }
 
 Specifies a status light animation sequence on a colored or monochrome LED
-using the [LED animation format](/spec/led-animation).
+using the [LED animation format](/spec/led-animation/).
 Typically, up to 8 steps (repeats) are supported.
 
 The status light is also used by Jacdac software stack to indicate various status mode

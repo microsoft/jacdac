@@ -117,7 +117,7 @@ typedef struct jd_control_flood_ping_report {
 
 /**
  * Specifies a status light animation sequence on a colored or monochrome LED
- * using the [LED animation format](/spec/led-animation).
+ * using the [LED animation format](/spec/led-animation/).
  * Typically, up to 8 steps (repeats) are supported.
  */
 #define JD_CONTROL_REG_STATUS_LIGHT 0x81

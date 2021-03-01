@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/triple-slash-reference */
 /// <reference path="jdspec.d.ts" />
+/// <reference path="jsep.d.ts" />
 
 declare namespace jdtest {
 
@@ -43,8 +44,7 @@ declare namespace jdtest {
     interface UnitTest {
         description: string;
         prompt: string;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        commands: any[];  // any -> jsep.Expression
+        commands: jsep.Expression[];  // any -> jsep.Expression
     }
 
     interface TestFunctionDescription {

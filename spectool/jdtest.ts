@@ -5,13 +5,16 @@
 import { parseIntFloat, getRegister } from "./jdutils";
 import { JSONPath } from "jsonpath-plus"
 import { testCommandFunctions, testExpressionFunctions } from "./jdtestfuns"
-import jsep from "jsep";
+import jsep, { ExpressionType } from "jsep";
+
+const supportedExpressions: ExpressionType[] = [ 'BinaryExpression', 'CallExpression', 'Identifier',
+    'Literal', 'UnaryExpression', 'LogicalExpression' ]
 
 // we parse a test with respect to an existing ServiceSpec
 export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: jdspec.ServiceSpec, filename = ""): jdtest.ServiceTest {
     filecontent = (filecontent || "").replace(/\r/g, "")
     const info: jdtest.ServiceTest = {
-        description: null,
+        description: "",
         serviceClassIdentifier: spec.classIdentifier,
         tests: []
     }
@@ -32,8 +35,8 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
         error("exception: " + e.message)
     }
 
-    if (!info.description)
-        error("file is missing a header description (#)")
+    if (currentTest)
+        finishTest();
 
     if (errors.length)
         info.errors = errors
@@ -67,13 +70,13 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
                 if (hd == "#" && !info.description) {
                     info.description = cont.trim()
                 } else if (hd =="##") {
+                    if (currentTest)
+                        finishTest();
                     testHeading = cont.trim();
                 }
             } else {
                 testPrompt += line;
             }
-            if (currentTest)
-                finishTest();
         } else {
             const expanded = line
                 .replace(/\/\/.*/, "")
@@ -90,11 +93,10 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
                 error("every test must have a description (via ##)")
             currentTest = {
                 description: testHeading,
-                prompt: testPrompt,
+                registers: [],
                 commands: []
             }
             testHeading = ""
-            testPrompt = ""
         }
         const call = /^([a-zA-Z]\w*)\(.*\)$/.exec(expanded);
         if (!call) {
@@ -108,6 +110,9 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
         if (!expr.callee) {
             error("a command must be a call expression in JavaScript syntax");
         } else {
+            // check for unsupported expression types
+            if (supportedExpressions.indexOf(expr.type) < 0)
+                error('Expression of type ' + expr.type + ' not currently supported')
             // check arguments
             const expected = testCommandFunctions[index].args.length
             if (expected !== expr.arguments.length)
@@ -133,7 +138,8 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
                 const ids = <jsep.Identifier[]>JSONPath({path: "$.*[?(@.type=='Identifier')]", json: parent})
                 ids.forEach(id => { lookupReplace(parent, id) })
             })
-            currentTest.commands.push(expr);
+            currentTest.commands.push({prompt: testPrompt, call: expr});
+            testPrompt = "";
         }
     }
 
@@ -155,6 +161,8 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
                     })
                 } catch(e) {
                     getRegister(spec, idChild.name)
+                    if (currentTest.registers.indexOf(idChild.name) < 0)
+                        currentTest.registers.push(idChild.name)
                     // TODO: if parent is MemberExpression, continue to do lookup
                 }
             } catch (e) {

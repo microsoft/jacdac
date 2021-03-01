@@ -22,7 +22,7 @@ declare namespace jdtest {
      */
     interface ServiceTest {
 
-        description: string;
+        description: string; // markdown
 
         /**
          * the service that this file targets
@@ -43,8 +43,13 @@ declare namespace jdtest {
 
     interface UnitTest {
         description: string;
-        prompt: string;
-        commands: jsep.CallExpression[];
+        registers: string[];
+        commands: UnitTestCommand[];
+    }
+
+    interface UnitTestCommand {
+        prompt: string; // markdwon
+        call: jsep.CallExpression
     }
 
     interface TestFunctionDescription {

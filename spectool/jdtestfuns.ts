@@ -1,10 +1,15 @@
 /* eslint-disable @typescript-eslint/triple-slash-reference */
 /// <reference path="jdtest.d.ts" />
 
+export type Commands = "reset" | "changes" |  "ask" | "say" | "check" 
+    | "increases" | "decreases" | "increasesBy" | "decreasesBy" 
+    | "rangesFromUpTo" | "rangesFromDownTo"
+
 export const testCommandFunctions: jdtest.TestFunctionDescription[] = [
     { id: "reset", args:[], prompt: "sends a reset command to the module"},
     { id: "changes", args:["reg"], prompt: "did the value of $1 change?"},
-    { id: "ask", args:["string"], prompt: undefined },
+    { id: "say", args:[], prompt: undefined },
+    { id: "ask", args:[], prompt: undefined },
     { id: "check", args:["boolean"], prompt: "does the condition $1 hold?"},
     { id: "increases", args:["reg"], prompt: "did the value of register $1 increase?"},
     { id: "decreases", args:["reg"], prompt: "did the value of register $1 decrease?"},

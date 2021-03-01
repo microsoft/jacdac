@@ -106,18 +106,18 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
         const index = testCommandFunctions.findIndex(r => callee == r.id)
         if (index < 0)
             error(callee + " is not a registered test function.")
-        const expr: jsep.CallExpression = <jsep.CallExpression>jsep(expanded);
-        if (!expr.callee) {
+        const root: jsep.CallExpression = <jsep.CallExpression>jsep(expanded);
+        if (!root.callee) {
             error("a command must be a call expression in JavaScript syntax");
         } else {
             // check for unsupported expression types
-            if (supportedExpressions.indexOf(expr.type) < 0)
-                error('Expression of type ' + expr.type + ' not currently supported')
+            if (supportedExpressions.indexOf(root.type) < 0)
+                error('Expression of type ' + root.type + ' not currently supported')
             // check arguments
             const expected = testCommandFunctions[index].args.length
-            if (expected !== expr.arguments.length)
-                error(callee+" expects "+expected+" arguments; got "+expr.arguments.length)
-            expr.arguments.forEach(arg => {
+            if (expected !== root.arguments.length)
+                error(callee+" expects "+expected+" arguments; got "+root.arguments.length)
+            root.arguments.forEach(arg => {
                 const callees = <jsep.CallExpression[]> JSONPath({path: "$..*[?(@.type=='CallExpression')]", json: arg})
                 callees.forEach(callExpr => {
                     if (callExpr.callee.type !== 'Identifier')
@@ -133,19 +133,20 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
             })
             // now visit all (p,c), c an Identifier that is not a callee child of CallExpression 
             // or a property child of a MemberExpression
-            const exprs = <jsep.Expression[]>JSONPath({path: "$..*[?(@.type=='Identifier')]^", json: expr})
+            const exprs = <jsep.Expression[]>JSONPath({path: "$..*[?(@.type=='Identifier')]^", json: root})
             exprs.forEach(parent => {
                 const ids = <jsep.Identifier[]>JSONPath({path: "$.*[?(@.type=='Identifier')]", json: parent})
                 ids.forEach(id => { lookupReplace(parent, id) })
             })
-            currentTest.commands.push({prompt: testPrompt, call: expr});
+            currentTest.commands.push({prompt: testPrompt, call: root});
             testPrompt = "";
         }
     }
 
     function lookupReplace(parent: jsep.Expression, idChild: jsep.Identifier) {
-        if (parent.type === "CallExpression" && idChild !== (<jsep.CallExpression>parent).callee
-        || parent.type === "MemberExpression" && idChild != (<jsep.MemberExpression>parent).property) {
+        if (parent.type !== "CallExpression" && parent.type !== "MemberExpression"
+         || parent.type === "CallExpression" && idChild !== (<jsep.CallExpression>parent).callee
+         || parent.type === "MemberExpression" && idChild != (<jsep.MemberExpression>parent).property) {
             try {
                 try {
                     const val = parseIntFloat(spec, idChild.name)

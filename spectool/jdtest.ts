@@ -128,7 +128,7 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
             const expected = testCommandFunctions[index].args.length
             if (expected !== expr.arguments.length)
                 error(callee+" expects "+expected+" arguments; got "+expr.arguments.length)
-            expr.arguments.forEach(arg => {
+            expr.arguments.forEach((arg:any) => {
                 const callees = <jsep.CallExpression[]> JSONPath({path: "$..*[?(@.type=='CallExpression')]", json: arg})
                 callees.forEach(callExpr => {
                     if (callExpr.callee.type !== 'Identifier')

@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/triple-slash-reference */
 /// <reference path="jdspec.d.ts" />
-/// <reference path="./jsep/jsep.d.ts" />
+/// <reference path="jdtest.d.ts" />
 
 import { parseIntFloat, getRegister } from "./jdutils";
 import { JSONPath } from "jsonpath-plus"
-import { parse } from "./jsep/jsep"
+import jsep = require("jsep");
 
 const testCommandFunctions: jdtest.TestFunctionDescription[] = [
     { id: "reset", args:[], prompt: "sends a reset command to the module"},
@@ -120,7 +120,7 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
         const index = testCommandFunctions.findIndex(r => callee == r.id)
         if (index < 0)
             error(callee + " is not a registered test function.")
-        const expr: jsep.CallExpression = <jsep.CallExpression>parse(expanded);
+        const expr: jsep.CallExpression = <jsep.CallExpression>jsep(expanded);
         if (!expr.callee) {
             error("a command must be a call expression in JavaScript syntax");
         } else {

@@ -333,12 +333,11 @@ export function parseServiceSpecificationMarkdownToJSON(
         if (!interpret) {
             const m = /^(#+)\s*(.*)/.exec(line);
             if (m) {
-                let [_full, hd, cont] = m;
+                const [, hd, cont] = m;
                 packetsToDescribe = null;
-                cont = cont.trim();
-                const newNoteId = cont.toLowerCase();
+                const newNoteId = cont.trim().toLowerCase();
                 if (hd == "#" && !info.name) {
-                    info.name = cont;
+                    info.name = cont.trim();
                     line = "";
                 } else if (
                     newNoteId == "registers" ||
@@ -368,7 +367,7 @@ export function parseServiceSpecificationMarkdownToJSON(
                 packetsToDescribe = null;
             const expanded = line
                 .replace(/\/\/.*/, "")
-                .replace(/[\?@:=,\{\};]/g, (s) => " " + s + " ")
+                .replace(/[?@:=,{};]/g, (s) => " " + s + " ")
                 .trim();
             if (!expanded) return;
             const words = expanded.split(/\s+/);
@@ -720,7 +719,15 @@ export function parseServiceSpecificationMarkdownToJSON(
         return v;
     }
 
+    function parseVal(words: string[]) {
+        const eq = words.shift();
+        if (eq != "=" && eq != ":") error("expecting '='");
+        const val = words.shift();
+        return parseIntCheck(val, true);
+    }
+
     function packetField(words: string[]) {
+
         if (
             words.length == 2 &&
             (words[0] == "repeats" ||
@@ -795,20 +802,20 @@ export function parseServiceSpecificationMarkdownToJSON(
                 tok = camelize(tok);
                 switch (tok) {
                     case "maxBytes":
-                        (field as any)[tok] = rangeCheck("u8", parseVal());
+                        (field as any)[tok] = rangeCheck("u8", parseVal(words));
                         break;
                     case "typicalMin":
                     case "typicalMax":
                     case "absoluteMin":
                     case "absoluteMax":
-                        (field as any)[tok] = rangeCheck(tp, parseVal());
+                        (field as any)[tok] = rangeCheck(tp, parseVal(words));
                         break;
                     case "preferredInterval":
                         if ((packetInfo as any)[tok] !== undefined)
                             error(`field ${tok} already set`);
                         (packetInfo as any)[tok] = rangeCheck(
                             "u32",
-                            parseVal()
+                            parseVal(words)
                         );
                         break;
                     default:
@@ -818,13 +825,6 @@ export function parseServiceSpecificationMarkdownToJSON(
                 if (words[0] == ",") words.shift();
             }
             if (tok == "}") tok = null;
-
-            function parseVal() {
-                const eq = words.shift();
-                if (eq != "=" && eq != ":") error("expecting '='");
-                const val = words.shift();
-                return parseIntCheck(val, true);
-            }
         }
 
         if (tok) error(`excessive tokens at the end of member: ${tok}...`);
@@ -927,7 +927,7 @@ export function parseServiceSpecificationMarkdownToJSON(
                 processInclude(words[2]);
                 break;
             case "class":
-            case "identifier":
+            case "identifier": {
                 info.classIdentifier = parseIntCheck(words[2]);
                 if (info.name != "Control" && info.classIdentifier == 0)
                     info.classIdentifier = 1;
@@ -951,6 +951,7 @@ export function parseServiceSpecificationMarkdownToJSON(
                         }; ${gen}`
                     );
                 break;
+            }
             case "camel":
                 info.camelName = words[2];
                 break;
@@ -1063,10 +1064,11 @@ export function parseServiceSpecificationMarkdownToJSON(
             case "i32":
             case "u32":
             case "i64":
-            case "u64":
+            case "u64": {
                 let sz = parseIntCheck(tp2.replace(/^./, "")) >> 3;
                 if (tp2[0] == "i") sz = -sz;
                 return [sz, tp2, 0];
+            }
             case "f16":
                 return [2, tp2, null];
             case "f32":
@@ -1083,11 +1085,12 @@ export function parseServiceSpecificationMarkdownToJSON(
             case "string":
             case "string0":
                 return [0, tp2, 0];
-            default:
+            default: {
                 const m = /^u8\[(\d+)\]$/.exec(tp2);
                 if (m) return [parseIntCheck(m[1]), tp2, 0];
                 error("unknown type: " + tp + " " + tp2);
                 return [4, tp2, 0];
+            }
         }
     }
 

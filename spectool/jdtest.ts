@@ -2,22 +2,21 @@
 /// <reference path="jdspec.d.ts" />
 /// <reference path="./jsep/jsep.d.ts" />
 
-import { parseIntFloat, getRegister, packetsToRegisters } from "./jdutils";
-import { camelize, capitalize } from "./jdspec"
+import { parseIntFloat, getRegister } from "./jdutils";
 import { JSONPath } from "jsonpath-plus"
 import { parse } from "./jsep/jsep"
 
 const testCommandFunctions: jdtest.TestFunctionDescription[] = [
     { id: "reset", args:[], prompt: "sends a reset command to the module"},
     { id: "changes", args:["reg"], prompt: "did the value of $1 change?"},
-    { id: "ask", args:["string"], prompt: ""},
-    { id: "check", args:["boolean"], prompt: ""},
-    { id: "increases", args:["reg"], prompt: ""},
-    { id: "decreases", args:["reg"], prompt: ""},
-    { id: "increasesBy", args:["reg","number"], prompt: ""},
-    { id: "decreasesBy", args:["reg","number"], prompt: ""},
-    { id: "rangesFromUpTo", args:["reg", "number", "number"], prompt: ""},
-    { id: "rangesFromDownTo", args:["reg", "number", "number"], prompt: ""}
+    { id: "ask", args:["string"], prompt: undefined },
+    { id: "check", args:["boolean"], prompt: "does the condition $1 hold?"},
+    { id: "increases", args:["reg"], prompt: "did the value of register $1 increase?"},
+    { id: "decreases", args:["reg"], prompt: "did the value of register $1 decrease?"},
+    { id: "increasesBy", args:["reg","number"], prompt: "did the value of register $1 increase by $2?"},
+    { id: "decreasesBy", args:["reg","number"], prompt: "did the value of register $1 decrease by $2?"},
+    { id: "rangesFromUpTo", args:["reg", "number", "number"], prompt: "register $1 should range in value from $2 up to $3"},
+    { id: "rangesFromDownTo", args:["reg", "number", "number"], prompt: "register $1 should range in value from $2 down to $3"}
 ]
 
 const testExpressionFunctions: jdtest.TestFunctionDescription[] = [

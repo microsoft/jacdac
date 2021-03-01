@@ -2,6 +2,7 @@
 
 ## reset test
 
+reset test (automated)
     reset()
     check(position == 0)
 

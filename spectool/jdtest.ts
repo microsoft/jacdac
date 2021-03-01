@@ -4,24 +4,8 @@
 
 import { parseIntFloat, getRegister } from "./jdutils";
 import { JSONPath } from "jsonpath-plus"
-import jsep = require("jsep");
-
-export const testCommandFunctions: jdtest.TestFunctionDescription[] = [
-    { id: "reset", args:[], prompt: "sends a reset command to the module"},
-    { id: "changes", args:["reg"], prompt: "did the value of $1 change?"},
-    { id: "ask", args:["string"], prompt: undefined },
-    { id: "check", args:["boolean"], prompt: "does the condition $1 hold?"},
-    { id: "increases", args:["reg"], prompt: "did the value of register $1 increase?"},
-    { id: "decreases", args:["reg"], prompt: "did the value of register $1 decrease?"},
-    { id: "increasesBy", args:["reg","number"], prompt: "did the value of register $1 increase by $2?"},
-    { id: "decreasesBy", args:["reg","number"], prompt: "did the value of register $1 decrease by $2?"},
-    { id: "rangesFromUpTo", args:["reg", "number", "number"], prompt: "register $1 should range in value from $2 up to $3"},
-    { id: "rangesFromDownTo", args:["reg", "number", "number"], prompt: "register $1 should range in value from $2 down to $3"}
-]
-
-export const testExpressionFunctions: jdtest.TestFunctionDescription[] = [
-    { id: "start", args:["any"], prompt: "value at beginning of test" }
-]
+import { testCommandFunctions, testExpressionFunctions } from "./jdtestfuns"
+import jsep from "jsep";
 
 // we parse a test with respect to an existing ServiceSpec
 export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: jdspec.ServiceSpec, filename = ""): jdtest.ServiceTest {

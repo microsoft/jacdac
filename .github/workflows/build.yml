@@ -20,6 +20,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install -g typescript
+      - run: npm install -g jsep
+      - run: npm install -g jsonpath-plus
       - run: make
       - uses: stefanzweifel/git-auto-commit-action@v4
         if: ${{ github.ref == 'refs/heads/main' }}

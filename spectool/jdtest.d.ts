@@ -44,7 +44,7 @@ declare namespace jdtest {
     interface UnitTest {
         description: string;
         prompt: string;
-        commands: jsep.Expression[];  // any -> jsep.Expression
+        commands: jsep.CallExpression[];
     }
 
     interface TestFunctionDescription {

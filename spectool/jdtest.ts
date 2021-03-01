@@ -6,7 +6,7 @@ import { parseIntFloat, getRegister } from "./jdutils";
 import { JSONPath } from "jsonpath-plus"
 import jsep = require("jsep");
 
-const testCommandFunctions: jdtest.TestFunctionDescription[] = [
+export const testCommandFunctions: jdtest.TestFunctionDescription[] = [
     { id: "reset", args:[], prompt: "sends a reset command to the module"},
     { id: "changes", args:["reg"], prompt: "did the value of $1 change?"},
     { id: "ask", args:["string"], prompt: undefined },
@@ -19,7 +19,7 @@ const testCommandFunctions: jdtest.TestFunctionDescription[] = [
     { id: "rangesFromDownTo", args:["reg", "number", "number"], prompt: "register $1 should range in value from $2 down to $3"}
 ]
 
-const testExpressionFunctions: jdtest.TestFunctionDescription[] = [
+export const testExpressionFunctions: jdtest.TestFunctionDescription[] = [
     { id: "start", args:["any"], prompt: "value at beginning of test" }
 ]
 

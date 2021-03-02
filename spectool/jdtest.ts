@@ -101,13 +101,16 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
         const call = /^([a-zA-Z]\w*)\(.*\)$/.exec(expanded);
         if (!call) {
             error("a command must be a call to a registered test function (JavaScript syntax)");
+            return;
         }
         const [ , callee] = call;
         const index = testCommandFunctions.findIndex(r => callee == r.id)
-        if (index < 0)
+        if (index < 0) {
             error(callee + " is not a registered test function.")
+            return
+        }
         const root: jsep.CallExpression = <jsep.CallExpression>jsep(expanded);
-        if (!root.callee) {
+        if (!root || !root.type || root.type != 'CallExpression' || !root.callee || !root.arguments) {
             error("a command must be a call expression in JavaScript syntax");
         } else {
             // check for unsupported expression types

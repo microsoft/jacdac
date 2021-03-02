@@ -18,9 +18,9 @@ declare namespace jdtest {
     }
 
     /**
-     * Service test.
+     * Service test specification
      */
-    interface ServiceTest {
+    interface ServiceTestSpec {
 
         description: string; // markdown
 
@@ -33,7 +33,7 @@ declare namespace jdtest {
         /**
          * the set of independent tests for the service
          */
-        tests: UnitTest[];
+        tests: TestSpec[];
 
         /**
          * If parsing of markdown fails, this includes the parse errors. Set to null/undefined when no errors.
@@ -41,14 +41,14 @@ declare namespace jdtest {
         errors?: jdspec.Diagnostic[];
     }
 
-    interface UnitTest {
+    interface TestSpec {
         description: string;
         registers: string[];
-        commands: UnitTestCommand[];
+        commands: CommandSpec[];
     }
 
-    interface UnitTestCommand {
-        prompt: string; // markdwon
+    interface CommandSpec {
+        prompt: string; // markdown
         call: jsep.CallExpression
     }
 

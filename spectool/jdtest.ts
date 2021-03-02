@@ -133,43 +133,72 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
             })
             // now visit all (p,c), c an Identifier that is not a callee child of CallExpression 
             // or a property child of a MemberExpression
-            const exprs = <jsep.Expression[]>JSONPath({path: "$..*[?(@.type=='Identifier')]^", json: root})
+            const exprs = <any[]>JSONPath({path: "$..*[?(@.type=='Identifier')]^", json: root})
+            let visited: any[] = [];
             exprs.forEach(parent => {
-                const ids = <jsep.Identifier[]>JSONPath({path: "$.*[?(@.type=='Identifier')]", json: parent})
-                ids.forEach(id => { lookupReplace(parent, id) })
+                if (visited.indexOf(parent) < 0) {
+                    visited.push(parent);
+                    lookupReplace(parent);
+                }
             })
             currentTest.commands.push({prompt: testPrompt, call: root});
             testPrompt = "";
         }
     }
 
-    function lookupReplace(parent: jsep.Expression, idChild: jsep.Identifier) {
-        if (parent.type !== "CallExpression" && parent.type !== "MemberExpression"
-         || parent.type === "CallExpression" && idChild !== (<jsep.CallExpression>parent).callee
-         || parent.type === "MemberExpression" && idChild != (<jsep.MemberExpression>parent).property) {
+    function toString(e: jsep.Expression) {
+        return e.type == 'Identifier' ? ("Identifer(" + (<jsep.Identifier>e).name + ")") : e.type;
+    } 
+
+    function lookupReplace(parent: any) {
+        if (parent.length) {
+            const exprs: jsep.Expression[] = parent
+            exprs.forEach((child: jsep.Expression) => {
+                if (child.type === 'Identifier')
+                    lookup(parent, <jsep.Identifier>child)
+            });
+        } else {
+            const expr: jsep.Expression = parent
+            Object.keys(parent).forEach((key:string) => {
+                const child = parent[key];
+                if (child?.type !== 'Identifier')
+                    return;
+                if (parent.type !== "CallExpression" && parent.type !== "MemberExpression"
+                    || parent.type === "CallExpression" && child !== (<jsep.CallExpression>parent).callee 
+                    || parent.type === "MemberExpression" && child != (<jsep.MemberExpression>parent).property) {
+                    lookup(parent, <jsep.Identifier>child)
+                }
+            });
+        }
+
+        function lookup(parent: any, child: jsep.Identifier) {
             try {
                 try {
-                    const val = parseIntFloat(spec, idChild.name)
+                    const val = parseIntFloat(spec, child.name)
                     const lit: jsep.Literal = {
                         type: 'Literal',
                         value: val,
                         raw: val.toString()
                     };
-                    // replace the Identifier by the (resolved) Literal
-                    Object.keys(parent).forEach((key:string) => {
-                        if (Object.getOwnPropertyDescriptor(parent,key) == idChild)
-                            Object.defineProperty(parent, key, lit);
-                    })
+                    /*TODO: replace the Identifier by the (resolved) Literal
+                    if (parent.type) {
+                        Object.keys(parent).forEach((key:string) => {
+                            if (Object.getOwnPropertyDescriptor(parent,key) == child)
+                                Object.defineProperty(parent, key, lit);
+                        })
+                    } else {
+    
+                    }*/
                 } catch(e) {
-                    getRegister(spec, idChild.name)
-                    if (currentTest.registers.indexOf(idChild.name) < 0)
-                        currentTest.registers.push(idChild.name)
+                    getRegister(spec, child.name)
+                    if (currentTest.registers.indexOf(child.name) < 0)
+                        currentTest.registers.push(child.name)
                     // TODO: if parent is MemberExpression, continue to do lookup
                 }
             } catch (e) {
-                error(idChild.name + " not found in specification")
+                error(child.name + " not found in specification")
             }
-        }
+        }    
     }
 
     function finishTest()  {

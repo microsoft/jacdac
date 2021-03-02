@@ -90,7 +90,7 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
     function processCommand(expanded: string)  {
         if (!currentTest) {
             if (!testHeading)
-                error("every test must have a description (via ##)")
+                error(`every test must have a description (via ##)`)
             currentTest = {
                 description: testHeading,
                 registers: [],
@@ -100,39 +100,39 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
         }
         const call = /^([a-zA-Z]\w*)\(.*\)$/.exec(expanded);
         if (!call) {
-            error("a command must be a call to a registered test function (JavaScript syntax)");
+            error(`a command must be a call to a registered test function (JavaScript syntax)`);
             return;
         }
         const [ , callee] = call;
         const index = testCommandFunctions.findIndex(r => callee == r.id)
         if (index < 0) {
-            error(callee + " is not a registered test command function.")
+            error(`${callee} is not a registered test command function.`)
             return
         }
         const root: jsep.CallExpression = <jsep.CallExpression>jsep(expanded);
         if (!root || !root.type || root.type != 'CallExpression' || !root.callee || !root.arguments) {
-            error("a command must be a call expression in JavaScript syntax");
+            error(`a command must be a call expression in JavaScript syntax`);
         } else {
             // check for unsupported expression types
             if (supportedExpressions.indexOf(root.type) < 0)
-                error('Expression of type ' + root.type + ' not currently supported')
+                error(`Expression of type ${root.type} not currently supported`)
             // check arguments
             const expected = testCommandFunctions[index].args.length
             if (expected !== root.arguments.length)
-                error(callee+" expects "+expected+" arguments; got "+root.arguments.length)
+                error(`${callee} expects ${expected} arguments; got ${root.arguments.length}`)
             else {
                 root.arguments.forEach(arg => {
                     const callers = <jsep.CallExpression[]> JSONPath({path: "$..*[?(@.type=='CallExpression')]", json: root})
                     callers.forEach(callExpr => {
                         if (callExpr.callee.type !== 'Identifier')
-                            error("all calls must be direct calls")
+                            error(`all calls must be direct calls`)
                         const id = (<jsep.Identifier>callExpr.callee).name;
                         const indexFun = testExpressionFunctions.findIndex(r => id == r.id)
                         if (indexFun < 0)
-                            error(id + " is not a registered test expression function.")
+                            error(`${id} is not a registered test expression function.`)
                         const expected = testExpressionFunctions[indexFun].args.length
                         if (expected !== callExpr.arguments.length)
-                            error(callee+" expects "+expected+" arguments; got "+callExpr.arguments.length)
+                            error(`${callee} expects ${expected} arguments; got ${callExpr.arguments.length}`)
                     })
                 })
             }
@@ -151,10 +151,6 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
         }
     }
 
-    function toString(e: jsep.Expression) {
-        return e.type == 'Identifier' ? ("Identifer(" + (<jsep.Identifier>e).name + ")") : e.type;
-    } 
-
     function lookupReplace(parent: any) {
         if (parent.length) {
             const exprs: jsep.Expression[] = parent
@@ -162,7 +158,7 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
                 if (child.type === 'Identifier')
                     lookup(parent, <jsep.Identifier>child)
             });
-        } else if (parent.type) {
+        } else {
             Object.keys(parent).forEach((key:string) => {
                 const child = parent[key];
                 if (child?.type !== 'Identifier')
@@ -173,8 +169,6 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
                     lookup(parent, <jsep.Identifier>child)
                 }
             });
-        } else {
-            error("unexpected case in test parser")
         }
 
         function lookup(parent: any, child: jsep.Identifier) {
@@ -202,7 +196,7 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
                     // TODO: if parent is MemberExpression, continue to do lookup
                 }
             } catch (e) {
-                error(child.name + " not found in specification")
+                error(`${child.name} not found in specification`)
             }
         }    
     }

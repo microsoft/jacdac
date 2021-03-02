@@ -106,7 +106,7 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
         const [ , callee] = call;
         const index = testCommandFunctions.findIndex(r => callee == r.id)
         if (index < 0) {
-            error(callee + " is not a registered test function.")
+            error(callee + " is not a registered test command function.")
             return
         }
         const root: jsep.CallExpression = <jsep.CallExpression>jsep(expanded);
@@ -120,20 +120,22 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
             const expected = testCommandFunctions[index].args.length
             if (expected !== root.arguments.length)
                 error(callee+" expects "+expected+" arguments; got "+root.arguments.length)
-            root.arguments.forEach(arg => {
-                const callees = <jsep.CallExpression[]> JSONPath({path: "$..*[?(@.type=='CallExpression')]", json: arg})
-                callees.forEach(callExpr => {
-                    if (callExpr.callee.type !== 'Identifier')
-                        error("all calls must be direct calls")
-                    const id = (<jsep.Identifier>callExpr.callee).name;
-                    const indexFun = testExpressionFunctions.findIndex(r => id == r.id)
-                    if (indexFun < 0)
-                        error(id + " is not a registered test function.")
-                    const expected = testCommandFunctions[indexFun].args.length
-                    if (expected !== callExpr.arguments.length)
-                        error(callee+" expects "+expected+" arguments; got "+callExpr.arguments.length)
+            else {
+                root.arguments.forEach(arg => {
+                    const callers = <jsep.CallExpression[]> JSONPath({path: "$..*[?(@.type=='CallExpression')]", json: root})
+                    callers.forEach(callExpr => {
+                        if (callExpr.callee.type !== 'Identifier')
+                            error("all calls must be direct calls")
+                        const id = (<jsep.Identifier>callExpr.callee).name;
+                        const indexFun = testExpressionFunctions.findIndex(r => id == r.id)
+                        if (indexFun < 0)
+                            error(id + " is not a registered test expression function.")
+                        const expected = testExpressionFunctions[indexFun].args.length
+                        if (expected !== callExpr.arguments.length)
+                            error(callee+" expects "+expected+" arguments; got "+callExpr.arguments.length)
+                    })
                 })
-            })
+            }
             // now visit all (p,c), c an Identifier that is not a callee child of CallExpression 
             // or a property child of a MemberExpression
             const exprs = <any[]>JSONPath({path: "$..*[?(@.type=='Identifier')]^", json: root})
@@ -160,18 +162,19 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
                 if (child.type === 'Identifier')
                     lookup(parent, <jsep.Identifier>child)
             });
-        } else {
-            const expr: jsep.Expression = parent
+        } else if (parent.type) {
             Object.keys(parent).forEach((key:string) => {
                 const child = parent[key];
                 if (child?.type !== 'Identifier')
-                    return;
-                if (parent.type !== "CallExpression" && parent.type !== "MemberExpression"
-                    || parent.type === "CallExpression" && child !== (<jsep.CallExpression>parent).callee 
-                    || parent.type === "MemberExpression" && child != (<jsep.MemberExpression>parent).property) {
+                    return; 
+                if (parent.type !== "MemberExpression" && parent.type !== "CallExpression"
+                    || parent.type === "MemberExpression" && child !== (<jsep.MemberExpression>parent).property
+                    || parent.type === "CallExpression" && child !== (<jsep.CallExpression>parent).callee) {
                     lookup(parent, <jsep.Identifier>child)
                 }
             });
+        } else {
+            error("unexpected case in test parser")
         }
 
         function lookup(parent: any, child: jsep.Identifier) {

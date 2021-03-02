@@ -11,9 +11,9 @@ const supportedExpressions: ExpressionType[] = [ 'BinaryExpression', 'CallExpres
     'Literal', 'UnaryExpression', 'LogicalExpression' ]
 
 // we parse a test with respect to an existing ServiceSpec
-export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: jdspec.ServiceSpec, filename = ""): jdtest.ServiceTest {
+export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: jdspec.ServiceSpec, filename = ""): jdtest.ServiceTestSpec {
     filecontent = (filecontent || "").replace(/\r/g, "")
-    const info: jdtest.ServiceTest = {
+    const info: jdtest.ServiceTestSpec = {
         description: "",
         serviceClassIdentifier: spec.classIdentifier,
         tests: []
@@ -22,7 +22,7 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
     let backticksType = ""
     const errors: jdspec.Diagnostic[] = []
     let lineNo = 0
-    let currentTest: jdtest.UnitTest = null
+    let currentTest: jdtest.TestSpec = null
     let testHeading = ""
     let testPrompt = ""
 

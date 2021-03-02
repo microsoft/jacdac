@@ -323,7 +323,7 @@ function processSpec(dn: string) {
     const fmtStats: { [index: string]: number } = {};
     const concats: jdspec.SMap<string> = {};
     const markdowns: jdspec.ServiceMarkdownSpec[] = [];
-    const tests: jdtest.ServiceTest[] = [];
+    const tests: jdtest.ServiceTestSpec[] = [];
     for (const fn of files) {
         if (!/\.md$/.test(fn) || fn[0] == ".") continue;
         console.log(`process ${fn}`);

@@ -1,29 +1,17 @@
 {
-  "name": "Arcade screen",
+  "name": "Indexed screen",
   "status": "experimental",
-  "shortId": "arcadescreen",
-  "camelName": "arcadeScreen",
-  "shortName": "arcadeScreen",
+  "shortId": "indexedscreen",
+  "camelName": "indexedScreen",
+  "shortName": "indexedScreen",
   "extends": [
     "_base"
   ],
   "notes": {
-    "short": "A screen with indexed colors.\n\nThis is typically run over an SPI connection, not regular single-wire JACDAC.",
-    "commands": "`RowMajor` is typical for computer screens, while most landscape embedded LCDs use `ColumnMajor`.\n`Upscale2x` means the physical resolution of the screen is double the reported resolution,\nand the screen will internally upscale."
+    "short": "A screen with indexed colors.\n\nThis is often run over an SPI connection, not regular single-wire JACDAC."
   },
   "classIdentifier": 385496805,
-  "enums": {
-    "DisplayFlags": {
-      "name": "DisplayFlags",
-      "storage": 1,
-      "isFlags": true,
-      "members": {
-        "ColumnMajor": 0,
-        "RowMajor": 1,
-        "Upscale2x": 2
-      }
-    }
-  },
+  "enums": {},
   "packets": [
     {
       "kind": "const",
@@ -97,80 +85,34 @@
     },
     {
       "kind": "command",
-      "name": "announce",
-      "identifier": 0,
-      "description": "Announces display capabilities and logical size\n(320x240 screen with `Upscale2x` will report 160x120).",
-      "fields": [],
-      "identifierName": "announce",
-      "hasReport": true
-    },
-    {
-      "kind": "report",
-      "name": "announce",
-      "identifier": 0,
-      "description": "Announces display capabilities and logical size\n(320x240 screen with `Upscale2x` will report 160x120).",
-      "fields": [
-        {
-          "name": "flags",
-          "unit": "",
-          "type": "DisplayFlags",
-          "storage": 1
-        },
-        {
-          "name": "bits_per_pixel",
-          "unit": "",
-          "type": "u8",
-          "storage": 1,
-          "isSimpleType": true
-        },
-        {
-          "name": "width",
-          "unit": "",
-          "type": "u16",
-          "storage": 2,
-          "isSimpleType": true
-        },
-        {
-          "name": "height",
-          "unit": "",
-          "type": "u16",
-          "storage": 2,
-          "isSimpleType": true
-        }
-      ],
-      "secondary": true,
-      "packFormat": "u8 u8 u16 u16"
-    },
-    {
-      "kind": "command",
       "name": "start_update",
       "identifier": 129,
       "description": "Sets the update window for subsequent `set_pixels` commands.",
       "fields": [
         {
           "name": "x",
-          "unit": "",
+          "unit": "px",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "y",
-          "unit": "",
+          "unit": "px",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "width",
-          "unit": "",
+          "unit": "px",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "height",
-          "unit": "",
+          "unit": "px",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -182,7 +124,7 @@
       "kind": "command",
       "name": "set_pixels",
       "identifier": 131,
-      "description": "Set pixels in current window, according to current palette.",
+      "description": "Set pixels in current window, according to current palette.\nEach \"line\" of data is aligned to a byte.",
       "fields": [
         {
           "name": "pixels",
@@ -248,6 +190,101 @@
         }
       ],
       "packFormat": "r: u8 u8 u8 u8"
+    },
+    {
+      "kind": "const",
+      "name": "bits_per_pixel",
+      "identifier": 384,
+      "description": "Determines the number of palette entries.\nTypical values are 1, 2, 4, or 8.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "bit",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u8"
+    },
+    {
+      "kind": "const",
+      "name": "width",
+      "identifier": 385,
+      "description": "Screen width in \"natural\" orientation.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "px",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u16"
+    },
+    {
+      "kind": "const",
+      "name": "height",
+      "identifier": 386,
+      "description": "Screen height in \"natural\" orientation.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "px",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u16"
+    },
+    {
+      "kind": "rw",
+      "name": "width_major",
+      "identifier": 129,
+      "description": "If true, consecutive pixels in the \"width\" direction are sent next to each other (this is typical for graphics cards).\nIf false, consecutive pixels in the \"height\" direction are sent next to each other.\nFor embedded screen controllers, this is typically true iff `width < height`\n(in other words, it's only true for portrait orientation screens).\nSome controllers may allow the user to change this (though the refresh order may not be optimal then).\nThis is independent of the `rotation` register.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "bool",
+          "storage": 1
+        }
+      ],
+      "packFormat": "u8"
+    },
+    {
+      "kind": "rw",
+      "name": "up_sampling",
+      "identifier": 130,
+      "description": "Every pixel sent over wire is represented by `up_sampling x up_sampling` square of physical pixels.\nSome displays may allow changing this (which will also result in changes to `width` and `height`).\nTypical values are 1 and 2.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "px",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u8"
+    },
+    {
+      "kind": "rw",
+      "name": "rotation",
+      "identifier": 131,
+      "description": "Possible values are 0, 90, 180 and 270 only.\nWrite to this register do not affect `width` and `height` registers,\nand may be ignored by some screens.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "°",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u16"
     }
   ],
   "tags": []

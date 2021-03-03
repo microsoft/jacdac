@@ -9,7 +9,7 @@
     "_sensor"
   ],
   "notes": {
-    "short": "A gamepad with direction and action buttons for one player."
+    "short": "A gamepad with direction and action buttons for one player.\nIf a device has multiple controllers, it should have multiple gamepad services, using consecutive service identifiers."
   },
   "classIdentifier": 501915758,
   "enums": {

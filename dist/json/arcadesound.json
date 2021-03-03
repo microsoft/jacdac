@@ -1,0 +1,153 @@
+{
+  "name": "Arcade sound",
+  "status": "experimental",
+  "shortId": "arcadesound",
+  "camelName": "arcadeSound",
+  "shortName": "arcadeSound",
+  "extends": [
+    "_base"
+  ],
+  "notes": {
+    "short": "A sound playing device.\n\nThis is typically run over an SPI connection, not regular single-wire JACDAC."
+  },
+  "classIdentifier": 533083654,
+  "enums": {},
+  "packets": [
+    {
+      "kind": "const",
+      "name": "instance_name",
+      "identifier": 265,
+      "description": "A friendly name that describes the role of this service instance in the device.\nIt often corresponds to what's printed on the device:\nfor example, `A` for button A, or `S0` for servo channel 0.\nWords like `left` should be avoided because of localization issues (unless they are printed on the device).",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "optional": true,
+      "identifierName": "instance_name",
+      "packFormat": "s",
+      "derived": "_base"
+    },
+    {
+      "kind": "ro",
+      "name": "status_code",
+      "identifier": 259,
+      "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe Jacdac status/error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the announce packet. If a service implements this register,\nit should also support the ``status_code_changed`` event defined below.",
+      "fields": [
+        {
+          "name": "code",
+          "unit": "",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "vendor_code",
+          "unit": "",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "identifierName": "status_code",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
+    {
+      "kind": "event",
+      "name": "status_code_changed",
+      "identifier": 4,
+      "description": "Notifies that the status code of the service changed.",
+      "fields": [
+        {
+          "name": "code",
+          "unit": "",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "vendor_code",
+          "unit": "",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "identifierName": "status_code_changed",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
+    {
+      "kind": "command",
+      "name": "play",
+      "identifier": 128,
+      "description": "Play samples, which are single channel, signed 16-bit little endian values.",
+      "fields": [
+        {
+          "name": "samples",
+          "unit": "",
+          "type": "bytes",
+          "storage": 0,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "b"
+    },
+    {
+      "kind": "rw",
+      "name": "sample_rate",
+      "identifier": 128,
+      "description": "Get or set playback sample rate (in samples per second).\nIf you set it, read it back, as the value may be rounded up or down.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "Hz",
+          "shift": 10,
+          "type": "u22.10",
+          "storage": 4,
+          "defaultValue": 44100
+        }
+      ],
+      "packFormat": "u22.10"
+    },
+    {
+      "kind": "const",
+      "name": "buffer_size",
+      "identifier": 384,
+      "description": "The size of the internal audio buffer.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "B",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u32"
+    },
+    {
+      "kind": "ro",
+      "name": "buffer_pending",
+      "identifier": 385,
+      "description": "How much data is still left in the buffer to play.\nClients should not send more data than `buffer_size - buffer_pending`,\nbut can keep the `buffer_pending` as low as they want to ensure low latency\nof audio playback.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "B",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u32"
+    }
+  ],
+  "tags": []
+}

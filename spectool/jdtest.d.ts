@@ -3,58 +3,55 @@
 /// <reference path="jsep.d.ts" />
 
 declare namespace jdtest {
-
-
     interface ServiceTestMarkdownSpec {
         /**
          * associated service
          */
-        serviceClassIdentifier: number;
+        serviceClassIdentifier: number
 
         /**
          * Markdown source
          */
-        source: string;
+        source: string
     }
 
     /**
      * Service test specification
      */
     interface ServiceTestSpec {
-
-        description: string; // markdown
+        description: string // markdown
 
         /**
          * the service that this file targets
          */
 
-        serviceClassIdentifier: number;
+        serviceClassIdentifier: number
 
         /**
          * the set of independent tests for the service
          */
-        tests: TestSpec[];
+        tests: TestSpec[]
 
         /**
          * If parsing of markdown fails, this includes the parse errors. Set to null/undefined when no errors.
          */
-        errors?: jdspec.Diagnostic[];
+        errors?: jdspec.Diagnostic[]
     }
 
     interface TestSpec {
-        description: string;
-        registers: string[];
-        commands: CommandSpec[];
+        description: string
+        registers: string[]
+        commands: CommandSpec[]
     }
 
     interface CommandSpec {
-        prompt: string; // markdown
+        prompt: string // markdown
         call: jsep.CallExpression
     }
 
     interface TestFunctionDescription {
-        id: string;
-        args: string[];
-        prompt: string;
+        id: string
+        args: string[]
+        prompt: string
     }
 }

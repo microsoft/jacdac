@@ -921,7 +921,8 @@ export function parseServiceSpecificationMarkdownToJSON(
     }
 
     function metadataMember(words: string[]) {
-        if ((words[1] != "=" && words[1] != ":") || words.length != 3)
+        if (!((words[1] == "=" || words[1] == ":") &&
+              (words[0]=="tags" || words.length == 3)))
             error(`expecting: FIELD_NAME = VALUE or FIELD_NAME : VALUE`);
         switch (words[0]) {
             case "extends":
@@ -971,7 +972,8 @@ export function parseServiceSpecificationMarkdownToJSON(
                 else error("unknown status");
                 break;
             case "tags":
-                info.tags = info.tags.concat(words.slice(2));
+                const tags = words.slice(2).filter(w => w != "," && w != ";");
+                info.tags = info.tags.concat(tags);
                 break;
             default:
                 error("unknown metadata field: " + words[0]);

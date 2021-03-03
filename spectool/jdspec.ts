@@ -76,6 +76,7 @@ export const unitDescription: jdspec.SMap<string> = {
     lux: "illuminance",
     bpm: "beats per minute",
     mcd: "micro candella",
+    px: "pixel",
 };
 
 export const secondaryUnitConverters: jdspec.SMap<{

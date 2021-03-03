@@ -348,5 +348,7 @@
       "packFormat": "u16 u8 u8 u8 u8 u8 u8"
     }
   ],
-  "tags": []
+  "tags": [
+    "8bit"
+  ]
 }

@@ -2,7 +2,7 @@
 
     identifier: 0x126f00e0
     camel: ledPixel
-    tags: light
+    tags: light, C
 
 A controller for strips of individually controlled RGB LEDs.
 

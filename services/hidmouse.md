@@ -3,6 +3,7 @@
     identifier: 0x1885dc1c
     status: experimental
     camel: hidMouse
+    tags: 8bit
 
 Controls a HID mouse. 
 

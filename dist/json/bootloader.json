@@ -288,5 +288,7 @@
       "packFormat": "u32 u32 u32"
     }
   ],
-  "tags": []
+  "tags": [
+    "C"
+  ]
 }

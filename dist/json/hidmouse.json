@@ -179,5 +179,7 @@
       "packFormat": "i16 u16"
     }
   ],
-  "tags": []
+  "tags": [
+    "8bit"
+  ]
 }

@@ -4,7 +4,7 @@ A two axis directional joystick
 
     identifier: 0x1acb1890
     extends: _sensor
-    tags: button
+    tags: button, 8bit
 
 ## Registers
 

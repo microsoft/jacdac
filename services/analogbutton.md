@@ -2,7 +2,7 @@
 
     identifier: 0x1865adc9
     extends: _sensor
-    tags: button
+    tags: button, 8bit
 
 A capacitive or pressure sensitive push-button.
 

@@ -4,7 +4,7 @@ A sensor that measures luminosity level.
 
     identifier: 0x17dc9a1c
     extends: _sensor
-    tags: imaging
+    tags: imaging, 8bit
 
 ## Registers
 

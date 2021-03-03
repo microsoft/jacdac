@@ -2,7 +2,7 @@
 
     identifier: 0x1b57b1d7
     camel: buzzer
-    tags: sound
+    tags: sound, C, 8bit
 
 A simple buzzer.
 

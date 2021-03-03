@@ -3,6 +3,7 @@
     identifier: 0x18b05b6a
     status: experimental
     camel: hidKeyboard
+    tags: 8bit
     
 Control a HID keyboard. 
 

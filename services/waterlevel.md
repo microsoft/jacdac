@@ -2,6 +2,7 @@
 
     identifier: 0x147b62ed
     extends: _sensor
+    tags: 8bit
 
 A sensor that measures liquid/water level.
 

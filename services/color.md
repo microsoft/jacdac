@@ -4,7 +4,7 @@ Senses RGB colors
 
     identifier: 0x1630d567
     extends: _sensor
-    tags: imaging
+    tags: imaging, 8bit
 
 ## Registers
 

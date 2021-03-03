@@ -1,6 +1,7 @@
 # Bootloader
 
     identifier: 0x1ffa9948
+    tags: C
 
 Allows flashing (reprogramming) devices over Jacdac.
 

@@ -241,6 +241,7 @@
     }
   ],
   "tags": [
-    "environment"
+    "environment",
+    "C"
   ]
 }

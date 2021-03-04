@@ -150,6 +150,10 @@ add this report in frame along with the announce packet.
 
 A friendly name that describes the role of this service instance in the device.
 
+    const specification_url?: string @ 0x108
+
+URL pointing to the markdown specification of a custom service.
+
 ## Events
 
 Events codes are 8-bit and are subdivided as follows:

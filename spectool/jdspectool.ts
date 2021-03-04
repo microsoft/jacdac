@@ -13,6 +13,7 @@ import {
     packInfo,
     parseServiceSpecificationMarkdownToJSON,
     snakify,
+    TYPESCRIPT_STATIC_NAMESPACE,
 } from "./jdspec"
 import { parseSpecificationTestMarkdownToJSON } from "./jdtest"
 import { packetsToRegisters } from "./jdutils"
@@ -77,9 +78,10 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
     const Intensity = 0x1
     const Value = 0x2
 
+    const nsc = TYPESCRIPT_STATIC_NAMESPACE
     const registers = packetsToRegisters(packets)
     let baseType = "Client"
-    const ctorArgs = [`jacdac.SRV_${snakify(camelName).toUpperCase()}`, `role`]
+    const ctorArgs = [`${nsc}.SRV_${snakify(camelName).toUpperCase()}`, `role`]
     const reading = registers.find(reg => reg.identifier === Reading)
     const regs = registers.filter(r => !!r)
     const events = packets.filter(pkt => !pkt.derived && pkt.kind === "event")
@@ -131,7 +133,7 @@ ${regs
         reg => `
             this._${camelize(reg.name)} = this.addRegister<[${
             packInfo(spec, reg, true, true).types
-        }]>(jacdac.${capitalize(spec.camelName)}Reg.${capitalize(
+        }]>(${nsc}.${capitalize(spec.camelName)}Reg.${capitalize(
             camelize(reg.name)
         )}, "${reg.packFormat}");`
     )
@@ -247,7 +249,7 @@ ${toMetaComments(
     `weight=${weight--}`
 )}
         on${capitalize(camelize(event.name))}(handler: () => void): void {
-            this.registerEvent(jacdac.${capitalize(
+            this.registerEvent(${nsc}.${capitalize(
                 spec.camelName
             )}Event.${capitalize(camelize(event.name))}, handler);
         }`
@@ -259,7 +261,7 @@ ${commands
         const { types } = packInfo(spec, command, true, true)
         const { fields } = command
         const fnames = fields.map(f => camelize(f.name))
-        const cmd = `jacdac.${capitalize(spec.camelName)}Cmd.${capitalize(
+        const cmd = `${nsc}.${capitalize(spec.camelName)}Cmd.${capitalize(
             camelize(command.name)
         )}`
         const fmt = command.packFormat

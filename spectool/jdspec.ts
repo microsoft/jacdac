@@ -1380,6 +1380,7 @@ ${code.replace(/^\n+/, "").replace(/\n+$/, "")}
 `
 }
 
+export const TYPESCRIPT_STATIC_NAMESPACE = "jacdac.constants"
 function packFormatForField(
     info: jdspec.ServiceSpec,
     fld: jdspec.PacketMember,
@@ -1397,7 +1398,7 @@ function packFormatForField(
     } else if (info.enums[fld.type]) {
         fmt = canonicalType(info.enums[fld.type].storage)
         tsType = upperCamel(info.camelName) + upperCamel(fld.type)
-        if (isStatic) tsType = "jacdac." + tsType
+        if (isStatic) tsType = TYPESCRIPT_STATIC_NAMESPACE + "." + tsType
     } else {
         switch (fld.type) {
             case "string":
@@ -1534,7 +1535,7 @@ function toTypescript(info: jdspec.ServiceSpec, staticTypeScript: boolean) {
     const enumkw = staticTypeScript
         ? indent + "export const enum"
         : "export enum"
-    let r = staticTypeScript ? "namespace jacdac {\n" : ""
+    let r = staticTypeScript ? `namespace ${TYPESCRIPT_STATIC_NAMESPACE} {\n` : ""
     r += indent + "// Service: " + info.name + "\n"
     if (info.shortId[0] != "_") {
         r +=

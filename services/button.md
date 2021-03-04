@@ -2,7 +2,8 @@
 
     identifier: 0x1473a263
     extends: _sensor
-    tags: button, C, 8bit
+    group: button
+    tags: C, 8bit
 
 A push-button, which returns to inactive position when not operated anymore.
 

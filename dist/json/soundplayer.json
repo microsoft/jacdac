@@ -162,7 +162,6 @@
       "packFormat": "u32 s"
     }
   ],
-  "tags": [
-    "sound"
-  ]
+  "tags": [],
+  "group": "Sound"
 }

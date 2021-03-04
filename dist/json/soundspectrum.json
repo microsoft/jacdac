@@ -246,7 +246,6 @@
       "packFormat": "u0.8"
     }
   ],
-  "tags": [
-    "sound"
-  ]
+  "tags": [],
+  "group": "Sound"
 }

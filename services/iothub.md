@@ -2,7 +2,7 @@
 
     identifier: 0x19ed364c
     camel: iotHub
-    tags: iot
+    group: iot
 
 Send messages, receive commands, and work with device twins in Azure IoT Hub.
 

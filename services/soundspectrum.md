@@ -2,7 +2,7 @@
 
     identifier: 0x157abc1e
     extends: _sensor
-    tags: sound
+    group: sound
 
 A microphone that analyzes the sound specturm
 

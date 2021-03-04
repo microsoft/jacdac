@@ -190,7 +190,7 @@
     }
   ],
   "tags": [
-    "environment",
     "8bit"
-  ]
+  ],
+  "group": "Environment"
 }

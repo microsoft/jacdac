@@ -98,7 +98,7 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
         ctorArgs.push(`"${reading.packFormat}"`)
     }
     const className = `${capitalize(camelName)}Client`
-    const group = capitalize(spec.tags?.[0] || name)
+    const group = capitalize(spec.group || name)
 
     const toMetaComments = (...lines: string[]) =>
         lines

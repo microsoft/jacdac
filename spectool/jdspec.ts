@@ -971,10 +971,14 @@ export function parseServiceSpecificationMarkdownToJSON(
                     info.status = <any>words[2]
                 else error("unknown status")
                 break
-            case "tags":
+            case "group":
+                info.group = capitalize(words.slice(2).join(" "));
+                break;
+            case "tags": {
                 const tags = words.slice(2).filter(w => w != "," && w != ";")
                 info.tags = info.tags.concat(tags)
                 break
+            }
             default:
                 error("unknown metadata field: " + words[0])
                 break

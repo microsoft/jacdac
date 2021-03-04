@@ -17,15 +17,9 @@ typedef struct jd_magnetometer_forces {
 
 
 /**
- * Error on the readings.
+ * Read-only nT int32_t. Error on the readings.
  */
 #define JD_MAGNETOMETER_REG_FORCES_ERROR JD_REG_READING_ERROR
-typedef struct jd_magnetometer_forces_error {
-    int32_t x; // nT
-    int32_t y; // nT
-    int32_t z; // nT
-} jd_magnetometer_forces_error_t;
-
 
 /**
  * No args. Forces a calibration sequence where the user/device

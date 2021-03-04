@@ -2281,10 +2281,10 @@ export enum MagnetometerReg {
     Forces = 0x101,
 
     /**
-     * Error on the readings.
+     * Read-only nT int32_t. Error on the readings.
      *
      * ```
-     * const [x, y, z] = jdunpack<[number, number, number]>(buf, "i32 i32 i32")
+     * const [forcesError] = jdunpack<[number]>(buf, "i32")
      * ```
      */
     ForcesError = 0x106,

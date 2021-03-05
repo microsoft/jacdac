@@ -1,6 +1,7 @@
 # Control
 
     identifier: 0x00000000
+    tags: C
 
 Control service is always service index `0`.
 It handles actions common to all services on a device.

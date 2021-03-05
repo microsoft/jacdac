@@ -160,5 +160,7 @@
       "identifierName": "inactive"
     }
   ],
-  "tags": []
+  "tags": [
+    "8bit"
+  ]
 }

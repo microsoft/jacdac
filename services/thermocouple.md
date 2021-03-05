@@ -2,7 +2,7 @@
 
     identifier: 0x143ac061
     extends: _sensor
-    tags: environment
+    group: environment
 
 A thermocouple using a heat probe to gather temperatures.
 

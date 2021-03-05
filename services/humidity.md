@@ -2,7 +2,8 @@
 
     identifier: 0x16c810b8
     extends: _sensor
-    tags: environment
+    tags: C
+    group: environment
 
 A sensor measuring humidity of outside environment.
 

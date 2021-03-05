@@ -2,7 +2,8 @@
 
     identifier: 0x1d4aa3b3
     extends: _sensor
-    tags: environment
+    tags: 8bit
+    group: environment
 
 A soil moisture sensor.
 

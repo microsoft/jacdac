@@ -2,27 +2,37 @@
 /// <reference path="jdspec.d.ts" />
 /// <reference path="jdtest.d.ts" />
 
-import { parseIntFloat, getRegister } from "./jdutils";
+import { parseIntFloat, getRegister } from "./jdutils"
 import { JSONPath } from "jsonpath-plus"
 import { testCommandFunctions, testExpressionFunctions } from "./jdtestfuns"
-import jsep, { ExpressionType } from "jsep";
+import jsep, { ExpressionType } from "jsep"
 
-const supportedExpressions: ExpressionType[] = [ 'BinaryExpression', 'CallExpression', 'Identifier',
-    'Literal', 'UnaryExpression', 'LogicalExpression' ]
+const supportedExpressions: ExpressionType[] = [
+    "BinaryExpression",
+    "CallExpression",
+    "Identifier",
+    "Literal",
+    "UnaryExpression",
+    "LogicalExpression",
+]
 
 // we parse a test with respect to an existing ServiceSpec
-export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: jdspec.ServiceSpec, filename = ""): jdtest.ServiceTest {
+export function parseSpecificationTestMarkdownToJSON(
+    filecontent: string,
+    spec: jdspec.ServiceSpec,
+    filename = ""
+): jdtest.ServiceTestSpec {
     filecontent = (filecontent || "").replace(/\r/g, "")
-    const info: jdtest.ServiceTest = {
+    const info: jdtest.ServiceTestSpec = {
         description: "",
         serviceClassIdentifier: spec.classIdentifier,
-        tests: []
+        tests: [],
     }
 
     let backticksType = ""
     const errors: jdspec.Diagnostic[] = []
     let lineNo = 0
-    let currentTest: jdtest.UnitTest = null
+    let currentTest: jdtest.TestSpec = null
     let testHeading = ""
     let testPrompt = ""
 
@@ -35,151 +45,201 @@ export function parseSpecificationTestMarkdownToJSON(filecontent: string, spec: 
         error("exception: " + e.message)
     }
 
-    if (currentTest)
-        finishTest();
+    if (currentTest) finishTest()
 
-    if (errors.length)
-        info.errors = errors
+    if (errors.length) info.errors = errors
 
-    return info;
+    return info
 
     function processLine(line: string) {
         if (backticksType) {
             if (line.trim() == "```") {
                 backticksType = null
-                if (backticksType == "default")
-                    return
+                if (backticksType == "default") return
             }
         } else {
             const m = /^```(.*)/.exec(line)
             if (m) {
                 backticksType = m[1] || "default"
-                if (backticksType == "default")
-                    return
+                if (backticksType == "default") return
             }
         }
 
-        const interpret = backticksType == "default" || line.slice(0, 4) == "    "
+        const interpret =
+            backticksType == "default" || line.slice(0, 4) == "    "
 
         if (!interpret) {
             const m = /^(#+)\s*(.*)/.exec(line)
             if (m) {
                 testHeading = ""
                 testPrompt = ""
-                const [ , hd, cont] = m
+                const [, hd, cont] = m
                 if (hd == "#" && !info.description) {
                     info.description = cont.trim()
-                } else if (hd =="##") {
-                    if (currentTest)
-                        finishTest();
-                    testHeading = cont.trim();
+                } else if (hd == "##") {
+                    if (currentTest) finishTest()
+                    testHeading = cont.trim()
                 }
             } else {
-                testPrompt += line;
+                testPrompt += line
             }
         } else {
-            const expanded = line
-                .replace(/\/\/.*/, "")
-                .trim()
-            if (!expanded)
-                return
+            const expanded = line.replace(/\/\/.*/, "").trim()
+            if (!expanded) return
             processCommand(expanded)
         }
     }
 
-    function processCommand(expanded: string)  {
+    function processCommand(expanded: string) {
         if (!currentTest) {
             if (!testHeading)
-                error("every test must have a description (via ##)")
+                error(`every test must have a description (via ##)`)
             currentTest = {
                 description: testHeading,
                 registers: [],
-                commands: []
+                commands: [],
             }
             testHeading = ""
         }
-        const call = /^([a-zA-Z]\w*)\(.*\)$/.exec(expanded);
+        const call = /^([a-zA-Z]\w*)\(.*\)$/.exec(expanded)
         if (!call) {
-            error("a command must be a call to a registered test function (JavaScript syntax)");
+            error(
+                `a command must be a call to a registered test function (JavaScript syntax)`
+            )
+            return
         }
-        const [ , callee] = call;
+        const [, callee] = call
         const index = testCommandFunctions.findIndex(r => callee == r.id)
-        if (index < 0)
-            error(callee + " is not a registered test function.")
-        const expr: jsep.CallExpression = <jsep.CallExpression>jsep(expanded);
-        if (!expr.callee) {
-            error("a command must be a call expression in JavaScript syntax");
+        if (index < 0) {
+            error(`${callee} is not a registered test command function.`)
+            return
+        }
+        const root: jsep.CallExpression = <jsep.CallExpression>jsep(expanded)
+        if (
+            !root ||
+            !root.type ||
+            root.type != "CallExpression" ||
+            !root.callee ||
+            !root.arguments
+        ) {
+            error(`a command must be a call expression in JavaScript syntax`)
         } else {
             // check for unsupported expression types
-            if (supportedExpressions.indexOf(expr.type) < 0)
-                error('Expression of type ' + expr.type + ' not currently supported')
+            if (supportedExpressions.indexOf(root.type) < 0)
+                error(`Expression of type ${root.type} not currently supported`)
             // check arguments
             const expected = testCommandFunctions[index].args.length
-            if (expected !== expr.arguments.length)
-                error(callee+" expects "+expected+" arguments; got "+expr.arguments.length)
-            expr.arguments.forEach(arg => {
-                const callees = <jsep.CallExpression[]> JSONPath({path: "$..*[?(@.type=='CallExpression')]", json: arg})
-                callees.forEach(callExpr => {
-                    if (callExpr.callee.type !== 'Identifier')
-                        error("all calls must be direct calls")
-                    const id = (<jsep.Identifier>callExpr.callee).name;
-                    const indexFun = testExpressionFunctions.findIndex(r => id == r.id)
-                    if (indexFun < 0)
-                        error(id + " is not a registered test function.")
-                    const expected = testCommandFunctions[indexFun].args.length
-                    if (expected !== callExpr.arguments.length)
-                        error(callee+" expects "+expected+" arguments; got "+callExpr.arguments.length)
+            if (expected !== root.arguments.length)
+                error(
+                    `${callee} expects ${expected} arguments; got ${root.arguments.length}`
+                )
+            else {
+                root.arguments.forEach(arg => {
+                    const callers = <jsep.CallExpression[]>(
+                        JSONPath({
+                            path: "$..*[?(@.type=='CallExpression')]",
+                            json: root,
+                        })
+                    )
+                    callers.forEach(callExpr => {
+                        if (callExpr.callee.type !== "Identifier")
+                            error(`all calls must be direct calls`)
+                        const id = (<jsep.Identifier>callExpr.callee).name
+                        const indexFun = testExpressionFunctions.findIndex(
+                            r => id == r.id
+                        )
+                        if (indexFun < 0)
+                            error(
+                                `${id} is not a registered test expression function.`
+                            )
+                        const expected =
+                            testExpressionFunctions[indexFun].args.length
+                        if (expected !== callExpr.arguments.length)
+                            error(
+                                `${callee} expects ${expected} arguments; got ${callExpr.arguments.length}`
+                            )
+                    })
                 })
-            })
-            // now visit all (p,c), c an Identifier that is not a callee child of CallExpression 
+            }
+            // now visit all (p,c), c an Identifier that is not a callee child of CallExpression
             // or a property child of a MemberExpression
-            const exprs = <jsep.Expression[]>JSONPath({path: "$..*[?(@.type=='Identifier')]^", json: expr})
+            const exprs = <any[]>(
+                JSONPath({ path: "$..*[?(@.type=='Identifier')]^", json: root })
+            )
+            let visited: any[] = []
             exprs.forEach(parent => {
-                const ids = <jsep.Identifier[]>JSONPath({path: "$.*[?(@.type=='Identifier')]", json: parent})
-                ids.forEach(id => { lookupReplace(parent, id) })
+                if (visited.indexOf(parent) < 0) {
+                    visited.push(parent)
+                    lookupReplace(parent)
+                }
             })
-            currentTest.commands.push({prompt: testPrompt, call: expr});
-            testPrompt = "";
+            currentTest.commands.push({ prompt: testPrompt, call: root })
+            testPrompt = ""
         }
     }
 
-    function lookupReplace(parent: jsep.Expression, idChild: jsep.Identifier) {
-        if (parent.type === "CallExpression" && idChild !== (<jsep.CallExpression>parent).callee
-        || parent.type === "MemberExpression" && idChild != (<jsep.MemberExpression>parent).property) {
+    function lookupReplace(parent: any) {
+        if (parent.length) {
+            const exprs: jsep.Expression[] = parent
+            exprs.forEach((child: jsep.Expression) => {
+                if (child.type === "Identifier")
+                    lookup(parent, <jsep.Identifier>child)
+            })
+        } else {
+            Object.keys(parent).forEach((key: string) => {
+                const child = parent[key]
+                if (child?.type !== "Identifier") return
+                if (
+                    (parent.type !== "MemberExpression" &&
+                        parent.type !== "CallExpression") ||
+                    (parent.type === "MemberExpression" &&
+                        child !== (<jsep.MemberExpression>parent).property) ||
+                    (parent.type === "CallExpression" &&
+                        child !== (<jsep.CallExpression>parent).callee)
+                ) {
+                    lookup(parent, <jsep.Identifier>child)
+                }
+            })
+        }
+
+        function lookup(parent: any, child: jsep.Identifier) {
             try {
                 try {
-                    const val = parseIntFloat(spec, idChild.name)
+                    const val = parseIntFloat(spec, child.name)
                     const lit: jsep.Literal = {
-                        type: 'Literal',
+                        type: "Literal",
                         value: val,
-                        raw: val.toString()
-                    };
-                    // replace the Identifier by the (resolved) Literal
-                    Object.keys(parent).forEach((key:string) => {
-                        if (Object.getOwnPropertyDescriptor(parent,key) == idChild)
-                            Object.defineProperty(parent, key, lit);
-                    })
-                } catch(e) {
-                    getRegister(spec, idChild.name)
-                    if (currentTest.registers.indexOf(idChild.name) < 0)
-                        currentTest.registers.push(idChild.name)
+                        raw: val.toString(),
+                    }
+                    /*TODO: replace the Identifier by the (resolved) Literal
+                    if (parent.type) {
+                        Object.keys(parent).forEach((key:string) => {
+                            if (Object.getOwnPropertyDescriptor(parent,key) == child)
+                                Object.defineProperty(parent, key, lit);
+                        })
+                    } else {
+    
+                    }*/
+                } catch (e) {
+                    getRegister(spec, child.name)
+                    if (currentTest.registers.indexOf(child.name) < 0)
+                        currentTest.registers.push(child.name)
                     // TODO: if parent is MemberExpression, continue to do lookup
                 }
             } catch (e) {
-                error(idChild.name + " not found in specification")
+                error(`${child.name} not found in specification`)
             }
         }
     }
 
-    function finishTest()  {
-        info.tests.push(currentTest);
+    function finishTest() {
+        info.tests.push(currentTest)
         currentTest = null
     }
-    
+
     function error(msg: string) {
         if (!msg) msg = "syntax error"
-        if (errors.some(e => e.line == lineNo && e.message == msg))
-            return
+        if (errors.some(e => e.line == lineNo && e.message == msg)) return
         errors.push({ file: filename, line: lineNo, message: msg })
     }
 }

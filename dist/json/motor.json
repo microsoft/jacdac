@@ -151,5 +151,8 @@
       "packFormat": "u16.16"
     }
   ],
-  "tags": []
+  "tags": [
+    "C",
+    "8bit"
+  ]
 }

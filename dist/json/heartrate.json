@@ -212,7 +212,6 @@
       "packFormat": "u8"
     }
   ],
-  "tags": [
-    "biometric"
-  ]
+  "tags": [],
+  "group": "Biometric"
 }

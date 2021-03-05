@@ -181,7 +181,6 @@
       "packFormat": "u16.16"
     }
   ],
-  "tags": [
-    "environment"
-  ]
+  "tags": [],
+  "group": "Environment"
 }

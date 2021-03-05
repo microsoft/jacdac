@@ -220,6 +220,7 @@
     }
   ],
   "tags": [
-    "environment"
-  ]
+    "C"
+  ],
+  "group": "Environment"
 }

@@ -208,7 +208,6 @@
       "packFormat": "u8"
     }
   ],
-  "tags": [
-    "environment"
-  ]
+  "tags": [],
+  "group": "Environment"
 }

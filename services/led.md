@@ -2,7 +2,7 @@
 
     identifier: 0x1e3048f8
     camel: led
-    tags: light
+    group: light
 
 A controller for 1 or more monochrome or RGB LEDs connected in parallel.
 

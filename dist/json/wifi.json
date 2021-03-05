@@ -233,7 +233,6 @@
       "identifierName": "inactive"
     }
   ],
-  "tags": [
-    "iot"
-  ]
+  "tags": [],
+  "group": "Iot"
 }

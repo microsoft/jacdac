@@ -613,7 +613,6 @@
       "packFormat": "z r: z z"
     }
   ],
-  "tags": [
-    "iot"
-  ]
+  "tags": [],
+  "group": "Iot"
 }

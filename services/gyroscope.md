@@ -2,7 +2,7 @@
 
     identifier: 0x1e1b06f2
     extends: _sensor
-    tags: movement
+    group: movement
 
 A 3-axis gyroscope.
 

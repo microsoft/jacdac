@@ -2,7 +2,8 @@
 
     identifier: 0x1ad29402
     extends: _sensor
-    tags: button
+    group: button
+    tags: 8bit
 
 A switch, which keeps its position.
 

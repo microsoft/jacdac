@@ -1,6 +1,7 @@
 # Logger
 
     identifier: 0x12dc1fca
+    tags: C
 
 A service which can report messages to the bus.
 

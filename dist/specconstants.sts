@@ -1,4 +1,4 @@
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Common registers and commands
 
     export const enum SystemReadingThreshold { // uint8_t
@@ -188,7 +188,7 @@ namespace jacdac {
          * add this report in frame along with the announce packet.
          *
          * ```
-         * const [code, vendorCode] = jdunpack<[jacdac.SystemStatusCodes, number]>(buf, "u16 u16")
+         * const [code, vendorCode] = jdunpack<[jacdac.constants.SystemStatusCodes, number]>(buf, "u16 u16")
          * ```
          */
         StatusCode = 0x103,
@@ -226,7 +226,7 @@ namespace jacdac {
          * Notifies that the status code of the service changed.
          *
          * ```
-         * const [code, vendorCode] = jdunpack<[jacdac.SystemStatusCodes, number]>(buf, "u16 u16")
+         * const [code, vendorCode] = jdunpack<[jacdac.constants.SystemStatusCodes, number]>(buf, "u16 u16")
          * ```
          */
         //% block="status code changed"
@@ -252,7 +252,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Base service
     export const enum BaseReg {
         /**
@@ -294,7 +294,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Sensor
     export const enum SensorReg {
         /**
@@ -327,7 +327,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Accelerometer
     export const SRV_ACCELEROMETER = 0x1f140409
     export const enum AccelerometerReg {
@@ -435,7 +435,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Analog Button
     export const SRV_ANALOG_BUTTON = 0x1865adc9
 
@@ -476,7 +476,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). The type of physical button.
          *
          * ```
-         * const [variant] = jdunpack<[jacdac.AnalogButtonVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.constants.AnalogButtonVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -497,7 +497,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Arcade Gamepad
     export const SRV_ARCADE_GAMEPAD = 0x1deaa06e
 
@@ -520,7 +520,7 @@ namespace jacdac {
          * `pressure` should be `0xff` for digital buttons, and proportional for analog ones.
          *
          * ```
-         * const [rest] = jdunpack<[([jacdac.ArcadeGamepadButton, number])[]]>(buf, "r: u8 u0.8")
+         * const [rest] = jdunpack<[([jacdac.constants.ArcadeGamepadButton, number])[]]>(buf, "r: u8 u0.8")
          * const [button, pressure] = rest[0]
          * ```
          */
@@ -530,7 +530,7 @@ namespace jacdac {
          * Constant. Indicates number of players supported and which buttons are present on the controller.
          *
          * ```
-         * const [button] = jdunpack<[jacdac.ArcadeGamepadButton[]]>(buf, "u8[]")
+         * const [button] = jdunpack<[jacdac.constants.ArcadeGamepadButton[]]>(buf, "u8[]")
          * ```
          */
         AvailableButtons = 0x180,
@@ -541,7 +541,7 @@ namespace jacdac {
          * Argument: button Button (uint8_t). Emitted when button goes from inactive to active.
          *
          * ```
-         * const [button] = jdunpack<[jacdac.ArcadeGamepadButton]>(buf, "u8")
+         * const [button] = jdunpack<[jacdac.constants.ArcadeGamepadButton]>(buf, "u8")
          * ```
          */
         //% block="down"
@@ -551,7 +551,7 @@ namespace jacdac {
          * Argument: button Button (uint8_t). Emitted when button goes from active to inactive.
          *
          * ```
-         * const [button] = jdunpack<[jacdac.ArcadeGamepadButton]>(buf, "u8")
+         * const [button] = jdunpack<[jacdac.constants.ArcadeGamepadButton]>(buf, "u8")
          * ```
          */
         //% block="up"
@@ -559,75 +559,55 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
-    // Service: Arcade screen
-    export const SRV_ARCADE_SCREEN = 0x16fa36e5
-
-    export const enum ArcadeScreenDisplayFlags { // uint8_t
-        ColumnMajor = 0x0,
-        RowMajor = 0x1,
-        Upscale2x = 0x2,
+namespace jacdac.constants {
+    // Service: Arcade sound
+    export const SRV_ARCADE_SOUND = 0x1fc63606
+    export const enum ArcadeSoundCmd {
+        /**
+         * Argument: samples bytes. Play samples, which are single channel, signed 16-bit little endian values.
+         *
+         * ```
+         * const [samples] = jdunpack<[Buffer]>(buf, "b")
+         * ```
+         */
+        Play = 0x80,
     }
 
-    export const enum ArcadeScreenCmd {
+    export const enum ArcadeSoundReg {
         /**
-         * No args. Announces display capabilities and logical size
-         * (320x240 screen with `Upscale2x` will report 160x120).
-         */
-        Announce = 0x0,
-
-        /**
-         * report Announce
-         * ```
-         * const [flags, bitsPerPixel, width, height] = jdunpack<[jacdac.ArcadeScreenDisplayFlags, number, number, number]>(buf, "u8 u8 u16 u16")
-         * ```
-         */
-
-        /**
-         * Sets the update window for subsequent `set_pixels` commands.
+         * Read-write Hz u22.10 (uint32_t). Get or set playback sample rate (in samples per second).
+         * If you set it, read it back, as the value may be rounded up or down.
          *
          * ```
-         * const [x, y, width, height] = jdunpack<[number, number, number, number]>(buf, "u16 u16 u16 u16")
+         * const [sampleRate] = jdunpack<[number]>(buf, "u22.10")
          * ```
          */
-        StartUpdate = 0x81,
+        SampleRate = 0x80,
 
         /**
-         * Argument: pixels bytes. Set pixels in current window, according to current palette.
+         * Constant B uint32_t. The size of the internal audio buffer.
          *
          * ```
-         * const [pixels] = jdunpack<[Buffer]>(buf, "b")
+         * const [bufferSize] = jdunpack<[number]>(buf, "u32")
          * ```
          */
-        SetPixels = 0x83,
-    }
-
-    export const enum ArcadeScreenReg {
-        /**
-         * Read-write ratio u0.8 (uint8_t). Set backlight brightness.
-         * If set to `0` the display may go to sleep.
-         *
-         * ```
-         * const [brightness] = jdunpack<[number]>(buf, "u0.8")
-         * ```
-         */
-        Brightness = 0x1,
+        BufferSize = 0x180,
 
         /**
-         * The current palette.
-         * The color entry repeats `1 << bits_per_pixel` times.
-         * This register may be write-only.
+         * Read-only B uint32_t. How much data is still left in the buffer to play.
+         * Clients should not send more data than `buffer_size - buffer_pending`,
+         * but can keep the `buffer_pending` as low as they want to ensure low latency
+         * of audio playback.
          *
          * ```
-         * const [rest] = jdunpack<[([number, number, number])[]]>(buf, "r: u8 u8 u8 x[1]")
-         * const [blue, green, red] = rest[0]
+         * const [bufferPending] = jdunpack<[number]>(buf, "u32")
          * ```
          */
-        Palette = 0x80,
+        BufferPending = 0x181,
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Barcode reader
     export const SRV_BARCODE_READER = 0x1c739e6c
 
@@ -661,7 +641,7 @@ namespace jacdac {
          * Constant. Reports the list of supported barcode formats, as documented in https://developer.mozilla.org/en-US/docs/Web/API/Barcode_Detection_API.
          *
          * ```
-         * const [format] = jdunpack<[jacdac.BarcodeReaderFormat[]]>(buf, "u8[]")
+         * const [format] = jdunpack<[jacdac.constants.BarcodeReaderFormat[]]>(buf, "u8[]")
          * ```
          */
         Formats = 0x180,
@@ -673,7 +653,7 @@ namespace jacdac {
          * In case of numeric barcodes, the `data` field should contain the ASCII (which is the same as UTF8 in that case) representation of the number.
          *
          * ```
-         * const [format, data] = jdunpack<[jacdac.BarcodeReaderFormat, string]>(buf, "u8 s")
+         * const [format, data] = jdunpack<[jacdac.constants.BarcodeReaderFormat, string]>(buf, "u8 s")
          * ```
          */
         //% block="detect"
@@ -681,7 +661,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Barometer
     export const SRV_BAROMETER = 0x1e117cea
     export const enum BarometerReg {
@@ -705,7 +685,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: bit:radio
     export const SRV_BIT_RADIO = 0x1ac986cf
     export const enum BitRadioReg {
@@ -817,7 +797,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Bootloader
     export const SRV_BOOTLOADER = 0x1ffa9948
 
@@ -874,13 +854,13 @@ namespace jacdac {
         /**
          * report PageData
          * ```
-         * const [sessionId, pageError, pageAddress] = jdunpack<[number, jacdac.BootloaderError, number]>(buf, "u32 u32 u32")
+         * const [sessionId, pageError, pageAddress] = jdunpack<[number, jacdac.constants.BootloaderError, number]>(buf, "u32 u32 u32")
          * ```
          */
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Button
     export const SRV_BUTTON = 0x1473a263
     export const enum ButtonReg {
@@ -927,7 +907,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Buzzer
     export const SRV_BUZZER = 0x1b57b1d7
     export const enum BuzzerReg {
@@ -956,7 +936,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Character Screen
     export const SRV_CHARACTER_SCREEN = 0x1f37c56a
 
@@ -994,7 +974,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). Describes the type of character LED screen.
          *
          * ```
-         * const [variant] = jdunpack<[jacdac.CharacterScreenVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.constants.CharacterScreenVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -1003,7 +983,7 @@ namespace jacdac {
          * Read-write TextDirection (uint8_t). Specifies the RTL or LTR direction of the text.
          *
          * ```
-         * const [textDirection] = jdunpack<[jacdac.CharacterScreenTextDirection]>(buf, "u8")
+         * const [textDirection] = jdunpack<[jacdac.constants.CharacterScreenTextDirection]>(buf, "u8")
          * ```
          */
         TextDirection = 0x82,
@@ -1028,7 +1008,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Color
     export const SRV_COLOR = 0x1630d567
     export const enum ColorReg {
@@ -1043,7 +1023,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Compass
     export const SRV_COMPASS = 0x15b7b9bf
     export const enum CompassReg {
@@ -1083,7 +1063,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Control
     export const SRV_CONTROL = 0x0
 
@@ -1107,7 +1087,7 @@ namespace jacdac {
         /**
          * report Services
          * ```
-         * const [restartCounter, flags, packetCount, serviceClass] = jdunpack<[number, jacdac.ControlAnnounceFlags, number, number[]]>(buf, "u8 u8 u8 x[1] u32[]")
+         * const [restartCounter, flags, packetCount, serviceClass] = jdunpack<[number, jacdac.constants.ControlAnnounceFlags, number, number[]]>(buf, "u8 u8 u8 x[1] u32[]")
          * ```
          */
 
@@ -1243,7 +1223,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Distance
     export const SRV_DISTANCE = 0x141a6b8a
 
@@ -1286,14 +1266,14 @@ namespace jacdac {
          * Constant Variant (uint8_t). Determines the type of sensor used.
          *
          * ```
-         * const [variant] = jdunpack<[jacdac.DistanceVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.constants.DistanceVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: DMX
     export const SRV_DMX = 0x11cf8c05
     export const enum DmxReg {
@@ -1319,7 +1299,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Equivalent CO₂
     export const SRV_E_CO2 = 0x169c9dc6
 
@@ -1378,14 +1358,14 @@ namespace jacdac {
          * Constant Variant (uint8_t). Type of physical sensor and capabilities.
          *
          * ```
-         * const [variant] = jdunpack<[jacdac.ECO2Variant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.constants.ECO2Variant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Gyroscope
     export const SRV_GYROSCOPE = 0x1e1b06f2
     export const enum GyroscopeReg {
@@ -1418,7 +1398,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Heart Rate
     export const SRV_HEART_RATE = 0x166c6dc4
 
@@ -1453,14 +1433,14 @@ namespace jacdac {
          * Constant Variant (uint8_t). The type of physical sensor
          *
          * ```
-         * const [variant] = jdunpack<[jacdac.HeartRateVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.constants.HeartRateVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: HID Keyboard
     export const SRV_HID_KEYBOARD = 0x18b05b6a
 
@@ -1487,7 +1467,7 @@ namespace jacdac {
          * Presses a key or a sequence of keys down.
          *
          * ```
-         * const [rest] = jdunpack<[([number, jacdac.HidKeyboardModifiers, jacdac.HidKeyboardAction])[]]>(buf, "r: u16 u8 u8")
+         * const [rest] = jdunpack<[([number, jacdac.constants.HidKeyboardModifiers, jacdac.constants.HidKeyboardAction])[]]>(buf, "r: u16 u8 u8")
          * const [selector, modifiers, action] = rest[0]
          * ```
          */
@@ -1500,7 +1480,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: HID Mouse
     export const SRV_HID_MOUSE = 0x1885dc1c
 
@@ -1525,7 +1505,7 @@ namespace jacdac {
          * A ``DoubleClick`` is two clicks with ``150ms`` gap between them (that is, ``100ms`` first click, ``150ms`` gap, ``100ms`` second click).
          *
          * ```
-         * const [buttons, event] = jdunpack<[jacdac.HidMouseButton, jacdac.HidMouseButtonEvent]>(buf, "u16 u8")
+         * const [buttons, event] = jdunpack<[jacdac.constants.HidMouseButton, jacdac.constants.HidMouseButtonEvent]>(buf, "u16 u8")
          * ```
          */
         SetButton = 0x80,
@@ -1552,7 +1532,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Humidity
     export const SRV_HUMIDITY = 0x16c810b8
     export const enum HumidityReg {
@@ -1594,7 +1574,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Illuminance
     export const SRV_ILLUMINANCE = 0x1e6ecaf2
     export const enum IlluminanceReg {
@@ -1618,7 +1598,120 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
+    // Service: Indexed screen
+    export const SRV_INDEXED_SCREEN = 0x16fa36e5
+    export const enum IndexedScreenCmd {
+        /**
+         * Sets the update window for subsequent `set_pixels` commands.
+         *
+         * ```
+         * const [x, y, width, height] = jdunpack<[number, number, number, number]>(buf, "u16 u16 u16 u16")
+         * ```
+         */
+        StartUpdate = 0x81,
+
+        /**
+         * Argument: pixels bytes. Set pixels in current window, according to current palette.
+         * Each "line" of data is aligned to a byte.
+         *
+         * ```
+         * const [pixels] = jdunpack<[Buffer]>(buf, "b")
+         * ```
+         */
+        SetPixels = 0x83,
+    }
+
+    export const enum IndexedScreenReg {
+        /**
+         * Read-write ratio u0.8 (uint8_t). Set backlight brightness.
+         * If set to `0` the display may go to sleep.
+         *
+         * ```
+         * const [brightness] = jdunpack<[number]>(buf, "u0.8")
+         * ```
+         */
+        Brightness = 0x1,
+
+        /**
+         * The current palette.
+         * The color entry repeats `1 << bits_per_pixel` times.
+         * This register may be write-only.
+         *
+         * ```
+         * const [rest] = jdunpack<[([number, number, number])[]]>(buf, "r: u8 u8 u8 x[1]")
+         * const [blue, green, red] = rest[0]
+         * ```
+         */
+        Palette = 0x80,
+
+        /**
+         * Constant bit uint8_t. Determines the number of palette entries.
+         * Typical values are 1, 2, 4, or 8.
+         *
+         * ```
+         * const [bitsPerPixel] = jdunpack<[number]>(buf, "u8")
+         * ```
+         */
+        BitsPerPixel = 0x180,
+
+        /**
+         * Constant px uint16_t. Screen width in "natural" orientation.
+         *
+         * ```
+         * const [width] = jdunpack<[number]>(buf, "u16")
+         * ```
+         */
+        Width = 0x181,
+
+        /**
+         * Constant px uint16_t. Screen height in "natural" orientation.
+         *
+         * ```
+         * const [height] = jdunpack<[number]>(buf, "u16")
+         * ```
+         */
+        Height = 0x182,
+
+        /**
+         * Read-write bool (uint8_t). If true, consecutive pixels in the "width" direction are sent next to each other (this is typical for graphics cards).
+         * If false, consecutive pixels in the "height" direction are sent next to each other.
+         * For embedded screen controllers, this is typically true iff `width < height`
+         * (in other words, it's only true for portrait orientation screens).
+         * Some controllers may allow the user to change this (though the refresh order may not be optimal then).
+         * This is independent of the `rotation` register.
+         *
+         * ```
+         * const [widthMajor] = jdunpack<[number]>(buf, "u8")
+         * ```
+         */
+        WidthMajor = 0x81,
+
+        /**
+         * Read-write px uint8_t. Every pixel sent over wire is represented by `up_sampling x up_sampling` square of physical pixels.
+         * Some displays may allow changing this (which will also result in changes to `width` and `height`).
+         * Typical values are 1 and 2.
+         *
+         * ```
+         * const [upSampling] = jdunpack<[number]>(buf, "u8")
+         * ```
+         */
+        UpSampling = 0x82,
+
+        /**
+         * Read-write ° uint16_t. Possible values are 0, 90, 180 and 270 only.
+         * Write to this register do not affect `width` and `height` registers,
+         * and may be ignored by some screens.
+         *
+         * ```
+         * const [rotation] = jdunpack<[number]>(buf, "u16")
+         * ```
+         */
+        Rotation = 0x83,
+    }
+
+}
+namespace jacdac.constants {
     // Service: Azure IoT Hub
     export const SRV_IOT_HUB = 0x19ed364c
     export const enum IotHubCmd {
@@ -1887,7 +1980,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Joystick
     export const SRV_JOYSTICK = 0x1acb1890
 
@@ -1912,7 +2005,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). The type of physical joystick.
          *
          * ```
-         * const [variant] = jdunpack<[jacdac.JoystickVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.constants.JoystickVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -1928,7 +2021,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: LED
     export const SRV_LED = 0x1e3048f8
 
@@ -2006,14 +2099,14 @@ namespace jacdac {
          * Constant Variant (uint8_t). The physical type of LED.
          *
          * ```
-         * const [variant] = jdunpack<[jacdac.LedVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.constants.LedVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: LED Matrix
     export const SRV_LED_MATRIX = 0x110d154b
     export const enum LedMatrixReg {
@@ -2056,7 +2149,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: LED Pixel
     export const SRV_LED_PIXEL = 0x126f00e0
 
@@ -2103,7 +2196,7 @@ namespace jacdac {
          * and could not allow change.
          *
          * ```
-         * const [lightType] = jdunpack<[jacdac.LedPixelLightType]>(buf, "u8")
+         * const [lightType] = jdunpack<[jacdac.constants.LedPixelLightType]>(buf, "u8")
          * ```
          */
         LightType = 0x80,
@@ -2163,7 +2256,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). Specifies the shape of the light strip.
          *
          * ```
-         * const [variant] = jdunpack<[jacdac.LedPixelVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.constants.LedPixelVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -2181,7 +2274,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Light level
     export const SRV_LIGHT_LEVEL = 0x17dc9a1c
 
@@ -2205,14 +2298,14 @@ namespace jacdac {
          * Constant Variant (uint8_t). The type of physical sensor.
          *
          * ```
-         * const [variant] = jdunpack<[jacdac.LightLevelVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.constants.LightLevelVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Logger
     export const SRV_LOGGER = 0x12dc1fca
 
@@ -2233,7 +2326,7 @@ namespace jacdac {
          * too verbose for them.
          *
          * ```
-         * const [minPriority] = jdunpack<[jacdac.LoggerPriority]>(buf, "u8")
+         * const [minPriority] = jdunpack<[jacdac.constants.LoggerPriority]>(buf, "u8")
          * ```
          */
         MinPriority = 0x80,
@@ -2278,7 +2371,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Magnetometer
     export const SRV_MAGNETOMETER = 0x13029088
     export const enum MagnetometerReg {
@@ -2293,10 +2386,10 @@ namespace jacdac {
         Forces = 0x101,
 
         /**
-         * Error on the readings.
+         * Read-only nT int32_t. Error on the readings.
          *
          * ```
-         * const [x, y, z] = jdunpack<[number, number, number]>(buf, "i32 i32 i32")
+         * const [forcesError] = jdunpack<[number]>(buf, "i32")
          * ```
          */
         ForcesError = 0x106,
@@ -2311,7 +2404,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Matrix Keypad
     export const SRV_MATRIX_KEYPAD = 0x13062dc8
 
@@ -2366,7 +2459,7 @@ namespace jacdac {
          * as the service controlling the LED pixel on the keypad.
          *
          * ```
-         * const [variant] = jdunpack<[jacdac.MatrixKeypadVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.constants.MatrixKeypadVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -2415,7 +2508,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Microphone
     export const SRV_MICROPHONE = 0x113dac86
     export const enum MicrophoneCmd {
@@ -2445,7 +2538,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: MIDI output
     export const SRV_MIDI_OUTPUT = 0x1a848cd7
     export const enum MidiOutputReg {
@@ -2476,7 +2569,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Model Runner
     export const SRV_MODEL_RUNNER = 0x140f9a78
 
@@ -2607,7 +2700,7 @@ namespace jacdac {
          * The format is typically present as first or second little endian word of model file.
          *
          * ```
-         * const [format] = jdunpack<[jacdac.ModelRunnerModelFormat]>(buf, "u32")
+         * const [format] = jdunpack<[jacdac.constants.ModelRunnerModelFormat]>(buf, "u32")
          * ```
          */
         Format = 0x186,
@@ -2633,7 +2726,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Motion
     export const SRV_MOTION = 0x1179a749
 
@@ -2673,14 +2766,14 @@ namespace jacdac {
          * Constant Variant (uint8_t). Type of physical sensor
          *
          * ```
-         * const [variant] = jdunpack<[jacdac.MotionVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.constants.MotionVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Motor
     export const SRV_MOTOR = 0x17004cd8
     export const enum MotorReg {
@@ -2724,7 +2817,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Multitouch
     export const SRV_MULTITOUCH = 0x18d55e2b
     export const enum MultitouchReg {
@@ -2795,7 +2888,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Potentiometer
     export const SRV_POTENTIOMETER = 0x1f274746
 
@@ -2818,14 +2911,14 @@ namespace jacdac {
          * Constant Variant (uint8_t). Specifies the physical layout of the potentiometer.
          *
          * ```
-         * const [variant] = jdunpack<[jacdac.PotentiometerVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.constants.PotentiometerVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Power
     export const SRV_POWER = 0x1fa4c95a
     export const enum PowerReg {
@@ -2951,7 +3044,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Protocol Test
     export const SRV_PROTO_TEST = 0x16c7466a
     export const enum ProtoTestReg {
@@ -3238,7 +3331,7 @@ namespace jacdac {
 
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Pulse Oximeter
     export const SRV_PULSE_OXIMETER = 0x10bb4eb6
     export const enum PulseOximeterReg {
@@ -3262,7 +3355,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Rain gauge
     export const SRV_RAIN_GAUGE = 0x13734c95
     export const enum RainGaugeReg {
@@ -3286,7 +3379,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Real time clock
     export const SRV_REAL_TIME_CLOCK = 0x1a8b1a28
 
@@ -3331,7 +3424,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). The type of physical clock used by the sensor.
          *
          * ```
-         * const [variant] = jdunpack<[jacdac.RealTimeClockVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.constants.RealTimeClockVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -3349,7 +3442,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Reflected light
     export const SRV_REFLECTED_LIGHT = 0x126c4cb2
 
@@ -3372,7 +3465,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). Type of physical sensor used
          *
          * ```
-         * const [variant] = jdunpack<[jacdac.ReflectedLightVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.constants.ReflectedLightVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -3393,7 +3486,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Relay
     export const SRV_RELAY = 0x183fe656
 
@@ -3417,7 +3510,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). Describes the type of relay used.
          *
          * ```
-         * const [variant] = jdunpack<[jacdac.RelayVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.constants.RelayVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -3447,7 +3540,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Random Number Generator
     export const SRV_RNG = 0x1789f0a2
 
@@ -3475,14 +3568,14 @@ namespace jacdac {
          * `WebCrypto` refers is used in simulators, where the source of randomness comes from an advanced operating system.
          *
          * ```
-         * const [variant] = jdunpack<[jacdac.RngVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.constants.RngVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Role Manager
     export const SRV_ROLE_MANAGER = 0x1e4b7e66
     export const enum RoleManagerReg {
@@ -3585,7 +3678,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Rotary encoder
     export const SRV_ROTARY_ENCODER = 0x10fa29c9
     export const enum RotaryEncoderReg {
@@ -3610,7 +3703,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Sensor Aggregator
     export const SRV_SENSOR_AGGREGATOR = 0x1d90e1c5
 
@@ -3629,7 +3722,7 @@ namespace jacdac {
          * These settings are stored in flash.
          *
          * ```
-         * const [samplingInterval, samplesInWindow, rest] = jdunpack<[number, number, ([Buffer, number, number, number, jacdac.SensorAggregatorSampleType, number])[]]>(buf, "u16 u16 x[4] r: b[8] u32 u8 u8 u8 i8")
+         * const [samplingInterval, samplesInWindow, rest] = jdunpack<[number, number, ([Buffer, number, number, number, jacdac.constants.SensorAggregatorSampleType, number])[]]>(buf, "u16 u16 x[4] r: b[8] u32 u8 u8 u8 i8")
          * const [deviceId, serviceClass, serviceNum, sampleSize, sampleType, sampleShift] = rest[0]
          * ```
          */
@@ -3673,7 +3766,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Servo
     export const SRV_SERVO = 0x12fc9103
     export const enum ServoReg {
@@ -3760,7 +3853,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Settings
     export const SRV_SETTINGS = 0x1107dc4a
     export const enum SettingsCmd {
@@ -3847,7 +3940,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: 7-segment display
     export const SRV_SEVEN_SEGMENT_DISPLAY = 0x196158f7
     export const enum SevenSegmentDisplayReg {
@@ -3902,7 +3995,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Soil moisture
     export const SRV_SOIL_MOISTURE = 0x1d4aa3b3
 
@@ -3925,14 +4018,14 @@ namespace jacdac {
          * Constant Variant (uint8_t). Describe the type of physical sensor.
          *
          * ```
-         * const [variant] = jdunpack<[jacdac.SoilMoistureVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.constants.SoilMoistureVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Solenoid
     export const SRV_SOLENOID = 0x171723ca
 
@@ -3956,14 +4049,14 @@ namespace jacdac {
          * Constant Variant (uint8_t). Describes the type of solenoid used.
          *
          * ```
-         * const [variant] = jdunpack<[jacdac.SolenoidVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.constants.SolenoidVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Sound level
     export const SRV_SOUND_LEVEL = 0x14ad1a5d
     export const enum SoundLevelReg {
@@ -4043,7 +4136,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Sound player
     export const SRV_SOUND_PLAYER = 0x1403d338
     export const enum SoundPlayerReg {
@@ -4087,7 +4180,7 @@ namespace jacdac {
 
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Sound Spectrum
     export const SRV_SOUND_SPECTRUM = 0x157abc1e
     export const enum SoundSpectrumReg {
@@ -4148,7 +4241,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Speech synthesis
     export const SRV_SPEECH_SYNTHESIS = 0x1204d995
     export const enum SpeechSynthesisReg {
@@ -4215,7 +4308,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Switch
     export const SRV_SWITCH = 0x1ad29402
 
@@ -4244,7 +4337,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). Describes the type of switch used.
          *
          * ```
-         * const [variant] = jdunpack<[jacdac.SwitchVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.constants.SwitchVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -4275,7 +4368,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: TCP
     export const SRV_TCP = 0x1b43b70b
 
@@ -4318,7 +4411,7 @@ namespace jacdac {
          * Argument: error TcpError (int32_t). Reported when an error is encountered. Negative error codes come directly from the SSL implementation.
          *
          * ```
-         * const [error] = jdunpack<[jacdac.TcpTcpError]>(buf, "i32")
+         * const [error] = jdunpack<[jacdac.constants.TcpTcpError]>(buf, "i32")
          * ```
          */
         Error = 0x0,
@@ -4341,7 +4434,7 @@ namespace jacdac {
 
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Thermocouple
     export const SRV_THERMOCOUPLE = 0x143ac061
 
@@ -4397,14 +4490,14 @@ namespace jacdac {
          * Constant Variant (uint8_t). Specifies the type of thermometer.
          *
          * ```
-         * const [variant] = jdunpack<[jacdac.ThermocoupleVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.constants.ThermocoupleVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Thermometer
     export const SRV_THERMOMETER = 0x1421bac7
 
@@ -4455,14 +4548,14 @@ namespace jacdac {
          * Constant Variant (uint8_t). Specifies the type of thermometer.
          *
          * ```
-         * const [variant] = jdunpack<[jacdac.ThermometerVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.constants.ThermometerVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Traffic Light
     export const SRV_TRAFFIC_LIGHT = 0x15c38d9b
     export const enum TrafficLightReg {
@@ -4495,7 +4588,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Total Volatile organic compound
     export const SRV_TVOC = 0x12a5b597
     export const enum TvocReg {
@@ -4546,7 +4639,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: UV index
     export const SRV_UV_INDEX = 0x1f6e0d90
 
@@ -4578,14 +4671,14 @@ namespace jacdac {
          * Constant Variant (uint8_t). The type of physical sensor and capabilities.
          *
          * ```
-         * const [variant] = jdunpack<[jacdac.UvIndexVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.constants.UvIndexVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Vibration motor
     export const SRV_VIBRATION_MOTOR = 0x183fc4a2
     export const enum VibrationMotorReg {
@@ -4612,7 +4705,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Water level
     export const SRV_WATER_LEVEL = 0x147b62ed
 
@@ -4636,14 +4729,14 @@ namespace jacdac {
          * Constant Variant (uint8_t). The type of physical sensor.
          *
          * ```
-         * const [variant] = jdunpack<[jacdac.WaterLevelVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.constants.WaterLevelVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Weight Scale
     export const SRV_WEIGHT_SCALE = 0x1f4d5040
 
@@ -4722,7 +4815,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). The type of physical scale
          *
          * ```
-         * const [variant] = jdunpack<[jacdac.WeightScaleVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.constants.WeightScaleVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -4745,7 +4838,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: WIFI
     export const SRV_WIFI = 0x18aae1fa
 
@@ -4792,7 +4885,7 @@ namespace jacdac {
     /**
      * pipe_report Results
      * ```
-     * const [flags, rssi, channel, bssid, ssid] = jdunpack<[jacdac.WifiAPFlags, number, number, Buffer, string]>(buf, "u32 x[4] i8 u8 b[6] s[33]")
+     * const [flags, rssi, channel, bssid, ssid] = jdunpack<[jacdac.constants.WifiAPFlags, number, number, Buffer, string]>(buf, "u32 x[4] i8 u8 b[6] s[33]")
      * ```
      */
 
@@ -4823,7 +4916,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Wind direction
     export const SRV_WIND_DIRECTION = 0x186be92b
     export const enum WindDirectionReg {
@@ -4856,7 +4949,7 @@ namespace jacdac {
     }
 
 }
-namespace jacdac {
+namespace jacdac.constants {
     // Service: Wind speed
     export const SRV_WIND_SPEED = 0x1b591bbf
     export const enum WindSpeedReg {

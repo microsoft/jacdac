@@ -185,7 +185,6 @@
       "packFormat": "u22.10"
     }
   ],
-  "tags": [
-    "environment"
-  ]
+  "tags": [],
+  "group": "Environment"
 }

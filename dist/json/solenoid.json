@@ -127,5 +127,7 @@
       "packFormat": "u8"
     }
   ],
-  "tags": []
+  "tags": [
+    "8bit"
+  ]
 }

@@ -1,6 +1,7 @@
 # Motor
 
     identifier: 0x17004cd8
+    tags: C, 8bit
 
 A bi-directional DC motor.
 

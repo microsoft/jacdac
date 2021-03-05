@@ -248,7 +248,6 @@
       "packFormat": "u8"
     }
   ],
-  "tags": [
-    "light"
-  ]
+  "tags": [],
+  "group": "Light"
 }

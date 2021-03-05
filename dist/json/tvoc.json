@@ -236,7 +236,6 @@
       "packFormat": "u32"
     }
   ],
-  "tags": [
-    "environment"
-  ]
+  "tags": [],
+  "group": "Environment"
 }

@@ -1,6 +1,7 @@
 # Relay
 
     identifier: 0x183fe656
+    tags: 8bit
 
 A switching relay.
 

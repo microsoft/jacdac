@@ -92,6 +92,10 @@ Number of microseconds since boot.
 
 Request the information web site for this device
 
+    const device_specification_url?: string @ 0x189
+
+URL pointing to device JSON specification.
+
     const firmware_url?: string @ 0x188
 
 URL with machine-readable metadata information about updating device firmware

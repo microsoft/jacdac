@@ -24,10 +24,6 @@ state. This report is typically not queried, when a device has an error, it will
 add this report in frame along with the announce packet. If a service implements this register,
 it should also support the ``status_code_changed`` event defined below.
 
-    const specification_url?: string @ specification_url
-
-URL pointing to the markdown specification of a custom service.
-
 ## Events
 
     event status_code_changed? @ status_code_changed {

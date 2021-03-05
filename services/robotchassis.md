@@ -10,7 +10,7 @@ A bidirectional drive robot.
     ro kinematics @ reading {
         x: i16.16 cm
         y: i16.16 cm
-	vx: i16.16 cm/s
+        vx: i16.16 cm/s
         vy: i16.16 cm/s
         heading: i16.16 °		
     }

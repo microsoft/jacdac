@@ -1,2 +1,4 @@
+node_modules
 built
 services/generated/
+package-lock.json

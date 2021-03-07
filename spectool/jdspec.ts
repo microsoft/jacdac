@@ -1380,7 +1380,7 @@ ${code.replace(/^\n+/, "").replace(/\n+$/, "")}
 `
 }
 
-export const TYPESCRIPT_STATIC_NAMESPACE = "jacdac.constants"
+export const TYPESCRIPT_STATIC_NAMESPACE = "jacdac"
 function packFormatForField(
     info: jdspec.ServiceSpec,
     fld: jdspec.PacketMember,

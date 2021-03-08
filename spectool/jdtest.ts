@@ -137,7 +137,7 @@ export function parseSpecificationTestMarkdownToJSON(
                 root.arguments.forEach((arg,a) => {
                     if (testCommandFunctions[index].args[a] === "register" && arg.type !== "Identifier") {
                         error (
-                            `${callee} expects a register in argument position ${a}`
+                            `${callee} expects a register in argument position ${a+1}`
                         )
                     }
                 })
@@ -161,16 +161,15 @@ export function parseSpecificationTestMarkdownToJSON(
                     if (id === 'start') {
                         if (callee !== 'check')
                             error("start expression function can only be used inside check test function")
-                        callExpr.arguments.forEach(arg => {
-                            const callsUnder = <jsep.CallExpression[]>(
-                                JSONPath({
+                        const callsUnder = <jsep.CallExpression[]>(
+                            JSONPath({
                                 path: "$..*[?(@.type=='CallExpression')]",
-                                json: arg,
-                            }))
-                            callsUnder.forEach(ce => {
-                                if (ce.callee.type === "Identifier" && (<jsep.Identifier>ce.callee).name === "start")
-                                    error("cannot nest start underneath start")
+                                json: callExpr,
                             })
+                        )
+                        callsUnder.forEach(ce => {
+                            if (ce.callee.type === "Identifier" && (<jsep.Identifier>ce.callee).name === "start")
+                                error("cannot nest start underneath start")
                         })
                     }
                     const expected =

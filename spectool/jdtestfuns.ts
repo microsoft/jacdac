@@ -15,43 +15,43 @@ export type Commands =
     | "rangesFromDownTo"
 
 export const testCommandFunctions: jdtest.TestFunctionDescription[] = [
-    { id: "reset", args: [], prompt: "sends a reset command to the module" },
-    { id: "changes", args: ["reg"], prompt: "did the value of $1 change?" },
+    { id: "reset", args: [], prompt: () => "sends a reset command to the module" },
+    { id: "changes", args: ["reg"], prompt: (args) => `did the value of ${args[0]} change?` },
     { id: "say", args: [], prompt: undefined },
     { id: "ask", args: [], prompt: undefined },
-    { id: "check", args: ["boolean"], prompt: "does the condition $1 hold?" },
+    { id: "check", args: ["boolean"], prompt: (args) => `does the condition ${args[0]} hold?` },
     {
         id: "increases",
         args: ["reg"],
-        prompt: "did the value of register $1 increase?",
+        prompt: (args) => `did the value of register ${args[0]} increase?`,
     },
     {
         id: "decreases",
         args: ["reg"],
-        prompt: "did the value of register $1 decrease?",
+        prompt: (args) => `did the value of register ${args[0]} decrease?`,
     },
     {
         id: "increasesBy",
         args: ["reg", "number"],
-        prompt: "did the value of register $1 increase by $2?",
+        prompt: (args) => `did the value of register ${args[0]} increase by ${args[1]}?`,
     },
     {
         id: "decreasesBy",
         args: ["reg", "number"],
-        prompt: "did the value of register $1 decrease by $2?",
+        prompt: (args) => `did the value of register ${args[0]} decrease by ${args[1]}?`,
     },
     {
         id: "rangesFromUpTo",
         args: ["reg", "number", "number"],
-        prompt: "register $1 should range in value from $2 up to $3",
+        prompt: (args) => `register ${args[0]} should range in value from ${args[1]} up to ${args[2]}`,
     },
     {
         id: "rangesFromDownTo",
         args: ["reg", "number", "number"],
-        prompt: "register $1 should range in value from $2 down to $3",
+        prompt: (args) => `register ${args[0]} should range in value from ${args[1]} down to ${args[2]}`,
     },
 ]
 
 export const testExpressionFunctions: jdtest.TestFunctionDescription[] = [
-    { id: "start", args: ["any"], prompt: "value at beginning of test" },
+    { id: "start", args: ["any"], prompt: undefined },
 ]

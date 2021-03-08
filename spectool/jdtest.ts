@@ -134,6 +134,7 @@ export function parseSpecificationTestMarkdownToJSON(
                     `${callee} expects ${expected} arguments; got ${root.arguments.length}`
                 )
             else {
+                // TODO: check the kind of expression against expected
                 root.arguments.forEach(arg => {
                     const callers = <jsep.CallExpression[]>(
                         JSONPath({

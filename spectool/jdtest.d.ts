@@ -52,6 +52,6 @@ declare namespace jdtest {
     interface TestFunctionDescription {
         id: string
         args: string[]
-        prompt: (args: string[]) => string
+        prompt: string
     }
 }

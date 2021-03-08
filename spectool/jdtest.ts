@@ -134,31 +134,50 @@ export function parseSpecificationTestMarkdownToJSON(
                     `${callee} expects ${expected} arguments; got ${root.arguments.length}`
                 )
             else {
-                root.arguments.forEach(arg => {
-                    const callers = <jsep.CallExpression[]>(
-                        JSONPath({
-                            path: "$..*[?(@.type=='CallExpression')]",
-                            json: root,
-                        })
-                    )
-                    callers.forEach(callExpr => {
-                        if (callExpr.callee.type !== "Identifier")
-                            error(`all calls must be direct calls`)
-                        const id = (<jsep.Identifier>callExpr.callee).name
-                        const indexFun = testExpressionFunctions.findIndex(
-                            r => id == r.id
+                root.arguments.forEach((arg,a) => {
+                    if (testCommandFunctions[index].args[a] === "register" && arg.type !== "Identifier") {
+                        error (
+                            `${callee} expects a register in argument position ${a+1}`
                         )
-                        if (indexFun < 0)
-                            error(
-                                `${id} is not a registered test expression function.`
-                            )
-                        const expected =
-                            testExpressionFunctions[indexFun].args.length
-                        if (expected !== callExpr.arguments.length)
-                            error(
-                                `${callee} expects ${expected} arguments; got ${callExpr.arguments.length}`
-                            )
+                    }
+                })
+                const callers = <jsep.CallExpression[]>(
+                    JSONPath({
+                        path: "$..*[?(@.type=='CallExpression')]",
+                        json: root,
                     })
+                )
+                callers.forEach(callExpr => {
+                    if (callExpr.callee.type !== "Identifier")
+                        error(`all calls must be direct calls`)
+                    const id = (<jsep.Identifier>callExpr.callee).name
+                    const indexFun = testExpressionFunctions.findIndex(
+                        r => id == r.id
+                    )
+                    if (indexFun < 0)
+                        error(
+                            `${id} is not a registered test expression function.`
+                        )
+                    if (id === 'start') {
+                        if (callee !== 'check')
+                            error("start expression function can only be used inside check test function")
+                        const callsUnder = <jsep.CallExpression[]>(
+                            JSONPath({
+                                path: "$..*[?(@.type=='CallExpression')]",
+                                json: callExpr,
+                            })
+                        )
+                        callsUnder.forEach(ce => {
+                            if (ce.callee.type === "Identifier" && (<jsep.Identifier>ce.callee).name === "start")
+                                error("cannot nest start underneath start")
+                        })
+                    }
+                    const expected =
+                        testExpressionFunctions[indexFun].args.length
+                    if (expected !== callExpr.arguments.length)
+                        error(
+                            `${callee} expects ${expected} arguments; got ${callExpr.arguments.length}`
+                        )
                 })
             }
             // now visit all (p,c), c an Identifier that is not a callee child of CallExpression

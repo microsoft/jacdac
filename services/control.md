@@ -95,18 +95,3 @@ Request the information web site for this device
     const firmware_url?: string @ 0x188
 
 URL with machine-readable metadata information about updating device firmware
-
-    rw status_light? @ 0x81 {
-        repeats:
-            red: u8
-            green: u8
-            blue: u8
-            duration8: u8 8ms
-    }
-
-Specifies a status light animation sequence on a colored or monochrome LED
-using the [LED animation format](/spec/led-animation/).
-Typically, up to 8 steps (repeats) are supported.
-
-The status light is also used by Jacdac software stack to indicate various status mode
-and this animation may be overridden when those modes are enabled.

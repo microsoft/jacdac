@@ -8,18 +8,25 @@ A controller for 1 or more monochrome or RGB LEDs connected in parallel.
 
 ## Registers
 
-    rw brightness: u0.16 / @ intensity
-
-Set the luminosity of the strip. The value is used to scale `value` in `steps` register.
-At `0` the power to the strip is completely shut down.
-
-    rw animation @ 0x82 {
-        repeats:
-            red: u8
-            green: u8
-            blue: u8
-            duration: u8 8ms
+    ro color @ reading {
+        red: u8
+        green: u8
+        blue: u8
     }
+
+    command animate @ 0x80 {        
+        from_red: u8
+        from_green: u8
+        from_blue: u8
+
+        speed: u8 // bit/frame min=1, max=64
+
+        to_red: u8
+        to_green: u8
+        to_blue: u8
+    }
+
+Initiates a color transition.
 
 Animations are described using pairs of color description and duration, 
 similarly to the `status_light` register in the control service.

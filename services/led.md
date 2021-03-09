@@ -15,6 +15,7 @@ A controller for 1 or more monochrome or RGB LEDs connected in parallel.
     }
 
     command animate @ 0x80 {        
+        // remove from?
         from_red: u8
         from_green: u8
         from_blue: u8

@@ -1,13 +1,5 @@
 # Rotary encoder tests
 
-## reset test
-
-reset test (automated)
-
-    say()
-    reset()
-    check(position == 0)
-
 ## knob turn
 
 turn the knob back and forth
@@ -78,3 +70,11 @@ note knob's physical position and quickly turn counter-clockwise one complete ro
 is the knob at the same physical position?
 
     ask()
+
+## reset test
+
+reset test (automated)
+
+    say()
+    reset()
+    check(position == 0)

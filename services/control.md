@@ -97,11 +97,10 @@ Request the information web site for this device
 URL with machine-readable metadata information about updating device firmware
 
     rw status_light? @ 0x81 {
-        repetitions: u16
         repeats:
-            hue: u8
-            saturation: u8
-            value: u8
+            red: u8
+            green: u8
+            blue: u8
             duration8: u8 8ms
     }
 

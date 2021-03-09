@@ -14,18 +14,16 @@ Set the luminosity of the strip. The value is used to scale `value` in `steps` r
 At `0` the power to the strip is completely shut down.
 
     rw animation @ 0x82 {
-        repetitions: u16
         repeats:
-            hue: u8
-            saturation: u8
-            value: u8
+            red: u8
+            green: u8
+            blue: u8
             duration: u8 8ms
     }
 
 Animations are described using pairs of color description and duration, 
 similarly to the `status_light` register in the control service.
-`repetition` as ``0`` is considered infinite.
-For monochrome LEDs, the hue and saturation are ignored.
+For monochrome LEDs, the average value of ``red``, ``green``, ``blue`` is used.
 A specification `(red, 80ms), (blue, 40ms), (blue, 0ms), (yellow, 80ms)`
 means to start with red, cross-fade to blue over 80ms, stay blue for 40ms,
 change to yellow, and cross-fade back to red in 80ms.

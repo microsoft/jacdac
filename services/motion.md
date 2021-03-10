@@ -30,6 +30,6 @@ Type of physical sensor
 
 ## Events
 
-   event movement @ active { }
+    event movement @ active { }
 
 A movement was detected.

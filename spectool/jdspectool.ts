@@ -244,8 +244,8 @@ ${toMetaComments(
 ${toMetaComments(
     `group="${group}"`,
     `blockId=jacdac_${shortId}_on_${reading.name}_change`,
-    `block="on %${shortId} ${humanify(reading.name)} changed by %threshold`,
-    `weight=100`,
+    `block="on %${shortId} ${humanify(reading.name)} changed by %threshold"`,
+    `weight=${weight--}`,
     `threshold.defl=${/[ui]0\./.test(reading.fields[0].type) ? "0.1" : "1"}`
 )}
         on${capitalize(camelize(reading.name))}ChangedBy(threshold: number, handler: () => void): void {

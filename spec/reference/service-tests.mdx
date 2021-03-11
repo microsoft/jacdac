@@ -35,20 +35,21 @@ make use of this markdown in order to interact with the user for manual testing:
 
 The remaining test functions can be checked automatically with a manual fallback
 
-- **check**(*expr*): check if the *expr* evaluates true
+- **check**(*expr*): check if the *expr* evaluates true (can make use of the **start** test expression)
 - **changes**(*expr*): check if the *expr* changes
 - **increases**(*register*): check if *register* increases in value
-- **decreases**(*register*): check if *register* descreases in value
+- **decreases**(*register*): check if *register* decreases in value
 - **increasesBy**(*register*,*expr*): check if *register* increases in value by *expr*
-- **decreasesBy**(*register*,*expr*): check if *register* descreases in value by *expr*
+- **decreasesBy**(*register*,*expr*): check if *register* decreases in value by *expr*
 - **rangesFromUpTo**(*register*,*startExpr*,*endExpr*): check if register increases from startExpr to endExpr (and integer values in between)
 - **rangesFromDownTo**(*register*,*startExpr*,*endExpr*): check if register decreases from startExpr to endExpr (and integer values in between
-- **reset**()
+- **reset**(): send reset command to device
 
 ## Test expressions
 
 Most test expressions are just JavaScript expressions where identifiers 
 refer to elements of the service specification (e.g., registers). A few 
 special test functions are provided:
-- **start**(expr): the value of expr at the start of the unit test
+- **start**(*expr*): the value of *expr* just before execution of the **check** test command, multiple **start** subexpressions can be used within a **check** expression
+
 

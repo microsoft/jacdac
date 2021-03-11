@@ -3,7 +3,6 @@
 /// <reference path="jdtest.d.ts" />
 
 import { parseIntFloat, getRegister } from "./jdutils"
-import { JSONPath } from "jsonpath-plus"
 import { testCommandFunctions, testExpressionFunctions } from "./jdtestfuns"
 import jsep, { ExpressionType } from "jsep"
 
@@ -15,6 +14,24 @@ const supportedExpressions: ExpressionType[] = [
     "UnaryExpression",
     "LogicalExpression",
 ]
+
+export function getExpressionsOfType(expr: jsep.Expression | jsep.Expression[], type: string, returnParent = false) {
+    const results: jsep.Expression[] = []
+    visit(null, expr)
+    return results
+
+    function visit(parent: any, current: any) {
+        if (Array.isArray(current)) {
+            (current as any[]).forEach(c => visit(current, c))
+        } else if (typeof current === "object") {
+            if (parent && current?.type === type)
+                results.push(returnParent ? parent : current)
+            Object.keys(current).forEach((key: string) => {
+                visit(current, current[key])
+            })
+        }
+    }
+}
 
 // we parse a test with respect to an existing ServiceSpec
 export function parseSpecificationTestMarkdownToJSON(
@@ -141,12 +158,7 @@ export function parseSpecificationTestMarkdownToJSON(
                         )
                     }
                 })
-                const callers = <jsep.CallExpression[]>(
-                    JSONPath({
-                        path: "$..*[?(@.type=='CallExpression')]",
-                        json: root,
-                    })
-                )
+                const callers = <jsep.CallExpression[]>getExpressionsOfType(root,'CallExpression')
                 callers.forEach(callExpr => {
                     if (callExpr.callee.type !== "Identifier")
                         error(`all calls must be direct calls`)
@@ -161,12 +173,7 @@ export function parseSpecificationTestMarkdownToJSON(
                     if (id === 'start') {
                         if (callee !== 'check')
                             error("start expression function can only be used inside check test function")
-                        const callsUnder = <jsep.CallExpression[]>(
-                            JSONPath({
-                                path: "$..*[?(@.type=='CallExpression')]",
-                                json: callExpr,
-                            })
-                        )
+                        const callsUnder = <jsep.CallExpression[]>getExpressionsOfType(callExpr,'CallExpression')
                         callsUnder.forEach(ce => {
                             if (ce.callee.type === "Identifier" && (<jsep.Identifier>ce.callee).name === "start")
                                 error("cannot nest start underneath start")
@@ -182,9 +189,7 @@ export function parseSpecificationTestMarkdownToJSON(
             }
             // now visit all (p,c), c an Identifier that is not a callee child of CallExpression
             // or a property child of a MemberExpression
-            const exprs = <any[]>(
-                JSONPath({ path: "$..*[?(@.type=='Identifier')]^", json: root })
-            )
+            const exprs = <any[]>getExpressionsOfType(root, 'Identifier', true)
             let visited: any[] = []
             exprs.forEach(parent => {
                 if (visited.indexOf(parent) < 0) {
@@ -198,7 +203,7 @@ export function parseSpecificationTestMarkdownToJSON(
     }
 
     function lookupReplace(parent: any) {
-        if (parent.length) {
+        if (Array.isArray(parent)) {
             const exprs: jsep.Expression[] = parent
             exprs.forEach((child: jsep.Expression) => {
                 if (child.type === "Identifier")

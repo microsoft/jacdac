@@ -8,7 +8,7 @@
     "_base"
   ],
   "notes": {
-    "short": "Assign roles to services on the Jacdac bus.\n\nInternally, the role manager stores a mapping from from `(device_id, service_idx)` to role name.\nUsers refer to services by using role names (eg., they instantiate an accelerometer client with a given role name).\nEach client has a role, and roles are unique to clients\n(ie., one should not have both a gyro and accelerometer service with role `left_leg`).\n\nRole names can be hierarchical, using slash character as a separator.\nExamples: `left_leg/acc`, `left_leg/gyro`, `right_leg/acc`.\nIf two roles share the prefix before first slash, it should be used as a hint that the services\nshould be co-located on a single device\n(eg., here the `left_leg` \"location\" is expected to have both an accelerometer and a gyro service on a single device)."
+    "short": "Assign roles to services on the Jacdac bus.\n\nInternally, the role manager stores a mapping from `(device_id, service_idx)` to role name.\nUsers refer to services by using role names (eg., they instantiate an accelerometer client with a given role name).\nEach client has a role, and roles are unique to clients\n(ie., one should not have both a gyro and accelerometer service with role `left_leg`).\n\nRole names can be hierarchical, using slash character as a separator.\nExamples: `left_leg/acc`, `left_leg/gyro`, `right_leg/acc`.\nIf two roles share the prefix before first slash, it should be used as a hint that the services\nshould be co-located on a single device\n(eg., here the `left_leg` \"location\" is expected to have both an accelerometer and a gyro service on a single device)."
   },
   "classIdentifier": 508264038,
   "enums": {},

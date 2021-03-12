@@ -2,11 +2,12 @@
 /// <reference path="jdspec.d.ts" />
 /// <reference path="jdtest.d.ts" />
 
-import { parseIntFloat, getRegister } from "./jdutils"
+import { parseIntFloat, getRegister, exprVisitor, getExpressionsOfType } from "./jdutils"
 import { testCommandFunctions, testExpressionFunctions } from "./jdtestfuns"
-import jsep, { ExpressionType } from "jsep"
+import jsep, { ArrayExpression, ExpressionType } from "jsep"
 
 const supportedExpressions: ExpressionType[] = [
+    "ArrayExpression",
     "BinaryExpression",
     "CallExpression",
     "Identifier",
@@ -14,24 +15,6 @@ const supportedExpressions: ExpressionType[] = [
     "UnaryExpression",
     "LogicalExpression",
 ]
-
-export function getExpressionsOfType(expr: jsep.Expression | jsep.Expression[], type: string, returnParent = false) {
-    const results: jsep.Expression[] = []
-    visit(null, expr)
-    return results
-
-    function visit(parent: any, current: any) {
-        if (Array.isArray(current)) {
-            (current as any[]).forEach(c => visit(current, c))
-        } else if (typeof current === "object") {
-            if (parent && current?.type === type)
-                results.push(returnParent ? parent : current)
-            Object.keys(current).forEach((key: string) => {
-                visit(current, current[key])
-            })
-        }
-    }
-}
 
 // we parse a test with respect to an existing ServiceSpec
 export function parseSpecificationTestMarkdownToJSON(
@@ -114,7 +97,8 @@ export function parseSpecificationTestMarkdownToJSON(
             currentTest = {
                 description: testHeading,
                 registers: [],
-                commands: [],
+                events: [],
+                testCommands: [],
             }
             testHeading = ""
         }
@@ -142,8 +126,10 @@ export function parseSpecificationTestMarkdownToJSON(
             error(`a command must be a call expression in JavaScript syntax`)
         } else {
             // check for unsupported expression types
-            if (supportedExpressions.indexOf(root.type) < 0)
-                error(`Expression of type ${root.type} not currently supported`)
+            exprVisitor(null, root, (p,c) => {
+                if (supportedExpressions.indexOf(c.type) < 0)
+                    error(`Expression of type ${c.type} not currently supported`)
+            })
             // check arguments
             const expected = testCommandFunctions[index].args.length
             if (expected !== root.arguments.length)
@@ -186,18 +172,46 @@ export function parseSpecificationTestMarkdownToJSON(
                             `${callee} expects ${expected} arguments; got ${callExpr.arguments.length}`
                         )
                 })
-            }
-            // now visit all (p,c), c an Identifier that is not a callee child of CallExpression
-            // or a property child of a MemberExpression
-            const exprs = <any[]>getExpressionsOfType(root, 'Identifier', true)
-            let visited: any[] = []
-            exprs.forEach(parent => {
-                if (visited.indexOf(parent) < 0) {
-                    visited.push(parent)
-                    lookupReplace(parent)
+                // context sensitive checking/lookup/resolution
+                if (callee === 'events') {
+                    let eventList = root.arguments[0]
+                    if (eventList.type != 'ArrayExpression')
+                        error(`events function expects a list of service events`)
+                    else {
+                        const elements = (eventList as jsep.ArrayExpression).elements
+                        let events = spec.packets?.filter(pkt => pkt.kind == "event")
+                        elements.forEach(e => {
+                            if (e.type !== 'Identifier')
+                                error(`event identifier expected`)
+                            else {
+                                const id = (e as jsep.Identifier).name
+                                if (!events.find(p => p.name === id)) {
+                                    error(`no event ${id} in specification`)
+                                } else {
+                                    if (currentTest.events.indexOf(id) < 0)
+                                        currentTest.events.push(id)
+                                }
+                            }
+                        })
+                    } 
+                } else {
+                    const exprs = <any[]>getExpressionsOfType(root, 'Identifier', true)
+                    let visited: any[] = []
+                    exprs.forEach(parent => {
+                        if (visited.indexOf(parent) < 0) {
+                            visited.push(parent)
+                            lookupReplace(parent)
+                        }
+                    })
+                    exprVisitor(null, root, (p,c) => {
+                        if (c.type === 'ArrayExpression')
+                            error(
+                                `array expression not allowed in this context`
+                            )
+                    })
                 }
-            })
-            currentTest.commands.push({ prompt: testPrompt, call: root })
+            }
+            currentTest.testCommands.push({ prompt: testPrompt, call: root })
             testPrompt = ""
         }
     }

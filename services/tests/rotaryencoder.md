@@ -40,9 +40,9 @@ turn one complete rotation counter-clockwise
 slowly turn clockwise one complete rotation
 
     say()
-    rangesFromUpTo(position, position, position + clicks_per_turn)
+    stepsUpTo(position, position + clicks_per_turn)
 
-is the knob at the same physical position?
+is the knob at the same physical position as when you started turning?
 
     ask()
 
@@ -51,12 +51,8 @@ is the knob at the same physical position?
 slowly turn counter-clockwise one complete rotation
 
     say()
-    rangesFromDownTo(position, position, position - clicks_per_turn)
+    stepsDownTo(position, position - clicks_per_turn)
 
-## reset test
+is the knob at the same physical position as when you started turning?
 
-reset test (automated)
-
-    say()
-    reset()
-    check(position == 0)
+    ask()

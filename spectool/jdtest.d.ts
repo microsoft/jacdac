@@ -41,10 +41,11 @@ declare namespace jdtest {
     interface TestSpec {
         description: string
         registers: string[]
-        commands: CommandSpec[]
+        events: string[]
+        testCommands: TestCommandSpec[]
     }
 
-    interface CommandSpec {
+    interface TestCommandSpec {
         prompt: string // markdown
         call: jsep.CallExpression
     }

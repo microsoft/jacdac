@@ -1,13 +1,5 @@
 # Rotary encoder tests
 
-## reset test
-
-reset test (automated)
-
-    say()
-    reset()
-    check(position == 0)
-
 ## knob turn
 
 turn the knob back and forth
@@ -50,6 +42,10 @@ slowly turn clockwise one complete rotation
     say()
     rangesFromUpTo(position, position, position + clicks_per_turn)
 
+is the knob at the same physical position?
+
+    ask()
+
 ## no missing value counter-clockwise
 
 slowly turn counter-clockwise one complete rotation
@@ -57,24 +53,10 @@ slowly turn counter-clockwise one complete rotation
     say()
     rangesFromDownTo(position, position, position - clicks_per_turn)
 
-## check physical position clockwise
+## reset test
 
-note knob's physical position and quickly turn clockwise one complete rotation
-
-    say()
-    increasesBy(position, clicks_per_turn)
-
-is the knob at the same physical position?
-
-    ask()
-
-## check physical position counter-clockwise
-
-note knob's physical position and quickly turn counter-clockwise one complete rotation
+reset test (automated)
 
     say()
-    decreasesBy(position, clicks_per_turn)
-
-is the knob at the same physical position?
-
-    ask()
+    reset()
+    check(position == 0)

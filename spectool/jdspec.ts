@@ -799,21 +799,21 @@ export function parseServiceSpecificationMarkdownToJSON(
                 tok = camelize(tok)
                 switch (tok) {
                     case "maxBytes":
-                        ;(field as any)[tok] = rangeCheck("u8", parseVal(words))
+                        ; (field as any)[tok] = rangeCheck("u8", parseVal(words))
                         break
                     case "typicalMin":
                     case "typicalMax":
                     case "absoluteMin":
                     case "absoluteMax":
-                        ;(field as any)[tok] = rangeCheck(tp, parseVal(words))
+                        ; (field as any)[tok] = rangeCheck(tp, parseVal(words))
                         break
                     case "preferredInterval":
                         if ((packetInfo as any)[tok] !== undefined)
                             error(`field ${tok} already set`)
-                        ;(packetInfo as any)[tok] = rangeCheck(
-                            "u32",
-                            parseVal(words)
-                        )
+                                ; (packetInfo as any)[tok] = rangeCheck(
+                                    "u32",
+                                    parseVal(words)
+                                )
                         break
                     default:
                         error("unknown constraint: " + tok)
@@ -910,7 +910,7 @@ export function parseServiceSpecificationMarkdownToJSON(
     }
 
     function genRandom() {
-        for (;;) {
+        for (; ;) {
             const m = (Math.random() * 0xfff_ffff) | 0x1000_0000
             if (looksRandom(m)) return m
         }
@@ -948,8 +948,7 @@ export function parseServiceSpecificationMarkdownToJSON(
                     error(
                         `class identifier ${toHex(
                             info.classIdentifier
-                        )} already used in ${
-                            usedIds[info.classIdentifier + ""]
+                        )} already used in ${usedIds[info.classIdentifier + ""]
                         }; ${gen}`
                     )
                 break
@@ -1585,9 +1584,8 @@ function toTypescript(info: jdspec.ServiceSpec, staticTypeScript: boolean) {
             if (staticTypeScript && pkt.kind === "event") {
                 meta = `//% block="${snakify(pkt.name).replace(/_/g, " ")}"\n`
             }
-            text = `${
-                wrapComment(cmt.comment + wrapSnippet(pack)) + meta
-            }${upperCamel(pkt.name)} = ${val},\n`
+            text = `${wrapComment(cmt.comment + wrapSnippet(pack)) + meta
+                }${upperCamel(pkt.name)} = ${val},\n`
         }
 
         if (text) tsEnums[inner] = (tsEnums[inner] || "") + text
@@ -1656,4 +1654,9 @@ export function converters(): jdspec.SMap<(s: jdspec.ServiceSpec) => string> {
         "cpp": toHPP,
         */
     }
+}
+
+export function isNumericType(field: jdspec.PacketMember) {
+    const tp = field.type;
+    return !field.startRepeats && /^[uif]\d+(\.\d+)?$/.test(tp) && tp != "pipe_port" && tp != "bool"
 }

@@ -2653,6 +2653,13 @@ export enum MotionReg {
     Variant = 0x107,
 }
 
+export enum MotionEvent {
+    /**
+     * A movement was detected.
+     */
+    Movement = 0x1,
+}
+
 // Service: Motor
 export const SRV_MOTOR = 0x17004cd8
 export enum MotorReg {

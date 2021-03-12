@@ -27,4 +27,9 @@
  */
 #define JD_MOTION_REG_VARIANT JD_REG_VARIANT
 
+/**
+ * A movement was detected.
+ */
+#define JD_MOTION_EV_MOVEMENT JD_EV_ACTIVE
+
 #endif

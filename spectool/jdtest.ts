@@ -97,7 +97,8 @@ export function parseSpecificationTestMarkdownToJSON(
             currentTest = {
                 description: testHeading,
                 registers: [],
-                commands: [],
+                events: [],
+                testCommands: [],
             }
             testHeading = ""
         }
@@ -184,8 +185,12 @@ export function parseSpecificationTestMarkdownToJSON(
                                 error(`event identifier expected`)
                             else {
                                 const id = (e as jsep.Identifier).name
-                                if (!events.find(p => p.name === id))
+                                if (!events.find(p => p.name === id)) {
                                     error(`no event ${id} in specification`)
+                                } else {
+                                    if (currentTest.events.indexOf(id) < 0)
+                                        currentTest.events.push(id)
+                                }
                             }
                         })
                     } 
@@ -206,7 +211,7 @@ export function parseSpecificationTestMarkdownToJSON(
                     })
                 }
             }
-            currentTest.commands.push({ prompt: testPrompt, call: root })
+            currentTest.testCommands.push({ prompt: testPrompt, call: root })
             testPrompt = ""
         }
     }

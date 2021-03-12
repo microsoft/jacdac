@@ -2,9 +2,9 @@
 /// <reference path="jdspec.d.ts" />
 /// <reference path="jdtest.d.ts" />
 
-import { parseIntFloat, getRegister } from "./jdutils"
+import { parseIntFloat, getRegister, exprVisitor, getExpressionsOfType } from "./jdutils"
 import { testCommandFunctions, testExpressionFunctions } from "./jdtestfuns"
-import jsep, { ExpressionType } from "jsep"
+import jsep, { ArrayExpression, ExpressionType } from "jsep"
 
 const supportedExpressions: ExpressionType[] = [
     "ArrayExpression",
@@ -15,26 +15,6 @@ const supportedExpressions: ExpressionType[] = [
     "UnaryExpression",
     "LogicalExpression",
 ]
-
-function visitor(parent: any, current: any, structVisit: (par:any, curr:any) => void) {
-    if (Array.isArray(current)) {
-        (current as any[]).forEach(c => visitor(current, c, structVisit))
-    } else if (typeof current === "object") {
-        if (parent && current)
-            structVisit(parent, current)
-        Object.keys(current).forEach((key: string) => {
-            visitor(current, current[key], structVisit)
-        })
-    }
-}
-export function getExpressionsOfType(expr: jsep.Expression | jsep.Expression[], type: string, returnParent = false) {
-    const results: jsep.Expression[] = []
-    visitor(null, expr, (p,c) => {
-        if (p && c.type === type)
-        results.push(returnParent ? p : c)
-    })
-    return results
-}
 
 // we parse a test with respect to an existing ServiceSpec
 export function parseSpecificationTestMarkdownToJSON(
@@ -145,7 +125,7 @@ export function parseSpecificationTestMarkdownToJSON(
             error(`a command must be a call expression in JavaScript syntax`)
         } else {
             // check for unsupported expression types
-            visitor(null, root, (p,c) => {
+            exprVisitor(null, root, (p,c) => {
                 if (supportedExpressions.indexOf(c.type) < 0)
                     error(`Expression of type ${c.type} not currently supported`)
             })
@@ -193,7 +173,22 @@ export function parseSpecificationTestMarkdownToJSON(
                 })
                 // context sensitive checking/lookup/resolution
                 if (callee === 'events') {
-                    // TODO: argument must a list of event names
+                    let eventList = root.arguments[0]
+                    if (eventList.type != 'ArrayExpression')
+                        error(`events function expects a list of service events`)
+                    else {
+                        const elements = (eventList as jsep.ArrayExpression).elements
+                        let events = spec.packets?.filter(pkt => pkt.kind == "event")
+                        elements.forEach(e => {
+                            if (e.type !== 'Identifier')
+                                error(`event identifier expected`)
+                            else {
+                                const id = (e as jsep.Identifier).name
+                                if (!events.find(p => p.name === id))
+                                    error(`no event ${id} in specification`)
+                            }
+                        })
+                    } 
                 } else {
                     const exprs = <any[]>getExpressionsOfType(root, 'Identifier', true)
                     let visited: any[] = []
@@ -202,6 +197,12 @@ export function parseSpecificationTestMarkdownToJSON(
                             visited.push(parent)
                             lookupReplace(parent)
                         }
+                    })
+                    exprVisitor(null, root, (p,c) => {
+                        if (c.type === 'ArrayExpression')
+                            error(
+                                `array expression not allowed in this context`
+                            )
                     })
                 }
             }

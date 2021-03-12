@@ -2,7 +2,6 @@
 /// <reference path="jdtest.d.ts" />
 
 export type Commands =
-    | "reset"
     | "changes"
     | "ask"
     | "say"
@@ -13,12 +12,13 @@ export type Commands =
     | "decreasesBy"
     | "rangesFromUpTo"
     | "rangesFromDownTo"
+    | "events"
 
 export const testCommandFunctions: jdtest.TestFunctionDescription[] = [
-    { id: "reset", args: [], prompt: "sends a reset command to the module" },
     { id: "changes", args: ["register"], prompt: `did the value of {1} change?` },
     { id: "say", args: [], prompt: undefined },
     { id: "ask", args: [], prompt: undefined },
+    { id: "events", args: ["array"], prompt: undefined },
     { id: "check", args: ["boolean"], prompt: `does the condition {1} hold?` },
     {
         id: "increases",

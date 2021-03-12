@@ -11,28 +11,27 @@
 #define JD_LED_VARIANT_BEAD 0x4
 
 /**
- * Read-write ratio u0.16 (uint16_t). Set the luminosity of the strip. The value is used to scale `value` in `steps` register.
- * At `0` the power to the strip is completely shut down.
+ * Initiates a color transition from the current color.
+ * For monochrome LEDs, the average value of ``red``, ``green``, ``blue`` is used.
  */
-#define JD_LED_REG_BRIGHTNESS JD_REG_INTENSITY
+#define JD_LED_CMD_ANIMATE 0x80
+typedef struct jd_led_animate {
+    uint8_t to_red;
+    uint8_t to_green;
+    uint8_t to_blue;
+    uint8_t speed;
+} jd_led_animate_t;
+
 
 /**
- * Animations are described using pairs of color description and duration, 
- * similarly to the `status_light` register in the control service.
- * `repetition` as ``0`` is considered infinite.
- * For monochrome LEDs, the hue and saturation are ignored.
- * A specification `(red, 80ms), (blue, 40ms), (blue, 0ms), (yellow, 80ms)`
- * means to start with red, cross-fade to blue over 80ms, stay blue for 40ms,
- * change to yellow, and cross-fade back to red in 80ms.
+ * The current color of the LED.
  */
-#define JD_LED_REG_ANIMATION 0x82
-typedef struct jd_led_animation {
-    uint16_t repetitions;
-    uint8_t hue;
-    uint8_t saturation;
-    uint8_t value;
-    uint8_t duration; // 8ms
-} jd_led_animation_t;
+#define JD_LED_REG_COLOR JD_REG_READING
+typedef struct jd_led_color {
+    uint8_t red;
+    uint8_t green;
+    uint8_t blue;
+} jd_led_color_t;
 
 
 /**

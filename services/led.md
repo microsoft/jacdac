@@ -6,6 +6,18 @@
 
 A controller for 1 or more monochrome or RGB LEDs connected in parallel.
 
+## Commands
+
+    command animate @ 0x80 {
+        to_red: u8
+        to_green: u8
+        to_blue: u8
+        speed: u8
+    }
+
+Initiates a color transition from the current color.
+For monochrome LEDs, the average value of ``red``, ``green``, ``blue`` is used.
+
 ## Registers
 
     ro color @ reading {
@@ -14,27 +26,7 @@ A controller for 1 or more monochrome or RGB LEDs connected in parallel.
         blue: u8
     }
 
-    command animate @ 0x80 {        
-        // remove from?
-        from_red: u8
-        from_green: u8
-        from_blue: u8
-
-        speed: u8 // bit/frame min=1, max=64
-
-        to_red: u8
-        to_green: u8
-        to_blue: u8
-    }
-
-Initiates a color transition.
-
-Animations are described using pairs of color description and duration, 
-similarly to the `status_light` register in the control service.
-For monochrome LEDs, the average value of ``red``, ``green``, ``blue`` is used.
-A specification `(red, 80ms), (blue, 40ms), (blue, 0ms), (yellow, 80ms)`
-means to start with red, cross-fade to blue over 80ms, stay blue for 40ms,
-change to yellow, and cross-fade back to red in 80ms.
+The current color of the LED.
 
     rw max_power? = 100: u16 mA @ max_power
 

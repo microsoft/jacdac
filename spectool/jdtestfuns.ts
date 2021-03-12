@@ -10,15 +10,15 @@ export type Commands =
     | "decreases"
     | "increasesBy"
     | "decreasesBy"
-    | "rangesFromUpTo"
-    | "rangesFromDownTo"
+    | "stepsUpTo"
+    | "stepsDownTo"
     | "events"
 
 export const testCommandFunctions: jdtest.TestFunctionDescription[] = [
     { id: "changes", args: ["register"], prompt: `did the value of {1} change?` },
     { id: "say", args: [], prompt: undefined },
     { id: "ask", args: [], prompt: undefined },
-    { id: "events", args: ["array"], prompt: undefined },
+    { id: "events", args: ["array"], prompt: `was the event trace {1} observed?` },
     { id: "check", args: ["boolean"], prompt: `does the condition {1} hold?` },
     {
         id: "increases",
@@ -41,14 +41,14 @@ export const testCommandFunctions: jdtest.TestFunctionDescription[] = [
         prompt: `did the value of register {1} decrease by {2}?`,
     },
     {
-        id: "rangesFromUpTo",
-        args: ["register", "number", "number"],
-        prompt: `register {1} should range in value from {2} up to {3}`,
+        id: "stepsUpTo",
+        args: ["register", "number"],
+        prompt: `register {1} should step up (by one) to {2}`,
     },
     {
-        id: "rangesFromDownTo",
-        args: ["register", "number", "number"],
-        prompt: `register {1} should range in value from {2} down to {3}`,
+        id: "stepsDownTo",
+        args: ["register", "number"],
+        prompt: `register {1} should step down (by one) to {2}`,
     },
 ]
 

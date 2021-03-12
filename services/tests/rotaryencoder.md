@@ -40,7 +40,7 @@ turn one complete rotation counter-clockwise
 slowly turn clockwise one complete rotation
 
     say()
-    rangesFromUpTo(position, position, position + clicks_per_turn)
+    stepsUpTo(position, position + clicks_per_turn)
 
 is the knob at the same physical position as when you started turning?
 
@@ -51,7 +51,7 @@ is the knob at the same physical position as when you started turning?
 slowly turn counter-clockwise one complete rotation
 
     say()
-    rangesFromDownTo(position, position, position - clicks_per_turn)
+    stepsDownTo(position, position - clicks_per_turn)
 
 is the knob at the same physical position as when you started turning?
 

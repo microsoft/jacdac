@@ -4,7 +4,6 @@
 export type Commands =
     | "changes"
     | "ask"
-    | "say"
     | "check"
     | "increases"
     | "decreases"
@@ -16,7 +15,6 @@ export type Commands =
 
 export const testCommandFunctions: jdtest.TestFunctionDescription[] = [
     { id: "changes", args: ["register"], prompt: `did the value of {1} change?` },
-    { id: "say", args: [], prompt: undefined },
     { id: "ask", args: [], prompt: undefined },
     { id: "events", args: ["array"], prompt: `was the event trace {1} observed?` },
     { id: "check", args: ["boolean"], prompt: `does the condition {1} hold?` },

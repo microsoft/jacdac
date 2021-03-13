@@ -4,9 +4,9 @@
 
 import { parseIntFloat, getRegister, exprVisitor, getExpressionsOfType } from "./jdutils"
 import { testCommandFunctions, testExpressionFunctions } from "./jdtestfuns"
-import jsep, { ArrayExpression, ExpressionType } from "jsep"
+import jsep from "jsep"
 
-const supportedExpressions: ExpressionType[] = [
+const supportedExpressions: jsep.ExpressionType[] = [
     "ArrayExpression",
     "BinaryExpression",
     "CallExpression",
@@ -91,16 +91,22 @@ export function parseSpecificationTestMarkdownToJSON(
     }
 
     function processCommand(expanded: string) {
+        // TODO: if there is a prompt, the test has no commands, and
+        // TODO: the first command is not ask/say
+        // TODO: then add a say command
+
         if (!currentTest) {
             if (!testHeading)
                 error(`every test must have a description (via ##)`)
             currentTest = {
                 description: testHeading,
+                prompt: testPrompt,
                 registers: [],
                 events: [],
                 testCommands: [],
             }
             testHeading = ""
+            testPrompt = ""
         }
         const call = /^([a-zA-Z]\w*)\(.*\)$/.exec(expanded)
         if (!call) {

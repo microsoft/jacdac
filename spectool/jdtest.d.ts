@@ -40,6 +40,7 @@ declare namespace jdtest {
 
     interface TestSpec {
         description: string
+        prompt: string
         registers: string[]
         events: string[]
         testCommands: TestCommandSpec[]

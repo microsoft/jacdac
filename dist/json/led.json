@@ -98,7 +98,7 @@
       "kind": "command",
       "name": "animate",
       "identifier": 128,
-      "description": "Initiates a color transition from the current color.\nFor monochrome LEDs, the average value of ``red``, ``green``, ``blue`` is used.",
+      "description": "This has the same semantics as `set_status_light` in the control service.",
       "fields": [
         {
           "name": "to_red",

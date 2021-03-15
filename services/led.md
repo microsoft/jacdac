@@ -15,8 +15,7 @@ A controller for 1 or more monochrome or RGB LEDs connected in parallel.
         speed: u8
     }
 
-Initiates a color transition from the current color.
-For monochrome LEDs, the average value of ``red``, ``green``, ``blue`` is used.
+This has the same semantics as `set_status_light` in the control service.
 
 ## Registers
 

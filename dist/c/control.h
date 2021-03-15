@@ -38,6 +38,7 @@ typedef struct jd_control_services_report {
 
 /**
  * No args. Blink an LED or otherwise draw user's attention.
+ * TODO: this is being deprecated in favor of `set_status_light`.
  */
 #define JD_CONTROL_CMD_IDENTIFY 0x81
 
@@ -66,6 +67,25 @@ typedef struct jd_control_flood_ping_report {
     uint32_t counter;
     uint8_t dummy_payload[0];
 } jd_control_flood_ping_report_t;
+
+
+/**
+ * Initiates a color transition of the status light from its current color to the one specified.
+ * The transition will complete in about `512 / speed` frames
+ * (each frame is currently 100ms, so speed of `51` is about 1 second and `26` 0.5 second).
+ * As a special case, if speed is `0` the transition is immediate.
+ * If MCU is not capable of executing transitions, it can consider `speed` to be always `0`.
+ * If a monochrome LEDs is fitted, the average value of ``red``, ``green``, ``blue`` is used.
+ * If intensity of a monochrome LED cannot be controlled, any value larger than `0` should be considered
+ * on, and `0` (for all three channels) should be considered off.
+ */
+#define JD_CONTROL_CMD_SET_STATUS_LIGHT 0x84
+typedef struct jd_control_set_status_light {
+    uint8_t to_red;
+    uint8_t to_green;
+    uint8_t to_blue;
+    uint8_t speed;
+} jd_control_set_status_light_t;
 
 
 /**

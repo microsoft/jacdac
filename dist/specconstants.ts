@@ -1032,6 +1032,7 @@ export enum ControlCmd {
 
     /**
      * No args. Blink an LED or otherwise draw user's attention.
+     * TODO: this is being deprecated in favor of `set_status_light`.
      */
     Identify = 0x81,
 
@@ -1057,6 +1058,22 @@ export enum ControlCmd {
      * const [counter, dummyPayload] = jdunpack<[number, Uint8Array]>(buf, "u32 b")
      * ```
      */
+
+    /**
+     * Initiates a color transition of the status light from its current color to the one specified.
+     * The transition will complete in about `512 / speed` frames
+     * (each frame is currently 100ms, so speed of `51` is about 1 second and `26` 0.5 second).
+     * As a special case, if speed is `0` the transition is immediate.
+     * If MCU is not capable of executing transitions, it can consider `speed` to be always `0`.
+     * If a monochrome LEDs is fitted, the average value of ``red``, ``green``, ``blue`` is used.
+     * If intensity of a monochrome LED cannot be controlled, any value larger than `0` should be considered
+     * on, and `0` (for all three channels) should be considered off.
+     *
+     * ```
+     * const [toRed, toGreen, toBlue, speed] = jdunpack<[number, number, number, number]>(buf, "u8 u8 u8 u8")
+     * ```
+     */
+    SetStatusLight = 0x84,
 }
 
 export enum ControlReg {
@@ -1927,8 +1944,7 @@ export enum LedVariant { // uint8_t
 
 export enum LedCmd {
     /**
-     * Initiates a color transition from the current color.
-     * For monochrome LEDs, the average value of ``red``, ``green``, ``blue`` is used.
+     * This has the same semantics as `set_status_light` in the control service.
      *
      * ```
      * const [toRed, toGreen, toBlue, speed] = jdunpack<[number, number, number, number]>(buf, "u8 u8 u8 u8")

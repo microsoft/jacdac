@@ -11,8 +11,7 @@
 #define JD_LED_VARIANT_BEAD 0x4
 
 /**
- * Initiates a color transition from the current color.
- * For monochrome LEDs, the average value of ``red``, ``green``, ``blue`` is used.
+ * This has the same semantics as `set_status_light` in the control service.
  */
 #define JD_LED_CMD_ANIMATE 0x80
 typedef struct jd_led_animate {

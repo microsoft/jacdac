@@ -3546,6 +3546,19 @@ export enum RotaryEncoderReg {
     ClicksPerTurn = 0x180,
 }
 
+// Service: Rover
+export const SRV_ROVER = 0x0
+export enum RoverReg {
+    /**
+     * The current position and orientation of the robot.
+     *
+     * ```
+     * const [x, y, vx, vy, heading] = jdunpack<[number, number, number, number, number]>(buf, "i16.16 i16.16 i16.16 i16.16 i16.16")
+     * ```
+     */
+    Kinematics = 0x101,
+}
+
 // Service: Sensor Aggregator
 export const SRV_SENSOR_AGGREGATOR = 0x1d90e1c5
 

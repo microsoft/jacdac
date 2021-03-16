@@ -1,6 +1,6 @@
-# Robot Chassis
+# Rover
 
-A bidirectional drive robot.
+A roving robot.
 
 	identifier: 0x19f4d06b
 	extends: _sensor

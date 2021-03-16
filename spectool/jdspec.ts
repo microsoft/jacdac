@@ -140,6 +140,12 @@ export const secondaryUnitConverters: jdspec.SMap<{
         offset: 0,
     },
     "m/h": { name: "meter per hour", unit: "m/s", scale: 1 / 3600, offset: 0 },
+    "cm/s": {
+        name: "centimeter per seconds",
+        unit: "m/s",
+        scale: 1 / 100,
+        offset: 0,
+    },
     ppm: { name: "parts per million", unit: "/", scale: 1.0e-6, offset: 0 },
     ppb: { name: "parts per billion", unit: "/", scale: 1.0e-9, offset: 0 },
     "/100": { name: "percent", unit: "/", scale: 1 / 100, offset: 0 },
@@ -799,21 +805,21 @@ export function parseServiceSpecificationMarkdownToJSON(
                 tok = camelize(tok)
                 switch (tok) {
                     case "maxBytes":
-                        ; (field as any)[tok] = rangeCheck("u8", parseVal(words))
+                        ;(field as any)[tok] = rangeCheck("u8", parseVal(words))
                         break
                     case "typicalMin":
                     case "typicalMax":
                     case "absoluteMin":
                     case "absoluteMax":
-                        ; (field as any)[tok] = rangeCheck(tp, parseVal(words))
+                        ;(field as any)[tok] = rangeCheck(tp, parseVal(words))
                         break
                     case "preferredInterval":
                         if ((packetInfo as any)[tok] !== undefined)
                             error(`field ${tok} already set`)
-                                ; (packetInfo as any)[tok] = rangeCheck(
-                                    "u32",
-                                    parseVal(words)
-                                )
+                        ;(packetInfo as any)[tok] = rangeCheck(
+                            "u32",
+                            parseVal(words)
+                        )
                         break
                     default:
                         error("unknown constraint: " + tok)
@@ -910,7 +916,7 @@ export function parseServiceSpecificationMarkdownToJSON(
     }
 
     function genRandom() {
-        for (; ;) {
+        for (;;) {
             const m = (Math.random() * 0xfff_ffff) | 0x1000_0000
             if (looksRandom(m)) return m
         }
@@ -948,7 +954,8 @@ export function parseServiceSpecificationMarkdownToJSON(
                     error(
                         `class identifier ${toHex(
                             info.classIdentifier
-                        )} already used in ${usedIds[info.classIdentifier + ""]
+                        )} already used in ${
+                            usedIds[info.classIdentifier + ""]
                         }; ${gen}`
                     )
                 break
@@ -971,8 +978,8 @@ export function parseServiceSpecificationMarkdownToJSON(
                 else error("unknown status")
                 break
             case "group":
-                info.group = capitalize(words.slice(2).join(" "));
-                break;
+                info.group = capitalize(words.slice(2).join(" "))
+                break
             case "tags": {
                 const tags = words.slice(2).filter(w => w != "," && w != ";")
                 info.tags = info.tags.concat(tags)
@@ -1534,7 +1541,9 @@ function toTypescript(info: jdspec.ServiceSpec, staticTypeScript: boolean) {
     const enumkw = staticTypeScript
         ? indent + "export const enum"
         : "export enum"
-    let r = staticTypeScript ? `namespace ${TYPESCRIPT_STATIC_NAMESPACE} {\n` : ""
+    let r = staticTypeScript
+        ? `namespace ${TYPESCRIPT_STATIC_NAMESPACE} {\n`
+        : ""
     r += indent + "// Service: " + info.name + "\n"
     if (info.shortId[0] != "_") {
         r +=
@@ -1584,8 +1593,9 @@ function toTypescript(info: jdspec.ServiceSpec, staticTypeScript: boolean) {
             if (staticTypeScript && pkt.kind === "event") {
                 meta = `//% block="${snakify(pkt.name).replace(/_/g, " ")}"\n`
             }
-            text = `${wrapComment(cmt.comment + wrapSnippet(pack)) + meta
-                }${upperCamel(pkt.name)} = ${val},\n`
+            text = `${
+                wrapComment(cmt.comment + wrapSnippet(pack)) + meta
+            }${upperCamel(pkt.name)} = ${val},\n`
         }
 
         if (text) tsEnums[inner] = (tsEnums[inner] || "") + text
@@ -1657,6 +1667,11 @@ export function converters(): jdspec.SMap<(s: jdspec.ServiceSpec) => string> {
 }
 
 export function isNumericType(field: jdspec.PacketMember) {
-    const tp = field.type;
-    return !field.startRepeats && /^[uif]\d+(\.\d+)?$/.test(tp) && tp != "pipe_port" && tp != "bool"
+    const tp = field.type
+    return (
+        !field.startRepeats &&
+        /^[uif]\d+(\.\d+)?$/.test(tp) &&
+        tp != "pipe_port" &&
+        tp != "bool"
+    )
 }

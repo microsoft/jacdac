@@ -13,7 +13,7 @@
  * Read-only bytes. A register that returns a 64 bytes random buffer on every request.
  * This never blocks for a long time. If you need additional random bytes, keep querying the register.
  */
-#define JD_RNG_REG_RANDOM JD_REG_READING
+#define JD_RNG_REG_RANDOM 0x180
 
 /**
  * Constant Variant (uint8_t). The type of algorithm/technique used to generate the number.

@@ -96,7 +96,7 @@
     {
       "kind": "ro",
       "name": "random",
-      "identifier": 257,
+      "identifier": 384,
       "description": "A register that returns a 64 bytes random buffer on every request.\nThis never blocks for a long time. If you need additional random bytes, keep querying the register.",
       "fields": [
         {
@@ -107,7 +107,6 @@
           "isSimpleType": true
         }
       ],
-      "identifierName": "reading",
       "packFormat": "b"
     },
     {

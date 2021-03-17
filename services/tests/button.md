@@ -22,5 +22,5 @@ Press and hold the button for 500-1500ms and then release
 
 Press and hold the button for more than 1500ms 
 
-    events([down, long_click, hold, up])
+    events([down, hold])
 

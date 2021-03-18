@@ -821,6 +821,15 @@ export enum ButtonReg {
      * ```
      */
     Pressed = 0x101,
+
+    /**
+     * Read-write uint16_t. The amount of time a button needs to be held for a `hold` event to be generated.
+     *
+     * ```
+     * const [holdTime] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    HoldTime = 0x80,
 }
 
 export enum ButtonEvent {
@@ -830,7 +839,12 @@ export enum ButtonEvent {
     Down = 0x1,
 
     /**
-     * Emitted when button goes from active (`pressed == 1`) to inactive.
+     * Argument: time ms uint32_t. Emitted when button goes from active (`pressed == 1`) to inactive. The 'time' parameter
+     * records the amount of time between the down and up events.
+     *
+     * ```
+     * const [time] = jdunpack<[number]>(buf, "u32")
+     * ```
      */
     Up = 0x2,
 
@@ -840,14 +854,9 @@ export enum ButtonEvent {
     Click = 0x80,
 
     /**
-     * Emitted after button is held for 500ms. Long click events are followed by a separate up event.
+     * Emitted after the button is held for more than `hold_time' (default/minimum 500ms). Hold events are followed by a separate up event.
      */
-    LongClick = 0x81,
-
-    /**
-     * Emitted after the button is held for 1500ms. Hold events are followed by a separate up event.
-     */
-    Hold = 0x82,
+    Hold = 0x81,
 }
 
 // Service: Buzzer

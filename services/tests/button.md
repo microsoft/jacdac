@@ -12,15 +12,9 @@ Quickly press and release the button (within 500ms of press)
 
     events([down, up, click])
 
-## Long click
-
-Press and hold the button for 500-1500ms and then release
-
-    events([down, long_click, up])
-
 ## Hold
 
-Press and hold the button for more than 1500ms 
+Press and hold the button for more than 500ms 
 
     events([down, hold])
 

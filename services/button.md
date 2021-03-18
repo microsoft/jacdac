@@ -23,7 +23,9 @@ The amount of time a button needs to be held for a `hold` event to be generated.
 
 Emitted when button goes from inactive (`pressed == 0`) to active.
 
-    event up { time: u32 ms } @ inactive
+    event up @ inactive { 
+        time: u32 ms 
+    } 
 
 Emitted when button goes from active (`pressed == 1`) to inactive. The 'time' parameter 
 records the amount of time between the down and up events.

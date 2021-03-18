@@ -162,9 +162,9 @@
     },
     {
       "kind": "rw",
-      "name": "hold_time",
+      "name": "click_hold_time",
       "identifier": 128,
-      "description": "The amount of time a button needs to be held for a `hold` event to be generated.",
+      "description": "Threshold for `click` and `hold` events (see event descriptions below).",
       "fields": [
         {
           "name": "_",
@@ -172,8 +172,8 @@
           "type": "u32",
           "storage": 4,
           "isSimpleType": true,
-          "defaultValue": 1000000,
-          "absoluteMin": 500000
+          "defaultValue": 1000,
+          "absoluteMin": 500
         }
       ],
       "packFormat": "u32"
@@ -194,7 +194,7 @@
       "fields": [
         {
           "name": "time",
-          "unit": "us",
+          "unit": "ms",
           "type": "u32",
           "storage": 4,
           "isSimpleType": true
@@ -207,14 +207,14 @@
       "kind": "event",
       "name": "click",
       "identifier": 128,
-      "description": "Emitted together with `up` when the press time was not longer than 500ms.",
+      "description": "Emitted together with `up` when the press time is not longer than `click_hold_time`.",
       "fields": []
     },
     {
       "kind": "event",
       "name": "hold",
       "identifier": 129,
-      "description": "Emitted after the button is held for more than `hold_time'. Hold events are followed by a separate up event.",
+      "description": "Emitted after the button is held for more than `click_hold_time`. Hold events are followed by a separate up event.",
       "fields": []
     }
   ],

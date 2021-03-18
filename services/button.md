@@ -24,7 +24,7 @@ The amount of time a button needs to be held for a `hold` event to be generated.
 Emitted when button goes from inactive (`pressed == 0`) to active.
 
     event up @ inactive { 
-        time: u32 ms 
+        time: u16 ms 
     } 
 
 Emitted when button goes from active (`pressed == 1`) to inactive. The 'time' parameter 
@@ -36,5 +36,5 @@ Emitted together with `up` when the press time was not longer than 500ms.
 
     event hold @ 0x81
 
-Emitted after the button is held for more than `hold_time' (default/minimum 500ms). Hold events are followed by a separate up event.
+Emitted after the button is held for more than `hold_time'. Hold events are followed by a separate up event.
 

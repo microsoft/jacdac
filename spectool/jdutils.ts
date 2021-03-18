@@ -84,3 +84,23 @@ export function parseIntFloat(
         throw new Error(`${ww[1]} is not a member of ${ww[0]}`)
     return en.members[ww[1]] || 0
 }
+
+export function exprVisitor(parent: any, current: any, structVisit: (par:any, curr:any) => void) {
+    if (Array.isArray(current)) {
+        (current as any[]).forEach(c => exprVisitor(current, c, structVisit))
+    } else if (typeof current === "object") {
+        if (parent && current)
+            structVisit(parent, current)
+        Object.keys(current).forEach((key: string) => {
+            exprVisitor(current, current[key], structVisit)
+        })
+    }
+}
+export function getExpressionsOfType(expr: jsep.Expression | jsep.Expression[], type: string, returnParent = false) {
+    const results: jsep.Expression[] = []
+    exprVisitor(null, expr, (p,c) => {
+        if (p && c.type === type)
+        results.push(returnParent ? p : c)
+    })
+    return results
+}

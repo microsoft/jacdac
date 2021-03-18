@@ -1,32 +1,26 @@
 # Button tests
 
-## downUp: press down and up
-    
-press the button and release it immediately
+## press and release
 
-    say()
+Press and release the button (once)
 
-did you observe an Up event, followed by a Down event?
+    events([down, up])
 
-    ask()
+## quick press (click)
 
-## click: click the button
+Quickly press and release the button (within 500ms of press)
 
-press the button down for 500ms and less than 1500ms and release it
-    
-    say()
+    events([down, up, click])
 
-did you observe a Click event?
+## Long click
 
-    ask()
+Press and hold the button for 500-1500ms and then release
 
-## long click: hold the button
+    events([down, long_click, up])
 
-press the button down at least 1500ms and release it
+## Hold
 
-    say()
+Press and hold the button for more than 1500ms 
 
-did you observe a LongClick event?"
-
-    ask()
+    events([down, hold])
 

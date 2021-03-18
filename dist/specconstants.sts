@@ -3566,7 +3566,7 @@ namespace jacdac {
          * const [random] = jdunpack<[Buffer]>(buf, "b")
          * ```
          */
-        Random = 0x101,
+        Random = 0x180,
 
         /**
          * Constant Variant (uint8_t). The type of algorithm/technique used to generate the number.
@@ -3707,6 +3707,21 @@ namespace jacdac {
          * ```
          */
         ClicksPerTurn = 0x180,
+    }
+
+}
+namespace jacdac {
+    // Service: Rover
+    export const SRV_ROVER = 0x0
+    export const enum RoverReg {
+        /**
+         * The current position and orientation of the robot.
+         *
+         * ```
+         * const [x, y, vx, vy, heading] = jdunpack<[number, number, number, number, number]>(buf, "i16.16 i16.16 i16.16 i16.16 i16.16")
+         * ```
+         */
+        Kinematics = 0x101,
     }
 
 }

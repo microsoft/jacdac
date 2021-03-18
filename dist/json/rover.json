@@ -1,27 +1,17 @@
 {
-  "name": "Random Number Generator",
+  "name": "Rover",
   "status": "experimental",
-  "shortId": "rng",
-  "camelName": "rng",
-  "shortName": "rng",
+  "shortId": "rover",
+  "camelName": "rover",
+  "shortName": "rover",
   "extends": [
     "_base"
   ],
   "notes": {
-    "short": "Generates random numbers using entropy sourced from physical processes.\n\nThis typically uses a cryptographical pseudo-random number generator (for example [Fortuna](https://en.wikipedia.org/wiki/Fortuna_(PRNG))),\nwhich is periodically re-seeded with entropy coming from some hardware source."
+    "short": "A roving robot.\n\n\tidentifier: 0x19f4d06b\n\textends: _sensor"
   },
-  "classIdentifier": 394916002,
-  "enums": {
-    "Variant": {
-      "name": "Variant",
-      "storage": 1,
-      "members": {
-        "Quantum": 1,
-        "ADCNoise": 2,
-        "WebCrypto": 3
-      }
-    }
-  },
+  "classIdentifier": 0,
+  "enums": {},
   "packets": [
     {
       "kind": "const",
@@ -95,36 +85,48 @@
     },
     {
       "kind": "ro",
-      "name": "random",
-      "identifier": 384,
-      "description": "A register that returns a 64 bytes random buffer on every request.\nThis never blocks for a long time. If you need additional random bytes, keep querying the register.",
+      "name": "kinematics",
+      "identifier": 257,
+      "description": "The current position and orientation of the robot.",
       "fields": [
         {
-          "name": "_",
-          "unit": "",
-          "type": "bytes",
-          "storage": 0,
-          "isSimpleType": true
-        }
-      ],
-      "packFormat": "b"
-    },
-    {
-      "kind": "const",
-      "name": "variant",
-      "identifier": 263,
-      "description": "The type of algorithm/technique used to generate the number.\n`Quantum` refers to dedicated hardware device generating random noise due to quantum effects.\n`ADCNoise` is the noise from quick readings of analog-digital converter, which reads temperature of the MCU or some floating pin.\n`WebCrypto` refers is used in simulators, where the source of randomness comes from an advanced operating system.",
-      "fields": [
+          "name": "x",
+          "unit": "cm",
+          "shift": 16,
+          "type": "i16.16",
+          "storage": -4
+        },
         {
-          "name": "_",
-          "unit": "",
-          "type": "Variant",
-          "storage": 1
+          "name": "y",
+          "unit": "cm",
+          "shift": 16,
+          "type": "i16.16",
+          "storage": -4
+        },
+        {
+          "name": "vx",
+          "unit": "cm/s",
+          "shift": 16,
+          "type": "i16.16",
+          "storage": -4
+        },
+        {
+          "name": "vy",
+          "unit": "cm/s",
+          "shift": 16,
+          "type": "i16.16",
+          "storage": -4
+        },
+        {
+          "name": "heading",
+          "unit": "°",
+          "shift": 16,
+          "type": "i16.16",
+          "storage": -4
         }
       ],
-      "optional": true,
-      "identifierName": "variant",
-      "packFormat": "u8"
+      "identifierName": "reading",
+      "packFormat": "i16.16 i16.16 i16.16 i16.16 i16.16"
     }
   ],
   "tags": []

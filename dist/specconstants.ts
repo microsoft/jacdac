@@ -3407,7 +3407,7 @@ export enum RngReg {
      * const [random] = jdunpack<[Uint8Array]>(buf, "b")
      * ```
      */
-    Random = 0x101,
+    Random = 0x180,
 
     /**
      * Constant Variant (uint8_t). The type of algorithm/technique used to generate the number.
@@ -3543,6 +3543,19 @@ export enum RotaryEncoderReg {
      * ```
      */
     ClicksPerTurn = 0x180,
+}
+
+// Service: Rover
+export const SRV_ROVER = 0x0
+export enum RoverReg {
+    /**
+     * The current position and orientation of the robot.
+     *
+     * ```
+     * const [x, y, vx, vy, heading] = jdunpack<[number, number, number, number, number]>(buf, "i16.16 i16.16 i16.16 i16.16 i16.16")
+     * ```
+     */
+    Kinematics = 0x101,
 }
 
 // Service: Sensor Aggregator

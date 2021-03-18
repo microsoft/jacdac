@@ -157,7 +157,7 @@
       "kind": "command",
       "name": "identify",
       "identifier": 129,
-      "description": "Blink an LED or otherwise draw user's attention.",
+      "description": "Blink an LED or otherwise draw user's attention.\nTODO: this is being deprecated in favor of `set_status_light`.",
       "fields": [],
       "optional": true
     },
@@ -224,6 +224,43 @@
       ],
       "secondary": true,
       "packFormat": "u32 b"
+    },
+    {
+      "kind": "command",
+      "name": "set_status_light",
+      "identifier": 132,
+      "description": "Initiates a color transition of the status light from its current color to the one specified.\nThe transition will complete in about `512 / speed` frames\n(each frame is currently 100ms, so speed of `51` is about 1 second and `26` 0.5 second).\nAs a special case, if speed is `0` the transition is immediate.\nIf MCU is not capable of executing transitions, it can consider `speed` to be always `0`.\nIf a monochrome LEDs is fitted, the average value of ``red``, ``green``, ``blue`` is used.\nIf intensity of a monochrome LED cannot be controlled, any value larger than `0` should be considered\non, and `0` (for all three channels) should be considered off.",
+      "fields": [
+        {
+          "name": "to_red",
+          "unit": "",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "to_green",
+          "unit": "",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "to_blue",
+          "unit": "",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "speed",
+          "unit": "",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u8 u8 u8 u8"
     },
     {
       "kind": "rw",
@@ -381,52 +418,6 @@
       ],
       "optional": true,
       "packFormat": "s"
-    },
-    {
-      "kind": "rw",
-      "name": "status_light",
-      "identifier": 129,
-      "description": "Specifies a status light animation sequence on a colored or monochrome LED\nusing the [LED animation format](/spec/led-animation/).\nTypically, up to 8 steps (repeats) are supported.\n\nThe status light is also used by Jacdac software stack to indicate various status mode\nand this animation may be overridden when those modes are enabled.",
-      "fields": [
-        {
-          "name": "repetitions",
-          "unit": "",
-          "type": "u16",
-          "storage": 2,
-          "isSimpleType": true
-        },
-        {
-          "name": "hue",
-          "unit": "",
-          "type": "u8",
-          "storage": 1,
-          "isSimpleType": true,
-          "startRepeats": true
-        },
-        {
-          "name": "saturation",
-          "unit": "",
-          "type": "u8",
-          "storage": 1,
-          "isSimpleType": true
-        },
-        {
-          "name": "value",
-          "unit": "",
-          "type": "u8",
-          "storage": 1,
-          "isSimpleType": true
-        },
-        {
-          "name": "duration8",
-          "unit": "8ms",
-          "type": "u8",
-          "storage": 1,
-          "isSimpleType": true
-        }
-      ],
-      "optional": true,
-      "packFormat": "u16 r: u8 u8 u8 u8"
     }
   ],
   "tags": [

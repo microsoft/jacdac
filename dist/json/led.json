@@ -95,66 +95,72 @@
       "derived": "_base"
     },
     {
-      "kind": "rw",
-      "name": "brightness",
-      "identifier": 1,
-      "description": "Set the luminosity of the strip. The value is used to scale `value` in `steps` register.\nAt `0` the power to the strip is completely shut down.",
+      "kind": "command",
+      "name": "animate",
+      "identifier": 128,
+      "description": "This has the same semantics as `set_status_light` in the control service.",
       "fields": [
         {
-          "name": "_",
-          "unit": "/",
-          "shift": 16,
-          "type": "u0.16",
-          "storage": 2
+          "name": "to_red",
+          "unit": "",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "to_green",
+          "unit": "",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "to_blue",
+          "unit": "",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "speed",
+          "unit": "",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
         }
       ],
-      "identifierName": "intensity",
-      "packFormat": "u0.16"
+      "packFormat": "u8 u8 u8 u8"
     },
     {
-      "kind": "rw",
-      "name": "animation",
-      "identifier": 130,
-      "description": "Animations are described using pairs of color description and duration, \nsimilarly to the `status_light` register in the control service.\n`repetition` as ``0`` is considered infinite.\nFor monochrome LEDs, the hue and saturation are ignored.\nA specification `(red, 80ms), (blue, 40ms), (blue, 0ms), (yellow, 80ms)`\nmeans to start with red, cross-fade to blue over 80ms, stay blue for 40ms,\nchange to yellow, and cross-fade back to red in 80ms.",
+      "kind": "ro",
+      "name": "color",
+      "identifier": 257,
+      "description": "The current color of the LED.",
       "fields": [
         {
-          "name": "repetitions",
-          "unit": "",
-          "type": "u16",
-          "storage": 2,
-          "isSimpleType": true
-        },
-        {
-          "name": "hue",
-          "unit": "",
-          "type": "u8",
-          "storage": 1,
-          "isSimpleType": true,
-          "startRepeats": true
-        },
-        {
-          "name": "saturation",
+          "name": "red",
           "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true
         },
         {
-          "name": "value",
+          "name": "green",
           "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true
         },
         {
-          "name": "duration",
-          "unit": "8ms",
+          "name": "blue",
+          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true
         }
       ],
-      "packFormat": "u16 r: u8 u8 u8 u8"
+      "identifierName": "reading",
+      "packFormat": "u8 u8 u8"
     },
     {
       "kind": "rw",

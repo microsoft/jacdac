@@ -1106,6 +1106,7 @@ namespace jacdac {
 
         /**
          * No args. Blink an LED or otherwise draw user's attention.
+         * TODO: this is being deprecated in favor of `set_status_light`.
          */
         Identify = 0x81,
 
@@ -1131,6 +1132,22 @@ namespace jacdac {
          * const [counter, dummyPayload] = jdunpack<[number, Buffer]>(buf, "u32 b")
          * ```
          */
+
+        /**
+         * Initiates a color transition of the status light from its current color to the one specified.
+         * The transition will complete in about `512 / speed` frames
+         * (each frame is currently 100ms, so speed of `51` is about 1 second and `26` 0.5 second).
+         * As a special case, if speed is `0` the transition is immediate.
+         * If MCU is not capable of executing transitions, it can consider `speed` to be always `0`.
+         * If a monochrome LEDs is fitted, the average value of ``red``, ``green``, ``blue`` is used.
+         * If intensity of a monochrome LED cannot be controlled, any value larger than `0` should be considered
+         * on, and `0` (for all three channels) should be considered off.
+         *
+         * ```
+         * const [toRed, toGreen, toBlue, speed] = jdunpack<[number, number, number, number]>(buf, "u8 u8 u8 u8")
+         * ```
+         */
+        SetStatusLight = 0x84,
     }
 
     export const enum ControlReg {
@@ -1216,18 +1233,6 @@ namespace jacdac {
          * ```
          */
         FirmwareUrl = 0x188,
-
-        /**
-         * Specifies a status light animation sequence on a colored or monochrome LED
-         * using the [LED animation format](/spec/led-animation/).
-         * Typically, up to 8 steps (repeats) are supported.
-         *
-         * ```
-         * const [repetitions, rest] = jdunpack<[number, ([number, number, number, number])[]]>(buf, "u16 r: u8 u8 u8 u8")
-         * const [hue, saturation, value, duration8] = rest[0]
-         * ```
-         */
-        StatusLight = 0x81,
     }
 
 }
@@ -2040,32 +2045,26 @@ namespace jacdac {
         Bead = 0x4,
     }
 
+    export const enum LedCmd {
+        /**
+         * This has the same semantics as `set_status_light` in the control service.
+         *
+         * ```
+         * const [toRed, toGreen, toBlue, speed] = jdunpack<[number, number, number, number]>(buf, "u8 u8 u8 u8")
+         * ```
+         */
+        Animate = 0x80,
+    }
+
     export const enum LedReg {
         /**
-         * Read-write ratio u0.16 (uint16_t). Set the luminosity of the strip. The value is used to scale `value` in `steps` register.
-         * At `0` the power to the strip is completely shut down.
+         * The current color of the LED.
          *
          * ```
-         * const [brightness] = jdunpack<[number]>(buf, "u0.16")
+         * const [red, green, blue] = jdunpack<[number, number, number]>(buf, "u8 u8 u8")
          * ```
          */
-        Brightness = 0x1,
-
-        /**
-         * Animations are described using pairs of color description and duration,
-         * similarly to the `status_light` register in the control service.
-         * `repetition` as ``0`` is considered infinite.
-         * For monochrome LEDs, the hue and saturation are ignored.
-         * A specification `(red, 80ms), (blue, 40ms), (blue, 0ms), (yellow, 80ms)`
-         * means to start with red, cross-fade to blue over 80ms, stay blue for 40ms,
-         * change to yellow, and cross-fade back to red in 80ms.
-         *
-         * ```
-         * const [repetitions, rest] = jdunpack<[number, ([number, number, number, number])[]]>(buf, "u16 r: u8 u8 u8 u8")
-         * const [hue, saturation, value, duration] = rest[0]
-         * ```
-         */
-        Animation = 0x82,
+        Color = 0x101,
 
         /**
          * Read-write mA uint16_t. Limit the power drawn by the light-strip (and controller).

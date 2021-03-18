@@ -27,10 +27,6 @@ Emitted when button goes from active (`pressed == 1`) to inactive.
 
 Emitted together with `up` when the press time was not longer than 500ms.
 
-    event long_click @ 0x81
-
-Emitted after button is held for 500ms. Long click events are followed by a separate up event.
-
-    event hold @ 0x82
+    event hold @ 0x81
 
 Emitted after the button is held for 1500ms. Hold events are followed by a separate up event.

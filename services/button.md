@@ -13,6 +13,10 @@ A push-button, which returns to inactive position when not operated anymore.
 
 Indicates whether the button is currently active (pressed).
 
+    rw hold_time: u16 { absolute_min=500 } ms @ 0x80
+
+The amount of time a button needs to be held for a `hold` event to be generated.
+
 ## Events
 
     event down @ active
@@ -29,4 +33,5 @@ Emitted together with `up` when the press time was not longer than 500ms.
 
     event hold @ 0x81
 
-Emitted after the button is held for 1500ms. Hold events are followed by a separate up event.
+Emitted after the button is held for more than `hold_time' (default/minimum 500ms). Hold events are followed by a separate up event.
+

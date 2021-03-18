@@ -169,13 +169,14 @@
         {
           "name": "_",
           "unit": "",
-          "type": "u16",
-          "storage": 2,
+          "type": "u32",
+          "storage": 4,
           "isSimpleType": true,
-          "absoluteMin": 500
+          "defaultValue": 1000000,
+          "absoluteMin": 500000
         }
       ],
-      "packFormat": "u16"
+      "packFormat": "u32"
     },
     {
       "kind": "event",
@@ -193,7 +194,7 @@
       "fields": [
         {
           "name": "time",
-          "unit": "ms",
+          "unit": "us",
           "type": "u32",
           "storage": 4,
           "isSimpleType": true
@@ -213,7 +214,7 @@
       "kind": "event",
       "name": "hold",
       "identifier": 129,
-      "description": "Emitted after the button is held for more than `hold_time' (default/minimum 500ms). Hold events are followed by a separate up event.",
+      "description": "Emitted after the button is held for more than `hold_time'. Hold events are followed by a separate up event.",
       "fields": []
     }
   ],

@@ -1970,7 +1970,7 @@ export enum LedReg {
      * const [red, green, blue] = jdunpack<[number, number, number]>(buf, "u8 u8 u8")
      * ```
      */
-    Color = 0x101,
+    Color = 0x180,
 
     /**
      * Read-write mA uint16_t. Limit the power drawn by the light-strip (and controller).

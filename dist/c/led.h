@@ -25,7 +25,7 @@ typedef struct jd_led_animate {
 /**
  * The current color of the LED.
  */
-#define JD_LED_REG_COLOR JD_REG_READING
+#define JD_LED_REG_COLOR 0x180
 typedef struct jd_led_color {
     uint8_t red;
     uint8_t green;

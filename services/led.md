@@ -19,7 +19,7 @@ This has the same semantics as `set_status_light` in the control service.
 
 ## Registers
 
-    ro color @ reading {
+    ro color @ 0x180 {
         red: u8
         green: u8
         blue: u8

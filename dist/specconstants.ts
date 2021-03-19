@@ -849,12 +849,12 @@ export enum ButtonEvent {
     Up = 0x2,
 
     /**
-     * Emitted together with `up` when the press time is not longer than `click_hold_time`.
+     * Emitted together with `up` when the press time less than or equal to `click_hold_time`.
      */
     Click = 0x80,
 
     /**
-     * Emitted after the button is held for more than `click_hold_time`. Hold events are followed by a separate up event.
+     * Emitted when the press times is greater than `click_hold_time`. Hold events are followed by a separate up event.
      */
     Hold = 0x81,
 }

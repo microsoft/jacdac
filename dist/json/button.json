@@ -207,14 +207,14 @@
       "kind": "event",
       "name": "click",
       "identifier": 128,
-      "description": "Emitted together with `up` when the press time is not longer than `click_hold_time`.",
+      "description": "Emitted together with `up` when the press time less than or equal to `click_hold_time`.",
       "fields": []
     },
     {
       "kind": "event",
       "name": "hold",
       "identifier": 129,
-      "description": "Emitted after the button is held for more than `click_hold_time`. Hold events are followed by a separate up event.",
+      "description": "Emitted when the press times is greater than `click_hold_time`. Hold events are followed by a separate up event.",
       "fields": []
     }
   ],

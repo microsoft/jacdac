@@ -25,3 +25,10 @@ Press and hold the button for between two and five seconds
     assign(click_hold_time, 5000)
     events([down, up, click])
 
+## Device resets threshold to 500 ms (on value < 500)
+
+This test requires no user input.
+
+    assign(click_hold_time, 0)
+    check(click_hold_time === 500)
+

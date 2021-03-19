@@ -26,12 +26,12 @@
 #define JD_BUTTON_EV_UP JD_EV_INACTIVE
 
 /**
- * Emitted together with `up` when the press time is not longer than `click_hold_time`.
+ * Emitted together with `up` when the press time less than or equal to `click_hold_time`.
  */
 #define JD_BUTTON_EV_CLICK 0x80
 
 /**
- * Emitted after the button is held for more than `click_hold_time`. Hold events are followed by a separate up event.
+ * Emitted when the press times is greater than `click_hold_time`. Hold events are followed by a separate up event.
  */
 #define JD_BUTTON_EV_HOLD 0x81
 

@@ -134,7 +134,7 @@
     {
       "kind": "ro",
       "name": "color",
-      "identifier": 257,
+      "identifier": 384,
       "description": "The current color of the LED.",
       "fields": [
         {
@@ -159,7 +159,6 @@
           "isSimpleType": true
         }
       ],
-      "identifierName": "reading",
       "packFormat": "u8 u8 u8"
     },
     {

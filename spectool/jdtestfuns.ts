@@ -12,11 +12,13 @@ export type Commands =
     | "stepsUpTo"
     | "stepsDownTo"
     | "events"
+    | "assign"
 
 export const testCommandFunctions: jdtest.TestFunctionDescription[] = [
     { id: "changes", args: ["register"], prompt: `did the value of {1} change?` },
     { id: "ask", args: [], prompt: undefined },
     { id: "events", args: ["array"], prompt: `was the event trace {1} observed?` },
+    { id: "assign", args: ["register", "number"], prompt: `write value {2:val} to {1}` },
     { id: "check", args: ["boolean"], prompt: `does the condition {1} hold?` },
     {
         id: "increases",

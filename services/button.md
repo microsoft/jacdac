@@ -13,7 +13,7 @@ A push-button, which returns to inactive position when not operated anymore.
 
 Indicates whether the button is currently active (pressed).
 
-    rw click_hold_time = 1000: u16 { absolute_min=500 } ms @ 0x80
+    rw click_hold_time = 1000: u32 { absolute_min=500 } ms @ 0x80
 
 Threshold for `click` and `hold` events (see event descriptions below).
 
@@ -24,7 +24,7 @@ Threshold for `click` and `hold` events (see event descriptions below).
 Emitted when button goes from inactive (`pressed == 0`) to active.
 
     event up @ inactive { 
-        time: u16 ms 
+        time: u32 ms 
     } 
 
 Emitted when button goes from active (`pressed == 1`) to inactive. The 'time' parameter 

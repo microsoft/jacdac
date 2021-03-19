@@ -13,24 +13,27 @@ A push-button, which returns to inactive position when not operated anymore.
 
 Indicates whether the button is currently active (pressed).
 
+    rw click_hold_time = 1000: u32 { absolute_min=500 } ms @ 0x80
+
+Threshold for `click` and `hold` events (see event descriptions below).
+
 ## Events
 
     event down @ active
 
 Emitted when button goes from inactive (`pressed == 0`) to active.
 
-    event up @ inactive
+    event up @ inactive { 
+        time: u32 ms 
+    } 
 
-Emitted when button goes from active (`pressed == 1`) to inactive.
+Emitted when button goes from active (`pressed == 1`) to inactive. The 'time' parameter 
+records the amount of time between the down and up events.
 
     event click @ 0x80
 
-Emitted together with `up` when the press time was not longer than 500ms.
+Emitted together with `up` when the press time less than or equal to `click_hold_time`.
 
-    event long_click @ 0x81
+    event hold @ 0x81
 
-Emitted after button is held for 500ms. Long click events are followed by a separate up event.
-
-    event hold @ 0x82
-
-Emitted after the button is held for 1500ms. Hold events are followed by a separate up event.
+Emitted when the press times is greater than `click_hold_time`. Hold events are followed by a separate up event.

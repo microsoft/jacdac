@@ -9,7 +9,8 @@ A service test is a markdown file that contains a number of unit tests for a
 given service. 
 
 ```info
-Use the [service test editor](/tools/service-test-editor/) to
+Use the [service test dashboard](../tools/service-test/) to run tests on devices. 
+Use the [service test editor](../tools/service-test-editor/) to
 view, create and edit tests.
 ```
 
@@ -28,16 +29,17 @@ a sequence of test commands.
 A test command is a single line JavaScript function call, indented. We currently
 support the following calls:
 
+- **assign**(*register*,*expr*): assigns the value of *expr* to *register*
 - **ask**(): ask the user to give a Yes/No answer to the question specified in preceding markdown
 - **check**(*expr*): check if the *expr* evaluates true (can make use of the **start** test expression)
 - **changes**(*expr*): check if the *expr* changes
 - **increases**(*register*): check if *register* increases in value
 - **decreases**(*register*): check if *register* decreases in value
-- **increasesBy**(*register*,*expr*): check if *register* increases in value by *expr*
-- **decreasesBy**(*register*,*expr*): check if *register* decreases in value by *expr*
-- **rangesFromUpTo**(*register*,*startExpr*,*endExpr*): check if register increases from startExpr to endExpr (and integer values in between)
-- **rangesFromDownTo**(*register*,*startExpr*,*endExpr*): check if register decreases from startExpr to endExpr (and integer values in between
-- **reset**(): send reset command to device
+- **increasesBy**(*register*,*expr*): check if *register* increases in value by at least *expr*
+- **decreasesBy**(*register*,*expr*): check if *register* decreases in value by at least *expr*
+- **stepsUpTo**(*register*,*startExpr*,*endExpr*): check if register increases from startExpr to endExpr (and integer values in between)
+- **stepsDownTo**(*register*,*startExpr*,*endExpr*): check if register decreases from startExpr to endExpr (and integer values in between
+- **events**([*event1*, *event2*...]): checks for the given sequence of events
 
 ## Test expressions
 

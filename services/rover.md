@@ -2,8 +2,8 @@
 
 A roving robot.
 
-	identifier: 0x19f4d06b
-	extends: _sensor
+    identifier: 0x19f4d06b
+    extends: _sensor
 
 ## Registers
 

@@ -5,12 +5,13 @@
   "camelName": "rover",
   "shortName": "rover",
   "extends": [
-    "_base"
+    "_base",
+    "_sensor"
   ],
   "notes": {
-    "short": "A roving robot.\n\n\tidentifier: 0x19f4d06b\n\textends: _sensor"
+    "short": "A roving robot."
   },
-  "classIdentifier": 0,
+  "classIdentifier": 435474539,
   "enums": {},
   "packets": [
     {
@@ -82,6 +83,66 @@
       "identifierName": "status_code_changed",
       "packFormat": "u16 u16",
       "derived": "_base"
+    },
+    {
+      "kind": "rw",
+      "name": "streaming_samples",
+      "identifier": 3,
+      "description": "Asks device to stream a given number of samples\n(clients will typically write `255` to this register every second or so, while streaming is required).",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        }
+      ],
+      "internal": true,
+      "identifierName": "streaming_samples",
+      "packFormat": "u8",
+      "derived": "_sensor"
+    },
+    {
+      "kind": "rw",
+      "name": "streaming_interval",
+      "identifier": 4,
+      "description": "Period between packets of data when streaming in milliseconds.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "ms",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true,
+          "defaultValue": 100,
+          "typicalMin": 1,
+          "typicalMax": 60000
+        }
+      ],
+      "identifierName": "streaming_interval",
+      "packFormat": "u32",
+      "derived": "_sensor"
+    },
+    {
+      "kind": "const",
+      "name": "streaming_preferred_interval",
+      "identifier": 258,
+      "description": "Preferred default streaming interval for sensor in milliseconds.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "ms",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        }
+      ],
+      "internal": true,
+      "optional": true,
+      "identifierName": "streaming_preferred_interval",
+      "packFormat": "u32",
+      "derived": "_sensor"
     },
     {
       "kind": "ro",

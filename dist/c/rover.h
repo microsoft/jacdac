@@ -2,7 +2,7 @@
 #ifndef _JACDAC_SPEC_ROVER_H
 #define _JACDAC_SPEC_ROVER_H 1
 
-#define JD_SERVICE_CLASS_ROVER  0x0
+#define JD_SERVICE_CLASS_ROVER  0x19f4d06b
 
 /**
  * The current position and orientation of the robot.

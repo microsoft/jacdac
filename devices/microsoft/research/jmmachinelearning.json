@@ -4,7 +4,7 @@
   "company": "Microsoft Research",
   "description": "Lets you run machine learning models on data coming from Jacdac network.",
   "repo": "https://github.com/microsoft/pxt-tensorflow",
-  "link": "https://github.com/microsoft/jacdac-stm32x0",
+  "link": "https://github.com/microsoft/jacdac-msr-modules",
   "services": [
     336566904,
     496034245

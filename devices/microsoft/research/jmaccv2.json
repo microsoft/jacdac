@@ -3,8 +3,8 @@
   "name": "JM Acc v2",
   "company": "Microsoft Research",
   "description": "A 3-axis accelerometer. 16G range.",
-  "repo": "https://github.com/microsoft/jacdac-stm32x0",
-  "link": "https://github.com/microsoft/jacdac-stm32x0",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "link": "https://github.com/microsoft/jacdac-msr-modules",
   "services": [
     521405449
   ],

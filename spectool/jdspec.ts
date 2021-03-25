@@ -466,6 +466,19 @@ export function parseServiceSpecificationMarkdownToJSON(
                     .join(", ")}`
             )
 
+
+        // additional checks for specific packets
+        if (["reading_error", "min_reading", "max_reading", "reading_resolution"].indexOf(packetInfo.identifierName) > -1) {
+            const regid = packetInfo.identifierName
+            if (packetInfo.fields.length > 1)
+                error(`${regid} must be a number`)
+            const reading = info.packets.find(pkt => pkt.kind === "ro" && pkt.identifierName === "reading");
+            if (!reading)
+                error(`${regid} register without a reading register`)
+            else if (packetInfo.fields[0].unit !== reading.fields[0].unit)
+                error(`${regid} unit (${packetInfo.fields[0].unit}) and reading unit (${reading.fields[0].unit}) must match`)
+        }
+
         packetInfo = null
     }
 

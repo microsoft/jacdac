@@ -973,7 +973,7 @@ export enum ColorReg {
 export const SRV_COMPASS = 0x15b7b9bf
 export enum CompassReg {
     /**
-     * Read-only u16.16 (uint32_t). The heading with respect to the magnetic north.
+     * Read-only ° u16.16 (uint32_t). The heading with respect to the magnetic north.
      *
      * ```
      * const [heading] = jdunpack<[number]>(buf, "u16.16")
@@ -1487,7 +1487,7 @@ export enum HumidityReg {
     HumidityError = 0x106,
 
     /**
-     * Constant °C u22.10 (uint32_t). Lowest humidity that can be reported.
+     * Constant %RH u22.10 (uint32_t). Lowest humidity that can be reported.
      *
      * ```
      * const [minHumidity] = jdunpack<[number]>(buf, "u22.10")
@@ -1496,7 +1496,7 @@ export enum HumidityReg {
     MinHumidity = 0x104,
 
     /**
-     * Constant °C u22.10 (uint32_t). Highest humidity that can be reported.
+     * Constant %RH u22.10 (uint32_t). Highest humidity that can be reported.
      *
      * ```
      * const [maxHumidity] = jdunpack<[number]>(buf, "u22.10")
@@ -4735,7 +4735,7 @@ export enum WifiEvent {
 export const SRV_WIND_DIRECTION = 0x186be92b
 export enum WindDirectionReg {
     /**
-     * Read-only uint16_t. The direction of the wind.
+     * Read-only ° uint16_t. The direction of the wind.
      *
      * ```
      * const [windDirection] = jdunpack<[number]>(buf, "u16")

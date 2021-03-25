@@ -7,7 +7,7 @@ A sensor that measures the heading.
 
 ## Registers
 
-    ro heading: u16.16 { absolute_min=0, absolute_max=359, preferred_interval=1000 } ° @ reading
+    ro heading: u16.16 ° { absolute_min=0, absolute_max=359, preferred_interval=1000 } @ reading
 
 The heading with respect to the magnetic north.
 

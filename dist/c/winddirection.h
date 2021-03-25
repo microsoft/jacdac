@@ -5,7 +5,7 @@
 #define JD_SERVICE_CLASS_WIND_DIRECTION  0x186be92b
 
 /**
- * Read-only uint16_t. The direction of the wind.
+ * Read-only ° uint16_t. The direction of the wind.
  */
 #define JD_WIND_DIRECTION_REG_WIND_DIRECTION JD_REG_READING
 

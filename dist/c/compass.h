@@ -5,7 +5,7 @@
 #define JD_SERVICE_CLASS_COMPASS  0x15b7b9bf
 
 /**
- * Read-only u16.16 (uint32_t). The heading with respect to the magnetic north.
+ * Read-only ° u16.16 (uint32_t). The heading with respect to the magnetic north.
  */
 #define JD_COMPASS_REG_HEADING JD_REG_READING
 

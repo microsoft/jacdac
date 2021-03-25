@@ -19,10 +19,10 @@ The relative humidity in percentage of full water saturation.
 
 The real humidity is between `humidity - humidity_error` and `humidity + humidity_error`.
 
-    const min_humidity = 0: u22.10 °C @ min_reading
+    const min_humidity = 0: u22.10 %RH @ min_reading
 
 Lowest humidity that can be reported.
 
-    const max_humidity = 100: u22.10 °C @ max_reading
+    const max_humidity = 100: u22.10 %RH @ max_reading
 
 Highest humidity that can be reported.

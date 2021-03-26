@@ -22,6 +22,9 @@ export function parseSpecificationTestMarkdownToJSON(
     spec: jdspec.ServiceSpec,
     filename = ""
 ): jdtest.ServiceTestSpec {
+    if (!spec)
+        return undefined;
+
     filecontent = (filecontent || "").replace(/\r/g, "")
     const info: jdtest.ServiceTestSpec = {
         description: "",
@@ -132,7 +135,7 @@ export function parseSpecificationTestMarkdownToJSON(
             error(`a command must be a call expression in JavaScript syntax`)
         } else {
             // check for unsupported expression types
-            exprVisitor(null, root, (p,c) => {
+            exprVisitor(null, root, (p, c) => {
                 if (supportedExpressions.indexOf(c.type) < 0)
                     error(`Expression of type ${c.type} not currently supported`)
             })
@@ -143,14 +146,14 @@ export function parseSpecificationTestMarkdownToJSON(
                     `${callee} expects ${expected} arguments; got ${root.arguments.length}`
                 )
             else {
-                root.arguments.forEach((arg,a) => {
+                root.arguments.forEach((arg, a) => {
                     if (testCommandFunctions[index].args[a] === "register" && arg.type !== "Identifier") {
-                        error (
-                            `${callee} expects a register in argument position ${a+1}`
+                        error(
+                            `${callee} expects a register in argument position ${a + 1}`
                         )
                     }
                 })
-                const callers = <jsep.CallExpression[]>getExpressionsOfType(root,'CallExpression')
+                const callers = <jsep.CallExpression[]>getExpressionsOfType(root, 'CallExpression')
                 callers.forEach(callExpr => {
                     if (callExpr.callee.type !== "Identifier")
                         error(`all calls must be direct calls`)
@@ -165,7 +168,7 @@ export function parseSpecificationTestMarkdownToJSON(
                     if (id === 'start') {
                         if (callee !== 'check')
                             error("start expression function can only be used inside check test function")
-                        const callsUnder = <jsep.CallExpression[]>getExpressionsOfType(callExpr,'CallExpression')
+                        const callsUnder = <jsep.CallExpression[]>getExpressionsOfType(callExpr, 'CallExpression')
                         callsUnder.forEach(ce => {
                             if (ce.callee.type === "Identifier" && (<jsep.Identifier>ce.callee).name === "start")
                                 error("cannot nest start underneath start")
@@ -180,12 +183,12 @@ export function parseSpecificationTestMarkdownToJSON(
                 })
                 // context sensitive checking/lookup/resolution
                 if (callee === 'events') {
-                    let eventList = root.arguments[0]
+                    const eventList = root.arguments[0]
                     if (eventList.type != 'ArrayExpression')
                         error(`events function expects a list of service events`)
                     else {
                         const elements = (eventList as jsep.ArrayExpression).elements
-                        let events = spec.packets?.filter(pkt => pkt.kind == "event")
+                        const events = spec.packets?.filter(pkt => pkt.kind == "event")
                         elements.forEach(e => {
                             if (e.type !== 'Identifier')
                                 error(`event identifier expected`)
@@ -199,17 +202,17 @@ export function parseSpecificationTestMarkdownToJSON(
                                 }
                             }
                         })
-                    } 
+                    }
                 } else {
                     const exprs = <any[]>getExpressionsOfType(root, 'Identifier', true)
-                    let visited: any[] = []
+                    const visited: any[] = []
                     exprs.forEach(parent => {
                         if (visited.indexOf(parent) < 0) {
                             visited.push(parent)
                             lookupReplace(parent)
                         }
                     })
-                    exprVisitor(null, root, (p,c) => {
+                    exprVisitor(null, root, (p, c) => {
                         if (c.type === 'ArrayExpression')
                             error(
                                 `array expression not allowed in this context`

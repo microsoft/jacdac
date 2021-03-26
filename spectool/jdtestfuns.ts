@@ -15,30 +15,30 @@ export type Commands =
     | "assign"
 
 export const testCommandFunctions: jdtest.TestFunctionDescription[] = [
-    { id: "changes", args: ["register"], prompt: `did the value of {1} change?` },
+    { id: "changes", args: ["register"], prompt: `check that {1} changes` },
     { id: "ask", args: [], prompt: undefined },
-    { id: "events", args: ["array"], prompt: `was the event trace {1} observed?` },
+    { id: "events", args: ["array"], prompt: `check that events {1} are observed` },
     { id: "assign", args: ["register", "number"], prompt: `write value {2:val} to {1}` },
-    { id: "check", args: ["boolean"], prompt: `does the condition {1} hold?` },
+    { id: "check", args: ["boolean"], prompt: `check that {1}` },
     {
         id: "increases",
         args: ["register"],
-        prompt: `did the value of {1} increase?`,
+        prompt: `check that {1} increases`,
     },
     {
         id: "decreases",
         args: ["register"],
-        prompt: `did the value of {1} decrease?`,
+        prompt: `check that {1} decreases`,
     },
     {
         id: "increasesBy",
         args: ["register", "number"],
-        prompt: `did the value of {1} (initially {1:val}) increase by {2:val}?`,
+        prompt: `check that  {1} (initially {1:val}) increases by {2:val}`,
     },
     {
         id: "decreasesBy",
         args: ["register", "number"],
-        prompt: `did the value of {1} (initially {1:val}) decrease by {2:val}?`,
+        prompt: `check that {1} (initially {1:val}) decreases by {2:val}`,
     },
     {
         id: "stepsUpTo",

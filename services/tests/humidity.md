@@ -1,5 +1,12 @@
 # Humidity tests
 
+## in range
+
+Check that thermometer temperature is in expected range
+
+    check(humidity <= max_humidity + humidity_error)
+    check(min_humidity - humidity_error <= humidity )
+
 ## increases
     
 blow on the sensor

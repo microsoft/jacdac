@@ -1,0 +1,14 @@
+{
+  "id": "microsoft-research-humiditymodulesample",
+  "name": "Humidity Module Sample",
+  "company": "Microsoft Research",
+  "description": "JM TEMP HUMIDITY 18-1.0A",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "services": [
+    337754823,
+    382210232
+  ],
+  "firmwares": [
+    899442616
+  ]
+}

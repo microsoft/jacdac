@@ -1,14 +1,19 @@
 # Thermometer tests
 
-## in range
-
-Check that thermometer temperature is in expected range
-
-    check(temperature <= max_temperature+temperature_error)
-    check(min_temperature-temperature_error <= temperature)
+## increases
     
-## increase temperature
+heat up the sensor
 
-Blow on the sensor to increase the temperature by one degree C
+    increasesBy(temperature, 2)
 
-    increasesBy(temperature, 1.0)
+## decreases
+    
+let the sensor cool down
+
+    decreasesBy(temperature, 2)
+
+## calibrate
+
+measure temperature using a calibrated sensor and check value
+
+    ask()

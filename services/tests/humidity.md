@@ -10,5 +10,10 @@ blow on the sensor
     
 let the sensor rest
 
-    decreasesBy(humidity, 5)
+    decreasesBy(humidity, 4)
 
+## calibrate
+
+measure humidity using a calibrated sensor and check value
+
+    ask()

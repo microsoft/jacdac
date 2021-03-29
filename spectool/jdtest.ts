@@ -276,15 +276,6 @@ export function parseSpecificationTestMarkdownToJSON(
                         value: val,
                         raw: val.toString(),
                     }
-                    /*TODO: replace the Identifier by the (resolved) Literal
-                    if (parent.type) {
-                        Object.keys(parent).forEach((key:string) => {
-                            if (Object.getOwnPropertyDescriptor(parent,key) == child)
-                                Object.defineProperty(parent, key, lit);
-                        })
-                    } else {
-    
-                    }*/
                 } catch (e) {
                     let [root,fld] = toName()
                     getRegister(spec, `${root}.${fld}`)

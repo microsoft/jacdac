@@ -104,3 +104,12 @@ export function getExpressionsOfType(expr: jsep.Expression | jsep.Expression[], 
     })
     return results
 }
+
+export function getExpressionsOfTypeWithParent(parent: jsep.Expression, expr: jsep.Expression | jsep.Expression[], type: string, returnParent = false) {
+    const results: jsep.Expression[] = []
+    exprVisitor(parent, expr, (p,c) => {
+        if (p && c.type === type)
+        results.push(returnParent ? p : c)
+    })
+    return results
+}

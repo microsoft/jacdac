@@ -189,8 +189,17 @@
       "kind": "event",
       "name": "hold",
       "identifier": 129,
-      "description": "Emitted when the press time is greater than 500ms, and then every 500ms as long\nas the button remains pressed.",
-      "fields": []
+      "description": "Emitted when the press time is greater than 500ms, and then at least every 500ms \nas long as the button remains pressed. The 'time' parameter records the the amount of time\nthat the button has been held (since the down event).",
+      "fields": [
+        {
+          "name": "time",
+          "unit": "ms",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u32"
     }
   ],
   "tags": [

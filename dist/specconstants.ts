@@ -840,8 +840,13 @@ export enum ButtonEvent {
     Up = 0x2,
 
     /**
-     * Emitted when the press time is greater than 500ms, and then every 500ms as long
-     * as the button remains pressed.
+     * Argument: time ms uint32_t. Emitted when the press time is greater than 500ms, and then at least every 500ms
+     * as long as the button remains pressed. The 'time' parameter records the the amount of time
+     * that the button has been held (since the down event).
+     *
+     * ```
+     * const [time] = jdunpack<[number]>(buf, "u32")
+     * ```
      */
     Hold = 0x81,
 }

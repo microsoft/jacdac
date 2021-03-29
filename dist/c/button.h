@@ -21,8 +21,9 @@
 #define JD_BUTTON_EV_UP JD_EV_INACTIVE
 
 /**
- * Emitted when the press time is greater than 500ms, and then every 500ms as long
- * as the button remains pressed.
+ * Argument: time ms uint32_t. Emitted when the press time is greater than 500ms, and then at least every 500ms 
+ * as long as the button remains pressed. The 'time' parameter records the the amount of time
+ * that the button has been held (since the down event).
  */
 #define JD_BUTTON_EV_HOLD 0x81
 

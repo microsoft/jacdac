@@ -10,11 +10,6 @@
 #define JD_BUTTON_REG_PRESSED JD_REG_READING
 
 /**
- * Read-write uint32_t. Threshold for `click` and `hold` events (see event descriptions below).
- */
-#define JD_BUTTON_REG_CLICK_HOLD_TIME 0x80
-
-/**
  * Emitted when button goes from inactive (`pressed == 0`) to active.
  */
 #define JD_BUTTON_EV_DOWN JD_EV_ACTIVE
@@ -26,12 +21,8 @@
 #define JD_BUTTON_EV_UP JD_EV_INACTIVE
 
 /**
- * Emitted together with `up` when the press time less than or equal to `click_hold_time`.
- */
-#define JD_BUTTON_EV_CLICK 0x80
-
-/**
- * Emitted when the press times is greater than `click_hold_time`. Hold events are followed by a separate up event.
+ * Emitted when the press time is greater than 500ms, and then every 500ms as long
+ * as the button remains pressed.
  */
 #define JD_BUTTON_EV_HOLD 0x81
 

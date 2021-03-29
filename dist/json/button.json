@@ -161,24 +161,6 @@
       "packFormat": "u8"
     },
     {
-      "kind": "rw",
-      "name": "click_hold_time",
-      "identifier": 128,
-      "description": "Threshold for `click` and `hold` events (see event descriptions below).",
-      "fields": [
-        {
-          "name": "_",
-          "unit": "",
-          "type": "u32",
-          "storage": 4,
-          "isSimpleType": true,
-          "defaultValue": 1000,
-          "absoluteMin": 500
-        }
-      ],
-      "packFormat": "u32"
-    },
-    {
       "kind": "event",
       "name": "down",
       "identifier": 1,
@@ -205,16 +187,9 @@
     },
     {
       "kind": "event",
-      "name": "click",
-      "identifier": 128,
-      "description": "Emitted together with `up` when the press time less than or equal to `click_hold_time`.",
-      "fields": []
-    },
-    {
-      "kind": "event",
       "name": "hold",
       "identifier": 129,
-      "description": "Emitted when the press times is greater than `click_hold_time`. Hold events are followed by a separate up event.",
+      "description": "Emitted when the press time is greater than 500ms, and then every 500ms as long\nas the button remains pressed.",
       "fields": []
     }
   ],

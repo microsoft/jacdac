@@ -183,14 +183,16 @@ export function parseSpecificationTestMarkdownToJSON(
                 } else if (argType === "number" || argType === "boolean") {
                     exprVisitor(null, root, (p, c) => {
                         if (c.type === 'Identifier') {
-                            lookupReplace(eventSymTable, p, c)
+                            lookupReplace(eventSymTable, p, c as jsep.Identifier)
                         } else if (c.type === 'ArrayExpression') {
                             error(
                                 `array expression not allowed in this context`
                             )
                         } else if (c.type === 'MemberExpression') {
-                            if (p?.type === 'MemberExpression') {
-                                error('only one level of dereference allowed')
+                            const member = c as jsep.MemberExpression;
+                            // A member expression must be of form id1.id2
+                            if (member.object.type !== 'Identifier' || member.property.type !== 'Identifier' || member.computed) {
+                                error('property access must be of form id.property')
                             }
                         }
                     })
@@ -201,7 +203,7 @@ export function parseSpecificationTestMarkdownToJSON(
         }
 
         function processCalls() {
-            exprVisitor(null, root, (parent, callExpr) => {
+            exprVisitor(null, root, (parent, callExpr: jsep.CallExpression) => {
                 if (callExpr.type !== 'CallExpression')
                     return;
                 if (callExpr.callee.type !== "Identifier")
@@ -217,8 +219,8 @@ export function parseSpecificationTestMarkdownToJSON(
                 if (id === 'start') {
                     if (callee !== 'check')
                         error("start expression function can only be used inside check test function")
-                    exprVisitor(null, callExpr, (parent, ce) => {
-                        if (callExpr.type !== 'CallExpression')
+                    exprVisitor(null, callExpr, (parent, ce: jsep.CallExpression) => {
+                        if (ce.type !== 'CallExpression')
                             return;
                         if (ce.callee.type === "Identifier" && (<jsep.Identifier>ce.callee).name === "start")
                             error("cannot nest start underneath start")
@@ -253,19 +255,19 @@ export function parseSpecificationTestMarkdownToJSON(
     }
 
     // TODO: MemberExpression
-    function lookupReplace(events: jdspec.PacketInfo[], parent: any, child: any) {
+    function lookupReplace(events: jdspec.PacketInfo[], parent: jsep.Expression, child: jsep.Identifier) {
         if (Array.isArray(parent)) {
-            lookup(events, parent, <jsep.Identifier>child)
+            lookup(events, parent, child)
         } else {
             // don't process identifiers that are callees of CallExpression or RHS of MemberExpressions
             if (parent?.type === "CallExpression" && child === (<jsep.CallExpression>parent).callee ||
                 parent.type === "MemberExpression" && child === (<jsep.MemberExpression>parent).property
             )
                 return;
-            lookup(events, parent, <jsep.Identifier>child)
+            lookup(events, parent, child)
         }
 
-        function lookup(events: jdspec.PacketInfo[], parent: any, child: jsep.Identifier) {
+        function lookup(events: jdspec.PacketInfo[], parent: jsep.Expression, child: jsep.Identifier) {
             try {
                 try {
                     const val = parseIntFloat(spec, child.name)
@@ -284,15 +286,29 @@ export function parseSpecificationTestMarkdownToJSON(
     
                     }*/
                 } catch (e) {
-                    getRegister(spec, child.name)
-                    if (currentTest.registers.indexOf(child.name) < 0)
-                        currentTest.registers.push(child.name)
-                    // TODO: if parent is MemberExpression, continue to do lookup
+                    let [root,fld] = toName()
+                    getRegister(spec, `${root}.${fld}`)
+                    if (currentTest.registers.indexOf(root) < 0)
+                        currentTest.registers.push(root)
                 }
             } catch (e) {
-                let pkt = events.find(pkt => pkt.name === child.name)
+                let [root,fld] = toName()
+                let pkt = events.find(pkt => pkt.name === root)
                 if (!pkt)
-                    error(`${child.name} not found in specification`)
+                    error(`${root} not found in specification`)
+                else {
+                    if (fld && !pkt.fields.find(f => f.name === fld))
+                        error(`${root}.${fld} not found in specification`)
+                }
+            }
+            function toName() {
+                if (parent?.type !== 'MemberExpression')
+                    return [child.name, ""];
+                else {
+                    const member = parent as jsep.MemberExpression
+                    return [(member.object as jsep.Identifier).name,
+                            (member.property as jsep.Identifier).name]
+                }
             }
         }
     }

@@ -85,7 +85,7 @@ export function parseIntFloat(
     return en.members[ww[1]] || 0
 }
 
-export function exprVisitor(parent: any, current: any, structVisit: (par:any, curr:any) => void) {
+export function exprVisitor(parent: any, current: any, structVisit: (par:jsep.Expression, curr:jsep.Expression) => void) {
     if (Array.isArray(current)) {
         (current as any[]).forEach(c => exprVisitor(current, c, structVisit))
     } else if (typeof current === "object") {

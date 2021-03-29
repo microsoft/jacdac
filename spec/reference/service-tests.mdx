@@ -39,7 +39,9 @@ support the following calls:
 - **decreasesBy**(*register*,*expr*): check if *register* decreases in value by at least *expr*
 - **stepsUpTo**(*register*,*startExpr*,*endExpr*): check if register increases from startExpr to endExpr (and integer values in between)
 - **stepsDownTo**(*register*,*startExpr*,*endExpr*): check if register decreases from startExpr to endExpr (and integer values in between
-- **events**([*event1*, *event2*...]): checks for the given sequence of events
+- **awaitEvent**(*event*,*expr*): wait for the *event* to arrive (ignoring other events) and then check *expr* (which may refer to arguments of *event*)
+- **nextEvent**(*event*,*expr*): next event should be *event* (fail if other events), and then check *expr* (which may refer to arguments of *event*)
+- **events**([*event1*, *event2*...]): checks for the given sequence of events. This is shorthand for `nextEvent(event1,true); nextEvent(event2,true) ...`
 
 ## Test expressions
 

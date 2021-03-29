@@ -295,10 +295,10 @@ export function parseSpecificationTestMarkdownToJSON(
                 let [root,fld] = toName()
                 let pkt = events.find(pkt => pkt.name === root)
                 if (!pkt)
-                    error(`${root} not found in specification`)
+                    error(`event ${root} not bound correctly`)
                 else {
                     if (fld && !pkt.fields.find(f => f.name === fld))
-                        error(`${root}.${fld} not found in specification`)
+                        error(`Field ${fld} of event ${root} not found in specification`)
                 }
             }
             function toName() {

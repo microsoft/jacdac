@@ -199,6 +199,8 @@ export function parseSpecificationTestMarkdownToJSON(
                                 `array expression not allowed in this context`
                             )
                     })
+                } else {
+                    error(`unexpected argument type (${argType})in jdtestfuns.ts`)
                 }
             })
         }

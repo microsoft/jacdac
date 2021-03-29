@@ -5,9 +5,7 @@
 import { 
     parseIntFloat, 
     getRegister, 
-    exprVisitor, 
-    getExpressionsOfType, 
-    getExpressionsOfTypeWithParent
+    exprVisitor
 } from "./jdutils"
 import { testCommandFunctions, testExpressionFunctions } from "./jdtestfuns"
 import jsep from "jsep"
@@ -183,21 +181,18 @@ export function parseSpecificationTestMarkdownToJSON(
                         (arg as jsep.ArrayExpression).elements.forEach(lookupEvent)
                     }
                 } else if (argType === "number" || argType === "boolean") {
-                    const exprs = <any[]>getExpressionsOfTypeWithParent(root, arg, 'Identifier', true)
-                    const visited: any[] = []
-                    exprs.forEach(parent => {
-                        if (visited.indexOf(parent) < 0) {
-                            visited.push(parent)
-                            lookupReplace(eventSymTable, parent)
-                        }
-                    })
-                    // currently, arrays are only used at top-level in
-                    // for the events test function, so disallow everywhere else
                     exprVisitor(null, root, (p, c) => {
-                        if (c.type === 'ArrayExpression')
+                        if (c.type === 'Identifier') {
+                            lookupReplace(eventSymTable, p, c)
+                        } else if (c.type === 'ArrayExpression') {
                             error(
                                 `array expression not allowed in this context`
                             )
+                        } else if (c.type === 'MemberExpression') {
+                            if (p?.type === 'MemberExpression') {
+                                error('only one level of dereference allowed')
+                            }
+                        }
                     })
                 } else {
                     error(`unexpected argument type (${argType})in jdtestfuns.ts`)
@@ -206,8 +201,9 @@ export function parseSpecificationTestMarkdownToJSON(
         }
 
         function processCalls() {
-            const callers = <jsep.CallExpression[]>getExpressionsOfType(root, 'CallExpression')
-            callers.forEach(callExpr => {
+            exprVisitor(null, root, (parent, callExpr) => {
+                if (callExpr.type !== 'CallExpression')
+                    return;
                 if (callExpr.callee.type !== "Identifier")
                     error(`all calls must be direct calls`)
                 const id = (<jsep.Identifier>callExpr.callee).name
@@ -221,8 +217,9 @@ export function parseSpecificationTestMarkdownToJSON(
                 if (id === 'start') {
                     if (callee !== 'check')
                         error("start expression function can only be used inside check test function")
-                    const callsUnder = <jsep.CallExpression[]>getExpressionsOfType(callExpr, 'CallExpression')
-                    callsUnder.forEach(ce => {
+                    exprVisitor(null, callExpr, (parent, ce) => {
+                        if (callExpr.type !== 'CallExpression')
+                            return;
                         if (ce.callee.type === "Identifier" && (<jsep.Identifier>ce.callee).name === "start")
                             error("cannot nest start underneath start")
                     })
@@ -256,28 +253,16 @@ export function parseSpecificationTestMarkdownToJSON(
     }
 
     // TODO: MemberExpression
-    function lookupReplace(events: jdspec.PacketInfo[], parent: any) {
+    function lookupReplace(events: jdspec.PacketInfo[], parent: any, child: any) {
         if (Array.isArray(parent)) {
-            const exprs: jsep.Expression[] = parent
-            exprs.forEach((child: jsep.Expression) => {
-                if (child.type === "Identifier")
-                    lookup(events, parent, <jsep.Identifier>child)
-            })
+            lookup(events, parent, <jsep.Identifier>child)
         } else {
-            Object.keys(parent).forEach((key: string) => {
-                const child = parent[key]
-                if (child?.type !== "Identifier") return
-                if (
-                    (parent.type !== "MemberExpression" &&
-                        parent.type !== "CallExpression") ||
-                    (parent.type === "MemberExpression" &&
-                        child !== (<jsep.MemberExpression>parent).property) ||
-                    (parent.type === "CallExpression" &&
-                        child !== (<jsep.CallExpression>parent).callee)
-                ) {
-                    lookup(events, parent, <jsep.Identifier>child)
-                }
-            })
+            // don't process identifiers that are callees of CallExpression or RHS of MemberExpressions
+            if (parent?.type === "CallExpression" && child === (<jsep.CallExpression>parent).callee ||
+                parent.type === "MemberExpression" && child === (<jsep.MemberExpression>parent).property
+            )
+                return;
+            lookup(events, parent, <jsep.Identifier>child)
         }
 
         function lookup(events: jdspec.PacketInfo[], parent: any, child: jsep.Identifier) {

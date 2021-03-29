@@ -96,20 +96,3 @@ export function exprVisitor(parent: any, current: any, structVisit: (par:any, cu
         })
     }
 }
-export function getExpressionsOfType(expr: jsep.Expression | jsep.Expression[], type: string, returnParent = false) {
-    const results: jsep.Expression[] = []
-    exprVisitor(null, expr, (p,c) => {
-        if (p && c.type === type)
-        results.push(returnParent ? p : c)
-    })
-    return results
-}
-
-export function getExpressionsOfTypeWithParent(parent: jsep.Expression, expr: jsep.Expression | jsep.Expression[], type: string, returnParent = false) {
-    const results: jsep.Expression[] = []
-    exprVisitor(parent, expr, (p,c) => {
-        if (p && c.type === type)
-        results.push(returnParent ? p : c)
-    })
-    return results
-}

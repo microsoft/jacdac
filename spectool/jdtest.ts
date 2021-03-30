@@ -181,7 +181,7 @@ export function parseSpecificationTestMarkdownToJSON(
                         (arg as jsep.ArrayExpression).elements.forEach(lookupEvent)
                     }
                 } else if (argType === "number" || argType === "boolean") {
-                    exprVisitor(null, root, (p, c) => {
+                    exprVisitor(root, arg, (p, c) => {
                         if (c.type === 'Identifier') {
                             lookupReplace(eventSymTable, p, c as jsep.Identifier)
                         } else if (c.type === 'ArrayExpression') {
@@ -254,7 +254,6 @@ export function parseSpecificationTestMarkdownToJSON(
         }
     }
 
-    // TODO: MemberExpression
     function lookupReplace(events: jdspec.PacketInfo[], parent: jsep.Expression, child: jsep.Identifier) {
         if (Array.isArray(parent)) {
             lookup(events, parent, child)
@@ -278,7 +277,9 @@ export function parseSpecificationTestMarkdownToJSON(
                     }
                 } catch (e) {
                     let [root,fld] = toName()
-                    getRegister(spec, `${root}.${fld}`)
+                    let regField = getRegister(spec, fld ? `${root}.${fld}` : root)
+                    // if (!fld && regField.pkt.fields.length > 0)
+                    //    error(`register ${root} has fields, but no field specified`)
                     if (currentTest.registers.indexOf(root) < 0)
                         currentTest.registers.push(root)
                 }
@@ -287,10 +288,10 @@ export function parseSpecificationTestMarkdownToJSON(
                 let pkt = events.find(pkt => pkt.name === root)
                 if (!pkt)
                     error(`event ${root} not bound correctly`)
-                else {
-                    if (fld && !pkt.fields.find(f => f.name === fld))
-                        error(`Field ${fld} of event ${root} not found in specification`)
-                }
+                else if (!fld && pkt.fields.length > 0)
+                    error(`event ${root} has fields, but no field specified`)
+                else if (fld && !pkt.fields.find(f => f.name === fld))
+                    error(`Field ${fld} of event ${root} not found in specification`)
             }
             function toName() {
                 if (parent?.type !== 'MemberExpression')

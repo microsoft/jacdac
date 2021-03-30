@@ -20,8 +20,8 @@ export const testCommandFunctions: jdtest.TestFunctionDescription[] = [
     { id: "changes", args: ["register"], prompt: `check that {1} changes` },
     { id: "ask", args: [], prompt: undefined },
     { id: "events", args: ["events"], prompt: `check that events {1} are observed` },
-    { id: "awaitEvent", args: ["event","number"], prompt: `wait for event {1} and then check {2} (other events ignored)` },
-    { id: "nextEvent", args: ["event","number"], prompt: `next event must be {1}, then check {2}` },
+    { id: "awaitEvent", args: ["event","boolean"], prompt: `wait for event {1} and then check {2} (other events ignored)` },
+    { id: "nextEvent", args: ["event","boolean"], prompt: `next event must be {1}, then check {2}` },
     { id: "assign", args: ["register", "number"], prompt: `write value {2:val} to {1}` },
     { id: "check", args: ["boolean"], prompt: `check that {1}` },
     {

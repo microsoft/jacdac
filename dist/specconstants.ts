@@ -821,15 +821,6 @@ export enum ButtonReg {
      * ```
      */
     Pressed = 0x101,
-
-    /**
-     * Read-write uint32_t. Threshold for `click` and `hold` events (see event descriptions below).
-     *
-     * ```
-     * const [clickHoldTime] = jdunpack<[number]>(buf, "u32")
-     * ```
-     */
-    ClickHoldTime = 0x80,
 }
 
 export enum ButtonEvent {
@@ -849,12 +840,13 @@ export enum ButtonEvent {
     Up = 0x2,
 
     /**
-     * Emitted together with `up` when the press time less than or equal to `click_hold_time`.
-     */
-    Click = 0x80,
-
-    /**
-     * Emitted when the press times is greater than `click_hold_time`. Hold events are followed by a separate up event.
+     * Argument: time ms uint32_t. Emitted when the press time is greater than 500ms, and then at least every 500ms
+     * as long as the button remains pressed. The 'time' parameter records the the amount of time
+     * that the button has been held (since the down event).
+     *
+     * ```
+     * const [time] = jdunpack<[number]>(buf, "u32")
+     * ```
      */
     Hold = 0x81,
 }

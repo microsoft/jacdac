@@ -2,11 +2,16 @@
 /// <reference path="jdspec.d.ts" />
 /// <reference path="jdtest.d.ts" />
 
-import { parseIntFloat, getRegister, exprVisitor, getExpressionsOfType } from "./jdutils"
+import { 
+    parseIntFloat, 
+    getRegister, 
+    exprVisitor
+} from "./jdutils"
 import { testCommandFunctions, testExpressionFunctions } from "./jdtestfuns"
 import jsep from "jsep"
 
 const supportedExpressions: jsep.ExpressionType[] = [
+    "MemberExpression",
     "ArrayExpression",
     "BinaryExpression",
     "CallExpression",
@@ -146,110 +151,122 @@ export function parseSpecificationTestMarkdownToJSON(
                     `${callee} expects ${expected} arguments; got ${root.arguments.length}`
                 )
             else {
-                root.arguments.forEach((arg, a) => {
-                    if (testCommandFunctions[index].args[a] === "register" && arg.type !== "Identifier") {
-                        error(
-                            `${callee} expects a register in argument position ${a + 1}`
-                        )
-                    }
-                })
-                const callers = <jsep.CallExpression[]>getExpressionsOfType(root, 'CallExpression')
-                callers.forEach(callExpr => {
-                    if (callExpr.callee.type !== "Identifier")
-                        error(`all calls must be direct calls`)
-                    const id = (<jsep.Identifier>callExpr.callee).name
-                    const indexFun = testExpressionFunctions.findIndex(
-                        r => id == r.id
-                    )
-                    if (indexFun < 0)
-                        error(
-                            `${id} is not a registered test expression function.`
-                        )
-                    if (id === 'start') {
-                        if (callee !== 'check')
-                            error("start expression function can only be used inside check test function")
-                        const callsUnder = <jsep.CallExpression[]>getExpressionsOfType(callExpr, 'CallExpression')
-                        callsUnder.forEach(ce => {
-                            if (ce.callee.type === "Identifier" && (<jsep.Identifier>ce.callee).name === "start")
-                                error("cannot nest start underneath start")
-                        })
-                    }
-                    const expected =
-                        testExpressionFunctions[indexFun].args.length
-                    if (expected !== callExpr.arguments.length)
-                        error(
-                            `${callee} expects ${expected} arguments; got ${callExpr.arguments.length}`
-                        )
-                })
-                // context sensitive checking/lookup/resolution
-                if (callee === 'events') {
-                    const eventList = root.arguments[0]
-                    if (eventList.type != 'ArrayExpression')
-                        error(`events function expects a list of service events`)
-                    else {
-                        const elements = (eventList as jsep.ArrayExpression).elements
-                        const events = spec.packets?.filter(pkt => pkt.kind == "event")
-                        elements.forEach(e => {
-                            if (e.type !== 'Identifier')
-                                error(`event identifier expected`)
-                            else {
-                                const id = (e as jsep.Identifier).name
-                                if (!events.find(p => p.name === id)) {
-                                    error(`no event ${id} in specification`)
-                                } else {
-                                    if (currentTest.events.indexOf(id) < 0)
-                                        currentTest.events.push(id)
-                                }
-                            }
-                        })
-                    }
-                } else {
-                    const exprs = <any[]>getExpressionsOfType(root, 'Identifier', true)
-                    const visited: any[] = []
-                    exprs.forEach(parent => {
-                        if (visited.indexOf(parent) < 0) {
-                            visited.push(parent)
-                            lookupReplace(parent)
-                        }
-                    })
-                    exprVisitor(null, root, (p, c) => {
-                        if (c.type === 'ArrayExpression')
-                            error(
-                                `array expression not allowed in this context`
-                            )
-                    })
-                }
+                // type checking of arguments.
+                processArguments();
+                // check all calls in subexpressions
+                processCalls()
             }
             currentTest.testCommands.push({ prompt: testPrompt, call: root })
             testPrompt = ""
         }
-    }
 
-    function lookupReplace(parent: any) {
-        if (Array.isArray(parent)) {
-            const exprs: jsep.Expression[] = parent
-            exprs.forEach((child: jsep.Expression) => {
-                if (child.type === "Identifier")
-                    lookup(parent, <jsep.Identifier>child)
-            })
-        } else {
-            Object.keys(parent).forEach((key: string) => {
-                const child = parent[key]
-                if (child?.type !== "Identifier") return
-                if (
-                    (parent.type !== "MemberExpression" &&
-                        parent.type !== "CallExpression") ||
-                    (parent.type === "MemberExpression" &&
-                        child !== (<jsep.MemberExpression>parent).property) ||
-                    (parent.type === "CallExpression" &&
-                        child !== (<jsep.CallExpression>parent).callee)
-                ) {
-                    lookup(parent, <jsep.Identifier>child)
+        function processArguments() {
+            let eventSymTable: jdspec.PacketInfo[] = []
+            root.arguments.forEach((arg, a) => {
+                const argType = testCommandFunctions[index].args[a]
+                if (argType === "register" || argType === "event") {
+                   if (arg.type !== "Identifier")
+                        error(
+                            `${callee} expects a ${argType} in argument position ${a + 1}`
+                        )
+                   else if (argType === "event" && a === 0) { 
+                        let pkt = lookupEvent(arg)
+                        if (pkt && eventSymTable.indexOf(pkt) === -1)
+                        eventSymTable.push(pkt)
+                   }
+                } else if (argType === "events") {
+                    if (arg.type != 'ArrayExpression')
+                        error(`events function expects a list of service events`)
+                    else {
+                        (arg as jsep.ArrayExpression).elements.forEach(lookupEvent)
+                    }
+                } else if (argType === "number" || argType === "boolean") {
+                    exprVisitor(root, arg, (p, c) => {
+                        if (c.type === 'Identifier') {
+                            lookupReplace(eventSymTable, p, c as jsep.Identifier)
+                        } else if (c.type === 'ArrayExpression') {
+                            error(
+                                `array expression not allowed in this context`
+                            )
+                        } else if (c.type === 'MemberExpression') {
+                            const member = c as jsep.MemberExpression;
+                            // A member expression must be of form id1.id2
+                            if (member.object.type !== 'Identifier' || member.property.type !== 'Identifier' || member.computed) {
+                                error('property access must be of form id.property')
+                            }
+                        }
+                    })
+                } else {
+                    error(`unexpected argument type (${argType})in jdtestfuns.ts`)
                 }
             })
         }
 
-        function lookup(parent: any, child: jsep.Identifier) {
+        function processCalls() {
+            exprVisitor(null, root, (parent, callExpr: jsep.CallExpression) => {
+                if (callExpr.type !== 'CallExpression')
+                    return;
+                if (callExpr.callee.type !== "Identifier")
+                    error(`all calls must be direct calls`)
+                const id = (<jsep.Identifier>callExpr.callee).name
+                const indexFun = testExpressionFunctions.findIndex(
+                    r => id == r.id
+                )
+                if (indexFun < 0)
+                    error(
+                        `${id} is not a registered test expression function.`
+                    )
+                if (id === 'start') {
+                    if (callee !== 'check')
+                        error("start expression function can only be used inside check test function")
+                    exprVisitor(null, callExpr, (parent, ce: jsep.CallExpression) => {
+                        if (ce.type !== 'CallExpression')
+                            return;
+                        if (ce.callee.type === "Identifier" && (<jsep.Identifier>ce.callee).name === "start")
+                            error("cannot nest start underneath start")
+                    })
+                }
+                const expected =
+                    testExpressionFunctions[indexFun].args.length
+                if (expected !== callExpr.arguments.length)
+                    error(
+                        `${callee} expects ${expected} arguments; got ${callExpr.arguments.length}`
+                    )
+            })
+        }
+
+        function lookupEvent(e: jsep.Expression) {
+            const events = spec.packets?.filter(pkt => pkt.kind == "event")
+            if (e.type !== 'Identifier') {
+                error(`event identifier expected`)
+            } else {
+                const id = (e as jsep.Identifier).name
+                const pkt = events.find(p => p.name === id)
+                if (!pkt) {
+                    error(`no event ${id} in specification`)
+                } else {
+                    if (currentTest.events.indexOf(id) < 0)
+                        currentTest.events.push(id)
+                    return pkt;
+                }
+            }
+            return null;
+        }
+    }
+
+    function lookupReplace(events: jdspec.PacketInfo[], parent: jsep.Expression, child: jsep.Identifier) {
+        if (Array.isArray(parent)) {
+            lookup(events, parent, child)
+        } else {
+            // don't process identifiers that are callees of CallExpression or RHS of MemberExpressions
+            if (parent?.type === "CallExpression" && child === (<jsep.CallExpression>parent).callee ||
+                parent.type === "MemberExpression" && child === (<jsep.MemberExpression>parent).property
+            )
+                return;
+            lookup(events, parent, child)
+        }
+
+        function lookup(events: jdspec.PacketInfo[], parent: jsep.Expression, child: jsep.Identifier) {
             try {
                 try {
                     const val = parseIntFloat(spec, child.name)
@@ -258,23 +275,32 @@ export function parseSpecificationTestMarkdownToJSON(
                         value: val,
                         raw: val.toString(),
                     }
-                    /*TODO: replace the Identifier by the (resolved) Literal
-                    if (parent.type) {
-                        Object.keys(parent).forEach((key:string) => {
-                            if (Object.getOwnPropertyDescriptor(parent,key) == child)
-                                Object.defineProperty(parent, key, lit);
-                        })
-                    } else {
-    
-                    }*/
                 } catch (e) {
-                    getRegister(spec, child.name)
-                    if (currentTest.registers.indexOf(child.name) < 0)
-                        currentTest.registers.push(child.name)
-                    // TODO: if parent is MemberExpression, continue to do lookup
+                    let [root,fld] = toName()
+                    let regField = getRegister(spec, fld ? `${root}.${fld}` : root)
+                    // if (!fld && regField.pkt.fields.length > 0)
+                    //    error(`register ${root} has fields, but no field specified`)
+                    if (currentTest.registers.indexOf(root) < 0)
+                        currentTest.registers.push(root)
                 }
             } catch (e) {
-                error(`${child.name} not found in specification`)
+                let [root,fld] = toName()
+                let pkt = events.find(pkt => pkt.name === root)
+                if (!pkt)
+                    error(`event ${root} not bound correctly`)
+                else if (!fld && pkt.fields.length > 0)
+                    error(`event ${root} has fields, but no field specified`)
+                else if (fld && !pkt.fields.find(f => f.name === fld))
+                    error(`Field ${fld} of event ${root} not found in specification`)
+            }
+            function toName() {
+                if (parent?.type !== 'MemberExpression')
+                    return [child.name, ""];
+                else {
+                    const member = parent as jsep.MemberExpression
+                    return [(member.object as jsep.Identifier).name,
+                            (member.property as jsep.Identifier).name]
+                }
             }
         }
     }

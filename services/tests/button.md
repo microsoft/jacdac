@@ -1,34 +1,31 @@
 # Button tests
 
-## press and release
+## Press and release
 
 Press and release the button (once)
 
     events([down, up])
 
-## quick press (click)
+## Hold event
 
-Quickly press and release the button (within 500ms of press)
+Press and hold the button for more than 500ms, then release
 
-    events([down, up, click])
+    events([down, hold, up])
 
-## Hold
+## Hold for 2 seconds (4 hold events)
 
-Press and hold the button for more than 500ms 
+Press and hold the button for 2 seconds, then release
 
-    events([down, hold])
+    events([down, hold, hold, hold])
+    nextEvent(up, up.time >= 2000 && up.time < 2500)
 
-## Change threshold to five seconds
+## Event timing for hold events
 
-Press and hold the button for between two and five seconds
+Press and hold the button for 2 seconds
 
-    assign(click_hold_time, 5000)
-    events([down, up, click])
+    awaitEvent(hold, hold.time >= 500)
+    nextEvent(hold, hold.time >= 1000)
+    nextEvent(hold, hold.time >= 1500)
+    nextEvent(hold, hold.time >= 2000)
 
-## Device resets threshold to 500 ms (on value < 500)
-
-This test requires no user input.
-
-    assign(click_hold_time, 0)
-    check(click_hold_time === 500)
 

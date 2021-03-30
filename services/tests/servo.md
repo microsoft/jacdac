@@ -4,7 +4,7 @@
 
 Rotate the handle to the center
 
-    angle = 0
+    assign(angle,0)
 
 Check that the handle is centered (or close to the center)
 

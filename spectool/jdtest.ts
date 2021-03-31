@@ -218,12 +218,12 @@ export function parseSpecificationTestMarkdownToJSON(
                         error(
                             `${id} is not a registered test expression function.`
                         )
-                    if (tef.context === "AsExpression" || tef.context === "AsEither") {
+                    if (tef.context === "expression" || tef.context === "either") {
                         if (argType != "boolean")
                             error(`${id} expression function can only be used inside a boolean expression`)
                         // no nested calls
                         const rootFun = testCommandFunctions[cmdIndex]
-                        if (rootFun.context === "AsExpression" || rootFun.context === "AsEither") 
+                        if (rootFun.context === "expression" || rootFun.context === "either") 
                             error(`cannot nest ${tef.id} underneath ${rootFun.id}`)
                         // look under tef
                         exprVisitor(null, callExpr, (parent, ce: jsep.CallExpression) => {

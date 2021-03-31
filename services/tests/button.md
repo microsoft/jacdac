@@ -6,22 +6,22 @@ Press and release the button (once)
 
     events([down, up])
 
-## Hold event
+## One hold event
 
 Press and hold the button for more than 500ms, then release
 
     events([down, hold, up])
 
-## Hold for 2 seconds (4 hold events)
+## Hold for three hold events
 
-Press and hold the button for 2 seconds, then release
+Press and hold the button for 3 hold events, then release
 
     events([down, hold, hold, hold])
-    nextEvent(up, up.time >= 2000 && up.time < 2500)
+    nextEvent(up, up.time >= 1500 && up.time < 2000)
 
 ## Event timing for hold events
 
-Press and hold the button for 2 seconds
+Press and hold the button for 4 hold events
 
     awaitEvent(hold, hold.time >= 500)
     nextEvent(hold, hold.time >= 1000)

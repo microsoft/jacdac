@@ -7,7 +7,7 @@ import {
     getRegister, 
     exprVisitor
 } from "./jdutils"
-import { hasBooleanExpression, getCommands, getExpressions } from "./jdtestfuns"
+import { getTestCommandFunctions, getTestExpressionFunctions } from "./jdtestfuns"
 import jsep from "jsep"
 
 const supportedExpressions: jsep.ExpressionType[] = [
@@ -124,7 +124,7 @@ export function parseSpecificationTestMarkdownToJSON(
             return
         }
         const [, callee] = call
-        const testCommandFunctions = getCommands();
+        const testCommandFunctions = getTestCommandFunctions();
         const cmdIndex = testCommandFunctions.findIndex(r => callee == r.id)
         if (cmdIndex < 0) {
             error(`${callee} is not a registered test command function.`)
@@ -204,7 +204,7 @@ export function parseSpecificationTestMarkdownToJSON(
         }
 
         function processCalls() { 
-            const testExpressionFunctions = getExpressions()
+            const testExpressionFunctions = getTestExpressionFunctions()
             root.arguments.forEach((arg, a) => {
                 const argType = testCommandFunctions[cmdIndex].args[a]
                 exprVisitor(root, arg, (parent, callExpr: jsep.CallExpression) => {

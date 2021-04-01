@@ -1,11 +1,7 @@
 /* eslint-disable @typescript-eslint/triple-slash-reference */
 /// <reference path="jdtest.d.ts" />
 
-export function hasBooleanExpression(t: jdtest.TestFunctionDescription) {
-    return t.args.indexOf("boolean") >= 0
-}
-
-export type Functions =
+export type JDTestFunctions =
     | "changes"
     | "ask"
     | "check"
@@ -21,11 +17,11 @@ export type Functions =
     | "assign"
     | "closeTo"
 
-export function getCommands() {
+export function getTestCommandFunctions() {
     return testFunctions.filter(f => f.context === "command" || f.context === "either")
 }
 
-export function getExpressions() {
+export function getTestExpressionFunctions() {
     return testFunctions.filter(f => f.context === "expression" || f.context === "either")
 }
 

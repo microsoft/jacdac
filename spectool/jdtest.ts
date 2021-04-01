@@ -7,7 +7,7 @@ import {
     getRegister, 
     exprVisitor
 } from "./jdutils"
-import { testCommandFunctions, testExpressionFunctions } from "./jdtestfuns"
+import { getTestCommandFunctions, getTestExpressionFunctions } from "./jdtestfuns"
 import jsep from "jsep"
 
 const supportedExpressions: jsep.ExpressionType[] = [
@@ -124,8 +124,9 @@ export function parseSpecificationTestMarkdownToJSON(
             return
         }
         const [, callee] = call
-        const index = testCommandFunctions.findIndex(r => callee == r.id)
-        if (index < 0) {
+        const testCommandFunctions = getTestCommandFunctions();
+        const cmdIndex = testCommandFunctions.findIndex(r => callee == r.id)
+        if (cmdIndex < 0) {
             error(`${callee} is not a registered test command function.`)
             return
         }
@@ -145,7 +146,7 @@ export function parseSpecificationTestMarkdownToJSON(
                     error(`Expression of type ${c.type} not currently supported`)
             })
             // check arguments
-            const expected = testCommandFunctions[index].args.length
+            const expected = testCommandFunctions[cmdIndex].args.length
             if (expected !== root.arguments.length)
                 error(
                     `${callee} expects ${expected} arguments; got ${root.arguments.length}`
@@ -163,7 +164,7 @@ export function parseSpecificationTestMarkdownToJSON(
         function processArguments() {
             let eventSymTable: jdspec.PacketInfo[] = []
             root.arguments.forEach((arg, a) => {
-                const argType = testCommandFunctions[index].args[a]
+                const argType = testCommandFunctions[cmdIndex].args[a]
                 if (argType === "register" || argType === "event") {
                    if (arg.type !== "Identifier")
                         error(
@@ -197,41 +198,47 @@ export function parseSpecificationTestMarkdownToJSON(
                         }
                     })
                 } else {
-                    error(`unexpected argument type (${argType})in jdtestfuns.ts`)
+                    error(`unexpected argument type (${argType}) in jdtestfuns.ts`)
                 }
             })
         }
 
-        function processCalls() {
-            exprVisitor(null, root, (parent, callExpr: jsep.CallExpression) => {
-                if (callExpr.type !== 'CallExpression')
-                    return;
-                if (callExpr.callee.type !== "Identifier")
-                    error(`all calls must be direct calls`)
-                const id = (<jsep.Identifier>callExpr.callee).name
-                const indexFun = testExpressionFunctions.findIndex(
-                    r => id == r.id
-                )
-                if (indexFun < 0)
-                    error(
-                        `${id} is not a registered test expression function.`
-                    )
-                if (id === 'start') {
-                    if (callee !== 'check')
-                        error("start expression function can only be used inside check test function")
-                    exprVisitor(null, callExpr, (parent, ce: jsep.CallExpression) => {
-                        if (ce.type !== 'CallExpression')
-                            return;
-                        if (ce.callee.type === "Identifier" && (<jsep.Identifier>ce.callee).name === "start")
-                            error("cannot nest start underneath start")
-                    })
-                }
-                const expected =
-                    testExpressionFunctions[indexFun].args.length
-                if (expected !== callExpr.arguments.length)
-                    error(
-                        `${callee} expects ${expected} arguments; got ${callExpr.arguments.length}`
-                    )
+        function processCalls() { 
+            const testExpressionFunctions = getTestExpressionFunctions()
+            root.arguments.forEach((arg, a) => {
+                const argType = testCommandFunctions[cmdIndex].args[a]
+                exprVisitor(root, arg, (parent, callExpr: jsep.CallExpression) => {
+                    if (callExpr.type !== 'CallExpression')
+                        return;
+                    if (callExpr.callee.type !== "Identifier")
+                        error(`all calls must be direct calls`)
+                    const id = (<jsep.Identifier>callExpr.callee).name
+                    const tef = testExpressionFunctions.find(r => id == r.id)
+                    if (!tef)
+                        error(
+                            `${id} is not a registered test expression function.`
+                        )
+                    if (tef.context === "expression" || tef.context === "either") {
+                        if (argType != "boolean")
+                            error(`${id} expression function can only be used inside a boolean expression`)
+                        // no nested calls
+                        const rootFun = testCommandFunctions[cmdIndex]
+                        if (rootFun.context === "expression" || rootFun.context === "either") 
+                            error(`cannot nest ${tef.id} underneath ${rootFun.id}`)
+                        // look under tef
+                        exprVisitor(null, callExpr, (parent, ce: jsep.CallExpression) => {
+                            if (ce.type !== 'CallExpression')
+                                return;
+                            if (ce.callee.type === "Identifier" && (<jsep.Identifier>ce.callee).name)
+                                error(`cannot nest ${(<jsep.Identifier>ce.callee).name} underneath ${id}`)
+                        })
+                    }
+                    const expected = tef.args.length
+                    if (expected !== callExpr.arguments.length)
+                        error(
+                            `${callee} expects ${expected} arguments; got ${callExpr.arguments.length}`
+                        )
+                })
             })
         }
 

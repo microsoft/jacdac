@@ -51,9 +51,12 @@ declare namespace jdtest {
         call: jsep.CallExpression
     }
 
+    type Context = "command" | "expression" | "either"
+
     interface TestFunctionDescription {
         id: string
         args: string[]
         prompt: string
+        context: Context
     }
 }

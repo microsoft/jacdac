@@ -6,6 +6,13 @@ Press and release the button (once)
 
     events([down, up])
 
+## Register and event correspondence
+
+Press the button
+
+    check(start(!pressed) && pressed)
+	nextEvent(down, true)
+
 ## One hold event
 
 Press and hold the button for more than 500ms, then release

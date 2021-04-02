@@ -82,8 +82,11 @@ export function parseSpecificationTestMarkdownToJSON(
                 testHeading = ""
                 testPrompt = ""
                 const [, hd, cont] = m
-                if (hd == "#" && !info.description) {
-                    info.description = cont.trim()
+                if (hd == "#") {
+                    if (!info.description)
+                        info.description = cont.trim()
+                    else 
+                        error("use ## to start a test, not #")
                 } else if (hd == "##") {
                     if (currentTest) finishTest()
                     testHeading = cont.trim()

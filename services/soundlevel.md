@@ -37,7 +37,7 @@ The sound level to trigger a loud event.
 
     rw quiet_threshold: u0.16 / @ high_threshold
 
-The sound level to trigger a quite event.
+The sound level to trigger a quiet event.
 
 ## Events
 

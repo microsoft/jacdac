@@ -232,7 +232,7 @@
       "kind": "rw",
       "name": "quiet_threshold",
       "identifier": 6,
-      "description": "The sound level to trigger a quite event.",
+      "description": "The sound level to trigger a quiet event.",
       "fields": [
         {
           "name": "_",

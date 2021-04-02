@@ -36,7 +36,7 @@
 #define JD_SOUND_LEVEL_REG_LOUD_THRESHOLD JD_REG_LOW_THRESHOLD
 
 /**
- * Read-write ratio u0.16 (uint16_t). The sound level to trigger a quite event.
+ * Read-write ratio u0.16 (uint16_t). The sound level to trigger a quiet event.
  */
 #define JD_SOUND_LEVEL_REG_QUIET_THRESHOLD JD_REG_HIGH_THRESHOLD
 

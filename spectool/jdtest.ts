@@ -74,7 +74,9 @@ export function parseSpecificationTestMarkdownToJSON(
         }
 
         const interpret =
-            backticksType == "default" || line.slice(0, 4) == "    "
+            backticksType == "default" || 
+            line.slice(0, 4) == "    " ||
+            /^\t/.exec(line)
 
         if (!interpret) {
             const m = /^(#+)\s*(.*)/.exec(line)

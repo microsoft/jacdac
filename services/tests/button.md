@@ -8,12 +8,12 @@ Press and release the button (once)
 
 ## Register and event correspondence
 
-Press and release the button (once)
+Press and release the button
 
     check(start(!pressed) && pressed)
-	nextEvent(down, true)
-	check(start(pressed) && !pressed)
-	nextEvent(up, true)
+    nextEvent(down, true)
+    check(start(pressed) && !pressed)
+    nextEvent(up, true)
 
 ## One hold event
 
@@ -37,4 +37,3 @@ Press and hold the button for 4 hold events
     nextEvent(hold, hold.time >= 1500)
     nextEvent(hold, hold.time >= 2000)
 
-	ne

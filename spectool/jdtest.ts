@@ -209,7 +209,7 @@ export function parseSpecificationTestMarkdownToJSON(
                         try {
                             lookupRegister((arg as jsep.Identifier).name, "")
                         } catch (e) {
-                            error(e)
+                            error(e.message)
                         }
                    }
                 } else if (argType === "events") {

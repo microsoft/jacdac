@@ -30,9 +30,25 @@ Place the device face up
     awaitEvent(face_up, true)
 
 
-## accelerometer 
+## 3 G event detection
 
 Move the device quickly in any direction
 
     check(forces.x >= 3 || forces.y >= 3 || forces.z >= 3)
     awaitEvent(force_3g, true)
+
+## 6 G event detection
+
+Move the device quickly in any direction
+
+    check(forces.x >= 6 || forces.y >= 6 || forces.z >= 6)
+    awaitEvent(force_6g, true)
+    
+## 8 G event detection
+
+Move the device quickly in any direction
+
+    check(forces.x >= 8 || forces.y >= 8 || forces.z >= 8)
+    awaitEvent(force_8g, true)
+
+

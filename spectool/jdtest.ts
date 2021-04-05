@@ -5,7 +5,8 @@
 import { 
     parseIntFloat, 
     getRegister, 
-    exprVisitor
+    exprVisitor,
+    isBoolOrNumericFormat
 } from "./jdutils"
 import { getTestCommandFunctions, getTestExpressionFunctions } from "./jdtestfuns"
 import jsep from "jsep"
@@ -275,7 +276,10 @@ export function parseSpecificationTestMarkdownToJSON(
     }
 
     function lookupRegister(root:string, fld:string)  {
-        getRegister(spec, root, fld)
+        let reg = getRegister(spec, root, fld)
+        if (reg.pkt && (!reg.fld && !isBoolOrNumericFormat(reg.pkt.packFormat) ||
+                        reg.fld && reg.fld.type && !isBoolOrNumericFormat(reg.fld.type)))
+            error("only bool/numeric registers allowed in tests")
         // if (!fld && regField.pkt.fields.length > 0)
         //    error(`register ${root} has fields, but no field specified`)
         if (currentTest.registers.indexOf(root) < 0)

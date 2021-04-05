@@ -27,29 +27,19 @@ export interface RegField {
     fld?: jdspec.PacketMember
 }
 
-export function getRegister(spec: jdspec.ServiceSpec, w: string): RegField {
+export function getRegister(spec: jdspec.ServiceSpec, root: string, fld: string = ""): RegField {
     const ret: RegField = { pkt: null }
-    if (/^\w+$/.test(w)) {
-        ret.pkt = lookupRegister(spec, w)
-        if (!ret.pkt) {
+    ret.pkt = lookupRegister(spec, root)
+    if (!ret.pkt) {
+        throw new Error(
+            `no register ${root} found in service ${spec.shortName}`
+        )
+    } else if (fld){
+        ret.fld = lookupField(ret.pkt, fld)
+        if (!ret.fld)
             throw new Error(
-                `no register ${w} found in service ${spec.shortName}`
+                `no field ${fld} found in register ${root} of service ${spec.shortName}`
             )
-        }
-    } else if (/^\w+\.\w+$/.test(w)) {
-        const [reg, field] = /^(\w+)\.(\w+)$/.exec(w)
-        ret.pkt = lookupRegister(spec, reg)
-        if (!ret.pkt) {
-            throw new Error(
-                `no register ${reg} found in service ${spec.shortName}`
-            )
-        } else {
-            ret.fld = lookupField(ret.pkt, field)
-            if (!ret.fld)
-                throw new Error(
-                    `no field ${field} found in register ${reg} of service ${spec.shortName}`
-                )
-        }
     }
     return ret
 }

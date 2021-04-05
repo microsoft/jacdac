@@ -289,21 +289,25 @@ export function parseSpecificationTestMarkdownToJSON(
                     }
                 } catch (e) {
                     let [root,fld] = toName()
-                    let regField = getRegister(spec, fld ? `${root}.${fld}` : root)
+                    let regField = getRegister(spec, root, fld)
                     // if (!fld && regField.pkt.fields.length > 0)
                     //    error(`register ${root} has fields, but no field specified`)
                     if (currentTest.registers.indexOf(root) < 0)
                         currentTest.registers.push(root)
                 }
             } catch (e) {
-                let [root,fld] = toName()
-                let pkt = events.find(pkt => pkt.name === root)
-                if (!pkt)
-                    error(`event ${root} not bound correctly`)
-                else if (!fld && pkt.fields.length > 0)
-                    error(`event ${root} has fields, but no field specified`)
-                else if (fld && !pkt.fields.find(f => f.name === fld))
-                    error(`Field ${fld} of event ${root} not found in specification`)
+                if (events.length > 0) {
+                    let [root,fld] = toName()
+                    let pkt = events.find(pkt => pkt.name === root)
+                    if (!pkt)
+                        error(`event ${root} not bound correctly`)
+                    else if (!fld && pkt.fields.length > 0)
+                        error(`event ${root} has fields, but no field specified`)
+                    else if (fld && !pkt.fields.find(f => f.name === fld))
+                        error(`Field ${fld} of event ${root} not found in specification`)
+                } else {
+                    error(e.message)
+                }
             }
             function toName() {
                 if (parent?.type !== 'MemberExpression')

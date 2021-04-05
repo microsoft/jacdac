@@ -281,7 +281,8 @@ export function parseSpecificationTestMarkdownToJSON(
         function lookup(events: jdspec.PacketInfo[], parent: jsep.Expression, child: jsep.Identifier) {
             try {
                 try {
-                    const val = parseIntFloat(spec, child.name)
+                    let [root,fld] = toName()
+                    const val = parseIntFloat(spec, fld ? `${root}.${fld}` : root)
                     const lit: jsep.Literal = {
                         type: "Literal",
                         value: val,

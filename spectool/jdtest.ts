@@ -188,7 +188,7 @@ export function parseSpecificationTestMarkdownToJSON(
                     }
                 } else if (argType === "number" || argType === "boolean") {
                     exprVisitor(root, arg, (p, c) => {
-                        if (c.type === 'Identifier') {
+                        if (p.type !== 'MemberExpression' && c.type === 'Identifier') {
                             lookupReplace(eventSymTable, p, c as jsep.Identifier)
                         } else if (c.type === 'ArrayExpression') {
                             error(
@@ -199,6 +199,8 @@ export function parseSpecificationTestMarkdownToJSON(
                             // A member expression must be of form id1.id2
                             if (member.object.type !== 'Identifier' || member.property.type !== 'Identifier' || member.computed) {
                                 error('property access must be of form id.property')
+                            } else {
+                                lookupReplace(eventSymTable, p, c as jsep.MemberExpression)
                             }
                         }
                     })
@@ -266,30 +268,40 @@ export function parseSpecificationTestMarkdownToJSON(
         }
     }
 
-    function lookupReplace(events: jdspec.PacketInfo[], parent: jsep.Expression, child: jsep.Identifier) {
+    function lookupReplace(events: jdspec.PacketInfo[], parent: jsep.Expression, child: jsep.Identifier | jsep.MemberExpression) {
         if (Array.isArray(parent)) {
-            lookup(events, parent, child)
+            let replace = lookup(events, parent, child)
+            parent.forEach(i => {
+                if (parent[i] === child)
+                    parent[i] = replace
+            })
         } else {
-            // don't process identifiers that are callees of CallExpression or RHS of MemberExpressions
-            if (parent?.type === "CallExpression" && child === (<jsep.CallExpression>parent).callee ||
-                parent.type === "MemberExpression" && child === (<jsep.MemberExpression>parent).property
-            )
+            // don't process identifiers that are callees of CallExpression
+            if (parent?.type === "CallExpression" && child === (<jsep.CallExpression>parent).callee)
                 return;
-            lookup(events, parent, child)
+            let replace = lookup(events, parent, child)
+            if (replace) {
+                Object.keys(parent).forEach(k => {
+                    if ((parent as any)[k] === child)
+                        (parent as any)[k] = replace
+                })
+            }
         }
 
-        function lookup(events: jdspec.PacketInfo[], parent: jsep.Expression, child: jsep.Identifier) {
+        function lookup(events: jdspec.PacketInfo[], parent: jsep.Expression, child: jsep.Identifier | jsep.MemberExpression) {
             try {
                 try {
-                    const val = parseIntFloat(spec, child.name)
+                    let [root,fld] = toName()
+                    const val = parseIntFloat(spec, fld ? `${root}.${fld}` : root)
                     const lit: jsep.Literal = {
                         type: "Literal",
                         value: val,
                         raw: val.toString(),
                     }
+                    return lit
                 } catch (e) {
                     let [root,fld] = toName()
-                    let regField = getRegister(spec, root, fld)
+                    getRegister(spec, root, fld)
                     // if (!fld && regField.pkt.fields.length > 0)
                     //    error(`register ${root} has fields, but no field specified`)
                     if (currentTest.registers.indexOf(root) < 0)
@@ -309,13 +321,13 @@ export function parseSpecificationTestMarkdownToJSON(
                     error(e.message)
                 }
             }
+            return undefined
             function toName() {
-                if (parent?.type !== 'MemberExpression')
+                if (child.type !== 'MemberExpression')
                     return [child.name, ""];
                 else {
-                    const member = parent as jsep.MemberExpression
-                    return [(member.object as jsep.Identifier).name,
-                            (member.property as jsep.Identifier).name]
+                    return [(child.object as jsep.Identifier).name,
+                            (child.property as jsep.Identifier).name]
                 }
             }
         }

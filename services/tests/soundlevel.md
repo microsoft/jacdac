@@ -5,6 +5,6 @@
 Make a loud noise and then be quiet
 
     check(sound_level > loud_threshold)
-    nextEvent(loud, true)
+    nextEvent(loud)
     check(sound_level < quiet_threshold)
-    nextEvent(quiet, true)
+    nextEvent(quiet)

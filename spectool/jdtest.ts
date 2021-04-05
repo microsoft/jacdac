@@ -179,6 +179,12 @@ export function parseSpecificationTestMarkdownToJSON(
                         let pkt = lookupEvent(arg)
                         if (pkt && eventSymTable.indexOf(pkt) === -1)
                         eventSymTable.push(pkt)
+                   } else if (argType === "register") {
+                        try {
+                            lookupRegister((arg as jsep.Identifier).name, "")
+                        } catch (e) {
+                            error(e)
+                        }
                    }
                 } else if (argType === "events") {
                     if (arg.type != 'ArrayExpression')
@@ -268,6 +274,14 @@ export function parseSpecificationTestMarkdownToJSON(
         }
     }
 
+    function lookupRegister(root:string, fld:string)  {
+        getRegister(spec, root, fld)
+        // if (!fld && regField.pkt.fields.length > 0)
+        //    error(`register ${root} has fields, but no field specified`)
+        if (currentTest.registers.indexOf(root) < 0)
+            currentTest.registers.push(root)
+    }
+
     function lookupReplace(events: jdspec.PacketInfo[], parent: jsep.Expression, child: jsep.Identifier | jsep.MemberExpression) {
         if (Array.isArray(parent)) {
             let replace = lookup(events, parent, child)
@@ -301,11 +315,7 @@ export function parseSpecificationTestMarkdownToJSON(
                     return lit
                 } catch (e) {
                     let [root,fld] = toName()
-                    getRegister(spec, root, fld)
-                    // if (!fld && regField.pkt.fields.length > 0)
-                    //    error(`register ${root} has fields, but no field specified`)
-                    if (currentTest.registers.indexOf(root) < 0)
-                        currentTest.registers.push(root)
+                    lookupRegister(root, fld)
                 }
             } catch (e) {
                 if (events.length > 0) {

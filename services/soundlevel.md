@@ -31,13 +31,13 @@ If both ``min_decibels`` and ``max_decibels`` are supported,
 the volume in deciment can be linearly interpolated between
 ``[min_decibels, max_decibels]``.
 
-    rw loud_threshold: u0.16 / @ low_threshold
+    rw loud_threshold: u0.16 / @ high_threshold
 
 The sound level to trigger a loud event.
 
-    rw quiet_threshold: u0.16 / @ high_threshold
+    rw quiet_threshold: u0.16 / @ low_threshold
 
-The sound level to trigger a quite event.
+The sound level to trigger a quiet event.
 
 ## Events
 

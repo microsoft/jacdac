@@ -26,26 +26,38 @@ a sequence of test commands.
 
 ## Test commands
 
-A test command is a single line JavaScript function call, indented. We currently
+A test command is a single line JavaScript function call, indented. Most expressions are just JavaScript expressions where identifiers 
+refer to elements of the service specification (e.g., registers, events). We currently
 support the following calls:
 
-- **assign**(*register*,*expr*): assigns the value of *expr* to *register*
 - **ask**(): ask the user to give a Yes/No answer to the question specified in preceding markdown
-- **check**(*expr*): check if the *expr* evaluates true (can make use of the **start** test expression)
+- **check**(*expr*): check if the *expr* evaluates true; the expression can refer to registers and can make use of the **start** test expression;
 - **changes**(*expr*): check if the *expr* changes
+
+### registers
+
+- **assign**(*register*,*expr*): assigns the value of *expr* to *register*
 - **increases**(*register*): check if *register* increases in value
 - **decreases**(*register*): check if *register* decreases in value
 - **increasesBy**(*register*,*expr*): check if *register* increases in value by at least *expr*
 - **decreasesBy**(*register*,*expr*): check if *register* decreases in value by at least *expr*
 - **stepsUpTo**(*register*,*startExpr*,*endExpr*): check if register increases from startExpr to endExpr (and integer values in between)
 - **stepsDownTo**(*register*,*startExpr*,*endExpr*): check if register decreases from startExpr to endExpr (and integer values in between
-- **events**([*event1*, *event2*...]): checks for the given sequence of events
+
+### events
+
+- **awaitEvent**(*event*,*expr*): wait for the *event* to arrive (ignoring other events) and then check *expr* (which may refer to arguments of *event*)
+- **nextEvent**(*event*,*expr*): next event should be *event* (fail if other events), and then check *expr* (which may refer to arguments of *event*)
+- **events**([*event1*, *event2*...]): checks for the given sequence of events. This is shorthand for `nextEvent(event1,true); nextEvent(event2,true) ...`
 
 ## Test expressions
 
-Most test expressions are just JavaScript expressions where identifiers 
-refer to elements of the service specification (e.g., registers). A few 
-special test functions are provided:
+A few  special test functions are provided:
+
 - **start**(*expr*): the value of *expr* just before execution of the **check** test command, multiple **start** subexpressions can be used within a **check** expression
+- **closeTo**(*expr*, *goal*, *error*): waits until the value *expr* is between *goal - error* and *goal + error*, 
+where the values of *goal* and *error* are captured at the start of the functione execution. This test expression can also be used
+as a command.
+
 
 

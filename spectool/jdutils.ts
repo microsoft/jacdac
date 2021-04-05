@@ -27,29 +27,19 @@ export interface RegField {
     fld?: jdspec.PacketMember
 }
 
-export function getRegister(spec: jdspec.ServiceSpec, w: string): RegField {
+export function getRegister(spec: jdspec.ServiceSpec, root: string, fld: string = ""): RegField {
     const ret: RegField = { pkt: null }
-    if (/^\w+$/.test(w)) {
-        ret.pkt = lookupRegister(spec, w)
-        if (!ret.pkt) {
+    ret.pkt = lookupRegister(spec, root)
+    if (!ret.pkt) {
+        throw new Error(
+            `no register ${root} found in service ${spec.shortName}`
+        )
+    } else if (fld){
+        ret.fld = lookupField(ret.pkt, fld)
+        if (!ret.fld)
             throw new Error(
-                `no register ${w} found in service ${spec.shortName}`
+                `no field ${fld} found in register ${root} of service ${spec.shortName}`
             )
-        }
-    } else if (/^\w+\.\w+$/.test(w)) {
-        const [reg, field] = /^(\w+)\.(\w+)$/.exec(w)
-        ret.pkt = lookupRegister(spec, reg)
-        if (!ret.pkt) {
-            throw new Error(
-                `no register ${reg} found in service ${spec.shortName}`
-            )
-        } else {
-            ret.fld = lookupField(ret.pkt, field)
-            if (!ret.fld)
-                throw new Error(
-                    `no field ${field} found in register ${reg} of service ${spec.shortName}`
-                )
-        }
     }
     return ret
 }
@@ -85,7 +75,7 @@ export function parseIntFloat(
     return en.members[ww[1]] || 0
 }
 
-export function exprVisitor(parent: any, current: any, structVisit: (par:any, curr:any) => void) {
+export function exprVisitor(parent: any, current: any, structVisit: (par:jsep.Expression, curr:jsep.Expression) => void) {
     if (Array.isArray(current)) {
         (current as any[]).forEach(c => exprVisitor(current, c, structVisit))
     } else if (typeof current === "object") {
@@ -95,12 +85,4 @@ export function exprVisitor(parent: any, current: any, structVisit: (par:any, cu
             exprVisitor(current, current[key], structVisit)
         })
     }
-}
-export function getExpressionsOfType(expr: jsep.Expression | jsep.Expression[], type: string, returnParent = false) {
-    const results: jsep.Expression[] = []
-    exprVisitor(null, expr, (p,c) => {
-        if (p && c.type === type)
-        results.push(returnParent ? p : c)
-    })
-    return results
 }

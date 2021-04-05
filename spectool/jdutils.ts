@@ -1,6 +1,10 @@
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path="jdspec.d.ts" />
 
+export function isBoolOrNumericFormat(fmt: string) {
+    return fmt === "bool" || /^[ui]\d+/i.test(fmt)
+}
+
 export function isRegister(pkt: jdspec.PacketInfo): boolean {
     return pkt && (pkt.kind == "const" || pkt.kind == "ro" || pkt.kind == "rw")
 }
@@ -24,11 +28,11 @@ export function lookupField(
 
 export interface RegField {
     pkt: jdspec.PacketInfo
-    fld?: jdspec.PacketMember
+    fld: jdspec.PacketMember
 }
 
 export function getRegister(spec: jdspec.ServiceSpec, root: string, fld: string = ""): RegField {
-    const ret: RegField = { pkt: null }
+    const ret: RegField = { pkt: undefined, fld: undefined }
     ret.pkt = lookupRegister(spec, root)
     if (!ret.pkt) {
         throw new Error(

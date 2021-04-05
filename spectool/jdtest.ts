@@ -5,7 +5,8 @@
 import { 
     parseIntFloat, 
     getRegister, 
-    exprVisitor
+    exprVisitor,
+    isBoolOrNumericFormat
 } from "./jdutils"
 import { getTestCommandFunctions, getTestExpressionFunctions } from "./jdtestfuns"
 import jsep from "jsep"
@@ -103,6 +104,10 @@ export function parseSpecificationTestMarkdownToJSON(
         }
     }
 
+    function argsRequiredOptional(args: any[], optional: boolean = false) {
+        return args.filter(a => !optional && typeof(a) === "string" || optional && typeof(a) === "object")
+    }
+
     function processCommand(expanded: string) {
         // TODO: if there is a prompt, the test has no commands, and
         // TODO: the first command is not ask/say
@@ -151,25 +156,46 @@ export function parseSpecificationTestMarkdownToJSON(
                     error(`Expression of type ${c.type} not currently supported`)
             })
             // check arguments
-            const expected = testCommandFunctions[cmdIndex].args.length
-            if (expected !== root.arguments.length)
+            const command = testCommandFunctions[cmdIndex]
+            const minArgs = argsRequiredOptional(command.args).length
+            const maxArgs = command.args.length
+            if (root.arguments.length < minArgs)
                 error(
-                    `${callee} expects ${expected} arguments; got ${root.arguments.length}`
+                    `${callee} expects at least ${minArgs} arguments; got ${root.arguments.length}`
                 )
+            else if (root.arguments.length > maxArgs) {
+                error(
+                    `${callee} expects at most ${maxArgs} arguments; got ${root.arguments.length}`
+                )
+            }
             else {
+                // deal with optional arguments
+                let newExpressions: jsep.Expression[] = []
+                for(let i = root.arguments.length; i<command.args.length;i++) {
+                    let [name, def] = command.args[i] as [string, any] 
+                    const lit: jsep.Literal = {
+                        type: "Literal",
+                        value: def,
+                        raw: def.toString(),
+                    }
+                    newExpressions.push(lit)
+                }
+                root.arguments = root.arguments.concat(newExpressions)
                 // type checking of arguments.
-                processArguments();
+                processArguments(command, root.arguments);
                 // check all calls in subexpressions
-                processCalls()
+                processCalls(command, root.arguments)
             }
             currentTest.testCommands.push({ prompt: testPrompt, call: root })
             testPrompt = ""
         }
 
-        function processArguments() {
+        function processArguments(command: jdtest.TestFunctionDescription, args: jsep.Expression[]) {
             let eventSymTable: jdspec.PacketInfo[] = []
-            root.arguments.forEach((arg, a) => {
-                const argType = testCommandFunctions[cmdIndex].args[a]
+            args.forEach((arg, a) => {
+                let argType = command.args[a]
+                if (typeof(argType) === "object")
+                    argType = command.args[a][0]
                 if (argType === "register" || argType === "event") {
                    if (arg.type !== "Identifier")
                         error(
@@ -216,10 +242,10 @@ export function parseSpecificationTestMarkdownToJSON(
             })
         }
 
-        function processCalls() { 
+        function processCalls(command: jdtest.TestFunctionDescription, args: jsep.Expression[]) {
             const testExpressionFunctions = getTestExpressionFunctions()
-            root.arguments.forEach((arg, a) => {
-                const argType = testCommandFunctions[cmdIndex].args[a]
+            args.forEach((arg, a) => {
+                const argType = command.args[a]
                 exprVisitor(root, arg, (parent, callExpr: jsep.CallExpression) => {
                     if (callExpr.type !== 'CallExpression')
                         return;
@@ -235,9 +261,8 @@ export function parseSpecificationTestMarkdownToJSON(
                         if (argType != "boolean")
                             error(`${id} expression function can only be used inside a boolean expression`)
                         // no nested calls
-                        const rootFun = testCommandFunctions[cmdIndex]
-                        if (rootFun.context === "expression" || rootFun.context === "either") 
-                            error(`cannot nest ${tef.id} underneath ${rootFun.id}`)
+                        if (command.context === "expression" || command.context === "either") 
+                            error(`cannot nest ${tef.id} underneath ${command.id}`)
                         // look under tef
                         exprVisitor(null, callExpr, (parent, ce: jsep.CallExpression) => {
                             if (ce.type !== 'CallExpression')
@@ -275,7 +300,10 @@ export function parseSpecificationTestMarkdownToJSON(
     }
 
     function lookupRegister(root:string, fld:string)  {
-        getRegister(spec, root, fld)
+        let reg = getRegister(spec, root, fld)
+        if (reg.pkt && (!reg.fld && !isBoolOrNumericFormat(reg.pkt.packFormat) ||
+                        reg.fld && reg.fld.type && !isBoolOrNumericFormat(reg.fld.type)))
+            error("only bool/numeric registers allowed in tests")
         // if (!fld && regField.pkt.fields.length > 0)
         //    error(`register ${root} has fields, but no field specified`)
         if (currentTest.registers.indexOf(root) < 0)

@@ -46,13 +46,13 @@ const testFunctions: jdtest.TestFunctionDescription[] = [
     },
     {
         id: "awaitEvent",
-        args: ["event", "boolean"],
+        args: ["event", ["boolean", true] ],
         prompt: `wait for event {1} and then check {2} (other events ignored)`,
         context: "command",
     },
     {
         id: "nextEvent",
-        args: ["event", "boolean"],
+        args: ["event", ["boolean", true]],
         prompt: `next event must be {1}, then check {2}`,
         context: "command",
     },

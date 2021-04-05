@@ -11,9 +11,9 @@ Press and release the button (once)
 Press and release the button
 
     check(start(!pressed) && pressed)
-    nextEvent(down, true)
+    nextEvent(down)
     check(start(pressed) && !pressed)
-    nextEvent(up, true)
+    nextEvent(up)
 
 ## One hold event
 

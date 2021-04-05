@@ -4,30 +4,30 @@
 
 Tilt the device up
 
-    awaitEvent(tilt_up, true)
+    awaitEvent(tilt_up)
 
 Now, tilt it down
 
-    awaitEvent(tilt_down, true)
+    awaitEvent(tilt_down)
 
 Now, tilt it left
 
-    awaitEvent(tilt_left, true)
+    awaitEvent(tilt_left)
 
 Now, tilt it right
 
-    awaitEvent(tilt_right, true)
+    awaitEvent(tilt_right)
 
 ## face events
 
 Place the device face down
 
-    awaitEvent(face_down, true)
+    awaitEvent(face_down)
     
     
 Place the device face up
 
-    awaitEvent(face_up, true)
+    awaitEvent(face_up)
 
 
 ## 3 G event detection
@@ -35,7 +35,7 @@ Place the device face up
 Move the device quickly in any direction
 
     check(forces.x >= 3 || forces.y >= 3 || forces.z >= 3)
-    awaitEvent(force_3g, true)
+    awaitEvent(force_3g)
 
 ## 6 G event detection
 

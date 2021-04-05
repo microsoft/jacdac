@@ -1,4 +1,4 @@
-# Jacdac Device and Service Catalogs
+# Jacdac Specification, Device and Service Catalogs
 
 **Jacdac** is a bus-based plug-and-play hardware/software stack 
 for **microcontrollers** and their peripherals (sensors/actuators), 

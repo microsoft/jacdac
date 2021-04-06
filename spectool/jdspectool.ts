@@ -83,7 +83,6 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
     const registers = packetsToRegisters(packets)
     let baseType = "Client"
     let isSimpleSensorClient = false
-    let thresholdDefl = 1
     const ctorArgs = [`${nsc}.SRV_${snakify(camelName).toUpperCase()}`, `role`]
     const reading = registers.find(reg => reg.identifier === Reading)
     const regs = registers.filter(r => !!r)
@@ -173,16 +172,24 @@ ${regs
                             field.absoluteMin,
                             field.unit === "/"
                                 ? field.type[0] === "i"
-                                    ? -1
+                                    ? -100
                                     : 0
                                 : undefined
                         )
                         const max = pick(
                             field.typicalMax,
                             field.absoluteMax,
-                            field.unit === "/" ? 1 : undefined
+                            field.unit === "/" ? 100 : undefined
                         )
                         const defl = field.defaultValue
+                        const valueScaler: (s : string) => string = 
+                            field.unit === "/" ? s => `${s} * 100`
+                            : field.type === "bool" ? s => `!!${s}`
+                            : s => s;
+                        const valueUnscaler: (s : string) => string = 
+                            field.unit === "/" ? s => `${s} / 100`
+                            : field.type === "bool" ? s => `${s} ? 1 : 0`
+                            : s => s
 
                         return `
         /**
@@ -196,7 +203,7 @@ ${toMetaComments(
                             `weight=${weight--}`
                         )}
         ${camelize(name)}(): ${types[fieldi]} {${isReading && isSimpleSensorClient ? `
-            return this.reading();
+            return ${valueScaler(`this.reading()`)};
         `  : `${isReading
                                 ? `
             this.setStreaming(true);`
@@ -204,7 +211,7 @@ ${toMetaComments(
             this.start();`
                             }            
             const values = ${fieldName}.pauseUntilValues() as any[];
-            return ${field.type === "bool" ? "!!" : ""}values[${fieldi}];`}
+            return ${valueScaler(`values[${fieldi}]`)};`}
         }
 ${reg.kind === "rw"
                                 ? `
@@ -227,8 +234,7 @@ ${toMetaComments(
         set${capitalize(camelize(name))}(value: ${types[fieldi]}) {
             this.start();
             const values = ${fieldName}.values as any[];
-            values[${fieldi}] = ${field.type === "bool" ? "value ? 1 : 0" : "value"
-                                };
+            values[${fieldi}] = ${valueUnscaler("value")};
             ${fieldName}.values = values as [${types}];
         }
 `

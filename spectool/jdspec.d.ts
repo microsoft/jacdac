@@ -569,6 +569,26 @@ declare namespace jdspec {
         repo: string
 
         /**
+         * Optional list of URLs pointing to a service specification markdown file
+         */
+        serviceSpecificationsUrls?: string[]
+
+        /**
+         * Links image urls
+         */
+        images?: {
+            /**
+             * Default image displayed to the user
+             */
+             default: string;
+
+             /**
+             * Square iconic image, max 128x128
+             */
+            icon?: string;
+        }
+
+        /**
          * Hooks for parser.
          */
         errors?: Diagnostic[]

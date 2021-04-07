@@ -6,8 +6,13 @@ order: 5
 ## Service Tests
 
 A service test is a markdown file that contains a number of unit tests for a
-given service. Use the [service test editor](/tools/service-test-editor/) to
+given service. 
+
+```info
+Use the [service test dashboard](../../tools/service-test/) to run tests on devices. 
+Use the [service test editor](../../tools/service-test-editor/) to
 view, create and edit tests.
+```
 
 The unit tests can be a mixture of automated and manual tests.
 A simple domain-specific set of test constructs is made available for easy
@@ -15,36 +20,44 @@ authoring of tests for the common cases, with an escape hatch to write TypeScrip
 for more complex test scenarios.
 
 The markdown file can (optionally) have a header (#) with a descriptive title. Each unit
-test must with a subheader (##) with a unique short description. A manual test
-generally starts with a prompt to the user, followed by a sequence of test
-commands. 
+test must with a subheader (##) with a unique short description. A test
+generally starts with a prompt to the user, specified in markdown, followed by 
+a sequence of test commands. 
 
 ## Test commands
 
-A test command is a single line JavaScript function call, indented. We currently
-support the following calls.  Every call can have optional preceding markdown, which 
-should be separated by a blank line from the call. The following two test functions
-make use of this markdown in order to interact with the user for manual testing:
+A test command is a single line JavaScript function call, indented. Most expressions are just JavaScript expressions where identifiers 
+refer to elements of the service specification (e.g., registers, events). We currently
+support the following calls:
 
-- **say**(): prompt the user with the preceding markdown
 - **ask**(): ask the user to give a Yes/No answer to the question specified in preceding markdown
-
-The remaining test functions can be checked automatically with a manual fallback
-
-- **check**(*expr*): check if the *expr* evaluates true
+- **check**(*expr*): check if the *expr* evaluates true; the expression can refer to registers and can make use of the **start** test expression;
 - **changes**(*expr*): check if the *expr* changes
+
+### registers
+
+- **assign**(*register*,*expr*): assigns the value of *expr* to *register*
 - **increases**(*register*): check if *register* increases in value
-- **decreases**(*register*): check if *register* descreases in value
-- **increasesBy**(*register*,*expr*): check if *register* increases in value by *expr*
-- **decreasesBy**(*register*,*expr*): check if *register* descreases in value by *expr*
-- **rangesFromUpTo**(*register*,*startExpr*,*endExpr*): check if register increases from startExpr to endExpr (and integer values in between)
-- **rangesFromDownTo**(*register*,*startExpr*,*endExpr*): check if register decreases from startExpr to endExpr (and integer values in between
-- **reset**()
+- **decreases**(*register*): check if *register* decreases in value
+- **increasesBy**(*register*,*expr*): check if *register* increases in value by at least *expr*
+- **decreasesBy**(*register*,*expr*): check if *register* decreases in value by at least *expr*
+- **stepsUpTo**(*register*,*startExpr*,*endExpr*): check if register increases from startExpr to endExpr (and integer values in between)
+- **stepsDownTo**(*register*,*startExpr*,*endExpr*): check if register decreases from startExpr to endExpr (and integer values in between
+
+### events
+
+- **awaitEvent**(*event*,*expr*): wait for the *event* to arrive (ignoring other events) and then check the optional *expr* (which may refer to arguments of *event*)
+- **nextEvent**(*event*,*expr*): next event should be *event* (fail if other events), and then check the optional *expr* (which may refer to arguments of *event*)
+- **events**([*event1*, *event2*...]): checks for the given sequence of events. This is shorthand for `nextEvent(event1,true); nextEvent(event2,true) ...`
 
 ## Test expressions
 
-Most test expressions are just JavaScript expressions where identifiers 
-refer to elements of the service specification (e.g., registers). A few 
-special test functions are provided:
-- **start**(expr): the value of expr at the start of the unit test
+A few  special test functions are provided:
+
+- **start**(*expr*): the value of *expr* just before execution of the **check** test command, multiple **start** subexpressions can be used within a **check** expression
+- **closeTo**(*expr*, *goal*, *error*): waits until the value *expr* is between *goal - error* and *goal + error*, 
+where the values of *goal* and *error* are captured at the start of the functione execution. This test expression can also be used
+as a command.
+
+
 

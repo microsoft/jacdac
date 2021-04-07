@@ -2,7 +2,8 @@
 
     identifier: 0x1473a263
     extends: _sensor
-    tags: button, C, 8bit
+    group: button
+    tags: C, 8bit
 
 A push-button, which returns to inactive position when not operated anymore.
 
@@ -18,18 +19,18 @@ Indicates whether the button is currently active (pressed).
 
 Emitted when button goes from inactive (`pressed == 0`) to active.
 
-    event up @ inactive
+    event up @ inactive { 
+        time: u32 ms 
+    } 
 
-Emitted when button goes from active (`pressed == 1`) to inactive.
+Emitted when button goes from active (`pressed == 1`) to inactive. The 'time' parameter 
+records the amount of time between the down and up events.
 
-    event click @ 0x80
+    event hold @ 0x81 {
+         time: u32 ms
+    }
 
-Emitted together with `up` when the press time was not longer than 500ms.
+Emitted when the press time is greater than 500ms, and then at least every 500ms 
+as long as the button remains pressed. The 'time' parameter records the the amount of time
+that the button has been held (since the down event).
 
-    event long_click @ 0x81
-
-Emitted after button is held for 500ms. Long click events are followed by a separate up event.
-
-    event hold @ 0x82
-
-Emitted after the button is held for 1500ms. Hold events are followed by a separate up event.

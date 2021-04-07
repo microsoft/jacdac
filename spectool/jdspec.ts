@@ -140,6 +140,12 @@ export const secondaryUnitConverters: jdspec.SMap<{
         offset: 0,
     },
     "m/h": { name: "meter per hour", unit: "m/s", scale: 1 / 3600, offset: 0 },
+    "cm/s": {
+        name: "centimeter per seconds",
+        unit: "m/s",
+        scale: 1 / 100,
+        offset: 0,
+    },
     ppm: { name: "parts per million", unit: "/", scale: 1.0e-6, offset: 0 },
     ppb: { name: "parts per billion", unit: "/", scale: 1.0e-9, offset: 0 },
     "/100": { name: "percent", unit: "/", scale: 1 / 100, offset: 0 },
@@ -459,6 +465,19 @@ export function parseServiceSpecificationMarkdownToJSON(
                     )
                     .join(", ")}`
             )
+
+
+        // additional checks for specific packets
+        if (["reading_error", "min_reading", "max_reading", "reading_resolution"].indexOf(packetInfo.identifierName) > -1) {
+            const regid = packetInfo.identifierName
+            if (packetInfo.fields.length > 1)
+                error(`${regid} must be a number`)
+            const reading = info.packets.find(pkt => pkt.kind === "ro" && pkt.identifierName === "reading");
+            if (!reading)
+                error(`${regid} register without a reading register`)
+            else if (packetInfo.fields[0].unit !== reading.fields[0].unit)
+                error(`${regid} unit (${packetInfo.fields[0].unit}) and reading unit (${reading.fields[0].unit}) must match`)
+        }
 
         packetInfo = null
     }
@@ -971,10 +990,14 @@ export function parseServiceSpecificationMarkdownToJSON(
                     info.status = <any>words[2]
                 else error("unknown status")
                 break
-            case "tags":
+            case "group":
+                info.group = capitalize(words.slice(2).join(" "))
+                break
+            case "tags": {
                 const tags = words.slice(2).filter(w => w != "," && w != ";")
                 info.tags = info.tags.concat(tags)
                 break
+            }
             default:
                 error("unknown metadata field: " + words[0])
                 break
@@ -1376,6 +1399,7 @@ ${code.replace(/^\n+/, "").replace(/\n+$/, "")}
 `
 }
 
+export const TYPESCRIPT_STATIC_NAMESPACE = "jacdac"
 function packFormatForField(
     info: jdspec.ServiceSpec,
     fld: jdspec.PacketMember,
@@ -1393,7 +1417,7 @@ function packFormatForField(
     } else if (info.enums[fld.type]) {
         fmt = canonicalType(info.enums[fld.type].storage)
         tsType = upperCamel(info.camelName) + upperCamel(fld.type)
-        if (isStatic) tsType = "jacdac." + tsType
+        if (isStatic) tsType = TYPESCRIPT_STATIC_NAMESPACE + "." + tsType
     } else {
         switch (fld.type) {
             case "string":
@@ -1530,7 +1554,9 @@ function toTypescript(info: jdspec.ServiceSpec, staticTypeScript: boolean) {
     const enumkw = staticTypeScript
         ? indent + "export const enum"
         : "export enum"
-    let r = staticTypeScript ? "namespace jacdac {\n" : ""
+    let r = staticTypeScript
+        ? `namespace ${TYPESCRIPT_STATIC_NAMESPACE} {\n`
+        : ""
     r += indent + "// Service: " + info.name + "\n"
     if (info.shortId[0] != "_") {
         r +=
@@ -1651,4 +1677,14 @@ export function converters(): jdspec.SMap<(s: jdspec.ServiceSpec) => string> {
         "cpp": toHPP,
         */
     }
+}
+
+export function isNumericType(field: jdspec.PacketMember) {
+    const tp = field.type
+    return (
+        !field.startRepeats &&
+        /^[uif]\d+(\.\d+)?$/.test(tp) &&
+        tp != "pipe_port" &&
+        tp != "bool"
+    )
 }

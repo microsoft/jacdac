@@ -1,6 +1,10 @@
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path="jdspec.d.ts" />
 
+export function isBoolOrNumericFormat(fmt: string) {
+    return fmt === "bool" || /^[ui]\d+/i.test(fmt)
+}
+
 export function isRegister(pkt: jdspec.PacketInfo): boolean {
     return pkt && (pkt.kind == "const" || pkt.kind == "ro" || pkt.kind == "rw")
 }
@@ -24,32 +28,22 @@ export function lookupField(
 
 export interface RegField {
     pkt: jdspec.PacketInfo
-    fld?: jdspec.PacketMember
+    fld: jdspec.PacketMember
 }
 
-export function getRegister(spec: jdspec.ServiceSpec, w: string): RegField {
-    const ret: RegField = { pkt: null }
-    if (/^\w+$/.test(w)) {
-        ret.pkt = lookupRegister(spec, w)
-        if (!ret.pkt) {
+export function getRegister(spec: jdspec.ServiceSpec, root: string, fld: string = ""): RegField {
+    const ret: RegField = { pkt: undefined, fld: undefined }
+    ret.pkt = lookupRegister(spec, root)
+    if (!ret.pkt) {
+        throw new Error(
+            `no register ${root} found in service ${spec.shortName}`
+        )
+    } else if (fld){
+        ret.fld = lookupField(ret.pkt, fld)
+        if (!ret.fld)
             throw new Error(
-                `no register ${w} found in service ${spec.shortName}`
+                `no field ${fld} found in register ${root} of service ${spec.shortName}`
             )
-        }
-    } else if (/^\w+\.\w+$/.test(w)) {
-        const [reg, field] = /^(\w+)\.(\w+)$/.exec(w)
-        ret.pkt = lookupRegister(spec, reg)
-        if (!ret.pkt) {
-            throw new Error(
-                `no register ${reg} found in service ${spec.shortName}`
-            )
-        } else {
-            ret.fld = lookupField(ret.pkt, field)
-            if (!ret.fld)
-                throw new Error(
-                    `no field ${field} found in register ${reg} of service ${spec.shortName}`
-                )
-        }
     }
     return ret
 }
@@ -83,4 +77,16 @@ export function parseIntFloat(
     if (!en.members.hasOwnProperty(ww[1]))
         throw new Error(`${ww[1]} is not a member of ${ww[0]}`)
     return en.members[ww[1]] || 0
+}
+
+export function exprVisitor(parent: any, current: any, structVisit: (par:jsep.Expression, curr:jsep.Expression) => void) {
+    if (Array.isArray(current)) {
+        (current as any[]).forEach(c => exprVisitor(current, c, structVisit))
+    } else if (typeof current === "object") {
+        if (parent && current)
+            structVisit(parent, current)
+        Object.keys(current).forEach((key: string) => {
+            exprVisitor(current, current[key], structVisit)
+        })
+    }
 }

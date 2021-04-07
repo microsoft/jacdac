@@ -190,7 +190,7 @@
       "fields": [
         {
           "name": "_",
-          "unit": "°C",
+          "unit": "%RH",
           "shift": 10,
           "type": "u22.10",
           "storage": 4,
@@ -208,7 +208,7 @@
       "fields": [
         {
           "name": "_",
-          "unit": "°C",
+          "unit": "%RH",
           "shift": 10,
           "type": "u22.10",
           "storage": 4,
@@ -220,7 +220,7 @@
     }
   ],
   "tags": [
-    "environment",
     "C"
-  ]
+  ],
+  "group": "Environment"
 }

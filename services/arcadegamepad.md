@@ -2,7 +2,8 @@
 
     identifier: 0x1deaa06e
     extends: _sensor
-    tags: button, C
+    tags: C
+    group: button
 
 A gamepad with direction and action buttons for one player.
 If a device has multiple controllers, it should have multiple gamepad services, using consecutive service identifiers.

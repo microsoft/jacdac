@@ -182,7 +182,6 @@
       "packFormat": "u22.10"
     }
   ],
-  "tags": [
-    "imaging"
-  ]
+  "tags": [],
+  "group": "Imaging"
 }

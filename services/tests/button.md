@@ -1,32 +1,39 @@
 # Button tests
 
-## downUp: press down and up
-    
-press the button and release it immediately
+## Press and release
 
-    say()
+Press and release the button (once)
 
-did you observe an Up event, followed by a Down event?
+    events([down, up])
 
-    ask()
+## Register and event correspondence
 
-## click: click the button
+Press and release the button
 
-press the button down for 500ms and less than 1500ms and release it
-    
-    say()
+    check(start(!pressed) && pressed)
+    nextEvent(down)
+    check(start(pressed) && !pressed)
+    nextEvent(up)
 
-did you observe a Click event?
+## One hold event
 
-    ask()
+Press and hold the button for more than 500ms, then release
 
-## long click: hold the button
+    events([down, hold, up])
 
-press the button down at least 1500ms and release it
+## Hold for three hold events
 
-    say()
+Press and hold the button for 3 hold events, then release
 
-did you observe a LongClick event?"
+    events([down, hold, hold, hold])
+    nextEvent(up, up.time >= 1500 && up.time < 2000)
 
-    ask()
+## Event timing for hold events
+
+Press and hold the button for 4 hold events
+
+    awaitEvent(hold, hold.time >= 500)
+    nextEvent(hold, hold.time >= 1000)
+    nextEvent(hold, hold.time >= 1500)
+    nextEvent(hold, hold.time >= 2000)
 

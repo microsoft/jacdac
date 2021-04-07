@@ -1,11 +1,20 @@
-# Potentiometer tests
+# Potentiometer Tests
 
-## position changes on movement
+## midpoint
 
-move the slider/potentiometer
+Adjust the potentiometer to the midpoint (0.5)
 
-    say()
+    closeTo(position,0.5,0.01)
 
-did the position register's value change?
-    
-    ask()
+
+## slider
+
+Check if the device is a slider
+
+    check(variant == Variant.Slider)
+
+## rotary
+
+Check if the device is a rotary
+
+    check(variant == Variant.Rotary)

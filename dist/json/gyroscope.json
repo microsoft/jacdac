@@ -211,7 +211,6 @@
       "packFormat": "i12.20"
     }
   ],
-  "tags": [
-    "movement"
-  ]
+  "tags": [],
+  "group": "Movement"
 }

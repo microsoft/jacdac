@@ -2,7 +2,8 @@
 
     identifier: 0x126c4cb2
     extends: _sensor
-    tags: imaging, 8bit
+    group: imaging
+    tags: 8bit
 
 A sensor that detects light and dark surfaces, commonly used for line following robots.
 

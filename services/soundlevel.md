@@ -2,7 +2,8 @@
 
      identifier: 0x14ad1a5d
      extends: _sensor
-     tags: sound, 8bit
+     group: sound
+     tags: 8bit
 
 A sound level detector sensor, gives a relative indication of the sound level.
 
@@ -30,13 +31,13 @@ If both ``min_decibels`` and ``max_decibels`` are supported,
 the volume in deciment can be linearly interpolated between
 ``[min_decibels, max_decibels]``.
 
-    rw loud_threshold: u0.16 / @ low_threshold
+    rw loud_threshold: u0.16 / @ high_threshold
 
 The sound level to trigger a loud event.
 
-    rw quiet_threshold: u0.16 / @ high_threshold
+    rw quiet_threshold: u0.16 / @ low_threshold
 
-The sound level to trigger a quite event.
+The sound level to trigger a quiet event.
 
 ## Events
 

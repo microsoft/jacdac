@@ -2,7 +2,8 @@
 
     identifier: 0x196158f7
     camel:sevenSegmentDisplay
-    tags: display, 8bit
+    group: display
+    tags: 8bit
 
 A 7-segment numeric display, with one or more digits.
 

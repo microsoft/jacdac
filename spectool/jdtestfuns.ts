@@ -1,57 +1,119 @@
 /* eslint-disable @typescript-eslint/triple-slash-reference */
 /// <reference path="jdtest.d.ts" />
 
-export type Commands =
-    | "reset"
+export type JDTestFunctions =
     | "changes"
     | "ask"
-    | "say"
     | "check"
     | "increases"
     | "decreases"
     | "increasesBy"
     | "decreasesBy"
-    | "rangesFromUpTo"
-    | "rangesFromDownTo"
+    | "stepsUpTo"
+    | "stepsDownTo"
+    | "events"
+    | "awaitEvent"
+    | "nextEvent"
+    | "assign"
+    | "closeTo"
 
-export const testCommandFunctions: jdtest.TestFunctionDescription[] = [
-    { id: "reset", args: [], prompt: "sends a reset command to the module" },
-    { id: "changes", args: ["reg"], prompt: "did the value of $1 change?" },
-    { id: "say", args: [], prompt: undefined },
-    { id: "ask", args: [], prompt: undefined },
-    { id: "check", args: ["boolean"], prompt: "does the condition $1 hold?" },
+export function getTestCommandFunctions() {
+    return testFunctions.filter(f => f.context === "command" || f.context === "either")
+}
+
+export function getTestExpressionFunctions() {
+    return testFunctions.filter(f => f.context === "expression" || f.context === "either")
+}
+
+const testFunctions: jdtest.TestFunctionDescription[] = [
+    {
+        id: "changes",
+        args: ["register"],
+        prompt: `check that {1} changes`,
+        context: "command",
+    },
+    {
+        id: "ask",
+        args: [],
+        prompt: undefined,
+        context: "command",
+    },
+    {
+        id: "events",
+        args: ["events"],
+        prompt: `check that events {1} are observed`,
+        context: "command",
+    },
+    {
+        id: "awaitEvent",
+        args: ["event", ["boolean", true] ],
+        prompt: `wait for event {1} and then check {2} (other events ignored)`,
+        context: "command",
+    },
+    {
+        id: "nextEvent",
+        args: ["event", ["boolean", true]],
+        prompt: `next event must be {1}, then check {2}`,
+        context: "command",
+    },
+    {
+        id: "assign",
+        args: ["register", "number"],
+        prompt: `write value {2:val} to {1}`,
+        context: "command",
+    },
+    {
+        id: "check",
+        args: ["boolean"],
+        prompt: `check that {1}`,
+        context: "command",
+    },
     {
         id: "increases",
-        args: ["reg"],
-        prompt: "did the value of register $1 increase?",
+        args: ["register"],
+        prompt: `check that {1} increases`,
+        context: "command",
     },
     {
         id: "decreases",
-        args: ["reg"],
-        prompt: "did the value of register $1 decrease?",
+        args: ["register"],
+        prompt: `check that {1} decreases`,
+        context: "command",
     },
     {
         id: "increasesBy",
-        args: ["reg", "number"],
-        prompt: "did the value of register $1 increase by $2?",
+        args: ["register", "number"],
+        prompt: `check that  {1} (initially {1:val}) increases by {2:val}`,
+        context: "command",
     },
     {
         id: "decreasesBy",
-        args: ["reg", "number"],
-        prompt: "did the value of register $1 decrease by $2?",
+        args: ["register", "number"],
+        prompt: `check that {1} (initially {1:val}) decreases by {2:val}`,
+        context: "command",
     },
     {
-        id: "rangesFromUpTo",
-        args: ["reg", "number", "number"],
-        prompt: "register $1 should range in value from $2 up to $3",
+        id: "stepsUpTo",
+        args: ["register", "number"],
+        prompt: `{1} should step up (by ones) from {1:val} to {2:val}`,
+        context: "command",
     },
     {
-        id: "rangesFromDownTo",
-        args: ["reg", "number", "number"],
-        prompt: "register $1 should range in value from $2 down to $3",
+        id: "stepsDownTo",
+        args: ["register", "number"],
+        prompt: `{1} should step down (by ones) from {1:val} to {2:val}`,
+        context: "command",
     },
-]
-
-export const testExpressionFunctions: jdtest.TestFunctionDescription[] = [
-    { id: "start", args: ["any"], prompt: "value at beginning of test" },
+    {
+        id: "start",
+        args: ["any"],
+        prompt: undefined,
+        context: "expression",
+    },
+    {
+        id: "closeTo",
+        args: ["number", "number", "number"],
+        prompt: `evaluate {1} until it is close to {2:val}, as given by error {3:val}`,
+        context: "either",
+    },
 ]

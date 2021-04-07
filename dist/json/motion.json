@@ -9,8 +9,7 @@
     "_sensor"
   ],
   "notes": {
-    "short": "A sensor, typically PIR, that detects object motion within a certain range",
-    "events": "event movement @ active { }\n\nA movement was detected."
+    "short": "A sensor, typically PIR, that detects object motion within a certain range"
   },
   "classIdentifier": 293185353,
   "enums": {
@@ -220,10 +219,18 @@
       "optional": true,
       "identifierName": "variant",
       "packFormat": "u8"
+    },
+    {
+      "kind": "event",
+      "name": "movement",
+      "identifier": 1,
+      "description": "A movement was detected.",
+      "fields": [],
+      "identifierName": "active"
     }
   ],
   "tags": [
-    "movement",
     "8bit"
-  ]
+  ],
+  "group": "Movement"
 }

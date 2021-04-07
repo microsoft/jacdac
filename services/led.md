@@ -2,33 +2,30 @@
 
     identifier: 0x1e3048f8
     camel: led
-    tags: light
+    group: light
 
 A controller for 1 or more monochrome or RGB LEDs connected in parallel.
 
-## Registers
+## Commands
 
-    rw brightness: u0.16 / @ intensity
-
-Set the luminosity of the strip. The value is used to scale `value` in `steps` register.
-At `0` the power to the strip is completely shut down.
-
-    rw animation @ 0x82 {
-        repetitions: u16
-        repeats:
-            hue: u8
-            saturation: u8
-            value: u8
-            duration: u8 8ms
+    command animate @ 0x80 {
+        to_red: u8
+        to_green: u8
+        to_blue: u8
+        speed: u8
     }
 
-Animations are described using pairs of color description and duration, 
-similarly to the `status_light` register in the control service.
-`repetition` as ``0`` is considered infinite.
-For monochrome LEDs, the hue and saturation are ignored.
-A specification `(red, 80ms), (blue, 40ms), (blue, 0ms), (yellow, 80ms)`
-means to start with red, cross-fade to blue over 80ms, stay blue for 40ms,
-change to yellow, and cross-fade back to red in 80ms.
+This has the same semantics as `set_status_light` in the control service.
+
+## Registers
+
+    ro color @ 0x180 {
+        red: u8
+        green: u8
+        blue: u8
+    }
+
+The current color of the LED.
 
     rw max_power? = 100: u16 mA @ max_power
 

@@ -214,7 +214,7 @@
     {
       "kind": "rw",
       "name": "loud_threshold",
-      "identifier": 5,
+      "identifier": 6,
       "description": "The sound level to trigger a loud event.",
       "fields": [
         {
@@ -225,14 +225,14 @@
           "storage": 2
         }
       ],
-      "identifierName": "low_threshold",
+      "identifierName": "high_threshold",
       "packFormat": "u0.16"
     },
     {
       "kind": "rw",
       "name": "quiet_threshold",
-      "identifier": 6,
-      "description": "The sound level to trigger a quite event.",
+      "identifier": 5,
+      "description": "The sound level to trigger a quiet event.",
       "fields": [
         {
           "name": "_",
@@ -242,7 +242,7 @@
           "storage": 2
         }
       ],
-      "identifierName": "high_threshold",
+      "identifierName": "low_threshold",
       "packFormat": "u0.16"
     },
     {
@@ -263,7 +263,7 @@
     }
   ],
   "tags": [
-    "sound",
     "8bit"
-  ]
+  ],
+  "group": "Sound"
 }

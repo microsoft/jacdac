@@ -152,7 +152,7 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
+          "unit": "°",
           "shift": 16,
           "type": "u16.16",
           "storage": 4,

@@ -37,6 +37,7 @@ Do nothing. Always ignored. Can be used to test ACKs.
     command identify? @ 0x81 { }
 
 Blink an LED or otherwise draw user's attention.
+TODO: this is being deprecated in favor of `set_status_light`.
 
     command reset? @ 0x82 { }
 
@@ -55,6 +56,22 @@ Reset device. ACK may or may not be sent.
 The device will respond `num_responses` times, as fast as it can, setting the `counter` field in the report
 to `start_counter`, then `start_counter + 1`, ..., and finally `start_counter + num_responses - 1`.
 The `dummy_payload` is `size` bytes long and contains bytes `0, 1, 2, ...`.
+
+    command set_status_light @ 0x84 {
+        to_red: u8
+        to_green: u8
+        to_blue: u8
+        speed: u8
+    }
+
+Initiates a color transition of the status light from its current color to the one specified.
+The transition will complete in about `512 / speed` frames
+(each frame is currently 100ms, so speed of `51` is about 1 second and `26` 0.5 second).
+As a special case, if speed is `0` the transition is immediate.
+If MCU is not capable of executing transitions, it can consider `speed` to be always `0`.
+If a monochrome LEDs is fitted, the average value of ``red``, ``green``, ``blue`` is used.
+If intensity of a monochrome LED cannot be controlled, any value larger than `0` should be considered
+on, and `0` (for all three channels) should be considered off.
 
 ## Registers
 
@@ -99,19 +116,3 @@ URL pointing to device JSON specification.
     const firmware_url?: string @ 0x188
 
 URL with machine-readable metadata information about updating device firmware
-
-    rw status_light? @ 0x81 {
-        repetitions: u16
-        repeats:
-            hue: u8
-            saturation: u8
-            value: u8
-            duration8: u8 8ms
-    }
-
-Specifies a status light animation sequence on a colored or monochrome LED
-using the [LED animation format](/spec/led-animation/).
-Typically, up to 8 steps (repeats) are supported.
-
-The status light is also used by Jacdac software stack to indicate various status mode
-and this animation may be overridden when those modes are enabled.

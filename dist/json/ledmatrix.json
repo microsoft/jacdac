@@ -150,7 +150,6 @@
       "packFormat": "u16"
     }
   ],
-  "tags": [
-    "display"
-  ]
+  "tags": [],
+  "group": "Display"
 }

@@ -47,7 +47,7 @@ Using Jacdac in microcontroller applications is incredibly easy and only
 requires a software stack that has a compatible Jacdac physical layer.
 
 Services are registered in the [service catalog](/services/) 
-and described by [service specifications](/reference/specification/service-specification/).
+and described by [service specifications](/reference/service-specification/).
 
 * [Read more about the service layer](#service-layer)
 
@@ -115,7 +115,7 @@ because they share the same software interface.
 
 Services act on __commands__ and optionally respond with __reports__. 
 Reports can also be emitted separately from a service without prompting from another device. 
-This interface is specified in a [custom markdown language](../../service-specification) 
+This interface is specified in a [custom markdown language](/reference/service-specification/) 
 that lists the possible commands and reports that a service can consume and emit. 
 Specifications can also inherit from other specifications. An example of this can be seen in the [sensor specification](../../../services/_sensor). Jacdac sensors inherit commands and reports from this specification, creating a set of base functionality for _all_ sensors.
 

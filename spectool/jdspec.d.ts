@@ -261,6 +261,11 @@ declare namespace jdspec {
          * General purpose tags
          */
         tags: string[]
+
+        /**
+         * Recommended grouping for APIs
+         */
+        group?: string
     }
 
     /**

@@ -40,18 +40,23 @@ declare namespace jdtest {
 
     interface TestSpec {
         description: string
+        prompt: string
         registers: string[]
-        commands: CommandSpec[]
+        events: string[]
+        testCommands: TestCommandSpec[]
     }
 
-    interface CommandSpec {
+    interface TestCommandSpec {
         prompt: string // markdown
         call: jsep.CallExpression
     }
 
+    type Context = "command" | "expression" | "either"
+
     interface TestFunctionDescription {
         id: string
-        args: string[]
+        args: (string | [string, any])[]
         prompt: string
+        context: Context
     }
 }

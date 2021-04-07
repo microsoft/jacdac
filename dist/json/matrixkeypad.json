@@ -306,7 +306,6 @@
       "packFormat": "u8"
     }
   ],
-  "tags": [
-    "button"
-  ]
+  "tags": [],
+  "group": "Button"
 }

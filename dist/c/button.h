@@ -15,23 +15,16 @@
 #define JD_BUTTON_EV_DOWN JD_EV_ACTIVE
 
 /**
- * Emitted when button goes from active (`pressed == 1`) to inactive.
+ * Argument: time ms uint32_t. Emitted when button goes from active (`pressed == 1`) to inactive. The 'time' parameter 
+ * records the amount of time between the down and up events.
  */
 #define JD_BUTTON_EV_UP JD_EV_INACTIVE
 
 /**
- * Emitted together with `up` when the press time was not longer than 500ms.
+ * Argument: time ms uint32_t. Emitted when the press time is greater than 500ms, and then at least every 500ms 
+ * as long as the button remains pressed. The 'time' parameter records the the amount of time
+ * that the button has been held (since the down event).
  */
-#define JD_BUTTON_EV_CLICK 0x80
-
-/**
- * Emitted after button is held for 500ms. Long click events are followed by a separate up event.
- */
-#define JD_BUTTON_EV_LONG_CLICK 0x81
-
-/**
- * Emitted after the button is held for 1500ms. Hold events are followed by a separate up event.
- */
-#define JD_BUTTON_EV_HOLD 0x82
+#define JD_BUTTON_EV_HOLD 0x81
 
 #endif

@@ -3,8 +3,8 @@
   "name": "JM GamePad v2",
   "company": "Microsoft Research",
   "description": "Lets you convert a plastic d-pad controller, so that it can be connected to a Jacdac network.",
-  "repo": "https://github.com/microsoft/jacdac-stm32x0",
-  "link": "https://github.com/microsoft/jacdac-stm32x0",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "link": "https://github.com/microsoft/jacdac-msr-modules",
   "services": [
     501915758
   ],

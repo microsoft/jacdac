@@ -172,35 +172,39 @@
       "kind": "event",
       "name": "up",
       "identifier": 2,
-      "description": "Emitted when button goes from active (`pressed == 1`) to inactive.",
-      "fields": [],
-      "identifierName": "inactive"
-    },
-    {
-      "kind": "event",
-      "name": "click",
-      "identifier": 128,
-      "description": "Emitted together with `up` when the press time was not longer than 500ms.",
-      "fields": []
-    },
-    {
-      "kind": "event",
-      "name": "long_click",
-      "identifier": 129,
-      "description": "Emitted after button is held for 500ms. Long click events are followed by a separate up event.",
-      "fields": []
+      "description": "Emitted when button goes from active (`pressed == 1`) to inactive. The 'time' parameter \nrecords the amount of time between the down and up events.",
+      "fields": [
+        {
+          "name": "time",
+          "unit": "ms",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        }
+      ],
+      "identifierName": "inactive",
+      "packFormat": "u32"
     },
     {
       "kind": "event",
       "name": "hold",
-      "identifier": 130,
-      "description": "Emitted after the button is held for 1500ms. Hold events are followed by a separate up event.",
-      "fields": []
+      "identifier": 129,
+      "description": "Emitted when the press time is greater than 500ms, and then at least every 500ms \nas long as the button remains pressed. The 'time' parameter records the the amount of time\nthat the button has been held (since the down event).",
+      "fields": [
+        {
+          "name": "time",
+          "unit": "ms",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u32"
     }
   ],
   "tags": [
-    "button",
     "C",
     "8bit"
-  ]
+  ],
+  "group": "Button"
 }

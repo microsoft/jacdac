@@ -5,7 +5,7 @@ Measures equivalent Total Volatile Organic Compound levels.
     identifier: 0x12a5b597
     extends: _sensor
     camel: tvoc
-    tags: environment
+    group: environment
 
 ## Registers
 

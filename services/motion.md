@@ -4,7 +4,8 @@ A sensor, typically PIR, that detects object motion within a certain range
 
     identifier: 0x1179a749
     extends: _sensor
-    tags: movement, 8bit
+    group: movement
+    tags: 8bit
 
 ## Registers
 
@@ -29,6 +30,6 @@ Type of physical sensor
 
 ## Events
 
-   event movement @ active { }
+    event movement @ active { }
 
 A movement was detected.

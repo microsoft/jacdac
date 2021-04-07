@@ -2,7 +2,7 @@
 
     identifier: 0x1e6ecaf2
     extends: _sensor
-    tags: imaging
+    group: imaging
 
 Detects the amount of light falling onto a given surface area.
 

@@ -9,9 +9,14 @@ A service specification describes the three main types of Jacdac packets that a 
 
 Service specifications are written in a literate form of markdown, for consumption by both human and machine. The formal specification fragments, given as markdown code sections, are interleaved with English specification text. The code sections can be in triple backticks or with four (4) leading spaces (examples in this document only use the leading spaces form).
 
-The [Service Editor](/tools/service-editor/) is an online editor for creating service specifications.
+```info
+Use the [service editor](/tools/service-editor/) to create service specifications.
+```
+
 The [jdspectool](https://github.com/microsoft/jacdac/tree/main/spectool) takes a service specification in markdown format and converts it to JSON.
 It can then also generate template files for implementation in various languages.
+
+
 
 ## Rocket Example
 
@@ -93,7 +98,11 @@ The third register (`num_nozzles`) is unit-less and constant, at least until the
 The fourth register is current acceleration.
 The `i16.16` type is signed 32 bit integer, where the value is shifted by 16 bits.
 That is, the last 16 bits is the fractional part.
-Similarly, a `i22.10` would also be a 32 bit integer, where the value is shifted by 10 bits.
+For example, if your accelrometer reports signed 14 bit values, where the number `1024` represents
+`1 m/s2` (in other words, it's in `i4.10` format), then you need to compute `reading << 6` to get the `i16.16` format.
+Similarly, a `i22.10` would also be a 32 bit integer, where the value is shifted by 10 bits,
+and `u0.16` represents a value between 0 and (almost) 1.
+If you have 12-bit ADC and need to convert it to `u0.16`, you do `adc << 4`.
 
 The register also has three fields.
 In fact, the `core_temperature` could be also expressed using the more verbose syntax,
@@ -397,24 +406,3 @@ The final zero-length packet, before closing the pipe, is optional.
 Both `segmented:` and `multi-segmented:` are currently only supported in `pipe report` and `pipe command`,
 with a single field of type `bytes`.
 
-## LED Animation
-
-Jacdac supports a simple encoding for basic LED animations. It is used in the [control service](/services/control/)
-``status_light`` register and also in the [led service](/services/led/).
-
-```
-    rw status_light ... {
-        repeats:
-            hue: u8
-            saturation: u8
-            value: u8
-            duration8: u8 8ms
-    }
-```
-
-Specifies a status light animation sequence on a colored or monochrome LED.
-``hue``, ``saturation``, ``value`` are the components of an HSV color
-and ``duration8`` is the duration of transition to the next color in the array, in units of ``8ms``. Module with monochrome LED can ignore ``hue``, ``saturation`` and use ``value``. The animation is played in a loop.
-Set the register to empty buffer to disable the animation.
-
-* Design your animation using the [LED Animation designer](/tools/led-animation-designer/).

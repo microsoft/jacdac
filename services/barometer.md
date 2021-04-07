@@ -2,7 +2,7 @@
 
     identifier: 0x1e117cea
     extends: _sensor
-    tags: environment
+    group: environment
 
 A sensor measuring air pressure of outside environment.
 

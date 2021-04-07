@@ -2,7 +2,8 @@
 
     identifier: 0x1f140409
     extends: _sensor
-    tags: movement, C
+    tags: C
+    group: movement
 
 A 3-axis accelerometer.
 

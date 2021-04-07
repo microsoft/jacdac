@@ -3,8 +3,8 @@
   "name": "JM PWM (Servo) v2.1",
   "company": "Microsoft Research",
   "description": "A controller for a 5V servo, with MicroUSB connector for power.",
-  "repo": "https://github.com/microsoft/jacdac-stm32x0",
-  "link": "https://github.com/microsoft/jacdac-stm32x0",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "link": "https://github.com/microsoft/jacdac-msr-modules",
   "services": [
     318542083
   ],

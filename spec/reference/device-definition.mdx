@@ -31,11 +31,11 @@ Each device file, (e.g. ``mydevice.md``), should be accompanied by a JPEG pictur
 
 ## Firmware updates
 
-Firmware updates can be hosted as **assets** on **releases** of GitHub repositories.
+Firmware updates can be hosted as **UF2 files** of GitHub repositories.
 Upon detecting a device with the specified firmware identifier, 
 Jacdac will automatically query the device catalog for the firmware repository, and download the latest firmware.
 
-* example [jacdac-stm32x0 releases](https://github.com/microsoft/jacdac-stm32x0/releases)
+* example [jacdac-msr-modules releases](https://github.com/microsoft/jacdac-msr-modules/tree/main/dist)
 
 The procedure runs as follows:
 * detect device on the bus

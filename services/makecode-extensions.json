@@ -297,6 +297,15 @@
     }
   },
   {
+    "service": "soundlevel",
+    "client": {
+      "name": "jacdac-sound-level",
+      "repo": "microsoft/pxt-jacdac/sound-level",
+      "qName": "modules.SoundLevelClient",
+      "default": "modules.soundLevel"
+    }
+  },
+  {
     "service": "tcp",
     "client": {
       "name": "jacdac-tcp",

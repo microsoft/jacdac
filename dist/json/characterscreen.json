@@ -199,7 +199,6 @@
       "packFormat": "u8"
     }
   ],
-  "tags": [
-    "display"
-  ]
+  "tags": [],
+  "group": "Display"
 }

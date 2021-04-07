@@ -830,24 +830,25 @@ export enum ButtonEvent {
     Down = 0x1,
 
     /**
-     * Emitted when button goes from active (`pressed == 1`) to inactive.
+     * Argument: time ms uint32_t. Emitted when button goes from active (`pressed == 1`) to inactive. The 'time' parameter
+     * records the amount of time between the down and up events.
+     *
+     * ```
+     * const [time] = jdunpack<[number]>(buf, "u32")
+     * ```
      */
     Up = 0x2,
 
     /**
-     * Emitted together with `up` when the press time was not longer than 500ms.
+     * Argument: time ms uint32_t. Emitted when the press time is greater than 500ms, and then at least every 500ms
+     * as long as the button remains pressed. The 'time' parameter records the the amount of time
+     * that the button has been held (since the down event).
+     *
+     * ```
+     * const [time] = jdunpack<[number]>(buf, "u32")
+     * ```
      */
-    Click = 0x80,
-
-    /**
-     * Emitted after button is held for 500ms. Long click events are followed by a separate up event.
-     */
-    LongClick = 0x81,
-
-    /**
-     * Emitted after the button is held for 1500ms. Hold events are followed by a separate up event.
-     */
-    Hold = 0x82,
+    Hold = 0x81,
 }
 
 // Service: Buzzer
@@ -964,7 +965,7 @@ export enum ColorReg {
 export const SRV_COMPASS = 0x15b7b9bf
 export enum CompassReg {
     /**
-     * Read-only u16.16 (uint32_t). The heading with respect to the magnetic north.
+     * Read-only ° u16.16 (uint32_t). The heading with respect to the magnetic north.
      *
      * ```
      * const [heading] = jdunpack<[number]>(buf, "u16.16")
@@ -1032,6 +1033,7 @@ export enum ControlCmd {
 
     /**
      * No args. Blink an LED or otherwise draw user's attention.
+     * TODO: this is being deprecated in favor of `set_status_light`.
      */
     Identify = 0x81,
 
@@ -1057,6 +1059,22 @@ export enum ControlCmd {
      * const [counter, dummyPayload] = jdunpack<[number, Uint8Array]>(buf, "u32 b")
      * ```
      */
+
+    /**
+     * Initiates a color transition of the status light from its current color to the one specified.
+     * The transition will complete in about `512 / speed` frames
+     * (each frame is currently 100ms, so speed of `51` is about 1 second and `26` 0.5 second).
+     * As a special case, if speed is `0` the transition is immediate.
+     * If MCU is not capable of executing transitions, it can consider `speed` to be always `0`.
+     * If a monochrome LEDs is fitted, the average value of ``red``, ``green``, ``blue`` is used.
+     * If intensity of a monochrome LED cannot be controlled, any value larger than `0` should be considered
+     * on, and `0` (for all three channels) should be considered off.
+     *
+     * ```
+     * const [toRed, toGreen, toBlue, speed] = jdunpack<[number, number, number, number]>(buf, "u8 u8 u8 u8")
+     * ```
+     */
+    SetStatusLight = 0x84,
 }
 
 export enum ControlReg {
@@ -1142,18 +1160,6 @@ export enum ControlReg {
      * ```
      */
     FirmwareUrl = 0x188,
-
-    /**
-     * Specifies a status light animation sequence on a colored or monochrome LED
-     * using the [LED animation format](/spec/led-animation/).
-     * Typically, up to 8 steps (repeats) are supported.
-     *
-     * ```
-     * const [repetitions, rest] = jdunpack<[number, ([number, number, number, number])[]]>(buf, "u16 r: u8 u8 u8 u8")
-     * const [hue, saturation, value, duration8] = rest[0]
-     * ```
-     */
-    StatusLight = 0x81,
 }
 
 // Service: Distance
@@ -1473,7 +1479,7 @@ export enum HumidityReg {
     HumidityError = 0x106,
 
     /**
-     * Constant °C u22.10 (uint32_t). Lowest humidity that can be reported.
+     * Constant %RH u22.10 (uint32_t). Lowest humidity that can be reported.
      *
      * ```
      * const [minHumidity] = jdunpack<[number]>(buf, "u22.10")
@@ -1482,7 +1488,7 @@ export enum HumidityReg {
     MinHumidity = 0x104,
 
     /**
-     * Constant °C u22.10 (uint32_t). Highest humidity that can be reported.
+     * Constant %RH u22.10 (uint32_t). Highest humidity that can be reported.
      *
      * ```
      * const [maxHumidity] = jdunpack<[number]>(buf, "u22.10")
@@ -1937,32 +1943,26 @@ export enum LedVariant { // uint8_t
     Bead = 0x4,
 }
 
+export enum LedCmd {
+    /**
+     * This has the same semantics as `set_status_light` in the control service.
+     *
+     * ```
+     * const [toRed, toGreen, toBlue, speed] = jdunpack<[number, number, number, number]>(buf, "u8 u8 u8 u8")
+     * ```
+     */
+    Animate = 0x80,
+}
+
 export enum LedReg {
     /**
-     * Read-write ratio u0.16 (uint16_t). Set the luminosity of the strip. The value is used to scale `value` in `steps` register.
-     * At `0` the power to the strip is completely shut down.
+     * The current color of the LED.
      *
      * ```
-     * const [brightness] = jdunpack<[number]>(buf, "u0.16")
+     * const [red, green, blue] = jdunpack<[number, number, number]>(buf, "u8 u8 u8")
      * ```
      */
-    Brightness = 0x1,
-
-    /**
-     * Animations are described using pairs of color description and duration,
-     * similarly to the `status_light` register in the control service.
-     * `repetition` as ``0`` is considered infinite.
-     * For monochrome LEDs, the hue and saturation are ignored.
-     * A specification `(red, 80ms), (blue, 40ms), (blue, 0ms), (yellow, 80ms)`
-     * means to start with red, cross-fade to blue over 80ms, stay blue for 40ms,
-     * change to yellow, and cross-fade back to red in 80ms.
-     *
-     * ```
-     * const [repetitions, rest] = jdunpack<[number, ([number, number, number, number])[]]>(buf, "u16 r: u8 u8 u8 u8")
-     * const [hue, saturation, value, duration] = rest[0]
-     * ```
-     */
-    Animation = 0x82,
+    Color = 0x180,
 
     /**
      * Read-write mA uint16_t. Limit the power drawn by the light-strip (and controller).
@@ -2281,10 +2281,10 @@ export enum MagnetometerReg {
     Forces = 0x101,
 
     /**
-     * Error on the readings.
+     * Read-only nT int32_t. Error on the readings.
      *
      * ```
-     * const [x, y, z] = jdunpack<[number, number, number]>(buf, "i32 i32 i32")
+     * const [forcesError] = jdunpack<[number]>(buf, "i32")
      * ```
      */
     ForcesError = 0x106,
@@ -2651,6 +2651,13 @@ export enum MotionReg {
      * ```
      */
     Variant = 0x107,
+}
+
+export enum MotionEvent {
+    /**
+     * A movement was detected.
+     */
+    Movement = 0x1,
 }
 
 // Service: Motor
@@ -3401,7 +3408,7 @@ export enum RngReg {
      * const [random] = jdunpack<[Uint8Array]>(buf, "b")
      * ```
      */
-    Random = 0x101,
+    Random = 0x180,
 
     /**
      * Constant Variant (uint8_t). The type of algorithm/technique used to generate the number.
@@ -3537,6 +3544,19 @@ export enum RotaryEncoderReg {
      * ```
      */
     ClicksPerTurn = 0x180,
+}
+
+// Service: Rover
+export const SRV_ROVER = 0x19f4d06b
+export enum RoverReg {
+    /**
+     * The current position and orientation of the robot.
+     *
+     * ```
+     * const [x, y, vx, vy, heading] = jdunpack<[number, number, number, number, number]>(buf, "i16.16 i16.16 i16.16 i16.16 i16.16")
+     * ```
+     */
+    Kinematics = 0x101,
 }
 
 // Service: Sensor Aggregator
@@ -3931,16 +3951,16 @@ export enum SoundLevelReg {
      * const [loudThreshold] = jdunpack<[number]>(buf, "u0.16")
      * ```
      */
-    LoudThreshold = 0x5,
+    LoudThreshold = 0x6,
 
     /**
-     * Read-write ratio u0.16 (uint16_t). The sound level to trigger a quite event.
+     * Read-write ratio u0.16 (uint16_t). The sound level to trigger a quiet event.
      *
      * ```
      * const [quietThreshold] = jdunpack<[number]>(buf, "u0.16")
      * ```
      */
-    QuietThreshold = 0x6,
+    QuietThreshold = 0x5,
 }
 
 export enum SoundLevelEvent {
@@ -4707,7 +4727,7 @@ export enum WifiEvent {
 export const SRV_WIND_DIRECTION = 0x186be92b
 export enum WindDirectionReg {
     /**
-     * Read-only uint16_t. The direction of the wind.
+     * Read-only ° uint16_t. The direction of the wind.
      *
      * ```
      * const [windDirection] = jdunpack<[number]>(buf, "u16")

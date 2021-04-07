@@ -569,11 +569,9 @@ declare namespace jdspec {
         repo: string
 
         /**
-         * Optional map of service class to a URL pointing to a service specification markdown file
+         * Optional list of URLs pointing to a service specification markdown file
          */
-        serviceSpecificationsUrls?: {
-            [serviceClass: number]: string
-        }
+        serviceSpecificationsUrls?: string[]
 
         /**
          * Links image urls

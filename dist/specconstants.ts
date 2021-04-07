@@ -1153,6 +1153,15 @@ export enum ControlReg {
     DeviceUrl = 0x187,
 
     /**
+     * Constant string (bytes). URL pointing to device JSON specification.
+     *
+     * ```
+     * const [deviceSpecificationUrl] = jdunpack<[string]>(buf, "s")
+     * ```
+     */
+    DeviceSpecificationUrl = 0x189,
+
+    /**
      * Constant string (bytes). URL with machine-readable metadata information about updating device firmware
      *
      * ```

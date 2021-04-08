@@ -25,7 +25,7 @@ that "fits" this device.
         session_id: u32
     }
 
-The flashing host should generate a random id, and use this command to set it.
+The flashing server should generate a random id, and use this command to set it.
 
     enum Error : u32 {
         NoError = 0

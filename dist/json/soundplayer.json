@@ -104,23 +104,16 @@
       "kind": "command",
       "name": "play",
       "identifier": 128,
-      "description": "Starts playing a sounds with a specific volume.",
+      "description": "Starts playing a sound.",
       "fields": [
         {
-          "name": "volume",
-          "unit": "/",
-          "shift": 16,
-          "type": "u0.16",
-          "storage": 2
-        },
-        {
-          "name": "name",
+          "name": "_",
           "unit": "",
           "type": "string",
           "storage": 0
         }
       ],
-      "packFormat": "u0.16 s"
+      "packFormat": "s"
     },
     {
       "kind": "command",

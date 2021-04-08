@@ -3999,10 +3999,10 @@ export enum SoundPlayerReg {
 
 export enum SoundPlayerCmd {
     /**
-     * Starts playing a sounds with a specific volume.
+     * Argument: string (bytes). Starts playing a sound.
      *
      * ```
-     * const [volume, name] = jdunpack<[number, string]>(buf, "u0.16 s")
+     * const [play] = jdunpack<[string]>(buf, "s")
      * ```
      */
     Play = 0x80,

@@ -13,12 +13,9 @@ Global volume of the output. ``0`` means completely off. This volume is mixed wi
 
 ## Commands
 
-    command play @ 0x80 {
-        volume: u0.16 /
-        name: string
-    }
+    command play: string @ 0x80
 
-Starts playing a sounds with a specific volume.
+Starts playing a sound.
 
     command list_sounds @ 0x81 {
         sounds_port: pipe

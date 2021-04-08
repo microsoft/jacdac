@@ -146,7 +146,7 @@
       "kind": "command",
       "name": "set_session",
       "identifier": 129,
-      "description": "The flashing host should generate a random id, and use this command to set it.",
+      "description": "The flashing server should generate a random id, and use this command to set it.",
       "fields": [
         {
           "name": "session_id",
@@ -163,7 +163,7 @@
       "kind": "report",
       "name": "set_session",
       "identifier": 129,
-      "description": "The flashing host should generate a random id, and use this command to set it.",
+      "description": "The flashing server should generate a random id, and use this command to set it.",
       "fields": [
         {
           "name": "session_id",

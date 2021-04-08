@@ -29,7 +29,7 @@ typedef struct jd_bootloader_info_report {
 
 
 /**
- * Argument: session_id uint32_t. The flashing host should generate a random id, and use this command to set it.
+ * Argument: session_id uint32_t. The flashing server should generate a random id, and use this command to set it.
  */
 #define JD_BOOTLOADER_CMD_SET_SESSION 0x81
 

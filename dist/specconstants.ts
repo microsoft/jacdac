@@ -775,7 +775,7 @@ export enum BootloaderCmd {
      */
 
     /**
-     * Argument: session_id uint32_t. The flashing host should generate a random id, and use this command to set it.
+     * Argument: session_id uint32_t. The flashing server should generate a random id, and use this command to set it.
      *
      * ```
      * const [sessionId] = jdunpack<[number]>(buf, "u32")

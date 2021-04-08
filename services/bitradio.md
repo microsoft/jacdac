@@ -50,9 +50,7 @@ Sends a double precision number and a name payload as a radio message
 
 Sends a payload of bytes as a radio message
 
-## Events
-
-    event string_received @ 0x80 {
+    report string_received @ 0x90 {
         time: u32 ms
         device_serial_number: u32
         rssi: i8 dB
@@ -62,7 +60,7 @@ Sends a payload of bytes as a radio message
 
 Raised when a string packet is received
 
-    event number_received @ 0x81 {
+    report number_received @ 0x91 {
         time: u32 ms
         device_serial_number: u32
         rssi: i8 dB
@@ -73,7 +71,7 @@ Raised when a string packet is received
 
 Raised when a number packet is received
 
-    event buffer_received @ 0x82 {
+    report buffer_received @ 0x92 {
         time: u32 ms
         device_serial_number: u32
         rssi: i8 dB

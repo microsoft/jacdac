@@ -718,9 +718,7 @@ export enum BitRadioCmd {
      * ```
      */
     SendBuffer = 0x83,
-}
 
-export enum BitRadioEvent {
     /**
      * Raised when a string packet is received
      *
@@ -728,7 +726,7 @@ export enum BitRadioEvent {
      * const [time, deviceSerialNumber, rssi, message] = jdunpack<[number, number, number, string]>(buf, "u32 u32 i8 x[1] s")
      * ```
      */
-    StringReceived = 0x80,
+    StringReceived = 0x90,
 
     /**
      * Raised when a number packet is received
@@ -737,7 +735,7 @@ export enum BitRadioEvent {
      * const [time, deviceSerialNumber, rssi, value, name] = jdunpack<[number, number, number, number, string]>(buf, "u32 u32 i8 x[3] f64 s")
      * ```
      */
-    NumberReceived = 0x81,
+    NumberReceived = 0x91,
 
     /**
      * Raised when a buffer packet is received
@@ -746,7 +744,7 @@ export enum BitRadioEvent {
      * const [time, deviceSerialNumber, rssi, data] = jdunpack<[number, number, number, Uint8Array]>(buf, "u32 u32 i8 x[1] b")
      * ```
      */
-    BufferReceived = 0x82,
+    BufferReceived = 0x92,
 }
 
 // Service: Bootloader

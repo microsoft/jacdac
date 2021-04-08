@@ -52,41 +52,41 @@ typedef struct jd_bit_radio_send_value {
 /**
  * Raised when a string packet is received
  */
-#define JD_BIT_RADIO_EV_STRING_RECEIVED 0x80
-typedef struct jd_bit_radio_string_received {
+#define JD_BIT_RADIO_CMD_STRING_RECEIVED 0x90
+typedef struct jd_bit_radio_string_received_report {
     uint32_t time; // ms
     uint32_t device_serial_number;
     int8_t rssi; // dB
     uint8_t padding;  // u8[1]
     char message[0];  // string
-} jd_bit_radio_string_received_t;
+} jd_bit_radio_string_received_report_t;
 
 
 /**
  * Raised when a number packet is received
  */
-#define JD_BIT_RADIO_EV_NUMBER_RECEIVED 0x81
-typedef struct jd_bit_radio_number_received {
+#define JD_BIT_RADIO_CMD_NUMBER_RECEIVED 0x91
+typedef struct jd_bit_radio_number_received_report {
     uint32_t time; // ms
     uint32_t device_serial_number;
     int8_t rssi; // dB
     uint8_t padding[3];  // u8[3]
     uint64_t value;  // f64
     char name[0];  // string
-} jd_bit_radio_number_received_t;
+} jd_bit_radio_number_received_report_t;
 
 
 /**
  * Raised when a buffer packet is received
  */
-#define JD_BIT_RADIO_EV_BUFFER_RECEIVED 0x82
-typedef struct jd_bit_radio_buffer_received {
+#define JD_BIT_RADIO_CMD_BUFFER_RECEIVED 0x92
+typedef struct jd_bit_radio_buffer_received_report {
     uint32_t time; // ms
     uint32_t device_serial_number;
     int8_t rssi; // dB
     uint8_t padding;  // u8[1]
     uint8_t data[0];
-} jd_bit_radio_buffer_received_t;
+} jd_bit_radio_buffer_received_report_t;
 
 
 #endif

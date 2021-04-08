@@ -223,9 +223,9 @@
       "packFormat": "b"
     },
     {
-      "kind": "event",
+      "kind": "report",
       "name": "string_received",
-      "identifier": 128,
+      "identifier": 144,
       "description": "Raised when a string packet is received",
       "fields": [
         {
@@ -265,9 +265,9 @@
       "packFormat": "u32 u32 i8 b[1] s"
     },
     {
-      "kind": "event",
+      "kind": "report",
       "name": "number_received",
-      "identifier": 129,
+      "identifier": 145,
       "description": "Raised when a number packet is received",
       "fields": [
         {
@@ -314,9 +314,9 @@
       "packFormat": "u32 u32 i8 b[3] f64 s"
     },
     {
-      "kind": "event",
+      "kind": "report",
       "name": "buffer_received",
-      "identifier": 130,
+      "identifier": 146,
       "description": "Raised when a buffer packet is received",
       "fields": [
         {

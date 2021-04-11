@@ -466,17 +466,25 @@ export function parseServiceSpecificationMarkdownToJSON(
                     .join(", ")}`
             )
 
-
         // additional checks for specific packets
-        if (["reading_error", "min_reading", "max_reading", "reading_resolution"].indexOf(packetInfo.identifierName) > -1) {
+        if (
+            [
+                "reading_error",
+                "min_reading",
+                "max_reading",
+                "reading_resolution",
+            ].indexOf(packetInfo.identifierName) > -1
+        ) {
             const regid = packetInfo.identifierName
-            if (packetInfo.fields.length > 1)
-                error(`${regid} must be a number`)
-            const reading = info.packets.find(pkt => pkt.kind === "ro" && pkt.identifierName === "reading");
-            if (!reading)
-                error(`${regid} register without a reading register`)
+            if (packetInfo.fields.length > 1) error(`${regid} must be a number`)
+            const reading = info.packets.find(
+                pkt => pkt.kind === "ro" && pkt.identifierName === "reading"
+            )
+            if (!reading) error(`${regid} register without a reading register`)
             else if (packetInfo.fields[0].unit !== reading.fields[0].unit)
-                error(`${regid} unit (${packetInfo.fields[0].unit}) and reading unit (${reading.fields[0].unit}) must match`)
+                error(
+                    `${regid} unit (${packetInfo.fields[0].unit}) and reading unit (${reading.fields[0].unit}) must match`
+                )
         }
 
         packetInfo = null
@@ -817,23 +825,30 @@ export function parseServiceSpecificationMarkdownToJSON(
                 if (tok == "}") break
                 tok = camelize(tok)
                 switch (tok) {
-                    case "maxBytes":
+                    case "maxBytes": {
+                        // eslint-disable-next-line @typescript-eslint/no-extra-semi,@typescript-eslint/no-explicit-any
                         ;(field as any)[tok] = rangeCheck("u8", parseVal(words))
                         break
+                    }
                     case "typicalMin":
                     case "typicalMax":
                     case "absoluteMin":
-                    case "absoluteMax":
+                    case "absoluteMax": {
+                        // eslint-disable-next-line @typescript-eslint/no-extra-semi,@typescript-eslint/no-explicit-any
                         ;(field as any)[tok] = rangeCheck(tp, parseVal(words))
                         break
-                    case "preferredInterval":
+                    }
+                    case "preferredInterval": {
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         if ((packetInfo as any)[tok] !== undefined)
                             error(`field ${tok} already set`)
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         ;(packetInfo as any)[tok] = rangeCheck(
                             "u32",
                             parseVal(words)
                         )
                         break
+                    }
                     default:
                         error("unknown constraint: " + tok)
                         break
@@ -1656,7 +1671,7 @@ export function escapeDeviceIdentifier(text: string) {
     const escaped = text
         .trim()
         .toLowerCase()
-        .replace(/([^a-z0-9\_-])+/gi, "-")
+        .replace(/([^a-z0-9_-])+/gi, "-")
         .replace(/^-+/, "")
         .replace(/-+$/, "")
     const id = snakify(escaped)

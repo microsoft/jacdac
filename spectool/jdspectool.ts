@@ -309,10 +309,10 @@ ${toMetaComments(
             })
             .join("")}    
     }
-    //% fixedInstance whenUsed
-    export const ${tsify(spec.camelName)} = new ${className}("${humanify(
+    //% fixedInstance whenUsed block="${humanify(spec.camelName).toLocaleLowerCase()} 1"
+    export const ${tsify(spec.camelName)}1 = new ${className}("${humanify(
                 spec.camelName
-            )}");
+            )}1");
 }`
 }
 

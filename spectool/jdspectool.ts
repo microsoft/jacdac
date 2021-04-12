@@ -181,7 +181,7 @@ ${regs
                             field.absoluteMax,
                             field.unit === "/" ? 100 : undefined
                         )
-                        const defl = field.defaultValue
+                        const defl = field.defaultValue || (field.unit === "/" ? "100" : undefined);
                         const valueScaler: (s : string) => string = 
                             field.unit === "/" ? s => `${s} * 100`
                             : field.type === "bool" ? s => `!!${s}`

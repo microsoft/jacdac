@@ -31,7 +31,7 @@ The current color of the LED.
 
 Limit the power drawn by the light-strip (and controller).
 
-    const led_count?: u16 @ 0x180
+    const led_count?: u16 @ 0x183
 
 If known, specifies the number of LEDs in parallel on this device.
 

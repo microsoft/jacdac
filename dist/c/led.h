@@ -41,7 +41,7 @@ typedef struct jd_led_color {
 /**
  * Constant uint16_t. If known, specifies the number of LEDs in parallel on this device.
  */
-#define JD_LED_REG_LED_COUNT 0x180
+#define JD_LED_REG_LED_COUNT 0x183
 
 /**
  * Constant nm uint16_t. If monochrome LED, specifies the wave length of the LED.

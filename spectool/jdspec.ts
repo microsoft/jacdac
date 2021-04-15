@@ -510,6 +510,17 @@ export function parseServiceSpecificationMarkdownToJSON(
         }
     }
 
+    function generalKind(k: jdspec.PacketKind): jdspec.PacketKind {
+        switch (k) {
+            case "const":
+            case "ro":
+            case "rw":
+                return "rw"
+            default:
+                return k
+        }
+    }
+
     function startPacket(words: string[]) {
         checkBraces(null)
         const kindSt = words.shift()
@@ -668,7 +679,7 @@ export function parseServiceSpecificationMarkdownToJSON(
         if (
             info.packets.some(
                 p =>
-                    p.kind == packetInfo.kind &&
+                    generalKind(p.kind) == generalKind(packetInfo.kind) &&
                     (!/pipe/.test(p.kind) ||
                         p.pipeType == packetInfo.pipeType) &&
                     p.identifier == packetInfo.identifier
@@ -842,7 +853,7 @@ export function parseServiceSpecificationMarkdownToJSON(
                         // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         if ((packetInfo as any)[tok] !== undefined)
                             error(`field ${tok} already set`)
-                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         ;(packetInfo as any)[tok] = rangeCheck(
                             "u32",
                             parseVal(words)

@@ -183,7 +183,7 @@
     {
       "kind": "const",
       "name": "led_count",
-      "identifier": 384,
+      "identifier": 387,
       "description": "If known, specifies the number of LEDs in parallel on this device.",
       "fields": [
         {

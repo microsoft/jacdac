@@ -27,7 +27,7 @@ Default streaming period is 1 second.
 
 Time drift since the last call to the ``set_time`` command.
 
-    const precision?: u16.16 ppm @ 0x180
+    const precision?: u16.16 ppm @ 0x181
 
 Error on the clock, in parts per million of seconds.
 

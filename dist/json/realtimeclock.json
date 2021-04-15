@@ -246,7 +246,7 @@
     {
       "kind": "const",
       "name": "precision",
-      "identifier": 384,
+      "identifier": 385,
       "description": "Error on the clock, in parts per million of seconds.",
       "fields": [
         {

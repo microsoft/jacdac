@@ -69,6 +69,14 @@ This is either binary on/off (0 or non-zero), or can be gradual (eg. brightness 
 
 The primary value of actuator (eg. servo pulse length, or motor duty cycle).
 
+    const min_value: i32 @ 0x110
+
+The lowest value that can be reported for the value register.
+
+    const max_value: i32 @ 0x111
+
+The highest value that can be reported for the value register.
+
     rw max_power = 500: u16 mA {typical_max = 500} @ 0x07
 
 Limit the power drawn by the service, in mA.

@@ -135,9 +135,9 @@
       "packFormat": "i16.16"
     },
     {
-      "kind": "rw",
+      "kind": "const",
       "name": "min_angle",
-      "identifier": 130,
+      "identifier": 272,
       "description": "Lowest angle that can be set.",
       "fields": [
         {
@@ -149,6 +149,7 @@
           "defaultValue": -90
         }
       ],
+      "identifierName": "min_value",
       "packFormat": "i16.16"
     },
     {
@@ -169,9 +170,9 @@
       "packFormat": "u16"
     },
     {
-      "kind": "rw",
+      "kind": "const",
       "name": "max_angle",
-      "identifier": 132,
+      "identifier": 273,
       "description": "Highest angle that can be set.",
       "fields": [
         {
@@ -183,6 +184,7 @@
           "defaultValue": 90
         }
       ],
+      "identifierName": "max_value",
       "packFormat": "i16.16"
     },
     {

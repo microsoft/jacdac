@@ -71,6 +71,24 @@ namespace jacdac {
         Value = 0x2,
 
         /**
+         * Constant int32_t. The lowest value that can be reported for the value register.
+         *
+         * ```
+         * const [minValue] = jdunpack<[number]>(buf, "i32")
+         * ```
+         */
+        MinValue = 0x110,
+
+        /**
+         * Constant int32_t. The highest value that can be reported for the value register.
+         *
+         * ```
+         * const [maxValue] = jdunpack<[number]>(buf, "i32")
+         * ```
+         */
+        MaxValue = 0x111,
+
+        /**
          * Read-write mA uint16_t. Limit the power drawn by the service, in mA.
          *
          * ```
@@ -3823,13 +3841,13 @@ namespace jacdac {
         Offset = 0x81,
 
         /**
-         * Read-write ° i16.16 (int32_t). Lowest angle that can be set.
+         * Constant ° i16.16 (int32_t). Lowest angle that can be set.
          *
          * ```
          * const [minAngle] = jdunpack<[number]>(buf, "i16.16")
          * ```
          */
-        MinAngle = 0x82,
+        MinAngle = 0x110,
 
         /**
          * Read-write μs uint16_t. The length of pulse corresponding to lowest angle.
@@ -3841,13 +3859,13 @@ namespace jacdac {
         MinPulse = 0x83,
 
         /**
-         * Read-write ° i16.16 (int32_t). Highest angle that can be set.
+         * Constant ° i16.16 (int32_t). Highest angle that can be set.
          *
          * ```
          * const [maxAngle] = jdunpack<[number]>(buf, "i16.16")
          * ```
          */
-        MaxAngle = 0x84,
+        MaxAngle = 0x111,
 
         /**
          * Read-write μs uint16_t. The length of pulse corresponding to highest angle.

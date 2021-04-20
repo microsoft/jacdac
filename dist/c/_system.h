@@ -71,6 +71,16 @@ typedef struct jd_system_event_report {
 #define JD_REG_VALUE 0x2
 
 /**
+ * Constant int32_t. The lowest value that can be reported for the value register.
+ */
+#define JD_REG_MIN_VALUE 0x110
+
+/**
+ * Constant int32_t. The highest value that can be reported for the value register.
+ */
+#define JD_REG_MAX_VALUE 0x111
+
+/**
  * Read-write mA uint16_t. Limit the power drawn by the service, in mA.
  */
 #define JD_REG_MAX_POWER 0x7

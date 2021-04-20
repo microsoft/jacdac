@@ -21,7 +21,7 @@ Turn the power to the servo on/off.
 
 Correction applied to the angle to account for the servo arm drift.
 
-    rw min_angle = -90: i16.16 ° @ 0x82
+    const min_angle = -90: i16.16 ° @ min_value
 
 Lowest angle that can be set.
 
@@ -29,7 +29,7 @@ Lowest angle that can be set.
 
 The length of pulse corresponding to lowest angle.
 
-    rw max_angle = 90: i16.16 ° @ 0x84
+    const max_angle = 90: i16.16 ° @ max_value
 
 Highest angle that can be set.
 

@@ -147,6 +147,38 @@
       "packFormat": "i32"
     },
     {
+      "kind": "const",
+      "name": "min_value",
+      "identifier": 272,
+      "description": "The lowest value that can be reported for the value register.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "i32",
+          "storage": -4,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "i32"
+    },
+    {
+      "kind": "const",
+      "name": "max_value",
+      "identifier": 273,
+      "description": "The highest value that can be reported for the value register.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "i32",
+          "storage": -4,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "i32"
+    },
+    {
       "kind": "rw",
       "name": "max_power",
       "identifier": 7,

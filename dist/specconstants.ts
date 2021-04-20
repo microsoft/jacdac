@@ -1018,8 +1018,23 @@ export enum CompassCmd {
 // Service: Control
 export const SRV_CONTROL = 0x0
 
+export enum ControlRestartLightFlags { // uint8_t
+    RestartCounterSteady = 0xf,
+    RestartCounter1 = 0x1,
+    RestartCounter2 = 0x2,
+    RestartCounter4 = 0x4,
+    RestartCounter8 = 0x8,
+    StatusLightMono = 0x10,
+    StatusLightRgbNoFade = 0x20,
+    StatusLightRgbFade = 0x30,
+}
+
+
 export enum ControlAnnounceFlags { // uint8_t
     SupportsACK = 0x1,
+    SupportsBroadcast = 0x2,
+    SupportsFrames = 0x4,
+    IsClient = 0x8,
 }
 
 export enum ControlCmd {
@@ -1038,7 +1053,7 @@ export enum ControlCmd {
     /**
      * report Services
      * ```
-     * const [restartCounter, flags, packetCount, serviceClass] = jdunpack<[number, ControlAnnounceFlags, number, number[]]>(buf, "u8 u8 u8 x[1] u32[]")
+     * const [restartCounter, flags, packetCount, serviceClass] = jdunpack<[ControlRestartLightFlags, ControlAnnounceFlags, number, number[]]>(buf, "u8 u8 u8 x[1] u32[]")
      * ```
      */
 

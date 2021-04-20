@@ -8,12 +8,25 @@ It handles actions common to all services on a device.
 
 ## Commands
 
+    flags RestartLightFlags : u8 {
+        RestartCounterSteady = 0x0F,
+        RestartCounter1 = 0x01,
+        RestartCounter2 = 0x02,
+        RestartCounter4 = 0x04,
+        RestartCounter8 = 0x08,
+        StatusLightMono = 0x10,
+        StatusLightRgbNoFade = 0x20,
+        StatusLightRgbFade = 0x30,
+    }
     flags AnnounceFlags : u8 {
         SupportsACK = 0x01,
+        SupportsBroadcast = 0x02,
+        SupportsFrames = 0x04,
+        IsClient = 0x08,
     }
     command services @ announce { }
     report {
-        restart_counter: u8
+        restart_counter: RestartLightFlags
         flags: AnnounceFlags
         packet_count: u8
         reserved: u8

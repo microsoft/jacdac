@@ -12,12 +12,30 @@
   },
   "classIdentifier": 0,
   "enums": {
+    "RestartLightFlags": {
+      "name": "RestartLightFlags",
+      "storage": 1,
+      "isFlags": true,
+      "members": {
+        "RestartCounterSteady": 15,
+        "RestartCounter1": 1,
+        "RestartCounter2": 2,
+        "RestartCounter4": 4,
+        "RestartCounter8": 8,
+        "StatusLightMono": 16,
+        "StatusLightRgbNoFade": 32,
+        "StatusLightRgbFade": 48
+      }
+    },
     "AnnounceFlags": {
       "name": "AnnounceFlags",
       "storage": 1,
       "isFlags": true,
       "members": {
-        "SupportsACK": 1
+        "SupportsACK": 1,
+        "SupportsBroadcast": 2,
+        "SupportsFrames": 4,
+        "IsClient": 8
       }
     }
   },
@@ -110,9 +128,8 @@
         {
           "name": "restart_counter",
           "unit": "",
-          "type": "u8",
-          "storage": 1,
-          "isSimpleType": true
+          "type": "RestartLightFlags",
+          "storage": 1
         },
         {
           "name": "flags",

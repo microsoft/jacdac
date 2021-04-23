@@ -101,7 +101,7 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
         isSimpleSensorClient = reading.fields.length === 1
             && isNumericType(reading.fields[0])
         baseType = isSimpleSensorClient
-            ? `SimpleSensorClient` : `SensorClient<[${types}]>`
+            ? `SimpleSensorClient` : `SensorClient`
         ctorArgs.push(`"${reading.packFormat}"`)
     }
     const className = `${capitalize(camelName)}Client`

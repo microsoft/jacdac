@@ -225,7 +225,7 @@
           "storage": 2
         }
       ],
-      "identifierName": "high_threshold",
+      "identifierName": "active_threshold",
       "packFormat": "u0.16"
     },
     {
@@ -242,7 +242,7 @@
           "storage": 2
         }
       ],
-      "identifierName": "low_threshold",
+      "identifierName": "inactive_threshold",
       "packFormat": "u0.16"
     },
     {

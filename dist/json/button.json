@@ -146,25 +146,26 @@
     },
     {
       "kind": "ro",
-      "name": "pressed",
+      "name": "pressure",
       "identifier": 257,
-      "description": "Indicates whether the button is currently active (pressed).",
+      "description": "Indicates the pressure state of the button, where ``0`` is open and ``0xffff`` is fully pressed.",
       "fields": [
         {
           "name": "_",
-          "unit": "",
-          "type": "bool",
-          "storage": 1
+          "unit": "/",
+          "shift": 16,
+          "type": "u0.16",
+          "storage": 2
         }
       ],
       "identifierName": "reading",
-      "packFormat": "u8"
+      "packFormat": "u0.16"
     },
     {
       "kind": "event",
       "name": "down",
       "identifier": 1,
-      "description": "Emitted when button goes from inactive (`pressed == 0`) to active.",
+      "description": "Emitted when button goes from inactive to active.",
       "fields": [],
       "identifierName": "active"
     },
@@ -172,7 +173,7 @@
       "kind": "event",
       "name": "up",
       "identifier": 2,
-      "description": "Emitted when button goes from active (`pressed == 1`) to inactive. The 'time' parameter \nrecords the amount of time between the down and up events.",
+      "description": "Emitted when button goes from active to inactive. The 'time' parameter \nrecords the amount of time between the down and up events.",
       "fields": [
         {
           "name": "time",

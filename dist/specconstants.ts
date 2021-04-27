@@ -2,8 +2,8 @@
 
 export enum SystemReadingThreshold { // uint8_t
     Neutral = 0x1,
-    Low = 0x2,
-    High = 0x3,
+    Inactive = 0x2,
+    Active = 0x3,
 }
 
 
@@ -162,22 +162,22 @@ export enum SystemReg {
     ReadingResolution = 0x108,
 
     /**
-     * Read-write int32_t. Threshold when reading data gets low and triggers a ``low``.
+     * Read-write int32_t. Threshold when reading data gets inactive and triggers a ``inactive``.
      *
      * ```
-     * const [lowThreshold] = jdunpack<[number]>(buf, "i32")
+     * const [inactiveThreshold] = jdunpack<[number]>(buf, "i32")
      * ```
      */
-    LowThreshold = 0x5,
+    InactiveThreshold = 0x5,
 
     /**
-     * Read-write int32_t. Thresholds when reading data gets high and triggers a ``high`` event.
+     * Read-write int32_t. Thresholds when reading data gets active and triggers a ``active`` event.
      *
      * ```
-     * const [highThreshold] = jdunpack<[number]>(buf, "i32")
+     * const [activeThreshold] = jdunpack<[number]>(buf, "i32")
      * ```
      */
-    HighThreshold = 0x6,
+    ActiveThreshold = 0x6,
 
     /**
      * Constant ms uint32_t. Preferred default streaming interval for sensor in milliseconds.
@@ -423,64 +423,6 @@ export enum AccelerometerEvent {
      * Emitted when force in any direction exceeds given threshold.
      */
     Force8g = 0x8a,
-}
-
-// Service: Analog Button
-export const SRV_ANALOG_BUTTON = 0x1865adc9
-
-export enum AnalogButtonVariant { // uint8_t
-    Pressure = 0x1,
-    Capacitive = 0x2,
-}
-
-export enum AnalogButtonReg {
-    /**
-     * Read-only ratio u0.16 (uint16_t). Indicates the current pressure (``force``) on the button.
-     *
-     * ```
-     * const [pressure] = jdunpack<[number]>(buf, "u0.16")
-     * ```
-     */
-    Pressure = 0x101,
-
-    /**
-     * Read-write ratio u0.16 (uint16_t). Indicates the lower threshold for ``inactive`` events.
-     *
-     * ```
-     * const [inactiveThreshold] = jdunpack<[number]>(buf, "u0.16")
-     * ```
-     */
-    InactiveThreshold = 0x5,
-
-    /**
-     * Read-write ratio u0.16 (uint16_t). Indicates the threshold for ``active`` events.
-     *
-     * ```
-     * const [activeThreshold] = jdunpack<[number]>(buf, "u0.16")
-     * ```
-     */
-    ActiveThreshold = 0x6,
-
-    /**
-     * Constant Variant (uint8_t). The type of physical button.
-     *
-     * ```
-     * const [variant] = jdunpack<[AnalogButtonVariant]>(buf, "u8")
-     * ```
-     */
-    Variant = 0x107,
-}
-
-export enum AnalogButtonEvent {
-    /**
-     * Emitted when button goes from inactive (pressure less than threshold) to active.
-     */
-    Active = 0x1,
-
-    /**
-     * Emitted when button goes from active (pressure higher than threshold) to inactive.
-     */
-    Inactive = 0x2,
 }
 
 // Service: Arcade Gamepad
@@ -830,23 +772,23 @@ export enum BootloaderCmd {
 export const SRV_BUTTON = 0x1473a263
 export enum ButtonReg {
     /**
-     * Read-only bool (uint8_t). Indicates whether the button is currently active (pressed).
+     * Read-only ratio u0.16 (uint16_t). Indicates the pressure state of the button, where ``0`` is open and ``0xffff`` is fully pressed.
      *
      * ```
-     * const [pressed] = jdunpack<[number]>(buf, "u8")
+     * const [pressure] = jdunpack<[number]>(buf, "u0.16")
      * ```
      */
-    Pressed = 0x101,
+    Pressure = 0x101,
 }
 
 export enum ButtonEvent {
     /**
-     * Emitted when button goes from inactive (`pressed == 0`) to active.
+     * Emitted when button goes from inactive to active.
      */
     Down = 0x1,
 
     /**
-     * Argument: time ms uint32_t. Emitted when button goes from active (`pressed == 1`) to inactive. The 'time' parameter
+     * Argument: time ms uint32_t. Emitted when button goes from active to inactive. The 'time' parameter
      * records the amount of time between the down and up events.
      *
      * ```
@@ -892,6 +834,36 @@ export enum BuzzerCmd {
      * ```
      */
     PlayTone = 0x80,
+}
+
+// Service: Capacitive Button
+export const SRV_CAPACITIVE_BUTTON = 0x1865adc9
+export enum CapacitiveButtonReg {
+    /**
+     * Read-write ratio u0.16 (uint16_t). Indicates the lower threshold for ``down`` events.
+     *
+     * ```
+     * const [downThreshold] = jdunpack<[number]>(buf, "u0.16")
+     * ```
+     */
+    DownThreshold = 0x5,
+
+    /**
+     * Read-write ratio u0.16 (uint16_t). Indicates the threshold for ``up`` events.
+     *
+     * ```
+     * const [upThreshold] = jdunpack<[number]>(buf, "u0.16")
+     * ```
+     */
+    UpThreshold = 0x6,
+}
+
+export enum CapacitiveButtonCmd {
+    /**
+     * No args. Request to calibrate the capactive. When calibration is requested, the device expects that no object is touching the button.
+     * The report indicates the calibration is done.
+     */
+    Calibrate = 0x2,
 }
 
 // Service: Character Screen
@@ -2955,6 +2927,28 @@ export enum PowerCmd {
      * ```
      */
     Active = 0x80,
+}
+
+// Service: Pressure Button
+export const SRV_PRESSURE_BUTTON = 0x181740c3
+export enum PressureButtonReg {
+    /**
+     * Read-write ratio u0.16 (uint16_t). Indicates the lower threshold for ``down`` events.
+     *
+     * ```
+     * const [downThreshold] = jdunpack<[number]>(buf, "u0.16")
+     * ```
+     */
+    DownThreshold = 0x5,
+
+    /**
+     * Read-write ratio u0.16 (uint16_t). Indicates the threshold for ``up`` events.
+     *
+     * ```
+     * const [upThreshold] = jdunpack<[number]>(buf, "u0.16")
+     * ```
+     */
+    UpThreshold = 0x6,
 }
 
 // Service: Protocol Test

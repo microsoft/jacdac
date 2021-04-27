@@ -18,8 +18,8 @@
       "storage": 1,
       "members": {
         "Neutral": 1,
-        "Low": 2,
-        "High": 3
+        "Inactive": 2,
+        "Active": 3
       }
     },
     "StatusCodes": {
@@ -312,9 +312,9 @@
     },
     {
       "kind": "rw",
-      "name": "low_threshold",
+      "name": "inactive_threshold",
       "identifier": 5,
-      "description": "Threshold when reading data gets low and triggers a ``low``.",
+      "description": "Threshold when reading data gets inactive and triggers a ``inactive``.",
       "fields": [
         {
           "name": "_",
@@ -328,9 +328,9 @@
     },
     {
       "kind": "rw",
-      "name": "high_threshold",
+      "name": "active_threshold",
       "identifier": 6,
-      "description": "Thresholds when reading data gets high and triggers a ``high`` event.",
+      "description": "Thresholds when reading data gets active and triggers a ``active`` event.",
       "fields": [
         {
           "name": "_",

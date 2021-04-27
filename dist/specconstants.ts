@@ -1064,7 +1064,6 @@ export enum ControlCmd {
 
     /**
      * No args. Blink an LED or otherwise draw user's attention.
-     * TODO: this is being deprecated in favor of `set_status_light`.
      */
     Identify = 0x81,
 

@@ -174,7 +174,7 @@
       "kind": "command",
       "name": "identify",
       "identifier": 129,
-      "description": "Blink an LED or otherwise draw user's attention.\nTODO: this is being deprecated in favor of `set_status_light`.",
+      "description": "Blink an LED or otherwise draw user's attention.",
       "fields": [],
       "optional": true
     },

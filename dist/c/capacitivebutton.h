@@ -5,14 +5,9 @@
 #define JD_SERVICE_CLASS_CAPACITIVE_BUTTON  0x1865adc9
 
 /**
- * Read-write ratio u0.16 (uint16_t). Indicates the lower threshold for ``down`` events.
- */
-#define JD_CAPACITIVE_BUTTON_REG_DOWN_THRESHOLD JD_REG_INACTIVE_THRESHOLD
-
-/**
  * Read-write ratio u0.16 (uint16_t). Indicates the threshold for ``up`` events.
  */
-#define JD_CAPACITIVE_BUTTON_REG_UP_THRESHOLD JD_REG_ACTIVE_THRESHOLD
+#define JD_CAPACITIVE_BUTTON_REG_THRESHOLD JD_REG_ACTIVE_THRESHOLD
 
 /**
  * No args. Request to calibrate the capactive. When calibration is requested, the device expects that no object is touching the button. 

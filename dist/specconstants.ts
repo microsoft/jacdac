@@ -840,22 +840,13 @@ export enum BuzzerCmd {
 export const SRV_CAPACITIVE_BUTTON = 0x1865adc9
 export enum CapacitiveButtonReg {
     /**
-     * Read-write ratio u0.16 (uint16_t). Indicates the lower threshold for ``down`` events.
-     *
-     * ```
-     * const [downThreshold] = jdunpack<[number]>(buf, "u0.16")
-     * ```
-     */
-    DownThreshold = 0x5,
-
-    /**
      * Read-write ratio u0.16 (uint16_t). Indicates the threshold for ``up`` events.
      *
      * ```
-     * const [upThreshold] = jdunpack<[number]>(buf, "u0.16")
+     * const [threshold] = jdunpack<[number]>(buf, "u0.16")
      * ```
      */
-    UpThreshold = 0x6,
+    Threshold = 0x6,
 }
 
 export enum CapacitiveButtonCmd {

@@ -5,6 +5,10 @@ export function isBoolOrNumericFormat(fmt: string) {
     return fmt === "bool" || /^[ui]\d+/i.test(fmt)
 }
 
+export function isConfigurationService(serviceClass: number) {
+    return (serviceClass & 0x2000_0000) == 0x2000_0000
+}
+
 export function isRegister(pkt: jdspec.PacketInfo): boolean {
     return pkt && (pkt.kind == "const" || pkt.kind == "ro" || pkt.kind == "rw")
 }
@@ -31,7 +35,7 @@ export interface RegField {
     fld: jdspec.PacketMember
 }
 
-export function getRegister(spec: jdspec.ServiceSpec, root: string, fld: string = ""): RegField {
+export function getRegister(spec: jdspec.ServiceSpec, root: string, fld = ""): RegField {
     const ret: RegField = { pkt: undefined, fld: undefined }
     ret.pkt = lookupRegister(spec, root)
     if (!ret.pkt) {
@@ -79,6 +83,7 @@ export function parseIntFloat(
     return en.members[ww[1]] || 0
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function exprVisitor(parent: any, current: any, structVisit: (par:jsep.Expression, curr:jsep.Expression) => void) {
     if (Array.isArray(current)) {
         (current as any[]).forEach(c => exprVisitor(current, c, structVisit))

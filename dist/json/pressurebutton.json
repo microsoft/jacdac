@@ -97,7 +97,6 @@
           "storage": 2
         }
       ],
-      "optional": true,
       "identifierName": "active_threshold",
       "packFormat": "u0.16"
     }

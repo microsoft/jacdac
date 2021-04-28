@@ -43,11 +43,11 @@
 /**
  * Raised when a loud sound is detected
  */
-#define JD_SOUND_LEVEL_EV_LOUD JD_EV_HIGH
+#define JD_SOUND_LEVEL_EV_LOUD JD_EV_ACTIVE
 
 /**
  * Raised when a period of quietness is detected
  */
-#define JD_SOUND_LEVEL_EV_QUIET JD_EV_LOW
+#define JD_SOUND_LEVEL_EV_QUIET JD_EV_INACTIVE
 
 #endif

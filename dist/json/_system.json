@@ -458,20 +458,6 @@
     },
     {
       "kind": "event",
-      "name": "low",
-      "identifier": 5,
-      "description": "Notifies that the low threshold has been crossed",
-      "fields": []
-    },
-    {
-      "kind": "event",
-      "name": "high",
-      "identifier": 6,
-      "description": "Notifies that the high threshold has been crossed",
-      "fields": []
-    },
-    {
-      "kind": "event",
       "name": "neutral",
       "identifier": 7,
       "description": "Notifies that the threshold is back between ``low`` and ``high``.",

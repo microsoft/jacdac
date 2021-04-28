@@ -246,16 +246,6 @@ export enum SystemEvent {
     StatusCodeChanged = 0x4,
 
     /**
-     * Notifies that the low threshold has been crossed
-     */
-    Low = 0x5,
-
-    /**
-     * Notifies that the high threshold has been crossed
-     */
-    High = 0x6,
-
-    /**
      * Notifies that the threshold is back between ``low`` and ``high``.
      */
     Neutral = 0x7,
@@ -3983,12 +3973,12 @@ export enum SoundLevelEvent {
     /**
      * Raised when a loud sound is detected
      */
-    Loud = 0x6,
+    Loud = 0x1,
 
     /**
      * Raised when a period of quietness is detected
      */
-    Quiet = 0x5,
+    Quiet = 0x2,
 }
 
 // Service: Sound player

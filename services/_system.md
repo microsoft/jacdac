@@ -183,14 +183,6 @@ Notifies that the some state of the service changed.
 
 Notifies that the status code of the service changed.
 
-    event low @ 0x05 {}
-
-Notifies that the low threshold has been crossed
-
-    event high @ 0x06 {}
-
-Notifies that the high threshold has been crossed
-
     event neutral @ 0x07 {}
 
 Notifies that the threshold is back between ``low`` and ``high``.

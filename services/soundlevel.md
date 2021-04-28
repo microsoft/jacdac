@@ -41,10 +41,10 @@ The sound level to trigger a quiet event.
 
 ## Events
 
-    event loud @ high {}
+    event loud @ active {}
 
 Raised when a loud sound is detected
 
-    event quiet @ low {}
+    event quiet @ inactive {}
 
 Raised when a period of quietness is detected

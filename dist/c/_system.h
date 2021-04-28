@@ -187,16 +187,6 @@ typedef struct jd_system_status_code_changed {
 
 
 /**
- * Notifies that the low threshold has been crossed
- */
-#define JD_EV_LOW 0x5
-
-/**
- * Notifies that the high threshold has been crossed
- */
-#define JD_EV_HIGH 0x6
-
-/**
  * Notifies that the threshold is back between ``low`` and ``high``.
  */
 #define JD_EV_NEUTRAL 0x7

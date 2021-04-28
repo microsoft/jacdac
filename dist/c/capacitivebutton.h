@@ -2,7 +2,7 @@
 #ifndef _JACDAC_SPEC_CAPACITIVE_BUTTON_H
 #define _JACDAC_SPEC_CAPACITIVE_BUTTON_H 1
 
-#define JD_SERVICE_CLASS_CAPACITIVE_BUTTON  0x1865adc9
+#define JD_SERVICE_CLASS_CAPACITIVE_BUTTON  0x2865adc9
 
 /**
  * Read-write ratio u0.16 (uint16_t). Indicates the threshold for ``up`` events.

@@ -1,6 +1,6 @@
 # Pressure Button
 
-    identifier: 0x181740c3
+    identifier: 0x281740c3
     tags: 8bit
     group: button
 

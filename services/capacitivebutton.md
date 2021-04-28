@@ -1,6 +1,6 @@
 # Capacitive Button
 
-    identifier: 0x1865adc9
+    identifier: 0x2865adc9
     tags: 8bit
     group: button
 

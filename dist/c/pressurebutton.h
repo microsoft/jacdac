@@ -2,7 +2,7 @@
 #ifndef _JACDAC_SPEC_PRESSURE_BUTTON_H
 #define _JACDAC_SPEC_PRESSURE_BUTTON_H 1
 
-#define JD_SERVICE_CLASS_PRESSURE_BUTTON  0x181740c3
+#define JD_SERVICE_CLASS_PRESSURE_BUTTON  0x281740c3
 
 /**
  * Read-write ratio u0.16 (uint16_t). Indicates the threshold for ``up`` events.

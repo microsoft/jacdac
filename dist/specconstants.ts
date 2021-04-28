@@ -837,7 +837,7 @@ export enum BuzzerCmd {
 }
 
 // Service: Capacitive Button
-export const SRV_CAPACITIVE_BUTTON = 0x1865adc9
+export const SRV_CAPACITIVE_BUTTON = 0x2865adc9
 export enum CapacitiveButtonReg {
     /**
      * Read-write ratio u0.16 (uint16_t). Indicates the threshold for ``up`` events.
@@ -2921,7 +2921,7 @@ export enum PowerCmd {
 }
 
 // Service: Pressure Button
-export const SRV_PRESSURE_BUTTON = 0x181740c3
+export const SRV_PRESSURE_BUTTON = 0x281740c3
 export enum PressureButtonReg {
     /**
      * Read-write ratio u0.16 (uint16_t). Indicates the threshold for ``up`` events.

@@ -983,7 +983,9 @@ export function parseServiceSpecificationMarkdownToJSON(
                     !(
                         info.classIdentifier == 0 ||
                         (0x1000_0001 <= info.classIdentifier &&
-                            info.classIdentifier <= 0x1fff_ff00)
+                            info.classIdentifier <= 0x1fff_ff00) ||
+                        (0x2000_0001 <= info.classIdentifier &&
+                            info.classIdentifier <= 0x2ffff_ff00)
                     )
                 )
                     error(`class identifier out of range; ${gen}`)

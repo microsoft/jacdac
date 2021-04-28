@@ -10,36 +10,53 @@ that is very useful to quickly troubleshoot them.
 The sections below details the blinking patterns
 and their associated states.
 
-## Connected
+Some modules have color LEDs and some monochrome orange LEDs.
+The color names in descriptions should be ignored when you are working with
+a module with a monochrome LED.
 
-When connected, all modules on the Jacdac bus do a short synchronized blink (50us) every 500ms.
+## Connected to network
+
+Jacdac modules do a barely visible, very short (~50us) green blink when they see
+announce packets from any brain (client).
+This happens every 500ms if you have one brain, and more often if you have more of them.
+All modules blink at the same time.
 
 This is the happy state, everything is working and communicating properly.
 
+## Connected to brain
+
+When the brain connects the device to its role manager, the device will blink green
+quickly three times (75ms on, 75ms off).
+
+If you want to see if brain connects to some device, restart the brain and see if the device
+blinks green three times.
+
 ## Startup
 
-On startup, the LED lights up at 100% for 270ms, then 5.9% for rest of 530ms, 
-then goes into application that turns it on full for 200ms.
+On startup, modules with bootloader will glow blue for around 300ms,
+and then green for another 300ms.
+
+Devices without bootloader will glow green for around 300ms.
 
 ## Identify
 
-When you ask a device to identify itself, it will start a blinking sequence 
-50ms every 150ms (50 on, 100 off) seven times (i.e. for 1 second).
+When you ask a device to identify itself, it will start a blinking sequence
+262ms on, 262ms off, four times (around 2 seconds), with the blue LED.
 
 ## Disconnected
 
 When the device does not receive any Jacdac packet for some time, 
-it enters the **disconnected** mode and blinks 5ms every 250ms.
+it enters the **disconnected** mode and glows red 1 second on, 1 second off.
 
 * check that the cable is properly secured on your module
 * check that the other modules are in connected mode as well
 
-
 ## Panic
 
 If the firmware crashes, it will enter **panic** mode
-and do a fast blink 70ms on, 70ms off - 30 times (4.2 seconds) before a reboot.
+and glow red, with short ~50ms breaks every ~500ms for ~5 seconds before reboot.
 
 ## Bootloader
 
-Every 524ms it changes from 5.9% and 1.6% (i.e. 1 sec duty cycle)
+Bootloader glows blue, and cycles between brighter and less bright versions of blue
+around every 0.5 second.

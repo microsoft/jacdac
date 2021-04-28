@@ -225,7 +225,7 @@
           "storage": 2
         }
       ],
-      "identifierName": "high_threshold",
+      "identifierName": "active_threshold",
       "packFormat": "u0.16"
     },
     {
@@ -242,24 +242,24 @@
           "storage": 2
         }
       ],
-      "identifierName": "low_threshold",
+      "identifierName": "inactive_threshold",
       "packFormat": "u0.16"
     },
     {
       "kind": "event",
       "name": "loud",
-      "identifier": 6,
+      "identifier": 1,
       "description": "Raised when a loud sound is detected",
       "fields": [],
-      "identifierName": "high"
+      "identifierName": "active"
     },
     {
       "kind": "event",
       "name": "quiet",
-      "identifier": 5,
+      "identifier": 2,
       "description": "Raised when a period of quietness is detected",
       "fields": [],
-      "identifierName": "low"
+      "identifierName": "inactive"
     }
   ],
   "tags": [

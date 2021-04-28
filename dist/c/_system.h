@@ -4,8 +4,8 @@
 
 // enum ReadingThreshold (uint8_t)
 #define JD_READING_THRESHOLD_NEUTRAL 0x1
-#define JD_READING_THRESHOLD_LOW 0x2
-#define JD_READING_THRESHOLD_HIGH 0x3
+#define JD_READING_THRESHOLD_INACTIVE 0x2
+#define JD_READING_THRESHOLD_ACTIVE 0x3
 
 // enum StatusCodes (uint16_t)
 #define JD_STATUS_CODES_READY 0x0
@@ -123,14 +123,14 @@ typedef struct jd_system_event_report {
 #define JD_REG_READING_RESOLUTION 0x108
 
 /**
- * Read-write int32_t. Threshold when reading data gets low and triggers a ``low``.
+ * Read-write int32_t. Threshold when reading data gets inactive and triggers a ``inactive``.
  */
-#define JD_REG_LOW_THRESHOLD 0x5
+#define JD_REG_INACTIVE_THRESHOLD 0x5
 
 /**
- * Read-write int32_t. Thresholds when reading data gets high and triggers a ``high`` event.
+ * Read-write int32_t. Thresholds when reading data gets active and triggers a ``active`` event.
  */
-#define JD_REG_HIGH_THRESHOLD 0x6
+#define JD_REG_ACTIVE_THRESHOLD 0x6
 
 /**
  * Constant ms uint32_t. Preferred default streaming interval for sensor in milliseconds.
@@ -185,16 +185,6 @@ typedef struct jd_system_status_code_changed {
     uint16_t vendor_code;
 } jd_system_status_code_changed_t;
 
-
-/**
- * Notifies that the low threshold has been crossed
- */
-#define JD_EV_LOW 0x5
-
-/**
- * Notifies that the high threshold has been crossed
- */
-#define JD_EV_HIGH 0x6
 
 /**
  * Notifies that the threshold is back between ``low`` and ``high``.

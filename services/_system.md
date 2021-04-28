@@ -113,16 +113,16 @@ Smallest, yet distinguishable change in reading.
 
     enum ReadingThreshold: u8 {
         Neutral = 1
-        Low = 2
-        High = 3
+        Inactive = 2
+        Active = 3
     }
-    rw low_threshold: i32 @ 0x05
+    rw inactive_threshold: i32 @ 0x05
 
-Threshold when reading data gets low and triggers a ``low``.
+Threshold when reading data gets inactive and triggers a ``inactive``.
 
-    rw high_threshold: i32 @ 0x06
+    rw active_threshold: i32 @ 0x06
 
-Thresholds when reading data gets high and triggers a ``high`` event.
+Thresholds when reading data gets active and triggers a ``active`` event.
 
     const streaming_preferred_interval: u32 ms @ 0x102
 
@@ -182,14 +182,6 @@ Notifies that the some state of the service changed.
     }
 
 Notifies that the status code of the service changed.
-
-    event low @ 0x05 {}
-
-Notifies that the low threshold has been crossed
-
-    event high @ 0x06 {}
-
-Notifies that the high threshold has been crossed
 
     event neutral @ 0x07 {}
 

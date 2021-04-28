@@ -5,17 +5,22 @@
 #define JD_SERVICE_CLASS_BUTTON  0x1473a263
 
 /**
- * Read-only bool (uint8_t). Indicates whether the button is currently active (pressed).
+ * Read-only ratio u0.16 (uint16_t). Indicates the pressure state of the button, where ``0`` is open and ``0xffff`` is fully pressed.
  */
-#define JD_BUTTON_REG_PRESSED JD_REG_READING
+#define JD_BUTTON_REG_PRESSURE JD_REG_READING
 
 /**
- * Emitted when button goes from inactive (`pressed == 0`) to active.
+ * Constant bool (uint8_t). Indicates if the button provides analog ``pressure`` readings.
+ */
+#define JD_BUTTON_REG_ANALOG 0x180
+
+/**
+ * Emitted when button goes from inactive to active.
  */
 #define JD_BUTTON_EV_DOWN JD_EV_ACTIVE
 
 /**
- * Argument: time ms uint32_t. Emitted when button goes from active (`pressed == 1`) to inactive. The 'time' parameter 
+ * Argument: time ms uint32_t. Emitted when button goes from active to inactive. The 'time' parameter 
  * records the amount of time between the down and up events.
  */
 #define JD_BUTTON_EV_UP JD_EV_INACTIVE

@@ -10,9 +10,9 @@ Press and release the button (once)
 
 Press and release the button
 
-    check(start(!pressed) && pressed)
+    check(start(pressure < 0.25) && pressure > 0.75)
     nextEvent(down)
-    check(start(pressed) && !pressed)
+    check(start(pressure > 0.25) && pressure < 0.75)
     nextEvent(up)
 
 ## One hold event

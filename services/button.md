@@ -9,21 +9,25 @@ A push-button, which returns to inactive position when not operated anymore.
 
 ## Registers
 
-    ro pressed: bool @ reading
+    ro pressure: u0.16 / @ reading
 
-Indicates whether the button is currently active (pressed).
+Indicates the pressure state of the button, where ``0`` is open and ``0xffff`` is fully pressed.
+
+    const analog?: bool @ 0x180
+
+Indicates if the button provides analog ``pressure`` readings.
 
 ## Events
 
     event down @ active
 
-Emitted when button goes from inactive (`pressed == 0`) to active.
+Emitted when button goes from inactive to active.
 
     event up @ inactive { 
         time: u32 ms 
     } 
 
-Emitted when button goes from active (`pressed == 1`) to inactive. The 'time' parameter 
+Emitted when button goes from active to inactive. The 'time' parameter 
 records the amount of time between the down and up events.
 
     event hold @ 0x81 {

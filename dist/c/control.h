@@ -51,7 +51,6 @@ typedef struct jd_control_services_report {
 
 /**
  * No args. Blink an LED or otherwise draw user's attention.
- * TODO: this is being deprecated in favor of `set_status_light`.
  */
 #define JD_CONTROL_CMD_IDENTIFY 0x81
 

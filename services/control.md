@@ -50,7 +50,6 @@ Do nothing. Always ignored. Can be used to test ACKs.
     command identify? @ 0x81 { }
 
 Blink an LED or otherwise draw user's attention.
-TODO: this is being deprecated in favor of `set_status_light`.
 
     command reset? @ 0x82 { }
 

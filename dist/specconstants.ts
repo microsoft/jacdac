@@ -769,6 +769,15 @@ export enum ButtonReg {
      * ```
      */
     Pressure = 0x101,
+
+    /**
+     * Constant bool (uint8_t). Indicates if the button provides analog ``pressure`` readings.
+     *
+     * ```
+     * const [analog] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Analog = 0x180,
 }
 
 export enum ButtonEvent {

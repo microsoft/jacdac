@@ -5,7 +5,7 @@ export function isBoolOrNumericFormat(fmt: string) {
     return fmt === "bool" || /^[ui]\d+/i.test(fmt)
 }
 
-export function isConfigurationService(serviceClass: number) {
+export function isMixinService(serviceClass: number) {
     return (serviceClass & 0x2000_0000) == 0x2000_0000
 }
 

@@ -13,6 +13,10 @@ A push-button, which returns to inactive position when not operated anymore.
 
 Indicates the pressure state of the button, where ``0`` is open and ``0xffff`` is fully pressed.
 
+    const analog?: bool @ 0x180
+
+Indicates if the button provides analog ``pressure`` readings.
+
 ## Events
 
     event down @ active

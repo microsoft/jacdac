@@ -10,6 +10,11 @@
 #define JD_BUTTON_REG_PRESSURE JD_REG_READING
 
 /**
+ * Constant bool (uint8_t). Indicates if the button provides analog ``pressure`` readings.
+ */
+#define JD_BUTTON_REG_ANALOG 0x180
+
+/**
  * Emitted when button goes from inactive to active.
  */
 #define JD_BUTTON_EV_DOWN JD_EV_ACTIVE

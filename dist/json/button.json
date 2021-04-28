@@ -162,6 +162,22 @@
       "packFormat": "u0.16"
     },
     {
+      "kind": "const",
+      "name": "analog",
+      "identifier": 384,
+      "description": "Indicates if the button provides analog ``pressure`` readings.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "bool",
+          "storage": 1
+        }
+      ],
+      "optional": true,
+      "packFormat": "u8"
+    },
+    {
       "kind": "event",
       "name": "down",
       "identifier": 1,

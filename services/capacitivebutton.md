@@ -8,7 +8,7 @@ A configuration service for a capacitive push-button.
 
 ## Registers
 
-    rw threshold?: u0.16 / @ active_threshold
+    rw threshold: u0.16 / @ active_threshold
     
 Indicates the threshold for ``up`` events.
 

@@ -2924,22 +2924,13 @@ export enum PowerCmd {
 export const SRV_PRESSURE_BUTTON = 0x181740c3
 export enum PressureButtonReg {
     /**
-     * Read-write ratio u0.16 (uint16_t). Indicates the lower threshold for ``down`` events.
-     *
-     * ```
-     * const [downThreshold] = jdunpack<[number]>(buf, "u0.16")
-     * ```
-     */
-    DownThreshold = 0x5,
-
-    /**
      * Read-write ratio u0.16 (uint16_t). Indicates the threshold for ``up`` events.
      *
      * ```
-     * const [upThreshold] = jdunpack<[number]>(buf, "u0.16")
+     * const [threshold] = jdunpack<[number]>(buf, "u0.16")
      * ```
      */
-    UpThreshold = 0x6,
+    Threshold = 0x6,
 }
 
 // Service: Protocol Test

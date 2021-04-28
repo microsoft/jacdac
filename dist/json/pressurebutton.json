@@ -85,24 +85,7 @@
     },
     {
       "kind": "rw",
-      "name": "down_threshold",
-      "identifier": 5,
-      "description": "Indicates the lower threshold for ``down`` events.",
-      "fields": [
-        {
-          "name": "_",
-          "unit": "/",
-          "shift": 16,
-          "type": "u0.16",
-          "storage": 2
-        }
-      ],
-      "identifierName": "inactive_threshold",
-      "packFormat": "u0.16"
-    },
-    {
-      "kind": "rw",
-      "name": "up_threshold",
+      "name": "threshold",
       "identifier": 6,
       "description": "Indicates the threshold for ``up`` events.",
       "fields": [
@@ -114,6 +97,7 @@
           "storage": 2
         }
       ],
+      "optional": true,
       "identifierName": "active_threshold",
       "packFormat": "u0.16"
     }

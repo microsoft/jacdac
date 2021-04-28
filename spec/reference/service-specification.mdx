@@ -31,7 +31,7 @@ A controller for a liquid-propelled rocket.
 ```
 
 The first line (header) specifies the name of the service (`name` in JSON format). We then assign the service a unique identifier (`classIdentifier` in JSON format) and give a single line description of the service.
-These identifers are always of the form `0x1-------`.
+These identifers are always of the form `0x1-------` for services and `0x2-------` for mixins.
 If you're just defining a new service, you can use the random generator below or specify it as `1` or other invalid value
 and the jdspectool will suggest a valid random identifier.
 
@@ -406,3 +406,7 @@ The final zero-length packet, before closing the pipe, is optional.
 Both `segmented:` and `multi-segmented:` are currently only supported in `pipe report` and `pipe command`,
 with a single field of type `bytes`.
 
+### Mixins
+
+Service mixins, services with class identifier starting with `0x2...`, allow to enhance existing services with new registers, typically vendor specific registers to configure
+the hardware device.

@@ -11,15 +11,35 @@
   "notes": {
     "short": "A two axis directional joystick"
   },
-  "classIdentifier": 449517712,
+  "classIdentifier": 277836886,
   "enums": {
+    "Buttons": {
+      "name": "Buttons",
+      "storage": 4,
+      "isFlags": true,
+      "members": {
+        "Left": 1,
+        "Up": 2,
+        "Right": 4,
+        "Down": 8,
+        "A": 16,
+        "B": 32,
+        "Menu": 64,
+        "Select": 128,
+        "Reset": 256,
+        "Exit": 512,
+        "X": 1024,
+        "Y": 2048
+      }
+    },
     "Variant": {
       "name": "Variant",
       "storage": 1,
       "members": {
         "Thumb": 1,
         "ArcadeBall": 2,
-        "ArcadeStick": 3
+        "ArcadeStick": 3,
+        "Gamepad": 4
       }
     }
   },
@@ -158,8 +178,14 @@
       "kind": "ro",
       "name": "direction",
       "identifier": 257,
-      "description": "The direction of the joystick measure in two direction.\nIf joystick is digital, then each direction will read as either `-0x8000`, `0x0`, or `0x7fff`.",
+      "description": "If the joystick is analog, the directional buttons should be \"simulated\", based on joystick position\n(`Left` is `{ x = -1, y = 0 }`, `Up` is `{ x = 0, y = -1}`).\nIf the joystick is digital, then each direction will read as either `-1`, `0`, or `1` (in fixed representation).\nThe primary button on the joystick is `A`.",
       "fields": [
+        {
+          "name": "buttons",
+          "unit": "",
+          "type": "Buttons",
+          "storage": 4
+        },
         {
           "name": "x",
           "unit": "/",
@@ -176,7 +202,7 @@
         }
       ],
       "identifierName": "reading",
-      "packFormat": "i1.15 i1.15"
+      "packFormat": "u32 i1.15 i1.15"
     },
     {
       "kind": "const",
@@ -197,19 +223,34 @@
     },
     {
       "kind": "const",
-      "name": "digital",
+      "name": "buttons_available",
       "identifier": 384,
-      "description": "Indicates if the joystick is digital, typically made of switches.",
+      "description": "Indicates a bitmask of the buttons that are mounted on the joystick.\nIf the `Left`/`Up`/`Right`/`Down` buttons are marked as available here, the joystick is digital.\nEven when marked as not available, they will still be simulated based on the analog joystick.",
       "fields": [
         {
           "name": "_",
           "unit": "",
-          "type": "bool",
-          "storage": 1
+          "type": "Buttons",
+          "storage": 4
         }
       ],
-      "optional": true,
-      "packFormat": "u8"
+      "packFormat": "u32"
+    },
+    {
+      "kind": "event",
+      "name": "buttons_changed",
+      "identifier": 3,
+      "description": "Emitted whenever the state of buttons changes.",
+      "fields": [
+        {
+          "name": "buttons",
+          "unit": "",
+          "type": "Buttons",
+          "storage": 4
+        }
+      ],
+      "identifierName": "change",
+      "packFormat": "u32"
     }
   ],
   "tags": [

@@ -2,19 +2,37 @@
 #ifndef _JACDAC_SPEC_JOYSTICK_H
 #define _JACDAC_SPEC_JOYSTICK_H 1
 
-#define JD_SERVICE_CLASS_JOYSTICK  0x1acb1890
+#define JD_SERVICE_CLASS_JOYSTICK  0x108f7456
+
+// enum Buttons (uint32_t)
+#define JD_JOYSTICK_BUTTONS_LEFT 0x1
+#define JD_JOYSTICK_BUTTONS_UP 0x2
+#define JD_JOYSTICK_BUTTONS_RIGHT 0x4
+#define JD_JOYSTICK_BUTTONS_DOWN 0x8
+#define JD_JOYSTICK_BUTTONS_A 0x10
+#define JD_JOYSTICK_BUTTONS_B 0x20
+#define JD_JOYSTICK_BUTTONS_MENU 0x40
+#define JD_JOYSTICK_BUTTONS_SELECT 0x80
+#define JD_JOYSTICK_BUTTONS_RESET 0x100
+#define JD_JOYSTICK_BUTTONS_EXIT 0x200
+#define JD_JOYSTICK_BUTTONS_X 0x400
+#define JD_JOYSTICK_BUTTONS_Y 0x800
 
 // enum Variant (uint8_t)
 #define JD_JOYSTICK_VARIANT_THUMB 0x1
 #define JD_JOYSTICK_VARIANT_ARCADE_BALL 0x2
 #define JD_JOYSTICK_VARIANT_ARCADE_STICK 0x3
+#define JD_JOYSTICK_VARIANT_GAMEPAD 0x4
 
 /**
- * The direction of the joystick measure in two direction.
- * If joystick is digital, then each direction will read as either `-0x8000`, `0x0`, or `0x7fff`.
+ * If the joystick is analog, the directional buttons should be "simulated", based on joystick position
+ * (`Left` is `{ x = -1, y = 0 }`, `Up` is `{ x = 0, y = -1}`).
+ * If the joystick is digital, then each direction will read as either `-1`, `0`, or `1` (in fixed representation).
+ * The primary button on the joystick is `A`.
  */
 #define JD_JOYSTICK_REG_DIRECTION JD_REG_READING
 typedef struct jd_joystick_direction {
+    uint32_t buttons;  // Buttons
     int16_t x;  // ratio i1.15
     int16_t y;  // ratio i1.15
 } jd_joystick_direction_t;
@@ -26,8 +44,15 @@ typedef struct jd_joystick_direction {
 #define JD_JOYSTICK_REG_VARIANT JD_REG_VARIANT
 
 /**
- * Constant bool (uint8_t). Indicates if the joystick is digital, typically made of switches.
+ * Constant Buttons (uint32_t). Indicates a bitmask of the buttons that are mounted on the joystick.
+ * If the `Left`/`Up`/`Right`/`Down` buttons are marked as available here, the joystick is digital.
+ * Even when marked as not available, they will still be simulated based on the analog joystick.
  */
-#define JD_JOYSTICK_REG_DIGITAL 0x180
+#define JD_JOYSTICK_REG_BUTTONS_AVAILABLE 0x180
+
+/**
+ * Argument: buttons Buttons (uint32_t). Emitted whenever the state of buttons changes.
+ */
+#define JD_JOYSTICK_EV_BUTTONS_CHANGED JD_EV_CHANGE
 
 #endif

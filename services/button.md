@@ -4,6 +4,7 @@
     extends: _sensor
     group: button
     tags: C, 8bit
+    status: stable
 
 A push-button, which returns to inactive position when not operated anymore.
 

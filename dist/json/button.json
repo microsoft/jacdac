@@ -1,6 +1,6 @@
 {
   "name": "Button",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "button",
   "camelName": "button",
   "shortName": "button",

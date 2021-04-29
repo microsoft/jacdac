@@ -1015,6 +1015,7 @@ export function parseServiceSpecificationMarkdownToJSON(
                     ["stable", "experimental", "deprecated"].indexOf(words[2]) >
                     -1
                 )
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     info.status = <any>words[2]
                 else error("unknown status")
                 break

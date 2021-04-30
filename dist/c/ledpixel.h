@@ -37,14 +37,14 @@
 #define JD_LED_PIXEL_REG_LIGHT_TYPE 0x80
 
 /**
- * Read-write uint16_t. Specifies the number of pixels in the strip.
+ * Read-write # uint16_t. Specifies the number of pixels in the strip.
  * Controllers which are sold with lights should default to the correct length
  * and could not allow change. Increasing length at runtime leads to ineffective use of memory and may lead to controller reboot.
  */
 #define JD_LED_PIXEL_REG_NUM_PIXELS 0x81
 
 /**
- * Read-write uint16_t. If the LED pixel strip is a matrix, specifies the number of columns. Otherwise, a square shape is assumed. Controllers which are sold with lights should default to the correct length
+ * Read-write # uint16_t. If the LED pixel strip is a matrix, specifies the number of columns. Otherwise, a square shape is assumed. Controllers which are sold with lights should default to the correct length
  * and could not allow change. Increasing length at runtime leads to ineffective use of memory and may lead to controller reboot.
  */
 #define JD_LED_PIXEL_REG_NUM_COLUMNS 0x83
@@ -55,13 +55,13 @@
 #define JD_LED_PIXEL_REG_MAX_POWER JD_REG_MAX_POWER
 
 /**
- * Constant uint16_t. The maximum supported number of pixels.
+ * Constant # uint16_t. The maximum supported number of pixels.
  * All writes to `num_pixels` are clamped to `max_pixels`.
  */
 #define JD_LED_PIXEL_REG_MAX_PIXELS 0x181
 
 /**
- * Read-write uint16_t. How many times to repeat the program passed in `run` command.
+ * Read-write # uint16_t. How many times to repeat the program passed in `run` command.
  * Should be set before the `run` command.
  * Setting to `0` means to repeat forever.
  */

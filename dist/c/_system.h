@@ -86,7 +86,7 @@ typedef struct jd_system_event_report {
 #define JD_REG_MAX_POWER 0x7
 
 /**
- * Read-write uint8_t. Asks device to stream a given number of samples
+ * Read-write # uint8_t. Asks device to stream a given number of samples
  * (clients will typically write `255` to this register every second or so, while streaming is required).
  */
 #define JD_REG_STREAMING_SAMPLES 0x3

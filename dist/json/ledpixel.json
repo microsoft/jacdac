@@ -162,7 +162,7 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
+          "unit": "#",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true,
@@ -179,7 +179,7 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
+          "unit": "#",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -214,7 +214,7 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
+          "unit": "#",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -230,7 +230,7 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
+          "unit": "#",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true,

@@ -81,7 +81,7 @@ The highest value that can be reported for the value register.
 
 Limit the power drawn by the service, in mA.
 
-    rw streaming_samples: u8 @ 0x03
+    rw streaming_samples: u8 # @ 0x03
 
 Asks device to stream a given number of samples
 (clients will typically write `255` to this register every second or so, while streaming is required).

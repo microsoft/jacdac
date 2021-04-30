@@ -207,7 +207,7 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
+          "unit": "#",
           "type": "u32",
           "storage": 4,
           "isSimpleType": true

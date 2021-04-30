@@ -91,13 +91,13 @@ Specifies the type of light strip connected to controller.
 Controllers which are sold with lights should default to the correct type
 and could not allow change.
 
-    rw num_pixels = 15: u16 @ 0x81
+    rw num_pixels = 15: u16 # @ 0x81
 
 Specifies the number of pixels in the strip.
 Controllers which are sold with lights should default to the correct length
 and could not allow change. Increasing length at runtime leads to ineffective use of memory and may lead to controller reboot.
 
-    rw num_columns?: u16 @ 0x83
+    rw num_columns?: u16 # @ 0x83
 
 If the LED pixel strip is a matrix, specifies the number of columns. Otherwise, a square shape is assumed. Controllers which are sold with lights should default to the correct length
 and could not allow change. Increasing length at runtime leads to ineffective use of memory and may lead to controller reboot.
@@ -106,12 +106,12 @@ and could not allow change. Increasing length at runtime leads to ineffective us
 
 Limit the power drawn by the light-strip (and controller).
 
-    const max_pixels: u16 @ 0x181
+    const max_pixels: u16 # @ 0x181
 
 The maximum supported number of pixels.
 All writes to `num_pixels` are clamped to `max_pixels`.
 
-    rw num_repeats = 1: u16 @ 0x82
+    rw num_repeats = 1: u16 # @ 0x82
 
 How many times to repeat the program passed in `run` command.
 Should be set before the `run` command.

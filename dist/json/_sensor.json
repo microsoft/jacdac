@@ -91,7 +91,7 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
+          "unit": "#",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true

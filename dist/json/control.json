@@ -12,9 +12,9 @@
   },
   "classIdentifier": 0,
   "enums": {
-    "RestartLightFlags": {
-      "name": "RestartLightFlags",
-      "storage": 1,
+    "AnnounceFlags": {
+      "name": "AnnounceFlags",
+      "storage": 2,
       "isFlags": true,
       "members": {
         "RestartCounterSteady": 15,
@@ -22,20 +22,14 @@
         "RestartCounter2": 2,
         "RestartCounter4": 4,
         "RestartCounter8": 8,
+        "StatusLightNone": 0,
         "StatusLightMono": 16,
         "StatusLightRgbNoFade": 32,
-        "StatusLightRgbFade": 48
-      }
-    },
-    "AnnounceFlags": {
-      "name": "AnnounceFlags",
-      "storage": 1,
-      "isFlags": true,
-      "members": {
-        "SupportsACK": 1,
-        "SupportsBroadcast": 2,
-        "SupportsFrames": 4,
-        "IsClient": 8
+        "StatusLightRgbFade": 48,
+        "SupportsACK": 256,
+        "SupportsBroadcast": 512,
+        "SupportsFrames": 1024,
+        "IsClient": 2048
       }
     }
   },
@@ -114,7 +108,7 @@
       "kind": "command",
       "name": "services",
       "identifier": 0,
-      "description": "The `restart_counter` starts at `0x1` and increments by one until it reaches `0xf`, then it stays at `0xf`.\nIf this number ever goes down, it indicates that the device restarted.\nThe upper 4 bits of `restart_counter` are reserved.\n`service_class` indicates class identifier for each service index (service index `0` is always control, so it's\nskipped in this enumeration).\n`packet_count` indicates the number of packets sent by the current device since last announce,\nincluding the current announce packet (it is always 0 if this feature is not supported).\nThe command form can be used to induce report, which is otherwise broadcast every 500ms.",
+      "description": "The `restart_counter` is computed from the `flags & RestartCounterSteady`, starts at `0x1` and increments by one until it reaches `0xf`, then it stays at `0xf`.\nIf this number ever goes down, it indicates that the device restarted.\n`service_class` indicates class identifier for each service index (service index `0` is always control, so it's\nskipped in this enumeration).\n`packet_count` indicates the number of packets sent by the current device since last announce,\nincluding the current announce packet (it is always 0 if this feature is not supported).\nThe command form can be used to induce report, which is otherwise broadcast every 500ms.",
       "fields": [],
       "identifierName": "announce",
       "hasReport": true
@@ -123,19 +117,13 @@
       "kind": "report",
       "name": "services",
       "identifier": 0,
-      "description": "The `restart_counter` starts at `0x1` and increments by one until it reaches `0xf`, then it stays at `0xf`.\nIf this number ever goes down, it indicates that the device restarted.\nThe upper 4 bits of `restart_counter` are reserved.\n`service_class` indicates class identifier for each service index (service index `0` is always control, so it's\nskipped in this enumeration).\n`packet_count` indicates the number of packets sent by the current device since last announce,\nincluding the current announce packet (it is always 0 if this feature is not supported).\nThe command form can be used to induce report, which is otherwise broadcast every 500ms.",
+      "description": "The `restart_counter` is computed from the `flags & RestartCounterSteady`, starts at `0x1` and increments by one until it reaches `0xf`, then it stays at `0xf`.\nIf this number ever goes down, it indicates that the device restarted.\n`service_class` indicates class identifier for each service index (service index `0` is always control, so it's\nskipped in this enumeration).\n`packet_count` indicates the number of packets sent by the current device since last announce,\nincluding the current announce packet (it is always 0 if this feature is not supported).\nThe command form can be used to induce report, which is otherwise broadcast every 500ms.",
       "fields": [
-        {
-          "name": "restart_counter",
-          "unit": "",
-          "type": "RestartLightFlags",
-          "storage": 1
-        },
         {
           "name": "flags",
           "unit": "",
           "type": "AnnounceFlags",
-          "storage": 1
+          "storage": 2
         },
         {
           "name": "packet_count",
@@ -161,7 +149,7 @@
         }
       ],
       "secondary": true,
-      "packFormat": "u8 u8 u8 u8 r: u32"
+      "packFormat": "u16 u8 u8 r: u32"
     },
     {
       "kind": "command",
@@ -174,7 +162,7 @@
       "kind": "command",
       "name": "identify",
       "identifier": 129,
-      "description": "Blink an LED or otherwise draw user's attention.",
+      "description": "Blink the status LED (262ms on, 262ms off, four times, with the blue LED) or otherwise draw user's attention to device with no status light. \nFor devices with status light (this can be discovered in the announce flags), the client should\nsend the sequence of status light command to generate the identify animation.",
       "fields": [],
       "optional": true
     },

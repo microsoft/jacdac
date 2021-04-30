@@ -980,30 +980,26 @@ export enum CompassCmd {
 // Service: Control
 export const SRV_CONTROL = 0x0
 
-export enum ControlRestartLightFlags { // uint8_t
+export enum ControlAnnounceFlags { // uint16_t
     RestartCounterSteady = 0xf,
     RestartCounter1 = 0x1,
     RestartCounter2 = 0x2,
     RestartCounter4 = 0x4,
     RestartCounter8 = 0x8,
+    StatusLightNone = 0x0,
     StatusLightMono = 0x10,
     StatusLightRgbNoFade = 0x20,
     StatusLightRgbFade = 0x30,
-}
-
-
-export enum ControlAnnounceFlags { // uint8_t
-    SupportsACK = 0x1,
-    SupportsBroadcast = 0x2,
-    SupportsFrames = 0x4,
-    IsClient = 0x8,
+    SupportsACK = 0x100,
+    SupportsBroadcast = 0x200,
+    SupportsFrames = 0x400,
+    IsClient = 0x800,
 }
 
 export enum ControlCmd {
     /**
-     * No args. The `restart_counter` starts at `0x1` and increments by one until it reaches `0xf`, then it stays at `0xf`.
+     * No args. The `restart_counter` is computed from the `flags & RestartCounterSteady`, starts at `0x1` and increments by one until it reaches `0xf`, then it stays at `0xf`.
      * If this number ever goes down, it indicates that the device restarted.
-     * The upper 4 bits of `restart_counter` are reserved.
      * `service_class` indicates class identifier for each service index (service index `0` is always control, so it's
      * skipped in this enumeration).
      * `packet_count` indicates the number of packets sent by the current device since last announce,
@@ -1015,7 +1011,7 @@ export enum ControlCmd {
     /**
      * report Services
      * ```
-     * const [restartCounter, flags, packetCount, serviceClass] = jdunpack<[ControlRestartLightFlags, ControlAnnounceFlags, number, number[]]>(buf, "u8 u8 u8 x[1] u32[]")
+     * const [flags, packetCount, serviceClass] = jdunpack<[ControlAnnounceFlags, number, number[]]>(buf, "u16 u8 x[1] u32[]")
      * ```
      */
 
@@ -1025,7 +1021,9 @@ export enum ControlCmd {
     Noop = 0x80,
 
     /**
-     * No args. Blink an LED or otherwise draw user's attention.
+     * No args. Blink the status LED (262ms on, 262ms off, four times, with the blue LED) or otherwise draw user's attention to device with no status light.
+     * For devices with status light (this can be discovered in the announce flags), the client should
+     * send the sequence of status light command to generate the identify animation.
      */
     Identify = 0x81,
 

@@ -4,26 +4,24 @@
 
 #define JD_SERVICE_CLASS_CONTROL  0x0
 
-// enum RestartLightFlags (uint8_t)
-#define JD_CONTROL_RESTART_LIGHT_FLAGS_RESTART_COUNTER_STEADY 0xf
-#define JD_CONTROL_RESTART_LIGHT_FLAGS_RESTART_COUNTER1 0x1
-#define JD_CONTROL_RESTART_LIGHT_FLAGS_RESTART_COUNTER2 0x2
-#define JD_CONTROL_RESTART_LIGHT_FLAGS_RESTART_COUNTER4 0x4
-#define JD_CONTROL_RESTART_LIGHT_FLAGS_RESTART_COUNTER8 0x8
-#define JD_CONTROL_RESTART_LIGHT_FLAGS_STATUS_LIGHT_MONO 0x10
-#define JD_CONTROL_RESTART_LIGHT_FLAGS_STATUS_LIGHT_RGB_NO_FADE 0x20
-#define JD_CONTROL_RESTART_LIGHT_FLAGS_STATUS_LIGHT_RGB_FADE 0x30
-
-// enum AnnounceFlags (uint8_t)
-#define JD_CONTROL_ANNOUNCE_FLAGS_SUPPORTS_ACK 0x1
-#define JD_CONTROL_ANNOUNCE_FLAGS_SUPPORTS_BROADCAST 0x2
-#define JD_CONTROL_ANNOUNCE_FLAGS_SUPPORTS_FRAMES 0x4
-#define JD_CONTROL_ANNOUNCE_FLAGS_IS_CLIENT 0x8
+// enum AnnounceFlags (uint16_t)
+#define JD_CONTROL_ANNOUNCE_FLAGS_RESTART_COUNTER_STEADY 0xf
+#define JD_CONTROL_ANNOUNCE_FLAGS_RESTART_COUNTER1 0x1
+#define JD_CONTROL_ANNOUNCE_FLAGS_RESTART_COUNTER2 0x2
+#define JD_CONTROL_ANNOUNCE_FLAGS_RESTART_COUNTER4 0x4
+#define JD_CONTROL_ANNOUNCE_FLAGS_RESTART_COUNTER8 0x8
+#define JD_CONTROL_ANNOUNCE_FLAGS_STATUS_LIGHT_NONE 0x0
+#define JD_CONTROL_ANNOUNCE_FLAGS_STATUS_LIGHT_MONO 0x10
+#define JD_CONTROL_ANNOUNCE_FLAGS_STATUS_LIGHT_RGB_NO_FADE 0x20
+#define JD_CONTROL_ANNOUNCE_FLAGS_STATUS_LIGHT_RGB_FADE 0x30
+#define JD_CONTROL_ANNOUNCE_FLAGS_SUPPORTS_ACK 0x100
+#define JD_CONTROL_ANNOUNCE_FLAGS_SUPPORTS_BROADCAST 0x200
+#define JD_CONTROL_ANNOUNCE_FLAGS_SUPPORTS_FRAMES 0x400
+#define JD_CONTROL_ANNOUNCE_FLAGS_IS_CLIENT 0x800
 
 /**
- * No args. The `restart_counter` starts at `0x1` and increments by one until it reaches `0xf`, then it stays at `0xf`.
+ * No args. The `restart_counter` is computed from the `flags & RestartCounterSteady`, starts at `0x1` and increments by one until it reaches `0xf`, then it stays at `0xf`.
  * If this number ever goes down, it indicates that the device restarted.
- * The upper 4 bits of `restart_counter` are reserved.
  * `service_class` indicates class identifier for each service index (service index `0` is always control, so it's
  * skipped in this enumeration).
  * `packet_count` indicates the number of packets sent by the current device since last announce,
@@ -36,8 +34,7 @@
  * Report: 
  */
 typedef struct jd_control_services_report {
-    uint8_t restart_counter;  // RestartLightFlags
-    uint8_t flags;  // AnnounceFlags
+    uint16_t flags;  // AnnounceFlags
     uint8_t packet_count;
     uint8_t reserved;
     uint32_t service_class[0];
@@ -50,7 +47,9 @@ typedef struct jd_control_services_report {
 #define JD_CONTROL_CMD_NOOP 0x80
 
 /**
- * No args. Blink an LED or otherwise draw user's attention.
+ * No args. Blink the status LED (262ms on, 262ms off, four times, with the blue LED) or otherwise draw user's attention to device with no status light. 
+ * For devices with status light (this can be discovered in the announce flags), the client should
+ * send the sequence of status light command to generate the identify animation.
  */
 #define JD_CONTROL_CMD_IDENTIFY 0x81
 

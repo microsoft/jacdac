@@ -49,7 +49,9 @@ Do nothing. Always ignored. Can be used to test ACKs.
 
     command identify? @ 0x81 { }
 
-Blink an LED or otherwise draw user's attention.
+Blink the status LED (262ms on, 262ms off, four times, with the blue LED) or otherwise draw user's attention to device with no status light. 
+For devices with status light (this can be discovered in the announce flags), the client should
+send the sequence of status light command to generate the identify animation.
 
     command reset? @ 0x82 { }
 

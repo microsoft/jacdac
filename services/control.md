@@ -8,25 +8,23 @@ It handles actions common to all services on a device.
 
 ## Commands
 
-    flags RestartLightFlags : u8 {
-        RestartCounterSteady = 0x0F,
-        RestartCounter1 = 0x01,
-        RestartCounter2 = 0x02,
-        RestartCounter4 = 0x04,
-        RestartCounter8 = 0x08,
-        StatusLightMono = 0x10,
-        StatusLightRgbNoFade = 0x20,
-        StatusLightRgbFade = 0x30,
-    }
-    flags AnnounceFlags : u8 {
-        SupportsACK = 0x01,
-        SupportsBroadcast = 0x02,
-        SupportsFrames = 0x04,
-        IsClient = 0x08,
+    flags AnnounceFlags : u16 {
+        RestartCounterSteady =  0x000F,
+        RestartCounter1 =       0x0001,
+        RestartCounter2 =       0x0002,
+        RestartCounter4 =       0x0004,
+        RestartCounter8 =       0x0008,
+        StatusLightNone =       0x0000,
+        StatusLightMono =       0x0010,
+        StatusLightRgbNoFade =  0x0020,
+        StatusLightRgbFade =    0x0030,
+        SupportsACK =           0x0100,
+        SupportsBroadcast =     0x0200,
+        SupportsFrames =        0x0400,
+        IsClient =              0x0800,
     }
     command services @ announce { }
     report {
-        restart_counter: RestartLightFlags
         flags: AnnounceFlags
         packet_count: u8
         reserved: u8
@@ -34,9 +32,8 @@ It handles actions common to all services on a device.
         service_class: u32
     }
 
-The `restart_counter` starts at `0x1` and increments by one until it reaches `0xf`, then it stays at `0xf`.
+The `restart_counter` is computed from the `flags & RestartCounterSteady`, starts at `0x1` and increments by one until it reaches `0xf`, then it stays at `0xf`.
 If this number ever goes down, it indicates that the device restarted.
-The upper 4 bits of `restart_counter` are reserved.
 `service_class` indicates class identifier for each service index (service index `0` is always control, so it's
 skipped in this enumeration).
 `packet_count` indicates the number of packets sent by the current device since last announce,
@@ -49,7 +46,9 @@ Do nothing. Always ignored. Can be used to test ACKs.
 
     command identify? @ 0x81 { }
 
-Blink an LED or otherwise draw user's attention.
+Blink the status LED (262ms on, 262ms off, four times, with the blue LED) or otherwise draw user's attention to device with no status light. 
+For devices with status light (this can be discovered in the announce flags), the client should
+send the sequence of status light command to generate the identify animation.
 
     command reset? @ 0x82 { }
 

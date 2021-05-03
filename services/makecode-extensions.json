@@ -207,6 +207,15 @@
     }
   },
   {
+    "service": "power",
+    "client": {
+      "name": "jacdac-power",
+      "repo": "microsoft/pxt-jacdac/power",
+      "qName": "modules.PowerClient",
+      "default": "modules.power"
+    }
+  },
+  {
     "service": "pulseoximeter",
     "client": {
       "name": "jacdac-pulse-oximeter",

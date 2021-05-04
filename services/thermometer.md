@@ -30,6 +30,6 @@ The real temperature is between `temperature - temperature_error` and `temperatu
         Indoor = 2,
         Body = 3,
     }
-    const variant: Variant @ variant
+    const variant?: Variant @ variant
 
 Specifies the type of thermometer.

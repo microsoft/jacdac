@@ -124,7 +124,7 @@ Setting to `0` means to repeat forever.
         Jewel = 4,
         Matrix = 5
     }
-    const variant: Variant @ variant
+    const variant?: Variant @ variant
 
 Specifies the shape of the light strip.
 

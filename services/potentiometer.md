@@ -17,6 +17,6 @@ The relative position of the slider between `0` and `1`.
         Slider = 1,
         Rotary = 2,
     }
-    const variant: Variant @ variant
+    const variant?: Variant @ variant
 
 Specifies the physical layout of the potentiometer.

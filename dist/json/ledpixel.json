@@ -252,6 +252,7 @@
           "storage": 1
         }
       ],
+      "optional": true,
       "identifierName": "variant",
       "packFormat": "u8"
     },

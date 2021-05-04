@@ -34,6 +34,6 @@ The real temperature is between `temperature - temperature_error` and `temperatu
         TypeR = 7
         TypeB = 8
     }
-    const variant: Variant @ variant
+    const variant?: Variant @ variant
 
 Specifies the type of thermometer.

@@ -174,12 +174,14 @@ ${regs
                                 ? field.type[0] === "i"
                                     ? -100
                                     : 0
-                                : undefined
+                                : undefined,
+                            field.type === "u8" ? 0 : undefined
                         )
                         const max = pick(
                             field.typicalMax,
                             field.absoluteMax,
-                            field.unit === "/" ? 100 : undefined
+                            field.unit === "/" ? 100 : undefined,
+                            field.type === "u8" ? 0xff : undefined
                         )
                         const defl = field.defaultValue || (field.unit === "/" ? "100" : undefined);
                         const valueScaler: (s : string) => string = 

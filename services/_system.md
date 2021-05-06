@@ -18,11 +18,12 @@ Command codes are subdivided as follows:
 
 Commands follow.
 
+    const announce_interval = 500
     command announce @ 0x00 { }
     report { ... }
 
 Enumeration data for control service; service-specific advertisement data otherwise.
-Control broadcasts it automatically every 500ms, but other service have to be queried to provide it.
+Control broadcasts it automatically every ``announce_interval``ms, but other service have to be queried to provide it.
 
     command get_register @ 0x1000 {}
     report { ... }

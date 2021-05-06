@@ -262,6 +262,7 @@ export function parseServiceSpecificationMarkdownToJSON(
         notes: {},
         classIdentifier: 0,
         enums: {},
+        constants: {},
         packets: [],
         tags: [],
     }
@@ -391,6 +392,10 @@ export function parseServiceSpecificationMarkdownToJSON(
                 case "report":
                 case "command":
                 case "const":
+                    // test for const foo = 0x12
+                    if (words.length === 4 && words[2] === "=") constant(words)
+                    else startPacket(words)
+                    break
                 case "ro":
                 case "rw":
                 case "event":
@@ -760,6 +765,16 @@ export function parseServiceSpecificationMarkdownToJSON(
         if (eq != "=" && eq != ":") error("expecting '='")
         const val = words.shift()
         return parseIntCheck(val, true)
+    }
+
+    function constant(words: string[]) {
+        const name = words[1]
+        const svalue = words[3]
+
+        const hex = /^0x/.test(svalue)
+        const value = hex ? parseInt(svalue, 16) : parseInt(svalue)
+        if (isNaN(value)) error("invalid numberic value for constant")
+        else info.constants[name] = { value, hex }
     }
 
     function packetField(words: string[]) {
@@ -1305,6 +1320,12 @@ function toH(info: jdspec.ServiceSpec) {
             info.classIdentifier
         )}\n`
 
+    for (const cst in info.constants) {
+        const { value, hex } = info.constants[cst]
+        r += `#define ${pref}${toUpper(cst)} ${
+            hex ? toHex(value) : value.toString()
+        }\n`
+    }
     for (const en of values(info.enums).filter(en => !en.derived)) {
         const enPref = pref + toUpper(en.name)
         r += `\n// enum ${en.name} (${cStorage(en.storage)})\n`

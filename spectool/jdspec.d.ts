@@ -237,6 +237,15 @@ declare namespace jdspec {
          */
         enums: SMap<EnumInfo>
 
+        /** Constants
+         *
+         * Numberical constants defined in the service.
+         */
+        constants: SMap<{
+            value: number
+            hex?: boolean
+        }>
+
         /**
          * Registers, commands, and events defined in service.
          */
@@ -580,12 +589,12 @@ declare namespace jdspec {
             /**
              * Default image displayed to the user
              */
-             default: string;
+            default: string
 
-             /**
+            /**
              * Square iconic image, max 128x128
              */
-            icon?: string;
+            icon?: string
         }
 
         /**

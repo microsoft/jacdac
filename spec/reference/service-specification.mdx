@@ -16,8 +16,6 @@ Use the [service editor](/tools/service-editor/) to create service specification
 The [jdspectool](https://github.com/microsoft/jacdac/tree/main/spectool) takes a service specification in markdown format and converts it to JSON.
 It can then also generate template files for implementation in various languages.
 
-
-
 ## Rocket Example
 
 Here's a simple example:
@@ -270,6 +268,15 @@ In fact, this is the only way to refer to the addresses in the system range:
 if the example used `@ 0x101` instead of `@ reading`, the jdspectool would generate an error.
 
 ## Other features
+
+### Constants
+
+Numerical constants, hexadecimal or integral, can be defined using the following syntax in code snippets:
+
+```markdown
+    const interval = 42
+    const timeout = 0x42
+```
 
 ### High codes
 

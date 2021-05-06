@@ -1666,6 +1666,10 @@ function toTypescript(info: jdspec.ServiceSpec, staticTypeScript: boolean) {
             ).toLocaleUpperCase()} = ${toHex(info.classIdentifier)}\n`
     }
     const pref = upperCamel(info.camelName)
+    for (const cst in info.constants) {
+        const { value, hex} = info.constants[cst]
+        r += indent + `export const ${toUpper(cst)} = ${hex ? value.toString() : toHex(value)}\n`
+    }
     for (const en of values(info.enums)) {
         const enPref = pref + upperCamel(en.name)
         r += `\n${enumkw} ${enPref} { // ${cStorage(en.storage)}\n`

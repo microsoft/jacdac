@@ -279,15 +279,6 @@
     }
   },
   {
-    "service": "settings",
-    "client": {
-      "name": "jacdac-settings",
-      "repo": "microsoft/pxt-jacdac/settings",
-      "qName": "modules.SettingsClient",
-      "default": "modules.settings"
-    }
-  },
-  {
     "service": "soilmoisture",
     "client": {
       "name": "jacdac-soil-moisture",

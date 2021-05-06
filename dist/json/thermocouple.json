@@ -28,6 +28,7 @@
       }
     }
   },
+  "constants": {},
   "packets": [
     {
       "kind": "const",

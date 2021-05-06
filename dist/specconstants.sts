@@ -1,5 +1,6 @@
 namespace jacdac {
     // Service: Common registers and commands
+    export const ANNOUNCE_INTERVAL = 0x1f4
 
     export const enum SystemReadingThreshold { // uint8_t
         Neutral = 0x1,
@@ -20,7 +21,7 @@ namespace jacdac {
     export const enum SystemCmd {
         /**
          * No args. Enumeration data for control service; service-specific advertisement data otherwise.
-         * Control broadcasts it automatically every 500ms, but other service have to be queried to provide it.
+         * Control broadcasts it automatically every ``announce_interval``ms, but other service have to be queried to provide it.
          */
         Announce = 0x0,
 

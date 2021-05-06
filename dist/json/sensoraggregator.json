@@ -25,6 +25,7 @@
       }
     }
   },
+  "constants": {},
   "packets": [
     {
       "kind": "const",

@@ -35,12 +35,18 @@
       }
     }
   },
+  "constants": {
+    "announce_interval": {
+      "value": 500,
+      "hex": false
+    }
+  },
   "packets": [
     {
       "kind": "command",
       "name": "announce",
       "identifier": 0,
-      "description": "Enumeration data for control service; service-specific advertisement data otherwise.\nControl broadcasts it automatically every 500ms, but other service have to be queried to provide it.",
+      "description": "Enumeration data for control service; service-specific advertisement data otherwise.\nControl broadcasts it automatically every ``announce_interval``ms, but other service have to be queried to provide it.",
       "fields": [],
       "hasReport": true
     },
@@ -48,7 +54,7 @@
       "kind": "report",
       "name": "announce",
       "identifier": 0,
-      "description": "Enumeration data for control service; service-specific advertisement data otherwise.\nControl broadcasts it automatically every 500ms, but other service have to be queried to provide it.",
+      "description": "Enumeration data for control service; service-specific advertisement data otherwise.\nControl broadcasts it automatically every ``announce_interval``ms, but other service have to be queried to provide it.",
       "fields": [],
       "secondary": true
     },

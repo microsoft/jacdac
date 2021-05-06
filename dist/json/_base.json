@@ -10,6 +10,7 @@
   },
   "classIdentifier": 536870899,
   "enums": {},
+  "constants": {},
   "packets": [
     {
       "kind": "const",

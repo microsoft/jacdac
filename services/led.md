@@ -3,6 +3,7 @@
     identifier: 0x1e3048f8
     camel: led
     group: light
+    tags: 8bit
 
 A controller for 1 or more monochrome or RGB LEDs connected in parallel.
 

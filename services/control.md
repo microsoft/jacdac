@@ -1,10 +1,13 @@
 # Control
 
     identifier: 0x00000000
-    tags: C
+    tags: C, 8bit
 
 Control service is always service index `0`.
 It handles actions common to all services on a device.
+
+Note: some of the optional features (including `flood_ping`, `mcu_temperature`, and all string registers)
+are not implemented in `8bit` version.
 
 ## Commands
 

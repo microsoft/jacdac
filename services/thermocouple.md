@@ -3,6 +3,7 @@
     identifier: 0x143ac061
     extends: _sensor
     group: environment
+    tags: 8bit
 
 A thermocouple using a heat probe to gather temperatures.
 

@@ -318,5 +318,7 @@
       "packFormat": "u22.10"
     }
   ],
-  "tags": []
+  "tags": [
+    "8bit"
+  ]
 }

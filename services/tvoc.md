@@ -6,6 +6,7 @@ Measures equivalent Total Volatile Organic Compound levels.
     extends: _sensor
     camel: tvoc
     group: environment
+    tags: 8bit
 
 ## Registers
 

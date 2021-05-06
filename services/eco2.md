@@ -6,6 +6,7 @@ Measures equivalent CO₂ levels.
     extends: _sensor
     camel: eCO2
     group: environment
+    tags: 8bit
 
 ## Registers
 

@@ -2,7 +2,7 @@
 
     identifier: 0x1421bac7
     extends: _sensor
-    tags: C
+    tags: C, 8bit
     group: environment
 
 A thermometer measuring outside or inside environment.

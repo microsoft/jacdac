@@ -198,5 +198,7 @@
       "packFormat": "u16.16"
     }
   ],
-  "tags": []
+  "tags": [
+    "8bit"
+  ]
 }

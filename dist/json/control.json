@@ -8,7 +8,7 @@
     "_base"
   ],
   "notes": {
-    "short": "Control service is always service index `0`.\nIt handles actions common to all services on a device."
+    "short": "Control service is always service index `0`.\nIt handles actions common to all services on a device.\n\nNote: some of the optional features (including `flood_ping`, `mcu_temperature`, and all string registers)\nare not implemented in `8bit` version."
   },
   "classIdentifier": 0,
   "enums": {
@@ -442,6 +442,7 @@
     }
   ],
   "tags": [
-    "C"
+    "C",
+    "8bit"
   ]
 }

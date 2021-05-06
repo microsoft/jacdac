@@ -3,6 +3,7 @@
     identifier: 0x1e117cea
     extends: _sensor
     group: environment
+    tags: 8bit
 
 A sensor measuring air pressure of outside environment.
 

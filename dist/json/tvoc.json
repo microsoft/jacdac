@@ -236,6 +236,8 @@
       "packFormat": "u32"
     }
   ],
-  "tags": [],
+  "tags": [
+    "8bit"
+  ],
   "group": "Environment"
 }

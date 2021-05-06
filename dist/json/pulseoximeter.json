@@ -182,6 +182,8 @@
       "packFormat": "u8.8"
     }
   ],
-  "tags": [],
+  "tags": [
+    "8bit"
+  ],
   "group": "Biometric"
 }

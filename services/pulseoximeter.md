@@ -3,6 +3,7 @@
     identifier: 0x10bb4eb6
     extends: _sensor
     group: biometric
+    tags: 8bit
 
 A sensor approximating the oxygen level. 
 

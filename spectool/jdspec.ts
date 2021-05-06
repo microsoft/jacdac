@@ -1275,7 +1275,7 @@ function toPython(
     for (const cst in info.constants) {
         const { value, hex } = info.constants[cst]
         r.push(
-            `${toUpper(cst)} = const(${
+            `_JD_${toUpper(cst)} = const(${
                 hex ? value.toString() : toHex(value)
             })\n`
         )

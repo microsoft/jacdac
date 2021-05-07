@@ -258,6 +258,21 @@ The above structure omits the details about physical transmission of Jacdac pack
 
 A device will generally maintain device-specific state for each of the services that it supports. This state should be kept in an array, where each array entry contains the service class and (a pointer to) the device-specific state for that service. When a device advertises its service classes they are presented in the same order as in the list.  This allows clients of the device to refer to one of its services by list index (`service_index`, an 8 bit quantity) instead of service class (a 32 bit quantity). The zero index (service number) is reserved for the control service. 
 
+In fact, only low six bits of `service_index` are currently used, with the two high bits reserved.
+This is because, it is impossible to enumerate more than 59 services (including control service).
+The following table lists allowed values for `service_index`.
+
+ `service_index` | Meaning
+-----------------|-------------
+`0x00`           | Control service
+`0x01`-`0x3a`    | Regular services
+`0x3b`           | Reserved
+`0x3c`           | Reserved
+`0x3d`           | Reserved
+`0x3e`           | Pipe packet (see below)
+`0x3f`           | ACK packet (see below)
+`0x40`-`0xff`    | Reserved
+
 #### flags
 
 A packet contains only one device identifier (rather than both source and destination identifiers, as in IP). If the lowest bit of `flags` is set, the packet is a _command packet_ and `device_identifier` is the destination device receiving the packet; otherwise, the packet is a _report packet_ and `device_identifier` is the source device broadcasting information on the bus. Read more about command and report packets in the next section.

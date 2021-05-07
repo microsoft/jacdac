@@ -5,7 +5,7 @@ A two axis directional joystick
     identifier: 0x108f7456
     extends: _sensor
     group: button
-    tags: 8bit
+    tags: 8bit, padauk
 
 ## Registers
 

@@ -3,7 +3,7 @@
     identifier: 0x1e6ecaf2
     extends: _sensor
     group: imaging
-    tags: 8bit
+    tags: 8bit, padauk
 
 Detects the amount of light falling onto a given surface area.
 

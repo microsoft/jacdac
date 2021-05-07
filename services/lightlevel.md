@@ -5,7 +5,7 @@ A sensor that measures luminosity level.
     identifier: 0x17dc9a1c
     extends: _sensor
     group: imaging
-    tags: 8bit
+    tags: 8bit, padauk
 
 ## Registers
 

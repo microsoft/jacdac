@@ -18,7 +18,7 @@ Command codes are subdivided as follows:
 
 Commands follow.
 
-    const announce_interval = 500
+    define announce_interval 500
     command announce @ 0x00 { }
     report { ... }
 

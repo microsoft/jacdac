@@ -1373,14 +1373,15 @@ export enum HeartRateReg {
 export const SRV_HID_KEYBOARD = 0x18b05b6a
 
 export enum HidKeyboardModifiers { // uint8_t
+    None = 0x0,
     LeftControl = 0xe0,
     LeftShift = 0xe1,
     LeftAlt = 0xe2,
-    LeftGUID = 0xe3,
+    LeftGUI = 0xe3,
     RightControl = 0xe4,
     RightShift = 0xe5,
     RightAlt = 0xe6,
-    RightGUID = 0xe7,
+    RightGUI = 0xe7,
 }
 
 

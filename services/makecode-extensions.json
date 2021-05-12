@@ -99,6 +99,24 @@
     }
   },
   {
+    "service": "hidkeyboard",
+    "client": {
+      "name": "jacdac-hid-keyboard",
+      "repo": "microsoft/pxt-jacdac/hid-keyboard",
+      "qName": "modules.HidKeyboardClient",
+      "default": "modules.hidKeyboard"
+    }
+  },
+  {
+    "service": "hidmouse",
+    "client": {
+      "name": "jacdac-hid-mouse",
+      "repo": "microsoft/pxt-jacdac/hid-mouse",
+      "qName": "modules.HidMouseClient",
+      "default": "modules.hidMouse"
+    }
+  },
+  {
     "service": "humidity",
     "client": {
       "name": "jacdac-humidity",

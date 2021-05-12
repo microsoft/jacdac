@@ -8,7 +8,7 @@
     "_base"
   ],
   "notes": {
-    "short": "Control a HID keyboard. \n\nThis service cannot be simulated.\n\nThe codes for the key (selectors) is defined in the [HID Keyboard\nspecification](https://usb.org/sites/default/files/hut1_21.pdf), chapter 10 Keyboard/Keypad Page, page 81.\n\nThe device keeps tracks of the key state and is able to clear it all with the clear command."
+    "short": "Control a HID keyboard. \n\nThis service cannot be simulated.\n\nThe codes for the key (selectors) is defined in the [HID Keyboard\nspecification](https://usb.org/sites/default/files/hut1_21.pdf), chapter 10 Keyboard/Keypad Page, page 81.\nModifiers are in page 87.\n\nThe device keeps tracks of the key state and is able to clear it all with the clear command."
   },
   "classIdentifier": 414210922,
   "enums": {
@@ -17,14 +17,15 @@
       "storage": 1,
       "isFlags": true,
       "members": {
+        "None": 0,
         "LeftControl": 224,
         "LeftShift": 225,
         "LeftAlt": 226,
-        "LeftGUID": 227,
+        "LeftGUI": 227,
         "RightControl": 228,
         "RightShift": 229,
         "RightAlt": 230,
-        "RightGUID": 231
+        "RightGUI": 231
       }
     },
     "Action": {

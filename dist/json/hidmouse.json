@@ -17,9 +17,9 @@
       "storage": 2,
       "isFlags": true,
       "members": {
-        "Right": 1,
-        "Middle": 4,
-        "Left": 2
+        "Left": 1,
+        "Right": 2,
+        "Middle": 4
       }
     },
     "ButtonEvent": {

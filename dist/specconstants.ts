@@ -1412,9 +1412,9 @@ export enum HidKeyboardCmd {
 export const SRV_HID_MOUSE = 0x1885dc1c
 
 export enum HidMouseButton { // uint16_t
-    Right = 0x1,
+    Left = 0x1,
+    Right = 0x2,
     Middle = 0x4,
-    Left = 0x2,
 }
 
 

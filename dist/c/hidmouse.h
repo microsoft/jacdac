@@ -5,9 +5,9 @@
 #define JD_SERVICE_CLASS_HID_MOUSE  0x1885dc1c
 
 // enum Button (uint16_t)
-#define JD_HID_MOUSE_BUTTON_RIGHT 0x1
+#define JD_HID_MOUSE_BUTTON_LEFT 0x1
+#define JD_HID_MOUSE_BUTTON_RIGHT 0x2
 #define JD_HID_MOUSE_BUTTON_MIDDLE 0x4
-#define JD_HID_MOUSE_BUTTON_LEFT 0x2
 
 // enum ButtonEvent (uint8_t)
 #define JD_HID_MOUSE_BUTTON_EVENT_UP 0x1

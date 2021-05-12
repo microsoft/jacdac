@@ -10,9 +10,9 @@ Controls a HID mouse.
 ## Commands
 
     flags Button : u16 {
-        Right = 0x01
+        Left = 0x01
+        Right = 0x02
         Middle = 0x04
-        Left = 0x02
     }
     enum ButtonEvent : u8 {
         Up = 0x01

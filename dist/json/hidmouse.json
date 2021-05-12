@@ -8,7 +8,7 @@
     "_base"
   ],
   "notes": {
-    "short": "Controls a HID mouse. \n\nThis service cannot be simulated."
+    "short": "Controls a HID mouse."
   },
   "classIdentifier": 411425820,
   "enums": {

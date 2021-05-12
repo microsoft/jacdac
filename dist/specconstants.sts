@@ -1443,14 +1443,14 @@ namespace jacdac {
 
     export const enum HidKeyboardModifiers { // uint8_t
         None = 0x0,
-        LeftControl = 0xe0,
-        LeftShift = 0xe1,
-        LeftAlt = 0xe2,
-        LeftGUI = 0xe3,
-        RightControl = 0xe4,
-        RightShift = 0xe5,
-        RightAlt = 0xe6,
-        RightGUI = 0xe7,
+        LeftControl = 0x1,
+        LeftShift = 0x2,
+        LeftAlt = 0x4,
+        LeftGUI = 0x8,
+        RightControl = 0x10,
+        RightShift = 0x20,
+        RightAlt = 0x40,
+        RightGUI = 0x80,
     }
 
 

@@ -17,14 +17,14 @@ The device keeps tracks of the key state and is able to clear it all with the cl
 
     flags Modifiers : u8 {
         None = 0x0
-        LeftControl = 0xe0
-        LeftShift = 0xe1
-        LeftAlt = 0xe2
-        LeftGUI = 0xe3
-        RightControl = 0xe4
-        RightShift = 0xe5
-        RightAlt = 0xe6
-        RightGUI = 0xe7
+        LeftControl = 0x01
+        LeftShift = 0x02
+        LeftAlt = 0x04
+        LeftGUI = 0x08
+        RightControl = 0x10
+        RightShift = 0x20
+        RightAlt = 0x40
+        RightGUI = 0x80
     }
     enum Action : u8 {
         Press = 0

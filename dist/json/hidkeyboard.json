@@ -18,14 +18,14 @@
       "isFlags": true,
       "members": {
         "None": 0,
-        "LeftControl": 224,
-        "LeftShift": 225,
-        "LeftAlt": 226,
-        "LeftGUI": 227,
-        "RightControl": 228,
-        "RightShift": 229,
-        "RightAlt": 230,
-        "RightGUI": 231
+        "LeftControl": 1,
+        "LeftShift": 2,
+        "LeftAlt": 4,
+        "LeftGUI": 8,
+        "RightControl": 16,
+        "RightShift": 32,
+        "RightAlt": 64,
+        "RightGUI": 128
       }
     },
     "Action": {

@@ -7,8 +7,6 @@
 
 Controls a HID mouse. 
 
-This service cannot be simulated.
-
 ## Commands
 
     flags Button : u16 {

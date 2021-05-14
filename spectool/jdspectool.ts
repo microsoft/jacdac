@@ -184,14 +184,14 @@ ${regs
                             field.type === "u8" ? 0xff : undefined
                         )
                         const defl = field.defaultValue || (field.unit === "/" ? "100" : undefined);
-                        const valueScaler: (s : string) => string = 
+                        const valueScaler: (s: string) => string =
                             field.unit === "/" ? s => `${s} * 100`
-                            : field.type === "bool" ? s => `!!${s}`
-                            : s => s;
-                        const valueUnscaler: (s : string) => string = 
+                                : field.type === "bool" ? s => `!!${s}`
+                                    : s => s;
+                        const valueUnscaler: (s: string) => string =
                             field.unit === "/" ? s => `${s} / 100`
-                            : field.type === "bool" ? s => `${s} ? 1 : 0`
-                            : s => s
+                                : field.type === "bool" ? s => `${s} ? 1 : 0`
+                                    : s => s
 
                         return `
         /**
@@ -250,12 +250,12 @@ ${toMetaComments(
          * Run code when the ${humanify(reading.name)} changes by the given threshold value.
         */
 ${toMetaComments(
-    `group="${group}"`,
-    `blockId=jacdac_${shortId}_on_${reading.name}_change`,
-    `block="on %${shortId} ${humanify(reading.name)} changed by %threshold"`,
-    `weight=${weight--}`,
-    `threshold.defl=${/[ui]0\./.test(reading.fields[0].type) ? "0.1" : "1"}`
-)}
+                `group="${group}"`,
+                `blockId=jacdac_${shortId}_on_${reading.name}_change`,
+                `block="on %${shortId} ${humanify(reading.name)} changed by %threshold"`,
+                `weight=${weight--}`,
+                `threshold.defl=${/[ui]0\./.test(reading.fields[0].type) ? "0.1" : "1"}`
+            )}
         on${capitalize(camelize(reading.name))}ChangedBy(threshold: number, handler: () => void): void {
             this.onReadingChangedBy(threshold, handler);
         }
@@ -425,8 +425,11 @@ function processSpec(dn: string) {
                             path.join(srvdir, "pxt.g.json"),
                             toPxtJson(json)
                         )
+                    // only write client.g.ts if it already exists; otherwise use .gts to avoid confusing TS intellisense
                     fs.writeFileSync(
-                        path.join(srvdir, "client.g.ts"),
+                        fs.existsSync(path.join(srvdir, "client.g.ts"))
+                            ? path.join(srvdir, "client.g.ts")
+                            : path.join(srvdir, "client.gts"),
                         mkcdclient
                     )
                 }

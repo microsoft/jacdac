@@ -3,10 +3,7 @@
 /// <reference path="jdtest.d.ts" />
 
 import { 
-    parseIntFloat, 
-    getRegister, 
     exprVisitor,
-    isBoolOrNumericFormat,
     SpecSymbolResolver
 } from "./jdutils"
 import { getTestCommandFunctions, getTestExpressionFunctions } from "./jdtestfuns"
@@ -45,7 +42,7 @@ export function parseSpecificationTestMarkdownToJSON(
     let currentTest: jdtest.TestSpec = null
     let testHeading = ""
     let testPrompt = ""
-    const symbolResolver = new SpecSymbolResolver(spec, (e) => error(e))
+    const symbolResolver = new SpecSymbolResolver(spec, undefined, (e) => error(e))
 
     try {
         for (const line of filecontent.split(/\n/)) {
@@ -193,6 +190,7 @@ export function parseSpecificationTestMarkdownToJSON(
             testPrompt = ""
         }
 
+        // this checking is specific to test functions (for now)
         function processCalls(command: jdtest.TestFunctionDescription, args: jsep.Expression[]) {
             const testExpressionFunctions = getTestExpressionFunctions()
             args.forEach((arg, a) => {

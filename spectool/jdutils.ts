@@ -84,11 +84,22 @@ export function parseIntFloat(
 }
 
 // static resolution of accesses to service specification
+
+// three-level of resolution
+// 1. specification provided to constructor: there is only this specification
+//    lookups are done against it directly (no roles)
+//
+// 2. undefined spec provided to constructor, role mapping provided instead
+//    lookups are done against the role mnapping (multiple specs possible)
+//
+// 3. both above undefined, then we assume short names of services at top-level
+
 export class SpecSymbolResolver {
     registers: string[];
     events: string[];
     
     constructor(private readonly spec: jdspec.ServiceSpec, 
+                private readonly role2spec: (role: string) => jdspec.ServiceSpec,
                 private readonly error: (m:string) => void) {
         this.reset()
     }
@@ -96,6 +107,48 @@ export class SpecSymbolResolver {
     reset() {
         this.registers = []
         this.events = []
+    }
+
+    // TODO: OR
+    private check(e: jsep.Expression, type: string) {
+        if (e.type !== type)
+            this.error(`expected ${type}; got ${e.type}`)
+    }
+
+    private specResolve(e: jsep.Expression): [jdspec.ServiceSpec, jsep.Expression] {
+        if (this.spec) {
+            return [this.spec, e]
+        }
+        // otherwise, we must have a memberexpression at top-level
+        // where the object references a role variable or specification shortName
+        this.check(e,"MemberExpression");
+        this.check((e as jsep.MemberExpression).object, "Identifier");
+        if (this.role2spec) {
+            const obj = (e as jsep.MemberExpression).object as jsep.Identifier
+            if (!this.role2spec(obj.name)) {
+                this.error(`no specification found for ${obj.name}`)
+            }
+            return [this.role2spec(obj.name), (e as jsep.MemberExpression).property]
+        }
+    }
+
+    private destructAccessPath(e: jsep.Expression, expectIdentifier = false) {
+        if (e.type === "Identifier") {
+            return [(e as jsep.Identifier).name, ""]
+        } else if (!expectIdentifier && e.type === "MemberExpression") {
+            let object = (e as jsep.MemberExpression).object as jsep.Identifier
+            let property = (e as jsep.MemberExpression).property as jsep.Identifier
+            this.check(object, "Identifier")
+            this.check(property, "Identifier");
+            return [object.name, property.name]
+        } else {
+            if (!expectIdentifier)
+               this.error(`expected Identifier or MemberExpression; got ${e.type}`)
+            else 
+                this.error(`expected Identifier; got ${e.type}`)
+            return undefined
+        }
+
     }
 
     processArguments(command: jdtest.TestFunctionDescription, root: jsep.CallExpression) {
@@ -116,7 +169,7 @@ export class SpecSymbolResolver {
                     eventSymTable.push(pkt)
             } else if (argType === "register") {
                     try {
-                        this.lookupRegister((arg as jsep.Identifier).name, "")
+                        this.lookupRegister(arg)
                     } catch (e) {
                         this.error(e.message)
                     }
@@ -151,26 +204,25 @@ export class SpecSymbolResolver {
         })
     }
 
-    lookupEvent(e: jsep.Expression) {
-        const events = this.spec.packets?.filter(pkt => pkt.kind == "event")
-        if (e.type !== 'Identifier') {
-            this.error(`event identifier expected`)
+    private lookupEvent(e: jsep.Expression) {
+        let [spec,rest] = this.specResolve(e)
+        let [id, _] = this.destructAccessPath(rest,true)
+        const events = spec.packets?.filter(pkt => pkt.kind == "event")
+        const pkt = events.find(p => p.name === id)
+        if (!pkt) {
+            this.error(`no event ${id} in specification`)
+            return undefined;
         } else {
-            const id = (e as jsep.Identifier).name
-            const pkt = events.find(p => p.name === id)
-            if (!pkt) {
-                this.error(`no event ${id} in specification`)
-            } else {
-                if (this.events.indexOf(id) < 0)
-                    this.events.push(id)
-                return pkt;
-            }
+            if (this.events.indexOf(id) < 0)
+                this.events.push(id)
+            return pkt;
         }
-        return null;
     }
 
-    lookupRegister(root:string, fld:string)  {
-        let reg = getRegister(this.spec, root, fld)
+    private lookupRegister(e: jsep.Expression)  {
+        let [spec,rest] = this.specResolve(e)
+        let [root, fld] = this.destructAccessPath(rest)
+        let reg = getRegister(spec, root, fld)
         if (reg.pkt && (!reg.fld && !isBoolOrNumericFormat(reg.pkt.packFormat) ||
                         reg.fld && reg.fld.type && !isBoolOrNumericFormat(reg.fld.type)))
             this.error("only bool/numeric registers allowed in tests")
@@ -180,7 +232,7 @@ export class SpecSymbolResolver {
             this.registers.push(root)
     }
 
-    lookupReplace(events: jdspec.PacketInfo[], parent: jsep.Expression, child: jsep.Identifier | jsep.MemberExpression) {
+    private lookupReplace(events: jdspec.PacketInfo[], parent: jsep.Expression, child: jsep.Identifier | jsep.MemberExpression) {
         if (Array.isArray(parent)) {
             let replace = this.lookup(events, parent, child)
             parent.forEach(i => {
@@ -202,10 +254,11 @@ export class SpecSymbolResolver {
     }
 
     private lookup(events: jdspec.PacketInfo[], parent: jsep.Expression, child: jsep.Identifier | jsep.MemberExpression) {
+        let [spec,rest] = this.specResolve(child)
+        let [root, fld] = this.destructAccessPath(rest)
         try {
             try {
-                let [root,fld] = toName()
-                const val = parseIntFloat(this.spec, fld ? `${root}.${fld}` : root)
+                const val = parseIntFloat(spec, fld ? `${root}.${fld}` : root)
                 const lit: jsep.Literal = {
                     type: "Literal",
                     value: val,
@@ -213,12 +266,10 @@ export class SpecSymbolResolver {
                 }
                 return lit
             } catch (e) {
-                let [root,fld] = toName()
-                this.lookupRegister(root, fld)
+                this.lookupRegister(rest)
             }
         } catch (e) {
             if (events.length > 0) {
-                let [root,fld] = toName()
                 let pkt = events.find(pkt => pkt.name === root)
                 if (!pkt)
                     this.error(`event ${root} not bound correctly`)
@@ -228,14 +279,6 @@ export class SpecSymbolResolver {
                     this.error(`Field ${fld} of event ${root} not found in specification`)
             } else {
                 this.error(e.message)
-            }
-        }
-        function toName() {
-            if (child.type !== 'MemberExpression')
-                return [child.name, ""];
-            else {
-                return [(child.object as jsep.Identifier).name,
-                        (child.property as jsep.Identifier).name]
             }
         }
     }

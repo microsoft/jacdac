@@ -176,20 +176,18 @@ export class SpecSymbolResolver {
                 argType = command.args[a][0]
             
             if (argType === "register" || argType === "event" || argType == "Identifier") {
-                if (arg.type !== "Identifier")
-                        this.error(
-                            `Expected a ${argType} in argument position ${a + 1}`
-                        )
-                else if (argType === "event" && a === 0) { 
-                        let pkt = this.lookupEvent(arg)
-                        if (pkt && eventSymTable.indexOf(pkt) === -1)
-                        eventSymTable.push(pkt)
+                if (argType == "Identifier") {
+                    this.check(arg,"Identifier")
+                } else if (argType === "event" && a === 0) { 
+                    let pkt = this.lookupEvent(arg)
+                    if (pkt && eventSymTable.indexOf(pkt) === -1)
+                    eventSymTable.push(pkt)
                 } else if (argType === "register") {
-                        try {
-                            this.lookupRegister(arg)
-                        } catch (e) {
-                            this.error(e.message)
-                        }
+                    try {
+                        this.lookupRegister(arg)
+                    } catch (e) {
+                        this.error(e.message)
+                    }
                 }
             } else if (argType === "events") {
                 if (arg.type != 'ArrayExpression')
@@ -199,6 +197,7 @@ export class SpecSymbolResolver {
                 }
             } else if (argType === "number" || argType === "boolean") {
                 exprVisitor(root, arg, (p, c) => {
+                    // TODO
                     if (p.type !== 'MemberExpression' && c.type === 'Identifier') {
                         this.lookupReplace(eventSymTable, p, c as jsep.Identifier)
                     } else if (c.type === 'ArrayExpression') {
@@ -233,6 +232,7 @@ export class SpecSymbolResolver {
         }
         // otherwise, we must have a memberexpression at top-level
         // where the object references a role variable or specification shortName
+        console.log(e)
         this.check(e,"MemberExpression");
         this.check((e as jsep.MemberExpression).object, "Identifier");
         if (this.role2spec) {
@@ -260,10 +260,8 @@ export class SpecSymbolResolver {
                 this.error(`expected Identifier; got ${e.type}`)
             return undefined
         }
-
     }
     
-
     private lookupEvent(e: jsep.Expression) {
         let [spec,rest] = this.specResolve(e)
         let [id, _] = this.destructAccessPath(rest,true)
@@ -282,6 +280,10 @@ export class SpecSymbolResolver {
     private lookupRegister(e: jsep.Expression)  {
         let [spec,rest] = this.specResolve(e)
         let [root, fld] = this.destructAccessPath(rest)
+        this.lookupRegisterRaw(spec, root, fld)
+    }
+
+    private lookupRegisterRaw(spec: jdspec.ServiceSpec, root: string, fld: string)  {
         let reg = getRegister(spec, root, fld)
         if (reg.pkt && (!reg.fld && !isBoolOrNumericFormat(reg.pkt.packFormat) ||
                         reg.fld && reg.fld.type && !isBoolOrNumericFormat(reg.fld.type)))
@@ -291,6 +293,7 @@ export class SpecSymbolResolver {
         if (this.registers.indexOf(root) < 0)
             this.registers.push(root)
     }
+
 
     private lookupReplace(events: jdspec.PacketInfo[], parent: jsep.Expression, child: jsep.Identifier | jsep.MemberExpression) {
         if (Array.isArray(parent)) {
@@ -326,7 +329,7 @@ export class SpecSymbolResolver {
                 }
                 return lit
             } catch (e) {
-                this.lookupRegister(rest)
+                this.lookupRegisterRaw(spec, root, fld)
             }
         } catch (e) {
             if (events.length > 0) {

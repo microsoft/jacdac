@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/triple-slash-reference */
-/// <reference path="jdspec.d.ts" />
-/// <reference path="jdtest.d.ts" />
-
 import { 
     exprVisitor,
     SpecSymbolResolver

@@ -1,6 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/triple-slash-reference
-/// <reference path="jdspec.d.ts" />
-
 import jsep from "jsep"
 
 export function isBoolOrNumericFormat(fmt: string) {

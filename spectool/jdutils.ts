@@ -232,7 +232,6 @@ export class SpecSymbolResolver {
         }
         // otherwise, we must have a memberexpression at top-level
         // where the object references a role variable or specification shortName
-        console.log(e)
         this.check(e,"MemberExpression");
         this.check((e as jsep.MemberExpression).object, "Identifier");
         if (this.role2spec) {

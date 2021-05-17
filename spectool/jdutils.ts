@@ -1,5 +1,3 @@
-import jsep from "jsep"
-
 export function isBoolOrNumericFormat(fmt: string) {
     return fmt === "bool" || /^[ui]\d+/i.test(fmt)
 }
@@ -91,6 +89,7 @@ export class SpecSymbolResolver {
     constructor(private readonly spec: jdspec.ServiceSpec, 
                 private readonly role2spec: (role: string) => jdspec.ServiceSpec,
                 private readonly supportedExpressions: jsep.ExpressionType[],
+                private readonly parser: (line: string | jsep.Expression) => jsep.Expression,
                 private readonly error: (m:string) => void) {
         this.reset()
     }
@@ -115,7 +114,7 @@ export class SpecSymbolResolver {
             this.error(`${callee} is not a registered function.`)
             return undefined
         }
-        const root: jsep.CallExpression = <jsep.CallExpression>jsep(line)
+        const root: jsep.CallExpression = <jsep.CallExpression>this.parser(line)
         if (
             !root ||
             !root.type ||

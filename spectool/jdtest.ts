@@ -38,7 +38,7 @@ export function parseSpecificationTestMarkdownToJSON(
     let currentTest: jdtest.TestSpec = null
     let testHeading = ""
     let testPrompt = ""
-    const symbolResolver = new SpecSymbolResolver(spec, undefined, supportedExpressions, (e) => error(e))
+    const symbolResolver = new SpecSymbolResolver(spec, undefined, supportedExpressions, jsep, (e) => error(e))
 
     try {
         for (const line of filecontent.split(/\n/)) {

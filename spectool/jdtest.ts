@@ -42,7 +42,7 @@ export function parseSpecificationTestMarkdownToJSON(
     let currentTest: jdtest.TestSpec = null
     let testHeading = ""
     let testPrompt = ""
-    const symbolResolver = new SpecSymbolResolver(spec, undefined, (e) => error(e))
+    const symbolResolver = new SpecSymbolResolver(spec, undefined, supportedExpressions, (e) => error(e))
 
     try {
         for (const line of filecontent.split(/\n/)) {
@@ -103,10 +103,6 @@ export function parseSpecificationTestMarkdownToJSON(
         }
     }
 
-    function argsRequiredOptional(args: any[], optional: boolean = false) {
-        return args.filter(a => !optional && typeof(a) === "string" || optional && typeof(a) === "object")
-    }
-
     function processCommand(expanded: string) {
         // TODO: if there is a prompt, the test has no commands, and
         // TODO: the first command is not ask/say
@@ -125,73 +121,20 @@ export function parseSpecificationTestMarkdownToJSON(
             testHeading = ""
             testPrompt = ""
         }
-        const call = /^([a-zA-Z]\w*)\(.*\)$/.exec(expanded)
-        if (!call) {
-            error(
-                `a command must be a call to a registered test function (JavaScript syntax)`
-            )
-            return
-        }
-        const [, callee] = call
-        const testCommandFunctions = getTestCommandFunctions();
-        const cmdIndex = testCommandFunctions.findIndex(r => callee == r.id)
-        if (cmdIndex < 0) {
-            error(`${callee} is not a registered test command function.`)
-            return
-        }
-        const root: jsep.CallExpression = <jsep.CallExpression>jsep(expanded)
-        if (
-            !root ||
-            !root.type ||
-            root.type != "CallExpression" ||
-            !root.callee ||
-            !root.arguments
-        ) {
-            error(`a command must be a call expression in JavaScript syntax`)
-        } else {
-            // check for unsupported expression types
-            exprVisitor(null, root, (p, c) => {
-                if (supportedExpressions.indexOf(c.type) < 0)
-                    error(`Expression of type ${c.type} not currently supported`)
-            })
-            // check arguments
-            const command = testCommandFunctions[cmdIndex]
-            const minArgs = argsRequiredOptional(command.args).length
-            const maxArgs = command.args.length
-            if (root.arguments.length < minArgs)
-                error(
-                    `${callee} expects at least ${minArgs} arguments; got ${root.arguments.length}`
-                )
-            else if (root.arguments.length > maxArgs) {
-                error(
-                    `${callee} expects at most ${maxArgs} arguments; got ${root.arguments.length}`
-                )
-            }
-            else {
-                // deal with optional arguments
-                let newExpressions: jsep.Expression[] = []
-                for(let i = root.arguments.length; i<command.args.length;i++) {
-                    let [name, def] = command.args[i] as [string, any] 
-                    const lit: jsep.Literal = {
-                        type: "Literal",
-                        value: def,
-                        raw: def.toString(),
-                    }
-                    newExpressions.push(lit)
-                }
-                root.arguments = root.arguments.concat(newExpressions)
+ 
+        const ret = symbolResolver.processLine(expanded, getTestCommandFunctions());
 
-                // type checking of arguments.
-                symbolResolver.processArguments(command, root);
-                // check all calls in subexpressions
-                processCalls(command, root.arguments)
-            }
+        if (ret) {
+            const [command, root] = ret
+            // check all calls in subexpressions
+            processCalls(command, root)
             currentTest.testCommands.push({ prompt: testPrompt, call: root })
             testPrompt = ""
         }
 
         // this checking is specific to test functions (for now)
-        function processCalls(command: jdtest.TestFunctionDescription, args: jsep.Expression[]) {
+        function processCalls(command: jdtest.TestFunctionDescription, root: jsep.CallExpression) {
+            const args = root.arguments
             const testExpressionFunctions = getTestExpressionFunctions()
             args.forEach((arg, a) => {
                 const argType = command.args[a]
@@ -223,7 +166,7 @@ export function parseSpecificationTestMarkdownToJSON(
                     const expected = tef.args.length
                     if (expected !== callExpr.arguments.length)
                         error(
-                            `${callee} expects ${expected} arguments; got ${callExpr.arguments.length}`
+                            `Expected ${expected} arguments; got ${callExpr.arguments.length}`
                         )
                 })
             })

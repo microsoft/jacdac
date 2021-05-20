@@ -226,9 +226,9 @@ export class SpecSymbolResolver {
             this.error(`expected ${type}; got ${e.type}`)
     }
 
-    private specResolve(e: jsep.Expression): [jdspec.ServiceSpec, jsep.Expression] {
+    private specResolve(e: jsep.Expression): [string, jdspec.ServiceSpec, jsep.Expression] {
         if (this.spec) {
-            return [this.spec, e]
+            return [this.spec.shortName, this.spec, e]
         }
         // otherwise, we must have a memberexpression at top-level
         // where the object references a role variable or specification shortName
@@ -239,7 +239,7 @@ export class SpecSymbolResolver {
             if (!this.role2spec(obj.name)) {
                 this.error(`no specification found for ${obj.name}`)
             }
-            return [this.role2spec(obj.name), (e as jsep.MemberExpression).property]
+            return [obj.name, this.role2spec(obj.name), (e as jsep.MemberExpression).property]
         }
     }
 
@@ -262,7 +262,7 @@ export class SpecSymbolResolver {
     }
     
     private lookupEvent(e: jsep.Expression) {
-        let [spec,rest] = this.specResolve(e)
+        let [role,spec,rest] = this.specResolve(e)
         let [id, _] = this.destructAccessPath(rest,true)
         const events = spec.packets?.filter(pkt => pkt.kind == "event")
         const pkt = events.find(p => p.name === id)
@@ -270,16 +270,20 @@ export class SpecSymbolResolver {
             this.error(`no event ${id} in specification`)
             return undefined;
         } else {
-            if (this.events.indexOf(id) < 0)
-                this.events.push(id)
+            let ev = `${role}.${id}`
+            if (this.events.indexOf(ev) < 0)
+                this.events.push(ev)
             return pkt;
         }
     }
 
     private lookupRegister(e: jsep.Expression)  {
-        let [spec,rest] = this.specResolve(e)
+        let [role,spec,rest] = this.specResolve(e)
         let [root, fld] = this.destructAccessPath(rest)
         this.lookupRegisterRaw(spec, root, fld)
+        let reg = `${role}.${root}`
+        if (this.registers.indexOf(reg) < 0)
+            this.registers.push(reg)
     }
 
     private lookupRegisterRaw(spec: jdspec.ServiceSpec, root: string, fld: string)  {
@@ -289,8 +293,6 @@ export class SpecSymbolResolver {
             this.error("only bool/numeric registers allowed")
         // if (!fld && regField.pkt.fields.length > 0)
         //    error(`register ${root} has fields, but no field specified`)
-        if (this.registers.indexOf(root) < 0)
-            this.registers.push(root)
     }
 
 
@@ -316,7 +318,7 @@ export class SpecSymbolResolver {
     }
 
     private lookup(events: jdspec.PacketInfo[], parent: jsep.Expression, child: jsep.Identifier | jsep.MemberExpression) {
-        let [spec,rest] = this.specResolve(child)
+        let [role, spec,rest] = this.specResolve(child)
         let [root, fld] = this.destructAccessPath(rest)
         try {
             try {
@@ -329,6 +331,9 @@ export class SpecSymbolResolver {
                 return lit
             } catch (e) {
                 this.lookupRegisterRaw(spec, root, fld)
+                let reg = `${role}.${root}`
+                if (this.registers.indexOf(reg) < 0)
+                    this.registers.push(reg)
             }
         } catch (e) {
             if (events.length > 0) {

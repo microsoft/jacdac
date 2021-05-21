@@ -156,7 +156,7 @@ declare namespace jdspec {
      * Many fields have no unit (e.g. they are identifiers); in that case empty string is used. Fields that represent counts use "#".
      * SenML (https://www.iana.org/assignments/senml/senml.xhtml) units and secondary unit are also supported.
      */
-    type Unit = "" | "us" | "mWh" | "#" | senml.Unit | senml.SecondaryUnit
+    type Unit = "" | "us" | "mWh" | "#" | "°" | senml.Unit | senml.SecondaryUnit
 
     /**
      * Stability status of a feature

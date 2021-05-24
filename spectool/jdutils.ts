@@ -276,13 +276,14 @@ export class SpecAwareMarkDownParser {
                         pkt => pkt.kind === "command"
                     )
                     theCommand = commands.find(
-                        c => c?.identifierName === command
+                        c => c?.name === command
                     )
                     if (!theCommand) {
                         this.error(
-                            `cannot find command named ${command} in spec ${spec}`
+                            `cannot find command named ${command} in spec ${spec.shortName}`
                         )
-                    } else return this.processCommandFunction(root, theCommand)
+                    } else 
+                        return this.processCommandFunction(root, theCommand)
                 }
             } else {
                 if (callee)
@@ -303,7 +304,7 @@ export class SpecAwareMarkDownParser {
     ): [jdtest.TestFunctionDescription, jsep.CallExpression] {
         if (root.arguments.length !== command?.fields?.length) {
             this.error(
-                `Command ${command.identifierName} expects ${command.fields.length} arguments: got ${root.arguments.length}`
+                `Command ${command.name} expects ${command.fields.length} arguments: got ${root.arguments.length}`
             )
         } else {
             const args = root.arguments
@@ -311,7 +312,7 @@ export class SpecAwareMarkDownParser {
                 this.visitReplace(root, arg, [])
             })
         }
-        return [undefined, undefined]
+        return [undefined, root]
     }
 
     private processTestFunction(

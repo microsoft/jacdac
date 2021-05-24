@@ -1162,6 +1162,28 @@ export enum ControlReg {
     FirmwareUrl = 0x188,
 }
 
+// Service: Dependable Sensor
+export const SRV_DEPENDABLE_SENSOR = 0x2e6692c5
+export enum DependableSensorReg {
+    /**
+     * Read-only bytes. Reads the computed fingerprint of the sensor. When the module computes a new value for the fingerprint, it may also send a packet with the updated value.
+     *
+     * ```
+     * const [fingerprint] = jdunpack<[Uint8Array]>(buf, "b")
+     * ```
+     */
+    Fingerprint = 0x180,
+
+    /**
+     * Read-write ms uint32_t. Specifies the interval between computing the fingerprint information.
+     *
+     * ```
+     * const [fingerprintInterval] = jdunpack<[number]>(buf, "u32")
+     * ```
+     */
+    FingerprintInterval = 0x80,
+}
+
 // Service: Distance
 export const SRV_DISTANCE = 0x141a6b8a
 

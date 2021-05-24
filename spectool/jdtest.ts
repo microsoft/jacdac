@@ -1,6 +1,7 @@
 import { 
     exprVisitor,
-    SpecSymbolResolver
+    SpecSymbolResolver,
+    SpecAwareMarkDownParser
 } from "./jdutils"
 import { getTestCommandFunctions, getTestExpressionFunctions } from "./jdtestfuns"
 import jsep from "jsep"
@@ -38,7 +39,8 @@ export function parseSpecificationTestMarkdownToJSON(
     let currentTest: jdtest.TestSpec = null
     let testHeading = ""
     let testPrompt = ""
-    const symbolResolver = new SpecSymbolResolver(spec, undefined, supportedExpressions, jsep, (e) => error(e))
+    const symbolResolver = new SpecSymbolResolver(spec, undefined, (e) => error(e))
+    const parser = new SpecAwareMarkDownParser(symbolResolver,  supportedExpressions, jsep, (e) => error(e))
 
     try {
         for (const line of filecontent.split(/\n/)) {
@@ -118,7 +120,7 @@ export function parseSpecificationTestMarkdownToJSON(
             testPrompt = ""
         }
  
-        const ret = symbolResolver.processLine(expanded, getTestCommandFunctions());
+        const ret = parser.processLine(expanded, getTestCommandFunctions());
 
         if (ret) {
             const [command, root] = ret

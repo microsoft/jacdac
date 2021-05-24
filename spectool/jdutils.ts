@@ -1,60 +1,9 @@
-export function isBoolOrNumericFormat(fmt: string) {
-    return fmt === "bool" || /^[ui]\d+/i.test(fmt)
-}
-
 export function isMixinService(serviceClass: number) {
     return (serviceClass & 0x2000_0000) == 0x2000_0000
 }
 
-export function isRegister(pkt: jdspec.PacketInfo): boolean {
-    return pkt && (pkt.kind == "const" || pkt.kind == "ro" || pkt.kind == "rw")
-}
-
-export function isCommand(pkt: jdspec.PacketInfo) {
-    return pkt.kind == "command"
-}
-
 export function packetsToRegisters(packets: jdspec.PacketInfo[]) {
     return packets.filter(pkt => !pkt.derived && isRegister(pkt))
-}
-export function lookupRegister(
-    spec: jdspec.ServiceSpec,
-    id: string
-): jdspec.PacketInfo {
-    return spec.packets.find(pkt => isRegister(pkt) && pkt.name === id)
-}
-
-export function lookupField(
-    pkt: jdspec.PacketInfo,
-    field: string
-): jdspec.PacketMember {
-    return pkt.fields.find(member => member.name === field)
-}
-
-export interface RegField {
-    pkt: jdspec.PacketInfo
-    fld: jdspec.PacketMember
-}
-
-export function getRegister(
-    spec: jdspec.ServiceSpec,
-    root: string,
-    fld = ""
-): RegField {
-    const ret: RegField = { pkt: undefined, fld: undefined }
-    ret.pkt = lookupRegister(spec, root)
-    if (!ret.pkt) {
-        throw new Error(
-            `no register ${root} found in service ${spec.shortName}`
-        )
-    } else if (fld) {
-        ret.fld = lookupField(ret.pkt, fld)
-        if (!ret.fld)
-            throw new Error(
-                `no field ${fld} found in register ${root} of service ${spec.shortName}`
-            )
-    }
-    return ret
 }
 
 export function parseIntFloat(
@@ -88,209 +37,20 @@ export function parseIntFloat(
     return en.members[ww[1]] || 0
 }
 
-export class SpecAwareMarkDownParser {
-
-    constructor(
-        private readonly resolver: SpecSymbolResolver,        
-        private readonly supportedExpressions: jsep.ExpressionType[],
-        private readonly parser: (
-            line: string | jsep.Expression
-        ) => jsep.Expression,
-        private readonly error: (m: string) => void
-        ) {
-    }
-
-    processLine(
-        line: string,
-        funs: jdtest.TestFunctionDescription[]
-    ): [jdtest.TestFunctionDescription, jsep.CallExpression] {
-        const root: jsep.CallExpression = <jsep.CallExpression>this.parser(line)
-        if (!root || !root.type || root.type != "CallExpression") {
-            this.error(
-                `a command must be a call expression in JavaScript syntax`
-            )
-            return undefined
-        }
-        // check for unsupported expression types
-        exprVisitor(null, root, (p, c) => {
-            if (this.supportedExpressions.indexOf(c.type) < 0)
-                this.error(
-                    `Expression of type ${c.type} not currently supported`
-                )
-        })
-
-        // first lookup in known functions
-        const callee = (root.callee as jsep.Identifier)?.name
-        const cmdIndex = funs.findIndex(r => callee == r.id)
-        let theCommand: jdspec.PacketInfo = undefined
-        if (cmdIndex < 0) {
-            if (root.callee.type === "MemberExpression") {
-                let [role, spec, rest] = this.resolver.specResolve(
-                    root.callee as jsep.MemberExpression
-                )
-                let [command, _] = this.resolver.destructAccessPath(rest)
-                if (!role) {
-                    this.error(
-                        `command does not conform to expected call expression`
-                    )
-                    return undefined
-                } else {
-                    // we have a spec, now look for command
-                    const commands = spec.packets?.filter(
-                        pkt => pkt.kind === "command"
-                    )
-                    theCommand = commands.find(
-                        c => c?.identifierName === command
-                    )
-                    if (!theCommand) {
-                        this.error(
-                            `cannot find command named ${command} in spec ${spec}`
-                        )
-                    } else
-                        this.processCommandFunction(root, theCommand)
-                }
-            } else {
-                if (callee)
-                    this.error(`${callee} is not a registered function.`)
-                else
-                    this.error(
-                        `command does not conform to expected call expression`
-                    )
-                return undefined
-            }
-        } else 
-            this.processTestFunction(funs, root, cmdIndex)
-    }
-
-    private processCommandFunction(root: jsep.CallExpression, command: jdspec.PacketInfo) {
-
-    }
-
-    private processTestFunction(
-        funs: jdtest.TestFunctionDescription[],
-        root: jsep.CallExpression,
-        cmdIndex: number
-    ) {
-        const callee = (root.callee as jsep.Identifier)?.name
-        // check arguments
-        const command = funs[cmdIndex]
-        const minArgs = argsRequiredOptional(command.args).length
-        const maxArgs = command.args.length
-        if (root.arguments.length < minArgs) {
-            this.error(
-                `${callee} expects at least ${minArgs} arguments; got ${root.arguments.length}`
-            )
-            return undefined
-        } else if (root.arguments.length > maxArgs) {
-            this.error(
-                `${callee} expects at most ${maxArgs} arguments; got ${root.arguments.length}`
-            )
-            return undefined
-        }
-        // deal with optional arguments
-        let newExpressions: jsep.Expression[] = []
-        for (let i = root.arguments.length; i < command.args.length; i++) {
-            let [name, def] = command.args[i] as [string, any]
-            const lit: jsep.Literal = {
-                type: "Literal",
-                value: def,
-                raw: def.toString(),
-            }
-            newExpressions.push(lit)
-        }
-        root.arguments = root.arguments.concat(newExpressions)
-        // type checking of arguments.
-        this.processArguments(command, root)
-        return [command, root]
-        function argsRequiredOptional(args: any[], optional: boolean = false) {
-            return args.filter(
-                a =>
-                    (!optional && typeof a === "string") ||
-                    (optional && typeof a === "object")
-            )
-        }
-    }
-
-    private processArguments(
-        command: jdtest.TestFunctionDescription,
-        root: jsep.CallExpression
-    ) {
-        const args = root.arguments
-        const eventSymTable: jdspec.PacketInfo[] = []
-        args.forEach((arg, a) => {
-            let argType = command.args[a]
-
-            if (typeof argType === "object") argType = command.args[a][0]
-
-            if (
-                argType === "register" ||
-                argType === "event" ||
-                argType == "Identifier"
-            ) {
-                if (argType == "Identifier") {
-                    this.resolver.check(arg, "Identifier")
-                } else if (argType === "event" && a === 0) {
-                    let pkt = this.resolver.lookupEvent(arg)
-                    if (pkt && eventSymTable.indexOf(pkt) === -1)
-                        eventSymTable.push(pkt)
-                } else if (argType === "register") {
-                    try {
-                        this.resolver.lookupRegister(arg)
-                    } catch (e) {
-                        this.error(e.message)
-                    }
-                }
-            } else if (argType === "events") {
-                if (arg.type != "ArrayExpression")
-                    this.error(
-                        `events function expects a list of service events`
-                    )
-                else {
-                    ;(arg as jsep.ArrayExpression).elements.forEach(e =>
-                        this.resolver.lookupEvent(e)
-                    )
-                }
-            } else if (argType === "number" || argType === "boolean") {
-                exprVisitor(root, arg, (p, c) => {
-                    // TODO
-                    if (
-                        p.type !== "MemberExpression" &&
-                        c.type === "Identifier"
-                    ) {
-                        this.resolver.lookupReplace(
-                            eventSymTable,
-                            p,
-                            c as jsep.Identifier
-                        )
-                    } else if (c.type === "ArrayExpression") {
-                        this.error(
-                            `array expression not allowed in this context`
-                        )
-                    } else if (c.type === "MemberExpression") {
-                        const member = c as jsep.MemberExpression
-                        // A member expression must be of form <Identifier>.<memberExpression|Identifier>
-                        if (
-                            member.object.type !== "Identifier" ||
-                            member.computed
-                        ) {
-                            this.error(
-                                "property access must be of form id.property"
-                            )
-                        } else {
-                            this.resolver.lookupReplace(
-                                eventSymTable,
-                                p,
-                                c as jsep.MemberExpression
-                            )
-                        }
-                    }
-                })
-            } else {
-                this.error(`unexpected argument type (${argType})`)
-            }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function exprVisitor(
+    parent: any,
+    current: any,
+    structVisit: (par: jsep.Expression, curr: jsep.Expression) => void
+) {
+    if (Array.isArray(current)) {
+        ;(current as any[]).forEach(c => exprVisitor(current, c, structVisit))
+    } else if (typeof current === "object") {
+        if (parent && current) structVisit(parent, current)
+        Object.keys(current).forEach((key: string) => {
+            exprVisitor(current, current[key], structVisit)
         })
     }
-
 }
 
 export class SpecSymbolResolver {
@@ -466,18 +226,257 @@ export class SpecSymbolResolver {
     }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function exprVisitor(
-    parent: any,
-    current: any,
-    structVisit: (par: jsep.Expression, curr: jsep.Expression) => void
-) {
-    if (Array.isArray(current)) {
-        ;(current as any[]).forEach(c => exprVisitor(current, c, structVisit))
-    } else if (typeof current === "object") {
-        if (parent && current) structVisit(parent, current)
-        Object.keys(current).forEach((key: string) => {
-            exprVisitor(current, current[key], structVisit)
+export class SpecAwareMarkDownParser {
+    constructor(
+        private readonly resolver: SpecSymbolResolver,
+        private readonly supportedExpressions: jsep.ExpressionType[],
+        private readonly parser: (
+            line: string | jsep.Expression
+        ) => jsep.Expression,
+        private readonly error: (m: string) => void
+    ) {}
+
+    processLine(
+        line: string,
+        funs: jdtest.TestFunctionDescription[]
+    ): [jdtest.TestFunctionDescription, jsep.CallExpression] {
+        const root: jsep.CallExpression = <jsep.CallExpression>this.parser(line)
+        if (!root || !root.type || root.type != "CallExpression") {
+            this.error(
+                `a command must be a call expression in JavaScript syntax`
+            )
+            return undefined
+        }
+        // check for unsupported expression types
+        exprVisitor(null, root, (p, c) => {
+            if (this.supportedExpressions.indexOf(c.type) < 0)
+                this.error(
+                    `Expression of type ${c.type} not currently supported`
+                )
+        })
+
+        // first lookup in known functions
+        const callee = (root.callee as jsep.Identifier)?.name
+        const cmdIndex = funs.findIndex(r => callee == r.id)
+        let theCommand: jdspec.PacketInfo = undefined
+        if (cmdIndex < 0) {
+            if (root.callee.type === "MemberExpression") {
+                let [role, spec, rest] = this.resolver.specResolve(
+                    root.callee as jsep.MemberExpression
+                )
+                let [command, _] = this.resolver.destructAccessPath(rest)
+                if (!role) {
+                    this.error(
+                        `command does not conform to expected call expression`
+                    )
+                    return undefined
+                } else {
+                    // we have a spec, now look for command
+                    const commands = spec.packets?.filter(
+                        pkt => pkt.kind === "command"
+                    )
+                    theCommand = commands.find(
+                        c => c?.identifierName === command
+                    )
+                    if (!theCommand) {
+                        this.error(
+                            `cannot find command named ${command} in spec ${spec}`
+                        )
+                    } else return this.processCommandFunction(root, theCommand)
+                }
+            } else {
+                if (callee)
+                    this.error(`${callee} is not a registered function.`)
+                else
+                    this.error(
+                        `command does not conform to expected call expression`
+                    )
+                return undefined
+            }
+        } else 
+            return this.processTestFunction(funs, root, cmdIndex)
+        return undefined
+    }
+
+    private processCommandFunction(
+        root: jsep.CallExpression,
+        command: jdspec.PacketInfo
+    ): [jdtest.TestFunctionDescription, jsep.CallExpression] {
+        return [undefined, undefined]
+    }
+
+    private processTestFunction(
+        funs: jdtest.TestFunctionDescription[],
+        root: jsep.CallExpression,
+        cmdIndex: number
+    ): [jdtest.TestFunctionDescription, jsep.CallExpression] {
+        const callee = (root.callee as jsep.Identifier)?.name
+        // check arguments
+        const command = funs[cmdIndex]
+        const minArgs = argsRequiredOptional(command.args).length
+        const maxArgs = command.args.length
+        if (root.arguments.length < minArgs) {
+            this.error(
+                `${callee} expects at least ${minArgs} arguments; got ${root.arguments.length}`
+            )
+            return undefined
+        } else if (root.arguments.length > maxArgs) {
+            this.error(
+                `${callee} expects at most ${maxArgs} arguments; got ${root.arguments.length}`
+            )
+            return undefined
+        }
+        // deal with optional arguments
+        let newExpressions: jsep.Expression[] = []
+        for (let i = root.arguments.length; i < command.args.length; i++) {
+            let [name, def] = command.args[i] as [string, any]
+            const lit: jsep.Literal = {
+                type: "Literal",
+                value: def,
+                raw: def.toString(),
+            }
+            newExpressions.push(lit)
+        }
+        root.arguments = root.arguments.concat(newExpressions)
+        // type checking of arguments.
+        this.processArguments(command, root)
+        return [command, root]
+        function argsRequiredOptional(args: any[], optional: boolean = false) {
+            return args.filter(
+                a =>
+                    (!optional && typeof a === "string") ||
+                    (optional && typeof a === "object")
+            )
+        }
+    }
+
+    private processArguments(
+        command: jdtest.TestFunctionDescription,
+        root: jsep.CallExpression
+    ) {
+        const args = root.arguments
+        const eventSymTable: jdspec.PacketInfo[] = []
+        args.forEach((arg, a) => {
+            let argType = command.args[a]
+
+            if (typeof argType === "object") argType = command.args[a][0]
+
+            if (
+                argType === "register" ||
+                argType === "event" ||
+                argType == "Identifier"
+            ) {
+                if (argType == "Identifier") {
+                    this.resolver.check(arg, "Identifier")
+                } else if (argType === "event" && a === 0) {
+                    let pkt = this.resolver.lookupEvent(arg)
+                    if (pkt && eventSymTable.indexOf(pkt) === -1)
+                        eventSymTable.push(pkt)
+                } else if (argType === "register") {
+                    try {
+                        this.resolver.lookupRegister(arg)
+                    } catch (e) {
+                        this.error(e.message)
+                    }
+                }
+            } else if (argType === "events") {
+                if (arg.type != "ArrayExpression")
+                    this.error(
+                        `events function expects a list of service events`
+                    )
+                else {
+                    ;(arg as jsep.ArrayExpression).elements.forEach(e =>
+                        this.resolver.lookupEvent(e)
+                    )
+                }
+            } else if (argType === "number" || argType === "boolean") {
+                exprVisitor(root, arg, (p, c) => {
+                    // TODO
+                    if (
+                        p.type !== "MemberExpression" &&
+                        c.type === "Identifier"
+                    ) {
+                        this.resolver.lookupReplace(
+                            eventSymTable,
+                            p,
+                            c as jsep.Identifier
+                        )
+                    } else if (c.type === "ArrayExpression") {
+                        this.error(
+                            `array expression not allowed in this context`
+                        )
+                    } else if (c.type === "MemberExpression") {
+                        const member = c as jsep.MemberExpression
+                        // A member expression must be of form <Identifier>.<memberExpression|Identifier>
+                        if (
+                            member.object.type !== "Identifier" ||
+                            member.computed
+                        ) {
+                            this.error(
+                                "property access must be of form id.property"
+                            )
+                        } else {
+                            this.resolver.lookupReplace(
+                                eventSymTable,
+                                p,
+                                c as jsep.MemberExpression
+                            )
+                        }
+                    }
+                })
+            } else {
+                this.error(`unexpected argument type (${argType})`)
+            }
         })
     }
+}
+
+// private stuff
+
+function isBoolOrNumericFormat(fmt: string) {
+    return fmt === "bool" || /^[ui]\d+/i.test(fmt)
+}
+
+function isRegister(pkt: jdspec.PacketInfo): boolean {
+    return pkt && (pkt.kind == "const" || pkt.kind == "ro" || pkt.kind == "rw")
+}
+
+function lookupRegister(
+    spec: jdspec.ServiceSpec,
+    id: string
+): jdspec.PacketInfo {
+    return spec.packets.find(pkt => isRegister(pkt) && pkt.name === id)
+}
+
+function lookupField(
+    pkt: jdspec.PacketInfo,
+    field: string
+): jdspec.PacketMember {
+    return pkt.fields.find(member => member.name === field)
+}
+
+interface RegField {
+    pkt: jdspec.PacketInfo
+    fld: jdspec.PacketMember
+}
+
+function getRegister(
+    spec: jdspec.ServiceSpec,
+    root: string,
+    fld = ""
+): RegField {
+    const ret: RegField = { pkt: undefined, fld: undefined }
+    ret.pkt = lookupRegister(spec, root)
+    if (!ret.pkt) {
+        throw new Error(
+            `no register ${root} found in service ${spec.shortName}`
+        )
+    } else if (fld) {
+        ret.fld = lookupField(ret.pkt, fld)
+        if (!ret.fld)
+            throw new Error(
+                `no field ${fld} found in register ${root} of service ${spec.shortName}`
+            )
+    }
+    return ret
 }

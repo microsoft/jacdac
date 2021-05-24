@@ -293,8 +293,7 @@ export class SpecAwareMarkDownParser {
                     )
                 return undefined
             }
-        } else 
-            return this.processTestFunction(funs, root, cmdIndex)
+        } else return this.processTestFunction(funs, root, cmdIndex)
         return undefined
     }
 
@@ -302,6 +301,16 @@ export class SpecAwareMarkDownParser {
         root: jsep.CallExpression,
         command: jdspec.PacketInfo
     ): [jdtest.TestFunctionDescription, jsep.CallExpression] {
+        if (root.arguments.length !== command?.fields?.length) {
+            this.error(
+                `Command ${command.identifierName} expects ${command.fields.length} arguments: got ${root.arguments.length}`
+            )
+        } else {
+            const args = root.arguments
+            args.forEach(arg => {
+                this.visitReplace(root, arg, [])
+            })
+        }
         return [undefined, undefined]
     }
 
@@ -339,7 +348,7 @@ export class SpecAwareMarkDownParser {
         }
         root.arguments = root.arguments.concat(newExpressions)
         // type checking of arguments.
-        this.processArguments(command, root)
+        this.processTestArguments(command, root)
         return [command, root]
         function argsRequiredOptional(args: any[], optional: boolean = false) {
             return args.filter(
@@ -350,7 +359,7 @@ export class SpecAwareMarkDownParser {
         }
     }
 
-    private processArguments(
+    private processTestArguments(
         command: jdtest.TestFunctionDescription,
         root: jsep.CallExpression
     ) {
@@ -390,42 +399,40 @@ export class SpecAwareMarkDownParser {
                     )
                 }
             } else if (argType === "number" || argType === "boolean") {
-                exprVisitor(root, arg, (p, c) => {
-                    // TODO
-                    if (
-                        p.type !== "MemberExpression" &&
-                        c.type === "Identifier"
-                    ) {
-                        this.resolver.lookupReplace(
-                            eventSymTable,
-                            p,
-                            c as jsep.Identifier
-                        )
-                    } else if (c.type === "ArrayExpression") {
-                        this.error(
-                            `array expression not allowed in this context`
-                        )
-                    } else if (c.type === "MemberExpression") {
-                        const member = c as jsep.MemberExpression
-                        // A member expression must be of form <Identifier>.<memberExpression|Identifier>
-                        if (
-                            member.object.type !== "Identifier" ||
-                            member.computed
-                        ) {
-                            this.error(
-                                "property access must be of form id.property"
-                            )
-                        } else {
-                            this.resolver.lookupReplace(
-                                eventSymTable,
-                                p,
-                                c as jsep.MemberExpression
-                            )
-                        }
-                    }
-                })
+                this.visitReplace(root, arg, eventSymTable)
             } else {
                 this.error(`unexpected argument type (${argType})`)
+            }
+        })
+    }
+
+    private visitReplace(
+        root: jsep.CallExpression,
+        arg: jsep.Expression,
+        eventSymTable: jdspec.PacketInfo[] = []
+    ) {
+        exprVisitor(root, arg, (p, c) => {
+            // TODO
+            if (p.type !== "MemberExpression" && c.type === "Identifier") {
+                this.resolver.lookupReplace(
+                    eventSymTable,
+                    p,
+                    c as jsep.Identifier
+                )
+            } else if (c.type === "ArrayExpression") {
+                this.error(`array expression not allowed in this context`)
+            } else if (c.type === "MemberExpression") {
+                const member = c as jsep.MemberExpression
+                // A member expression must be of form <Identifier>.<memberExpression|Identifier>
+                if (member.object.type !== "Identifier" || member.computed) {
+                    this.error("property access must be of form id.property")
+                } else {
+                    this.resolver.lookupReplace(
+                        eventSymTable,
+                        p,
+                        c as jsep.MemberExpression
+                    )
+                }
             }
         })
     }

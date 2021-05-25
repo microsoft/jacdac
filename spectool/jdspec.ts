@@ -398,6 +398,8 @@ export function parseServiceSpecificationMarkdownToJSON(
                 case "ro":
                 case "rw":
                 case "event":
+                case "client":
+                case "server":
                     startPacket(words)
                     break
                 case "}":
@@ -527,6 +529,17 @@ export function parseServiceSpecificationMarkdownToJSON(
 
     function startPacket(words: string[]) {
         checkBraces(null)
+
+        let client: boolean = undefined
+        let server: boolean = undefined
+        if (words[0] === "client") {
+            client = true
+            words.shift()
+        } else if (words[0] === "server") {
+            server = true
+            words.shift()
+        }
+
         const kindSt = words.shift()
         let kind: jdspec.PacketKind = "command"
         if (kindSt == "meta") {
@@ -564,6 +577,8 @@ export function parseServiceSpecificationMarkdownToJSON(
             description: "",
             fields: [],
             internal,
+            client,
+            server
         }
         if (isReport && lastCmd && name == lastCmd.name) {
             packetInfo.secondary = true

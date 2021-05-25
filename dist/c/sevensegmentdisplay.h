@@ -33,4 +33,9 @@
  */
 #define JD_SEVEN_SEGMENT_DISPLAY_REG_DECIMAL_POINT 0x181
 
+/**
+ * Argument: text string (bytes). Shows the text characters on the screen. If the text is longer than the screen, characters are ignored.
+ */
+#define JD_SEVEN_SEGMENT_DISPLAY_CMD_SET_TEXT 0x80
+
 #endif

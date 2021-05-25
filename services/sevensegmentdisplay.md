@@ -9,7 +9,7 @@ A 7-segment numeric display, with one or more digits.
 
 ## Registers
 
-    rw digits: bytes @ value
+    server rw digits: bytes @ value
 
 Each byte encodes the display status of a digit using, 
 where bit 0 encodes segment `A`, bit 1 encodes segments `B`, ..., bit 6 encodes segments `G`, and bit 7 encodes the decimal point (if present).
@@ -42,3 +42,11 @@ The number of digits available on the display.
     const decimal_point: bool @ 0x181
 
 True if decimal points are available (on all digits).
+
+## Commands
+
+    client command set_text @ 0x80 {
+        text: string
+    }
+
+Shows the text characters on the screen. If the text is longer than the screen, characters are ignored.

@@ -98,6 +98,7 @@
           "isSimpleType": true
         }
       ],
+      "server": true,
       "identifierName": "value",
       "packFormat": "b"
     },
@@ -164,6 +165,22 @@
         }
       ],
       "packFormat": "u8"
+    },
+    {
+      "kind": "command",
+      "name": "set_text",
+      "identifier": 128,
+      "description": "Shows the text characters on the screen. If the text is longer than the screen, characters are ignored.",
+      "fields": [
+        {
+          "name": "text",
+          "unit": "",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "client": true,
+      "packFormat": "s"
     }
   ],
   "tags": [

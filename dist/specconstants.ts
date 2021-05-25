@@ -3910,6 +3910,17 @@ export enum SevenSegmentDisplayReg {
     DecimalPoint = 0x181,
 }
 
+export enum SevenSegmentDisplayCmd {
+    /**
+     * Argument: text string (bytes). Shows the text characters on the screen. If the text is longer than the screen, characters are ignored.
+     *
+     * ```
+     * const [text] = jdunpack<[string]>(buf, "s")
+     * ```
+     */
+    SetText = 0x80,
+}
+
 // Service: Soil moisture
 export const SRV_SOIL_MOISTURE = 0x1d4aa3b3
 

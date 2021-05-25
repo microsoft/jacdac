@@ -159,6 +159,7 @@
           "storage": 2
         }
       ],
+      "server": true,
       "identifierName": "reading",
       "packFormat": "u0.16"
     },
@@ -176,6 +177,22 @@
         }
       ],
       "optional": true,
+      "packFormat": "u8"
+    },
+    {
+      "kind": "ro",
+      "name": "pressed",
+      "identifier": 385,
+      "description": "Determines if the button is pressed currently.\n\nIf the event ``down`` is observed, ``pressed`` is true; if ``up`` or ``hold`` are observed, ``pressed`` is false.\nTo initialize, wait for any event or timeout to ``pressed`` is true after 750ms (1.5x hold time).",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "bool",
+          "storage": 1
+        }
+      ],
+      "client": true,
       "packFormat": "u8"
     },
     {

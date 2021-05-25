@@ -821,6 +821,15 @@ namespace jacdac {
          * ```
          */
         Analog = 0x180,
+
+        /**
+         * Read-only bool (uint8_t). Determines if the button is pressed currently.
+         *
+         * ```
+         * const [pressed] = jdunpack<[number]>(buf, "u8")
+         * ```
+         */
+        Pressed = 0x181,
     }
 
     export const enum ButtonEvent {

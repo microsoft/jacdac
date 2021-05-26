@@ -6,7 +6,7 @@ A power-provider service.
 
 ## Power negotiation protocol
 
-The purpose of the power negotiation is to ensure that there is no more than ~500mA
+The purpose of the power negotiation is to ensure that there is no more than ~900mA
 delivered to the power rail.
 This is realized by limiting the number of enabled power provider services to one.
 
@@ -14,54 +14,62 @@ Note, that it's also possible to have low-current power providers,
 which are limited to 100mA and do not run a power provider service.
 These are **not** accounted for in the power negotiation protocol.
 
-The protocol is based on `active` reports, which are always sent 
-after general device announce packets, in the same frame.
-This makes it simpler for other power services to parse them.
+The protocol is based on `shutdown` commands, which are sent as broadcast
+to the power service.
+They follow a very narrow format:
+* they need to be the only packet in the frame
+* the second word of `device_id` needs to be set to `0xAA_AA_AA_AA` (alternating 0 and 1)
+* the service index is set to `0x3d`
+* the CRC is therefore fixed
+* therefore, the packet can be recognized by reading the first 8 bytes
 
-The `active` reports contain device priority, which is formed from the maximum available current
-and remaining battery capacity.
+Multi-channel power-providers (which provide a separate 900mA to each of their channels)
+will detect that a `shutdown` command is being received after 8 bytes.
+They will then briefly deactivate a switch which connects their internal and external
+Jacdac data lines.
+If the `shutdown` is still received correctly, it means it came from the internal network,
+and thus there's some other power provider active.
+This makes the current power provider shut down.
+Alternatively, if the provider handles multiple channels, but has only one Jacdac input,
+it can just see if the internal line wiggles after the switch deactivation.
 
-After queuing an announce with `active` report, the service enters a grace period
+After queuing a `shutdown` command, the service enters a grace period
 until the report has been sent on the wire.
-During the grace period incoming `active` reports are ignored.
+During the grace period incoming `shutdown` commands are ignored.
 
 * Upon reset, a power service enables itself, and then only after 0-300ms (random)
-  send the first device announce packet directly followed by `active` report
-* Every enabled power service emits power `active` reports with its announce packets,
-  which are sent every 400-600ms (random; first few announce packets can be even sent more often)
-* If an enabled power service sees a power `active` report from somebody else of higher or equal priority,
+  sends the first `shutdown` command
+* Every enabled power service emits `shutdown` commands every 400-600ms (random; first few packets can be even sent more often)
+* If an enabled power service sees a power `shutdown` command from somebody else,
   it disables itself (unless in grace period)
-* If a disabled power service sees no power `active` report for more than ~1200ms, it enables itself
+* If a disabled power service sees no power `shutdown` command for more than ~1200ms, it enables itself
   (this is when the previous power source is unplugged or otherwise malfunctions)
-* Power services keep track of the current provider
-  (device ID from the most recent `active` report, either incoming or outgoing).
-  If the current provider has not changed for at least 50-60s (random),
-  and its last priority is lower or equal to the current service priority,
-  then just before the next announce period, the service enables itself
-  (thus also resetting the 50-60s timer).
+* If a power service has been disabled for 50-60s (random), it enables itself.
 
 ### Rationale for the grace period
 
 Consider the following scenario:
-* device A queues `active` report for sending
-* A receives external `active` packet from B (thus disabling A)
-* the A `active` report is sent from the queue (thus eventually disabling B)
-To avoid that, we make sure that at the precise instant when `active` report is sent,
-the device is enabled (and thus will stay enabled until another `active` report arrives).
+
+* device A queues `shutdown` command for sending
+* A receives external `shutdown` packet from B (thus disabling A)
+* the A `shutdown` command is sent from the queue (thus eventually disabling B)
+
+To avoid that, we make sure that at the precise instant when `shutdown` command is sent,
+the power is enabled (and thus will stay enabled until another `shutdown` command arrives).
 This could be achieved by inspecting the enable bit, aftering acquiring the line
 and before starting UART transmission, however that would require breaking abstraction layers.
-So instead, we never disable the service, while the `active` packet is queued.
+So instead, we never disable the service, while the `shutdown` packet is queued.
 This may lead to delays in disabling power services, but these should be limited due to the
-random nature of the announce packet spacing.
+random nature of the `shutdown` packet spacing.
 
 ### Rationale for timings
 
-The initial 0-300ms delay is set to spread out the announce periods of power services,
+The initial 0-300ms delay is set to spread out the `shutdown` periods of power services,
 to minimize collisions.
-The announce periods are randomized 400-600ms, instead of a fixed 500ms used for regular
+The `shutdown` periods are randomized 400-600ms, instead of a fixed 500ms used for regular
 services, for the same reason.
 
-The 1200ms period is set so that droping two announce packets in a row
+The 1200ms period is set so that droping two `shutdown` packets in a row
 from the current provider will not cause power switch, while missing 3 will.
 
 The 50-60s power switch period is arbitrary, but chosen to limit amount of switching between supplies,
@@ -72,15 +80,23 @@ while keeping it short enough for user to notice any problems such switching may
     rw enabled = 1: bool @ intensity
 
 Turn the power to the bus on/off.
+See `power_status` for the actual current state.
 
-    rw max_power = 500: u16 mA {typical_max = 500} @ max_power
+    rw max_power = 900: u16 mA {typical_max = 900} @ max_power
 
 Limit the power provided by the service. The actual maximum limit will depend on hardware.
 This field may be read-only in some implementations - you should read it back after setting.
 
-    ro overload: bool @ 0x181
+    enum PowerStatus : u8 {
+        Disabled = 0
+        Powering = 1
+        Overload = 2
+        Overprovision = 3
+    }
+    ro power_status: PowerStatus @ 0x181
 
-Indicates whether the power has been shut down due to overdraw.
+Indicates whether the power provider is currently providing power, and if not why not.
+`Overprovision` means there was another power provider, and we stopped not to overprovision the bus.
 
     ro current_draw?: u16 mA @ reading
 
@@ -106,27 +122,16 @@ Many USB power packs need current to be drawn from time to time to prevent shutd
 This regulates how often and for how long such current is drawn.
 Typically a 1/8W 22 ohm resistor is used as load. This limits the duty cycle to 10%.
 
-    rw priority_offset: i32 @ 0x82
-
-This value is added to `priority` of `active` reports, thus modifying amount of load-sharing
-between different supplies.
-The `priority` is clamped to `u32` range when included in `active` reports.
-
 ## Commands
 
-    report active @ 0x80 {
-        priority: u32
+    command shutdown @ 0x80 {}
+
+Sent by the power service periodically, as broadcast.
+
+## Events
+
+    event power_status_changed @ change {
+        power_status: PowerStatus
     }
 
-Emitted with announce packets when the service is running.
-The `priority` should be computed as
-`(((max_power >> 5) << 24) | remaining_capacity) + priority_offset`
-where the `remaining_capacity` is `(battery_charge * battery_capacity) >> 16`,
-or one of the special constants
-`0xe00000` when the remaining capacity is unknown,
-or `0xf00000` when the capacity is considered infinite (eg., wall charger).
-The `priority` is clamped to `u32` range after computation.
-In cases where battery capacity is unknown but the charge percentage can be estimated,
-it's recommended to assume a fixed (typical) battery capacity for priority purposes,
-rather than using `0xe00000`, as this will have a better load-sharing characteristic,
-especially if several power providers of the same type are used.
+Emitted whenever `power_status` changes.

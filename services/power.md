@@ -79,6 +79,26 @@ Additionally:
 * When a current overdraw is detected, the service stop providing power and enters `Overload` state for around 2 seconds,
   while still sending `shutdown` commands.
 
+### Client notes
+
+If a client hears a `shutdown` command it just means it's on a branch of the
+network with a (high) power provider.
+As clients (brains) typically do not consume much current (as opposed to, say, servos),
+the `shutdown` commands are typically irrelevant to them.
+
+For power monitoring, the `power_status_changed` event (and possibly `power_status` register)
+can be used.
+In particular, user interfaces may alert the user to `Overload` status.
+The `Overprovision` status is generally considered normal (eg. when two multi-channel power providers are linked together).
+
+### Server implementation notes
+
+Strategies:
+
+* an MCU per channel (typically using a very simple 8-bit MCU)
+* a dedicated MCU for multiple channels
+* a power supply integrated with user-programmable brain
+
 ### Rationale for the grace period
 
 Consider the following scenario:

@@ -93,11 +93,58 @@ The `Overprovision` status is generally considered normal (eg. when two multi-ch
 
 ### Server implementation notes
 
-Strategies:
+#### An MCU per channel
 
-* an MCU per channel (typically using a very simple 8-bit MCU)
-* a dedicated MCU for multiple channels
-* a power supply integrated with user-programmable brain
+Every channel has:
+* a cheap 8-bit MCU (eg., PMS150C)
+* a current limiter with latching circuit
+* an analog switch
+
+The MCU is connected to data line of the channel.
+The switch joins the data line of the channel with internal data bus, common to all channels.
+Both the switch and the limiter are controlled by the MCU.
+The latching circuit on the limiter shuts it down immediately on current overdraw.
+
+During reception, after the beginning of `shutdown` frame is detected,
+the switch is opened for a brief period.
+If the `shutdown` frame is received correctly, it means it was on MCU's channel.
+
+#### A dedicated MCU for multiple channels
+
+Every channel has:
+* a current limiter with latching circuit
+* an analog switch
+* a wiggle-detection line connecting the MCU to data line of the channel
+
+The MCU here needs at least 4 pins per channel.
+Switches and limiters are set up like in the configuration above.
+The Jacdac data line of the MCU is connected to internal data bus.
+
+While a Jacdac packet is being received, the MCU keeps checking if it is a 
+beginning of the `shutdown` frame.
+If that is the case, it opens all switches and checks which one(s) of the channel
+data lines wiggle (via the wiggle lines; this can be done with EXTI latches).
+The one(s) that wiggle received the `shutdown` frame and need to be disabled.
+
+Also, while sending the `shutdown` frames itself, it needs to be done separately
+for each channel, with all the other switches open.
+If during that operation we detect wiggle on other channels, then we have detected
+a loop, and the respective channels needs to be disabled.
+
+#### A brain-integrated power supply
+
+Here, there's only one channel of power and we don't have hard real time requirements,
+so user-programmable brain can control it.
+There is no need for analog switch or wiggle-detection line,
+but the current limiter with latching circuit is still needed.
+
+There is nothing special to do during reception of `shutdown` packet.
+When it is received, the current limiter should just be disabled.
+
+Ideally, exception/hard-fault handlers on the MCU should also disable the
+current limiter.
+Similarly, the limiter should be disabled while the MCU is in bootloader mode,
+or otherwise unaware of the power negotiation protocol. 
 
 ### Rationale for the grace period
 

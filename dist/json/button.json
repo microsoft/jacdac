@@ -159,7 +159,7 @@
           "storage": 2
         }
       ],
-      "server": true,
+      "lowLevel": true,
       "identifierName": "reading",
       "packFormat": "u0.16"
     },

@@ -399,7 +399,7 @@ export function parseServiceSpecificationMarkdownToJSON(
                 case "rw":
                 case "event":
                 case "client":
-                case "server":
+                case "lowlevel":
                     startPacket(words)
                     break
                 case "}":
@@ -531,12 +531,12 @@ export function parseServiceSpecificationMarkdownToJSON(
         checkBraces(null)
 
         let client: boolean = undefined
-        let server: boolean = undefined
+        let lowLevel: boolean = undefined
         if (words[0] === "client") {
             client = true
             words.shift()
-        } else if (words[0] === "server") {
-            server = true
+        } else if (words[0] === "lowlevel") {
+            lowLevel = true
             words.shift()
         }
 
@@ -578,7 +578,7 @@ export function parseServiceSpecificationMarkdownToJSON(
             fields: [],
             internal,
             client,
-            server
+            lowLevel
         }
         if (isReport && lastCmd && name == lastCmd.name) {
             packetInfo.secondary = true

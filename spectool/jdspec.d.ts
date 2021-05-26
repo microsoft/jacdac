@@ -424,9 +424,9 @@ declare namespace jdspec {
         client?: boolean
 
         /**
-         * This member is a low-level member to support small servers and typically is not exposed by high-level client
+         * This member is designed to support small servers and typically is not exposed by high-level client.
          */
-        server?: boolean
+         lowLevel?: boolean
     }
 
     /**

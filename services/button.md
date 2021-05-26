@@ -9,7 +9,7 @@ A push-button, which returns to inactive position when not operated anymore.
 
 ## Registers
 
-    server ro pressure: u0.16 / @ reading
+    lowlevel ro pressure: u0.16 / @ reading
 
 Indicates the pressure state of the button, where ``0`` is open and ``0xffff`` is fully pressed.
 

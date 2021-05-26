@@ -98,7 +98,7 @@
           "isSimpleType": true
         }
       ],
-      "server": true,
+      "lowLevel": true,
       "identifierName": "value",
       "packFormat": "b"
     },

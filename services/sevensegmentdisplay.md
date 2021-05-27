@@ -45,8 +45,14 @@ True if decimal points are available (on all digits).
 
 ## Commands
 
-    client command set_text @ 0x80 {
+    client command set_number @ 0x80 {
+        value: f64
+    }
+
+Shows the number on the screen using the decimal dot if available.
+
+    client command set_text @ 0x81 {
         text: string
     }
 
-Shows the text characters on the screen. If the text is longer than the screen, characters are ignored.
+Shows the text on the screen. The client may decide to scroll the text if too long.

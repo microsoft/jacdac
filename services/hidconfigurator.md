@@ -21,7 +21,7 @@ The current configuration the server is using.
     }
     report {
         configuration_number: u8
-        padding:x
+        padding:u8[3]
     repeats:
         device_id: u8[8]
         service_class: u32
@@ -30,13 +30,14 @@ The current configuration the server is using.
         trigger_value: u32
         selector: u16
         modifiers:u16
+        padding: u8[2]
     }
     
 Retrieves a configuration stored on the server. If the configuration does not exist, an empty report will be returned
 
     command store_configuration @ 0x81 {
     configuration_number: u8
-    padding:x
+    padding:u8[3]
     repeats:
         device_id: u8[8]
         service_class: u32
@@ -45,6 +46,7 @@ Retrieves a configuration stored on the server. If the configuration does not ex
         trigger_value: u32
         selector: u16
         modifiers:u16
+        padding: u8[2]
     }
 Stores the given configuration on the server. If a configuration exists at this index, the new configuration will replace it.
 

@@ -418,9 +418,13 @@ export function parseServiceSpecificationMarkdownToJSON(
     }
 
     function finishPacket() {
-        packetInfo.packed = hasNaturalAlignment(packetInfo) ? undefined : true
-        if (packetInfo.packed)
-            warn(`you may want to use explicit padding in ${packetInfo.name}`)
+        let res, remaining;
+        [res, remaining] = hasNaturalAlignment(packetInfo);
+
+        if (res === false) {
+            packetInfo.packed = true;
+            error(`Please use explicit padding in ${packetInfo.kind} ${packetInfo.name} [0x${packetInfo.identifier.toString(16)}]. Uneven and unspecified padding of ${remaining} bytes.`)
+        }
 
         let repeats = false
         let hadzero = false
@@ -1186,11 +1190,11 @@ export function parseServiceSpecificationMarkdownToJSON(
             const sz = memberSize(m)
             if (sz == 0) continue
             const pad = sz > 4 ? 4 : sz
-            if (!/^u8\[/.test(m.type) && byteOffset % pad != 0) return false
+            if (!/^u8\[/.test(m.type) && byteOffset % pad != 0) return [false, byteOffset % pad]
             byteOffset += sz
         }
 
-        return true
+        return [true, 0]
     }
 }
 

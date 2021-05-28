@@ -226,30 +226,26 @@ export class SpecSymbolResolver {
     }
 }
 
-export class SpecAwareMarkDownParser {
+export class CheckExpression {
     constructor(
         private readonly resolver: SpecSymbolResolver,
-        private readonly supportedExpressions: jsep.ExpressionType[],
-        private readonly parser: (
-            line: string | jsep.Expression
-        ) => jsep.Expression,
+        private readonly supportedExpression: (type: jsep.ExpressionType) => boolean,
         private readonly error: (m: string) => void
     ) {}
 
-    processLine(
-        line: string,
+    check(
+        root: jsep.CallExpression,
         funs: jdtest.TestFunctionDescription[]
-    ): [jdtest.TestFunctionDescription, jsep.CallExpression] {
-        const root: jsep.CallExpression = <jsep.CallExpression>this.parser(line)
+    ): [jdtest.TestFunctionDescription, jsep.CallExpression]  {
         if (!root || !root.type || root.type != "CallExpression") {
             this.error(
                 `a command must be a call expression in JavaScript syntax`
             )
-            return undefined
+            return
         }
         // check for unsupported expression types
         exprVisitor(null, root, (p, c) => {
-            if (this.supportedExpressions.indexOf(c.type) < 0)
+            if (!this.supportedExpression(c.type))
                 this.error(
                     `Expression of type ${c.type} not currently supported`
                 )
@@ -292,16 +288,17 @@ export class SpecAwareMarkDownParser {
                     this.error(
                         `command does not conform to expected call expression`
                     )
-                return undefined
+                    return undefined
             }
-        } else return this.processTestFunction(funs, root, cmdIndex)
+        } else 
+            return this.processTestFunction(funs, root, cmdIndex)
         return undefined
     }
 
     private processCommandFunction(
         root: jsep.CallExpression,
         command: jdspec.PacketInfo
-    ): [jdtest.TestFunctionDescription, jsep.CallExpression] {
+): [jdtest.TestFunctionDescription, jsep.CallExpression] {
         if (root.arguments.length !== command?.fields?.length) {
             this.error(
                 `Command ${command.name} expects ${command.fields.length} arguments: got ${root.arguments.length}`

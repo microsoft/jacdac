@@ -30,6 +30,6 @@ to send `P = 1000000 / F` and `D = P * V / 2`.
         frequency: u16 Hz
         volume: u0.16 /
         duration: u16 ms
-    } = play_tone(1000000 / frequency, 1000000 / frequency * volume / 2, duration)
+    }
 
 Play a note at the given frequency and volume.

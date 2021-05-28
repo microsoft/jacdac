@@ -843,6 +843,15 @@ export enum BuzzerCmd {
      * ```
      */
     PlayTone = 0x80,
+
+    /**
+     * Play a note at the given frequency and volume.
+     *
+     * ```
+     * const [frequency, volume, duration] = jdunpack<[number, number, number]>(buf, "u16 u0.16 u16")
+     * ```
+     */
+    PlayNote = 0x81,
 }
 
 // Service: Capacitive Button
@@ -3921,13 +3930,22 @@ export enum SevenSegmentDisplayReg {
 
 export enum SevenSegmentDisplayCmd {
     /**
-     * Argument: text string (bytes). Shows the text characters on the screen. If the text is longer than the screen, characters are ignored.
+     * Argument: value f64 (uint64_t). Shows the number on the screen using the decimal dot if available.
+     *
+     * ```
+     * const [value] = jdunpack<[number]>(buf, "f64")
+     * ```
+     */
+    SetNumber = 0x80,
+
+    /**
+     * Argument: text string (bytes). Shows the text on the screen. The client may decide to scroll the text if too long.
      *
      * ```
      * const [text] = jdunpack<[string]>(buf, "s")
      * ```
      */
-    SetText = 0x80,
+    SetText = 0x81,
 }
 
 // Service: Soil moisture

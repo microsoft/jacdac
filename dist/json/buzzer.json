@@ -130,7 +130,39 @@
           "isSimpleType": true
         }
       ],
+      "lowLevel": true,
       "packFormat": "u16 u16 u16"
+    },
+    {
+      "kind": "command",
+      "name": "play_note",
+      "identifier": 129,
+      "description": "Play a note at the given frequency and volume.",
+      "fields": [
+        {
+          "name": "frequency",
+          "unit": "Hz",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "volume",
+          "unit": "/",
+          "shift": 16,
+          "type": "u0.16",
+          "storage": 2
+        },
+        {
+          "name": "duration",
+          "unit": "ms",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "client": true,
+      "packFormat": "u16 u0.16 u16"
     }
   ],
   "tags": [

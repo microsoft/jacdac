@@ -45,9 +45,11 @@ Stores the given configuration on the server. If a configuration exists at this 
     command swap_to_configuration @0x82 {
         configuration_number: u16
     }
+ 
+Swaps to the given configuration if exists, remains on the current configuration if not.
     
     command next_configuration @0x83 {
         configuration_number: u16
     }
-
+Moves to the next configration using a round robin approach. If only one configuration exists, this command is a no-op.
 

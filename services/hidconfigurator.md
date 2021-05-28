@@ -21,6 +21,7 @@ The current configuration the server is using.
     }
     report {
         configuration_number: u8
+        padding:x
     repeats:
         device_id: u8[8]
         service_class: u32
@@ -35,6 +36,7 @@ Retrieves a configuration stored on the server. If the configuration does not ex
 
     command store_configuration @ 0x81 {
     configuration_number: u8
+    padding:x
     repeats:
         device_id: u8[8]
         service_class: u32

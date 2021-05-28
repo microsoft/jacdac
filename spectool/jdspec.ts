@@ -578,7 +578,7 @@ export function parseServiceSpecificationMarkdownToJSON(
             fields: [],
             internal,
             client,
-            lowLevel
+            lowLevel,
         }
         if (isReport && lastCmd && name == lastCmd.name) {
             packetInfo.secondary = true
@@ -1734,7 +1734,9 @@ function toTypescript(info: jdspec.ServiceSpec, staticTypeScript: boolean) {
         if (pkt.secondary || inner == "info") {
             if (pack)
                 text = wrapComment(
-                    `${pkt.kind} ${upperCamel(pkt.name)}${wrapSnippet(pack)}`
+                    `${pkt.kind} ${upperCamel(pkt.name)}${
+                        pkt.client ? "" : wrapSnippet(pack)
+                    }`
                 )
         } else {
             const val = toHex(pkt.identifier)
@@ -1742,7 +1744,9 @@ function toTypescript(info: jdspec.ServiceSpec, staticTypeScript: boolean) {
                 meta = `//% block="${snakify(pkt.name).replace(/_/g, " ")}"\n`
             }
             text = `${
-                wrapComment(cmt.comment + wrapSnippet(pack)) + meta
+                wrapComment(
+                    cmt.comment + (pkt.client ? "" : wrapSnippet(pack))
+                ) + meta
             }${upperCamel(pkt.name)} = ${val},\n`
         }
 

@@ -782,10 +782,6 @@ export enum ButtonReg {
 
     /**
      * Read-only bool (uint8_t). Determines if the button is pressed currently.
-     *
-     * ```
-     * const [pressed] = jdunpack<[number]>(buf, "u8")
-     * ```
      */
     Pressed = 0x181,
 }
@@ -846,10 +842,6 @@ export enum BuzzerCmd {
 
     /**
      * Play a note at the given frequency and volume.
-     *
-     * ```
-     * const [frequency, volume, duration] = jdunpack<[number, number, number]>(buf, "u16 u0.16 u16")
-     * ```
      */
     PlayNote = 0x81,
 }
@@ -3931,19 +3923,11 @@ export enum SevenSegmentDisplayReg {
 export enum SevenSegmentDisplayCmd {
     /**
      * Argument: value f64 (uint64_t). Shows the number on the screen using the decimal dot if available.
-     *
-     * ```
-     * const [value] = jdunpack<[number]>(buf, "f64")
-     * ```
      */
     SetNumber = 0x80,
 
     /**
      * Argument: text string (bytes). Shows the text on the screen. The client may decide to scroll the text if too long.
-     *
-     * ```
-     * const [text] = jdunpack<[string]>(buf, "s")
-     * ```
      */
     SetText = 0x81,
 }

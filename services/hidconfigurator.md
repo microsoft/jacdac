@@ -7,8 +7,10 @@ A service for configuring how Jacdac device map to HID input events. Users can h
 ## Registers
 
     rw num_configurations: u16 @ 0x80
- 
+    
 The number of configurations stored on this device.
+
+    ro current_configuraiton: u16 @ 0x80
 
 ## Commands
 
@@ -29,7 +31,7 @@ The number of configurations stored on this device.
     
 Retrieves a configuration stored on the server. If the configuration does not exist, an empty report will be returned
 
-    command store_configuration @0x81 {
+    command store_configuration @ 0x81 {
     configuration_number: u16
     repeats:
         device_id: u8[8]
@@ -42,13 +44,13 @@ Retrieves a configuration stored on the server. If the configuration does not ex
     }
 Stores the given configuration on the server. If a configuration exists at this index, the new configuration will replace it.
 
-    command swap_to_configuration @0x82 {
+    command swap_to_configuration @ 0x82 {
         configuration_number: u16
     }
  
 Swaps to the given configuration if exists, remains on the current configuration if not.
     
-    command next_configuration @0x83 {
+    command next_configuration @ 0x83 {
         configuration_number: u16
     }
 Moves to the next configration using a round robin approach. If only one configuration exists, this command is a no-op.

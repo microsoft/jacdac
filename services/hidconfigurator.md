@@ -1,4 +1,4 @@
-# HID Configurator
+# HID Adapter Configurator
 
     identifier: 0x1e5758b5
     
@@ -8,9 +8,11 @@ A service for configuring how Jacdac device map to HID input events. Users can h
 
     rw num_configurations: u8 @ 0x80
     
-The number of configurations stored on this device.
+The number of configurations stored on the server.
 
-    ro current_configuration: u8 @ 0x81
+    rw current_configuration: u8 @ 0x81
+
+The current configuration the server is using.
 
 ## Commands
 
@@ -48,13 +50,13 @@ Stores the given configuration on the server. If a configuration exists at this 
     }
 Clears all configurations stored on the device.
 
-    command swap_to_configuration @ 0x83 {
-        configuration_number: u8
-    }
- 
-Swaps to the given configuration if exists, remains on the current configuration if not.
+## Events
+
+    event swapped @ change { }
     
-    command next_configuration @ 0x84 {
-    }
-Moves to the next configration using a round robin approach. If only one configuration exists, this command is a no-op.
+Event that notifies clients that the server has swapped to a new configuration.
+
+    event modified @ 0x80 { }
+    
+Event that notifies clients that the server has modified to a configuration.
 

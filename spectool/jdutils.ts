@@ -226,14 +226,14 @@ export class SpecSymbolResolver {
     }
 }
 
-export class CheckExpression {
+export class IT4Checker {
     constructor(
         private readonly resolver: SpecSymbolResolver,
         private readonly supportedExpression: (type: jsep.ExpressionType) => boolean,
         private readonly error: (m: string) => void
     ) {}
 
-    check(
+    checkCommand(
         root: jsep.CallExpression,
         funs: jdtest.TestFunctionDescription[]
     ): [jdtest.TestFunctionDescription, jsep.CallExpression]  {

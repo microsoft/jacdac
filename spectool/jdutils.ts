@@ -208,20 +208,22 @@ export class SpecSymbolResolver {
                 if (this.registers.indexOf(reg) < 0) this.registers.push(reg)
             }
         } catch (e) {
-            if (events.length > 0) {
-                let pkt = events.find(pkt => pkt.name === root)
-                if (!pkt) this.error(`event ${root} not bound correctly`)
-                else if (!fld && pkt.fields.length > 0)
-                    this.error(
-                        `event ${root} has fields, but no field specified`
-                    )
-                else if (fld && !pkt.fields.find(f => f.name === fld))
-                    this.error(
-                        `Field ${fld} of event ${root} not found in specification`
-                    )
-            } else {
-                this.error(e.message)
+            let pkt: jdspec.PacketInfo = undefined
+            if (events.length)
+                pkt = events.find(pkt => pkt.name === root)
+            else {
+                // we need a fully qualified name
+                pkt = spec.packets.find(p => pkt.kind === "event" && pkt.name === root)
             }
+            if (!pkt) this.error(`event ${root} not bound correctly`)
+            else if (!fld && pkt.fields.length > 0)
+                this.error(
+                    `event ${root} has fields, but no field specified`
+                )
+            else if (fld && !pkt.fields.find(f => f.name === fld))
+                this.error(
+                    `Field ${fld} of event ${root} not found in specification`
+                )
         }
     }
 }

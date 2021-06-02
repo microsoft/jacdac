@@ -72,7 +72,14 @@ export class SpecSymbolResolver {
 
     // TODO: OR
     public check(e: jsep.Expression, type: string) {
-        if (e.type !== type) this.error(`expected ${type}; got ${e.type}`)
+        if (!e) {
+            this.error(`expression is undefined`)
+            return false
+        } else if (e.type !== type) {
+            this.error(`expected ${type}; got ${e.type}`)
+            return false
+        }
+        return true
     }
 
     public specResolve(e: jsep.Expression): {
@@ -85,9 +92,11 @@ export class SpecSymbolResolver {
         }
         // otherwise, we must have a memberexpression at top-level
         // where the object references a role variable or specification shortName
-        this.check(e, "MemberExpression")
-        this.check((e as jsep.MemberExpression).object, "Identifier")
-        if (this.role2spec) {
+        if (
+            this.check(e, "MemberExpression") &&
+            this.check((e as jsep.MemberExpression).object, "Identifier") &&
+            this.role2spec
+        ) {
             const obj = (e as jsep.MemberExpression).object as jsep.Identifier
             if (!this.role2spec(obj.name)) {
                 this.error(`no specification found for ${obj.name}`)
@@ -107,9 +116,10 @@ export class SpecSymbolResolver {
             let object = (e as jsep.MemberExpression).object as jsep.Identifier
             let property = (e as jsep.MemberExpression)
                 .property as jsep.Identifier
-            this.check(object, "Identifier")
-            this.check(property, "Identifier")
-            return [object.name, property.name]
+            if (this.check(object, "Identifier") &&
+                this.check(property, "Identifier"))
+                return [object.name, property.name]
+            return undefined
         } else {
             if (!expectIdentifier)
                 this.error(
@@ -121,7 +131,7 @@ export class SpecSymbolResolver {
     }
 
     public lookupEvent(e: jsep.Expression) {
-        let {role, spec, rest} = this.specResolve(e)
+        let { role, spec, rest } = this.specResolve(e)
         let [id, _] = this.destructAccessPath(rest, true)
         const events = spec.packets?.filter(pkt => pkt.kind == "event")
         const pkt = events.find(p => p.name === id)
@@ -136,7 +146,7 @@ export class SpecSymbolResolver {
     }
 
     public lookupRegister(e: jsep.Expression) {
-        let {role, spec, rest} = this.specResolve(e)
+        let { role, spec, rest } = this.specResolve(e)
         let [root, fld] = this.destructAccessPath(rest)
         this.lookupRegisterRaw(spec, root, fld)
         let reg = `${role}.${root}`
@@ -193,7 +203,7 @@ export class SpecSymbolResolver {
         parent: jsep.Expression,
         child: jsep.Identifier | jsep.MemberExpression
     ) {
-        let {role, spec, rest} = this.specResolve(child)
+        let { role, spec, rest } = this.specResolve(child)
         let [root, fld] = this.destructAccessPath(rest)
         try {
             try {
@@ -262,7 +272,7 @@ export class IT4Checker {
         let theCommand: jdspec.PacketInfo = undefined
         if (cmdIndex < 0) {
             if (root.callee.type === "MemberExpression") {
-                let {role, spec, rest} = this.resolver.specResolve(
+                let { role, spec, rest } = this.resolver.specResolve(
                     root.callee as jsep.MemberExpression
                 )
                 let [command, _] = this.resolver.destructAccessPath(rest)
@@ -420,7 +430,10 @@ export class IT4Checker {
                 )
             } else if (c.type === "ArrayExpression") {
                 this.error(`array expression not allowed in this context`)
-            } else if (p.type !== "MemberExpression" && c.type === "MemberExpression") {
+            } else if (
+                p.type !== "MemberExpression" &&
+                c.type === "MemberExpression"
+            ) {
                 const member = c as jsep.MemberExpression
                 // A member expression must be of form <Identifier>.<memberExpression|Identifier>
                 if (member.object.type !== "Identifier" || member.computed) {

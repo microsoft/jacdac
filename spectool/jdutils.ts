@@ -239,7 +239,7 @@ export class SpecSymbolResolver {
     }
 }
 
-export class IT4Checker {
+export class VMChecker {
     constructor(
         private readonly resolver: SpecSymbolResolver,
         private readonly supportedExpression: (

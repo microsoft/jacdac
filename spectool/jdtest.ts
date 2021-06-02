@@ -1,7 +1,7 @@
 import { 
     exprVisitor,
     SpecSymbolResolver,
-    IT4Checker
+    VMChecker
 } from "./jdutils"
 import { getTestCommandFunctions, getTestExpressionFunctions } from "./jdtestfuns"
 import jsep from "jsep"
@@ -40,7 +40,7 @@ export function parseSpecificationTestMarkdownToJSON(
     let testHeading = ""
     let testPrompt = ""
     const symbolResolver = new SpecSymbolResolver(spec, undefined, (e) => error(e))
-    const checkExpression = new IT4Checker(symbolResolver, (t) => supportedExpressions.indexOf(t) >= 0, (e) => error(e))
+    const checkExpression = new VMChecker(symbolResolver, (t) => supportedExpressions.indexOf(t) >= 0, (e) => error(e))
 
     try {
         for (const line of filecontent.split(/\n/)) {

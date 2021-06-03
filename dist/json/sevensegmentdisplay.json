@@ -98,6 +98,7 @@
           "isSimpleType": true
         }
       ],
+      "lowLevel": true,
       "identifierName": "value",
       "packFormat": "b"
     },
@@ -164,6 +165,39 @@
         }
       ],
       "packFormat": "u8"
+    },
+    {
+      "kind": "command",
+      "name": "set_number",
+      "identifier": 128,
+      "description": "Shows the number on the screen using the decimal dot if available.",
+      "fields": [
+        {
+          "name": "value",
+          "unit": "",
+          "isFloat": true,
+          "type": "f64",
+          "storage": 8
+        }
+      ],
+      "client": true,
+      "packFormat": "f64"
+    },
+    {
+      "kind": "command",
+      "name": "set_text",
+      "identifier": 129,
+      "description": "Shows the text on the screen. The client may decide to scroll the text if too long.",
+      "fields": [
+        {
+          "name": "text",
+          "unit": "",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "client": true,
+      "packFormat": "s"
     }
   ],
   "tags": [

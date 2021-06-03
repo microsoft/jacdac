@@ -417,6 +417,16 @@ declare namespace jdspec {
          * For registers, preffere interval (ms) to refresh the register
          */
         preferredInterval?: number
+
+        /**
+         * This member is not implemented on the server and typically is 'simulated' by clients
+         */
+        client?: boolean
+
+        /**
+         * This member is designed to support small servers and typically is not exposed by high-level client.
+         */
+         lowLevel?: boolean
     }
 
     /**

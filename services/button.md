@@ -9,13 +9,20 @@ A push-button, which returns to inactive position when not operated anymore.
 
 ## Registers
 
-    ro pressure: u0.16 / @ reading
+    lowlevel ro pressure: u0.16 / @ reading
 
 Indicates the pressure state of the button, where ``0`` is open and ``0xffff`` is fully pressed.
 
     const analog?: bool @ 0x180
 
 Indicates if the button provides analog ``pressure`` readings.
+
+    client ro pressed: bool @ 0x181
+
+Determines if the button is pressed currently.
+
+If the event ``down`` is observed, ``pressed`` is true; if ``up`` or ``hold`` are observed, ``pressed`` is false.
+To initialize, wait for any event or timeout to ``pressed`` is true after 750ms (1.5x hold time).
 
 ## Events
 

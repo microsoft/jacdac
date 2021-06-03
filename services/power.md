@@ -24,7 +24,7 @@ While channels have separate current limits, there's nothing to prevent the user
 from joining two or more channels outside of the provider using a passive hub.
 This would allow more than 900mA of current to be drawn, resulting in cables or components
 getting hot and/or malfunctioning.
-Thus, the power negotiation protocol seeks to detect sitatations where
+Thus, the power negotiation protocol seeks to detect situations where
 multiple channels of power provider(s) are bridged together
 and shut down all but one of the channels involved.
 
@@ -32,7 +32,7 @@ The protocol is built around the power providers periodically sending specially 
 `shutdown` commands in broadcast mode.
 Note that this is unusual - services typically only send reports.
 
-The `shutdown` commands can be reliably identified based on their first half.
+The `shutdown` commands can be reliably identified based on their first half (more details below).
 When a power provider starts receiving a `shutdown` command, it needs to take
 steps to identify which of its channels the command is coming from.
 This is typically realized with analog switches between data lines of channels.

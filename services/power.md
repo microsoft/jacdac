@@ -55,6 +55,9 @@ The `shutdown` commands follow a very narrow format:
 * the CRC is therefore fixed
 * therefore, the packet can be recognized by reading the first 8 bytes (total length is 16 bytes)
 
+The exact byte structure of `shutdown` command is:
+`15 59 04 05 5A C9 A4 1F AA AA AA AA 00 3D 80 00`
+
 There is one power service per channel.
 A multi-channel power provider can be implemented as one device with multiple services (typically with one MCU),
 or many devices with one service each (typically multiple MCUs).
@@ -65,8 +68,8 @@ After queuing a `shutdown` command, the service enters a grace period
 until the report has been sent on the wire.
 During the grace period incoming `shutdown` commands are ignored.
 
-* Upon reset, a power service enables itself, and then only after 0-300ms (random)
-  sends the first `shutdown` command
+* Upon reset, a power service enters `Startup` state, and then only after 0-300ms (random)
+  enables itself and sends the first `shutdown` command
 * Every enabled power service emits `shutdown` commands every 400-600ms (random; first few packets can be even sent more often)
 * If an enabled power service sees a `shutdown` command from somebody else,
   it disables itself (unless in grace period)
@@ -193,11 +196,13 @@ This field may be read-only in some implementations - you should read it back af
         Powering = 1
         Overload = 2
         Overprovision = 3
+        Startup = 4
     }
     ro power_status: PowerStatus @ 0x181
 
 Indicates whether the power provider is currently providing power (`Powering` state), and if not, why not.
 `Overprovision` means there was another power provider, and we stopped not to overprovision the bus.
+The `Startup` status is used during the initial 0-300ms delay.
 
     ro current_draw?: u16 mA @ reading
 

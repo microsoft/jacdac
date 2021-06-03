@@ -5,13 +5,11 @@ order: 2
 
 ## Service Specification
 
-A service specification describes the three main types of Jacdac packets that a service recognizes: registers, commands, and events.  
+A service specification describes the three main types of Jacdac packets that a service recognizes: registers, commands, and events.
 
 Service specifications are written in a literate form of markdown, for consumption by both human and machine. The formal specification fragments, given as markdown code sections, are interleaved with English specification text. The code sections can be in triple backticks or with four (4) leading spaces (examples in this document only use the leading spaces form).
 
-```info
-Use the [service editor](/tools/service-editor/) to create service specifications.
-```
+-   Use the [service editor](/tools/service-editor/) to create service specifications.
 
 The [jdspectool](https://github.com/microsoft/jacdac/tree/main/spectool) takes a service specification in markdown format and converts it to JSON.
 It can then also generate template files for implementation in various languages.
@@ -116,7 +114,7 @@ The last register, `max_acceleration`, that specifies the sensitivity of the sen
 This is denoted by adding a `?` after the register name.
 
 You can specify a preferred interval for refreshing the register in the specification
-as for the ``mcu_temperature`` register in the control service.
+as for the `mcu_temperature` register in the control service.
 
 ```
 ro mcu_temperature?: i16 °C { preferred_interval=60000, typical_min = -10, typical_max = 150 } @ 0x182
@@ -128,14 +126,14 @@ Format strings are space-separated sequences of type descriptions.
 All numbers are understood to be little endian.
 The following type descriptions are supported:
 
-* `u8`, `u16`, `u32` - unsigned, 1, 2, and 4 bytes long respectively
-* `i8`, `i16`, `i32` - similar, but signed
-* `b` - buffer until the end of input (has to be last)
-* `s` - similar, but utf-8 encoded string
-* `z` - NULL-terminated utf-8 string
-* `b[10]` - 10 byte buffer (10 is just an example, here and below)
-* `s[10]` - 10 byte utf-8 string; trailing NUL bytes (if any) are removed
-* `x[10]` - 10 bytes of padding
+-   `u8`, `u16`, `u32` - unsigned, 1, 2, and 4 bytes long respectively
+-   `i8`, `i16`, `i32` - similar, but signed
+-   `b` - buffer until the end of input (has to be last)
+-   `s` - similar, but utf-8 encoded string
+-   `z` - NULL-terminated utf-8 string
+-   `b[10]` - 10 byte buffer (10 is just an example, here and below)
+-   `s[10]` - 10 byte utf-8 string; trailing NUL bytes (if any) are removed
+-   `x[10]` - 10 bytes of padding
 
 There is one more token, `r:`. The type descriptions following it are repeated in order
 until the input buffer is exhausted.
@@ -183,7 +181,7 @@ Constraints can be also applied on registers.
 Note that `report` syntax skips name and command code - these are copied from the preceding
 `command`.
 
-Also note that `0x80` command code is used, which is the same as the register code for 
+Also note that `0x80` command code is used, which is the same as the register code for
 `oxygen_delay`.
 This is allowed, as register codes occupy a separate namespace from command codes -
 register codes combined with masks of `0x1000` or `0x2000` form command codes
@@ -321,13 +319,33 @@ Any data field should be annoted with its unit, to allow better interpretation o
 
 <SpecificationUnitList />
 
+## Low level
+
+Some members (registers, commands) are considered `lowlevel` in the sense that they support implementation on tiny MCUs and are not meant to be used directly by higher level languages.
+
+```markdown
+    lowlevel command play_tone @ 0x80 { period: u16 us, duty: u16 us, ... }
+```
+
+For example, the `play_tone` command is expressed in terms of electrical terms, period, duty but a typically user would expect frequency and volume.
+
+## Client
+
+Some members (registers, commands, events) are not implemented on the server and should be implemented by clients. For example, the `play_note` command uses frequency and volume and should do the conversion math to `period`, `duty`
+on the client.
+
+```markdown
+    client command play_note @ 0x81 { frequency: u16 Hz, volume: u0.16 /, ... }
+```
+
 ### Pipes
 
 Pipes are an application-level mechanism for establishing reliable one- and two-way point-to-point data links.
 
 Typical applications where pipes should be used:
-* a WiFi service, where the pipe represents a TCP connection
-* when a response to a command doesn't fit in one packet (eg. WiFi scan results)
+
+-   a WiFi service, where the pipe represents a TCP connection
+-   when a response to a command doesn't fit in one packet (eg. WiFi scan results)
 
 Pipes are typically established using commands and reports.
 The sink of the pipe needs to provide its device identifier (if not already present elsewhere) and a port number.
@@ -415,6 +433,6 @@ with a single field of type `bytes`.
 
 ### Mixins
 
-Service mixins, services with class identifier starting with `0x2...`, allow to enhance existing services with new registers, 
+Service mixins, services with class identifier starting with `0x2...`, allow to enhance existing services with new registers,
 typically vendor specific registers to configure the hardware device.
 The mixin always applies to a previous non-mixin service listed in the announce packet.

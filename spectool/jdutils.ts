@@ -72,29 +72,40 @@ export class SpecSymbolResolver {
 
     // TODO: OR
     public check(e: jsep.Expression, type: string) {
-        if (e.type !== type) this.error(`expected ${type}; got ${e.type}`)
+        if (!e) {
+            this.error(`expression is undefined`)
+            return false
+        } else if (e.type !== type) {
+            this.error(`expected ${type}; got ${e.type}`)
+            return false
+        }
+        return true
     }
 
-    public specResolve(
-        e: jsep.Expression
-    ): [string, jdspec.ServiceSpec, jsep.Expression] {
+    public specResolve(e: jsep.Expression): {
+        role: string
+        spec: jdspec.ServiceSpec
+        rest: jsep.Expression
+    } {
         if (this.spec) {
-            return [this.spec.shortName, this.spec, e]
+            return { role: this.spec.shortName, spec: this.spec, rest: e }
         }
         // otherwise, we must have a memberexpression at top-level
         // where the object references a role variable or specification shortName
-        this.check(e, "MemberExpression")
-        this.check((e as jsep.MemberExpression).object, "Identifier")
-        if (this.role2spec) {
+        if (
+            this.check(e, "MemberExpression") &&
+            this.check((e as jsep.MemberExpression).object, "Identifier") &&
+            this.role2spec
+        ) {
             const obj = (e as jsep.MemberExpression).object as jsep.Identifier
             if (!this.role2spec(obj.name)) {
                 this.error(`no specification found for ${obj.name}`)
             }
-            return [
-                obj.name,
-                this.role2spec(obj.name),
-                (e as jsep.MemberExpression).property,
-            ]
+            return {
+                role: obj.name,
+                spec: this.role2spec(obj.name),
+                rest: (e as jsep.MemberExpression).property,
+            }
         }
     }
 
@@ -105,9 +116,10 @@ export class SpecSymbolResolver {
             let object = (e as jsep.MemberExpression).object as jsep.Identifier
             let property = (e as jsep.MemberExpression)
                 .property as jsep.Identifier
-            this.check(object, "Identifier")
-            this.check(property, "Identifier")
-            return [object.name, property.name]
+            if (this.check(object, "Identifier") &&
+                this.check(property, "Identifier"))
+                return [object.name, property.name]
+            return undefined
         } else {
             if (!expectIdentifier)
                 this.error(
@@ -119,7 +131,7 @@ export class SpecSymbolResolver {
     }
 
     public lookupEvent(e: jsep.Expression) {
-        let [role, spec, rest] = this.specResolve(e)
+        let { role, spec, rest } = this.specResolve(e)
         let [id, _] = this.destructAccessPath(rest, true)
         const events = spec.packets?.filter(pkt => pkt.kind == "event")
         const pkt = events.find(p => p.name === id)
@@ -134,7 +146,7 @@ export class SpecSymbolResolver {
     }
 
     public lookupRegister(e: jsep.Expression) {
-        let [role, spec, rest] = this.specResolve(e)
+        let { role, spec, rest } = this.specResolve(e)
         let [root, fld] = this.destructAccessPath(rest)
         this.lookupRegisterRaw(spec, root, fld)
         let reg = `${role}.${root}`
@@ -191,7 +203,7 @@ export class SpecSymbolResolver {
         parent: jsep.Expression,
         child: jsep.Identifier | jsep.MemberExpression
     ) {
-        let [role, spec, rest] = this.specResolve(child)
+        let { role, spec, rest } = this.specResolve(child)
         let [root, fld] = this.destructAccessPath(rest)
         try {
             try {
@@ -208,48 +220,47 @@ export class SpecSymbolResolver {
                 if (this.registers.indexOf(reg) < 0) this.registers.push(reg)
             }
         } catch (e) {
-            if (events.length > 0) {
-                let pkt = events.find(pkt => pkt.name === root)
-                if (!pkt) this.error(`event ${root} not bound correctly`)
-                else if (!fld && pkt.fields.length > 0)
-                    this.error(
-                        `event ${root} has fields, but no field specified`
-                    )
-                else if (fld && !pkt.fields.find(f => f.name === fld))
-                    this.error(
-                        `Field ${fld} of event ${root} not found in specification`
-                    )
-            } else {
-                this.error(e.message)
+            let pkt: jdspec.PacketInfo = undefined
+            if (events.length) pkt = events.find(pkt => pkt.name === root)
+            else {
+                // we need a fully qualified name
+                pkt = spec.packets?.find(
+                    p => p.kind === "event" && p.name === root
+                )
             }
+            if (!pkt) this.error(`event ${root} not bound correctly`)
+            else if (!fld && pkt.fields.length > 0)
+                this.error(`event ${root} has fields, but no field specified`)
+            else if (fld && !pkt.fields.find(f => f.name === fld))
+                this.error(
+                    `Field ${fld} of event ${root} not found in specification`
+                )
         }
     }
 }
 
-export class SpecAwareMarkDownParser {
+export class VMChecker {
     constructor(
         private readonly resolver: SpecSymbolResolver,
-        private readonly supportedExpressions: jsep.ExpressionType[],
-        private readonly parser: (
-            line: string | jsep.Expression
-        ) => jsep.Expression,
+        private readonly supportedExpression: (
+            type: jsep.ExpressionType
+        ) => boolean,
         private readonly error: (m: string) => void
     ) {}
 
-    processLine(
-        line: string,
+    checkCommand(
+        root: jsep.CallExpression,
         funs: jdtest.TestFunctionDescription[]
     ): [jdtest.TestFunctionDescription, jsep.CallExpression] {
-        const root: jsep.CallExpression = <jsep.CallExpression>this.parser(line)
         if (!root || !root.type || root.type != "CallExpression") {
             this.error(
                 `a command must be a call expression in JavaScript syntax`
             )
-            return undefined
+            return
         }
         // check for unsupported expression types
         exprVisitor(null, root, (p, c) => {
-            if (this.supportedExpressions.indexOf(c.type) < 0)
+            if (!this.supportedExpression(c.type))
                 this.error(
                     `Expression of type ${c.type} not currently supported`
                 )
@@ -261,7 +272,7 @@ export class SpecAwareMarkDownParser {
         let theCommand: jdspec.PacketInfo = undefined
         if (cmdIndex < 0) {
             if (root.callee.type === "MemberExpression") {
-                let [role, spec, rest] = this.resolver.specResolve(
+                let { role, spec, rest } = this.resolver.specResolve(
                     root.callee as jsep.MemberExpression
                 )
                 let [command, _] = this.resolver.destructAccessPath(rest)
@@ -275,15 +286,12 @@ export class SpecAwareMarkDownParser {
                     const commands = spec.packets?.filter(
                         pkt => pkt.kind === "command"
                     )
-                    theCommand = commands.find(
-                        c => c?.name === command
-                    )
+                    theCommand = commands.find(c => c?.name === command)
                     if (!theCommand) {
                         this.error(
                             `cannot find command named ${command} in spec ${spec.shortName}`
                         )
-                    } else 
-                        return this.processCommandFunction(root, theCommand)
+                    } else return this.processCommandFunction(root, theCommand)
                 }
             } else {
                 if (callee)
@@ -422,7 +430,10 @@ export class SpecAwareMarkDownParser {
                 )
             } else if (c.type === "ArrayExpression") {
                 this.error(`array expression not allowed in this context`)
-            } else if (c.type === "MemberExpression") {
+            } else if (
+                p.type !== "MemberExpression" &&
+                c.type === "MemberExpression"
+            ) {
                 const member = c as jsep.MemberExpression
                 // A member expression must be of form <Identifier>.<memberExpression|Identifier>
                 if (member.object.type !== "Identifier" || member.computed) {

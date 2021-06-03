@@ -779,6 +779,11 @@ export enum ButtonReg {
      * ```
      */
     Analog = 0x180,
+
+    /**
+     * Read-only bool (uint8_t). Determines if the button is pressed currently.
+     */
+    Pressed = 0x181,
 }
 
 export enum ButtonEvent {
@@ -834,6 +839,11 @@ export enum BuzzerCmd {
      * ```
      */
     PlayTone = 0x80,
+
+    /**
+     * Play a note at the given frequency and volume.
+     */
+    PlayNote = 0x81,
 }
 
 // Service: Capacitive Button
@@ -3908,6 +3918,18 @@ export enum SevenSegmentDisplayReg {
      * ```
      */
     DecimalPoint = 0x181,
+}
+
+export enum SevenSegmentDisplayCmd {
+    /**
+     * Argument: value f64 (uint64_t). Shows the number on the screen using the decimal dot if available.
+     */
+    SetNumber = 0x80,
+
+    /**
+     * Argument: text string (bytes). Shows the text on the screen. The client may decide to scroll the text if too long.
+     */
+    SetText = 0x81,
 }
 
 // Service: Soil moisture

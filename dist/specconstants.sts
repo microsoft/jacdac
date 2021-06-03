@@ -2988,15 +2988,26 @@ namespace jacdac {
 namespace jacdac {
     // Service: Power
     export const SRV_POWER = 0x1fa4c95a
+
+    export const enum PowerPowerStatus { // uint8_t
+        Disallowed = 0x0,
+        Powering = 0x1,
+        Overload = 0x2,
+        Overprovision = 0x3,
+        Startup = 0x4,
+    }
+
     export const enum PowerReg {
         /**
-         * Read-write bool (uint8_t). Turn the power to the bus on/off.
+         * Read-write bool (uint8_t). Can be used to completely disable the service.
+         * When allowed, the service may still not be providing power, see
+         * `power_status` for the actual current state.
          *
          * ```
-         * const [enabled] = jdunpack<[number]>(buf, "u8")
+         * const [allowed] = jdunpack<[number]>(buf, "u8")
          * ```
          */
-        Enabled = 0x1,
+        Allowed = 0x1,
 
         /**
          * Read-write mA uint16_t. Limit the power provided by the service. The actual maximum limit will depend on hardware.
@@ -3009,13 +3020,15 @@ namespace jacdac {
         MaxPower = 0x7,
 
         /**
-         * Read-only bool (uint8_t). Indicates whether the power has been shut down due to overdraw.
+         * Read-only PowerStatus (uint8_t). Indicates whether the power provider is currently providing power (`Powering` state), and if not, why not.
+         * `Overprovision` means there was another power provider, and we stopped not to overprovision the bus.
+         * The `Startup` status is used during the initial 0-300ms delay.
          *
          * ```
-         * const [overload] = jdunpack<[number]>(buf, "u8")
+         * const [powerStatus] = jdunpack<[jacdac.PowerPowerStatus]>(buf, "u8")
          * ```
          */
-        Overload = 0x181,
+        PowerStatus = 0x181,
 
         /**
          * Read-only mA uint16_t. Present current draw from the bus.
@@ -3075,39 +3088,25 @@ namespace jacdac {
          * ```
          */
         KeepOnPulsePeriod = 0x81,
-
-        /**
-         * Read-write int32_t. This value is added to `priority` of `active` reports, thus modifying amount of load-sharing
-         * between different supplies.
-         * The `priority` is clamped to `u32` range when included in `active` reports.
-         *
-         * ```
-         * const [priorityOffset] = jdunpack<[number]>(buf, "i32")
-         * ```
-         */
-        PriorityOffset = 0x82,
     }
 
     export const enum PowerCmd {
         /**
-         * Argument: priority uint32_t. Emitted with announce packets when the service is running.
-         * The `priority` should be computed as
-         * `(((max_power >> 5) << 24) | remaining_capacity) + priority_offset`
-         * where the `remaining_capacity` is `(battery_charge * battery_capacity) >> 16`,
-         * or one of the special constants
-         * `0xe00000` when the remaining capacity is unknown,
-         * or `0xf00000` when the capacity is considered infinite (eg., wall charger).
-         * The `priority` is clamped to `u32` range after computation.
-         * In cases where battery capacity is unknown but the charge percentage can be estimated,
-         * it's recommended to assume a fixed (typical) battery capacity for priority purposes,
-         * rather than using `0xe00000`, as this will have a better load-sharing characteristic,
-         * especially if several power providers of the same type are used.
+         * No args. Sent by the power service periodically, as broadcast.
+         */
+        Shutdown = 0x80,
+    }
+
+    export const enum PowerEvent {
+        /**
+         * Argument: power_status PowerStatus (uint8_t). Emitted whenever `power_status` changes.
          *
          * ```
-         * const [priority] = jdunpack<[number]>(buf, "u32")
+         * const [powerStatus] = jdunpack<[jacdac.PowerPowerStatus]>(buf, "u8")
          * ```
          */
-        Active = 0x80,
+        //% block="power status changed"
+        PowerStatusChanged = 0x3,
     }
 
 }

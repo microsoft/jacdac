@@ -53,9 +53,16 @@ export function exprVisitor(
     }
 }
 
+interface Resolve {
+    role: string
+    spec: jdspec.ServiceSpec
+    rest: jsep.Expression
+}
+
 export class SpecSymbolResolver {
     registers: string[]
     events: string[]
+    roles: string[]
 
     constructor(
         private readonly spec: jdspec.ServiceSpec,
@@ -68,9 +75,9 @@ export class SpecSymbolResolver {
     reset() {
         this.registers = []
         this.events = []
+        this.roles = []
     }
 
-    // TODO: OR
     public check(e: jsep.Expression, type: string) {
         if (!e) {
             this.error(`expression is undefined`)
@@ -82,17 +89,11 @@ export class SpecSymbolResolver {
         return true
     }
 
-    public specResolve(e: jsep.Expression): {
-        role: string
-        spec: jdspec.ServiceSpec
-        rest: jsep.Expression
-    } {
+    public specResolve(e: jsep.Expression): Resolve {
+        let ret: Resolve = undefined
         if (this.spec) {
-            return { role: this.spec.shortName, spec: this.spec, rest: e }
-        }
-        // otherwise, we must have a memberexpression at top-level
-        // where the object references a role variable or specification shortName
-        if (
+            ret = { role: this.spec.shortName, spec: this.spec, rest: e }
+        } else if (
             this.check(e, "MemberExpression") &&
             this.check((e as jsep.MemberExpression).object, "Identifier") &&
             this.role2spec
@@ -101,12 +102,15 @@ export class SpecSymbolResolver {
             if (!this.role2spec(obj.name)) {
                 this.error(`no specification found for ${obj.name}`)
             }
-            return {
+            ret = {
                 role: obj.name,
                 spec: this.role2spec(obj.name),
                 rest: (e as jsep.MemberExpression).property,
             }
         }
+        if (ret && this.roles.indexOf(ret.role) < 0)
+            this.registers.push(ret.role)
+        return ret
     }
 
     public destructAccessPath(e: jsep.Expression, expectIdentifier = false) {
@@ -116,8 +120,10 @@ export class SpecSymbolResolver {
             let object = (e as jsep.MemberExpression).object as jsep.Identifier
             let property = (e as jsep.MemberExpression)
                 .property as jsep.Identifier
-            if (this.check(object, "Identifier") &&
-                this.check(property, "Identifier"))
+            if (
+                this.check(object, "Identifier") &&
+                this.check(property, "Identifier")
+            )
                 return [object.name, property.name]
             return undefined
         } else {

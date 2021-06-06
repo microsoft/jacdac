@@ -109,7 +109,7 @@ export class SpecSymbolResolver {
             }
         }
         if (ret && this.roles.indexOf(ret.role) < 0)
-            this.registers.push(ret.role)
+            this.roles.push(ret.role)
         return ret
     }
 

@@ -7,6 +7,18 @@
 
 A 3-axis accelerometer.
 
+## Orientation
+
+An accelerometer module should translate acceleration values as follows:
+
+| Orientation           	| X value 	| Y value  	| Z value 	|
+|-----------------------	|---------	|----------	|---------	|
+| Module lying flat     	| 0       	| 0        	| -1000   	|
+| Module on "left" edge   	| -1000   	| 0        	| 0       	|
+| Module on "bottom" edge 	| 0       	| 1000     	| 0       	|
+
+We recomment an orientation marking on the PCB so that users can mount modules without having to experiment with the device.
+
 ## Registers
 
     ro forces @ reading {

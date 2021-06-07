@@ -17,7 +17,7 @@ An accelerometer module should translate acceleration values as follows:
 | Module on "left" edge   	| -1000   	| 0        	| 0       	|
 | Module on "bottom" edge 	| 0       	| 1000     	| 0       	|
 
-We recomment an orientation marking on the PCB so that users can mount modules without having to experiment with the device.
+We recommend an orientation marking on the PCB so that users can mount modules without having to experiment with the device.
 
 ## Registers
 

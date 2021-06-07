@@ -11,11 +11,11 @@ A 3-axis accelerometer.
 
 An accelerometer module should translate acceleration values as follows:
 
-| Orientation           	| X value (g) 	| Y value (g)  	| Z value (g) 	|
-|-----------------------	|---------	|----------	|---------	|
-| Module lying flat     	| 0       	| 0        	| -1   	|
-| Module standing upright on "left" edge   	| -1   	| 0        	| 0       	|
-| Module standing upright on "bottom" edge 	| 0       	| 1     	| 0       	|
+| Orientation           	| X value (g) 	| Y value (g) 	| Z value (g) 	|
+|-----------------------	|-------------	|-------------	|-------------	|
+| Module lying flat     	| 0           	| 0           	| -1          	|
+| Module on left edge   	| -1          	| 0           	| 0           	|
+| Module on bottom edge 	| 0           	| 1           	| 0           	|
 
 We recommend an orientation marking on the PCB so that users can mount modules without having to experiment with the device. Left/bottom can be determined by assuming text on silk runs left-to-right.
 

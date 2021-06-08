@@ -44,7 +44,7 @@ export function exprVisitor(
     structVisit: (par: jsep.Expression, curr: jsep.Expression) => void
 ) {
     if (Array.isArray(current)) {
-        ;(current as any[]).forEach(c => exprVisitor(current, c, structVisit))
+        (current as any[]).forEach(c => exprVisitor(current, c, structVisit))
     } else if (typeof current === "object") {
         if (parent && current) structVisit(parent, current)
         Object.keys(current).forEach((key: string) => {
@@ -108,8 +108,7 @@ export class SpecSymbolResolver {
                 rest: (e as jsep.MemberExpression).property,
             }
         }
-        if (ret && this.roles.indexOf(ret.role) < 0)
-            this.roles.push(ret.role)
+        if (ret && this.roles.indexOf(ret.role) < 0) this.roles.push(ret.role)
         return ret
     }
 
@@ -117,8 +116,9 @@ export class SpecSymbolResolver {
         if (e.type === "Identifier") {
             return [(e as jsep.Identifier).name, ""]
         } else if (!expectIdentifier && e.type === "MemberExpression") {
-            let object = (e as jsep.MemberExpression).object as jsep.Identifier
-            let property = (e as jsep.MemberExpression)
+            const object = (e as jsep.MemberExpression)
+                .object as jsep.Identifier
+            const property = (e as jsep.MemberExpression)
                 .property as jsep.Identifier
             if (
                 this.check(object, "Identifier") &&
@@ -137,25 +137,25 @@ export class SpecSymbolResolver {
     }
 
     public lookupEvent(e: jsep.Expression) {
-        let { role, spec, rest } = this.specResolve(e)
-        let [id, _] = this.destructAccessPath(rest, true)
+        const { role, spec, rest } = this.specResolve(e)
+        const [id, _] = this.destructAccessPath(rest, true)
         const events = spec.packets?.filter(pkt => pkt.kind == "event")
         const pkt = events.find(p => p.name === id)
         if (!pkt) {
             this.error(`no event ${id} in specification`)
             return undefined
         } else {
-            let ev = `${role}.${id}`
+            const ev = `${role}.${id}`
             if (this.events.indexOf(ev) < 0) this.events.push(ev)
             return pkt
         }
     }
 
     public lookupRegister(e: jsep.Expression) {
-        let { role, spec, rest } = this.specResolve(e)
-        let [root, fld] = this.destructAccessPath(rest)
+        const { role, spec, rest } = this.specResolve(e)
+        const [root, fld] = this.destructAccessPath(rest)
         this.lookupRegisterRaw(spec, root, fld)
-        let reg = `${role}.${root}`
+        const reg = `${role}.${root}`
         if (this.registers.indexOf(reg) < 0) this.registers.push(reg)
     }
 
@@ -164,7 +164,7 @@ export class SpecSymbolResolver {
         root: string,
         fld: string
     ) {
-        let reg = getRegister(spec, root, fld)
+        const reg = getRegister(spec, root, fld)
         if (
             reg.pkt &&
             ((!reg.fld && !isBoolOrNumericFormat(reg.pkt.packFormat)) ||
@@ -183,7 +183,7 @@ export class SpecSymbolResolver {
         child: jsep.Identifier | jsep.MemberExpression
     ) {
         if (Array.isArray(parent)) {
-            let replace = this.lookup(events, parent, child)
+            const replace = this.lookup(events, parent, child)
             parent.forEach(i => {
                 if (parent[i] === child) parent[i] = replace
             })
@@ -194,7 +194,7 @@ export class SpecSymbolResolver {
                 child === (<jsep.CallExpression>parent).callee
             )
                 return
-            let replace = this.lookup(events, parent, child)
+            const replace = this.lookup(events, parent, child)
             if (replace) {
                 Object.keys(parent).forEach(k => {
                     if ((parent as any)[k] === child)
@@ -209,8 +209,8 @@ export class SpecSymbolResolver {
         parent: jsep.Expression,
         child: jsep.Identifier | jsep.MemberExpression
     ) {
-        let { role, spec, rest } = this.specResolve(child)
-        let [root, fld] = this.destructAccessPath(rest)
+        const { role, spec, rest } = this.specResolve(child)
+        const [root, fld] = this.destructAccessPath(rest)
         try {
             try {
                 const val = parseIntFloat(spec, fld ? `${root}.${fld}` : root)
@@ -222,7 +222,7 @@ export class SpecSymbolResolver {
                 return lit
             } catch (e) {
                 this.lookupRegisterRaw(spec, root, fld)
-                let reg = `${role}.${root}`
+                const reg = `${role}.${root}`
                 if (this.registers.indexOf(reg) < 0) this.registers.push(reg)
             }
         } catch (e) {
@@ -278,10 +278,10 @@ export class VMChecker {
         let theCommand: jdspec.PacketInfo = undefined
         if (cmdIndex < 0) {
             if (root.callee.type === "MemberExpression") {
-                let { role, spec, rest } = this.resolver.specResolve(
+                const { role, spec, rest } = this.resolver.specResolve(
                     root.callee as jsep.MemberExpression
                 )
-                let [command, _] = this.resolver.destructAccessPath(rest)
+                const [command, _] = this.resolver.destructAccessPath(rest)
                 if (!role) {
                     this.error(
                         `command does not conform to expected call expression`
@@ -351,9 +351,9 @@ export class VMChecker {
             return undefined
         }
         // deal with optional arguments
-        let newExpressions: jsep.Expression[] = []
+        const newExpressions: jsep.Expression[] = []
         for (let i = root.arguments.length; i < command.args.length; i++) {
-            let [name, def] = command.args[i] as [string, any]
+            const [name, def] = command.args[i] as [string, any]
             const lit: jsep.Literal = {
                 type: "Literal",
                 value: def,
@@ -365,7 +365,7 @@ export class VMChecker {
         // type checking of arguments.
         this.processTestArguments(command, root)
         return [command, root]
-        function argsRequiredOptional(args: any[], optional: boolean = false) {
+        function argsRequiredOptional(args: any[], optional = false) {
             return args.filter(
                 a =>
                     (!optional && typeof a === "string") ||
@@ -393,7 +393,7 @@ export class VMChecker {
                 if (argType == "Identifier") {
                     this.resolver.check(arg, "Identifier")
                 } else if (argType === "event" && a === 0) {
-                    let pkt = this.resolver.lookupEvent(arg)
+                    const pkt = this.resolver.lookupEvent(arg)
                     if (pkt && eventSymTable.indexOf(pkt) === -1)
                         eventSymTable.push(pkt)
                 } else if (argType === "register") {
@@ -409,7 +409,7 @@ export class VMChecker {
                         `events function expects a list of service events`
                     )
                 else {
-                    ;(arg as jsep.ArrayExpression).elements.forEach(e =>
+                    (arg as jsep.ArrayExpression).elements.forEach(e =>
                         this.resolver.lookupEvent(e)
                     )
                 }

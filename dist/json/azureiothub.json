@@ -173,16 +173,8 @@
       "name": "change",
       "identifier": 3,
       "description": "Raised when the connection status changes.",
-      "fields": [
-        {
-          "name": "connection_status",
-          "unit": "",
-          "type": "string",
-          "storage": 0
-        }
-      ],
-      "identifierName": "change",
-      "packFormat": "s"
+      "fields": [],
+      "identifierName": "change"
     },
     {
       "kind": "event",

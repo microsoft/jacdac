@@ -41,7 +41,7 @@
 #define JD_AZURE_IOT_HUB_REG_DEVICE_ID 0x182
 
 /**
- * Argument: connection_status string (bytes). Raised when the connection status changes.
+ * Raised when the connection status changes.
  */
 #define JD_AZURE_IOT_HUB_EV_CHANGE JD_EV_CHANGE
 

@@ -41,9 +41,7 @@ Something like `my-dev-007`; empty string when `connection_string` is not set.
 
 ## Events
 
-    event change @ change {
-        connection_status: string
-    }
+    event change @ change
 
 Raised when the connection status changes.
 

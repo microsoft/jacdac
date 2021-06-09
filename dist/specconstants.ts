@@ -576,11 +576,7 @@ export enum AzureIotHubReg {
 
 export enum AzureIotHubEvent {
     /**
-     * Argument: connection_status string (bytes). Raised when the connection status changes.
-     *
-     * ```
-     * const [connectionStatus] = jdunpack<[string]>(buf, "s")
-     * ```
+     * Raised when the connection status changes.
      */
     Change = 0x3,
 

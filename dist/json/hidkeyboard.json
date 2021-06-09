@@ -137,6 +137,7 @@
           "storage": 1
         }
       ],
+      "lowLevel": true,
       "packFormat": "r: u16 u8 u8"
     },
     {

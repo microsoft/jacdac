@@ -1069,6 +1069,22 @@ namespace jacdac {
         Columns = 0x181,
     }
 
+    export const enum CharacterScreenCmd {
+        /**
+         * Overrides the content of a single line at a 0-based index.
+         *
+         * ```
+         * const [index, message] = jdunpack<[number, string]>(buf, "u16 s")
+         * ```
+         */
+        SetLine = 0x80,
+
+        /**
+         * No args. Clears all text from the display.
+         */
+        Clear = 0x81,
+    }
+
 }
 namespace jacdac {
     // Service: Color

@@ -1013,6 +1013,22 @@ export enum CharacterScreenReg {
     Columns = 0x181,
 }
 
+export enum CharacterScreenCmd {
+    /**
+     * Overrides the content of a single line at a 0-based index.
+     *
+     * ```
+     * const [index, message] = jdunpack<[number, string]>(buf, "u16 s")
+     * ```
+     */
+    SetLine = 0x80,
+
+    /**
+     * No args. Clears all text from the display.
+     */
+    Clear = 0x81,
+}
+
 // Service: Color
 export const SRV_COLOR = 0x1630d567
 export enum ColorReg {

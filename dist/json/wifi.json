@@ -41,7 +41,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -59,14 +58,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -85,14 +82,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -111,7 +106,6 @@
       "fields": [
         {
           "name": "results",
-          "unit": "",
           "type": "pipe",
           "storage": 12
         }
@@ -127,13 +121,11 @@
       "fields": [
         {
           "name": "flags",
-          "unit": "",
           "type": "APFlags",
           "storage": 4
         },
         {
           "name": "reserved",
-          "unit": "",
           "type": "u32",
           "storage": 4,
           "isSimpleType": true
@@ -149,7 +141,6 @@
         },
         {
           "name": "channel",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true,
@@ -158,13 +149,11 @@
         },
         {
           "name": "bssid",
-          "unit": "",
           "type": "u8[6]",
           "storage": 6
         },
         {
           "name": "ssid",
-          "unit": "",
           "type": "string",
           "storage": 33,
           "maxBytes": 33
@@ -181,13 +170,11 @@
       "fields": [
         {
           "name": "ssid",
-          "unit": "",
           "type": "string0",
           "storage": 0
         },
         {
           "name": "password",
-          "unit": "",
           "type": "string0",
           "storage": 0,
           "isOptional": true
@@ -210,7 +197,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "bool",
           "storage": 1
         }

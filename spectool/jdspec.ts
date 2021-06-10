@@ -173,6 +173,11 @@ export const secondaryUnitConverters: jdspec.SMap<{
     "#": { name: "count", unit: "#", scale: 1, offset: 0 },
 }
 
+export const encodings: jdspec.SMap<jdspec.Encoding> = {
+    json: "JSON",
+    bitset: "bitset",
+}
+
 export function resolveUnit(unit: string) {
     if (unit === "") return { name: "", unit: "", scale: 1, offset: 1 } // indentifier
 
@@ -829,9 +834,12 @@ export function parseServiceSpecificationMarkdownToJSON(
         const isFloat = typeShift === null || undefined
 
         let tok = words.shift()
-        let unit: jdspec.Unit = ""
+        let unit: jdspec.Unit
+        let encoding: jdspec.Encoding
         if (tok != "{") {
-            unit = normalizeUnit(tok)
+            if (type === "string" || type === "bytes")
+                encoding = normalizeEncoding(tok)
+            else unit = normalizeUnit(tok)
             tok = words.shift()
         }
 
@@ -852,6 +860,7 @@ export function parseServiceSpecificationMarkdownToJSON(
         const field: jdspec.PacketMember = {
             name,
             unit,
+            encoding,
             shift,
             isFloat,
             type,
@@ -866,6 +875,9 @@ export function parseServiceSpecificationMarkdownToJSON(
                 undefined,
             startRepeats: nextModifier == "repeats" || undefined,
         }
+
+        if (!unit) delete field.unit
+        if (!encoding) delete field.encoding
 
         if (tok == "{") {
             while (words.length) {
@@ -1185,13 +1197,17 @@ export function parseServiceSpecificationMarkdownToJSON(
         }
     }
 
+    function normalizeEncoding(unit: string): jdspec.Encoding {
+        return (unit && encodings[unit.toLowerCase()]) || undefined
+    }
+
     function normalizeUnit(unit: string): jdspec.Unit {
-        if (unit === undefined || unit === null) return ""
+        if (unit === undefined || unit === null) return undefined
 
         if (unitDescription[unit] || secondaryUnitConverters[unit])
             return unit as jdspec.Unit
         error(`expecting unit, got '${unit}'`)
-        return ""
+        return undefined
     }
 
     function hasNaturalAlignment(iface: jdspec.PacketInfo) {

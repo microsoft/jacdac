@@ -40,7 +40,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -58,14 +57,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -84,14 +81,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -170,7 +165,6 @@
       "fields": [
         {
           "name": "button",
-          "unit": "",
           "type": "Button",
           "storage": 1,
           "startRepeats": true
@@ -194,7 +188,6 @@
       "fields": [
         {
           "name": "button",
-          "unit": "",
           "type": "Button",
           "storage": 1,
           "startRepeats": true
@@ -210,7 +203,6 @@
       "fields": [
         {
           "name": "button",
-          "unit": "",
           "type": "Button",
           "storage": 1
         }
@@ -226,7 +218,6 @@
       "fields": [
         {
           "name": "button",
-          "unit": "",
           "type": "Button",
           "storage": 1
         }

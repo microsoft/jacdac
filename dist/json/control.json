@@ -43,7 +43,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -61,14 +60,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -87,14 +84,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -122,27 +117,23 @@
       "fields": [
         {
           "name": "flags",
-          "unit": "",
           "type": "AnnounceFlags",
           "storage": 2
         },
         {
           "name": "packet_count",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true
         },
         {
           "name": "reserved",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true
         },
         {
           "name": "service_class",
-          "unit": "",
           "type": "u32",
           "storage": 4,
           "isSimpleType": true,
@@ -183,14 +174,12 @@
       "fields": [
         {
           "name": "num_responses",
-          "unit": "",
           "type": "u32",
           "storage": 4,
           "isSimpleType": true
         },
         {
           "name": "start_counter",
-          "unit": "",
           "type": "u32",
           "storage": 4,
           "isSimpleType": true
@@ -215,14 +204,12 @@
       "fields": [
         {
           "name": "counter",
-          "unit": "",
           "type": "u32",
           "storage": 4,
           "isSimpleType": true
         },
         {
           "name": "dummy_payload",
-          "unit": "",
           "type": "bytes",
           "storage": 0,
           "isSimpleType": true
@@ -239,28 +226,24 @@
       "fields": [
         {
           "name": "to_red",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true
         },
         {
           "name": "to_green",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true
         },
         {
           "name": "to_blue",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true
         },
         {
           "name": "speed",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true
@@ -293,7 +276,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -309,7 +291,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "u32",
           "storage": 4,
           "isSimpleType": true,
@@ -328,7 +309,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "u32",
           "storage": 4,
           "isSimpleType": true,
@@ -347,7 +327,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -401,7 +380,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -417,7 +395,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -433,7 +410,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "string",
           "storage": 0
         }

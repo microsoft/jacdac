@@ -22,7 +22,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -40,14 +39,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -66,14 +63,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -83,6 +78,30 @@
       "identifierName": "status_code_changed",
       "packFormat": "u16 u16",
       "derived": "_base"
+    },
+    {
+      "kind": "command",
+      "name": "send_message",
+      "identifier": 130,
+      "description": "Sends a short message in string format (it's typically JSON-encoded).",
+      "fields": [
+        {
+          "name": "body",
+          "encoding": "JSON",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "hasReport": true,
+      "packFormat": "s"
+    },
+    {
+      "kind": "report",
+      "name": "send_message",
+      "identifier": 130,
+      "description": "Sends a short message in string format (it's typically JSON-encoded).",
+      "fields": [],
+      "secondary": true
     },
     {
       "kind": "command",
@@ -99,31 +118,6 @@
       "fields": []
     },
     {
-      "kind": "command",
-      "name": "send_message",
-      "identifier": 130,
-      "description": "Sends a short message in string format (it's typically JSON-encoded).",
-      "fields": [
-        {
-          "name": "body",
-          "unit": "",
-          "type": "string",
-          "storage": 0
-        }
-      ],
-      "lowLevel": true,
-      "hasReport": true,
-      "packFormat": "s"
-    },
-    {
-      "kind": "report",
-      "name": "send_message",
-      "identifier": 130,
-      "description": "Sends a short message in string format (it's typically JSON-encoded).",
-      "fields": [],
-      "secondary": true
-    },
-    {
       "kind": "ro",
       "name": "connection_status",
       "identifier": 384,
@@ -131,7 +125,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -146,7 +139,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -161,20 +153,11 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
       ],
       "packFormat": "s"
-    },
-    {
-      "kind": "event",
-      "name": "change",
-      "identifier": 3,
-      "description": "Raised when the connection status changes.",
-      "fields": [],
-      "identifierName": "change"
     },
     {
       "kind": "event",
@@ -184,13 +167,26 @@
       "fields": [
         {
           "name": "body",
-          "unit": "",
+          "encoding": "JSON",
           "type": "string",
           "storage": 0
         }
       ],
-      "lowLevel": true,
       "packFormat": "s"
+    },
+    {
+      "kind": "event",
+      "name": "connected",
+      "identifier": 128,
+      "description": "Raised when the device is connected to the hub.",
+      "fields": []
+    },
+    {
+      "kind": "event",
+      "name": "disconnected",
+      "identifier": 129,
+      "description": "Raised when the device is disconnected to the hub. ``connection_status`` may contain information about the error.",
+      "fields": []
     }
   ],
   "tags": [],

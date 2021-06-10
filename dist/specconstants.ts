@@ -524,6 +524,15 @@ export enum ArcadeSoundReg {
 export const SRV_AZURE_IOT_HUB = 0x19ed364c
 export enum AzureIotHubCmd {
     /**
+     * Argument: body string (bytes). Sends a short message in string format (it's typically JSON-encoded).
+     *
+     * ```
+     * const [body] = jdunpack<[string]>(buf, "s")
+     * ```
+     */
+    SendMessage = 0x82,
+
+    /**
      * No args. Try connecting using currently set `connection_string`.
      * The service normally periodically tries to connect automatically.
      */
@@ -534,15 +543,6 @@ export enum AzureIotHubCmd {
      * This disables auto-connect behavior, until a `connect` command is issued.
      */
     Disconnect = 0x81,
-
-    /**
-     * Argument: body string (bytes). Sends a short message in string format (it's typically JSON-encoded).
-     *
-     * ```
-     * const [body] = jdunpack<[string]>(buf, "s")
-     * ```
-     */
-    SendMessage = 0x82,
 }
 
 export enum AzureIotHubReg {
@@ -576,11 +576,6 @@ export enum AzureIotHubReg {
 
 export enum AzureIotHubEvent {
     /**
-     * Raised when the connection status changes.
-     */
-    Change = 0x3,
-
-    /**
      * Argument: body string (bytes). This event is emitted upon reception of a cloud to device message, that is a string
      * (doesn't contain NUL bytes) and fits in a single event packet.
      *
@@ -589,6 +584,16 @@ export enum AzureIotHubEvent {
      * ```
      */
     Message = 0x82,
+
+    /**
+     * Raised when the device is connected to the hub.
+     */
+    Connected = 0x80,
+
+    /**
+     * Raised when the device is disconnected to the hub. ``connection_status`` may contain information about the error.
+     */
+    Disconnected = 0x81,
 }
 
 // Service: Barcode reader

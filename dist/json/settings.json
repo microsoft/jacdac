@@ -23,7 +23,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -41,14 +40,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -67,14 +64,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -93,7 +88,6 @@
       "fields": [
         {
           "name": "key",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -109,13 +103,11 @@
       "fields": [
         {
           "name": "key",
-          "unit": "",
           "type": "string0",
           "storage": 0
         },
         {
           "name": "value",
-          "unit": "",
           "type": "bytes",
           "storage": 0,
           "isSimpleType": true
@@ -132,13 +124,11 @@
       "fields": [
         {
           "name": "key",
-          "unit": "",
           "type": "string0",
           "storage": 0
         },
         {
           "name": "value",
-          "unit": "",
           "type": "bytes",
           "storage": 0,
           "isSimpleType": true
@@ -154,7 +144,6 @@
       "fields": [
         {
           "name": "key",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -169,7 +158,6 @@
       "fields": [
         {
           "name": "results",
-          "unit": "",
           "type": "pipe",
           "storage": 12
         }
@@ -185,7 +173,6 @@
       "fields": [
         {
           "name": "key",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -201,7 +188,6 @@
       "fields": [
         {
           "name": "results",
-          "unit": "",
           "type": "pipe",
           "storage": 12
         }
@@ -217,13 +203,11 @@
       "fields": [
         {
           "name": "key",
-          "unit": "",
           "type": "string0",
           "storage": 0
         },
         {
           "name": "value",
-          "unit": "",
           "type": "bytes",
           "storage": 0,
           "isSimpleType": true

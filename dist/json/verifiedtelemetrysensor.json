@@ -41,7 +41,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -59,14 +58,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -85,14 +82,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -111,13 +106,11 @@
       "fields": [
         {
           "name": "status",
-          "unit": "",
           "type": "bool",
           "storage": 1
         },
         {
           "name": "confidence",
-          "unit": "",
           "type": "FingerprintTemplateConfidence",
           "storage": 1
         }
@@ -149,7 +142,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "FingerprintType",
           "storage": 1
         }
@@ -164,14 +156,12 @@
       "fields": [
         {
           "name": "property",
-          "unit": "",
           "type": "string0",
           "storage": 0,
           "startRepeats": true
         },
         {
           "name": "value",
-          "unit": "",
           "type": "string0",
           "storage": 0
         }

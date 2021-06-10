@@ -32,7 +32,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -50,14 +49,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -76,14 +73,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -102,7 +97,6 @@
       "fields": [
         {
           "name": "inbound",
-          "unit": "",
           "type": "pipe",
           "storage": 12
         }
@@ -119,7 +113,6 @@
       "fields": [
         {
           "name": "outbound_port",
-          "unit": "",
           "type": "pipe_port",
           "storage": 2
         }
@@ -136,14 +129,12 @@
       "fields": [
         {
           "name": "tcp_port",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "hostname",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -159,7 +150,6 @@
       "fields": [
         {
           "name": "data",
-          "unit": "",
           "type": "bytes",
           "storage": 0,
           "isSimpleType": true
@@ -176,7 +166,6 @@
       "fields": [
         {
           "name": "data",
-          "unit": "",
           "type": "bytes",
           "storage": 0,
           "isSimpleType": true
@@ -193,7 +182,6 @@
       "fields": [
         {
           "name": "error",
-          "unit": "",
           "type": "TcpError",
           "storage": -4
         }

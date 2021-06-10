@@ -8,6 +8,13 @@ Send messages, receive commands, and work with device twins in Azure IoT Hub.
 
 ## Commands
 
+    command send_message @ 0x82 {
+        body: string JSON
+    }
+    report {}
+
+Sends a short message in string format (it's typically JSON-encoded).
+
     command connect @ 0x80 {}
 
 Try connecting using currently set `connection_string`.
@@ -17,13 +24,6 @@ The service normally periodically tries to connect automatically.
 
 Disconnect from current Hub if any.
 This disables auto-connect behavior, until a `connect` command is issued.
-
-    lowlevel command send_message @ 0x82 {
-        body: string
-    }
-    report {}
-
-Sends a short message in string format (it's typically JSON-encoded).
 
 ## Registers
 
@@ -41,13 +41,17 @@ Something like `my-dev-007`; empty string when `connection_string` is not set.
 
 ## Events
 
-    event change @ change
-
-Raised when the connection status changes.
-
-    lowlevel event message @ 0x82 {
-        body: string
+    event message @ 0x82 {
+        body: string JSON
     }
 
 This event is emitted upon reception of a cloud to device message, that is a string
 (doesn't contain NUL bytes) and fits in a single event packet.
+
+    event connected @ 0x80
+
+Raised when the device is connected to the hub.
+
+    event disconnected @ 0x81
+
+Raised when the device is disconnected to the hub. ``connection_status`` may contain information about the error.

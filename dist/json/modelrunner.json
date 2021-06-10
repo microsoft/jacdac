@@ -32,7 +32,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -50,14 +49,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -76,14 +73,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -119,7 +114,6 @@
       "fields": [
         {
           "name": "model_port",
-          "unit": "",
           "type": "pipe_port",
           "storage": 2
         }
@@ -136,7 +130,6 @@
       "fields": [
         {
           "name": "outputs",
-          "unit": "",
           "type": "pipe",
           "storage": 12
         }
@@ -153,7 +146,6 @@
       "fields": [
         {
           "name": "inputs",
-          "unit": "",
           "type": "pipe_port",
           "storage": 2
         }
@@ -170,7 +162,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -186,7 +177,6 @@
       "fields": [
         {
           "name": "output",
-          "unit": "",
           "isFloat": true,
           "type": "f32",
           "storage": 4,
@@ -204,7 +194,6 @@
       "fields": [
         {
           "name": "dimension",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true,
@@ -221,7 +210,6 @@
       "fields": [
         {
           "name": "dimension",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true,
@@ -286,7 +274,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -301,7 +288,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "ModelFormat",
           "storage": 4
         }
@@ -316,7 +302,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "u32",
           "storage": 4,
           "isSimpleType": true
@@ -332,7 +317,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "bool",
           "storage": 1
         }

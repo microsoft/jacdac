@@ -4390,6 +4390,73 @@ export enum UvIndexReg {
     Variant = 0x107,
 }
 
+// Service: Dependable Sensor
+export const SRV_DEPENDABLE_SENSOR = 0x2194841f
+
+export enum DependableSensorFingerprintTemplateConfidence { // uint8_t
+    High = 0x64,
+    Medium = 0x32,
+    Low = 0x0,
+}
+
+
+export enum DependableSensorFingerprintType { // uint8_t
+    FallCurve = 0x1,
+    CurrentSense = 0x2,
+    Custom = 0x3,
+}
+
+export enum DependableSensorReg {
+    /**
+     * Reads the telemetry working status, where ``true`` is working and ``false`` is faulty.
+     *
+     * ```
+     * const [status, confidence] = jdunpack<[number, DependableSensorFingerprintTemplateConfidence]>(buf, "u8 u8")
+     * ```
+     */
+    Telemetry = 0x180,
+
+    /**
+     * Read-write ms uint32_t. Specifies the interval between computing the fingerprint information.
+     *
+     * ```
+     * const [telemetryStatusInterval] = jdunpack<[number]>(buf, "u32")
+     * ```
+     */
+    TelemetryStatusInterval = 0x80,
+
+    /**
+     * Constant FingerprintType (uint8_t). Type of the fingerprint.
+     *
+     * ```
+     * const [fingerprintType] = jdunpack<[DependableSensorFingerprintType]>(buf, "u8")
+     * ```
+     */
+    FingerprintType = 0x181,
+
+    /**
+     * Template Fingerprint information of a working sensor.
+     *
+     * ```
+     * const [rest] = jdunpack<[([string, string])[]]>(buf, "r: z z")
+     * const [property, value] = rest[0]
+     * ```
+     */
+    FingerprintTemplate = 0x182,
+}
+
+export enum DependableSensorCmd {
+    /**
+     * No args. This command will clear the template fingerprint of a sensor and collect a new template fingerprint of the attached sensor.
+     */
+    ResetFingerprintTemplate = 0x80,
+
+    /**
+     * No args. This command will append a new template fingerprint to the `fingerprintTemplate`. Appending more fingerprints will increase the accuracy in detecting the telemetry status.
+     */
+    RetrainFingerprintTemplate = 0x81,
+}
+
 // Service: Vibration motor
 export const SRV_VIBRATION_MOTOR = 0x183fc4a2
 export enum VibrationMotorReg {

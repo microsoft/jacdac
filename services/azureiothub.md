@@ -18,8 +18,8 @@ The service normally periodically tries to connect automatically.
 Disconnect from current Hub if any.
 This disables auto-connect behavior, until a `connect` command is issued.
 
-    lowlevel command send_message @ 0x82 {
-        body: string
+    command send_message @ 0x82 {
+        body: string JSON
     }
     report {}
 
@@ -45,8 +45,8 @@ Something like `my-dev-007`; empty string when `connection_string` is not set.
 
 Raised when the connection status changes.
 
-    lowlevel event message @ 0x82 {
-        body: string
+    event message @ 0x82 {
+        body: string JSON
     }
 
 This event is emitted upon reception of a cloud to device message, that is a string

@@ -22,7 +22,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -40,14 +39,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -66,14 +63,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -92,7 +87,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "bool",
           "storage": 1,
           "defaultValue": 1
@@ -108,7 +102,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "bool",
           "storage": 1
         }
@@ -123,13 +116,11 @@
       "fields": [
         {
           "name": "device_id",
-          "unit": "",
           "type": "devid",
           "storage": 8
         },
         {
           "name": "service_idx",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true
@@ -146,20 +137,17 @@
       "fields": [
         {
           "name": "device_id",
-          "unit": "",
           "type": "devid",
           "storage": 8
         },
         {
           "name": "service_idx",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true
         },
         {
           "name": "role",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -175,20 +163,17 @@
       "fields": [
         {
           "name": "device_id",
-          "unit": "",
           "type": "devid",
           "storage": 8
         },
         {
           "name": "service_idx",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true
         },
         {
           "name": "role",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -210,7 +195,6 @@
       "fields": [
         {
           "name": "stored_roles",
-          "unit": "",
           "type": "pipe",
           "storage": 12
         }
@@ -226,20 +210,17 @@
       "fields": [
         {
           "name": "device_id",
-          "unit": "",
           "type": "devid",
           "storage": 8
         },
         {
           "name": "service_idx",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true
         },
         {
           "name": "role",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -255,7 +236,6 @@
       "fields": [
         {
           "name": "required_roles",
-          "unit": "",
           "type": "pipe",
           "storage": 12
         }
@@ -271,27 +251,23 @@
       "fields": [
         {
           "name": "device_id",
-          "unit": "",
           "type": "devid",
           "storage": 8
         },
         {
           "name": "service_class",
-          "unit": "",
           "type": "u32",
           "storage": 4,
           "isSimpleType": true
         },
         {
           "name": "service_idx",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true
         },
         {
           "name": "role",
-          "unit": "",
           "type": "string",
           "storage": 0
         }

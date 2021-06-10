@@ -9,7 +9,7 @@ A 7-segment numeric display, with one or more digits.
 
 ## Registers
 
-    lowlevel rw digits: bytes @ value
+    lowlevel rw digits: bytes bitset @ value
 
 Each byte encodes the display status of a digit using, 
 where bit 0 encodes segment `A`, bit 1 encodes segments `B`, ..., bit 6 encodes segments `G`, and bit 7 encodes the decimal point (if present).

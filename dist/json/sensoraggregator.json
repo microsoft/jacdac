@@ -35,7 +35,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -53,14 +52,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -79,14 +76,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -112,35 +107,30 @@
         },
         {
           "name": "samples_in_window",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "reserved",
-          "unit": "",
           "type": "u32",
           "storage": 4,
           "isSimpleType": true
         },
         {
           "name": "device_id",
-          "unit": "",
           "type": "devid",
           "storage": 8,
           "startRepeats": true
         },
         {
           "name": "service_class",
-          "unit": "",
           "type": "u32",
           "storage": 4,
           "isSimpleType": true
         },
         {
           "name": "service_num",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true
@@ -154,13 +144,11 @@
         },
         {
           "name": "sample_type",
-          "unit": "",
           "type": "SampleType",
           "storage": 1
         },
         {
           "name": "sample_shift",
-          "unit": "",
           "type": "i8",
           "storage": -1,
           "isSimpleType": true
@@ -176,7 +164,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "u32",
           "storage": 4,
           "isSimpleType": true
@@ -224,7 +211,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "bytes",
           "storage": 0,
           "isSimpleType": true

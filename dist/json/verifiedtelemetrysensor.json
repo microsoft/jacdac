@@ -1,9 +1,9 @@
 {
-  "name": "Dependable Sensor",
+  "name": "Verified Telemetry",
   "status": "experimental",
   "shortId": "verifiedtelemetrysensor",
-  "camelName": "dependableSensor",
-  "shortName": "dependableSensor",
+  "camelName": "verifiedTelemetry",
+  "shortName": "verifiedTelemetry",
   "extends": [
     "_base"
   ],

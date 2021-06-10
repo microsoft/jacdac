@@ -1,4 +1,4 @@
-# Dependable Sensor
+# Verified Telemetry
 
     identifier: 0x2194841f
 

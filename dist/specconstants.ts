@@ -4390,28 +4390,28 @@ export enum UvIndexReg {
     Variant = 0x107,
 }
 
-// Service: Dependable Sensor
-export const SRV_DEPENDABLE_SENSOR = 0x2194841f
+// Service: Verified Telemetry
+export const SRV_VERIFIED_TELEMETRY = 0x2194841f
 
-export enum DependableSensorFingerprintTemplateConfidence { // uint8_t
+export enum VerifiedTelemetryFingerprintTemplateConfidence { // uint8_t
     High = 0x64,
     Medium = 0x32,
     Low = 0x0,
 }
 
 
-export enum DependableSensorFingerprintType { // uint8_t
+export enum VerifiedTelemetryFingerprintType { // uint8_t
     FallCurve = 0x1,
     CurrentSense = 0x2,
     Custom = 0x3,
 }
 
-export enum DependableSensorReg {
+export enum VerifiedTelemetryReg {
     /**
      * Reads the telemetry working status, where ``true`` is working and ``false`` is faulty.
      *
      * ```
-     * const [status, confidence] = jdunpack<[number, DependableSensorFingerprintTemplateConfidence]>(buf, "u8 u8")
+     * const [status, confidence] = jdunpack<[number, VerifiedTelemetryFingerprintTemplateConfidence]>(buf, "u8 u8")
      * ```
      */
     Telemetry = 0x180,
@@ -4429,7 +4429,7 @@ export enum DependableSensorReg {
      * Constant FingerprintType (uint8_t). Type of the fingerprint.
      *
      * ```
-     * const [fingerprintType] = jdunpack<[DependableSensorFingerprintType]>(buf, "u8")
+     * const [fingerprintType] = jdunpack<[VerifiedTelemetryFingerprintType]>(buf, "u8")
      * ```
      */
     FingerprintType = 0x181,
@@ -4445,7 +4445,7 @@ export enum DependableSensorReg {
     FingerprintTemplate = 0x182,
 }
 
-export enum DependableSensorCmd {
+export enum VerifiedTelemetryCmd {
     /**
      * No args. This command will clear the template fingerprint of a sensor and collect a new template fingerprint of the attached sensor.
      */

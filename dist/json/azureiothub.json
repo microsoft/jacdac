@@ -1,0 +1,198 @@
+{
+  "name": "Azure IoT Hub",
+  "status": "experimental",
+  "shortId": "azureiothub",
+  "camelName": "azureIotHub",
+  "shortName": "azureIotHub",
+  "extends": [
+    "_base"
+  ],
+  "notes": {
+    "short": "Send messages, receive commands, and work with device twins in Azure IoT Hub."
+  },
+  "classIdentifier": 434976332,
+  "enums": {},
+  "constants": {},
+  "packets": [
+    {
+      "kind": "const",
+      "name": "instance_name",
+      "identifier": 265,
+      "description": "A friendly name that describes the role of this service instance in the device.\nIt often corresponds to what's printed on the device:\nfor example, `A` for button A, or `S0` for servo channel 0.\nWords like `left` should be avoided because of localization issues (unless they are printed on the device).",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "optional": true,
+      "identifierName": "instance_name",
+      "packFormat": "s",
+      "derived": "_base"
+    },
+    {
+      "kind": "ro",
+      "name": "status_code",
+      "identifier": 259,
+      "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe Jacdac status/error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the announce packet. If a service implements this register,\nit should also support the ``status_code_changed`` event defined below.",
+      "fields": [
+        {
+          "name": "code",
+          "unit": "",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "vendor_code",
+          "unit": "",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "identifierName": "status_code",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
+    {
+      "kind": "event",
+      "name": "status_code_changed",
+      "identifier": 4,
+      "description": "Notifies that the status code of the service changed.",
+      "fields": [
+        {
+          "name": "code",
+          "unit": "",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "vendor_code",
+          "unit": "",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "identifierName": "status_code_changed",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
+    {
+      "kind": "command",
+      "name": "connect",
+      "identifier": 128,
+      "description": "Try connecting using currently set `connection_string`.\nThe service normally periodically tries to connect automatically.",
+      "fields": []
+    },
+    {
+      "kind": "command",
+      "name": "disconnect",
+      "identifier": 129,
+      "description": "Disconnect from current Hub if any.\nThis disables auto-connect behavior, until a `connect` command is issued.",
+      "fields": []
+    },
+    {
+      "kind": "command",
+      "name": "send_message",
+      "identifier": 130,
+      "description": "Sends a short message in string format (it's typically JSON-encoded).",
+      "fields": [
+        {
+          "name": "body",
+          "unit": "",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "lowLevel": true,
+      "hasReport": true,
+      "packFormat": "s"
+    },
+    {
+      "kind": "report",
+      "name": "send_message",
+      "identifier": 130,
+      "description": "Sends a short message in string format (it's typically JSON-encoded).",
+      "fields": [],
+      "secondary": true
+    },
+    {
+      "kind": "ro",
+      "name": "connection_status",
+      "identifier": 384,
+      "description": "Returns `\"ok\"` when connected, empty `\"\"` when disconnected, and an error description otherwise.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "packFormat": "s"
+    },
+    {
+      "kind": "const",
+      "name": "hub_name",
+      "identifier": 385,
+      "description": "Something like `my-iot-hub.azure-devices.net`; empty string when not properly configured",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "packFormat": "s"
+    },
+    {
+      "kind": "const",
+      "name": "device_id",
+      "identifier": 386,
+      "description": "Something like `my-dev-007`; empty string when `connection_string` is not set.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "packFormat": "s"
+    },
+    {
+      "kind": "event",
+      "name": "change",
+      "identifier": 3,
+      "description": "Raised when the connection status changes.",
+      "fields": [],
+      "identifierName": "change"
+    },
+    {
+      "kind": "event",
+      "name": "message",
+      "identifier": 130,
+      "description": "This event is emitted upon reception of a cloud to device message, that is a string\n(doesn't contain NUL bytes) and fits in a single event packet.",
+      "fields": [
+        {
+          "name": "body",
+          "unit": "",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "lowLevel": true,
+      "packFormat": "s"
+    }
+  ],
+  "tags": [],
+  "group": "Iot"
+}

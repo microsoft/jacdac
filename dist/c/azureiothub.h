@@ -5,6 +5,15 @@
 #define JD_SERVICE_CLASS_AZURE_IOT_HUB  0x19ed364c
 
 /**
+ * Argument: body string (bytes). Sends a short message in string format (it's typically JSON-encoded).
+ */
+#define JD_AZURE_IOT_HUB_CMD_SEND_MESSAGE 0x82
+
+/**
+ * Report: No args
+ */
+
+/**
  * No args. Try connecting using currently set `connection_string`.
  * The service normally periodically tries to connect automatically.
  */
@@ -15,15 +24,6 @@
  * This disables auto-connect behavior, until a `connect` command is issued.
  */
 #define JD_AZURE_IOT_HUB_CMD_DISCONNECT 0x81
-
-/**
- * Argument: body string (bytes). Sends a short message in string format (it's typically JSON-encoded).
- */
-#define JD_AZURE_IOT_HUB_CMD_SEND_MESSAGE 0x82
-
-/**
- * Report: No args
- */
 
 /**
  * Read-only string (bytes). Returns `"ok"` when connected, empty `""` when disconnected, and an error description otherwise.
@@ -41,14 +41,19 @@
 #define JD_AZURE_IOT_HUB_REG_DEVICE_ID 0x182
 
 /**
- * Raised when the connection status changes.
- */
-#define JD_AZURE_IOT_HUB_EV_CHANGE JD_EV_CHANGE
-
-/**
  * Argument: body string (bytes). This event is emitted upon reception of a cloud to device message, that is a string
  * (doesn't contain NUL bytes) and fits in a single event packet.
  */
 #define JD_AZURE_IOT_HUB_EV_MESSAGE 0x82
+
+/**
+ * Raised when the device is connected to the hub.
+ */
+#define JD_AZURE_IOT_HUB_EV_CONNECTED 0x80
+
+/**
+ * Raised when the device is disconnected to the hub. ``connection_status`` may contain information about the error.
+ */
+#define JD_AZURE_IOT_HUB_EV_DISCONNECTED 0x81
 
 #endif

@@ -179,7 +179,7 @@ export const encodings: jdspec.SMap<jdspec.Encoding> = {
 }
 
 export function resolveUnit(unit: string) {
-    if (unit === "") return { name: "", unit: "", scale: 1, offset: 1 } // indentifier
+    if (!unit) return { name: "", scale: 1, offset: 1 } // indentifier
 
     // seconary unit?
     const su = secondaryUnitConverters[unit]

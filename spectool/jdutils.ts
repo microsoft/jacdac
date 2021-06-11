@@ -139,7 +139,9 @@ export class SpecSymbolResolver {
     }
 
     public lookupEvent(e: jsep.Expression) {
-        const { role, spec, rest } = this.specResolve(e)
+        const resolve = this.specResolve(e)
+        if (!resolve) return
+        const { role, spec, rest } = resolve
         const [id, _] = this.destructAccessPath(rest, true)
         const events = spec.packets?.filter(pkt => pkt.kind == "event")
         const pkt = events.find(p => p.name === id)
@@ -154,7 +156,9 @@ export class SpecSymbolResolver {
     }
 
     public lookupRegister(e: jsep.Expression) {
-        const { role, spec, rest } = this.specResolve(e)
+        const resolve = this.specResolve(e)
+        if (!resolve) return
+        const { role, spec, rest } = resolve
         const [root, fld] = this.destructAccessPath(rest)
         this.lookupRegisterRaw(spec, root, fld)
         const reg = `${role}.${root}`
@@ -211,13 +215,9 @@ export class SpecSymbolResolver {
         parent: jsep.Expression,
         child: jsep.Identifier | jsep.MemberExpression
     ) {
-        // special case for global variable $.global
-        if (child.type === "MemberExpression") {
-            const obj = (child as jsep.MemberExpression).object as jsep.Identifier
-            if (obj.name === "$")
-                return
-        }
-        const { role, spec, rest } = this.specResolve(child)
+        const resolve = this.specResolve(child)
+        if (!resolve) return
+        const { role, spec, rest } = resolve
         const [root, fld] = this.destructAccessPath(rest)
         try {
             try {

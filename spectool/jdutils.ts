@@ -99,6 +99,8 @@ export class SpecSymbolResolver {
             this.role2spec
         ) {
             const obj = (e as jsep.MemberExpression).object as jsep.Identifier
+            if (obj.name === "$")
+                return undefined
             if (!this.role2spec(obj.name)) {
                 this.error(`no specification found for ${obj.name}`)
             }
@@ -209,6 +211,12 @@ export class SpecSymbolResolver {
         parent: jsep.Expression,
         child: jsep.Identifier | jsep.MemberExpression
     ) {
+        // special case for global variable $.global
+        if (child.type === "MemberExpression") {
+            const obj = (child as jsep.MemberExpression).object as jsep.Identifier
+            if (obj.name === "$")
+                return
+        }
         const { role, spec, rest } = this.specResolve(child)
         const [root, fld] = this.destructAccessPath(rest)
         try {
@@ -427,7 +435,6 @@ export class VMChecker {
         eventSymTable: jdspec.PacketInfo[] = []
     ) {
         exprVisitor(root, arg, (p, c) => {
-            // TODO
             if (p.type !== "MemberExpression" && c.type === "Identifier") {
                 this.resolver.lookupReplace(
                     eventSymTable,

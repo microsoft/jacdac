@@ -1,5 +1,5 @@
 export function isMixinService(serviceClass: number) {
-    return (serviceClass & 0x2000_0000) == 0x2000_0000
+    return (serviceClass & 0x2000_0000) === 0x2000_0000
 }
 
 export function packetsToRegisters(packets: jdspec.PacketInfo[]) {
@@ -93,13 +93,15 @@ export class SpecSymbolResolver {
         let ret: Resolve = undefined
         if (this.spec) {
             ret = { role: this.spec.shortName, spec: this.spec, rest: e }
+        } else if (e.type === "Identifier") {
+            return undefined 
         } else if (
             this.check(e, "MemberExpression") &&
             this.check((e as jsep.MemberExpression).object, "Identifier") &&
             this.role2spec
         ) {
             const obj = (e as jsep.MemberExpression).object as jsep.Identifier
-            if (obj.name === "$")
+            if (obj.name.startsWith("$"))
                 return undefined
             if (!this.role2spec(obj.name)) {
                 this.error(`no specification found for ${obj.name}`)
@@ -143,7 +145,7 @@ export class SpecSymbolResolver {
         if (!resolve) return
         const { role, spec, rest } = resolve
         const [id, _] = this.destructAccessPath(rest, true)
-        const events = spec.packets?.filter(pkt => pkt.kind == "event")
+        const events = spec.packets?.filter(pkt => pkt.kind === "event")
         const pkt = events.find(p => p.name === id)
         if (!pkt) {
             this.error(`no event ${id} in specification`)
@@ -279,10 +281,9 @@ export class VMChecker {
                     `Expression of type ${c.type} not currently supported`
                 )
         })
-
         // first lookup in known functions
         const callee = (root.callee as jsep.Identifier)?.name
-        const cmdIndex = funs.findIndex(r => callee == r.id)
+        const cmdIndex = funs.findIndex(r => callee === r.id)
         let theCommand: jdspec.PacketInfo = undefined
         if (cmdIndex < 0) {
             if (root.callee.type === "MemberExpression") {
@@ -305,7 +306,7 @@ export class VMChecker {
                         this.error(
                             `cannot find command named ${command} in spec ${spec.shortName}`
                         )
-                    } else return this.processCommandFunction(root, theCommand)
+                    } else return this.processSpecCommandFunction(root, theCommand)
                 }
             } else {
                 if (callee)
@@ -320,7 +321,7 @@ export class VMChecker {
         return undefined
     }
 
-    private processCommandFunction(
+    private processSpecCommandFunction(
         root: jsep.CallExpression,
         command: jdspec.PacketInfo
     ): [jdtest.TestFunctionDescription, jsep.CallExpression] {
@@ -330,7 +331,7 @@ export class VMChecker {
             )
         } else {
             const args = root.arguments
-            args.forEach(arg => {
+            args.forEach((arg) => {
                 this.visitReplace(root, arg, [])
             })
         }
@@ -396,9 +397,9 @@ export class VMChecker {
             if (
                 argType === "register" ||
                 argType === "event" ||
-                argType == "Identifier"
+                argType === "Identifier"
             ) {
-                if (argType == "Identifier") {
+                if (argType === "Identifier") {
                     this.resolver.check(arg, "Identifier")
                 } else if (argType === "event" && a === 0) {
                     const pkt = this.resolver.lookupEvent(arg)
@@ -470,7 +471,7 @@ function isBoolOrNumericFormat(fmt: string) {
 }
 
 function isRegister(pkt: jdspec.PacketInfo): boolean {
-    return pkt && (pkt.kind == "const" || pkt.kind == "ro" || pkt.kind == "rw")
+    return pkt && (pkt.kind === "const" || pkt.kind === "ro" || pkt.kind === "rw")
 }
 
 function lookupRegister(

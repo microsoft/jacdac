@@ -45,3 +45,12 @@ Emitted when the press time is greater than 500ms, and then at least every 500ms
 as long as the button remains pressed. The 'time' parameter records the the amount of time
 that the button has been held (since the down event).
 
+    client event click @ 0x82 { }
+    
+Up with less than `click_delay` ms.
+
+    client rw click_delay : u16 ms
+     
+    client event double_click @x83 { }
+
+Two `up` events followed within ``double_click_delay`` ms.

@@ -35,9 +35,7 @@ Type of the fingerprint.
     }
     ro fingerprint_template @ 0x182 {
         confidence: FingerprintTemplateConfidence
-        repeats:
-            property: string0
-            value: string0
+        template: bytes
     }
 
 Template Fingerprint information of a working sensor.

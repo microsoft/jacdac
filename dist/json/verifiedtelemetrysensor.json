@@ -164,18 +164,13 @@
           "storage": 2
         },
         {
-          "name": "property",
-          "type": "string0",
+          "name": "template",
+          "type": "bytes",
           "storage": 0,
-          "startRepeats": true
-        },
-        {
-          "name": "value",
-          "type": "string0",
-          "storage": 0
+          "isSimpleType": true
         }
       ],
-      "packFormat": "u16 r: z z"
+      "packFormat": "u16 b"
     },
     {
       "kind": "command",

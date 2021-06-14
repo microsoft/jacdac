@@ -4670,8 +4670,7 @@ namespace jacdac {
          * Template Fingerprint information of a working sensor.
          *
          * ```
-         * const [confidence, rest] = jdunpack<[jacdac.VerifiedTelemetryFingerprintTemplateConfidence, ([string, string])[]]>(buf, "u16 r: z z")
-         * const [property, value] = rest[0]
+         * const [confidence, template] = jdunpack<[jacdac.VerifiedTelemetryFingerprintTemplateConfidence, Buffer]>(buf, "u16 b")
          * ```
          */
         FingerprintTemplate = 0x182,

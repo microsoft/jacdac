@@ -40,8 +40,7 @@
 #define JD_VERIFIED_TELEMETRY_REG_FINGERPRINT_TEMPLATE 0x182
 typedef struct jd_verified_telemetry_fingerprint_template {
     uint16_t confidence;  // FingerprintTemplateConfidence
-    char property[0];  // string0
-    // char value[0];  // string0
+    uint8_t template[0];
 } jd_verified_telemetry_fingerprint_template_t;
 
 

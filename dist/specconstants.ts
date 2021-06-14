@@ -4466,8 +4466,7 @@ export enum VerifiedTelemetryReg {
      * Template Fingerprint information of a working sensor.
      *
      * ```
-     * const [confidence, rest] = jdunpack<[VerifiedTelemetryFingerprintTemplateConfidence, ([string, string])[]]>(buf, "u16 r: z z")
-     * const [property, value] = rest[0]
+     * const [confidence, template] = jdunpack<[VerifiedTelemetryFingerprintTemplateConfidence, Uint8Array]>(buf, "u16 b")
      * ```
      */
     FingerprintTemplate = 0x182,

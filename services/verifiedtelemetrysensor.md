@@ -53,7 +53,7 @@ This command will append a new template fingerprint to the `fingerprintTemplate`
 ## Events
 
     event telemetry_status_change @ change { 
-        telemtry: Status
+        telemetry_status: Status
     }
     
 The telemetry status of the device was updated.

@@ -4464,10 +4464,10 @@ export enum VerifiedTelemetryCmd {
 
 export enum VerifiedTelemetryEvent {
     /**
-     * Argument: telemtry Status (uint8_t). The telemetry status of the device was updated.
+     * Argument: telemetry_status Status (uint8_t). The telemetry status of the device was updated.
      *
      * ```
-     * const [telemtry] = jdunpack<[VerifiedTelemetryStatus]>(buf, "u8")
+     * const [telemetryStatus] = jdunpack<[VerifiedTelemetryStatus]>(buf, "u8")
      * ```
      */
     TelemetryStatusChange = 0x3,

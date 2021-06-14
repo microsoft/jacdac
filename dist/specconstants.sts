@@ -4666,10 +4666,10 @@ namespace jacdac {
 
     export const enum VerifiedTelemetryEvent {
         /**
-         * Argument: telemtry Status (uint8_t). The telemetry status of the device was updated.
+         * Argument: telemetry_status Status (uint8_t). The telemetry status of the device was updated.
          *
          * ```
-         * const [telemtry] = jdunpack<[jacdac.VerifiedTelemetryStatus]>(buf, "u8")
+         * const [telemetryStatus] = jdunpack<[jacdac.VerifiedTelemetryStatus]>(buf, "u8")
          * ```
          */
         //% block="telemetry status change"

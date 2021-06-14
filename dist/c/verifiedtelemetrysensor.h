@@ -55,7 +55,7 @@ typedef struct jd_verified_telemetry_fingerprint_template {
 #define JD_VERIFIED_TELEMETRY_CMD_RETRAIN_FINGERPRINT_TEMPLATE 0x81
 
 /**
- * Argument: telemtry Status (uint8_t). The telemetry status of the device was updated.
+ * Argument: telemetry_status Status (uint8_t). The telemetry status of the device was updated.
  */
 #define JD_VERIFIED_TELEMETRY_EV_TELEMETRY_STATUS_CHANGE JD_EV_CHANGE
 

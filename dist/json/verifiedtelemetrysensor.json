@@ -193,7 +193,7 @@
       "description": "The telemetry status of the device was updated.",
       "fields": [
         {
-          "name": "telemtry",
+          "name": "telemetry_status",
           "type": "Status",
           "storage": 1
         }

@@ -14,11 +14,6 @@
 #define JD_VERIFIED_TELEMETRY_FINGERPRINT_TYPE_CURRENT_SENSE 0x2
 #define JD_VERIFIED_TELEMETRY_FINGERPRINT_TYPE_CUSTOM 0x3
 
-// enum FingerprintTemplateConfidence (uint16_t)
-#define JD_VERIFIED_TELEMETRY_FINGERPRINT_TEMPLATE_CONFIDENCE_HIGH 0x64
-#define JD_VERIFIED_TELEMETRY_FINGERPRINT_TEMPLATE_CONFIDENCE_MEDIUM 0x32
-#define JD_VERIFIED_TELEMETRY_FINGERPRINT_TEMPLATE_CONFIDENCE_LOW 0x0
-
 /**
  * Read-only Status (uint8_t). Reads the telemetry working status, where ``true`` is working and ``false`` is faulty.
  */
@@ -39,7 +34,7 @@
  */
 #define JD_VERIFIED_TELEMETRY_REG_FINGERPRINT_TEMPLATE 0x182
 typedef struct jd_verified_telemetry_fingerprint_template {
-    uint16_t confidence;  // FingerprintTemplateConfidence
+    uint16_t confidence; // %
     uint8_t template[0];
 } jd_verified_telemetry_fingerprint_template_t;
 

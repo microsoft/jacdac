@@ -4405,13 +4405,6 @@ export enum VerifiedTelemetryFingerprintType { // uint8_t
     Custom = 0x3,
 }
 
-
-export enum VerifiedTelemetryFingerprintTemplateConfidence { // uint16_t
-    High = 0x64,
-    Medium = 0x32,
-    Low = 0x0,
-}
-
 export enum VerifiedTelemetryReg {
     /**
      * Read-only Status (uint8_t). Reads the telemetry working status, where ``true`` is working and ``false`` is faulty.
@@ -4444,7 +4437,7 @@ export enum VerifiedTelemetryReg {
      * Template Fingerprint information of a working sensor.
      *
      * ```
-     * const [confidence, template] = jdunpack<[VerifiedTelemetryFingerprintTemplateConfidence, Uint8Array]>(buf, "u16 b")
+     * const [confidence, template] = jdunpack<[number, Uint8Array]>(buf, "u16 b")
      * ```
      */
     FingerprintTemplate = 0x182,

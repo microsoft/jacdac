@@ -28,13 +28,8 @@ Specifies the interval between computing the fingerprint information.
 
 Type of the fingerprint.
 
-    enum FingerprintTemplateConfidence : u16 {
-        High = 100
-        Medium = 50
-        Low = 0
-    }
     ro fingerprint_template @ 0x182 {
-        confidence: FingerprintTemplateConfidence
+        confidence: u16 %
         template: bytes
     }
 

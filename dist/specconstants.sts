@@ -4607,13 +4607,6 @@ namespace jacdac {
         Custom = 0x3,
     }
 
-
-    export const enum VerifiedTelemetryFingerprintTemplateConfidence { // uint16_t
-        High = 0x64,
-        Medium = 0x32,
-        Low = 0x0,
-    }
-
     export const enum VerifiedTelemetryReg {
         /**
          * Read-only Status (uint8_t). Reads the telemetry working status, where ``true`` is working and ``false`` is faulty.
@@ -4646,7 +4639,7 @@ namespace jacdac {
          * Template Fingerprint information of a working sensor.
          *
          * ```
-         * const [confidence, template] = jdunpack<[jacdac.VerifiedTelemetryFingerprintTemplateConfidence, Buffer]>(buf, "u16 b")
+         * const [confidence, template] = jdunpack<[number, Buffer]>(buf, "u16 b")
          * ```
          */
         FingerprintTemplate = 0x182,

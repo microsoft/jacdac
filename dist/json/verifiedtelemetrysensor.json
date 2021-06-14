@@ -29,15 +29,6 @@
         "CurrentSense": 2,
         "Custom": 3
       }
-    },
-    "FingerprintTemplateConfidence": {
-      "name": "FingerprintTemplateConfidence",
-      "storage": 2,
-      "members": {
-        "High": 100,
-        "Medium": 50,
-        "Low": 0
-      }
     }
   },
   "constants": {},
@@ -160,8 +151,10 @@
       "fields": [
         {
           "name": "confidence",
-          "type": "FingerprintTemplateConfidence",
-          "storage": 2
+          "unit": "%",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
         },
         {
           "name": "template",

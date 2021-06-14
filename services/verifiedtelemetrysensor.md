@@ -6,16 +6,12 @@ A mixin service that exposes verified telemetry information for a sensor (see ht
 
 ## Registers
 
-    enum FingerprintTemplateConfidence : u8 {
-        High = 100
-        Medium = 50
-        Low = 0
+    enum Status : u8 {
+        Unknown = 0
+        Working = 1
+        Faulty = 2        
     }
-
-    ro telemetry @ 0x180 {
-        status: bool
-        confidence: FingerprintTemplateConfidence
-    }
+    ro telemetry_status: Status @ 0x180
     
 Reads the telemetry working status, where ``true`` is working and ``false`` is faulty.
 
@@ -28,12 +24,17 @@ Specifies the interval between computing the fingerprint information.
         CurrentSense = 2
         Custom = 3
     }
-
     const fingerprint_type: FingerprintType @ 0x181
 
 Type of the fingerprint.
 
-    const fingerprint_template @ 0x182 {
+    enum FingerprintTemplateConfidence : u16 {
+        High = 100
+        Medium = 50
+        Low = 0
+    }
+    ro fingerprint_template @ 0x182 {
+        confidence: FingerprintTemplateConfidence
         repeats:
             property: string0
             value: string0
@@ -50,3 +51,15 @@ This command will clear the template fingerprint of a sensor and collect a new t
     command retrain_fingerprint_template @ 0x081 {}
 
 This command will append a new template fingerprint to the `fingerprintTemplate`. Appending more fingerprints will increase the accuracy in detecting the telemetry status.
+
+## Events
+
+    event telemetry_status_change @ change { 
+        telemtry: Status
+    }
+    
+The telemetry status of the device was updated.
+
+    event fingerprint_template_change @ 0x80 { }
+    
+The fingerprint template was updated

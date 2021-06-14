@@ -4,25 +4,25 @@
 
 #define JD_SERVICE_CLASS_VERIFIED_TELEMETRY  0x2194841f
 
-// enum FingerprintTemplateConfidence (uint8_t)
-#define JD_VERIFIED_TELEMETRY_FINGERPRINT_TEMPLATE_CONFIDENCE_HIGH 0x64
-#define JD_VERIFIED_TELEMETRY_FINGERPRINT_TEMPLATE_CONFIDENCE_MEDIUM 0x32
-#define JD_VERIFIED_TELEMETRY_FINGERPRINT_TEMPLATE_CONFIDENCE_LOW 0x0
+// enum Status (uint8_t)
+#define JD_VERIFIED_TELEMETRY_STATUS_UNKNOWN 0x0
+#define JD_VERIFIED_TELEMETRY_STATUS_WORKING 0x1
+#define JD_VERIFIED_TELEMETRY_STATUS_FAULTY 0x2
 
 // enum FingerprintType (uint8_t)
 #define JD_VERIFIED_TELEMETRY_FINGERPRINT_TYPE_FALL_CURVE 0x1
 #define JD_VERIFIED_TELEMETRY_FINGERPRINT_TYPE_CURRENT_SENSE 0x2
 #define JD_VERIFIED_TELEMETRY_FINGERPRINT_TYPE_CUSTOM 0x3
 
-/**
- * Reads the telemetry working status, where ``true`` is working and ``false`` is faulty.
- */
-#define JD_VERIFIED_TELEMETRY_REG_TELEMETRY 0x180
-typedef struct jd_verified_telemetry_telemetry {
-    uint8_t status;  // bool
-    uint8_t confidence;  // FingerprintTemplateConfidence
-} jd_verified_telemetry_telemetry_t;
+// enum FingerprintTemplateConfidence (uint16_t)
+#define JD_VERIFIED_TELEMETRY_FINGERPRINT_TEMPLATE_CONFIDENCE_HIGH 0x64
+#define JD_VERIFIED_TELEMETRY_FINGERPRINT_TEMPLATE_CONFIDENCE_MEDIUM 0x32
+#define JD_VERIFIED_TELEMETRY_FINGERPRINT_TEMPLATE_CONFIDENCE_LOW 0x0
 
+/**
+ * Read-only Status (uint8_t). Reads the telemetry working status, where ``true`` is working and ``false`` is faulty.
+ */
+#define JD_VERIFIED_TELEMETRY_REG_TELEMETRY_STATUS 0x180
 
 /**
  * Read-write ms uint32_t. Specifies the interval between computing the fingerprint information.
@@ -39,6 +39,7 @@ typedef struct jd_verified_telemetry_telemetry {
  */
 #define JD_VERIFIED_TELEMETRY_REG_FINGERPRINT_TEMPLATE 0x182
 typedef struct jd_verified_telemetry_fingerprint_template {
+    uint16_t confidence;  // FingerprintTemplateConfidence
     char property[0];  // string0
     // char value[0];  // string0
 } jd_verified_telemetry_fingerprint_template_t;
@@ -53,5 +54,15 @@ typedef struct jd_verified_telemetry_fingerprint_template {
  * No args. This command will append a new template fingerprint to the `fingerprintTemplate`. Appending more fingerprints will increase the accuracy in detecting the telemetry status.
  */
 #define JD_VERIFIED_TELEMETRY_CMD_RETRAIN_FINGERPRINT_TEMPLATE 0x81
+
+/**
+ * Argument: telemtry Status (uint8_t). The telemetry status of the device was updated.
+ */
+#define JD_VERIFIED_TELEMETRY_EV_TELEMETRY_STATUS_CHANGE JD_EV_CHANGE
+
+/**
+ * The fingerprint template was updated
+ */
+#define JD_VERIFIED_TELEMETRY_EV_FINGERPRINT_TEMPLATE_CHANGE 0x80
 
 #endif

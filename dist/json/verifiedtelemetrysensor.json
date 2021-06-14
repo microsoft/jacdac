@@ -12,13 +12,13 @@
   },
   "classIdentifier": 563381279,
   "enums": {
-    "FingerprintTemplateConfidence": {
-      "name": "FingerprintTemplateConfidence",
+    "Status": {
+      "name": "Status",
       "storage": 1,
       "members": {
-        "High": 100,
-        "Medium": 50,
-        "Low": 0
+        "Unknown": 0,
+        "Working": 1,
+        "Faulty": 2
       }
     },
     "FingerprintType": {
@@ -28,6 +28,15 @@
         "FallCurve": 1,
         "CurrentSense": 2,
         "Custom": 3
+      }
+    },
+    "FingerprintTemplateConfidence": {
+      "name": "FingerprintTemplateConfidence",
+      "storage": 2,
+      "members": {
+        "High": 100,
+        "Medium": 50,
+        "Low": 0
       }
     }
   },
@@ -100,22 +109,17 @@
     },
     {
       "kind": "ro",
-      "name": "telemetry",
+      "name": "telemetry_status",
       "identifier": 384,
       "description": "Reads the telemetry working status, where ``true`` is working and ``false`` is faulty.",
       "fields": [
         {
-          "name": "status",
-          "type": "bool",
-          "storage": 1
-        },
-        {
-          "name": "confidence",
-          "type": "FingerprintTemplateConfidence",
+          "name": "_",
+          "type": "Status",
           "storage": 1
         }
       ],
-      "packFormat": "u8 u8"
+      "packFormat": "u8"
     },
     {
       "kind": "rw",
@@ -149,11 +153,16 @@
       "packFormat": "u8"
     },
     {
-      "kind": "const",
+      "kind": "ro",
       "name": "fingerprint_template",
       "identifier": 386,
       "description": "Template Fingerprint information of a working sensor.",
       "fields": [
+        {
+          "name": "confidence",
+          "type": "FingerprintTemplateConfidence",
+          "storage": 2
+        },
         {
           "name": "property",
           "type": "string0",
@@ -166,7 +175,7 @@
           "storage": 0
         }
       ],
-      "packFormat": "r: z z"
+      "packFormat": "u16 r: z z"
     },
     {
       "kind": "command",
@@ -180,6 +189,28 @@
       "name": "retrain_fingerprint_template",
       "identifier": 129,
       "description": "This command will append a new template fingerprint to the `fingerprintTemplate`. Appending more fingerprints will increase the accuracy in detecting the telemetry status.",
+      "fields": []
+    },
+    {
+      "kind": "event",
+      "name": "telemetry_status_change",
+      "identifier": 3,
+      "description": "The telemetry status of the device was updated.",
+      "fields": [
+        {
+          "name": "telemtry",
+          "type": "Status",
+          "storage": 1
+        }
+      ],
+      "identifierName": "change",
+      "packFormat": "u8"
+    },
+    {
+      "kind": "event",
+      "name": "fingerprint_template_change",
+      "identifier": 128,
+      "description": "The fingerprint template was updated",
       "fields": []
     }
   ],

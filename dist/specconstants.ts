@@ -4414,10 +4414,10 @@ export enum UvIndexReg {
 // Service: Verified Telemetry
 export const SRV_VERIFIED_TELEMETRY = 0x2194841f
 
-export enum VerifiedTelemetryFingerprintTemplateConfidence { // uint8_t
-    High = 0x64,
-    Medium = 0x32,
-    Low = 0x0,
+export enum VerifiedTelemetryStatus { // uint8_t
+    Unknown = 0x0,
+    Working = 0x1,
+    Faulty = 0x2,
 }
 
 
@@ -4427,15 +4427,22 @@ export enum VerifiedTelemetryFingerprintType { // uint8_t
     Custom = 0x3,
 }
 
+
+export enum VerifiedTelemetryFingerprintTemplateConfidence { // uint16_t
+    High = 0x64,
+    Medium = 0x32,
+    Low = 0x0,
+}
+
 export enum VerifiedTelemetryReg {
     /**
-     * Reads the telemetry working status, where ``true`` is working and ``false`` is faulty.
+     * Read-only Status (uint8_t). Reads the telemetry working status, where ``true`` is working and ``false`` is faulty.
      *
      * ```
-     * const [status, confidence] = jdunpack<[number, VerifiedTelemetryFingerprintTemplateConfidence]>(buf, "u8 u8")
+     * const [telemetryStatus] = jdunpack<[VerifiedTelemetryStatus]>(buf, "u8")
      * ```
      */
-    Telemetry = 0x180,
+    TelemetryStatus = 0x180,
 
     /**
      * Read-write ms uint32_t. Specifies the interval between computing the fingerprint information.
@@ -4459,7 +4466,7 @@ export enum VerifiedTelemetryReg {
      * Template Fingerprint information of a working sensor.
      *
      * ```
-     * const [rest] = jdunpack<[([string, string])[]]>(buf, "r: z z")
+     * const [confidence, rest] = jdunpack<[VerifiedTelemetryFingerprintTemplateConfidence, ([string, string])[]]>(buf, "u16 r: z z")
      * const [property, value] = rest[0]
      * ```
      */
@@ -4476,6 +4483,22 @@ export enum VerifiedTelemetryCmd {
      * No args. This command will append a new template fingerprint to the `fingerprintTemplate`. Appending more fingerprints will increase the accuracy in detecting the telemetry status.
      */
     RetrainFingerprintTemplate = 0x81,
+}
+
+export enum VerifiedTelemetryEvent {
+    /**
+     * Argument: telemtry Status (uint8_t). The telemetry status of the device was updated.
+     *
+     * ```
+     * const [telemtry] = jdunpack<[VerifiedTelemetryStatus]>(buf, "u8")
+     * ```
+     */
+    TelemetryStatusChange = 0x3,
+
+    /**
+     * The fingerprint template was updated
+     */
+    FingerprintTemplateChange = 0x80,
 }
 
 // Service: Vibration motor

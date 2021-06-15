@@ -1,27 +1,27 @@
-vanity name, design id, revision, module name, redirect source
-aaaaaa, 30, 1.0, accelerometer, aka.ms
-aaaaab, 39, 1.1, hub, aka.ms
-aaaaac, 37, 2.1, RGB LED 8 ring, aka.ms
-aaaaad, 29, 0.3, Low power micro:bit jacdapter, aka.ms
-aaaaae, , , , 
-aaaaaf, , , ,
-aaaaag, , , , 
-aaaaah, , , , 
-aaaaai, , , , 
-aaaaaj, , , , 
-aaaaak, , , , 
-aaaaal, , , , 
-aaaaam, , , , 
-aaaaan, , , , 
-aaaaao, , , , 
-aaaaap, , , , 
-aaaaaq, , , , 
-aaaaar, , , , 
-aaaaas, , , , 
-aaaaat, , , , 
-aaaaau, , , , 
-aaaaav, , , , 
-aaaaaw, , , , 
-aaaaax, , , , 
-aaaaay, , , , 
-aaaaaz, , , , 
+vanityname,designid,revision,modulename,redirectsource
+aaaaaa,30,1.0,accelerometer,aka.ms
+aaaaab,39,1.1,hub,aka.ms
+aaaaac,37,2.1,RGB LED 8 ring,aka.ms
+aaaaad,29,0.3,Low power micro:bit jacdapter,aka.ms
+aaaaae,,,,
+aaaaaf,,,,
+aaaaag,,,,
+aaaaah,,,,
+aaaaai,,,,
+aaaaaj,,,,
+aaaaak,,,,
+aaaaal,,,,
+aaaaam,,,,
+aaaaan,,,,
+aaaaao,,,,
+aaaaap,,,,
+aaaaaq,,,,
+aaaaar,,,,
+aaaaas,,,,
+aaaaat,,,,
+aaaaau,,,,
+aaaaav,,,,
+aaaaaw,,,,
+aaaaax,,,,
+aaaaay,,,,
+aaaaaz,,,,

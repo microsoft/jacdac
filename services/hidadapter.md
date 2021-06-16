@@ -55,10 +55,8 @@ Clears all configurations stored on the device.
 
 ## Events
 
-    event swapped @ change { }
+    event swapped @ change { 
+        configuration_number: u8
+    }
     
 Event that notifies clients that the server has swapped to a new configuration.
-
-    event modified @ 0x80 { }
-    
-Event that notifies clients that the server has modified to a configuration.

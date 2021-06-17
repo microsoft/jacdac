@@ -26,9 +26,9 @@ The current configuration the server is using.
         padding: u8[2]
         device_id: u64
         service_class: u32
-        service_idx: u8
-        trigger_context: u8
         trigger_value: u32
+        trigger_context: u8
+        service_idx: u8
         selector: u16
         modifiers: u16
     }
@@ -51,9 +51,9 @@ Open pipe for streaming a configuration to the service. The size of the configur
         padding: u8[2]
         device_id: u64
         service_class: u32
-        service_idx: u8
-        trigger_context: u8
         trigger_value: u32
+        trigger_context: u8
+        service_idx: u8
         selector: u16
         modifiers: u16
     }
@@ -70,7 +70,7 @@ Clears a specific binding stored on the device.
     }
 Clears a specific configuration stored on the device.
 
-    command clear @ 0x82 { }
+    command clear @ 0x84 { }
 Clears all configurations and bindings stored on the device.
 
 ## Events

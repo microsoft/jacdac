@@ -1,8 +1,8 @@
-# HID Adapter Configurator
+# HID Adapter
 
     identifier: 0x1e5758b5
     
-A service for configuring how Jacdac device map to HID input events. Users can have multiple configurations and swap between them using the `swapTo` or `next` commands.
+A service for configuring how Jacdac device map to HID input events. Users can have multiple configurations and swap between them by writing to `current_configuration`.
 
 ## Registers
 
@@ -23,13 +23,13 @@ The current configuration the server is using.
     pipe report configuration {
         configuration_number: u8
         binding_index: u8
-        device_id: u8[8]
+        device_id: u64
         service_class: u32
         service_idx: u8
-        trigger_context:u8
+        trigger_context: u8
         trigger_value: u32
         selector: u16
-        modifiers:u16
+        modifiers: u16
     }
     
 Retrieves a configuration stored on the server. If the configuration does not exist, an empty report will be returned
@@ -41,27 +41,27 @@ Retrieves a configuration stored on the server. If the configuration does not ex
     pipe report configuration {
         configuration_number: u8
         binding_index: u8
-        device_id: u8[8]
+        device_id: u64
         service_class: u32
         service_idx: u8
-        trigger_context:u8
+        trigger_context: u8
         trigger_value: u32
         selector: u16
-        modifiers:u16
+        modifiers: u16
     }
-    
+
 Retrieves a configuration stored on the server. If the configuration does not exist, an empty report will be returned
 
     command set_binding @ 0x81 {
         configuration_number: u8
         binding_index: u8
-        device_id: u8[8]
+        device_id: u64
         service_class: u32
         service_idx: u8
-        trigger_context:u8
+        trigger_context: u8
         trigger_value: u32
         selector: u16
-        modifiers:u16
+        modifiers: u16
     }
 Stores the given configuration on the server. If a configuration exists at this index, the new configuration will replace it.
 
@@ -76,8 +76,7 @@ Clears a specific binding stored on the device.
     }
 Clears a specific binding stored on the device.
 
-    command clear @ 0x82 {
-    }
+    command clear @ 0x82 { }
 Clears all configurations and bindings stored on the device.
 
 ## Events

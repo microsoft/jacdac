@@ -23,7 +23,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -41,14 +40,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -67,14 +64,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -159,6 +154,7 @@
           "storage": 2
         }
       ],
+      "lowLevel": true,
       "identifierName": "reading",
       "packFormat": "u0.16"
     },
@@ -170,12 +166,26 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "bool",
           "storage": 1
         }
       ],
       "optional": true,
+      "packFormat": "u8"
+    },
+    {
+      "kind": "ro",
+      "name": "pressed",
+      "identifier": 385,
+      "description": "Determines if the button is pressed currently.\n\nIf the event ``down`` is observed, ``pressed`` is true; if ``up`` or ``hold`` are observed, ``pressed`` is false.\nTo initialize, wait for any event or timeout to ``pressed`` is true after 750ms (1.5x hold time).",
+      "fields": [
+        {
+          "name": "_",
+          "type": "bool",
+          "storage": 1
+        }
+      ],
+      "client": true,
       "packFormat": "u8"
     },
     {

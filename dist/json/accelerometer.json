@@ -10,6 +10,7 @@
   ],
   "notes": {
     "short": "A 3-axis accelerometer.",
+    "long": "## Orientation\n\nAn accelerometer module should translate acceleration values as follows:\n\n| Orientation           \t| X value (g) \t| Y value (g) \t| Z value (g) \t|\n|-----------------------\t|-------------\t|-------------\t|-------------\t|\n| Module lying flat     \t| 0           \t| 0           \t| -1          \t|\n| Module on left edge   \t| -1          \t| 0           \t| 0           \t|\n| Module on bottom edge \t| 0           \t| 1           \t| 0           \t|\n\nWe recommend an orientation marking on the PCB so that users can mount modules without having to experiment with the device. Left/bottom can be determined by assuming text on silk runs left-to-right.",
     "events": "All events are debounced."
   },
   "classIdentifier": 521405449,
@@ -24,7 +25,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -42,14 +42,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -68,14 +66,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true

@@ -15,6 +15,11 @@
 #define JD_BUTTON_REG_ANALOG 0x180
 
 /**
+ * Read-only bool (uint8_t). Determines if the button is pressed currently.
+ */
+#define JD_BUTTON_REG_PRESSED 0x181
+
+/**
  * Emitted when button goes from inactive to active.
  */
 #define JD_BUTTON_EV_DOWN JD_EV_ACTIVE

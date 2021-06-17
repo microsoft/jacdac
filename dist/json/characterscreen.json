@@ -39,7 +39,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -57,14 +56,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -83,14 +80,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -109,11 +104,11 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
       ],
+      "lowLevel": true,
       "identifierName": "value",
       "packFormat": "s"
     },
@@ -142,7 +137,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "Variant",
           "storage": 1
         }
@@ -159,7 +153,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "TextDirection",
           "storage": 1
         }
@@ -175,7 +168,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true
@@ -191,13 +183,39 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true
         }
       ],
       "packFormat": "u8"
+    },
+    {
+      "kind": "command",
+      "name": "set_line",
+      "identifier": 128,
+      "description": "Overrides the content of a single line at a 0-based index.",
+      "fields": [
+        {
+          "name": "index",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "packFormat": "u16 s"
+    },
+    {
+      "kind": "command",
+      "name": "clear",
+      "identifier": 129,
+      "description": "Clears all text from the display.",
+      "fields": []
     }
   ],
   "tags": [],

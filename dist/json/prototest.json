@@ -24,7 +24,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -42,14 +41,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -68,14 +65,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -94,7 +89,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "bool",
           "storage": 1
         }
@@ -109,7 +103,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "bool",
           "storage": 1
         }
@@ -124,7 +117,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "u32",
           "storage": 4,
           "isSimpleType": true
@@ -140,7 +132,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "u32",
           "storage": 4,
           "isSimpleType": true
@@ -156,7 +147,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "i32",
           "storage": -4,
           "isSimpleType": true
@@ -172,7 +162,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "i32",
           "storage": -4,
           "isSimpleType": true
@@ -188,7 +177,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -203,7 +191,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -218,7 +205,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "bytes",
           "storage": 0,
           "isSimpleType": true
@@ -234,7 +220,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "bytes",
           "storage": 0,
           "isSimpleType": true
@@ -250,28 +235,24 @@
       "fields": [
         {
           "name": "i8",
-          "unit": "",
           "type": "i8",
           "storage": -1,
           "isSimpleType": true
         },
         {
           "name": "u8",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true
         },
         {
           "name": "u16",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "i32",
-          "unit": "",
           "type": "i32",
           "storage": -4,
           "isSimpleType": true
@@ -287,28 +268,24 @@
       "fields": [
         {
           "name": "i8",
-          "unit": "",
           "type": "i8",
           "storage": -1,
           "isSimpleType": true
         },
         {
           "name": "u8",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true
         },
         {
           "name": "u16",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "i32",
-          "unit": "",
           "type": "i32",
           "storage": -4,
           "isSimpleType": true
@@ -324,14 +301,12 @@
       "fields": [
         {
           "name": "u8",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true
         },
         {
           "name": "string",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -346,14 +321,12 @@
       "fields": [
         {
           "name": "u8",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true
         },
         {
           "name": "string",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -368,7 +341,6 @@
       "fields": [
         {
           "name": "bool",
-          "unit": "",
           "type": "bool",
           "storage": 1
         }
@@ -383,7 +355,6 @@
       "fields": [
         {
           "name": "u32",
-          "unit": "",
           "type": "u32",
           "storage": 4,
           "isSimpleType": true
@@ -399,7 +370,6 @@
       "fields": [
         {
           "name": "i32",
-          "unit": "",
           "type": "i32",
           "storage": -4,
           "isSimpleType": true
@@ -415,7 +385,6 @@
       "fields": [
         {
           "name": "string",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -430,7 +399,6 @@
       "fields": [
         {
           "name": "bytes",
-          "unit": "",
           "type": "bytes",
           "storage": 0,
           "isSimpleType": true
@@ -446,28 +414,24 @@
       "fields": [
         {
           "name": "i8",
-          "unit": "",
           "type": "i8",
           "storage": -1,
           "isSimpleType": true
         },
         {
           "name": "u8",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true
         },
         {
           "name": "u16",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "i32",
-          "unit": "",
           "type": "i32",
           "storage": -4,
           "isSimpleType": true
@@ -483,14 +447,12 @@
       "fields": [
         {
           "name": "u8",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true
         },
         {
           "name": "string",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -505,7 +467,6 @@
       "fields": [
         {
           "name": "bool",
-          "unit": "",
           "type": "bool",
           "storage": 1
         }
@@ -520,7 +481,6 @@
       "fields": [
         {
           "name": "u32",
-          "unit": "",
           "type": "u32",
           "storage": 4,
           "isSimpleType": true
@@ -536,7 +496,6 @@
       "fields": [
         {
           "name": "i32",
-          "unit": "",
           "type": "i32",
           "storage": -4,
           "isSimpleType": true
@@ -552,7 +511,6 @@
       "fields": [
         {
           "name": "string",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -567,7 +525,6 @@
       "fields": [
         {
           "name": "bytes",
-          "unit": "",
           "type": "bytes",
           "storage": 0,
           "isSimpleType": true
@@ -583,28 +540,24 @@
       "fields": [
         {
           "name": "i8",
-          "unit": "",
           "type": "i8",
           "storage": -1,
           "isSimpleType": true
         },
         {
           "name": "u8",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true
         },
         {
           "name": "u16",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "i32",
-          "unit": "",
           "type": "i32",
           "storage": -4,
           "isSimpleType": true
@@ -620,14 +573,12 @@
       "fields": [
         {
           "name": "u8",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true
         },
         {
           "name": "string",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -642,7 +593,6 @@
       "fields": [
         {
           "name": "p_bytes",
-          "unit": "",
           "type": "pipe",
           "storage": 12
         }
@@ -658,7 +608,6 @@
       "fields": [
         {
           "name": "byte",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true

@@ -22,7 +22,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -40,14 +39,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -66,14 +63,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -92,12 +87,13 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
+          "encoding": "bitset",
           "type": "bytes",
           "storage": 0,
           "isSimpleType": true
         }
       ],
+      "lowLevel": true,
       "identifierName": "value",
       "packFormat": "b"
     },
@@ -126,7 +122,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "bool",
           "storage": 1
         }
@@ -142,7 +137,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true
@@ -158,12 +152,42 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "bool",
           "storage": 1
         }
       ],
       "packFormat": "u8"
+    },
+    {
+      "kind": "command",
+      "name": "set_number",
+      "identifier": 128,
+      "description": "Shows the number on the screen using the decimal dot if available.",
+      "fields": [
+        {
+          "name": "value",
+          "isFloat": true,
+          "type": "f64",
+          "storage": 8
+        }
+      ],
+      "client": true,
+      "packFormat": "f64"
+    },
+    {
+      "kind": "command",
+      "name": "set_text",
+      "identifier": 129,
+      "description": "Shows the text on the screen. The client may decide to scroll the text if too long.",
+      "fields": [
+        {
+          "name": "text",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "client": true,
+      "packFormat": "s"
     }
   ],
   "tags": [

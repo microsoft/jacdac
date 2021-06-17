@@ -24,7 +24,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -42,14 +41,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -68,14 +65,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -154,7 +149,6 @@
       "fields": [
         {
           "name": "capacitance",
-          "unit": "",
           "type": "i32",
           "storage": -4,
           "isSimpleType": true,
@@ -172,7 +166,6 @@
       "fields": [
         {
           "name": "channel",
-          "unit": "",
           "type": "u32",
           "storage": 4,
           "isSimpleType": true
@@ -189,7 +182,6 @@
       "fields": [
         {
           "name": "channel",
-          "unit": "",
           "type": "u32",
           "storage": 4,
           "isSimpleType": true
@@ -206,7 +198,6 @@
       "fields": [
         {
           "name": "channel",
-          "unit": "",
           "type": "u32",
           "storage": 4,
           "isSimpleType": true
@@ -222,7 +213,6 @@
       "fields": [
         {
           "name": "channel",
-          "unit": "",
           "type": "u32",
           "storage": 4,
           "isSimpleType": true

@@ -173,8 +173,13 @@ export const secondaryUnitConverters: jdspec.SMap<{
     "#": { name: "count", unit: "#", scale: 1, offset: 0 },
 }
 
+export const encodings: jdspec.SMap<jdspec.Encoding> = {
+    json: "JSON",
+    bitset: "bitset",
+}
+
 export function resolveUnit(unit: string) {
-    if (unit === "") return { name: "", unit: "", scale: 1, offset: 1 } // indentifier
+    if (!unit) return { name: "", scale: 1, offset: 1 } // indentifier
 
     // seconary unit?
     const su = secondaryUnitConverters[unit]
@@ -398,6 +403,8 @@ export function parseServiceSpecificationMarkdownToJSON(
                 case "ro":
                 case "rw":
                 case "event":
+                case "client":
+                case "lowlevel":
                     startPacket(words)
                     break
                 case "}":
@@ -530,6 +537,17 @@ export function parseServiceSpecificationMarkdownToJSON(
 
     function startPacket(words: string[]) {
         checkBraces(null)
+
+        let client: boolean = undefined
+        let lowLevel: boolean = undefined
+        if (words[0] === "client") {
+            client = true
+            words.shift()
+        } else if (words[0] === "lowlevel") {
+            lowLevel = true
+            words.shift()
+        }
+
         const kindSt = words.shift()
         let kind: jdspec.PacketKind = "command"
         if (kindSt == "meta") {
@@ -567,6 +585,8 @@ export function parseServiceSpecificationMarkdownToJSON(
             description: "",
             fields: [],
             internal,
+            client,
+            lowLevel,
         }
         if (isReport && lastCmd && name == lastCmd.name) {
             packetInfo.secondary = true
@@ -817,9 +837,12 @@ export function parseServiceSpecificationMarkdownToJSON(
         const isFloat = typeShift === null || undefined
 
         let tok = words.shift()
-        let unit: jdspec.Unit = ""
+        let unit: jdspec.Unit
+        let encoding: jdspec.Encoding
         if (tok != "{") {
-            unit = normalizeUnit(tok)
+            if (type === "string" || type === "bytes")
+                encoding = normalizeEncoding(tok)
+            else unit = normalizeUnit(tok)
             tok = words.shift()
         }
 
@@ -840,6 +863,7 @@ export function parseServiceSpecificationMarkdownToJSON(
         const field: jdspec.PacketMember = {
             name,
             unit,
+            encoding,
             shift,
             isFloat,
             type,
@@ -854,6 +878,9 @@ export function parseServiceSpecificationMarkdownToJSON(
                 undefined,
             startRepeats: nextModifier == "repeats" || undefined,
         }
+
+        if (!unit) delete field.unit
+        if (!encoding) delete field.encoding
 
         if (tok == "{") {
             while (words.length) {
@@ -1173,13 +1200,17 @@ export function parseServiceSpecificationMarkdownToJSON(
         }
     }
 
+    function normalizeEncoding(unit: string): jdspec.Encoding {
+        return (unit && encodings[unit.toLowerCase()]) || undefined
+    }
+
     function normalizeUnit(unit: string): jdspec.Unit {
-        if (unit === undefined || unit === null) return ""
+        if (unit === undefined || unit === null) return undefined
 
         if (unitDescription[unit] || secondaryUnitConverters[unit])
             return unit as jdspec.Unit
         error(`expecting unit, got '${unit}'`)
-        return ""
+        return undefined
     }
 
     function paddingError(iface: jdspec.PacketInfo): string {
@@ -1725,7 +1756,9 @@ function toTypescript(info: jdspec.ServiceSpec, staticTypeScript: boolean) {
         if (pkt.secondary || inner == "info") {
             if (pack)
                 text = wrapComment(
-                    `${pkt.kind} ${upperCamel(pkt.name)}${wrapSnippet(pack)}`
+                    `${pkt.kind} ${upperCamel(pkt.name)}${
+                        pkt.client ? "" : wrapSnippet(pack)
+                    }`
                 )
         } else {
             const val = toHex(pkt.identifier)
@@ -1733,7 +1766,9 @@ function toTypescript(info: jdspec.ServiceSpec, staticTypeScript: boolean) {
                 meta = `//% block="${snakify(pkt.name).replace(/_/g, " ")}"\n`
             }
             text = `${
-                wrapComment(cmt.comment + wrapSnippet(pack)) + meta
+                wrapComment(
+                    cmt.comment + (pkt.client ? "" : wrapSnippet(pack))
+                ) + meta
             }${upperCamel(pkt.name)} = ${val},\n`
         }
 

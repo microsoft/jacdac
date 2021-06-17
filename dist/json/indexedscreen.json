@@ -22,7 +22,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -40,14 +39,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -66,14 +63,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -129,7 +124,6 @@
       "fields": [
         {
           "name": "pixels",
-          "unit": "",
           "type": "bytes",
           "storage": 0,
           "isSimpleType": true
@@ -162,7 +156,6 @@
       "fields": [
         {
           "name": "blue",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true,
@@ -170,21 +163,18 @@
         },
         {
           "name": "green",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true
         },
         {
           "name": "red",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true
         },
         {
           "name": "padding",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true
@@ -248,7 +238,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "bool",
           "storage": 1
         }

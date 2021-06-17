@@ -1,24 +1,33 @@
 {
-  "name": "Soil moisture",
+  "name": "Verified Telemetry",
   "status": "experimental",
-  "shortId": "soilmoisture",
-  "camelName": "soilMoisture",
-  "shortName": "soilMoisture",
+  "shortId": "verifiedtelemetrysensor",
+  "camelName": "verifiedTelemetry",
+  "shortName": "verifiedTelemetry",
   "extends": [
-    "_base",
-    "_sensor"
+    "_base"
   ],
   "notes": {
-    "short": "A soil moisture sensor."
+    "short": "A mixin service that exposes verified telemetry information for a sensor (see https://github.com/Azure/Verified-Telemetry/tree/main/PnPModel)."
   },
-  "classIdentifier": 491430835,
+  "classIdentifier": 563381279,
   "enums": {
-    "Variant": {
-      "name": "Variant",
+    "Status": {
+      "name": "Status",
       "storage": 1,
       "members": {
-        "Resistive": 1,
-        "Capacitive": 2
+        "Unknown": 0,
+        "Working": 1,
+        "Faulty": 2
+      }
+    },
+    "FingerprintType": {
+      "name": "FingerprintType",
+      "storage": 1,
+      "members": {
+        "FallCurve": 1,
+        "CurrentSense": 2,
+        "Custom": 3
       }
     }
   },
@@ -90,102 +99,108 @@
       "derived": "_base"
     },
     {
-      "kind": "rw",
-      "name": "streaming_samples",
-      "identifier": 3,
-      "description": "Asks device to stream a given number of samples\n(clients will typically write `255` to this register every second or so, while streaming is required).",
-      "fields": [
-        {
-          "name": "_",
-          "unit": "#",
-          "type": "u8",
-          "storage": 1,
-          "isSimpleType": true
-        }
-      ],
-      "internal": true,
-      "identifierName": "streaming_samples",
-      "packFormat": "u8",
-      "derived": "_sensor"
-    },
-    {
-      "kind": "rw",
-      "name": "streaming_interval",
-      "identifier": 4,
-      "description": "Period between packets of data when streaming in milliseconds.",
-      "fields": [
-        {
-          "name": "_",
-          "unit": "ms",
-          "type": "u32",
-          "storage": 4,
-          "isSimpleType": true,
-          "defaultValue": 100,
-          "typicalMin": 1,
-          "typicalMax": 60000
-        }
-      ],
-      "identifierName": "streaming_interval",
-      "packFormat": "u32",
-      "derived": "_sensor"
-    },
-    {
-      "kind": "const",
-      "name": "streaming_preferred_interval",
-      "identifier": 258,
-      "description": "Preferred default streaming interval for sensor in milliseconds.",
-      "fields": [
-        {
-          "name": "_",
-          "unit": "ms",
-          "type": "u32",
-          "storage": 4,
-          "isSimpleType": true
-        }
-      ],
-      "internal": true,
-      "optional": true,
-      "identifierName": "streaming_preferred_interval",
-      "packFormat": "u32",
-      "derived": "_sensor"
-    },
-    {
       "kind": "ro",
-      "name": "moisture",
-      "identifier": 257,
-      "description": "Indicates the wetness of the soil, from ``dry`` to ``wet``.",
+      "name": "telemetry_status",
+      "identifier": 384,
+      "description": "Reads the telemetry working status, where ``true`` is working and ``false`` is faulty.",
       "fields": [
         {
           "name": "_",
-          "unit": "/",
-          "shift": 16,
-          "type": "u0.16",
-          "storage": 2
-        }
-      ],
-      "identifierName": "reading",
-      "preferredInterval": 1000,
-      "packFormat": "u0.16"
-    },
-    {
-      "kind": "const",
-      "name": "variant",
-      "identifier": 263,
-      "description": "Describe the type of physical sensor.",
-      "fields": [
-        {
-          "name": "_",
-          "type": "Variant",
+          "type": "Status",
           "storage": 1
         }
       ],
-      "optional": true,
-      "identifierName": "variant",
       "packFormat": "u8"
+    },
+    {
+      "kind": "rw",
+      "name": "telemetry_status_interval",
+      "identifier": 128,
+      "description": "Specifies the interval between computing the fingerprint information.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "ms",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "packFormat": "u32"
+    },
+    {
+      "kind": "const",
+      "name": "fingerprint_type",
+      "identifier": 385,
+      "description": "Type of the fingerprint.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "FingerprintType",
+          "storage": 1
+        }
+      ],
+      "packFormat": "u8"
+    },
+    {
+      "kind": "ro",
+      "name": "fingerprint_template",
+      "identifier": 386,
+      "description": "Template Fingerprint information of a working sensor.",
+      "fields": [
+        {
+          "name": "confidence",
+          "unit": "%",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "template",
+          "type": "bytes",
+          "storage": 0,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u16 b"
+    },
+    {
+      "kind": "command",
+      "name": "reset_fingerprint_template",
+      "identifier": 128,
+      "description": "This command will clear the template fingerprint of a sensor and collect a new template fingerprint of the attached sensor.",
+      "fields": []
+    },
+    {
+      "kind": "command",
+      "name": "retrain_fingerprint_template",
+      "identifier": 129,
+      "description": "This command will append a new template fingerprint to the `fingerprintTemplate`. Appending more fingerprints will increase the accuracy in detecting the telemetry status.",
+      "fields": []
+    },
+    {
+      "kind": "event",
+      "name": "telemetry_status_change",
+      "identifier": 3,
+      "description": "The telemetry status of the device was updated.",
+      "fields": [
+        {
+          "name": "telemetry_status",
+          "type": "Status",
+          "storage": 1
+        }
+      ],
+      "identifierName": "change",
+      "packFormat": "u8"
+    },
+    {
+      "kind": "event",
+      "name": "fingerprint_template_change",
+      "identifier": 128,
+      "description": "The fingerprint template was updated",
+      "fields": []
     }
   ],
-  "tags": [
-    "8bit"
-  ],
-  "group": "Environment"
+  "tags": []
 }

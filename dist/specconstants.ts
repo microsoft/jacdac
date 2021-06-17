@@ -520,6 +520,82 @@ export enum ArcadeSoundReg {
     BufferPending = 0x181,
 }
 
+// Service: Azure IoT Hub
+export const SRV_AZURE_IOT_HUB = 0x19ed364c
+export enum AzureIotHubCmd {
+    /**
+     * Argument: body string (bytes). Sends a short message in string format (it's typically JSON-encoded).
+     *
+     * ```
+     * const [body] = jdunpack<[string]>(buf, "s")
+     * ```
+     */
+    SendMessage = 0x82,
+
+    /**
+     * No args. Try connecting using currently set `connection_string`.
+     * The service normally periodically tries to connect automatically.
+     */
+    Connect = 0x80,
+
+    /**
+     * No args. Disconnect from current Hub if any.
+     * This disables auto-connect behavior, until a `connect` command is issued.
+     */
+    Disconnect = 0x81,
+}
+
+export enum AzureIotHubReg {
+    /**
+     * Read-only string (bytes). Returns `"ok"` when connected, empty `""` when disconnected, and an error description otherwise.
+     *
+     * ```
+     * const [connectionStatus] = jdunpack<[string]>(buf, "s")
+     * ```
+     */
+    ConnectionStatus = 0x180,
+
+    /**
+     * Constant string (bytes). Something like `my-iot-hub.azure-devices.net`; empty string when not properly configured
+     *
+     * ```
+     * const [hubName] = jdunpack<[string]>(buf, "s")
+     * ```
+     */
+    HubName = 0x181,
+
+    /**
+     * Constant string (bytes). Something like `my-dev-007`; empty string when `connection_string` is not set.
+     *
+     * ```
+     * const [deviceId] = jdunpack<[string]>(buf, "s")
+     * ```
+     */
+    DeviceId = 0x182,
+}
+
+export enum AzureIotHubEvent {
+    /**
+     * Argument: body string (bytes). This event is emitted upon reception of a cloud to device message, that is a string
+     * (doesn't contain NUL bytes) and fits in a single event packet.
+     *
+     * ```
+     * const [body] = jdunpack<[string]>(buf, "s")
+     * ```
+     */
+    Message = 0x82,
+
+    /**
+     * Raised when the device is connected to the hub.
+     */
+    Connected = 0x80,
+
+    /**
+     * Raised when the device is disconnected to the hub. ``connection_status`` may contain information about the error.
+     */
+    Disconnected = 0x81,
+}
+
 // Service: Barcode reader
 export const SRV_BARCODE_READER = 0x1c739e6c
 
@@ -779,6 +855,11 @@ export enum ButtonReg {
      * ```
      */
     Analog = 0x180,
+
+    /**
+     * Read-only bool (uint8_t). Determines if the button is pressed currently.
+     */
+    Pressed = 0x181,
 }
 
 export enum ButtonEvent {
@@ -834,6 +915,11 @@ export enum BuzzerCmd {
      * ```
      */
     PlayTone = 0x80,
+
+    /**
+     * Play a note at the given frequency and volume.
+     */
+    PlayNote = 0x81,
 }
 
 // Service: Capacitive Button
@@ -925,6 +1011,22 @@ export enum CharacterScreenReg {
      * ```
      */
     Columns = 0x181,
+}
+
+export enum CharacterScreenCmd {
+    /**
+     * Overrides the content of a single line at a 0-based index.
+     *
+     * ```
+     * const [index, message] = jdunpack<[number, string]>(buf, "u16 s")
+     * ```
+     */
+    SetLine = 0x80,
+
+    /**
+     * No args. Clears all text from the display.
+     */
+    Clear = 0x81,
 }
 
 // Service: Color
@@ -1160,28 +1262,6 @@ export enum ControlReg {
      * ```
      */
     FirmwareUrl = 0x188,
-}
-
-// Service: Dependable Sensor
-export const SRV_DEPENDABLE_SENSOR = 0x2e6692c5
-export enum DependableSensorReg {
-    /**
-     * Read-only bytes. Reads the computed fingerprint of the sensor. When the module computes a new value for the fingerprint, it may also send a packet with the updated value.
-     *
-     * ```
-     * const [fingerprint] = jdunpack<[Uint8Array]>(buf, "b")
-     * ```
-     */
-    Fingerprint = 0x180,
-
-    /**
-     * Read-write ms uint32_t. Specifies the interval between computing the fingerprint information.
-     *
-     * ```
-     * const [fingerprintInterval] = jdunpack<[number]>(buf, "u32")
-     * ```
-     */
-    FingerprintInterval = 0x80,
 }
 
 // Service: Distance
@@ -1651,270 +1731,6 @@ export enum IndexedScreenReg {
      * ```
      */
     Rotation = 0x83,
-}
-
-// Service: Azure IoT Hub
-export const SRV_IOT_HUB = 0x19ed364c
-export enum IotHubCmd {
-    /**
-     * No args. Try connecting using currently set `connection_string`.
-     * The service normally preiodically tries to connect automatically.
-     */
-    Connect = 0x80,
-
-    /**
-     * No args. Disconnect from current Hub if any.
-     * This disables auto-connect behavior, until a `connect` command is issued.
-     */
-    Disconnect = 0x81,
-
-    /**
-     * Sends a short message in string format (it's typically JSON-encoded). Multiple properties can be attached.
-     *
-     * ```
-     * const [msg, rest] = jdunpack<[string, ([string, string])[]]>(buf, "z r: z z")
-     * const [propertyName, propertyValue] = rest[0]
-     * ```
-     */
-    SendStringMsg = 0x82,
-
-    /**
-     * No args. Sends an arbitrary, possibly binary, message. The size is only limited by RAM on the module.
-     */
-    SendMsgExt = 0x83,
-
-    /**
-     * report SendMsgExt
-     * ```
-     * const [message] = jdunpack<[number]>(buf, "u16")
-     * ```
-     */
-
-    /**
-     * Argument: devicebound pipe (bytes). Subscribes for cloud to device messages, which will be sent over the specified pipe.
-     *
-     * ```
-     * const [devicebound] = jdunpack<[Uint8Array]>(buf, "b[12]")
-     * ```
-     */
-    Subscribe = 0x84,
-
-    /**
-     * Argument: twin_result pipe (bytes). Ask for current device digital twin.
-     *
-     * ```
-     * const [twinResult] = jdunpack<[Uint8Array]>(buf, "b[12]")
-     * ```
-     */
-    GetTwin = 0x85,
-
-    /**
-     * Argument: twin_updates pipe (bytes). Subscribe to updates to our twin.
-     *
-     * ```
-     * const [twinUpdates] = jdunpack<[Uint8Array]>(buf, "b[12]")
-     * ```
-     */
-    SubscribeTwin = 0x87,
-
-    /**
-     * No args. Start twin update.
-     */
-    PatchTwin = 0x86,
-
-    /**
-     * report PatchTwin
-     * ```
-     * const [patchPort] = jdunpack<[number]>(buf, "u16")
-     * ```
-     */
-
-    /**
-     * Argument: method_call pipe (bytes). Subscribe to direct method calls.
-     *
-     * ```
-     * const [methodCall] = jdunpack<[Uint8Array]>(buf, "b[12]")
-     * ```
-     */
-    SubscribeMethod = 0x88,
-
-    /**
-     * Respond to a direct method call (`request_id` comes from `subscribe_method` pipe).
-     *
-     * ```
-     * const [status, requestId] = jdunpack<[number, string]>(buf, "u32 z")
-     * ```
-     */
-    RespondToMethod = 0x89,
-
-    /**
-     * report RespondToMethod
-     * ```
-     * const [responseBody] = jdunpack<[number]>(buf, "u16")
-     * ```
-     */
-}
-
-
-/**
- * pipe_command Message
- * ```
- * const [body] = jdunpack<[Uint8Array]>(buf, "b")
- * ```
- */
-
-/**
- * pipe_report Devicebound
- * ```
- * const [body] = jdunpack<[Uint8Array]>(buf, "b")
- * ```
- */
-
-/**
- * pipe_report TwinJson
- * ```
- * const [json] = jdunpack<[Uint8Array]>(buf, "b")
- * ```
- */
-
-/**
- * pipe_report TwinUpdateJson
- * ```
- * const [json] = jdunpack<[Uint8Array]>(buf, "b")
- * ```
- */
-
-/**
- * pipe_command TwinPatchJson
- * ```
- * const [json] = jdunpack<[Uint8Array]>(buf, "b")
- * ```
- */
-
-/**
- * pipe_report MethodCallBody
- * ```
- * const [json] = jdunpack<[Uint8Array]>(buf, "b")
- * ```
- */
-
-/**
- * pipe_command MethodResponse
- * ```
- * const [json] = jdunpack<[Uint8Array]>(buf, "b")
- * ```
- */
-
-
-export enum IotHubPipeCmd {
-    /**
-     * Set properties on the message. Can be repeated multiple times.
-     *
-     * ```
-     * const [rest] = jdunpack<[([string, string])[]]>(buf, "r: z z")
-     * const [propertyName, propertyValue] = rest[0]
-     * ```
-     */
-    Properties = 0x1,
-
-    /**
-     * If there are any properties, this meta-report is send one or more times.
-     * All properties of a given message are always sent before the body.
-     *
-     * ```
-     * const [rest] = jdunpack<[([string, string])[]]>(buf, "r: z z")
-     * const [propertyName, propertyValue] = rest[0]
-     * ```
-     */
-    DeviceboundProperties = 0x1,
-
-    /**
-     * Argument: status_code uint32_t. This emitted if status is not 200.
-     *
-     * ```
-     * const [statusCode] = jdunpack<[number]>(buf, "u32")
-     * ```
-     */
-    TwinError = 0x1,
-
-    /**
-     * This is sent after the last part of the `method_call_body`.
-     *
-     * ```
-     * const [methodName, requestId] = jdunpack<[string, string]>(buf, "z z")
-     * ```
-     */
-    MethodCall = 0x1,
-}
-
-export enum IotHubReg {
-    /**
-     * Read-only string (bytes). Returns `"ok"` when connected, and an error description otherwise.
-     *
-     * ```
-     * const [connectionStatus] = jdunpack<[string]>(buf, "s")
-     * ```
-     */
-    ConnectionStatus = 0x180,
-
-    /**
-     * Read-write string (bytes). Connection string typically looks something like
-     * `HostName=my-iot-hub.azure-devices.net;DeviceId=my-dev-007;SharedAccessKey=xyz+base64key`.
-     * You can get it in `Shared access policies -> iothubowner -> Connection string-primary key` in the Azure Portal.
-     * This register is write-only.
-     * You can use `hub_name` and `device_id` to check if connection string is set, but you cannot get the shared access key.
-     *
-     * ```
-     * const [connectionString] = jdunpack<[string]>(buf, "s")
-     * ```
-     */
-    ConnectionString = 0x80,
-
-    /**
-     * Read-only string (bytes). Something like `my-iot-hub.azure-devices.net`; empty string when `connection_string` is not set.
-     *
-     * ```
-     * const [hubName] = jdunpack<[string]>(buf, "s")
-     * ```
-     */
-    HubName = 0x181,
-
-    /**
-     * Read-only string (bytes). Something like `my-dev-007`; empty string when `connection_string` is not set.
-     *
-     * ```
-     * const [deviceId] = jdunpack<[string]>(buf, "s")
-     * ```
-     */
-    DeviceId = 0x182,
-}
-
-export enum IotHubEvent {
-    /**
-     * Emitted upon successful connection.
-     */
-    Connected = 0x80,
-
-    /**
-     * Argument: reason string (bytes). Emitted when connection was lost.
-     *
-     * ```
-     * const [reason] = jdunpack<[string]>(buf, "s")
-     * ```
-     */
-    ConnectionError = 0x81,
-
-    /**
-     * This event is emitted upon reception of a cloud to device message, that is a string
-     * (doesn't contain NUL bytes) and fits in a single event packet.
-     * For reliable reception, use the `subscribe` command above.
-     *
-     * ```
-     * const [msg, rest] = jdunpack<[string, ([string, string])[]]>(buf, "z r: z z")
-     * const [propertyName, propertyValue] = rest[0]
-     * ```
-     */
-    DeviceboundStr = 0x82,
 }
 
 // Service: Joystick
@@ -2850,15 +2666,26 @@ export enum PotentiometerReg {
 
 // Service: Power
 export const SRV_POWER = 0x1fa4c95a
+
+export enum PowerPowerStatus { // uint8_t
+    Disallowed = 0x0,
+    Powering = 0x1,
+    Overload = 0x2,
+    Overprovision = 0x3,
+    Startup = 0x4,
+}
+
 export enum PowerReg {
     /**
-     * Read-write bool (uint8_t). Turn the power to the bus on/off.
+     * Read-write bool (uint8_t). Can be used to completely disable the service.
+     * When allowed, the service may still not be providing power, see
+     * `power_status` for the actual current state.
      *
      * ```
-     * const [enabled] = jdunpack<[number]>(buf, "u8")
+     * const [allowed] = jdunpack<[number]>(buf, "u8")
      * ```
      */
-    Enabled = 0x1,
+    Allowed = 0x1,
 
     /**
      * Read-write mA uint16_t. Limit the power provided by the service. The actual maximum limit will depend on hardware.
@@ -2871,13 +2698,15 @@ export enum PowerReg {
     MaxPower = 0x7,
 
     /**
-     * Read-only bool (uint8_t). Indicates whether the power has been shut down due to overdraw.
+     * Read-only PowerStatus (uint8_t). Indicates whether the power provider is currently providing power (`Powering` state), and if not, why not.
+     * `Overprovision` means there was another power provider, and we stopped not to overprovision the bus.
+     * The `Startup` status is used during the initial 0-300ms delay.
      *
      * ```
-     * const [overload] = jdunpack<[number]>(buf, "u8")
+     * const [powerStatus] = jdunpack<[PowerPowerStatus]>(buf, "u8")
      * ```
      */
-    Overload = 0x181,
+    PowerStatus = 0x181,
 
     /**
      * Read-only mA uint16_t. Present current draw from the bus.
@@ -2937,39 +2766,24 @@ export enum PowerReg {
      * ```
      */
     KeepOnPulsePeriod = 0x81,
-
-    /**
-     * Read-write int32_t. This value is added to `priority` of `active` reports, thus modifying amount of load-sharing
-     * between different supplies.
-     * The `priority` is clamped to `u32` range when included in `active` reports.
-     *
-     * ```
-     * const [priorityOffset] = jdunpack<[number]>(buf, "i32")
-     * ```
-     */
-    PriorityOffset = 0x82,
 }
 
 export enum PowerCmd {
     /**
-     * Argument: priority uint32_t. Emitted with announce packets when the service is running.
-     * The `priority` should be computed as
-     * `(((max_power >> 5) << 24) | remaining_capacity) + priority_offset`
-     * where the `remaining_capacity` is `(battery_charge * battery_capacity) >> 16`,
-     * or one of the special constants
-     * `0xe00000` when the remaining capacity is unknown,
-     * or `0xf00000` when the capacity is considered infinite (eg., wall charger).
-     * The `priority` is clamped to `u32` range after computation.
-     * In cases where battery capacity is unknown but the charge percentage can be estimated,
-     * it's recommended to assume a fixed (typical) battery capacity for priority purposes,
-     * rather than using `0xe00000`, as this will have a better load-sharing characteristic,
-     * especially if several power providers of the same type are used.
+     * No args. Sent by the power service periodically, as broadcast.
+     */
+    Shutdown = 0x80,
+}
+
+export enum PowerEvent {
+    /**
+     * Argument: power_status PowerStatus (uint8_t). Emitted whenever `power_status` changes.
      *
      * ```
-     * const [priority] = jdunpack<[number]>(buf, "u32")
+     * const [powerStatus] = jdunpack<[PowerPowerStatus]>(buf, "u8")
      * ```
      */
-    Active = 0x80,
+    PowerStatusChanged = 0x3,
 }
 
 // Service: Pressure Button
@@ -3910,6 +3724,18 @@ export enum SevenSegmentDisplayReg {
     DecimalPoint = 0x181,
 }
 
+export enum SevenSegmentDisplayCmd {
+    /**
+     * Argument: value f64 (uint64_t). Shows the number on the screen using the decimal dot if available.
+     */
+    SetNumber = 0x80,
+
+    /**
+     * Argument: text string (bytes). Shows the text on the screen. The client may decide to scroll the text if too long.
+     */
+    SetText = 0x81,
+}
+
 // Service: Soil moisture
 export const SRV_SOIL_MOISTURE = 0x1d4aa3b3
 
@@ -4561,6 +4387,88 @@ export enum UvIndexReg {
      * ```
      */
     Variant = 0x107,
+}
+
+// Service: Verified Telemetry
+export const SRV_VERIFIED_TELEMETRY = 0x2194841f
+
+export enum VerifiedTelemetryStatus { // uint8_t
+    Unknown = 0x0,
+    Working = 0x1,
+    Faulty = 0x2,
+}
+
+
+export enum VerifiedTelemetryFingerprintType { // uint8_t
+    FallCurve = 0x1,
+    CurrentSense = 0x2,
+    Custom = 0x3,
+}
+
+export enum VerifiedTelemetryReg {
+    /**
+     * Read-only Status (uint8_t). Reads the telemetry working status, where ``true`` is working and ``false`` is faulty.
+     *
+     * ```
+     * const [telemetryStatus] = jdunpack<[VerifiedTelemetryStatus]>(buf, "u8")
+     * ```
+     */
+    TelemetryStatus = 0x180,
+
+    /**
+     * Read-write ms uint32_t. Specifies the interval between computing the fingerprint information.
+     *
+     * ```
+     * const [telemetryStatusInterval] = jdunpack<[number]>(buf, "u32")
+     * ```
+     */
+    TelemetryStatusInterval = 0x80,
+
+    /**
+     * Constant FingerprintType (uint8_t). Type of the fingerprint.
+     *
+     * ```
+     * const [fingerprintType] = jdunpack<[VerifiedTelemetryFingerprintType]>(buf, "u8")
+     * ```
+     */
+    FingerprintType = 0x181,
+
+    /**
+     * Template Fingerprint information of a working sensor.
+     *
+     * ```
+     * const [confidence, template] = jdunpack<[number, Uint8Array]>(buf, "u16 b")
+     * ```
+     */
+    FingerprintTemplate = 0x182,
+}
+
+export enum VerifiedTelemetryCmd {
+    /**
+     * No args. This command will clear the template fingerprint of a sensor and collect a new template fingerprint of the attached sensor.
+     */
+    ResetFingerprintTemplate = 0x80,
+
+    /**
+     * No args. This command will append a new template fingerprint to the `fingerprintTemplate`. Appending more fingerprints will increase the accuracy in detecting the telemetry status.
+     */
+    RetrainFingerprintTemplate = 0x81,
+}
+
+export enum VerifiedTelemetryEvent {
+    /**
+     * Argument: telemetry_status Status (uint8_t). The telemetry status of the device was updated.
+     *
+     * ```
+     * const [telemetryStatus] = jdunpack<[VerifiedTelemetryStatus]>(buf, "u8")
+     * ```
+     */
+    TelemetryStatusChange = 0x3,
+
+    /**
+     * The fingerprint template was updated
+     */
+    FingerprintTemplateChange = 0x80,
 }
 
 // Service: Vibration motor

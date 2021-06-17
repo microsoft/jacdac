@@ -22,7 +22,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -40,14 +39,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -66,14 +63,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -92,7 +87,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "bool",
           "storage": 1
         }
@@ -108,7 +102,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true
@@ -124,7 +117,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true,
@@ -143,7 +135,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true,
@@ -162,7 +153,6 @@
       "fields": [
         {
           "name": "message",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -177,7 +167,6 @@
       "fields": [
         {
           "name": "value",
-          "unit": "",
           "isFloat": true,
           "type": "f64",
           "storage": 8
@@ -193,14 +182,12 @@
       "fields": [
         {
           "name": "value",
-          "unit": "",
           "isFloat": true,
           "type": "f64",
           "storage": 8
         },
         {
           "name": "name",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -215,7 +202,6 @@
       "fields": [
         {
           "name": "data",
-          "unit": "",
           "type": "bytes",
           "storage": 0,
           "isSimpleType": true
@@ -238,7 +224,6 @@
         },
         {
           "name": "device_serial_number",
-          "unit": "",
           "type": "u32",
           "storage": 4,
           "isSimpleType": true
@@ -252,13 +237,11 @@
         },
         {
           "name": "padding",
-          "unit": "",
           "type": "u8[1]",
           "storage": 1
         },
         {
           "name": "message",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -280,7 +263,6 @@
         },
         {
           "name": "device_serial_number",
-          "unit": "",
           "type": "u32",
           "storage": 4,
           "isSimpleType": true
@@ -294,20 +276,17 @@
         },
         {
           "name": "padding",
-          "unit": "",
           "type": "u8[3]",
           "storage": 3
         },
         {
           "name": "value",
-          "unit": "",
           "isFloat": true,
           "type": "f64",
           "storage": 8
         },
         {
           "name": "name",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -329,7 +308,6 @@
         },
         {
           "name": "device_serial_number",
-          "unit": "",
           "type": "u32",
           "storage": 4,
           "isSimpleType": true
@@ -343,13 +321,11 @@
         },
         {
           "name": "padding",
-          "unit": "",
           "type": "u8[1]",
           "storage": 1
         },
         {
           "name": "data",
-          "unit": "",
           "type": "bytes",
           "storage": 0,
           "isSimpleType": true

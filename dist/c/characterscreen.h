@@ -42,4 +42,19 @@
  */
 #define JD_CHARACTER_SCREEN_REG_COLUMNS 0x181
 
+/**
+ * Overrides the content of a single line at a 0-based index.
+ */
+#define JD_CHARACTER_SCREEN_CMD_SET_LINE 0x80
+typedef struct jd_character_screen_set_line {
+    uint16_t index;
+    char message[0];  // string
+} jd_character_screen_set_line_t;
+
+
+/**
+ * No args. Clears all text from the display.
+ */
+#define JD_CHARACTER_SCREEN_CMD_CLEAR 0x81
+
 #endif

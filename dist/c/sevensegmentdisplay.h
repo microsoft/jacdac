@@ -33,4 +33,14 @@
  */
 #define JD_SEVEN_SEGMENT_DISPLAY_REG_DECIMAL_POINT 0x181
 
+/**
+ * Argument: value f64 (uint64_t). Shows the number on the screen using the decimal dot if available.
+ */
+#define JD_SEVEN_SEGMENT_DISPLAY_CMD_SET_NUMBER 0x80
+
+/**
+ * Argument: text string (bytes). Shows the text on the screen. The client may decide to scroll the text if too long.
+ */
+#define JD_SEVEN_SEGMENT_DISPLAY_CMD_SET_TEXT 0x81
+
 #endif

@@ -33,7 +33,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "string",
           "storage": 0
         }
@@ -51,14 +50,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -77,14 +74,12 @@
       "fields": [
         {
           "name": "code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "vendor_code",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
@@ -163,14 +158,12 @@
       "fields": [
         {
           "name": "year",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "month",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true,
@@ -179,7 +172,6 @@
         },
         {
           "name": "day_of_month",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true,
@@ -188,7 +180,6 @@
         },
         {
           "name": "day_of_week",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true,
@@ -197,7 +188,6 @@
         },
         {
           "name": "hour",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true,
@@ -206,7 +196,6 @@
         },
         {
           "name": "min",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true,
@@ -215,7 +204,6 @@
         },
         {
           "name": "sec",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true,
@@ -269,7 +257,6 @@
       "fields": [
         {
           "name": "_",
-          "unit": "",
           "type": "Variant",
           "storage": 1
         }
@@ -286,14 +273,12 @@
       "fields": [
         {
           "name": "year",
-          "unit": "",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true
         },
         {
           "name": "month",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true,
@@ -302,7 +287,6 @@
         },
         {
           "name": "day_of_month",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true,
@@ -311,7 +295,6 @@
         },
         {
           "name": "day_of_week",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true,
@@ -320,7 +303,6 @@
         },
         {
           "name": "hour",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true,
@@ -329,7 +311,6 @@
         },
         {
           "name": "min",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true,
@@ -338,7 +319,6 @@
         },
         {
           "name": "sec",
-          "unit": "",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true,

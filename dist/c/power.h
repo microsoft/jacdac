@@ -4,10 +4,19 @@
 
 #define JD_SERVICE_CLASS_POWER  0x1fa4c95a
 
+// enum PowerStatus (uint8_t)
+#define JD_POWER_POWER_STATUS_DISALLOWED 0x0
+#define JD_POWER_POWER_STATUS_POWERING 0x1
+#define JD_POWER_POWER_STATUS_OVERLOAD 0x2
+#define JD_POWER_POWER_STATUS_OVERPROVISION 0x3
+#define JD_POWER_POWER_STATUS_STARTUP 0x4
+
 /**
- * Read-write bool (uint8_t). Turn the power to the bus on/off.
+ * Read-write bool (uint8_t). Can be used to completely disable the service.
+ * When allowed, the service may still not be providing power, see 
+ * `power_status` for the actual current state.
  */
-#define JD_POWER_REG_ENABLED JD_REG_INTENSITY
+#define JD_POWER_REG_ALLOWED JD_REG_INTENSITY
 
 /**
  * Read-write mA uint16_t. Limit the power provided by the service. The actual maximum limit will depend on hardware.
@@ -16,9 +25,11 @@
 #define JD_POWER_REG_MAX_POWER JD_REG_MAX_POWER
 
 /**
- * Read-only bool (uint8_t). Indicates whether the power has been shut down due to overdraw.
+ * Read-only PowerStatus (uint8_t). Indicates whether the power provider is currently providing power (`Powering` state), and if not, why not.
+ * `Overprovision` means there was another power provider, and we stopped not to overprovision the bus.
+ * The `Startup` status is used during the initial 0-300ms delay.
  */
-#define JD_POWER_REG_OVERLOAD 0x181
+#define JD_POWER_REG_POWER_STATUS 0x181
 
 /**
  * Read-only mA uint16_t. Present current draw from the bus.
@@ -56,26 +67,13 @@
 #define JD_POWER_REG_KEEP_ON_PULSE_PERIOD 0x81
 
 /**
- * Read-write int32_t. This value is added to `priority` of `active` reports, thus modifying amount of load-sharing
- * between different supplies.
- * The `priority` is clamped to `u32` range when included in `active` reports.
+ * No args. Sent by the power service periodically, as broadcast.
  */
-#define JD_POWER_REG_PRIORITY_OFFSET 0x82
+#define JD_POWER_CMD_SHUTDOWN 0x80
 
 /**
- * Argument: priority uint32_t. Emitted with announce packets when the service is running.
- * The `priority` should be computed as
- * `(((max_power >> 5) << 24) | remaining_capacity) + priority_offset`
- * where the `remaining_capacity` is `(battery_charge * battery_capacity) >> 16`,
- * or one of the special constants
- * `0xe00000` when the remaining capacity is unknown,
- * or `0xf00000` when the capacity is considered infinite (eg., wall charger).
- * The `priority` is clamped to `u32` range after computation.
- * In cases where battery capacity is unknown but the charge percentage can be estimated,
- * it's recommended to assume a fixed (typical) battery capacity for priority purposes,
- * rather than using `0xe00000`, as this will have a better load-sharing characteristic,
- * especially if several power providers of the same type are used.
+ * Argument: power_status PowerStatus (uint8_t). Emitted whenever `power_status` changes.
  */
-#define JD_POWER_CMD_ACTIVE 0x80
+#define JD_POWER_EV_POWER_STATUS_CHANGED JD_EV_CHANGE
 
 #endif

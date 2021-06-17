@@ -23,6 +23,7 @@ The current configuration the server is using.
     pipe report configuration {
         configuration_number: u8
         binding_index: u8
+        padding: u8[2]
         device_id: u64
         service_class: u32
         service_idx: u8
@@ -41,6 +42,7 @@ Retrieves a configuration stored on the server. If the configuration does not ex
     pipe report configuration {
         configuration_number: u8
         binding_index: u8
+        padding: u8[2]
         device_id: u64
         service_class: u32
         service_idx: u8
@@ -55,6 +57,7 @@ Retrieves a configuration stored on the server. If the configuration does not ex
     command set_binding @ 0x81 {
         configuration_number: u8
         binding_index: u8
+        padding: u8[2]
         device_id: u64
         service_class: u32
         service_idx: u8

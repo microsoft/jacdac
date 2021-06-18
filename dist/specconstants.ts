@@ -2672,7 +2672,6 @@ export enum PowerPowerStatus { // uint8_t
     Powering = 0x1,
     Overload = 0x2,
     Overprovision = 0x3,
-    Startup = 0x4,
 }
 
 export enum PowerReg {
@@ -2700,7 +2699,6 @@ export enum PowerReg {
     /**
      * Read-only PowerStatus (uint8_t). Indicates whether the power provider is currently providing power (`Powering` state), and if not, why not.
      * `Overprovision` means there was another power provider, and we stopped not to overprovision the bus.
-     * The `Startup` status is used during the initial 0-300ms delay.
      *
      * ```
      * const [powerStatus] = jdunpack<[PowerPowerStatus]>(buf, "u8")

@@ -68,14 +68,14 @@ After queuing a `shutdown` command, the service enters a grace period
 until the report has been sent on the wire.
 During the grace period incoming `shutdown` commands are ignored.
 
-* Upon reset, a power service enters `Startup` state, and then only after 0-300ms (random)
-  enables itself and sends the first `shutdown` command
+* Upon reset, a power service enables itself, and then only after 0-300ms (random)
+  sends the first `shutdown` command
 * Every enabled power service emits `shutdown` commands every 400-600ms (random; first few packets can be even sent more often)
 * If an enabled power service sees a `shutdown` command from somebody else,
   it disables itself (unless in grace period)
 * If a disabled power service sees no `shutdown` command for more than ~1200ms, it enables itself
   (this is when the previous power source is unplugged or otherwise malfunctions)
-* If a power service has been disabled for 50-60s (random), it enables itself.
+* If a power service has been disabled for around 10s, it enables itself.
 
 Additionally:
 * While the `allowed` register is set to `0`, the service will not enable itself (nor send `shutdown` commands)
@@ -186,7 +186,7 @@ Can be used to completely disable the service.
 When allowed, the service may still not be providing power, see 
 `power_status` for the actual current state.
 
-    rw max_power = 900: u16 mA {typical_max = 900} @ max_power
+    rw max_power? = 900: u16 mA {typical_max = 900} @ max_power
 
 Limit the power provided by the service. The actual maximum limit will depend on hardware.
 This field may be read-only in some implementations - you should read it back after setting.
@@ -196,13 +196,11 @@ This field may be read-only in some implementations - you should read it back af
         Powering = 1
         Overload = 2
         Overprovision = 3
-        Startup = 4
     }
     ro power_status: PowerStatus @ 0x181
 
 Indicates whether the power provider is currently providing power (`Powering` state), and if not, why not.
 `Overprovision` means there was another power provider, and we stopped not to overprovision the bus.
-The `Startup` status is used during the initial 0-300ms delay.
 
     ro current_draw?: u16 mA @ reading
 
@@ -221,8 +219,8 @@ Fraction of charge in the battery.
 Energy that can be delivered to the bus when battery is fully charged.
 This excludes conversion overheads if any.
 
-    rw keep_on_pulse_duration = 600: u16 ms @ 0x80
-    rw keep_on_pulse_period = 20000: u16 ms @ 0x81
+    rw keep_on_pulse_duration? = 600: u16 ms @ 0x80
+    rw keep_on_pulse_period? = 20000: u16 ms @ 0x81
 
 Many USB power packs need current to be drawn from time to time to prevent shutdown.
 This regulates how often and for how long such current is drawn.

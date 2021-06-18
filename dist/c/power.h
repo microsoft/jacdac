@@ -9,7 +9,6 @@
 #define JD_POWER_POWER_STATUS_POWERING 0x1
 #define JD_POWER_POWER_STATUS_OVERLOAD 0x2
 #define JD_POWER_POWER_STATUS_OVERPROVISION 0x3
-#define JD_POWER_POWER_STATUS_STARTUP 0x4
 
 /**
  * Read-write bool (uint8_t). Can be used to completely disable the service.
@@ -27,7 +26,6 @@
 /**
  * Read-only PowerStatus (uint8_t). Indicates whether the power provider is currently providing power (`Powering` state), and if not, why not.
  * `Overprovision` means there was another power provider, and we stopped not to overprovision the bus.
- * The `Startup` status is used during the initial 0-300ms delay.
  */
 #define JD_POWER_REG_POWER_STATUS 0x181
 

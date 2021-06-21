@@ -890,6 +890,53 @@ export enum ButtonEvent {
     Hold = 0x81,
 }
 
+// Service: Button Gesture
+export const SRV_BUTTON_GESTURE = 0x1421a39d
+export enum ButtonGestureEvent {
+    /**
+     * Emitted when the button is clicked (down, then up shortly after).
+     * Event emitted on the release edge.
+     */
+    Click = 0x85,
+
+    /**
+     * Emitted when the button is clicked and held (down, and held for some period of time).
+     */
+    ClickHold = 0x86,
+
+    /**
+     * Emitted when the button is double-clicked.
+     * Note that a separate (single) click event is generated on the first edge, to allow the events to be responsive.
+     */
+    DoubleClick = 0x87,
+
+    /**
+     *
+     * ```
+     * const [clicks] = jdunpack<[number]>(buf, "u32")
+     * ```
+     */
+    MultiClick = 0x88,
+
+    /**
+     *
+     * ```
+     * const [clicks] = jdunpack<[number]>(buf, "u32")
+     * ```
+     */
+    MultiClickHold = 0x89,
+
+    /**
+     * Argument: heldTime ms uint32_t. Emitted when the button is released after a click-and-hold event.
+     * `heldTime` is the total time the button is held down (not including any prior clicks, eg for a double-click-into-hold)
+     *
+     * ```
+     * const [heldTime] = jdunpack<[number]>(buf, "u32")
+     * ```
+     */
+    HoldRelease = 0x90,
+}
+
 // Service: Buzzer
 export const SRV_BUZZER = 0x1b57b1d7
 export enum BuzzerReg {

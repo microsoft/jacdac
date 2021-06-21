@@ -27,6 +27,15 @@
     }
   },
   {
+    "service": "buttonGesture",
+    "client": {
+      "name": "jacdac-button-gesture",
+      "repo": "microsoft/pxt-jacdac/button-gesture",
+      "qName": "modules.ButtonGestureClient",
+      "default": "modules.buttonGesture"
+    }
+  },
+  {
     "service": "buzzer",
     "client": {
       "name": "jacdac-buzzer",

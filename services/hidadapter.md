@@ -35,16 +35,6 @@ The current configuration the server is using.
     
 Retrieves a configuration stored on the server. If the configuration does not exist, an empty report will be returned
 
-    command set_configuration @ 0x81 {
-        configuration_size: u32
-        configuration_number: u8
-    }
-    report {
-        configuration_port: pipe_port
-    }
-
-Open pipe for streaming a configuration to the service. The size of the configuration has to be declared upfront. The configuration is streamed over regular pipe data packets. When the pipe is closed, the configuration is written to flash.
-
     command set_binding @ 0x82 {
         configuration_number: u8
         binding_index: u8

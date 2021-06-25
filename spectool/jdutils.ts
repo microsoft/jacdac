@@ -55,6 +55,7 @@ export function exprVisitor(
 
 interface Resolve {
     role: string
+    client: boolean
     spec: jdspec.ServiceSpec
     rest: jsep.Expression
 }
@@ -66,7 +67,7 @@ export class SpecSymbolResolver {
 
     constructor(
         private readonly spec: jdspec.ServiceSpec,
-        private readonly role2spec: (role: string) => jdspec.ServiceSpec,
+        private readonly role2spec: (role: string) => { spec: jdspec.ServiceSpec, client: boolean},
         private readonly error: (m: string) => void
     ) {
         this.reset()
@@ -92,7 +93,7 @@ export class SpecSymbolResolver {
     public specResolve(e: jsep.Expression): Resolve {
         let ret: Resolve = undefined
         if (this.spec) {
-            ret = { role: this.spec.shortName, spec: this.spec, rest: e }
+            ret = { role: this.spec.shortName, spec: this.spec, client: true, rest: e }
         } else if (e.type === "Identifier") {
             return undefined 
         } else if (
@@ -106,9 +107,11 @@ export class SpecSymbolResolver {
             if (!this.role2spec(obj.name)) {
                 this.error(`no specification found for ${obj.name}`)
             }
+            const { spec, client } = this.role2spec(obj.name)
             ret = {
                 role: obj.name,
-                spec: this.role2spec(obj.name),
+                spec,
+                client,
                 rest: (e as jsep.MemberExpression).property,
             }
         }
@@ -287,7 +290,7 @@ export class VMChecker {
         let theCommand: jdspec.PacketInfo = undefined
         if (cmdIndex < 0) {
             if (root.callee.type === "MemberExpression") {
-                const { role, spec, rest } = this.resolver.specResolve(
+                const { role, spec, rest, client } = this.resolver.specResolve(
                     root.callee as jsep.MemberExpression
                 )
                 const [command, _] = this.resolver.destructAccessPath(rest)
@@ -299,7 +302,7 @@ export class VMChecker {
                 } else {
                     // we have a spec, now look for command
                     const commands = spec.packets?.filter(
-                        pkt => pkt.kind === "command"
+                        pkt => client && pkt.kind === "command" || !client && pkt.kind === "event"
                     )
                     theCommand = commands.find(c => c?.name === command)
                     if (!theCommand) {

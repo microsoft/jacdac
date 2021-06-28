@@ -28,7 +28,7 @@ The current configuration the server is using.
         service_class: u32
         trigger_value: u32
         trigger_context: u8
-        service_idx: u8
+        service_index: u8
         selector: u16
         modifiers: u16
     }
@@ -43,7 +43,7 @@ Retrieves a configuration stored on the server. If the configuration does not ex
         service_class: u32
         trigger_value: u32
         trigger_context: u8
-        service_idx: u8
+        service_index: u8
         selector: u16
         modifiers: u16
     }

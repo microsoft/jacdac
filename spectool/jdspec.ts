@@ -425,9 +425,12 @@ export function parseServiceSpecificationMarkdownToJSON(
     }
 
     function finishPacket() {
-        packetInfo.packed = hasNaturalAlignment(packetInfo) ? undefined : true
-        if (packetInfo.packed)
-            warn(`you may want to use explicit padding in ${packetInfo.name}`)
+        const paderr = paddingError(packetInfo)
+
+        if (paderr) {
+            packetInfo.packed = true
+            error(`${paderr} in ${packetInfo.kind} ${packetInfo.name}`)
+        }
 
         let repeats = false
         let hadzero = false
@@ -1210,18 +1213,21 @@ export function parseServiceSpecificationMarkdownToJSON(
         return undefined
     }
 
-    function hasNaturalAlignment(iface: jdspec.PacketInfo) {
+    function paddingError(iface: jdspec.PacketInfo): string {
         let byteOffset = 0
 
         for (const m of iface.fields) {
             const sz = memberSize(m)
             if (sz == 0) continue
             const pad = sz > 4 ? 4 : sz
-            if (!/^u8\[/.test(m.type) && byteOffset % pad != 0) return false
+            if (!/^u8\[/.test(m.type) && byteOffset % pad != 0)
+                return `need padding of ${
+                    pad - (byteOffset % pad)
+                } byte(s) before ${m.name}`
             byteOffset += sz
         }
 
-        return true
+        return null
     }
 }
 

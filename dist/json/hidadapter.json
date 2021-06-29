@@ -1,0 +1,323 @@
+{
+  "name": "HID Adapter",
+  "status": "experimental",
+  "shortId": "hidadapter",
+  "camelName": "hIDAdapter",
+  "shortName": "hIDAdapter",
+  "extends": [
+    "_base"
+  ],
+  "notes": {
+    "short": "A service for configuring how Jacdac device map to HID input events. Users can have multiple configurations and swap between them by writing to `current_configuration`."
+  },
+  "classIdentifier": 509040821,
+  "enums": {},
+  "constants": {},
+  "packets": [
+    {
+      "kind": "const",
+      "name": "instance_name",
+      "identifier": 265,
+      "description": "A friendly name that describes the role of this service instance in the device.\nIt often corresponds to what's printed on the device:\nfor example, `A` for button A, or `S0` for servo channel 0.\nWords like `left` should be avoided because of localization issues (unless they are printed on the device).",
+      "fields": [
+        {
+          "name": "_",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "optional": true,
+      "identifierName": "instance_name",
+      "packFormat": "s",
+      "derived": "_base"
+    },
+    {
+      "kind": "ro",
+      "name": "status_code",
+      "identifier": 259,
+      "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe Jacdac status/error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the announce packet. If a service implements this register,\nit should also support the ``status_code_changed`` event defined below.",
+      "fields": [
+        {
+          "name": "code",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "vendor_code",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "identifierName": "status_code",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
+    {
+      "kind": "event",
+      "name": "status_code_changed",
+      "identifier": 4,
+      "description": "Notifies that the status code of the service changed.",
+      "fields": [
+        {
+          "name": "code",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "vendor_code",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "identifierName": "status_code_changed",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
+    {
+      "kind": "rw",
+      "name": "num_configurations",
+      "identifier": 128,
+      "description": "The number of configurations stored on the server.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u8"
+    },
+    {
+      "kind": "rw",
+      "name": "current_configuration",
+      "identifier": 129,
+      "description": "The current configuration the server is using.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u8"
+    },
+    {
+      "kind": "command",
+      "name": "get_configuration",
+      "identifier": 128,
+      "description": "Retrieves a configuration stored on the server. If the configuration does not exist, an empty report will be returned",
+      "fields": [
+        {
+          "name": "results",
+          "type": "pipe",
+          "storage": 12
+        },
+        {
+          "name": "configuration_number",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        }
+      ],
+      "pipeType": "get_configuration",
+      "packFormat": "b[12] u8"
+    },
+    {
+      "kind": "pipe_report",
+      "name": "configuration",
+      "identifier": 0,
+      "description": "Retrieves a configuration stored on the server. If the configuration does not exist, an empty report will be returned",
+      "fields": [
+        {
+          "name": "configuration_number",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "binding_index",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "padding",
+          "type": "u8[2]",
+          "storage": 2
+        },
+        {
+          "name": "device_id",
+          "type": "u64",
+          "storage": 8,
+          "isSimpleType": true
+        },
+        {
+          "name": "service_class",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        },
+        {
+          "name": "trigger_value",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        },
+        {
+          "name": "trigger_context",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "service_index",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "selector",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "modifiers",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "pipeType": "get_configuration",
+      "packFormat": "u8 u8 b[2] u64 u32 u32 u8 u8 u16 u16"
+    },
+    {
+      "kind": "command",
+      "name": "set_binding",
+      "identifier": 130,
+      "description": "Stores the given binding on the server. If a binding exists at this index, the new binding will replace it.",
+      "fields": [
+        {
+          "name": "configuration_number",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "binding_index",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "padding",
+          "type": "u8[2]",
+          "storage": 2
+        },
+        {
+          "name": "device_id",
+          "type": "u64",
+          "storage": 8,
+          "isSimpleType": true
+        },
+        {
+          "name": "service_class",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        },
+        {
+          "name": "trigger_value",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        },
+        {
+          "name": "trigger_context",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "service_index",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "selector",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "modifiers",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u8 u8 b[2] u64 u32 u32 u8 u8 u16 u16"
+    },
+    {
+      "kind": "command",
+      "name": "clear_binding",
+      "identifier": 131,
+      "description": "Clears a specific binding stored on the device.",
+      "fields": [
+        {
+          "name": "configuration_number",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "binding_index",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u8 u8"
+    },
+    {
+      "kind": "command",
+      "name": "clear_configuration",
+      "identifier": 132,
+      "description": "Clears a specific configuration stored on the device.",
+      "fields": [
+        {
+          "name": "configuration_number",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u8"
+    },
+    {
+      "kind": "command",
+      "name": "clear",
+      "identifier": 133,
+      "description": "Clears all configurations and bindings stored on the device.",
+      "fields": []
+    },
+    {
+      "kind": "event",
+      "name": "changed",
+      "identifier": 3,
+      "description": "Event that notifies clients that the server has swapped to a new configuration or changed key bindings.",
+      "fields": [],
+      "identifierName": "change"
+    }
+  ],
+  "tags": []
+}

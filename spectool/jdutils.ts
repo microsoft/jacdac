@@ -44,7 +44,7 @@ export function exprVisitor(
     structVisit: (par: jsep.Expression, curr: jsep.Expression) => void
 ) {
     if (Array.isArray(current)) {
-        (current as any[]).forEach(c => exprVisitor(current, c, structVisit))
+        ;(current as any[]).forEach(c => exprVisitor(current, c, structVisit))
     } else if (typeof current === "object") {
         if (parent && current) structVisit(parent, current)
         Object.keys(current).forEach((key: string) => {
@@ -55,6 +55,7 @@ export function exprVisitor(
 
 interface Resolve {
     role: string
+    client: boolean
     spec: jdspec.ServiceSpec
     rest: jsep.Expression
 }
@@ -66,7 +67,10 @@ export class SpecSymbolResolver {
 
     constructor(
         private readonly spec: jdspec.ServiceSpec,
-        private readonly role2spec: (role: string) => jdspec.ServiceSpec,
+        private readonly role2spec: (role: string) => {
+            spec: jdspec.ServiceSpec
+            client: boolean
+        },
         private readonly error: (m: string) => void
     ) {
         this.reset()
@@ -92,23 +96,29 @@ export class SpecSymbolResolver {
     public specResolve(e: jsep.Expression): Resolve {
         let ret: Resolve = undefined
         if (this.spec) {
-            ret = { role: this.spec.shortName, spec: this.spec, rest: e }
+            ret = {
+                role: this.spec.shortName,
+                spec: this.spec,
+                client: true,
+                rest: e,
+            }
         } else if (e.type === "Identifier") {
-            return undefined 
+            return undefined
         } else if (
             this.check(e, "MemberExpression") &&
             this.check((e as jsep.MemberExpression).object, "Identifier") &&
             this.role2spec
         ) {
             const obj = (e as jsep.MemberExpression).object as jsep.Identifier
-            if (obj.name.startsWith("$"))
-                return undefined
+            if (obj.name.startsWith("$")) return undefined
             if (!this.role2spec(obj.name)) {
                 this.error(`no specification found for ${obj.name}`)
             }
+            const { spec, client } = this.role2spec(obj.name)
             ret = {
                 role: obj.name,
-                spec: this.role2spec(obj.name),
+                spec,
+                client,
                 rest: (e as jsep.MemberExpression).property,
             }
         }
@@ -287,7 +297,7 @@ export class VMChecker {
         let theCommand: jdspec.PacketInfo = undefined
         if (cmdIndex < 0) {
             if (root.callee.type === "MemberExpression") {
-                const { role, spec, rest } = this.resolver.specResolve(
+                const { role, spec, rest, client } = this.resolver.specResolve(
                     root.callee as jsep.MemberExpression
                 )
                 const [command, _] = this.resolver.destructAccessPath(rest)
@@ -299,14 +309,17 @@ export class VMChecker {
                 } else {
                     // we have a spec, now look for command
                     const commands = spec.packets?.filter(
-                        pkt => pkt.kind === "command"
+                        pkt =>
+                            (client && pkt.kind === "command") ||
+                            (!client && pkt.kind === "event")
                     )
                     theCommand = commands.find(c => c?.name === command)
                     if (!theCommand) {
                         this.error(
                             `cannot find command named ${command} in spec ${spec.shortName}`
                         )
-                    } else return this.processSpecCommandFunction(root, theCommand)
+                    } else
+                        return this.processSpecCommandFunction(root, theCommand)
                 }
             } else {
                 if (callee)
@@ -331,7 +344,7 @@ export class VMChecker {
             )
         } else {
             const args = root.arguments
-            args.forEach((arg) => {
+            args.forEach(arg => {
                 this.visitReplace(root, arg, [])
             })
         }
@@ -418,7 +431,7 @@ export class VMChecker {
                         `events function expects a list of service events`
                     )
                 else {
-                    (arg as jsep.ArrayExpression).elements.forEach(e =>
+                    ;(arg as jsep.ArrayExpression).elements.forEach(e =>
                         this.resolver.lookupEvent(e)
                     )
                 }
@@ -471,7 +484,9 @@ function isBoolOrNumericFormat(fmt: string) {
 }
 
 function isRegister(pkt: jdspec.PacketInfo): boolean {
-    return pkt && (pkt.kind === "const" || pkt.kind === "ro" || pkt.kind === "rw")
+    return (
+        pkt && (pkt.kind === "const" || pkt.kind === "ro" || pkt.kind === "rw")
+    )
 }
 
 function lookupRegister(

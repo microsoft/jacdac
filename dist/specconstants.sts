@@ -942,6 +942,24 @@ namespace jacdac {
 
 }
 namespace jacdac {
+    // Service: Button Edge
+    export const SRV_BUTTON_EDGE = 0x1e4f7ffd
+    export const enum ButtonEdgeEvent {
+        /**
+         * Emitted when button goes from not-pressed to pressed.
+         */
+        //% block="down"
+        Down = 0x80,
+
+        /**
+         * Emitted when button goes from pressed to not-pressed.
+         */
+        //% block="up"
+        Up = 0x81,
+    }
+
+}
+namespace jacdac {
     // Service: Button Gesture
     export const SRV_BUTTON_GESTURE = 0x1421a39d
     export const enum ButtonGestureEvent {
@@ -993,6 +1011,21 @@ namespace jacdac {
          */
         //% block="hold Release"
         HoldRelease = 0x90,
+    }
+
+}
+namespace jacdac {
+    // Service: Button Streaming
+    export const SRV_BUTTON_STREAMING = 0x1cf8a306
+    export const enum ButtonStreamingReg {
+        /**
+         * Read-only bool (uint8_t). Indicates if the button is pressed, with ``true`` being pressed and ``false`` being not pressed.
+         *
+         * ```
+         * const [pressed] = jdunpack<[number]>(buf, "u8")
+         * ```
+         */
+        Pressed = 0x101,
     }
 
 }

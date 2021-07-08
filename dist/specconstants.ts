@@ -890,6 +890,20 @@ export enum ButtonEvent {
     Hold = 0x81,
 }
 
+// Service: Button Edge
+export const SRV_BUTTON_EDGE = 0x1e4f7ffd
+export enum ButtonEdgeEvent {
+    /**
+     * Emitted when button goes from not-pressed to pressed.
+     */
+    Down = 0x80,
+
+    /**
+     * Emitted when button goes from pressed to not-pressed.
+     */
+    Up = 0x81,
+}
+
 // Service: Button Gesture
 export const SRV_BUTTON_GESTURE = 0x1421a39d
 export enum ButtonGestureEvent {
@@ -935,6 +949,19 @@ export enum ButtonGestureEvent {
      * ```
      */
     HoldRelease = 0x90,
+}
+
+// Service: Button Streaming
+export const SRV_BUTTON_STREAMING = 0x1cf8a306
+export enum ButtonStreamingReg {
+    /**
+     * Read-only bool (uint8_t). Indicates if the button is pressed, with ``true`` being pressed and ``false`` being not pressed.
+     *
+     * ```
+     * const [pressed] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Pressed = 0x101,
 }
 
 // Service: Buzzer

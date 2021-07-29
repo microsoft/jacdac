@@ -1697,20 +1697,32 @@ function memberSize(fld: jdspec.PacketMember) {
     return Math.abs(fld.storage)
 }
 
-function toTypescript(info: jdspec.ServiceSpec, staticTypeScript: boolean) {
-    const indent = staticTypeScript ? "    " : ""
+function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
+    const staticTypeScript = language === "sts"
+    const csharp = language === "c#"
+    const useNamespace = staticTypeScript || csharp
+
+    const indent = useNamespace ? "    " : ""
     const indent2 = indent + "    "
-    const enumkw = staticTypeScript
+    const enumkw = csharp
+        ? indent + "public enum"
+        : staticTypeScript
         ? indent + "export const enum"
         : "export enum"
-    let r = staticTypeScript
-        ? `namespace ${TYPESCRIPT_STATIC_NAMESPACE} {\n`
+    const exportkw = csharp ? "public" : "export"
+    let r = useNamespace
+        ? `namespace ${
+              csharp
+                  ? capitalize(TYPESCRIPT_STATIC_NAMESPACE)
+                  : TYPESCRIPT_STATIC_NAMESPACE
+          } {\n`
         : ""
+
     r += indent + "// Service: " + info.name + "\n"
     if (info.shortId[0] != "_") {
         r +=
             indent +
-            `export const SRV_${snakify(
+            `${exportkw} const SRV_${snakify(
                 info.camelName
             ).toLocaleUpperCase()} = ${toHex(info.classIdentifier)}\n`
     }
@@ -1719,10 +1731,11 @@ function toTypescript(info: jdspec.ServiceSpec, staticTypeScript: boolean) {
         const { value, hex } = info.constants[cst]
         r +=
             indent +
-            `export const ${toUpper(cst)} = ${
+            `${exportkw} const ${toUpper(cst)} = ${
                 hex ? value.toString() : toHex(value)
             }\n`
     }
+
     for (const en of values(info.enums)) {
         const enPref = pref + upperCamel(en.name)
         r += `\n${enumkw} ${enPref} { // ${cStorage(en.storage)}\n`
@@ -1789,7 +1802,7 @@ function toTypescript(info: jdspec.ServiceSpec, staticTypeScript: boolean) {
         }
     }
 
-    if (staticTypeScript) r += "}\n"
+    if (useNamespace) r += "}\n"
 
     return r.replace(/ *$/gm, "")
 }
@@ -1832,8 +1845,9 @@ export function converters(): jdspec.SMap<(s: jdspec.ServiceSpec) => string> {
     return {
         json: (j: jdspec.ServiceSpec) => JSON.stringify(j, null, 2),
         c: toH,
-        ts: j => toTypescript(j, false),
-        sts: j => toTypescript(j, true),
+        ts: j => toTypescript(j, "ts"),
+        sts: j => toTypescript(j, "sts"),
+        cs: j => toTypescript(j, "c#"),
         py: j => toPython(j),
         /*
         "cpp": toHPP,

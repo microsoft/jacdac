@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class SoilMoistureConstants
+    {
     // Service: Soil moisture
-    public const SRV_SOIL_MOISTURE = 0x1d4aa3b3
+        public const uint ServiceClass = 0x1d4aa3b3;
+    }
 
     public enum SoilMoistureVariant { // uint8_t
         Resistive = 0x1,

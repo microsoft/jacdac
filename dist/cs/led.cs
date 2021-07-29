@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class LedConstants
+    {
     // Service: LED
-    public const SRV_LED = 0x1e3048f8
+        public const uint ServiceClass = 0x1e3048f8;
+    }
 
     public enum LedVariant { // uint8_t
         ThroughHole = 0x1,

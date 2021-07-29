@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class WindSpeedConstants
+    {
     // Service: Wind speed
-    public const SRV_WIND_SPEED = 0x1b591bbf
+        public const uint ServiceClass = 0x1b591bbf;
+    }
     public enum WindSpeedReg {
         /**
          * Read-only m/s u16.16 (uint32_t). The velocity of the wind.

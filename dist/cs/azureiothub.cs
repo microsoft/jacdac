@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class AzureIotHubConstants
+    {
     // Service: Azure IoT Hub
-    public const SRV_AZURE_IOT_HUB = 0x19ed364c
+        public const uint ServiceClass = 0x19ed364c;
+    }
     public enum AzureIotHubCmd {
         /**
          * Argument: body string (bytes). Sends a short message in string format (it's typically JSON-encoded).

@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class MotionConstants
+    {
     // Service: Motion
-    public const SRV_MOTION = 0x1179a749
+        public const uint ServiceClass = 0x1179a749;
+    }
 
     public enum MotionVariant { // uint8_t
         PIR = 0x1,

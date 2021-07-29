@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class CharacterScreenConstants
+    {
     // Service: Character Screen
-    public const SRV_CHARACTER_SCREEN = 0x1f37c56a
+        public const uint ServiceClass = 0x1f37c56a;
+    }
 
     public enum CharacterScreenVariant { // uint8_t
         LCD = 0x1,

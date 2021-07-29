@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class VibrationMotorConstants
+    {
     // Service: Vibration motor
-    public const SRV_VIBRATION_MOTOR = 0x183fc4a2
+        public const uint ServiceClass = 0x183fc4a2;
+    }
     public enum VibrationMotorReg {
         /**
          * Read-write bool (uint8_t). Determines if the vibration motor responds to vibrate commands.

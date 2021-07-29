@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class LedMatrixConstants
+    {
     // Service: LED Matrix
-    public const SRV_LED_MATRIX = 0x110d154b
+        public const uint ServiceClass = 0x110d154b;
+    }
     public enum LedMatrixReg {
         /**
          * Read-write bytes. The state of the screen where pixel on/off state is

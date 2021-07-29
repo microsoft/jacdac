@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class SevenSegmentDisplayConstants
+    {
     // Service: 7-segment display
-    public const SRV_SEVEN_SEGMENT_DISPLAY = 0x196158f7
+        public const uint ServiceClass = 0x196158f7;
+    }
     public enum SevenSegmentDisplayReg {
         /**
          * Read-write bytes. Each byte encodes the display status of a digit using,

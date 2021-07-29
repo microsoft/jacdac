@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class RngConstants
+    {
     // Service: Random Number Generator
-    public const SRV_RNG = 0x1789f0a2
+        public const uint ServiceClass = 0x1789f0a2;
+    }
 
     public enum RngVariant { // uint8_t
         Quantum = 0x1,

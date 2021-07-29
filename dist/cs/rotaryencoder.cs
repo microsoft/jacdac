@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class RotaryEncoderConstants
+    {
     // Service: Rotary encoder
-    public const SRV_ROTARY_ENCODER = 0x10fa29c9
+        public const uint ServiceClass = 0x10fa29c9;
+    }
     public enum RotaryEncoderReg {
         /**
          * Read-only # int32_t. Upon device reset starts at `0` (regardless of the shaft position).

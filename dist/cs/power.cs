@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class PowerConstants
+    {
     // Service: Power
-    public const SRV_POWER = 0x1fa4c95a
+        public const uint ServiceClass = 0x1fa4c95a;
+    }
 
     public enum PowerPowerStatus { // uint8_t
         Disallowed = 0x0,

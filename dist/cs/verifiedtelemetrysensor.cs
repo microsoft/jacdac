@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class VerifiedTelemetryConstants
+    {
     // Service: Verified Telemetry
-    public const SRV_VERIFIED_TELEMETRY = 0x2194841f
+        public const uint ServiceClass = 0x2194841f;
+    }
 
     public enum VerifiedTelemetryStatus { // uint8_t
         Unknown = 0x0,

@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class ControlConstants
+    {
     // Service: Control
-    public const SRV_CONTROL = 0x0
+        public const uint ServiceClass = 0x0;
+    }
 
     public enum ControlAnnounceFlags { // uint16_t
         RestartCounterSteady = 0xf,

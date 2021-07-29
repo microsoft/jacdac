@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class WeightScaleConstants
+    {
     // Service: Weight Scale
-    public const SRV_WEIGHT_SCALE = 0x1f4d5040
+        public const uint ServiceClass = 0x1f4d5040;
+    }
 
     public enum WeightScaleVariant { // uint8_t
         Body = 0x1,

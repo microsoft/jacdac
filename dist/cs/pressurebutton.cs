@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class PressureButtonConstants
+    {
     // Service: Pressure Button
-    public const SRV_PRESSURE_BUTTON = 0x281740c3
+        public const uint ServiceClass = 0x281740c3;
+    }
     public enum PressureButtonReg {
         /**
          * Read-write ratio u0.16 (uint16_t). Indicates the threshold for ``up`` events.

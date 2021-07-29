@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class JoystickConstants
+    {
     // Service: Joystick
-    public const SRV_JOYSTICK = 0x108f7456
+        public const uint ServiceClass = 0x108f7456;
+    }
 
     public enum JoystickButtons { // uint32_t
         Left = 0x1,

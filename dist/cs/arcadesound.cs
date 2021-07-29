@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class ArcadeSoundConstants
+    {
     // Service: Arcade sound
-    public const SRV_ARCADE_SOUND = 0x1fc63606
+        public const uint ServiceClass = 0x1fc63606;
+    }
     public enum ArcadeSoundCmd {
         /**
          * Argument: samples bytes. Play samples, which are single channel, signed 16-bit little endian values.

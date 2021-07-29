@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class ProtoTestConstants
+    {
     // Service: Protocol Test
-    public const SRV_PROTO_TEST = 0x16c7466a
+        public const uint ServiceClass = 0x16c7466a;
+    }
     public enum ProtoTestReg {
         /**
          * Read-write bool (uint8_t). A read write bool register.

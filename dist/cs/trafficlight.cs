@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class TrafficLightConstants
+    {
     // Service: Traffic Light
-    public const SRV_TRAFFIC_LIGHT = 0x15c38d9b
+        public const uint ServiceClass = 0x15c38d9b;
+    }
     public enum TrafficLightReg {
         /**
          * Read-write bool (uint8_t). The on/off state of the red light.

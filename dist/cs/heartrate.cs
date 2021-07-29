@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class HeartRateConstants
+    {
     // Service: Heart Rate
-    public const SRV_HEART_RATE = 0x166c6dc4
+        public const uint ServiceClass = 0x166c6dc4;
+    }
 
     public enum HeartRateVariant { // uint8_t
         Finger = 0x1,

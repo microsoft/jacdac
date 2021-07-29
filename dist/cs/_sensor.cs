@@ -1,5 +1,8 @@
 namespace Jacdac {
+    public static class SensorConstants
+    {
     // Service: Sensor
+    }
     public enum SensorReg {
         /**
          * Read-write # uint8_t. Asks device to stream a given number of samples

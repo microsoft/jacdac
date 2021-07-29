@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class AccelerometerConstants
+    {
     // Service: Accelerometer
-    public const SRV_ACCELEROMETER = 0x1f140409
+        public const uint ServiceClass = 0x1f140409;
+    }
     public enum AccelerometerReg {
         /**
          * Indicates the current forces acting on accelerometer.

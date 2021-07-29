@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class SwitchConstants
+    {
     // Service: Switch
-    public const SRV_SWITCH = 0x1ad29402
+        public const uint ServiceClass = 0x1ad29402;
+    }
 
     public enum SwitchVariant { // uint8_t
         Slide = 0x1,

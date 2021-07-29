@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class MicrophoneConstants
+    {
     // Service: Microphone
-    public const SRV_MICROPHONE = 0x113dac86
+        public const uint ServiceClass = 0x113dac86;
+    }
     public enum MicrophoneCmd {
         /**
          * The samples will be streamed back over the `samples` pipe.

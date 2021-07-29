@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class TvocConstants
+    {
     // Service: Total Volatile organic compound
-    public const SRV_TVOC = 0x12a5b597
+        public const uint ServiceClass = 0x12a5b597;
+    }
     public enum TvocReg {
         /**
          * Read-only ppb u22.10 (uint32_t). Total volatile organic compound readings in parts per billion.

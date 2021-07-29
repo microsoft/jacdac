@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class TcpConstants
+    {
     // Service: TCP
-    public const SRV_TCP = 0x1b43b70b
+        public const uint ServiceClass = 0x1b43b70b;
+    }
 
     public enum TcpTcpError { // int32_t
         InvalidCommand = 0x1,

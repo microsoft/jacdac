@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class BitRadioConstants
+    {
     // Service: bit:radio
-    public const SRV_BIT_RADIO = 0x1ac986cf
+        public const uint ServiceClass = 0x1ac986cf;
+    }
     public enum BitRadioReg {
         /**
          * Read-write bool (uint8_t). Turns on/off the radio antenna.

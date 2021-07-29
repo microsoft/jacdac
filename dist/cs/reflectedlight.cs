@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class ReflectedLightConstants
+    {
     // Service: Reflected light
-    public const SRV_REFLECTED_LIGHT = 0x126c4cb2
+        public const uint ServiceClass = 0x126c4cb2;
+    }
 
     public enum ReflectedLightVariant { // uint8_t
         InfraredDigital = 0x1,

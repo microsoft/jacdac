@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class PotentiometerConstants
+    {
     // Service: Potentiometer
-    public const SRV_POTENTIOMETER = 0x1f274746
+        public const uint ServiceClass = 0x1f274746;
+    }
 
     public enum PotentiometerVariant { // uint8_t
         Slider = 0x1,

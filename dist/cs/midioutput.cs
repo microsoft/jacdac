@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class MidiOutputConstants
+    {
     // Service: MIDI output
-    public const SRV_MIDI_OUTPUT = 0x1a848cd7
+        public const uint ServiceClass = 0x1a848cd7;
+    }
     public enum MidiOutputReg {
         /**
          * Read-write bool (uint8_t). Opens or closes the port to the MIDI device

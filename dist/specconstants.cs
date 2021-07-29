@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class SystemConstants
+    {
     // Service: Common registers and commands
-    public const ANNOUNCE_INTERVAL = 0x1f4
+        public const uint ANNOUNCE_INTERVAL = 0x1f4;
+    }
 
     public enum SystemReadingThreshold { // uint8_t
         Neutral = 0x1,
@@ -255,7 +258,10 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class BaseConstants
+    {
     // Service: Base service
+    }
     public enum BaseReg {
         /**
          * Constant string (bytes). A friendly name that describes the role of this service instance in the device.
@@ -296,7 +302,10 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class SensorConstants
+    {
     // Service: Sensor
+    }
     public enum SensorReg {
         /**
          * Read-write # uint8_t. Asks device to stream a given number of samples
@@ -329,8 +338,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
-        // Service: Accelerometer
-        public const int SRV_ACCELEROMETER = 0x1f140409;
+    public static class AccelerometerConstants
+    {
+    // Service: Accelerometer
+        public const uint ServiceClass = 0x1f140409;
+    }
     public enum AccelerometerReg {
         /**
          * Indicates the current forces acting on accelerometer.
@@ -425,8 +437,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class ArcadeGamepadConstants
+    {
     // Service: Arcade Gamepad
-    public const SRV_ARCADE_GAMEPAD = 0x1deaa06e
+        public const uint ServiceClass = 0x1deaa06e;
+    }
 
     public enum ArcadeGamepadButton { // uint8_t
         Left = 0x1,
@@ -485,8 +500,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class ArcadeSoundConstants
+    {
     // Service: Arcade sound
-    public const SRV_ARCADE_SOUND = 0x1fc63606
+        public const uint ServiceClass = 0x1fc63606;
+    }
     public enum ArcadeSoundCmd {
         /**
          * Argument: samples bytes. Play samples, which are single channel, signed 16-bit little endian values.
@@ -533,8 +551,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class AzureIotHubConstants
+    {
     // Service: Azure IoT Hub
-    public const SRV_AZURE_IOT_HUB = 0x19ed364c
+        public const uint ServiceClass = 0x19ed364c;
+    }
     public enum AzureIotHubCmd {
         /**
          * Argument: body string (bytes). Sends a short message in string format (it's typically JSON-encoded).
@@ -611,8 +632,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class BarcodeReaderConstants
+    {
     // Service: Barcode reader
-    public const SRV_BARCODE_READER = 0x1c739e6c
+        public const uint ServiceClass = 0x1c739e6c;
+    }
 
     public enum BarcodeReaderFormat { // uint8_t
         Aztec = 0x1,
@@ -664,8 +688,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class BarometerConstants
+    {
     // Service: Barometer
-    public const SRV_BAROMETER = 0x1e117cea
+        public const uint ServiceClass = 0x1e117cea;
+    }
     public enum BarometerReg {
         /**
          * Read-only hPa u22.10 (uint32_t). The air pressure.
@@ -688,8 +715,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class BitRadioConstants
+    {
     // Service: bit:radio
-    public const SRV_BIT_RADIO = 0x1ac986cf
+        public const uint ServiceClass = 0x1ac986cf;
+    }
     public enum BitRadioReg {
         /**
          * Read-write bool (uint8_t). Turns on/off the radio antenna.
@@ -795,8 +825,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class BootloaderConstants
+    {
     // Service: Bootloader
-    public const SRV_BOOTLOADER = 0x1ffa9948
+        public const uint ServiceClass = 0x1ffa9948;
+    }
 
     public enum BootloaderError { // uint32_t
         NoError = 0x0,
@@ -858,8 +891,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class ButtonConstants
+    {
     // Service: Button
-    public const SRV_BUTTON = 0x1473a263
+        public const uint ServiceClass = 0x1473a263;
+    }
     public enum ButtonReg {
         /**
          * Read-only ratio u0.16 (uint16_t). Indicates the pressure state of the button, where ``0`` is open and ``0xffff`` is fully pressed.
@@ -915,8 +951,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class BuzzerConstants
+    {
     // Service: Buzzer
-    public const SRV_BUZZER = 0x1b57b1d7
+        public const uint ServiceClass = 0x1b57b1d7;
+    }
     public enum BuzzerReg {
         /**
          * Read-write ratio u0.8 (uint8_t). The volume (duty cycle) of the buzzer.
@@ -949,8 +988,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class CapacitiveButtonConstants
+    {
     // Service: Capacitive Button
-    public const SRV_CAPACITIVE_BUTTON = 0x2865adc9
+        public const uint ServiceClass = 0x2865adc9;
+    }
     public enum CapacitiveButtonReg {
         /**
          * Read-write ratio u0.16 (uint16_t). Indicates the threshold for ``up`` events.
@@ -972,8 +1014,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class CharacterScreenConstants
+    {
     // Service: Character Screen
-    public const SRV_CHARACTER_SCREEN = 0x1f37c56a
+        public const uint ServiceClass = 0x1f37c56a;
+    }
 
     public enum CharacterScreenVariant { // uint8_t
         LCD = 0x1,
@@ -1060,8 +1105,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class ColorConstants
+    {
     // Service: Color
-    public const SRV_COLOR = 0x1630d567
+        public const uint ServiceClass = 0x1630d567;
+    }
     public enum ColorReg {
         /**
          * Detected color in the RGB color space.
@@ -1075,8 +1123,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class CompassConstants
+    {
     // Service: Compass
-    public const SRV_COMPASS = 0x15b7b9bf
+        public const uint ServiceClass = 0x15b7b9bf;
+    }
     public enum CompassReg {
         /**
          * Read-only ° u16.16 (uint32_t). The heading with respect to the magnetic north.
@@ -1115,8 +1166,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class ControlConstants
+    {
     // Service: Control
-    public const SRV_CONTROL = 0x0
+        public const uint ServiceClass = 0x0;
+    }
 
     public enum ControlAnnounceFlags { // uint16_t
         RestartCounterSteady = 0xf,
@@ -1301,8 +1355,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class DistanceConstants
+    {
     // Service: Distance
-    public const SRV_DISTANCE = 0x141a6b8a
+        public const uint ServiceClass = 0x141a6b8a;
+    }
 
     public enum DistanceVariant { // uint8_t
         Ultrasonic = 0x1,
@@ -1351,8 +1408,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class DmxConstants
+    {
     // Service: DMX
-    public const SRV_DMX = 0x11cf8c05
+        public const uint ServiceClass = 0x11cf8c05;
+    }
     public enum DmxReg {
         /**
          * Read-write bool (uint8_t). Determines if the DMX bridge is active
@@ -1377,8 +1437,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class ECO2Constants
+    {
     // Service: Equivalent CO₂
-    public const SRV_E_CO2 = 0x169c9dc6
+        public const uint ServiceClass = 0x169c9dc6;
+    }
 
     public enum ECO2Variant { // uint8_t
         VOC = 0x1,
@@ -1443,8 +1506,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class GyroscopeConstants
+    {
     // Service: Gyroscope
-    public const SRV_GYROSCOPE = 0x1e1b06f2
+        public const uint ServiceClass = 0x1e1b06f2;
+    }
     public enum GyroscopeReg {
         /**
          * Indicates the current forces acting on accelerometer.
@@ -1476,8 +1542,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class HeartRateConstants
+    {
     // Service: Heart Rate
-    public const SRV_HEART_RATE = 0x166c6dc4
+        public const uint ServiceClass = 0x166c6dc4;
+    }
 
     public enum HeartRateVariant { // uint8_t
         Finger = 0x1,
@@ -1518,8 +1587,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class HIDAdapterConstants
+    {
     // Service: HID Adapter
-    public const SRV_H_IDADAPTER = 0x1e5758b5
+        public const uint ServiceClass = 0x1e5758b5;
+    }
     public enum HIDAdapterReg {
         /**
          * Read-write uint8_t. The number of configurations stored on the server.
@@ -1601,8 +1673,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class HidKeyboardConstants
+    {
     // Service: HID Keyboard
-    public const SRV_HID_KEYBOARD = 0x18b05b6a
+        public const uint ServiceClass = 0x18b05b6a;
+    }
 
     public enum HidKeyboardModifiers { // uint8_t
         None = 0x0,
@@ -1642,8 +1717,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class HidMouseConstants
+    {
     // Service: HID Mouse
-    public const SRV_HID_MOUSE = 0x1885dc1c
+        public const uint ServiceClass = 0x1885dc1c;
+    }
 
     public enum HidMouseButton { // uint16_t
         Left = 0x1,
@@ -1694,8 +1772,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class HumidityConstants
+    {
     // Service: Humidity
-    public const SRV_HUMIDITY = 0x16c810b8
+        public const uint ServiceClass = 0x16c810b8;
+    }
     public enum HumidityReg {
         /**
          * Read-only %RH u22.10 (uint32_t). The relative humidity in percentage of full water saturation.
@@ -1736,8 +1817,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class IlluminanceConstants
+    {
     // Service: Illuminance
-    public const SRV_ILLUMINANCE = 0x1e6ecaf2
+        public const uint ServiceClass = 0x1e6ecaf2;
+    }
     public enum IlluminanceReg {
         /**
          * Read-only lux u22.10 (uint32_t). The amount of illuminance, as lumens per square metre.
@@ -1760,8 +1844,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class IndexedScreenConstants
+    {
     // Service: Indexed screen
-    public const SRV_INDEXED_SCREEN = 0x16fa36e5
+        public const uint ServiceClass = 0x16fa36e5;
+    }
     public enum IndexedScreenCmd {
         /**
          * Sets the update window for subsequent `set_pixels` commands.
@@ -1873,8 +1960,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class JoystickConstants
+    {
     // Service: Joystick
-    public const SRV_JOYSTICK = 0x108f7456
+        public const uint ServiceClass = 0x108f7456;
+    }
 
     public enum JoystickButtons { // uint32_t
         Left = 0x1,
@@ -1946,8 +2036,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class LedConstants
+    {
     // Service: LED
-    public const SRV_LED = 0x1e3048f8
+        public const uint ServiceClass = 0x1e3048f8;
+    }
 
     public enum LedVariant { // uint8_t
         ThroughHole = 0x1,
@@ -2025,8 +2118,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class LedMatrixConstants
+    {
     // Service: LED Matrix
-    public const SRV_LED_MATRIX = 0x110d154b
+        public const uint ServiceClass = 0x110d154b;
+    }
     public enum LedMatrixReg {
         /**
          * Read-write bytes. The state of the screen where pixel on/off state is
@@ -2068,8 +2164,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class LedPixelConstants
+    {
     // Service: LED Pixel
-    public const SRV_LED_PIXEL = 0x126f00e0
+        public const uint ServiceClass = 0x126f00e0;
+    }
 
     public enum LedPixelLightType { // uint8_t
         WS2812B_GRB = 0x0,
@@ -2193,8 +2292,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class LightLevelConstants
+    {
     // Service: Light level
-    public const SRV_LIGHT_LEVEL = 0x17dc9a1c
+        public const uint ServiceClass = 0x17dc9a1c;
+    }
 
     public enum LightLevelVariant { // uint8_t
         PhotoResistor = 0x1,
@@ -2224,8 +2326,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class LoggerConstants
+    {
     // Service: Logger
-    public const SRV_LOGGER = 0x12dc1fca
+        public const uint ServiceClass = 0x12dc1fca;
+    }
 
     public enum LoggerPriority { // uint8_t
         Debug = 0x0,
@@ -2290,8 +2395,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class MagnetometerConstants
+    {
     // Service: Magnetometer
-    public const SRV_MAGNETOMETER = 0x13029088
+        public const uint ServiceClass = 0x13029088;
+    }
     public enum MagnetometerReg {
         /**
          * Indicates the current magnetic field on magnetometer.
@@ -2323,8 +2431,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class MatrixKeypadConstants
+    {
     // Service: Matrix Keypad
-    public const SRV_MATRIX_KEYPAD = 0x13062dc8
+        public const uint ServiceClass = 0x13062dc8;
+    }
 
     public enum MatrixKeypadVariant { // uint8_t
         Membrane = 0x1,
@@ -2423,8 +2534,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class MicrophoneConstants
+    {
     // Service: Microphone
-    public const SRV_MICROPHONE = 0x113dac86
+        public const uint ServiceClass = 0x113dac86;
+    }
     public enum MicrophoneCmd {
         /**
          * The samples will be streamed back over the `samples` pipe.
@@ -2453,8 +2567,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class MidiOutputConstants
+    {
     // Service: MIDI output
-    public const SRV_MIDI_OUTPUT = 0x1a848cd7
+        public const uint ServiceClass = 0x1a848cd7;
+    }
     public enum MidiOutputReg {
         /**
          * Read-write bool (uint8_t). Opens or closes the port to the MIDI device
@@ -2484,8 +2601,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class ModelRunnerConstants
+    {
     // Service: Model Runner
-    public const SRV_MODEL_RUNNER = 0x140f9a78
+        public const uint ServiceClass = 0x140f9a78;
+    }
 
     public enum ModelRunnerModelFormat { // uint32_t
         TFLite = 0x334c4654,
@@ -2641,8 +2761,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class MotionConstants
+    {
     // Service: Motion
-    public const SRV_MOTION = 0x1179a749
+        public const uint ServiceClass = 0x1179a749;
+    }
 
     public enum MotionVariant { // uint8_t
         PIR = 0x1,
@@ -2695,8 +2818,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class MotorConstants
+    {
     // Service: Motor
-    public const SRV_MOTOR = 0x17004cd8
+        public const uint ServiceClass = 0x17004cd8;
+    }
     public enum MotorReg {
         /**
          * Read-write ratio i1.15 (int16_t). PWM duty cycle of the motor. Use negative/positive values to run the motor forwards and backwards.
@@ -2739,8 +2865,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class MultitouchConstants
+    {
     // Service: Multitouch
-    public const SRV_MULTITOUCH = 0x18d55e2b
+        public const uint ServiceClass = 0x18d55e2b;
+    }
     public enum MultitouchReg {
         /**
          * Read-only. Capacitance of channels. The capacitance is continuously calibrated, and a value of `0` indicates
@@ -2804,8 +2933,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class PotentiometerConstants
+    {
     // Service: Potentiometer
-    public const SRV_POTENTIOMETER = 0x1f274746
+        public const uint ServiceClass = 0x1f274746;
+    }
 
     public enum PotentiometerVariant { // uint8_t
         Slider = 0x1,
@@ -2834,8 +2966,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class PowerConstants
+    {
     // Service: Power
-    public const SRV_POWER = 0x1fa4c95a
+        public const uint ServiceClass = 0x1fa4c95a;
+    }
 
     public enum PowerPowerStatus { // uint8_t
         Disallowed = 0x0,
@@ -2956,8 +3091,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class PressureButtonConstants
+    {
     // Service: Pressure Button
-    public const SRV_PRESSURE_BUTTON = 0x281740c3
+        public const uint ServiceClass = 0x281740c3;
+    }
     public enum PressureButtonReg {
         /**
          * Read-write ratio u0.16 (uint16_t). Indicates the threshold for ``up`` events.
@@ -2971,8 +3109,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class ProtoTestConstants
+    {
     // Service: Protocol Test
-    public const SRV_PROTO_TEST = 0x16c7466a
+        public const uint ServiceClass = 0x16c7466a;
+    }
     public enum ProtoTestReg {
         /**
          * Read-write bool (uint8_t). A read write bool register.
@@ -3251,8 +3392,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class PulseOximeterConstants
+    {
     // Service: Pulse Oximeter
-    public const SRV_PULSE_OXIMETER = 0x10bb4eb6
+        public const uint ServiceClass = 0x10bb4eb6;
+    }
     public enum PulseOximeterReg {
         /**
          * Read-only % u8.8 (uint16_t). The estimated oxygen level in blood.
@@ -3275,8 +3419,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class RainGaugeConstants
+    {
     // Service: Rain gauge
-    public const SRV_RAIN_GAUGE = 0x13734c95
+        public const uint ServiceClass = 0x13734c95;
+    }
     public enum RainGaugeReg {
         /**
          * Read-only mm u16.16 (uint32_t). Total precipitation recorded so far.
@@ -3299,8 +3446,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class RealTimeClockConstants
+    {
     // Service: Real time clock
-    public const SRV_REAL_TIME_CLOCK = 0x1a8b1a28
+        public const uint ServiceClass = 0x1a8b1a28;
+    }
 
     public enum RealTimeClockVariant { // uint8_t
         Computer = 0x1,
@@ -3362,8 +3512,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class ReflectedLightConstants
+    {
     // Service: Reflected light
-    public const SRV_REFLECTED_LIGHT = 0x126c4cb2
+        public const uint ServiceClass = 0x126c4cb2;
+    }
 
     public enum ReflectedLightVariant { // uint8_t
         InfraredDigital = 0x1,
@@ -3404,8 +3557,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class RelayConstants
+    {
     // Service: Relay
-    public const SRV_RELAY = 0x183fe656
+        public const uint ServiceClass = 0x183fe656;
+    }
 
     public enum RelayVariant { // uint8_t
         Electromechanical = 0x1,
@@ -3456,8 +3612,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class RngConstants
+    {
     // Service: Random Number Generator
-    public const SRV_RNG = 0x1789f0a2
+        public const uint ServiceClass = 0x1789f0a2;
+    }
 
     public enum RngVariant { // uint8_t
         Quantum = 0x1,
@@ -3491,8 +3650,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class RoleManagerConstants
+    {
     // Service: Role Manager
-    public const SRV_ROLE_MANAGER = 0x1e4b7e66
+        public const uint ServiceClass = 0x1e4b7e66;
+    }
     public enum RoleManagerReg {
         /**
          * Read-write bool (uint8_t). Normally, if some roles are unfilled, and there are idle services that can fulfill them,
@@ -3593,8 +3755,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class RotaryEncoderConstants
+    {
     // Service: Rotary encoder
-    public const SRV_ROTARY_ENCODER = 0x10fa29c9
+        public const uint ServiceClass = 0x10fa29c9;
+    }
     public enum RotaryEncoderReg {
         /**
          * Read-only # int32_t. Upon device reset starts at `0` (regardless of the shaft position).
@@ -3618,8 +3783,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class RoverConstants
+    {
     // Service: Rover
-    public const SRV_ROVER = 0x19f4d06b
+        public const uint ServiceClass = 0x19f4d06b;
+    }
     public enum RoverReg {
         /**
          * The current position and orientation of the robot.
@@ -3633,8 +3801,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class SensorAggregatorConstants
+    {
     // Service: Sensor Aggregator
-    public const SRV_SENSOR_AGGREGATOR = 0x1d90e1c5
+        public const uint ServiceClass = 0x1d90e1c5;
+    }
 
     public enum SensorAggregatorSampleType { // uint8_t
         U8 = 0x8,
@@ -3696,8 +3867,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class ServoConstants
+    {
     // Service: Servo
-    public const SRV_SERVO = 0x12fc9103
+        public const uint ServiceClass = 0x12fc9103;
+    }
     public enum ServoReg {
         /**
          * Read-write ° i16.16 (int32_t). Specifies the angle of the arm.
@@ -3783,8 +3957,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class SettingsConstants
+    {
     // Service: Settings
-    public const SRV_SETTINGS = 0x1107dc4a
+        public const uint ServiceClass = 0x1107dc4a;
+    }
     public enum SettingsCmd {
         /**
          * Argument: key string (bytes). Get the value of given setting. If no such entry exists, the value returned is empty.
@@ -3869,8 +4046,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class SevenSegmentDisplayConstants
+    {
     // Service: 7-segment display
-    public const SRV_SEVEN_SEGMENT_DISPLAY = 0x196158f7
+        public const uint ServiceClass = 0x196158f7;
+    }
     public enum SevenSegmentDisplayReg {
         /**
          * Read-write bytes. Each byte encodes the display status of a digit using,
@@ -3936,8 +4116,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class SoilMoistureConstants
+    {
     // Service: Soil moisture
-    public const SRV_SOIL_MOISTURE = 0x1d4aa3b3
+        public const uint ServiceClass = 0x1d4aa3b3;
+    }
 
     public enum SoilMoistureVariant { // uint8_t
         Resistive = 0x1,
@@ -3966,8 +4149,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class SolenoidConstants
+    {
     // Service: Solenoid
-    public const SRV_SOLENOID = 0x171723ca
+        public const uint ServiceClass = 0x171723ca;
+    }
 
     public enum SolenoidVariant { // uint8_t
         PushPull = 0x1,
@@ -3997,8 +4183,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class SoundLevelConstants
+    {
     // Service: Sound level
-    public const SRV_SOUND_LEVEL = 0x14ad1a5d
+        public const uint ServiceClass = 0x14ad1a5d;
+    }
     public enum SoundLevelReg {
         /**
          * Read-only ratio u0.16 (uint16_t). The sound level detected by the microphone
@@ -4075,8 +4264,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class SoundPlayerConstants
+    {
     // Service: Sound player
-    public const SRV_SOUND_PLAYER = 0x1403d338
+        public const uint ServiceClass = 0x1403d338;
+    }
     public enum SoundPlayerReg {
         /**
          * Read-write ratio u0.16 (uint16_t). Global volume of the output. ``0`` means completely off. This volume is mixed with each play volumes.
@@ -4119,8 +4311,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class SoundSpectrumConstants
+    {
     // Service: Sound Spectrum
-    public const SRV_SOUND_SPECTRUM = 0x157abc1e
+        public const uint ServiceClass = 0x157abc1e;
+    }
     public enum SoundSpectrumReg {
         /**
          * Read-only bytes. The computed frequency data.
@@ -4180,8 +4375,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class SpeechSynthesisConstants
+    {
     // Service: Speech synthesis
-    public const SRV_SPEECH_SYNTHESIS = 0x1204d995
+        public const uint ServiceClass = 0x1204d995;
+    }
     public enum SpeechSynthesisReg {
         /**
          * Read-write bool (uint8_t). Determines if the speech engine is in a non-paused state.
@@ -4247,8 +4445,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class SwitchConstants
+    {
     // Service: Switch
-    public const SRV_SWITCH = 0x1ad29402
+        public const uint ServiceClass = 0x1ad29402;
+    }
 
     public enum SwitchVariant { // uint8_t
         Slide = 0x1,
@@ -4305,8 +4506,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class TcpConstants
+    {
     // Service: TCP
-    public const SRV_TCP = 0x1b43b70b
+        public const uint ServiceClass = 0x1b43b70b;
+    }
 
     public enum TcpTcpError { // int32_t
         InvalidCommand = 0x1,
@@ -4371,8 +4575,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class ThermocoupleConstants
+    {
     // Service: Thermocouple
-    public const SRV_THERMOCOUPLE = 0x143ac061
+        public const uint ServiceClass = 0x143ac061;
+    }
 
     public enum ThermocoupleVariant { // uint8_t
         TypeK = 0x1,
@@ -4434,8 +4641,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class ThermometerConstants
+    {
     // Service: Thermometer
-    public const SRV_THERMOMETER = 0x1421bac7
+        public const uint ServiceClass = 0x1421bac7;
+    }
 
     public enum ThermometerVariant { // uint8_t
         Outdoor = 0x1,
@@ -4492,8 +4702,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class TrafficLightConstants
+    {
     // Service: Traffic Light
-    public const SRV_TRAFFIC_LIGHT = 0x15c38d9b
+        public const uint ServiceClass = 0x15c38d9b;
+    }
     public enum TrafficLightReg {
         /**
          * Read-write bool (uint8_t). The on/off state of the red light.
@@ -4525,8 +4738,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class TvocConstants
+    {
     // Service: Total Volatile organic compound
-    public const SRV_TVOC = 0x12a5b597
+        public const uint ServiceClass = 0x12a5b597;
+    }
     public enum TvocReg {
         /**
          * Read-only ppb u22.10 (uint32_t). Total volatile organic compound readings in parts per billion.
@@ -4576,8 +4792,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class UvIndexConstants
+    {
     // Service: UV index
-    public const SRV_UV_INDEX = 0x1f6e0d90
+        public const uint ServiceClass = 0x1f6e0d90;
+    }
 
     public enum UvIndexVariant { // uint8_t
         UVA_UVB = 0x1,
@@ -4615,8 +4834,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class VerifiedTelemetryConstants
+    {
     // Service: Verified Telemetry
-    public const SRV_VERIFIED_TELEMETRY = 0x2194841f
+        public const uint ServiceClass = 0x2194841f;
+    }
 
     public enum VerifiedTelemetryStatus { // uint8_t
         Unknown = 0x0,
@@ -4699,8 +4921,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class VibrationMotorConstants
+    {
     // Service: Vibration motor
-    public const SRV_VIBRATION_MOTOR = 0x183fc4a2
+        public const uint ServiceClass = 0x183fc4a2;
+    }
     public enum VibrationMotorReg {
         /**
          * Read-write bool (uint8_t). Determines if the vibration motor responds to vibrate commands.
@@ -4726,8 +4951,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class WaterLevelConstants
+    {
     // Service: Water level
-    public const SRV_WATER_LEVEL = 0x147b62ed
+        public const uint ServiceClass = 0x147b62ed;
+    }
 
     public enum WaterLevelVariant { // uint8_t
         Resistive = 0x1,
@@ -4757,8 +4985,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class WeightScaleConstants
+    {
     // Service: Weight Scale
-    public const SRV_WEIGHT_SCALE = 0x1f4d5040
+        public const uint ServiceClass = 0x1f4d5040;
+    }
 
     public enum WeightScaleVariant { // uint8_t
         Body = 0x1,
@@ -4859,8 +5090,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class WifiConstants
+    {
     // Service: WIFI
-    public const SRV_WIFI = 0x18aae1fa
+        public const uint ServiceClass = 0x18aae1fa;
+    }
 
     public enum WifiAPFlags { // uint32_t
         HasPassword = 0x1,
@@ -4935,8 +5169,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class WindDirectionConstants
+    {
     // Service: Wind direction
-    public const SRV_WIND_DIRECTION = 0x186be92b
+        public const uint ServiceClass = 0x186be92b;
+    }
     public enum WindDirectionReg {
         /**
          * Read-only ° uint16_t. The direction of the wind.
@@ -4968,8 +5205,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    public static class WindSpeedConstants
+    {
     // Service: Wind speed
-    public const SRV_WIND_SPEED = 0x1b591bbf
+        public const uint ServiceClass = 0x1b591bbf;
+    }
     public enum WindSpeedReg {
         /**
          * Read-only m/s u16.16 (uint32_t). The velocity of the wind.

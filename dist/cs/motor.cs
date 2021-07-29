@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class MotorConstants
+    {
     // Service: Motor
-    public const SRV_MOTOR = 0x17004cd8
+        public const uint ServiceClass = 0x17004cd8;
+    }
     public enum MotorReg {
         /**
          * Read-write ratio i1.15 (int16_t). PWM duty cycle of the motor. Use negative/positive values to run the motor forwards and backwards.

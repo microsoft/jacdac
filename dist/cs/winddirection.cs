@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class WindDirectionConstants
+    {
     // Service: Wind direction
-    public const SRV_WIND_DIRECTION = 0x186be92b
+        public const uint ServiceClass = 0x186be92b;
+    }
     public enum WindDirectionReg {
         /**
          * Read-only ° uint16_t. The direction of the wind.

@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class CapacitiveButtonConstants
+    {
     // Service: Capacitive Button
-    public const SRV_CAPACITIVE_BUTTON = 0x2865adc9
+        public const uint ServiceClass = 0x2865adc9;
+    }
     public enum CapacitiveButtonReg {
         /**
          * Read-write ratio u0.16 (uint16_t). Indicates the threshold for ``up`` events.

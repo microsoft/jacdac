@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class RelayConstants
+    {
     // Service: Relay
-    public const SRV_RELAY = 0x183fe656
+        public const uint ServiceClass = 0x183fe656;
+    }
 
     public enum RelayVariant { // uint8_t
         Electromechanical = 0x1,

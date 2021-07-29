@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class ServoConstants
+    {
     // Service: Servo
-    public const SRV_SERVO = 0x12fc9103
+        public const uint ServiceClass = 0x12fc9103;
+    }
     public enum ServoReg {
         /**
          * Read-write ° i16.16 (int32_t). Specifies the angle of the arm.

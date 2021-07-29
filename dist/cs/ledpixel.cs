@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class LedPixelConstants
+    {
     // Service: LED Pixel
-    public const SRV_LED_PIXEL = 0x126f00e0
+        public const uint ServiceClass = 0x126f00e0;
+    }
 
     public enum LedPixelLightType { // uint8_t
         WS2812B_GRB = 0x0,

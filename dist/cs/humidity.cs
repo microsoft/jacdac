@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class HumidityConstants
+    {
     // Service: Humidity
-    public const SRV_HUMIDITY = 0x16c810b8
+        public const uint ServiceClass = 0x16c810b8;
+    }
     public enum HumidityReg {
         /**
          * Read-only %RH u22.10 (uint32_t). The relative humidity in percentage of full water saturation.

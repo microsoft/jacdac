@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class ColorConstants
+    {
     // Service: Color
-    public const SRV_COLOR = 0x1630d567
+        public const uint ServiceClass = 0x1630d567;
+    }
     public enum ColorReg {
         /**
          * Detected color in the RGB color space.

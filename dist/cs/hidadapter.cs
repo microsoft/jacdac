@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class HIDAdapterConstants
+    {
     // Service: HID Adapter
-    public const SRV_H_IDADAPTER = 0x1e5758b5
+        public const uint ServiceClass = 0x1e5758b5;
+    }
     public enum HIDAdapterReg {
         /**
          * Read-write uint8_t. The number of configurations stored on the server.

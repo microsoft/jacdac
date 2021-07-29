@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class WaterLevelConstants
+    {
     // Service: Water level
-    public const SRV_WATER_LEVEL = 0x147b62ed
+        public const uint ServiceClass = 0x147b62ed;
+    }
 
     public enum WaterLevelVariant { // uint8_t
         Resistive = 0x1,

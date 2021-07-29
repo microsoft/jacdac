@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class IndexedScreenConstants
+    {
     // Service: Indexed screen
-    public const SRV_INDEXED_SCREEN = 0x16fa36e5
+        public const uint ServiceClass = 0x16fa36e5;
+    }
     public enum IndexedScreenCmd {
         /**
          * Sets the update window for subsequent `set_pixels` commands.

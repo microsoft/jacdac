@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class SolenoidConstants
+    {
     // Service: Solenoid
-    public const SRV_SOLENOID = 0x171723ca
+        public const uint ServiceClass = 0x171723ca;
+    }
 
     public enum SolenoidVariant { // uint8_t
         PushPull = 0x1,

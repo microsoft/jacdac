@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class SettingsConstants
+    {
     // Service: Settings
-    public const SRV_SETTINGS = 0x1107dc4a
+        public const uint ServiceClass = 0x1107dc4a;
+    }
     public enum SettingsCmd {
         /**
          * Argument: key string (bytes). Get the value of given setting. If no such entry exists, the value returned is empty.

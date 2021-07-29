@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class ButtonConstants
+    {
     // Service: Button
-    public const SRV_BUTTON = 0x1473a263
+        public const uint ServiceClass = 0x1473a263;
+    }
     public enum ButtonReg {
         /**
          * Read-only ratio u0.16 (uint16_t). Indicates the pressure state of the button, where ``0`` is open and ``0xffff`` is fully pressed.

@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class SoundSpectrumConstants
+    {
     // Service: Sound Spectrum
-    public const SRV_SOUND_SPECTRUM = 0x157abc1e
+        public const uint ServiceClass = 0x157abc1e;
+    }
     public enum SoundSpectrumReg {
         /**
          * Read-only bytes. The computed frequency data.

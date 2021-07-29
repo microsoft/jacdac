@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class RoleManagerConstants
+    {
     // Service: Role Manager
-    public const SRV_ROLE_MANAGER = 0x1e4b7e66
+        public const uint ServiceClass = 0x1e4b7e66;
+    }
     public enum RoleManagerReg {
         /**
          * Read-write bool (uint8_t). Normally, if some roles are unfilled, and there are idle services that can fulfill them,

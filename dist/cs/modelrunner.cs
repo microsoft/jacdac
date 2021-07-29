@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class ModelRunnerConstants
+    {
     // Service: Model Runner
-    public const SRV_MODEL_RUNNER = 0x140f9a78
+        public const uint ServiceClass = 0x140f9a78;
+    }
 
     public enum ModelRunnerModelFormat { // uint32_t
         TFLite = 0x334c4654,

@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class HidMouseConstants
+    {
     // Service: HID Mouse
-    public const SRV_HID_MOUSE = 0x1885dc1c
+        public const uint ServiceClass = 0x1885dc1c;
+    }
 
     public enum HidMouseButton { // uint16_t
         Left = 0x1,

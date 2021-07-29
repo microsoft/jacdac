@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class RainGaugeConstants
+    {
     // Service: Rain gauge
-    public const SRV_RAIN_GAUGE = 0x13734c95
+        public const uint ServiceClass = 0x13734c95;
+    }
     public enum RainGaugeReg {
         /**
          * Read-only mm u16.16 (uint32_t). Total precipitation recorded so far.

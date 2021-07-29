@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class IlluminanceConstants
+    {
     // Service: Illuminance
-    public const SRV_ILLUMINANCE = 0x1e6ecaf2
+        public const uint ServiceClass = 0x1e6ecaf2;
+    }
     public enum IlluminanceReg {
         /**
          * Read-only lux u22.10 (uint32_t). The amount of illuminance, as lumens per square metre.

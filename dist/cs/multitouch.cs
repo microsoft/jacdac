@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class MultitouchConstants
+    {
     // Service: Multitouch
-    public const SRV_MULTITOUCH = 0x18d55e2b
+        public const uint ServiceClass = 0x18d55e2b;
+    }
     public enum MultitouchReg {
         /**
          * Read-only. Capacitance of channels. The capacitance is continuously calibrated, and a value of `0` indicates

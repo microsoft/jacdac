@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class WifiConstants
+    {
     // Service: WIFI
-    public const SRV_WIFI = 0x18aae1fa
+        public const uint ServiceClass = 0x18aae1fa;
+    }
 
     public enum WifiAPFlags { // uint32_t
         HasPassword = 0x1,

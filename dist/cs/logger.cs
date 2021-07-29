@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class LoggerConstants
+    {
     // Service: Logger
-    public const SRV_LOGGER = 0x12dc1fca
+        public const uint ServiceClass = 0x12dc1fca;
+    }
 
     public enum LoggerPriority { // uint8_t
         Debug = 0x0,

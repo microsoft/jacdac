@@ -1,5 +1,8 @@
 namespace Jacdac {
+    public static class BaseConstants
+    {
     // Service: Base service
+    }
     public enum BaseReg {
         /**
          * Constant string (bytes). A friendly name that describes the role of this service instance in the device.

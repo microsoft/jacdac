@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class MatrixKeypadConstants
+    {
     // Service: Matrix Keypad
-    public const SRV_MATRIX_KEYPAD = 0x13062dc8
+        public const uint ServiceClass = 0x13062dc8;
+    }
 
     public enum MatrixKeypadVariant { // uint8_t
         Membrane = 0x1,

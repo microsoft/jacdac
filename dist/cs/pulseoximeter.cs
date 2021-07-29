@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class PulseOximeterConstants
+    {
     // Service: Pulse Oximeter
-    public const SRV_PULSE_OXIMETER = 0x10bb4eb6
+        public const uint ServiceClass = 0x10bb4eb6;
+    }
     public enum PulseOximeterReg {
         /**
          * Read-only % u8.8 (uint16_t). The estimated oxygen level in blood.

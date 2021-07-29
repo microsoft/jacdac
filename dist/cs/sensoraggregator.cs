@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class SensorAggregatorConstants
+    {
     // Service: Sensor Aggregator
-    public const SRV_SENSOR_AGGREGATOR = 0x1d90e1c5
+        public const uint ServiceClass = 0x1d90e1c5;
+    }
 
     public enum SensorAggregatorSampleType { // uint8_t
         U8 = 0x8,

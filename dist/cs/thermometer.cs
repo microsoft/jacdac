@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class ThermometerConstants
+    {
     // Service: Thermometer
-    public const SRV_THERMOMETER = 0x1421bac7
+        public const uint ServiceClass = 0x1421bac7;
+    }
 
     public enum ThermometerVariant { // uint8_t
         Outdoor = 0x1,

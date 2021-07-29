@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class ArcadeGamepadConstants
+    {
     // Service: Arcade Gamepad
-    public const SRV_ARCADE_GAMEPAD = 0x1deaa06e
+        public const uint ServiceClass = 0x1deaa06e;
+    }
 
     public enum ArcadeGamepadButton { // uint8_t
         Left = 0x1,

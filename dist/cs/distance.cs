@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class DistanceConstants
+    {
     // Service: Distance
-    public const SRV_DISTANCE = 0x141a6b8a
+        public const uint ServiceClass = 0x141a6b8a;
+    }
 
     public enum DistanceVariant { // uint8_t
         Ultrasonic = 0x1,

@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class MagnetometerConstants
+    {
     // Service: Magnetometer
-    public const SRV_MAGNETOMETER = 0x13029088
+        public const uint ServiceClass = 0x13029088;
+    }
     public enum MagnetometerReg {
         /**
          * Indicates the current magnetic field on magnetometer.

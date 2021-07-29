@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class GyroscopeConstants
+    {
     // Service: Gyroscope
-    public const SRV_GYROSCOPE = 0x1e1b06f2
+        public const uint ServiceClass = 0x1e1b06f2;
+    }
     public enum GyroscopeReg {
         /**
          * Indicates the current forces acting on accelerometer.

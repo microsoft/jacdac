@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class LightLevelConstants
+    {
     // Service: Light level
-    public const SRV_LIGHT_LEVEL = 0x17dc9a1c
+        public const uint ServiceClass = 0x17dc9a1c;
+    }
 
     public enum LightLevelVariant { // uint8_t
         PhotoResistor = 0x1,

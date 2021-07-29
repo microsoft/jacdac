@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class RoverConstants
+    {
     // Service: Rover
-    public const SRV_ROVER = 0x19f4d06b
+        public const uint ServiceClass = 0x19f4d06b;
+    }
     public enum RoverReg {
         /**
          * The current position and orientation of the robot.

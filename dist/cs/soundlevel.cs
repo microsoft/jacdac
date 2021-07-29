@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class SoundLevelConstants
+    {
     // Service: Sound level
-    public const SRV_SOUND_LEVEL = 0x14ad1a5d
+        public const uint ServiceClass = 0x14ad1a5d;
+    }
     public enum SoundLevelReg {
         /**
          * Read-only ratio u0.16 (uint16_t). The sound level detected by the microphone

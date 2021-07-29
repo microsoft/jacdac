@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class BarcodeReaderConstants
+    {
     // Service: Barcode reader
-    public const SRV_BARCODE_READER = 0x1c739e6c
+        public const uint ServiceClass = 0x1c739e6c;
+    }
 
     public enum BarcodeReaderFormat { // uint8_t
         Aztec = 0x1,

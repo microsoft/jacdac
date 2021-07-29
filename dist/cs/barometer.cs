@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class BarometerConstants
+    {
     // Service: Barometer
-    public const SRV_BAROMETER = 0x1e117cea
+        public const uint ServiceClass = 0x1e117cea;
+    }
     public enum BarometerReg {
         /**
          * Read-only hPa u22.10 (uint32_t). The air pressure.

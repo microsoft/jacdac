@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class ECO2Constants
+    {
     // Service: Equivalent CO₂
-    public const SRV_E_CO2 = 0x169c9dc6
+        public const uint ServiceClass = 0x169c9dc6;
+    }
 
     public enum ECO2Variant { // uint8_t
         VOC = 0x1,

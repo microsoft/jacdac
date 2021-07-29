@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class CompassConstants
+    {
     // Service: Compass
-    public const SRV_COMPASS = 0x15b7b9bf
+        public const uint ServiceClass = 0x15b7b9bf;
+    }
     public enum CompassReg {
         /**
          * Read-only ° u16.16 (uint32_t). The heading with respect to the magnetic north.

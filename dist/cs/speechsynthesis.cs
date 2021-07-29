@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class SpeechSynthesisConstants
+    {
     // Service: Speech synthesis
-    public const SRV_SPEECH_SYNTHESIS = 0x1204d995
+        public const uint ServiceClass = 0x1204d995;
+    }
     public enum SpeechSynthesisReg {
         /**
          * Read-write bool (uint8_t). Determines if the speech engine is in a non-paused state.

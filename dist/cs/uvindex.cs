@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class UvIndexConstants
+    {
     // Service: UV index
-    public const SRV_UV_INDEX = 0x1f6e0d90
+        public const uint ServiceClass = 0x1f6e0d90;
+    }
 
     public enum UvIndexVariant { // uint8_t
         UVA_UVB = 0x1,

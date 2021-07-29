@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path="jdspec.d.ts" />
 import { parseIntFloat } from "./jdutils"
@@ -1704,12 +1705,15 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
 
     const indent = useNamespace ? "    " : ""
     const indent2 = indent + "    "
+    const numberkw = csharp ? "uint " : ""
+    const hexkw = csharp ? "byte[]" : ""
     const enumkw = csharp
         ? indent + "public enum"
         : staticTypeScript
         ? indent + "export const enum"
         : "export enum"
     const exportkw = csharp ? "public" : "export"
+    const cskw = csharp ? ";" : ""
     let r = useNamespace
         ? `namespace ${
               csharp
@@ -1718,22 +1722,36 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
           } {\n`
         : ""
 
+    if (csharp) {
+        r += `${indent}public static class ${capitalize(
+            info.camelName
+        )}Constants\n${indent}{\n`
+    }
     r += indent + "// Service: " + info.name + "\n"
     if (info.shortId[0] != "_") {
+        const name = csharp
+            ? "ServiceClass"
+            : `SRV_${snakify(info.camelName).toLocaleUpperCase()}`
         r +=
             indent +
-            `${exportkw} const SRV_${snakify(
-                info.camelName
-            ).toLocaleUpperCase()} = ${toHex(info.classIdentifier)}\n`
+            (csharp ? indent : "") +
+            `${exportkw} const ${numberkw}${name} = ${toHex(
+                info.classIdentifier
+            )}${cskw}\n`
     }
     const pref = upperCamel(info.camelName)
     for (const cst in info.constants) {
         const { value, hex } = info.constants[cst]
         r +=
             indent +
-            `${exportkw} const ${toUpper(cst)} = ${
+            (csharp ? indent : "") +
+            `${exportkw} const ${hex ? hexkw : numberkw}${toUpper(cst)} = ${
                 hex ? value.toString() : toHex(value)
-            }\n`
+            }${cskw}\n`
+    }
+
+    if (csharp) {
+        r += indent + `}\n`
     }
 
     for (const en of values(info.enums)) {

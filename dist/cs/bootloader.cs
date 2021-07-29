@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class BootloaderConstants
+    {
     // Service: Bootloader
-    public const SRV_BOOTLOADER = 0x1ffa9948
+        public const uint ServiceClass = 0x1ffa9948;
+    }
 
     public enum BootloaderError { // uint32_t
         NoError = 0x0,

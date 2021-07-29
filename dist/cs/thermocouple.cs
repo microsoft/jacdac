@@ -1,6 +1,9 @@
 namespace Jacdac {
+    public static class ThermocoupleConstants
+    {
     // Service: Thermocouple
-    public const SRV_THERMOCOUPLE = 0x143ac061
+        public const uint ServiceClass = 0x143ac061;
+    }
 
     public enum ThermocoupleVariant { // uint8_t
         TypeK = 0x1,

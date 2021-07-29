@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Sound player
     public static class SoundPlayerConstants
     {
-    // Service: Sound player
         public const uint ServiceClass = 0x1403d338;
     }
     public enum SoundPlayerReg {

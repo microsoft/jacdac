@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Azure IoT Hub
     public static class AzureIotHubConstants
     {
-    // Service: Azure IoT Hub
         public const uint ServiceClass = 0x19ed364c;
     }
     public enum AzureIotHubCmd {

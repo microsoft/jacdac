@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Illuminance
     public static class IlluminanceConstants
     {
-    // Service: Illuminance
         public const uint ServiceClass = 0x1e6ecaf2;
     }
     public enum IlluminanceReg {

@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Weight Scale
     public static class WeightScaleConstants
     {
-    // Service: Weight Scale
         public const uint ServiceClass = 0x1f4d5040;
     }
 

@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Role Manager
     public static class RoleManagerConstants
     {
-    // Service: Role Manager
         public const uint ServiceClass = 0x1e4b7e66;
     }
     public enum RoleManagerReg {

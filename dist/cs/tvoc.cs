@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Total Volatile organic compound
     public static class TvocConstants
     {
-    // Service: Total Volatile organic compound
         public const uint ServiceClass = 0x12a5b597;
     }
     public enum TvocReg {

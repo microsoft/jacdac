@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Settings
     public static class SettingsConstants
     {
-    // Service: Settings
         public const uint ServiceClass = 0x1107dc4a;
     }
     public enum SettingsCmd {

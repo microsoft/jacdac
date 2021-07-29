@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Accelerometer
     public static class AccelerometerConstants
     {
-    // Service: Accelerometer
         public const uint ServiceClass = 0x1f140409;
     }
     public enum AccelerometerReg {

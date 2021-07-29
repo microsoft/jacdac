@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Light level
     public static class LightLevelConstants
     {
-    // Service: Light level
         public const uint ServiceClass = 0x17dc9a1c;
     }
 

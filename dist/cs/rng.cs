@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Random Number Generator
     public static class RngConstants
     {
-    // Service: Random Number Generator
         public const uint ServiceClass = 0x1789f0a2;
     }
 

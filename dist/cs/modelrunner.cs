@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Model Runner
     public static class ModelRunnerConstants
     {
-    // Service: Model Runner
         public const uint ServiceClass = 0x140f9a78;
     }
 

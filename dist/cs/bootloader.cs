@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Bootloader
     public static class BootloaderConstants
     {
-    // Service: Bootloader
         public const uint ServiceClass = 0x1ffa9948;
     }
 

@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: LED Matrix
     public static class LedMatrixConstants
     {
-    // Service: LED Matrix
         public const uint ServiceClass = 0x110d154b;
     }
     public enum LedMatrixReg {

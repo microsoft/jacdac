@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Power
     public static class PowerConstants
     {
-    // Service: Power
         public const uint ServiceClass = 0x1fa4c95a;
     }
 

@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Thermometer
     public static class ThermometerConstants
     {
-    // Service: Thermometer
         public const uint ServiceClass = 0x1421bac7;
     }
 

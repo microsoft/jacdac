@@ -1,8 +1,8 @@
 namespace Jacdac {
+    // Service: Common registers and commands
     public static class SystemConstants
     {
-    // Service: Common registers and commands
-        public const uint ANNOUNCE_INTERVAL = 0x1f4;
+        public const uint AnnounceInterval = 0x1f4;
     }
 
     public enum SystemReadingThreshold { // uint8_t
@@ -258,9 +258,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Base service
     public static class BaseConstants
     {
-    // Service: Base service
     }
     public enum BaseReg {
         /**
@@ -302,9 +302,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Sensor
     public static class SensorConstants
     {
-    // Service: Sensor
     }
     public enum SensorReg {
         /**
@@ -338,9 +338,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Accelerometer
     public static class AccelerometerConstants
     {
-    // Service: Accelerometer
         public const uint ServiceClass = 0x1f140409;
     }
     public enum AccelerometerReg {
@@ -437,9 +437,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Arcade Gamepad
     public static class ArcadeGamepadConstants
     {
-    // Service: Arcade Gamepad
         public const uint ServiceClass = 0x1deaa06e;
     }
 
@@ -500,9 +500,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Arcade sound
     public static class ArcadeSoundConstants
     {
-    // Service: Arcade sound
         public const uint ServiceClass = 0x1fc63606;
     }
     public enum ArcadeSoundCmd {
@@ -551,9 +551,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Azure IoT Hub
     public static class AzureIotHubConstants
     {
-    // Service: Azure IoT Hub
         public const uint ServiceClass = 0x19ed364c;
     }
     public enum AzureIotHubCmd {
@@ -632,9 +632,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Barcode reader
     public static class BarcodeReaderConstants
     {
-    // Service: Barcode reader
         public const uint ServiceClass = 0x1c739e6c;
     }
 
@@ -688,9 +688,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Barometer
     public static class BarometerConstants
     {
-    // Service: Barometer
         public const uint ServiceClass = 0x1e117cea;
     }
     public enum BarometerReg {
@@ -715,9 +715,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: bit:radio
     public static class BitRadioConstants
     {
-    // Service: bit:radio
         public const uint ServiceClass = 0x1ac986cf;
     }
     public enum BitRadioReg {
@@ -825,9 +825,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Bootloader
     public static class BootloaderConstants
     {
-    // Service: Bootloader
         public const uint ServiceClass = 0x1ffa9948;
     }
 
@@ -891,9 +891,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Button
     public static class ButtonConstants
     {
-    // Service: Button
         public const uint ServiceClass = 0x1473a263;
     }
     public enum ButtonReg {
@@ -951,9 +951,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Buzzer
     public static class BuzzerConstants
     {
-    // Service: Buzzer
         public const uint ServiceClass = 0x1b57b1d7;
     }
     public enum BuzzerReg {
@@ -988,9 +988,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Capacitive Button
     public static class CapacitiveButtonConstants
     {
-    // Service: Capacitive Button
         public const uint ServiceClass = 0x2865adc9;
     }
     public enum CapacitiveButtonReg {
@@ -1014,9 +1014,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Character Screen
     public static class CharacterScreenConstants
     {
-    // Service: Character Screen
         public const uint ServiceClass = 0x1f37c56a;
     }
 
@@ -1105,9 +1105,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Color
     public static class ColorConstants
     {
-    // Service: Color
         public const uint ServiceClass = 0x1630d567;
     }
     public enum ColorReg {
@@ -1123,9 +1123,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Compass
     public static class CompassConstants
     {
-    // Service: Compass
         public const uint ServiceClass = 0x15b7b9bf;
     }
     public enum CompassReg {
@@ -1166,9 +1166,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Control
     public static class ControlConstants
     {
-    // Service: Control
         public const uint ServiceClass = 0x0;
     }
 
@@ -1355,9 +1355,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Distance
     public static class DistanceConstants
     {
-    // Service: Distance
         public const uint ServiceClass = 0x141a6b8a;
     }
 
@@ -1408,9 +1408,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: DMX
     public static class DmxConstants
     {
-    // Service: DMX
         public const uint ServiceClass = 0x11cf8c05;
     }
     public enum DmxReg {
@@ -1437,9 +1437,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Equivalent CO₂
     public static class ECO2Constants
     {
-    // Service: Equivalent CO₂
         public const uint ServiceClass = 0x169c9dc6;
     }
 
@@ -1506,9 +1506,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Gyroscope
     public static class GyroscopeConstants
     {
-    // Service: Gyroscope
         public const uint ServiceClass = 0x1e1b06f2;
     }
     public enum GyroscopeReg {
@@ -1542,9 +1542,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Heart Rate
     public static class HeartRateConstants
     {
-    // Service: Heart Rate
         public const uint ServiceClass = 0x166c6dc4;
     }
 
@@ -1587,9 +1587,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: HID Adapter
     public static class HIDAdapterConstants
     {
-    // Service: HID Adapter
         public const uint ServiceClass = 0x1e5758b5;
     }
     public enum HIDAdapterReg {
@@ -1673,9 +1673,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: HID Keyboard
     public static class HidKeyboardConstants
     {
-    // Service: HID Keyboard
         public const uint ServiceClass = 0x18b05b6a;
     }
 
@@ -1717,9 +1717,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: HID Mouse
     public static class HidMouseConstants
     {
-    // Service: HID Mouse
         public const uint ServiceClass = 0x1885dc1c;
     }
 
@@ -1772,9 +1772,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Humidity
     public static class HumidityConstants
     {
-    // Service: Humidity
         public const uint ServiceClass = 0x16c810b8;
     }
     public enum HumidityReg {
@@ -1817,9 +1817,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Illuminance
     public static class IlluminanceConstants
     {
-    // Service: Illuminance
         public const uint ServiceClass = 0x1e6ecaf2;
     }
     public enum IlluminanceReg {
@@ -1844,9 +1844,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Indexed screen
     public static class IndexedScreenConstants
     {
-    // Service: Indexed screen
         public const uint ServiceClass = 0x16fa36e5;
     }
     public enum IndexedScreenCmd {
@@ -1960,9 +1960,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Joystick
     public static class JoystickConstants
     {
-    // Service: Joystick
         public const uint ServiceClass = 0x108f7456;
     }
 
@@ -2036,9 +2036,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: LED
     public static class LedConstants
     {
-    // Service: LED
         public const uint ServiceClass = 0x1e3048f8;
     }
 
@@ -2118,9 +2118,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: LED Matrix
     public static class LedMatrixConstants
     {
-    // Service: LED Matrix
         public const uint ServiceClass = 0x110d154b;
     }
     public enum LedMatrixReg {
@@ -2164,9 +2164,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: LED Pixel
     public static class LedPixelConstants
     {
-    // Service: LED Pixel
         public const uint ServiceClass = 0x126f00e0;
     }
 
@@ -2292,9 +2292,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Light level
     public static class LightLevelConstants
     {
-    // Service: Light level
         public const uint ServiceClass = 0x17dc9a1c;
     }
 
@@ -2326,9 +2326,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Logger
     public static class LoggerConstants
     {
-    // Service: Logger
         public const uint ServiceClass = 0x12dc1fca;
     }
 
@@ -2395,9 +2395,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Magnetometer
     public static class MagnetometerConstants
     {
-    // Service: Magnetometer
         public const uint ServiceClass = 0x13029088;
     }
     public enum MagnetometerReg {
@@ -2431,9 +2431,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Matrix Keypad
     public static class MatrixKeypadConstants
     {
-    // Service: Matrix Keypad
         public const uint ServiceClass = 0x13062dc8;
     }
 
@@ -2534,9 +2534,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Microphone
     public static class MicrophoneConstants
     {
-    // Service: Microphone
         public const uint ServiceClass = 0x113dac86;
     }
     public enum MicrophoneCmd {
@@ -2567,9 +2567,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: MIDI output
     public static class MidiOutputConstants
     {
-    // Service: MIDI output
         public const uint ServiceClass = 0x1a848cd7;
     }
     public enum MidiOutputReg {
@@ -2601,9 +2601,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Model Runner
     public static class ModelRunnerConstants
     {
-    // Service: Model Runner
         public const uint ServiceClass = 0x140f9a78;
     }
 
@@ -2761,9 +2761,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Motion
     public static class MotionConstants
     {
-    // Service: Motion
         public const uint ServiceClass = 0x1179a749;
     }
 
@@ -2818,9 +2818,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Motor
     public static class MotorConstants
     {
-    // Service: Motor
         public const uint ServiceClass = 0x17004cd8;
     }
     public enum MotorReg {
@@ -2865,9 +2865,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Multitouch
     public static class MultitouchConstants
     {
-    // Service: Multitouch
         public const uint ServiceClass = 0x18d55e2b;
     }
     public enum MultitouchReg {
@@ -2933,9 +2933,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Potentiometer
     public static class PotentiometerConstants
     {
-    // Service: Potentiometer
         public const uint ServiceClass = 0x1f274746;
     }
 
@@ -2966,9 +2966,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Power
     public static class PowerConstants
     {
-    // Service: Power
         public const uint ServiceClass = 0x1fa4c95a;
     }
 
@@ -3091,9 +3091,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Pressure Button
     public static class PressureButtonConstants
     {
-    // Service: Pressure Button
         public const uint ServiceClass = 0x281740c3;
     }
     public enum PressureButtonReg {
@@ -3109,9 +3109,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Protocol Test
     public static class ProtoTestConstants
     {
-    // Service: Protocol Test
         public const uint ServiceClass = 0x16c7466a;
     }
     public enum ProtoTestReg {
@@ -3392,9 +3392,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Pulse Oximeter
     public static class PulseOximeterConstants
     {
-    // Service: Pulse Oximeter
         public const uint ServiceClass = 0x10bb4eb6;
     }
     public enum PulseOximeterReg {
@@ -3419,9 +3419,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Rain gauge
     public static class RainGaugeConstants
     {
-    // Service: Rain gauge
         public const uint ServiceClass = 0x13734c95;
     }
     public enum RainGaugeReg {
@@ -3446,9 +3446,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Real time clock
     public static class RealTimeClockConstants
     {
-    // Service: Real time clock
         public const uint ServiceClass = 0x1a8b1a28;
     }
 
@@ -3512,9 +3512,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Reflected light
     public static class ReflectedLightConstants
     {
-    // Service: Reflected light
         public const uint ServiceClass = 0x126c4cb2;
     }
 
@@ -3557,9 +3557,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Relay
     public static class RelayConstants
     {
-    // Service: Relay
         public const uint ServiceClass = 0x183fe656;
     }
 
@@ -3612,9 +3612,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Random Number Generator
     public static class RngConstants
     {
-    // Service: Random Number Generator
         public const uint ServiceClass = 0x1789f0a2;
     }
 
@@ -3650,9 +3650,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Role Manager
     public static class RoleManagerConstants
     {
-    // Service: Role Manager
         public const uint ServiceClass = 0x1e4b7e66;
     }
     public enum RoleManagerReg {
@@ -3755,9 +3755,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Rotary encoder
     public static class RotaryEncoderConstants
     {
-    // Service: Rotary encoder
         public const uint ServiceClass = 0x10fa29c9;
     }
     public enum RotaryEncoderReg {
@@ -3783,9 +3783,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Rover
     public static class RoverConstants
     {
-    // Service: Rover
         public const uint ServiceClass = 0x19f4d06b;
     }
     public enum RoverReg {
@@ -3801,9 +3801,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Sensor Aggregator
     public static class SensorAggregatorConstants
     {
-    // Service: Sensor Aggregator
         public const uint ServiceClass = 0x1d90e1c5;
     }
 
@@ -3867,9 +3867,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Servo
     public static class ServoConstants
     {
-    // Service: Servo
         public const uint ServiceClass = 0x12fc9103;
     }
     public enum ServoReg {
@@ -3957,9 +3957,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Settings
     public static class SettingsConstants
     {
-    // Service: Settings
         public const uint ServiceClass = 0x1107dc4a;
     }
     public enum SettingsCmd {
@@ -4046,9 +4046,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: 7-segment display
     public static class SevenSegmentDisplayConstants
     {
-    // Service: 7-segment display
         public const uint ServiceClass = 0x196158f7;
     }
     public enum SevenSegmentDisplayReg {
@@ -4116,9 +4116,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Soil moisture
     public static class SoilMoistureConstants
     {
-    // Service: Soil moisture
         public const uint ServiceClass = 0x1d4aa3b3;
     }
 
@@ -4149,9 +4149,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Solenoid
     public static class SolenoidConstants
     {
-    // Service: Solenoid
         public const uint ServiceClass = 0x171723ca;
     }
 
@@ -4183,9 +4183,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Sound level
     public static class SoundLevelConstants
     {
-    // Service: Sound level
         public const uint ServiceClass = 0x14ad1a5d;
     }
     public enum SoundLevelReg {
@@ -4264,9 +4264,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Sound player
     public static class SoundPlayerConstants
     {
-    // Service: Sound player
         public const uint ServiceClass = 0x1403d338;
     }
     public enum SoundPlayerReg {
@@ -4311,9 +4311,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Sound Spectrum
     public static class SoundSpectrumConstants
     {
-    // Service: Sound Spectrum
         public const uint ServiceClass = 0x157abc1e;
     }
     public enum SoundSpectrumReg {
@@ -4375,9 +4375,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Speech synthesis
     public static class SpeechSynthesisConstants
     {
-    // Service: Speech synthesis
         public const uint ServiceClass = 0x1204d995;
     }
     public enum SpeechSynthesisReg {
@@ -4445,9 +4445,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Switch
     public static class SwitchConstants
     {
-    // Service: Switch
         public const uint ServiceClass = 0x1ad29402;
     }
 
@@ -4506,9 +4506,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: TCP
     public static class TcpConstants
     {
-    // Service: TCP
         public const uint ServiceClass = 0x1b43b70b;
     }
 
@@ -4575,9 +4575,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Thermocouple
     public static class ThermocoupleConstants
     {
-    // Service: Thermocouple
         public const uint ServiceClass = 0x143ac061;
     }
 
@@ -4641,9 +4641,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Thermometer
     public static class ThermometerConstants
     {
-    // Service: Thermometer
         public const uint ServiceClass = 0x1421bac7;
     }
 
@@ -4702,9 +4702,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Traffic Light
     public static class TrafficLightConstants
     {
-    // Service: Traffic Light
         public const uint ServiceClass = 0x15c38d9b;
     }
     public enum TrafficLightReg {
@@ -4738,9 +4738,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Total Volatile organic compound
     public static class TvocConstants
     {
-    // Service: Total Volatile organic compound
         public const uint ServiceClass = 0x12a5b597;
     }
     public enum TvocReg {
@@ -4792,9 +4792,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: UV index
     public static class UvIndexConstants
     {
-    // Service: UV index
         public const uint ServiceClass = 0x1f6e0d90;
     }
 
@@ -4834,9 +4834,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Verified Telemetry
     public static class VerifiedTelemetryConstants
     {
-    // Service: Verified Telemetry
         public const uint ServiceClass = 0x2194841f;
     }
 
@@ -4921,9 +4921,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Vibration motor
     public static class VibrationMotorConstants
     {
-    // Service: Vibration motor
         public const uint ServiceClass = 0x183fc4a2;
     }
     public enum VibrationMotorReg {
@@ -4951,9 +4951,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Water level
     public static class WaterLevelConstants
     {
-    // Service: Water level
         public const uint ServiceClass = 0x147b62ed;
     }
 
@@ -4985,9 +4985,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Weight Scale
     public static class WeightScaleConstants
     {
-    // Service: Weight Scale
         public const uint ServiceClass = 0x1f4d5040;
     }
 
@@ -5090,9 +5090,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: WIFI
     public static class WifiConstants
     {
-    // Service: WIFI
         public const uint ServiceClass = 0x18aae1fa;
     }
 
@@ -5169,9 +5169,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Wind direction
     public static class WindDirectionConstants
     {
-    // Service: Wind direction
         public const uint ServiceClass = 0x186be92b;
     }
     public enum WindDirectionReg {
@@ -5205,9 +5205,9 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Wind speed
     public static class WindSpeedConstants
     {
-    // Service: Wind speed
         public const uint ServiceClass = 0x1b591bbf;
     }
     public enum WindSpeedReg {

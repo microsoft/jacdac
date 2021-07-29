@@ -1722,12 +1722,12 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
           } {\n`
         : ""
 
+    r += indent + "// Service: " + info.name + "\n"
     if (csharp) {
         r += `${indent}public static class ${capitalize(
             info.camelName
         )}Constants\n${indent}{\n`
     }
-    r += indent + "// Service: " + info.name + "\n"
     if (info.shortId[0] != "_") {
         const name = csharp
             ? "ServiceClass"
@@ -1745,9 +1745,9 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
         r +=
             indent +
             (csharp ? indent : "") +
-            `${exportkw} const ${hex ? hexkw : numberkw}${toUpper(cst)} = ${
-                hex ? value.toString() : toHex(value)
-            }${cskw}\n`
+            `${exportkw} const ${hex ? hexkw : numberkw}${
+                csharp ? capitalize(camelize(cst)) : toUpper(cst)
+            } = ${hex ? value.toString() : toHex(value)}${cskw}\n`
     }
 
     if (csharp) {

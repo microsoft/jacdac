@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Speech synthesis
     public static class SpeechSynthesisConstants
     {
-    // Service: Speech synthesis
         public const uint ServiceClass = 0x1204d995;
     }
     public enum SpeechSynthesisReg {

@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Microphone
     public static class MicrophoneConstants
     {
-    // Service: Microphone
         public const uint ServiceClass = 0x113dac86;
     }
     public enum MicrophoneCmd {

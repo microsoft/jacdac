@@ -1,8 +1,8 @@
 namespace Jacdac {
+    // Service: Common registers and commands
     public static class SystemConstants
     {
-    // Service: Common registers and commands
-        public const uint ANNOUNCE_INTERVAL = 0x1f4;
+        public const uint AnnounceInterval = 0x1f4;
     }
 
     public enum SystemReadingThreshold { // uint8_t

@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Barcode reader
     public static class BarcodeReaderConstants
     {
-    // Service: Barcode reader
         public const uint ServiceClass = 0x1c739e6c;
     }
 

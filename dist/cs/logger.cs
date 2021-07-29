@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Logger
     public static class LoggerConstants
     {
-    // Service: Logger
         public const uint ServiceClass = 0x12dc1fca;
     }
 

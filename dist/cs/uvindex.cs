@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: UV index
     public static class UvIndexConstants
     {
-    // Service: UV index
         public const uint ServiceClass = 0x1f6e0d90;
     }
 

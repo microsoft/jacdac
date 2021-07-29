@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: LED Pixel
     public static class LedPixelConstants
     {
-    // Service: LED Pixel
         public const uint ServiceClass = 0x126f00e0;
     }
 

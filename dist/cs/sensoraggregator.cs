@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Sensor Aggregator
     public static class SensorAggregatorConstants
     {
-    // Service: Sensor Aggregator
         public const uint ServiceClass = 0x1d90e1c5;
     }
 

@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Indexed screen
     public static class IndexedScreenConstants
     {
-    // Service: Indexed screen
         public const uint ServiceClass = 0x16fa36e5;
     }
     public enum IndexedScreenCmd {

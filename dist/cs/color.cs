@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Color
     public static class ColorConstants
     {
-    // Service: Color
         public const uint ServiceClass = 0x1630d567;
     }
     public enum ColorReg {

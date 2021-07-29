@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: bit:radio
     public static class BitRadioConstants
     {
-    // Service: bit:radio
         public const uint ServiceClass = 0x1ac986cf;
     }
     public enum BitRadioReg {

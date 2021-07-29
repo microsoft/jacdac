@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: HID Mouse
     public static class HidMouseConstants
     {
-    // Service: HID Mouse
         public const uint ServiceClass = 0x1885dc1c;
     }
 

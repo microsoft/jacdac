@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: HID Adapter
     public static class HIDAdapterConstants
     {
-    // Service: HID Adapter
         public const uint ServiceClass = 0x1e5758b5;
     }
     public enum HIDAdapterReg {

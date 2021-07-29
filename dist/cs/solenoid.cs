@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Solenoid
     public static class SolenoidConstants
     {
-    // Service: Solenoid
         public const uint ServiceClass = 0x171723ca;
     }
 

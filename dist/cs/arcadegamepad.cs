@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Arcade Gamepad
     public static class ArcadeGamepadConstants
     {
-    // Service: Arcade Gamepad
         public const uint ServiceClass = 0x1deaa06e;
     }
 

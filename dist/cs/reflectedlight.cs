@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Reflected light
     public static class ReflectedLightConstants
     {
-    // Service: Reflected light
         public const uint ServiceClass = 0x126c4cb2;
     }
 

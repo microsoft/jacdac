@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Arcade sound
     public static class ArcadeSoundConstants
     {
-    // Service: Arcade sound
         public const uint ServiceClass = 0x1fc63606;
     }
     public enum ArcadeSoundCmd {

@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Sound Spectrum
     public static class SoundSpectrumConstants
     {
-    // Service: Sound Spectrum
         public const uint ServiceClass = 0x157abc1e;
     }
     public enum SoundSpectrumReg {

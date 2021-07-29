@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Multitouch
     public static class MultitouchConstants
     {
-    // Service: Multitouch
         public const uint ServiceClass = 0x18d55e2b;
     }
     public enum MultitouchReg {

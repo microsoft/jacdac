@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Motor
     public static class MotorConstants
     {
-    // Service: Motor
         public const uint ServiceClass = 0x17004cd8;
     }
     public enum MotorReg {

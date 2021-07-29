@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Matrix Keypad
     public static class MatrixKeypadConstants
     {
-    // Service: Matrix Keypad
         public const uint ServiceClass = 0x13062dc8;
     }
 

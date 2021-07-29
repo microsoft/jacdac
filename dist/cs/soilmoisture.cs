@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Soil moisture
     public static class SoilMoistureConstants
     {
-    // Service: Soil moisture
         public const uint ServiceClass = 0x1d4aa3b3;
     }
 

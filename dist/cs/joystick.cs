@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Joystick
     public static class JoystickConstants
     {
-    // Service: Joystick
         public const uint ServiceClass = 0x108f7456;
     }
 

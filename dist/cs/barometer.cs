@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Barometer
     public static class BarometerConstants
     {
-    // Service: Barometer
         public const uint ServiceClass = 0x1e117cea;
     }
     public enum BarometerReg {

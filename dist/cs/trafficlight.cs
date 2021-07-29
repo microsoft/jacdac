@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Traffic Light
     public static class TrafficLightConstants
     {
-    // Service: Traffic Light
         public const uint ServiceClass = 0x15c38d9b;
     }
     public enum TrafficLightReg {

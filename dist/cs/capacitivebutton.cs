@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Capacitive Button
     public static class CapacitiveButtonConstants
     {
-    // Service: Capacitive Button
         public const uint ServiceClass = 0x2865adc9;
     }
     public enum CapacitiveButtonReg {

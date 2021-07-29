@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Potentiometer
     public static class PotentiometerConstants
     {
-    // Service: Potentiometer
         public const uint ServiceClass = 0x1f274746;
     }
 

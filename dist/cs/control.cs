@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Control
     public static class ControlConstants
     {
-    // Service: Control
         public const uint ServiceClass = 0x0;
     }
 

@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Gyroscope
     public static class GyroscopeConstants
     {
-    // Service: Gyroscope
         public const uint ServiceClass = 0x1e1b06f2;
     }
     public enum GyroscopeReg {

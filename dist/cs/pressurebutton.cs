@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Pressure Button
     public static class PressureButtonConstants
     {
-    // Service: Pressure Button
         public const uint ServiceClass = 0x281740c3;
     }
     public enum PressureButtonReg {

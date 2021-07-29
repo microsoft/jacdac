@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Buzzer
     public static class BuzzerConstants
     {
-    // Service: Buzzer
         public const uint ServiceClass = 0x1b57b1d7;
     }
     public enum BuzzerReg {

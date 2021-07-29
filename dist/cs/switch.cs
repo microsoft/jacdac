@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Switch
     public static class SwitchConstants
     {
-    // Service: Switch
         public const uint ServiceClass = 0x1ad29402;
     }
 

@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: MIDI output
     public static class MidiOutputConstants
     {
-    // Service: MIDI output
         public const uint ServiceClass = 0x1a848cd7;
     }
     public enum MidiOutputReg {

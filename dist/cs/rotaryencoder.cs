@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Rotary encoder
     public static class RotaryEncoderConstants
     {
-    // Service: Rotary encoder
         public const uint ServiceClass = 0x10fa29c9;
     }
     public enum RotaryEncoderReg {

@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Pulse Oximeter
     public static class PulseOximeterConstants
     {
-    // Service: Pulse Oximeter
         public const uint ServiceClass = 0x10bb4eb6;
     }
     public enum PulseOximeterReg {

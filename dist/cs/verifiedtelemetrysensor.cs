@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Verified Telemetry
     public static class VerifiedTelemetryConstants
     {
-    // Service: Verified Telemetry
         public const uint ServiceClass = 0x2194841f;
     }
 

@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Wind direction
     public static class WindDirectionConstants
     {
-    // Service: Wind direction
         public const uint ServiceClass = 0x186be92b;
     }
     public enum WindDirectionReg {

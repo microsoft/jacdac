@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Base service
     public static class BaseConstants
     {
-    // Service: Base service
     }
     public enum BaseReg {
         /**

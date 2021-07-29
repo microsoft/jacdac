@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: HID Keyboard
     public static class HidKeyboardConstants
     {
-    // Service: HID Keyboard
         public const uint ServiceClass = 0x18b05b6a;
     }
 

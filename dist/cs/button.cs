@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Button
     public static class ButtonConstants
     {
-    // Service: Button
         public const uint ServiceClass = 0x1473a263;
     }
     public enum ButtonReg {

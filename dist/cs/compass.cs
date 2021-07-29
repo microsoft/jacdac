@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Compass
     public static class CompassConstants
     {
-    // Service: Compass
         public const uint ServiceClass = 0x15b7b9bf;
     }
     public enum CompassReg {

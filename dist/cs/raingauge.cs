@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Rain gauge
     public static class RainGaugeConstants
     {
-    // Service: Rain gauge
         public const uint ServiceClass = 0x13734c95;
     }
     public enum RainGaugeReg {

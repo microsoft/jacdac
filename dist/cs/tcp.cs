@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: TCP
     public static class TcpConstants
     {
-    // Service: TCP
         public const uint ServiceClass = 0x1b43b70b;
     }
 

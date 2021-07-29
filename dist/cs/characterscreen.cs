@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Character Screen
     public static class CharacterScreenConstants
     {
-    // Service: Character Screen
         public const uint ServiceClass = 0x1f37c56a;
     }
 

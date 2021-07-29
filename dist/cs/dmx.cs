@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: DMX
     public static class DmxConstants
     {
-    // Service: DMX
         public const uint ServiceClass = 0x11cf8c05;
     }
     public enum DmxReg {

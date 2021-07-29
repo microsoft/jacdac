@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Distance
     public static class DistanceConstants
     {
-    // Service: Distance
         public const uint ServiceClass = 0x141a6b8a;
     }
 

@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Relay
     public static class RelayConstants
     {
-    // Service: Relay
         public const uint ServiceClass = 0x183fe656;
     }
 

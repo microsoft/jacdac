@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Water level
     public static class WaterLevelConstants
     {
-    // Service: Water level
         public const uint ServiceClass = 0x147b62ed;
     }
 

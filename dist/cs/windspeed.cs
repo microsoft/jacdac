@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Wind speed
     public static class WindSpeedConstants
     {
-    // Service: Wind speed
         public const uint ServiceClass = 0x1b591bbf;
     }
     public enum WindSpeedReg {

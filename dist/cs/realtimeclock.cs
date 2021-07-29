@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Real time clock
     public static class RealTimeClockConstants
     {
-    // Service: Real time clock
         public const uint ServiceClass = 0x1a8b1a28;
     }
 

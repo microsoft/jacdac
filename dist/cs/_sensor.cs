@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Sensor
     public static class SensorConstants
     {
-    // Service: Sensor
     }
     public enum SensorReg {
         /**

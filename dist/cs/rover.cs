@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Rover
     public static class RoverConstants
     {
-    // Service: Rover
         public const uint ServiceClass = 0x19f4d06b;
     }
     public enum RoverReg {

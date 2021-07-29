@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Protocol Test
     public static class ProtoTestConstants
     {
-    // Service: Protocol Test
         public const uint ServiceClass = 0x16c7466a;
     }
     public enum ProtoTestReg {

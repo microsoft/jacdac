@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: 7-segment display
     public static class SevenSegmentDisplayConstants
     {
-    // Service: 7-segment display
         public const uint ServiceClass = 0x196158f7;
     }
     public enum SevenSegmentDisplayReg {

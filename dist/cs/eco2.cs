@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Equivalent CO₂
     public static class ECO2Constants
     {
-    // Service: Equivalent CO₂
         public const uint ServiceClass = 0x169c9dc6;
     }
 

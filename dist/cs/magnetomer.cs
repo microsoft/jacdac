@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Magnetometer
     public static class MagnetometerConstants
     {
-    // Service: Magnetometer
         public const uint ServiceClass = 0x13029088;
     }
     public enum MagnetometerReg {

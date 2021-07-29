@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Sound level
     public static class SoundLevelConstants
     {
-    // Service: Sound level
         public const uint ServiceClass = 0x14ad1a5d;
     }
     public enum SoundLevelReg {

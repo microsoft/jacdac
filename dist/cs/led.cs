@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: LED
     public static class LedConstants
     {
-    // Service: LED
         public const uint ServiceClass = 0x1e3048f8;
     }
 

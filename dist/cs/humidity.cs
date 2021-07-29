@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Humidity
     public static class HumidityConstants
     {
-    // Service: Humidity
         public const uint ServiceClass = 0x16c810b8;
     }
     public enum HumidityReg {

@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Motion
     public static class MotionConstants
     {
-    // Service: Motion
         public const uint ServiceClass = 0x1179a749;
     }
 

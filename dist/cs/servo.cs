@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Servo
     public static class ServoConstants
     {
-    // Service: Servo
         public const uint ServiceClass = 0x12fc9103;
     }
     public enum ServoReg {

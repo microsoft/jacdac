@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Thermocouple
     public static class ThermocoupleConstants
     {
-    // Service: Thermocouple
         public const uint ServiceClass = 0x143ac061;
     }
 

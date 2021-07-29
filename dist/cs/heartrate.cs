@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: Heart Rate
     public static class HeartRateConstants
     {
-    // Service: Heart Rate
         public const uint ServiceClass = 0x166c6dc4;
     }
 

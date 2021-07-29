@@ -1,7 +1,7 @@
 namespace Jacdac {
+    // Service: WIFI
     public static class WifiConstants
     {
-    // Service: WIFI
         public const uint ServiceClass = 0x18aae1fa;
     }
 

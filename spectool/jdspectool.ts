@@ -454,6 +454,7 @@ function processSpec(dn: string) {
     )
     fs.writeFileSync(path.join(outp, "specconstants.ts"), concats["ts"])
     fs.writeFileSync(path.join(outp, "specconstants.sts"), concats["sts"])
+    fs.writeFileSync(path.join(outp, "specconstants.cs"), concats["cs"])
     if (fs.existsSync(pxtJacdacDir))
         // only available locally
         fs.writeFileSync(

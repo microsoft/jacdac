@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-jsep@^0.3.5:
-  version "0.3.5"
-  resolved "https://registry.yarnpkg.com/jsep/-/jsep-0.3.5.tgz#3fd79ebd92f6f434e4857d5272aaeef7d948264d"
-  integrity sha512-AoRLBDc6JNnKjNcmonituEABS5bcfqDhQAWWXNTFrqu6nVXBpBAGfcoTGZMFlIrh9FjmE1CQyX9CTNwZrXMMDA==
+jsep@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/jsep/-/jsep-0.4.0.tgz#2191c41bde180c27551bb550abb407d88976ed4a"
+  integrity sha512-UDkrzhJK8hmgXeGK8WIiecc/cuW4Vnx5nnrRma7yaxK0WXlvZ4VerGrcxPzifd/CA6QdcI1hpXqr22tHKXpcQA==
 
 typescript@^4.2.3:
   version "4.2.3"

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path="jdspec.d.ts" />
 import { parseIntFloat } from "./jdutils"
@@ -1264,6 +1265,19 @@ function cStorage(tp: jdspec.StorageType) {
     else return `uint${tp * 8}_t`
 }
 
+function cSharpStorage(tp: jdspec.StorageType) {
+    if (tp == 0 || [1, 2, 4, 8].indexOf(Math.abs(tp)) < 0) return "bytes"
+    switch(tp) {
+        case -1: return "sbyte"
+        case 1: return "byte"
+        case -2: return "short"
+        case 2: return "ushort"
+        case -4: return "int"
+        case 4: return "uint"
+    }
+    return `unknown({${tp})`
+}
+
 function canonicalType(tp: jdspec.StorageType): string {
     if (tp == 0) return "bytes"
     if (tp < 0) return `i${-tp * 8}`
@@ -1697,35 +1711,65 @@ function memberSize(fld: jdspec.PacketMember) {
     return Math.abs(fld.storage)
 }
 
-function toTypescript(info: jdspec.ServiceSpec, staticTypeScript: boolean) {
-    const indent = staticTypeScript ? "    " : ""
+function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
+    const staticTypeScript = language === "sts"
+    const csharp = language === "c#"
+    const useNamespace = staticTypeScript || csharp
+
+    const indent = useNamespace ? "    " : ""
     const indent2 = indent + "    "
-    const enumkw = staticTypeScript
+    const numberkw = csharp ? "uint " : ""
+    const hexkw = csharp ? "byte[]" : ""
+    const enumkw = csharp
+        ? indent + "public enum"
+        : staticTypeScript
         ? indent + "export const enum"
         : "export enum"
-    let r = staticTypeScript
-        ? `namespace ${TYPESCRIPT_STATIC_NAMESPACE} {\n`
+    const exportkw = csharp ? "public" : "export"
+    const cskw = csharp ? ";" : ""
+    let r = useNamespace
+        ? `namespace ${
+              csharp
+                  ? capitalize(TYPESCRIPT_STATIC_NAMESPACE)
+                  : TYPESCRIPT_STATIC_NAMESPACE
+          } {\n`
         : ""
+
     r += indent + "// Service: " + info.name + "\n"
+    if (csharp) {
+        r += `${indent}public static class ${capitalize(
+            info.camelName
+        )}Constants\n${indent}{\n`
+    }
     if (info.shortId[0] != "_") {
+        const name = csharp
+            ? "ServiceClass"
+            : `SRV_${snakify(info.camelName).toLocaleUpperCase()}`
         r +=
             indent +
-            `export const SRV_${snakify(
-                info.camelName
-            ).toLocaleUpperCase()} = ${toHex(info.classIdentifier)}\n`
+            (csharp ? indent : "") +
+            `${exportkw} const ${numberkw}${name} = ${toHex(
+                info.classIdentifier
+            )}${cskw}\n`
     }
     const pref = upperCamel(info.camelName)
     for (const cst in info.constants) {
         const { value, hex } = info.constants[cst]
         r +=
             indent +
-            `export const ${toUpper(cst)} = ${
-                hex ? value.toString() : toHex(value)
-            }\n`
+            (csharp ? indent : "") +
+            `${exportkw} const ${hex ? hexkw : numberkw}${
+                csharp ? capitalize(camelize(cst)) : toUpper(cst)
+            } = ${hex ? value.toString() : toHex(value)}${cskw}\n`
     }
+
+    if (csharp) {
+        r += indent + `}\n`
+    }
+
     for (const en of values(info.enums)) {
         const enPref = pref + upperCamel(en.name)
-        r += `\n${enumkw} ${enPref} { // ${cStorage(en.storage)}\n`
+        r += `\n${enumkw} ${enPref}${csharp ? `: ${cSharpStorage(en.storage)}` : ""} { // ${cStorage(en.storage)}\n`
         for (const k of Object.keys(en.members))
             r += indent2 + k + " = " + toHex(en.members[k]) + ",\n"
         r += indent + "}\n\n"
@@ -1789,7 +1833,7 @@ function toTypescript(info: jdspec.ServiceSpec, staticTypeScript: boolean) {
         }
     }
 
-    if (staticTypeScript) r += "}\n"
+    if (useNamespace) r += "}\n"
 
     return r.replace(/ *$/gm, "")
 }
@@ -1832,8 +1876,9 @@ export function converters(): jdspec.SMap<(s: jdspec.ServiceSpec) => string> {
     return {
         json: (j: jdspec.ServiceSpec) => JSON.stringify(j, null, 2),
         c: toH,
-        ts: j => toTypescript(j, false),
-        sts: j => toTypescript(j, true),
+        ts: j => toTypescript(j, "ts"),
+        sts: j => toTypescript(j, "sts"),
+        cs: j => toTypescript(j, "c#"),
         py: j => toPython(j),
         /*
         "cpp": toHPP,

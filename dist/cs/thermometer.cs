@@ -5,7 +5,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1421bac7;
     }
 
-    public enum ThermometerVariant { // uint8_t
+    public enum ThermometerVariant: byte { // uint8_t
         Outdoor = 0x1,
         Indoor = 0x2,
         Body = 0x3,

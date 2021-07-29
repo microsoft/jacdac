@@ -5,7 +5,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1789f0a2;
     }
 
-    public enum RngVariant { // uint8_t
+    public enum RngVariant: byte { // uint8_t
         Quantum = 0x1,
         ADCNoise = 0x2,
         WebCrypto = 0x3,

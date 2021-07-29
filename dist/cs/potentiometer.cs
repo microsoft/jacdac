@@ -5,7 +5,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1f274746;
     }
 
-    public enum PotentiometerVariant { // uint8_t
+    public enum PotentiometerVariant: byte { // uint8_t
         Slider = 0x1,
         Rotary = 0x2,
     }

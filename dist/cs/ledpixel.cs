@@ -5,14 +5,14 @@ namespace Jacdac {
         public const uint ServiceClass = 0x126f00e0;
     }
 
-    public enum LedPixelLightType { // uint8_t
+    public enum LedPixelLightType: byte { // uint8_t
         WS2812B_GRB = 0x0,
         APA102 = 0x10,
         SK9822 = 0x11,
     }
 
 
-    public enum LedPixelVariant { // uint8_t
+    public enum LedPixelVariant: byte { // uint8_t
         Strip = 0x1,
         Ring = 0x2,
         Stick = 0x3,

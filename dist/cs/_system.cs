@@ -5,14 +5,14 @@ namespace Jacdac {
         public const uint AnnounceInterval = 0x1f4;
     }
 
-    public enum SystemReadingThreshold { // uint8_t
+    public enum SystemReadingThreshold: byte { // uint8_t
         Neutral = 0x1,
         Inactive = 0x2,
         Active = 0x3,
     }
 
 
-    public enum SystemStatusCodes { // uint16_t
+    public enum SystemStatusCodes: ushort { // uint16_t
         Ready = 0x0,
         Initializing = 0x1,
         Calibrating = 0x2,

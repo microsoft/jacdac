@@ -5,7 +5,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x166c6dc4;
     }
 
-    public enum HeartRateVariant { // uint8_t
+    public enum HeartRateVariant: byte { // uint8_t
         Finger = 0x1,
         Chest = 0x2,
         Wrist = 0x3,

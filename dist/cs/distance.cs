@@ -5,7 +5,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x141a6b8a;
     }
 
-    public enum DistanceVariant { // uint8_t
+    public enum DistanceVariant: byte { // uint8_t
         Ultrasonic = 0x1,
         Infrared = 0x2,
         LiDAR = 0x3,

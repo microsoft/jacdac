@@ -5,14 +5,14 @@ namespace Jacdac {
         public const uint AnnounceInterval = 0x1f4;
     }
 
-    public enum SystemReadingThreshold { // uint8_t
+    public enum SystemReadingThreshold: byte { // uint8_t
         Neutral = 0x1,
         Inactive = 0x2,
         Active = 0x3,
     }
 
 
-    public enum SystemStatusCodes { // uint16_t
+    public enum SystemStatusCodes: ushort { // uint16_t
         Ready = 0x0,
         Initializing = 0x1,
         Calibrating = 0x2,
@@ -443,7 +443,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1deaa06e;
     }
 
-    public enum ArcadeGamepadButton { // uint8_t
+    public enum ArcadeGamepadButton: byte { // uint8_t
         Left = 0x1,
         Up = 0x2,
         Right = 0x3,
@@ -638,7 +638,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1c739e6c;
     }
 
-    public enum BarcodeReaderFormat { // uint8_t
+    public enum BarcodeReaderFormat: byte { // uint8_t
         Aztec = 0x1,
         Code128 = 0x2,
         Code39 = 0x3,
@@ -831,7 +831,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1ffa9948;
     }
 
-    public enum BootloaderError { // uint32_t
+    public enum BootloaderError: uint { // uint32_t
         NoError = 0x0,
         PacketTooSmall = 0x1,
         OutOfFlashableRange = 0x2,
@@ -1020,13 +1020,13 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1f37c56a;
     }
 
-    public enum CharacterScreenVariant { // uint8_t
+    public enum CharacterScreenVariant: byte { // uint8_t
         LCD = 0x1,
         OLED = 0x2,
     }
 
 
-    public enum CharacterScreenTextDirection { // uint8_t
+    public enum CharacterScreenTextDirection: byte { // uint8_t
         LeftToRight = 0x1,
         RightToLeft = 0x2,
     }
@@ -1172,7 +1172,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x0;
     }
 
-    public enum ControlAnnounceFlags { // uint16_t
+    public enum ControlAnnounceFlags: ushort { // uint16_t
         RestartCounterSteady = 0xf,
         RestartCounter1 = 0x1,
         RestartCounter2 = 0x2,
@@ -1361,7 +1361,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x141a6b8a;
     }
 
-    public enum DistanceVariant { // uint8_t
+    public enum DistanceVariant: byte { // uint8_t
         Ultrasonic = 0x1,
         Infrared = 0x2,
         LiDAR = 0x3,
@@ -1443,7 +1443,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x169c9dc6;
     }
 
-    public enum ECO2Variant { // uint8_t
+    public enum ECO2Variant: byte { // uint8_t
         VOC = 0x1,
         NDIR = 0x2,
     }
@@ -1548,7 +1548,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x166c6dc4;
     }
 
-    public enum HeartRateVariant { // uint8_t
+    public enum HeartRateVariant: byte { // uint8_t
         Finger = 0x1,
         Chest = 0x2,
         Wrist = 0x3,
@@ -1679,7 +1679,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x18b05b6a;
     }
 
-    public enum HidKeyboardModifiers { // uint8_t
+    public enum HidKeyboardModifiers: byte { // uint8_t
         None = 0x0,
         LeftControl = 0x1,
         LeftShift = 0x2,
@@ -1692,7 +1692,7 @@ namespace Jacdac {
     }
 
 
-    public enum HidKeyboardAction { // uint8_t
+    public enum HidKeyboardAction: byte { // uint8_t
         Press = 0x0,
         Up = 0x1,
         Down = 0x2,
@@ -1723,14 +1723,14 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1885dc1c;
     }
 
-    public enum HidMouseButton { // uint16_t
+    public enum HidMouseButton: ushort { // uint16_t
         Left = 0x1,
         Right = 0x2,
         Middle = 0x4,
     }
 
 
-    public enum HidMouseButtonEvent { // uint8_t
+    public enum HidMouseButtonEvent: byte { // uint8_t
         Up = 0x1,
         Down = 0x2,
         Click = 0x3,
@@ -1966,7 +1966,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x108f7456;
     }
 
-    public enum JoystickButtons { // uint32_t
+    public enum JoystickButtons: uint { // uint32_t
         Left = 0x1,
         Up = 0x2,
         Right = 0x4,
@@ -1982,7 +1982,7 @@ namespace Jacdac {
     }
 
 
-    public enum JoystickVariant { // uint8_t
+    public enum JoystickVariant: byte { // uint8_t
         Thumb = 0x1,
         ArcadeBall = 0x2,
         ArcadeStick = 0x3,
@@ -2042,7 +2042,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1e3048f8;
     }
 
-    public enum LedVariant { // uint8_t
+    public enum LedVariant: byte { // uint8_t
         ThroughHole = 0x1,
         SMD = 0x2,
         Power = 0x3,
@@ -2170,14 +2170,14 @@ namespace Jacdac {
         public const uint ServiceClass = 0x126f00e0;
     }
 
-    public enum LedPixelLightType { // uint8_t
+    public enum LedPixelLightType: byte { // uint8_t
         WS2812B_GRB = 0x0,
         APA102 = 0x10,
         SK9822 = 0x11,
     }
 
 
-    public enum LedPixelVariant { // uint8_t
+    public enum LedPixelVariant: byte { // uint8_t
         Strip = 0x1,
         Ring = 0x2,
         Stick = 0x3,
@@ -2298,7 +2298,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x17dc9a1c;
     }
 
-    public enum LightLevelVariant { // uint8_t
+    public enum LightLevelVariant: byte { // uint8_t
         PhotoResistor = 0x1,
         LEDMatrix = 0x2,
         Ambient = 0x3,
@@ -2332,7 +2332,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x12dc1fca;
     }
 
-    public enum LoggerPriority { // uint8_t
+    public enum LoggerPriority: byte { // uint8_t
         Debug = 0x0,
         Log = 0x1,
         Warning = 0x2,
@@ -2437,7 +2437,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x13062dc8;
     }
 
-    public enum MatrixKeypadVariant { // uint8_t
+    public enum MatrixKeypadVariant: byte { // uint8_t
         Membrane = 0x1,
         Keyboard = 0x2,
         Elastomer = 0x3,
@@ -2607,7 +2607,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x140f9a78;
     }
 
-    public enum ModelRunnerModelFormat { // uint32_t
+    public enum ModelRunnerModelFormat: uint { // uint32_t
         TFLite = 0x334c4654,
         ML4F = 0x30470f62,
         EdgeImpulseCompiled = 0x30564945,
@@ -2767,7 +2767,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1179a749;
     }
 
-    public enum MotionVariant { // uint8_t
+    public enum MotionVariant: byte { // uint8_t
         PIR = 0x1,
     }
 
@@ -2939,7 +2939,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1f274746;
     }
 
-    public enum PotentiometerVariant { // uint8_t
+    public enum PotentiometerVariant: byte { // uint8_t
         Slider = 0x1,
         Rotary = 0x2,
     }
@@ -2972,7 +2972,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1fa4c95a;
     }
 
-    public enum PowerPowerStatus { // uint8_t
+    public enum PowerPowerStatus: byte { // uint8_t
         Disallowed = 0x0,
         Powering = 0x1,
         Overload = 0x2,
@@ -3452,7 +3452,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1a8b1a28;
     }
 
-    public enum RealTimeClockVariant { // uint8_t
+    public enum RealTimeClockVariant: byte { // uint8_t
         Computer = 0x1,
         Crystal = 0x2,
         Cuckoo = 0x3,
@@ -3518,7 +3518,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x126c4cb2;
     }
 
-    public enum ReflectedLightVariant { // uint8_t
+    public enum ReflectedLightVariant: byte { // uint8_t
         InfraredDigital = 0x1,
         InfraredAnalog = 0x2,
     }
@@ -3563,7 +3563,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x183fe656;
     }
 
-    public enum RelayVariant { // uint8_t
+    public enum RelayVariant: byte { // uint8_t
         Electromechanical = 0x1,
         SolidState = 0x2,
         Reed = 0x3,
@@ -3618,7 +3618,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1789f0a2;
     }
 
-    public enum RngVariant { // uint8_t
+    public enum RngVariant: byte { // uint8_t
         Quantum = 0x1,
         ADCNoise = 0x2,
         WebCrypto = 0x3,
@@ -3807,7 +3807,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1d90e1c5;
     }
 
-    public enum SensorAggregatorSampleType { // uint8_t
+    public enum SensorAggregatorSampleType: byte { // uint8_t
         U8 = 0x8,
         I8 = 0x88,
         U16 = 0x10,
@@ -4122,7 +4122,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1d4aa3b3;
     }
 
-    public enum SoilMoistureVariant { // uint8_t
+    public enum SoilMoistureVariant: byte { // uint8_t
         Resistive = 0x1,
         Capacitive = 0x2,
     }
@@ -4155,7 +4155,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x171723ca;
     }
 
-    public enum SolenoidVariant { // uint8_t
+    public enum SolenoidVariant: byte { // uint8_t
         PushPull = 0x1,
         Valve = 0x2,
         Latch = 0x3,
@@ -4451,7 +4451,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1ad29402;
     }
 
-    public enum SwitchVariant { // uint8_t
+    public enum SwitchVariant: byte { // uint8_t
         Slide = 0x1,
         Tilt = 0x2,
         PushButton = 0x3,
@@ -4512,7 +4512,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1b43b70b;
     }
 
-    public enum TcpTcpError { // int32_t
+    public enum TcpTcpError: int { // int32_t
         InvalidCommand = 0x1,
         InvalidCommandPayload = 0x2,
     }
@@ -4581,7 +4581,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x143ac061;
     }
 
-    public enum ThermocoupleVariant { // uint8_t
+    public enum ThermocoupleVariant: byte { // uint8_t
         TypeK = 0x1,
         TypeJ = 0x2,
         TypeT = 0x3,
@@ -4647,7 +4647,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1421bac7;
     }
 
-    public enum ThermometerVariant { // uint8_t
+    public enum ThermometerVariant: byte { // uint8_t
         Outdoor = 0x1,
         Indoor = 0x2,
         Body = 0x3,
@@ -4798,7 +4798,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1f6e0d90;
     }
 
-    public enum UvIndexVariant { // uint8_t
+    public enum UvIndexVariant: byte { // uint8_t
         UVA_UVB = 0x1,
         Visible_IR = 0x2,
     }
@@ -4840,14 +4840,14 @@ namespace Jacdac {
         public const uint ServiceClass = 0x2194841f;
     }
 
-    public enum VerifiedTelemetryStatus { // uint8_t
+    public enum VerifiedTelemetryStatus: byte { // uint8_t
         Unknown = 0x0,
         Working = 0x1,
         Faulty = 0x2,
     }
 
 
-    public enum VerifiedTelemetryFingerprintType { // uint8_t
+    public enum VerifiedTelemetryFingerprintType: byte { // uint8_t
         FallCurve = 0x1,
         CurrentSense = 0x2,
         Custom = 0x3,
@@ -4957,7 +4957,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x147b62ed;
     }
 
-    public enum WaterLevelVariant { // uint8_t
+    public enum WaterLevelVariant: byte { // uint8_t
         Resistive = 0x1,
         ContactPhotoElectric = 0x2,
         NonContactPhotoElectric = 0x3,
@@ -4991,7 +4991,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1f4d5040;
     }
 
-    public enum WeightScaleVariant { // uint8_t
+    public enum WeightScaleVariant: byte { // uint8_t
         Body = 0x1,
         Food = 0x2,
         Jewelry = 0x3,
@@ -5096,7 +5096,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x18aae1fa;
     }
 
-    public enum WifiAPFlags { // uint32_t
+    public enum WifiAPFlags: uint { // uint32_t
         HasPassword = 0x1,
         WPS = 0x2,
         HasSecondaryChannelAbove = 0x4,

@@ -5,7 +5,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x171723ca;
     }
 
-    public enum SolenoidVariant { // uint8_t
+    public enum SolenoidVariant: byte { // uint8_t
         PushPull = 0x1,
         Valve = 0x2,
         Latch = 0x3,

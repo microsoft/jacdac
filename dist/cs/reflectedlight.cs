@@ -5,7 +5,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x126c4cb2;
     }
 
-    public enum ReflectedLightVariant { // uint8_t
+    public enum ReflectedLightVariant: byte { // uint8_t
         InfraredDigital = 0x1,
         InfraredAnalog = 0x2,
     }

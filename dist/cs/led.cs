@@ -5,7 +5,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1e3048f8;
     }
 
-    public enum LedVariant { // uint8_t
+    public enum LedVariant: byte { // uint8_t
         ThroughHole = 0x1,
         SMD = 0x2,
         Power = 0x3,

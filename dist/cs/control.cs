@@ -5,7 +5,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x0;
     }
 
-    public enum ControlAnnounceFlags { // uint16_t
+    public enum ControlAnnounceFlags: ushort { // uint16_t
         RestartCounterSteady = 0xf,
         RestartCounter1 = 0x1,
         RestartCounter2 = 0x2,

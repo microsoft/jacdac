@@ -5,7 +5,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1179a749;
     }
 
-    public enum MotionVariant { // uint8_t
+    public enum MotionVariant: byte { // uint8_t
         PIR = 0x1,
     }
 

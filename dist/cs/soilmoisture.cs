@@ -5,7 +5,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1d4aa3b3;
     }
 
-    public enum SoilMoistureVariant { // uint8_t
+    public enum SoilMoistureVariant: byte { // uint8_t
         Resistive = 0x1,
         Capacitive = 0x2,
     }

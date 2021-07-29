@@ -5,7 +5,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1f4d5040;
     }
 
-    public enum WeightScaleVariant { // uint8_t
+    public enum WeightScaleVariant: byte { // uint8_t
         Body = 0x1,
         Food = 0x2,
         Jewelry = 0x3,

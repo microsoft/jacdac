@@ -5,7 +5,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1d90e1c5;
     }
 
-    public enum SensorAggregatorSampleType { // uint8_t
+    public enum SensorAggregatorSampleType: byte { // uint8_t
         U8 = 0x8,
         I8 = 0x88,
         U16 = 0x10,

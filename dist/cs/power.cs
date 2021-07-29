@@ -5,7 +5,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1fa4c95a;
     }
 
-    public enum PowerPowerStatus { // uint8_t
+    public enum PowerPowerStatus: byte { // uint8_t
         Disallowed = 0x0,
         Powering = 0x1,
         Overload = 0x2,

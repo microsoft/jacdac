@@ -5,7 +5,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x17dc9a1c;
     }
 
-    public enum LightLevelVariant { // uint8_t
+    public enum LightLevelVariant: byte { // uint8_t
         PhotoResistor = 0x1,
         LEDMatrix = 0x2,
         Ambient = 0x3,

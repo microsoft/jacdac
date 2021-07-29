@@ -5,7 +5,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1ffa9948;
     }
 
-    public enum BootloaderError { // uint32_t
+    public enum BootloaderError: uint { // uint32_t
         NoError = 0x0,
         PacketTooSmall = 0x1,
         OutOfFlashableRange = 0x2,

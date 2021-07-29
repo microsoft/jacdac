@@ -5,7 +5,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1f6e0d90;
     }
 
-    public enum UvIndexVariant { // uint8_t
+    public enum UvIndexVariant: byte { // uint8_t
         UVA_UVB = 0x1,
         Visible_IR = 0x2,
     }

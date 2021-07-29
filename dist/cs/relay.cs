@@ -5,7 +5,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x183fe656;
     }
 
-    public enum RelayVariant { // uint8_t
+    public enum RelayVariant: byte { // uint8_t
         Electromechanical = 0x1,
         SolidState = 0x2,
         Reed = 0x3,

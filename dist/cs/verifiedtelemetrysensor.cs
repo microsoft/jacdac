@@ -5,14 +5,14 @@ namespace Jacdac {
         public const uint ServiceClass = 0x2194841f;
     }
 
-    public enum VerifiedTelemetryStatus { // uint8_t
+    public enum VerifiedTelemetryStatus: byte { // uint8_t
         Unknown = 0x0,
         Working = 0x1,
         Faulty = 0x2,
     }
 
 
-    public enum VerifiedTelemetryFingerprintType { // uint8_t
+    public enum VerifiedTelemetryFingerprintType: byte { // uint8_t
         FallCurve = 0x1,
         CurrentSense = 0x2,
         Custom = 0x3,

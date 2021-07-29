@@ -5,7 +5,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x143ac061;
     }
 
-    public enum ThermocoupleVariant { // uint8_t
+    public enum ThermocoupleVariant: byte { // uint8_t
         TypeK = 0x1,
         TypeJ = 0x2,
         TypeT = 0x3,

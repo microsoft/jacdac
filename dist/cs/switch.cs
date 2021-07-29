@@ -5,7 +5,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1ad29402;
     }
 
-    public enum SwitchVariant { // uint8_t
+    public enum SwitchVariant: byte { // uint8_t
         Slide = 0x1,
         Tilt = 0x2,
         PushButton = 0x3,

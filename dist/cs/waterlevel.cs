@@ -5,7 +5,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x147b62ed;
     }
 
-    public enum WaterLevelVariant { // uint8_t
+    public enum WaterLevelVariant: byte { // uint8_t
         Resistive = 0x1,
         ContactPhotoElectric = 0x2,
         NonContactPhotoElectric = 0x3,

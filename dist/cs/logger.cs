@@ -5,7 +5,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x12dc1fca;
     }
 
-    public enum LoggerPriority { // uint8_t
+    public enum LoggerPriority: byte { // uint8_t
         Debug = 0x0,
         Log = 0x1,
         Warning = 0x2,

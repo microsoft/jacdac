@@ -5,7 +5,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x13062dc8;
     }
 
-    public enum MatrixKeypadVariant { // uint8_t
+    public enum MatrixKeypadVariant: byte { // uint8_t
         Membrane = 0x1,
         Keyboard = 0x2,
         Elastomer = 0x3,

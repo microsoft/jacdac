@@ -5,7 +5,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1a8b1a28;
     }
 
-    public enum RealTimeClockVariant { // uint8_t
+    public enum RealTimeClockVariant: byte { // uint8_t
         Computer = 0x1,
         Crystal = 0x2,
         Cuckoo = 0x3,

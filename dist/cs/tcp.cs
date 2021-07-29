@@ -5,7 +5,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1b43b70b;
     }
 
-    public enum TcpTcpError { // int32_t
+    public enum TcpTcpError: int { // int32_t
         InvalidCommand = 0x1,
         InvalidCommandPayload = 0x2,
     }

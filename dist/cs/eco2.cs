@@ -5,7 +5,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x169c9dc6;
     }
 
-    public enum ECO2Variant { // uint8_t
+    public enum ECO2Variant: byte { // uint8_t
         VOC = 0x1,
         NDIR = 0x2,
     }

@@ -5,14 +5,14 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1885dc1c;
     }
 
-    public enum HidMouseButton { // uint16_t
+    public enum HidMouseButton: ushort { // uint16_t
         Left = 0x1,
         Right = 0x2,
         Middle = 0x4,
     }
 
 
-    public enum HidMouseButtonEvent { // uint8_t
+    public enum HidMouseButtonEvent: byte { // uint8_t
         Up = 0x1,
         Down = 0x2,
         Click = 0x3,

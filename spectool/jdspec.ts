@@ -1265,6 +1265,19 @@ function cStorage(tp: jdspec.StorageType) {
     else return `uint${tp * 8}_t`
 }
 
+function cSharpStorage(tp: jdspec.StorageType) {
+    if (tp == 0 || [1, 2, 4, 8].indexOf(Math.abs(tp)) < 0) return "bytes"
+    switch(tp) {
+        case -1: return "sbyte"
+        case 1: return "byte"
+        case -2: return "short"
+        case 2: return "ushort"
+        case -4: return "int"
+        case 4: return "uint"
+    }
+    return `unknown({${tp})`
+}
+
 function canonicalType(tp: jdspec.StorageType): string {
     if (tp == 0) return "bytes"
     if (tp < 0) return `i${-tp * 8}`
@@ -1756,7 +1769,7 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
 
     for (const en of values(info.enums)) {
         const enPref = pref + upperCamel(en.name)
-        r += `\n${enumkw} ${enPref} { // ${cStorage(en.storage)}\n`
+        r += `\n${enumkw} ${enPref}${csharp ? `: ${cSharpStorage(en.storage)}` : ""} { // ${cStorage(en.storage)}\n`
         for (const k of Object.keys(en.members))
             r += indent2 + k + " = " + toHex(en.members[k]) + ",\n"
         r += indent + "}\n\n"

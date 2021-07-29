@@ -5,7 +5,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x18b05b6a;
     }
 
-    public enum HidKeyboardModifiers { // uint8_t
+    public enum HidKeyboardModifiers: byte { // uint8_t
         None = 0x0,
         LeftControl = 0x1,
         LeftShift = 0x2,
@@ -18,7 +18,7 @@ namespace Jacdac {
     }
 
 
-    public enum HidKeyboardAction { // uint8_t
+    public enum HidKeyboardAction: byte { // uint8_t
         Press = 0x0,
         Up = 0x1,
         Down = 0x2,

@@ -5,13 +5,13 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1f37c56a;
     }
 
-    public enum CharacterScreenVariant { // uint8_t
+    public enum CharacterScreenVariant: byte { // uint8_t
         LCD = 0x1,
         OLED = 0x2,
     }
 
 
-    public enum CharacterScreenTextDirection { // uint8_t
+    public enum CharacterScreenTextDirection: byte { // uint8_t
         LeftToRight = 0x1,
         RightToLeft = 0x2,
     }

@@ -5,7 +5,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1c739e6c;
     }
 
-    public enum BarcodeReaderFormat { // uint8_t
+    public enum BarcodeReaderFormat: byte { // uint8_t
         Aztec = 0x1,
         Code128 = 0x2,
         Code39 = 0x3,

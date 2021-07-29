@@ -5,7 +5,7 @@ namespace Jacdac {
         public const uint ServiceClass = 0x1deaa06e;
     }
 
-    public enum ArcadeGamepadButton { // uint8_t
+    public enum ArcadeGamepadButton: byte { // uint8_t
         Left = 0x1,
         Up = 0x2,
         Right = 0x3,

@@ -431,7 +431,7 @@ declare namespace jdspec {
         /**
          * This member is designed to support small servers and typically is not exposed by high-level client.
          */
-         lowLevel?: boolean
+        lowLevel?: boolean
     }
 
     /**
@@ -479,7 +479,7 @@ declare namespace jdspec {
          * A Unit helping to interpret value.
          */
         unit?: Unit
-        
+
         /**
          * An encoding helping to interpret the value
          */

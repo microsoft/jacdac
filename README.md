@@ -4,6 +4,8 @@
 for **microcontrollers** and their peripherals (sensors/actuators), 
 with applications to rapid prototyping, making, and physical computing. 
 
+**Partner Preview: Jacdac is currently in preview. If you would like to join as a pre-release test partner, please email jacdac-tap@microsoft.com.**
+
 This repository contains the service specifications and device definitions.
 
 * Read online documentation at https://aka.ms/jacdac

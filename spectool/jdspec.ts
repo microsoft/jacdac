@@ -1490,7 +1490,7 @@ export function snakify(name: string) {
 
 export function dashify(name: string) {
     if (!name) return name
-    return snakify(name.replace(/^_+/, "")).replace(/_/g, "-").toLowerCase()
+    return snakify(name.replace(/^_+/, "")).replace(/(_|\s)+/g, "-").toLowerCase()
 }
 
 export function humanify(name: string) {

@@ -114,12 +114,12 @@ typedef struct jd_control_set_status_light {
 /**
  * Constant uint32_t. A numeric code for the string above; used to identify firmware images and devices.
  */
-#define JD_CONTROL_REG_FIRMWARE_IDENTIFIER 0x181
+#define JD_CONTROL_REG_PRODUCT_IDENTIFIER 0x181
 
 /**
- * Constant uint32_t. Typically the same as `firmware_identifier` unless device was flashed by hand; the bootloader will respond to that code.
+ * Constant uint32_t. Typically the same as `product_identifier` unless device was flashed by hand; the bootloader will respond to that code.
  */
-#define JD_CONTROL_REG_BOOTLOADER_FIRMWARE_IDENTIFIER 0x184
+#define JD_CONTROL_REG_BOOTLOADER_PRODUCT_IDENTIFIER 0x184
 
 /**
  * Constant string (bytes). A string describing firmware version; typically semver.

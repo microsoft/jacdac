@@ -12,10 +12,10 @@ Allows flashing (reprogramming) devices over Jacdac.
         service_class: u32
         page_size: u32 B
         flashable_size: u32 B
-        firmware_identifier: u32
+        product_identifer: u32
     }
 
-The `service_class` is always `0x1ffa9948`. The `firmware_identifier` identifies the kind of firmware
+The `service_class` is always `0x1ffa9948`. The `product_identifer` identifies the kind of firmware
 that "fits" this device.
 
     command set_session @ 0x81 {

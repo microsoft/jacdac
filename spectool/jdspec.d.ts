@@ -583,7 +583,7 @@ declare namespace jdspec {
         link?: string
 
         /**
-         * Firmware identifiers associated with different versions of this device.
+         * Product identifiers associated with different versions of this device.
          */
         productIdentifiers: number[]
 

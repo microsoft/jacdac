@@ -99,13 +99,13 @@ say 1.6s every 0.5s.
 
 Identifies the type of hardware (eg., ACME Corp. Servo X-42 Rev C)
 
-    const firmware_identifier? : u32 { absolute_min = 0x3000_0000, absolute_max = 0x3fff_ffff } @ 0x181
+    const product_identifier? : u32 { absolute_min = 0x3000_0000, absolute_max = 0x3fff_ffff } @ 0x181
 
 A numeric code for the string above; used to identify firmware images and devices.
 
-    const bootloader_firmware_identifier?: u32 { absolute_min = 0x3000_0000, absolute_max = 0x3fff_ffff } @ 0x184
+    const bootloader_product_identifier?: u32 { absolute_min = 0x3000_0000, absolute_max = 0x3fff_ffff } @ 0x184
 
-Typically the same as `firmware_identifier` unless device was flashed by hand; the bootloader will respond to that code.
+Typically the same as `product_identifier` unless device was flashed by hand; the bootloader will respond to that code.
 
     const firmware_version?: string @ 0x185
 

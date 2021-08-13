@@ -285,7 +285,7 @@
     },
     {
       "kind": "const",
-      "name": "firmware_identifier",
+      "name": "product_identifier",
       "identifier": 385,
       "description": "A numeric code for the string above; used to identify firmware images and devices.",
       "fields": [
@@ -303,9 +303,9 @@
     },
     {
       "kind": "const",
-      "name": "bootloader_firmware_identifier",
+      "name": "bootloader_product_identifier",
       "identifier": 388,
-      "description": "Typically the same as `firmware_identifier` unless device was flashed by hand; the bootloader will respond to that code.",
+      "description": "Typically the same as `product_identifier` unless device was flashed by hand; the bootloader will respond to that code.",
       "fields": [
         {
           "name": "_",

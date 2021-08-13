@@ -585,7 +585,7 @@ declare namespace jdspec {
         /**
          * Firmware identifiers associated with different versions of this device.
          */
-        firmwares: number[]
+        productIdentifiers: number[]
 
         /**
          * Service class identifiers for services supported by this device.
@@ -596,11 +596,6 @@ declare namespace jdspec {
          * Github repository containing the firmware releases
          */
         repo: string
-
-        /**
-         * Optional list of URLs pointing to a service specification markdown file
-         */
-        serviceSpecificationsUrls?: string[]
 
         /**
          * Links image urls

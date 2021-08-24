@@ -405,6 +405,7 @@ export function parseServiceSpecificationMarkdownToJSON(
                 case "rw":
                 case "event":
                 case "client":
+                case "volatile":
                 case "lowlevel":
                     startPacket(words)
                     break
@@ -541,13 +542,18 @@ export function parseServiceSpecificationMarkdownToJSON(
 
         let client: boolean = undefined
         let lowLevel: boolean = undefined
+        let volatile: boolean = undefined
         if (words[0] === "client") {
             client = true
             words.shift()
         } else if (words[0] === "lowlevel") {
             lowLevel = true
             words.shift()
+        } else if (words[0] === "volatile") {
+            volatile = true
+            words.shift()
         }
+
 
         const kindSt = words.shift()
         let kind: jdspec.PacketKind = "command"
@@ -588,6 +594,7 @@ export function parseServiceSpecificationMarkdownToJSON(
             internal,
             client,
             lowLevel,
+            volatile
         }
         if (isReport && lastCmd && name == lastCmd.name) {
             packetInfo.secondary = true

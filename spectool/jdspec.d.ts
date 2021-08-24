@@ -424,6 +424,11 @@ declare namespace jdspec {
         preferredInterval?: number
 
         /**
+         * For registers, is it volatile (changes without any prompting)
+         */
+         volatile?: boolean
+
+        /**
          * This member is not implemented on the server and typically is 'simulated' by clients
          */
         client?: boolean

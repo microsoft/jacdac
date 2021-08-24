@@ -310,7 +310,7 @@ export class VMChecker {
                     // we have a spec, now look for command
                     const commands = spec.packets?.filter(
                         pkt =>
-                            (client && pkt.kind === "command") ||
+                            (client && pkt.kind === "action") ||
                             (!client && pkt.kind === "event")
                     )
                     theCommand = commands.find(c => c?.name === command)

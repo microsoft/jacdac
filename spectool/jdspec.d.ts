@@ -328,7 +328,7 @@ declare namespace jdspec {
      */
     type PacketKind =
         | "report"
-        | "command"
+        | "action"
         | "const"
         | "ro"
         | "rw"
@@ -339,7 +339,7 @@ declare namespace jdspec {
         | "meta_pipe_report"
 
     /**
-     * Spec for a report/command/register or event.
+     * Spec for a report/action/register or event.
      */
     interface PacketInfo {
         /**
@@ -358,8 +358,8 @@ declare namespace jdspec {
         pipeType?: string
 
         /**
-         * This either a command/report number, an identifier for event, or a register number, which is combined
-         * with 0x1000/0x2000 to get command for reading/writing.
+         * This either an action/report number, an identifier for event, or a register number, which is combined
+         * with 0x1000/0x2000 (for reading/writing), which yields the (packet) command/operation 
          */
         identifier: number
 
@@ -404,12 +404,12 @@ declare namespace jdspec {
         derived?: string
 
         /**
-         * If present and true, this is a report that has the same identifier as preceding command.
+         * If present and true, this is a report that has the same identifier as preceding action.
          */
         secondary?: boolean
 
         /**
-         * If present and true, this command is followed by its report.
+         * If present and true, this action is followed by its report.
          */
         hasReport?: boolean
 

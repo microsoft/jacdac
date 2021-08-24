@@ -354,7 +354,7 @@ export function parseServiceSpecificationMarkdownToJSON(
                     line = ""
                 } else if (
                     newNoteId == "registers" ||
-                    newNoteId == "commands" ||
+                    newNoteId == "actions" ||
                     newNoteId == "events" ||
                     newNoteId == "examples"
                 ) {
@@ -399,7 +399,7 @@ export function parseServiceSpecificationMarkdownToJSON(
                 case "meta":
                 case "pipe":
                 case "report":
-                case "command":
+                case "action":
                 case "const":
                 case "ro":
                 case "rw":
@@ -550,18 +550,18 @@ export function parseServiceSpecificationMarkdownToJSON(
         }
 
         const kindSt = words.shift()
-        let kind: jdspec.PacketKind = "command"
+        let kind: jdspec.PacketKind = "action"
         if (kindSt == "meta") {
-            forceSection("commands")
+            forceSection("actions")
             let w2 = words.shift()
             if (w2 == "pipe") w2 = words.shift()
-            if (w2 == "report" || w2 == "command")
+            if (w2 == "report" || w2 == "action")
                 kind = ("meta_pipe_" + w2) as any
             else error("invalid token after meta")
         } else if (kindSt == "pipe") {
-            forceSection("commands")
+            forceSection("actions")
             const w2 = words.shift()
-            if (w2 == "report" || w2 == "command") kind = ("pipe_" + w2) as any
+            if (w2 == "report" || w2 == "action") kind = ("pipe_" + w2) as any
             else error("invalid token after pipe")
         } else {
             kind = kindSt as any
@@ -605,7 +605,7 @@ export function parseServiceSpecificationMarkdownToJSON(
             // OK
         } else if (
             prev.length == 1 &&
-            prev[0].kind == "command" &&
+            prev[0].kind == "action" &&
             packetInfo.kind == "report"
         ) {
             // OK
@@ -666,8 +666,8 @@ export function parseServiceSpecificationMarkdownToJSON(
                     isUser = 0x80 <= v && v <= 0xff
                     break
                 case "report":
-                case "command":
-                    forceSection("commands")
+                case "action":
+                    forceSection("actions")
                     isSystem = 0x00 <= v && v <= 0x7f
                     isUser = 0x80 <= v && v <= 0xff
                     isHigh = 0x100 <= v && v <= 0xeff
@@ -718,7 +718,7 @@ export function parseServiceSpecificationMarkdownToJSON(
 
         info.packets.push(packetInfo)
 
-        if (kind == "command") lastCmd = packetInfo
+        if (kind == "action") lastCmd = packetInfo
         else lastCmd = null
 
         if (words[0] == "=" || words[0] == ":") {

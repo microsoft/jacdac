@@ -91,7 +91,7 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
     const commands = packets.filter(
         pkt =>
             !pkt.derived &&
-            pkt.kind === "command" &&
+            pkt.kind === "action" &&
             pkt.fields.every(f => f.type !== "pipe")
     )
 

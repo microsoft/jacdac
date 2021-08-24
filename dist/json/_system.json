@@ -243,6 +243,7 @@
           "isSimpleType": true
         }
       ],
+      "volatile": true,
       "packFormat": "i32"
     },
     {
@@ -288,6 +289,7 @@
           "isSimpleType": true
         }
       ],
+      "volatile": true,
       "packFormat": "u32"
     },
     {

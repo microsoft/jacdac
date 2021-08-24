@@ -542,18 +542,13 @@ export function parseServiceSpecificationMarkdownToJSON(
 
         let client: boolean = undefined
         let lowLevel: boolean = undefined
-        let volatile: boolean = undefined
         if (words[0] === "client") {
             client = true
             words.shift()
         } else if (words[0] === "lowlevel") {
             lowLevel = true
             words.shift()
-        } else if (words[0] === "volatile") {
-            volatile = true
-            words.shift()
         }
-
 
         const kindSt = words.shift()
         let kind: jdspec.PacketKind = "command"
@@ -577,6 +572,14 @@ export function parseServiceSpecificationMarkdownToJSON(
         if (words[0] === "internal") {
             internal = true
             words.shift()
+        } 
+        
+        let volatile: boolean = undefined
+        if (words[0] === "volatile") {
+            if (kind != "ro" && kind != "rw")
+                error("volatile can only modify ro or rw")
+            volatile = true
+            words.shift()
         }
 
         let name = words.shift()
@@ -585,6 +588,7 @@ export function parseServiceSpecificationMarkdownToJSON(
             words.unshift(name)
             name = lastCmd.name
         }
+
         packetInfo = {
             kind,
             name: normalizeName(name),

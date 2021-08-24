@@ -21,7 +21,7 @@ We recommend an orientation marking on the PCB so that users can mount modules w
 
 ## Registers
 
-    volatile ro forces @ reading {
+    ro forces @ reading {
         x: i12.20 g
         y: i12.20 g
         z: i12.20 g
@@ -29,7 +29,7 @@ We recommend an orientation marking on the PCB so that users can mount modules w
 
 Indicates the current forces acting on accelerometer.
 
-    volatile ro forces_error?: i12.20 g @ reading_error
+    ro forces_error?: i12.20 g @ reading_error
 
 Error on the reading value.
 

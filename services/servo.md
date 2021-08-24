@@ -11,7 +11,7 @@ The `min/max_angle/pulse` may be read-only if the servo is permanently affixed t
 
     rw angle: i16.16 ° { typical_min=-90, typical_max=90 } @ value
 
-Specifies the angle of the arm.
+Specifies the angle of the arm (request).
 
     rw enabled: bool @ intensity
 
@@ -44,3 +44,8 @@ The servo motor will stop rotating when it is trying to move a ``stall_torque`` 
     const response_speed?: u16.16 s/60° @ 0x181
 
 Time to move 60°.
+
+    ro volatile current_angle?: i16.16 ° @ 0x182
+
+The current physical position of the arm.
+

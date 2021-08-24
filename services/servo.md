@@ -45,7 +45,7 @@ The servo motor will stop rotating when it is trying to move a ``stall_torque`` 
 
 Time to move 60°.
 
-    ro volatile current_angle?: i16.16 ° @ 0x182
+    ro current_angle?: i16.16 ° @ reading
 
 The current physical position of the arm.
 

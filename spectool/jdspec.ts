@@ -661,6 +661,9 @@ export function parseServiceSpecificationMarkdownToJSON(
                 }
             }
 
+            if (packetInfo.identifierName === "reading")
+                packetInfo.volatile = true
+
             let isUser = false
             let isSystem = false
             let isHigh = 0x200 <= v && v <= 0xeff

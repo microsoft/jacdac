@@ -236,7 +236,7 @@
     {
       "kind": "ro",
       "name": "current_angle",
-      "identifier": 386,
+      "identifier": 257,
       "description": "The current physical position of the arm.",
       "fields": [
         {
@@ -249,6 +249,7 @@
       ],
       "volatile": true,
       "optional": true,
+      "identifierName": "reading",
       "packFormat": "i16.16"
     }
   ],

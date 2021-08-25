@@ -350,6 +350,7 @@
           "typicalMax": 150
         }
       ],
+      "volatile": true,
       "optional": true,
       "preferredInterval": 60000,
       "packFormat": "i16"
@@ -368,6 +369,7 @@
           "isSimpleType": true
         }
       ],
+      "volatile": true,
       "optional": true,
       "preferredInterval": 60000,
       "packFormat": "u64"

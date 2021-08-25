@@ -156,6 +156,7 @@
           "absoluteMax": 359
         }
       ],
+      "volatile": true,
       "identifierName": "reading",
       "preferredInterval": 1000,
       "packFormat": "u16"
@@ -174,6 +175,7 @@
           "isSimpleType": true
         }
       ],
+      "volatile": true,
       "optional": true,
       "identifierName": "reading_error",
       "packFormat": "u16"

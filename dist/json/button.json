@@ -155,6 +155,7 @@
         }
       ],
       "lowLevel": true,
+      "volatile": true,
       "identifierName": "reading",
       "packFormat": "u0.16"
     },

@@ -165,6 +165,7 @@
           "startRepeats": true
         }
       ],
+      "volatile": true,
       "identifierName": "reading",
       "packFormat": "r: u8"
     },

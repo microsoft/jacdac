@@ -83,7 +83,7 @@
       "kind": "rw",
       "name": "angle",
       "identifier": 2,
-      "description": "Specifies the angle of the arm.",
+      "description": "Specifies the angle of the arm (request).",
       "fields": [
         {
           "name": "_",
@@ -232,6 +232,25 @@
       ],
       "optional": true,
       "packFormat": "u16.16"
+    },
+    {
+      "kind": "ro",
+      "name": "current_angle",
+      "identifier": 257,
+      "description": "The current physical position of the arm.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "°",
+          "shift": 16,
+          "type": "i16.16",
+          "storage": -4
+        }
+      ],
+      "volatile": true,
+      "optional": true,
+      "identifierName": "reading",
+      "packFormat": "i16.16"
     }
   ],
   "tags": [

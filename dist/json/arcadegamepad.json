@@ -177,6 +177,7 @@
           "storage": 1
         }
       ],
+      "volatile": true,
       "identifierName": "reading",
       "packFormat": "r: u8 u0.8"
     },

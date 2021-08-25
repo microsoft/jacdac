@@ -405,6 +405,7 @@ export function parseServiceSpecificationMarkdownToJSON(
                 case "rw":
                 case "event":
                 case "client":
+                case "volatile":
                 case "lowlevel":
                     startPacket(words)
                     break
@@ -571,6 +572,14 @@ export function parseServiceSpecificationMarkdownToJSON(
         if (words[0] === "internal") {
             internal = true
             words.shift()
+        } 
+        
+        let volatile: boolean = undefined
+        if (words[0] === "volatile") {
+            if (kind != "ro" && kind != "rw")
+                error("volatile can only modify ro or rw")
+            volatile = true
+            words.shift()
         }
 
         let name = words.shift()
@@ -579,6 +588,7 @@ export function parseServiceSpecificationMarkdownToJSON(
             words.unshift(name)
             name = lastCmd.name
         }
+
         packetInfo = {
             kind,
             name: normalizeName(name),
@@ -588,6 +598,7 @@ export function parseServiceSpecificationMarkdownToJSON(
             internal,
             client,
             lowLevel,
+            volatile
         }
         if (isReport && lastCmd && name == lastCmd.name) {
             packetInfo.secondary = true
@@ -649,6 +660,10 @@ export function parseServiceSpecificationMarkdownToJSON(
                     error(`${w} cannot be resolved, since _system is missing`)
                 }
             }
+
+            // if we are accessing the reading or reading_error register, mark it volatile
+            if (kind === "ro" && (v === 0x101 || v === 0x106))
+                packetInfo.volatile = true
 
             let isUser = false
             let isSystem = false

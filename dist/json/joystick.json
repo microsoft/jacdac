@@ -196,6 +196,7 @@
           "storage": -2
         }
       ],
+      "volatile": true,
       "identifierName": "reading",
       "packFormat": "u32 i1.15 i1.15"
     },

@@ -156,6 +156,7 @@
           "typicalMin": 0
         }
       ],
+      "volatile": true,
       "identifierName": "reading",
       "packFormat": "u22.10"
     },
@@ -173,6 +174,7 @@
           "storage": 4
         }
       ],
+      "volatile": true,
       "optional": true,
       "identifierName": "reading_error",
       "packFormat": "u22.10"

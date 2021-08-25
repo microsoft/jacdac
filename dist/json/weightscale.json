@@ -164,6 +164,7 @@
           "storage": 4
         }
       ],
+      "volatile": true,
       "identifierName": "reading",
       "packFormat": "u16.16"
     },
@@ -181,6 +182,7 @@
           "storage": 4
         }
       ],
+      "volatile": true,
       "optional": true,
       "identifierName": "reading_error",
       "packFormat": "u16.16"

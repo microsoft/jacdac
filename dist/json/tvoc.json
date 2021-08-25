@@ -175,6 +175,7 @@
           "storage": 4
         }
       ],
+      "volatile": true,
       "optional": true,
       "identifierName": "reading_error",
       "packFormat": "u22.10"

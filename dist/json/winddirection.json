@@ -175,6 +175,7 @@
           "isSimpleType": true
         }
       ],
+      "volatile": true,
       "optional": true,
       "identifierName": "reading_error",
       "packFormat": "u16"

@@ -178,6 +178,7 @@
           "storage": 4
         }
       ],
+      "volatile": true,
       "identifierName": "reading_error",
       "packFormat": "u22.10"
     }

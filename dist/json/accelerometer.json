@@ -188,6 +188,7 @@
           "storage": -4
         }
       ],
+      "volatile": true,
       "optional": true,
       "identifierName": "reading_error",
       "packFormat": "i12.20"

@@ -95,7 +95,7 @@
       "kind": "command",
       "name": "info",
       "identifier": 0,
-      "description": "The `service_class` is always `0x1ffa9948`. The `firmware_identifier` identifies the kind of firmware\nthat \"fits\" this device.",
+      "description": "The `service_class` is always `0x1ffa9948`. The `product_identifer` identifies the kind of firmware\nthat \"fits\" this device.",
       "fields": [],
       "identifierName": "announce",
       "hasReport": true
@@ -104,7 +104,7 @@
       "kind": "report",
       "name": "info",
       "identifier": 0,
-      "description": "The `service_class` is always `0x1ffa9948`. The `firmware_identifier` identifies the kind of firmware\nthat \"fits\" this device.",
+      "description": "The `service_class` is always `0x1ffa9948`. The `product_identifer` identifies the kind of firmware\nthat \"fits\" this device.",
       "fields": [
         {
           "name": "service_class",
@@ -127,7 +127,7 @@
           "isSimpleType": true
         },
         {
-          "name": "firmware_identifier",
+          "name": "product_identifer",
           "type": "u32",
           "storage": 4,
           "isSimpleType": true

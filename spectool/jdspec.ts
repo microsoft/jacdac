@@ -1866,7 +1866,7 @@ export function normalizeDeviceSpecification(dev: jdspec.DeviceSpec) {
         repo: dev.repo,
         link: dev.link,
         services: dev.services || [],
-        firmwares: dev.firmwares || [],
+        productIdentifiers: dev.productIdentifiers || [],
     }
     return clone
 }

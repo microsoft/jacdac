@@ -1,27 +1,27 @@
-vanityname,designid,revision,modulename,redirectsource
-aaaaaa,30,1,accelerometer,aka.ms
-aaaaab,39,1.1,hub,aka.ms
-aaaaac,37,2.1,RGB LED 8 ring,aka.ms
-aaaaad,29,0.3,Low power micro:bit jacdapter,aka.ms
-aaaaae,10,1.3,PADAUK Button,aka.ms
-aaaaaf,49,1,Slider,aka.ms
-aaaaag,18,1.1,Temperature and humidity,aka.ms
-aaaaah,26,1.1,JacdacRotary,aka.ms
-aaaaai,23,1.1,JacdacServoDual,aka.ms
-aaaaaj,48,0.2,JacdacIoT,aka.ms
-aaaaak,50,0.1,JacdacPower,aka.ms
-aaaaal,34,1.3,JacdacAccessSwitchInput,aka.ms
-aaaaam,44,0.2,JacdacJoystick,aka.ms
-aaaaan,40,0.2,JacdacG0Button,aka.ms
-aaaaao,49,1.1,Slider,aka.ms
-aaaaap,41,0.2,JacdacBrainF4 ,aka.ms
-aaaaaq,53,0.1,MikrobusCarrierBoard,aka.ms
-aaaaar,54,0.1,JacdacMotionDetection,aka.ms
-aaaaas,55,0.1,JacdacAmbientLight,aka.ms
-aaaaat,58,0.1,JacdacRgbLedBar10,aka.ms
-aaaaau,,,,
-aaaaav,,,,
-aaaaaw,,,,
-aaaaax,,,,
-aaaaay,,,,
-aaaaaz,,,,
+vanityname,designid,revision,modulename,redirectsource,productid
+aaaaaa,30,1.0,accelerometer,aka.ms,0x38c5de8f
+aaaaab,39,1.1,hub,aka.ms,
+aaaaac,37,2.1,RGB LED 8 ring,aka.ms,0x3027f977
+aaaaad,29,0.3,Low power micro:bit jacdapter,aka.ms,
+aaaaae,10,1.3,PADAUK Button,aka.ms,0x357084e1
+aaaaaf,49,1.0,Slider,aka.ms,0x3a78f364
+aaaaag,18,1.1,Temperature and humidity,aka.ms,0x3156cfd7
+aaaaah,26,1.1,JacdacRotary,aka.ms,0x31736afd
+aaaaai,23,1.1,JacdacServoDual,aka.ms,0x3daf1cf6
+aaaaaj,48,0.2,JacdacIoT,aka.ms,
+aaaaak,50,0.1,JacdacPower,aka.ms,0x3592dcb4
+aaaaal,34,1.3,JacdacAccessSwitchInput,aka.ms,0x39842fd9
+aaaaam,44,0.2,JacdacJoystick,aka.ms,0x328d0f9d
+aaaaan,40,0.2,JacdacG0Button,aka.ms,0x3865780e
+aaaaao,49,1.1,Slider,aka.ms,0x399a7233
+aaaaap,41,0.2,JacdacBrainF4 ,aka.ms,
+aaaaaq,53,0.1,MikrobusCarrierBoard,aka.ms,
+aaaaar,54,0.1,JacdacMotionDetection,aka.ms,
+aaaaas,55,0.1,JacdacAmbientLight,aka.ms,
+aaaaat,58,0.1,JacdacRgbLedBar10,aka.ms,
+aaaaau,48,0.3,JacdacBrainESP32,aka.ms,
+aaaaav,61,3.4,JM-mikroBUS,aka.ms,
+aaaaaw,60,0.1,JacdacRgbLedGeneric,aka.ms,
+aaaaax,,,,,
+aaaaay,,,,,
+aaaaaz,,,,,

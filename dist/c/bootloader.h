@@ -12,7 +12,7 @@
 #define JD_BOOTLOADER_ERROR_NOT_PAGE_ALIGNED 0x4
 
 /**
- * No args. The `service_class` is always `0x1ffa9948`. The `firmware_identifier` identifies the kind of firmware
+ * No args. The `service_class` is always `0x1ffa9948`. The `product_identifer` identifies the kind of firmware
  * that "fits" this device.
  */
 #define JD_BOOTLOADER_CMD_INFO JD_CMD_ANNOUNCE
@@ -24,7 +24,7 @@ typedef struct jd_bootloader_info_report {
     uint32_t service_class;
     uint32_t page_size; // B
     uint32_t flashable_size; // B
-    uint32_t firmware_identifier;
+    uint32_t product_identifer;
 } jd_bootloader_info_report_t;
 
 

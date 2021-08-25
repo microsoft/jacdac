@@ -6,7 +6,7 @@ namespace Jacdac {
     }
     public enum ServoReg {
         /**
-         * Read-write ° i16.16 (int32_t). Specifies the angle of the arm.
+         * Read-write ° i16.16 (int32_t). Specifies the angle of the arm (request).
          *
          * ```
          * const [angle] = jdunpack<[number]>(buf, "i16.16")
@@ -85,6 +85,15 @@ namespace Jacdac {
          * ```
          */
         ResponseSpeed = 0x181,
+
+        /**
+         * Read-only ° i16.16 (int32_t). The current physical position of the arm.
+         *
+         * ```
+         * const [currentAngle] = jdunpack<[number]>(buf, "i16.16")
+         * ```
+         */
+        CurrentAngle = 0x101,
     }
 
 }

@@ -163,6 +163,7 @@
           "storage": 2
         }
       ],
+      "volatile": true,
       "identifierName": "reading",
       "preferredInterval": 1000,
       "packFormat": "u0.16"

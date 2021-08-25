@@ -661,7 +661,8 @@ export function parseServiceSpecificationMarkdownToJSON(
                 }
             }
 
-            if (packetInfo.identifierName === "reading")
+            // if we are accessing the reading register, mark it volatile
+            if ((kind === "ro" || kind == "rw") && v === 0x101)
                 packetInfo.volatile = true
 
             let isUser = false

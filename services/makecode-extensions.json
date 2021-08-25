@@ -45,6 +45,15 @@
     }
   },
   {
+    "service": "color",
+    "client": {
+      "name": "jacdac-color",
+      "repo": "microsoft/pxt-jacdac/color",
+      "qName": "modules.ColorClient",
+      "default": "modules.color"
+    }
+  },
+  {
     "service": "compass",
     "client": {
       "name": "jacdac-compass",

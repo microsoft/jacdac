@@ -155,6 +155,7 @@
           "startRepeats": true
         }
       ],
+      "volatile": true,
       "identifierName": "reading",
       "packFormat": "r: i32"
     },

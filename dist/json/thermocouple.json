@@ -169,6 +169,7 @@
           "storage": -4
         }
       ],
+      "volatile": true,
       "identifierName": "reading",
       "preferredInterval": 1000,
       "packFormat": "i22.10"

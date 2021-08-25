@@ -168,6 +168,7 @@
           "typicalMax": 200
         }
       ],
+      "volatile": true,
       "identifierName": "reading",
       "preferredInterval": 1000,
       "packFormat": "u16.16"

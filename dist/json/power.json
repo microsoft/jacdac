@@ -156,6 +156,7 @@
           "isSimpleType": true
         }
       ],
+      "volatile": true,
       "optional": true,
       "identifierName": "reading",
       "packFormat": "u16"

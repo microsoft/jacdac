@@ -154,6 +154,7 @@
           "storage": 2
         }
       ],
+      "volatile": true,
       "identifierName": "reading",
       "packFormat": "u0.16"
     },

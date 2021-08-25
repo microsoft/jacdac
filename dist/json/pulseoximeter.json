@@ -156,6 +156,7 @@
           "typicalMax": 100
         }
       ],
+      "volatile": true,
       "identifierName": "reading",
       "packFormat": "u8.8"
     },

@@ -168,6 +168,7 @@
           "isSimpleType": true
         }
       ],
+      "volatile": true,
       "identifierName": "reading",
       "packFormat": "i32 i32 i32"
     },

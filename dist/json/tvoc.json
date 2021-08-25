@@ -157,6 +157,7 @@
           "typicalMin": 0
         }
       ],
+      "volatile": true,
       "identifierName": "reading",
       "packFormat": "u22.10"
     },

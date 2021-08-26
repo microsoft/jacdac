@@ -25,7 +25,8 @@
     ],
     "productIdentifiers": [
       1020174761
-    ]
+    ],
+    "deprecated": true
   },
   {
     "id": "microsoft-research-jmanalogjoystick44v0.2",
@@ -53,7 +54,8 @@
     ],
     "productIdentifiers": [
       886919574
-    ]
+    ],
+    "deprecated": true
   },
   {
     "id": "microsoft-research-jmarcadecontrolsv2",
@@ -67,7 +69,8 @@
     ],
     "productIdentifiers": [
       954450524
-    ]
+    ],
+    "deprecated": true
   },
   {
     "id": "microsoft-research-jmbutton10v1.3",
@@ -96,7 +99,8 @@
     ],
     "productIdentifiers": [
       813927310
-    ]
+    ],
+    "deprecated": true
   },
   {
     "id": "microsoft-research-jmcrankv2",
@@ -110,7 +114,8 @@
     ],
     "productIdentifiers": [
       866678795
-    ]
+    ],
+    "deprecated": true
   },
   {
     "id": "microsoft-research-jmgamepadv2",
@@ -151,7 +156,8 @@
       336566904,
       496034245
     ],
-    "productIdentifiers": []
+    "productIdentifiers": [],
+    "deprecated": true
   },
   {
     "id": "microsoft-research-jmmotorv2.1",
@@ -165,7 +171,8 @@
     ],
     "productIdentifiers": [
       809626198
-    ]
+    ],
+    "deprecated": true
   },
   {
     "id": "microsoft-research-jmpower",
@@ -179,7 +186,8 @@
     ],
     "productIdentifiers": [
       815885628
-    ]
+    ],
+    "deprecated": true
   },
   {
     "id": "microsoft-research-jmprotov2.0",
@@ -191,7 +199,8 @@
     "services": [],
     "productIdentifiers": [
       1052138004
-    ]
+    ],
+    "deprecated": true
   },
   {
     "id": "microsoft-research-jmpwmnpxv2.0",
@@ -205,7 +214,8 @@
     ],
     "productIdentifiers": [
       895762065
-    ]
+    ],
+    "deprecated": true
   },
   {
     "id": "microsoft-research-jmpwmnpxv2.1",
@@ -233,7 +243,8 @@
     ],
     "productIdentifiers": [
       816890446
-    ]
+    ],
+    "deprecated": true
   },
   {
     "id": "microsoft-research-jmpwmservov2.1",
@@ -247,7 +258,8 @@
     ],
     "productIdentifiers": [
       986140247
-    ]
+    ],
+    "deprecated": true
   },
   {
     "id": "microsoft-research-jmrgbledringv2.1",
@@ -304,7 +316,8 @@
     ],
     "productIdentifiers": [
       1043615261
-    ]
+    ],
+    "deprecated": true
   },
   {
     "id": "microsoft-research-jmsndv2.0",
@@ -318,7 +331,8 @@
     ],
     "productIdentifiers": [
       854957595
-    ]
+    ],
+    "deprecated": true
   },
   {
     "id": "microsoft-research-jmtemphumidity18v1.0a",
@@ -362,6 +376,7 @@
     ],
     "productIdentifiers": [
       1067172458
-    ]
+    ],
+    "deprecated": true
   }
 ]

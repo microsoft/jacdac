@@ -572,8 +572,8 @@ export function parseServiceSpecificationMarkdownToJSON(
         if (words[0] === "internal") {
             internal = true
             words.shift()
-        } 
-        
+        }
+
         let volatile: boolean = undefined
         if (words[0] === "volatile") {
             if (kind != "ro" && kind != "rw")
@@ -598,7 +598,7 @@ export function parseServiceSpecificationMarkdownToJSON(
             internal,
             client,
             lowLevel,
-            volatile
+            volatile,
         }
         if (isReport && lastCmd && name == lastCmd.name) {
             packetInfo.secondary = true
@@ -1282,13 +1282,19 @@ function cStorage(tp: jdspec.StorageType) {
 
 function cSharpStorage(tp: jdspec.StorageType) {
     if (tp == 0 || [1, 2, 4, 8].indexOf(Math.abs(tp)) < 0) return "bytes"
-    switch(tp) {
-        case -1: return "sbyte"
-        case 1: return "byte"
-        case -2: return "short"
-        case 2: return "ushort"
-        case -4: return "int"
-        case 4: return "uint"
+    switch (tp) {
+        case -1:
+            return "sbyte"
+        case 1:
+            return "byte"
+        case -2:
+            return "short"
+        case 2:
+            return "ushort"
+        case -4:
+            return "int"
+        case 4:
+            return "uint"
     }
     return `unknown({${tp})`
 }
@@ -1505,7 +1511,9 @@ export function snakify(name: string) {
 
 export function dashify(name: string) {
     if (!name) return name
-    return snakify(name.replace(/^_+/, "")).replace(/(_|\s)+/g, "-").toLowerCase()
+    return snakify(name.replace(/^_+/, ""))
+        .replace(/(_|\s)+/g, "-")
+        .toLowerCase()
 }
 
 export function humanify(name: string) {
@@ -1784,7 +1792,9 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
 
     for (const en of values(info.enums)) {
         const enPref = pref + upperCamel(en.name)
-        r += `\n${enumkw} ${enPref}${csharp ? `: ${cSharpStorage(en.storage)}` : ""} { // ${cStorage(en.storage)}\n`
+        r += `\n${enumkw} ${enPref}${
+            csharp ? `: ${cSharpStorage(en.storage)}` : ""
+        } { // ${cStorage(en.storage)}\n`
         for (const k of Object.keys(en.members))
             r += indent2 + k + " = " + toHex(en.members[k]) + ",\n"
         r += indent + "}\n\n"
@@ -1868,6 +1878,7 @@ export function normalizeDeviceSpecification(dev: jdspec.DeviceSpec) {
         services: dev.services || [],
         productIdentifiers: dev.productIdentifiers || [],
     }
+    if (dev.deprecated !== undefined) clone.deprecated = dev.deprecated
     return clone
 }
 

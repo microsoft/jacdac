@@ -1,0 +1,14 @@
+{
+    "id": "microsoft-research-jm-button-10-v1.3",
+    "name": "JM Button 10 v1.3",
+    "company": "Microsoft Research",
+    "description": "",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+        343122531
+    ],
+    "productIdentifiers": [
+        896566497
+    ]
+}

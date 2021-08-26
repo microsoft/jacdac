@@ -618,6 +618,11 @@ declare namespace jdspec {
         }
 
         /**
+         * This module is no longer produced or used
+         */
+        deprecated?: boolean
+
+        /**
          * Hooks for parser.
          */
         errors?: Diagnostic[]

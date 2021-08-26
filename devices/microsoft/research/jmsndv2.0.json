@@ -1,14 +1,11 @@
 {
-  "id": "microsoft-research-jmsnd-v2.0",
-  "name": "JM SND v2.0",
-  "company": "Microsoft Research",
-  "description": "A simple buzzer.",
-  "repo": "https://github.com/microsoft/jacdac-msr-modules",
-  "link": "https://github.com/microsoft/jacdac-msr-modules",
-  "services": [
-    458731991
-  ],
-  "productIdentifiers": [
-    854957595
-  ]
+    "id": "microsoft-research-jmsnd-v2.0",
+    "name": "JM SND v2.0",
+    "company": "Microsoft Research",
+    "description": "A simple buzzer.",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [458731991],
+    "productIdentifiers": [854957595],
+    "deprecated": true
 }

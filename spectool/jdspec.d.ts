@@ -426,7 +426,7 @@ declare namespace jdspec {
         /**
          * For registers, is it volatile (changes without any prompting)
          */
-         volatile?: boolean
+        volatile?: boolean
 
         /**
          * This member is not implemented on the server and typically is 'simulated' by clients
@@ -561,12 +561,7 @@ declare namespace jdspec {
         message: string
     }
 
-    interface DeviceSpec {
-        /**
-         * URL-friendly id.
-         */
-        id: string
-
+    interface DeviceClassSpec {
         /**
          * Friendly name of the device
          */
@@ -575,7 +570,19 @@ declare namespace jdspec {
         /**
          * A few sentences about the device
          */
-        description: string
+        description?: string
+
+        /**
+         * Service class identifiers for services supported by this device.
+         */
+        services: number[]
+    }
+
+    interface DeviceSpec extends DeviceClassSpec {
+        /**
+         * URL-friendly id.
+         */
+        id: string
 
         /**
          * Manufacturer of the device
@@ -591,11 +598,6 @@ declare namespace jdspec {
          * Product identifiers associated with different versions of this device.
          */
         productIdentifiers: number[]
-
-        /**
-         * Service class identifiers for services supported by this device.
-         */
-        services: number[]
 
         /**
          * Github repository containing the firmware releases
@@ -616,7 +618,6 @@ declare namespace jdspec {
              */
             icon?: string
         }
-
 
         /**
          * Specifies the stability status of this device.

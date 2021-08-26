@@ -1878,7 +1878,7 @@ export function normalizeDeviceSpecification(dev: jdspec.DeviceSpec) {
         services: dev.services || [],
         productIdentifiers: dev.productIdentifiers || [],
     }
-    if (dev.deprecated !== undefined) clone.deprecated = dev.deprecated
+    if (dev.status !== undefined) clone.status = dev.status
     return clone
 }
 

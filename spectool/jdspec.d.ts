@@ -617,10 +617,11 @@ declare namespace jdspec {
             icon?: string
         }
 
+
         /**
-         * This module is no longer produced or used
+         * Specifies the stability status of this device.
          */
-        deprecated?: boolean
+        status?: StabilityStatus
 
         /**
          * Hooks for parser.

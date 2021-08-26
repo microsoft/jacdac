@@ -1887,7 +1887,8 @@ export function escapeDeviceIdentifier(text: string) {
     const escaped = text
         .trim()
         .toLowerCase()
-        .replace(/([^a-z0-9_\-.])+/gi, "-")
+        .replace(/([^a-z0-9_-])+/gi, "-")
+        .replace(/\./g, "") // routing does not like dots
         .replace(/^-+/, "")
         .replace(/-+$/, "")
     const id = snakify(escaped)

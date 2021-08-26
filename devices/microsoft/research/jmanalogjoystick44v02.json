@@ -3,8 +3,7 @@
     "name": "JM Analog Joystick 44 v0.2",
     "company": "Microsoft Research",
     "description": "",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-padauk",
     "services": [
         277836886
     ],

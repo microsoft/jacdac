@@ -3,8 +3,7 @@
     "name": "JM Button 10 v1.3",
     "company": "Microsoft Research",
     "description": "",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-padauk",
     "services": [
         343122531
     ],

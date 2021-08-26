@@ -85,6 +85,35 @@
     ]
   },
   {
+    "id": "microsoft-research-jmclickairquality4v32",
+    "name": "JM-Click Airquality4 v3.2",
+    "company": "Microsoft Research",
+    "description": "",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      379362758,
+      312849815
+    ],
+    "productIdentifiers": [
+      878106432
+    ]
+  },
+  {
+    "id": "microsoft-research-jmclickcolorv32",
+    "name": "JM-Click Color v3.2",
+    "company": "Microsoft Research",
+    "description": "",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      372299111
+    ],
+    "productIdentifiers": [
+      1020991645
+    ]
+  },
+  {
     "id": "microsoft-research-jmcrankbtnv2",
     "name": "JM Crank+Btn v2",
     "company": "Microsoft Research",

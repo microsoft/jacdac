@@ -1,5 +1,134 @@
 [
   {
+    "id": "microsoft-research-jmaccelerometer3002",
+    "name": "JM Accelerometer 30-0.2",
+    "company": "Microsoft Research",
+    "description": "",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      521405449
+    ],
+    "productIdentifiers": [
+      872001670
+    ]
+  },
+  {
+    "id": "microsoft-research-jmanalogjoystick44v02",
+    "name": "JM Analog Joystick 44 v0.2",
+    "company": "Microsoft Research",
+    "description": "",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      277836886
+    ],
+    "productIdentifiers": [
+      976429228
+    ]
+  },
+  {
+    "id": "microsoft-research-jmbutton10v13",
+    "name": "JM Button 10 v1.3",
+    "company": "Microsoft Research",
+    "description": "",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      343122531
+    ],
+    "productIdentifiers": [
+      896566497
+    ]
+  },
+  {
+    "id": "microsoft-research-jmkeyboardkey46v10",
+    "name": "JM Keyboard Key 46 v1.0",
+    "company": "Microsoft Research",
+    "description": "",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      343122531
+    ],
+    "productIdentifiers": [
+      1067229774
+    ]
+  },
+  {
+    "id": "microsoft-research-jmrgbledringv21",
+    "name": "JM RGB LED RING v2.1",
+    "company": "Microsoft Research",
+    "description": "",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      309264608
+    ],
+    "productIdentifiers": [
+      807926135
+    ]
+  },
+  {
+    "id": "microsoft-research-jmrotaryctrlbtnv10",
+    "name": "JM Rotary Ctrl + Btn v1.0",
+    "company": "Microsoft Research",
+    "description": "",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      284830153,
+      343122531
+    ],
+    "productIdentifiers": [
+      1060754715
+    ]
+  },
+  {
+    "id": "microsoft-research-jmslider49v10",
+    "name": "JM Slider 49 v1.0",
+    "company": "Microsoft Research",
+    "description": "",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      522667846
+    ],
+    "productIdentifiers": [
+      981005156
+    ]
+  },
+  {
+    "id": "microsoft-research-jmtemphumidity1810a",
+    "name": "JM TEMP HUMIDITY 18-1.0A",
+    "company": "Microsoft Research",
+    "description": "",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      337754823,
+      382210232
+    ],
+    "productIdentifiers": [
+      899442616
+    ]
+  },
+  {
+    "id": "microsoft-research-jmtemphumidity1811",
+    "name": "JM TEMP HUMIDITY 18-1.1",
+    "company": "Microsoft Research",
+    "description": "",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      337754823,
+      382210232
+    ],
+    "productIdentifiers": [
+      827772887
+    ]
+  },
+  {
     "id": "microsoft-research-jmaccv2",
     "name": "JM Acc v2",
     "company": "Microsoft Research",
@@ -233,20 +362,6 @@
     ],
     "productIdentifiers": [
       1067172458
-    ]
-  },
-  {
-    "id": "microsoft-research-thermometerhumidity",
-    "name": "Thermometer Humidity",
-    "company": "Microsoft Research",
-    "description": "JM TEMP HUMIDITY 18-1.0A",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "services": [
-      337754823,
-      382210232
-    ],
-    "productIdentifiers": [
-      899442616
     ]
   }
 ]

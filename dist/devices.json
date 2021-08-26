@@ -229,7 +229,8 @@
     ],
     "productIdentifiers": [
       1013705700
-    ]
+    ],
+    "deprecated": true
   },
   {
     "id": "microsoft-research-jmpwmservov2.0",

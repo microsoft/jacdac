@@ -1,14 +1,15 @@
 {
-    "id": "microsoft-research-jm-accelerometer-30-0.2",
-    "name": "JM Accelerometer 30-0.2",
+    "id": "microsoft-research-jm-temp-humidity-18-v1.1",
+    "name": "JM TEMP HUMIDITY 18-v1.1",
     "company": "Microsoft Research",
     "description": "",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "link": "https://github.com/microsoft/jacdac-msr-modules",
     "services": [
-        521405449
+        337754823,
+        382210232
     ],
     "productIdentifiers": [
-        872001670
+        827772887
     ]
 }

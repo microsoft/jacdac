@@ -1,5 +1,5 @@
 {
-  "id": "microsoft-research-jmpwmnpxv21",
+  "id": "microsoft-research-jmpwmnpx-v2.1",
   "name": "JM PWM (npx) v2.1",
   "company": "Microsoft Research",
   "description": "A light-strip controller with MicroUSB connector for power. Supports WS2812B, APA102, and SK9822.",

@@ -1,5 +1,5 @@
 {
-  "id": "microsoft-research-jmpwmservov20",
+  "id": "microsoft-research-jmpwmservo-v2.0",
   "name": "JM PWM (Servo) v2.0",
   "company": "Microsoft Research",
   "description": "A controller for a 5V servo.",

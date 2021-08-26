@@ -1,14 +1,14 @@
 {
-  "id": "microsoft-research-jmtouchprotov20",
-  "name": "JM Touch-Proto v2.0",
+  "id": "microsoft-research-jmsnd-v2.0",
+  "name": "JM SND v2.0",
   "company": "Microsoft Research",
-  "description": "A multi-touch sensor based on proto board.",
+  "description": "A simple buzzer.",
   "repo": "https://github.com/microsoft/jacdac-msr-modules",
   "link": "https://github.com/microsoft/jacdac-msr-modules",
   "services": [
-    416636459
+    458731991
   ],
   "productIdentifiers": [
-    1067172458
+    854957595
   ]
 }

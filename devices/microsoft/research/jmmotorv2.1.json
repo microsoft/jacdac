@@ -1,5 +1,5 @@
 {
-  "id": "microsoft-research-jmmotorv21",
+  "id": "microsoft-research-jmmotor-v2.1",
   "name": "JM Motor v2.1",
   "company": "Microsoft Research",
   "description": "Lets you control a single DC motor (up to 5V; yellow plastic ones work well).",

@@ -1,14 +1,14 @@
 {
-  "id": "microsoft-research-jmsndv20",
-  "name": "JM SND v2.0",
+  "id": "microsoft-research-jmarcadebtn-v2.0",
+  "name": "JM ArcadeBtn v2.0",
   "company": "Microsoft Research",
-  "description": "A simple buzzer.",
+  "description": "Lets you connect a single arcade button with an LED.",
   "repo": "https://github.com/microsoft/jacdac-msr-modules",
   "link": "https://github.com/microsoft/jacdac-msr-modules",
   "services": [
-    458731991
+    343122531
   ],
   "productIdentifiers": [
-    854957595
+    886919574
   ]
 }

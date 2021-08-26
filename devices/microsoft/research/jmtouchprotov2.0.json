@@ -1,14 +1,14 @@
 {
-  "id": "microsoft-research-jmpwmservov21",
-  "name": "JM PWM (Servo) v2.1",
+  "id": "microsoft-research-jmtouchproto-v2.0",
+  "name": "JM Touch-Proto v2.0",
   "company": "Microsoft Research",
-  "description": "A controller for a 5V servo, with MicroUSB connector for power.",
+  "description": "A multi-touch sensor based on proto board.",
   "repo": "https://github.com/microsoft/jacdac-msr-modules",
   "link": "https://github.com/microsoft/jacdac-msr-modules",
   "services": [
-    318542083
+    416636459
   ],
   "productIdentifiers": [
-    986140247
+    1067172458
   ]
 }

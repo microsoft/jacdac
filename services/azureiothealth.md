@@ -6,7 +6,7 @@ Health and diagnostics information about the Azure Iot Hub connection.
 
 ## Registers
 
-    ro volatile hub: string @ 0x180
+    ro hub: string @ 0x180
     
 Name of the connected hub, if any.    
 
@@ -17,7 +17,7 @@ Name of the connected hub, if any.
         Connecting = 2
         Disconnecting = 3
     }
-    ro volatile connection_status: ConnectionStatus @ 0x181
+    ro connection_status: ConnectionStatus @ 0x181
 
 Indicates the status of connection. A message beyond the [0..3] range represents an HTTP error code. 
 

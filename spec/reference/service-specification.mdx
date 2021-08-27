@@ -339,6 +339,17 @@ on the client.
     client command play_note @ 0x81 { frequency: u16 Hz, volume: u0.16 /, ... }
 ```
 
+## Restricted
+
+Certain command cannot be issued over the bus and are only allowed through a WebUSB or WebSerial connection
+
+```markdown
+    restricted command set_connection_string @ 0x86 { }
+    report {
+        connection_string_port: pipe_port
+    }
+```
+
 ### Pipes
 
 Pipes are an application-level mechanism for establishing reliable one- and two-way point-to-point data links.

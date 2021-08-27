@@ -1,9 +1,8 @@
-# Azure IoT Heath
+# Azure IoT Health
 
     identifier: 0x1462eefc
     
-General health and diagnostic information about a Azure Iot Hub connection.
-The connection status is provided through the status code register.
+Health and diagnostics information about the Azure Iot Hub connection.
 
 ## Registers
 

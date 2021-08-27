@@ -62,6 +62,12 @@ Route an ``identify`` commands to the selected device
 
 Route a ``reset`` commands to the selected device
 
+    command ping @ 0x84 {
+        payload: u32
+    }
+
+Commands the device to send a ``ping`` message to the hub with the given payload.
+
 ## Events
 
     event twin_change @ change { }

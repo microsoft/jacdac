@@ -102,6 +102,7 @@
           "isSimpleType": true
         }
       ],
+      "volatile": true,
       "packFormat": "b"
     },
     {

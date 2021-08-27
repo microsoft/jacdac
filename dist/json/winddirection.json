@@ -179,23 +179,6 @@
       "optional": true,
       "identifierName": "reading_error",
       "packFormat": "u16"
-    },
-    {
-      "kind": "ro",
-      "name": "wind_direction_offset",
-      "identifier": 384,
-      "description": "Offset added to direction to account for sensor calibration.",
-      "fields": [
-        {
-          "name": "_",
-          "unit": "°",
-          "type": "i16",
-          "storage": -2,
-          "isSimpleType": true
-        }
-      ],
-      "optional": true,
-      "packFormat": "i16"
     }
   ],
   "tags": [

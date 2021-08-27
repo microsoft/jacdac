@@ -230,6 +230,7 @@
           "storage": 4
         }
       ],
+      "volatile": true,
       "optional": true,
       "packFormat": "u16.16"
     },

@@ -16,6 +16,3 @@ The direction of the wind.
 
 Error on the wind direction reading
 
-    ro wind_direction_offset?: i16 ° @ 0x180
-
-Offset added to direction to account for sensor calibration.

@@ -14,9 +14,4 @@
  */
 #define JD_WIND_DIRECTION_REG_WIND_DIRECTION_ERROR JD_REG_READING_ERROR
 
-/**
- * Read-only ° int16_t. Offset added to direction to account for sensor calibration.
- */
-#define JD_WIND_DIRECTION_REG_WIND_DIRECTION_OFFSET 0x180
-
 #endif

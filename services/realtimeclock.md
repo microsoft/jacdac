@@ -23,7 +23,7 @@ Current time in 24h representation.
 * ``day_of_week`` is day of the week, starting at ``1`` as monday
 Default streaming period is 1 second.
 
-    ro error?: u16.16 s @ 0x180
+    ro volatile error?: u16.16 s @ 0x180
 
 Time drift since the last call to the ``set_time`` command.
 

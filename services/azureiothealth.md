@@ -48,6 +48,18 @@ Starts a connection to the IoT hub service
 
 Starts disconnecting from the IoT hub service
 
+    command identify @ 0x83 {
+        device_id: u64
+    }
+
+Route an ``identify`` commands to the selected device
+
+    command reset @ 0x83 {
+        device_id: u64
+    }
+
+Route a ``reset`` commands to the selected device
+
 ## Events
 
     event twin_change @ change { }

@@ -407,6 +407,7 @@ export function parseServiceSpecificationMarkdownToJSON(
                 case "client":
                 case "volatile":
                 case "lowlevel":
+                case "restricted":
                     startPacket(words)
                     break
                 case "}":
@@ -542,7 +543,11 @@ export function parseServiceSpecificationMarkdownToJSON(
 
         let client: boolean = undefined
         let lowLevel: boolean = undefined
-        if (words[0] === "client") {
+        let restricted: boolean = undefined
+        if (words[0] === "restricted") {
+            restricted = true
+            words.shift()
+        } else if (words[0] === "client") {
             client = true
             words.shift()
         } else if (words[0] === "lowlevel") {
@@ -567,6 +572,9 @@ export function parseServiceSpecificationMarkdownToJSON(
         } else {
             kind = kindSt as any
         }
+
+        if (restricted && kind !== "command")
+            error("restricted only applies to commands")
 
         let internal: boolean = undefined
         if (words[0] === "internal") {
@@ -599,6 +607,7 @@ export function parseServiceSpecificationMarkdownToJSON(
             client,
             lowLevel,
             volatile,
+            restricted
         }
         if (isReport && lastCmd && name == lastCmd.name) {
             packetInfo.secondary = true

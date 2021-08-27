@@ -429,6 +429,11 @@ declare namespace jdspec {
         volatile?: boolean
 
         /**
+         * For commands, this command is not allowed from the bus
+         */
+        restricted?: boolean
+
+        /**
          * This member is not implemented on the server and typically is 'simulated' by clients
          */
         client?: boolean

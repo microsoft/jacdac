@@ -136,19 +136,4 @@ typedef struct jd_control_set_status_light {
  */
 #define JD_CONTROL_REG_UPTIME 0x186
 
-/**
- * Constant string (bytes). Request the information web site for this device
- */
-#define JD_CONTROL_REG_DEVICE_URL 0x187
-
-/**
- * Constant string (bytes). URL pointing to device JSON specification.
- */
-#define JD_CONTROL_REG_DEVICE_SPECIFICATION_URL 0x189
-
-/**
- * Constant string (bytes). URL with machine-readable metadata information about updating device firmware
- */
-#define JD_CONTROL_REG_FIRMWARE_URL 0x188
-
 #endif

@@ -1359,33 +1359,6 @@ export enum ControlReg {
      * ```
      */
     Uptime = 0x186,
-
-    /**
-     * Constant string (bytes). Request the information web site for this device
-     *
-     * ```
-     * const [deviceUrl] = jdunpack<[string]>(buf, "s")
-     * ```
-     */
-    DeviceUrl = 0x187,
-
-    /**
-     * Constant string (bytes). URL pointing to device JSON specification.
-     *
-     * ```
-     * const [deviceSpecificationUrl] = jdunpack<[string]>(buf, "s")
-     * ```
-     */
-    DeviceSpecificationUrl = 0x189,
-
-    /**
-     * Constant string (bytes). URL with machine-readable metadata information about updating device firmware
-     *
-     * ```
-     * const [firmwareUrl] = jdunpack<[string]>(buf, "s")
-     * ```
-     */
-    FirmwareUrl = 0x188,
 }
 
 // Service: Dimmer

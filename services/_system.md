@@ -143,6 +143,10 @@ For services which support this, there's an enum defining the meaning.
         Sleeping = 3
         WaitingForInput = 4
 
+        Connected = 5
+        Disconnected = 6
+        ConnectionError = 7
+
         CalibrationNeeded = 100
     }
     ro status_code? @ 0x103 {

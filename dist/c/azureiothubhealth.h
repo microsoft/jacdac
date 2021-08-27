@@ -11,9 +11,9 @@
 #define JD_AZURE_IOT_HUB_HEALTH_CONNECTION_STATUS_DISCONNECTING 0x3
 
 /**
- * Read-only string (bytes). Name of the connected hub, if any.
+ * Read-only string (bytes). Something like `my-iot-hub.azure-devices.net`; empty string when not properly configured
  */
-#define JD_AZURE_IOT_HUB_HEALTH_REG_HUB 0x180
+#define JD_AZURE_IOT_HUB_HEALTH_REG_HUB_NAME 0x180
 
 /**
  * Read-only ConnectionStatus (uint16_t). Indicates the status of connection. A message beyond the [0..3] range represents an HTTP error code.

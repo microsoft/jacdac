@@ -92,9 +92,9 @@
     },
     {
       "kind": "ro",
-      "name": "hub",
+      "name": "hub_name",
       "identifier": 384,
-      "description": "Name of the connected hub, if any.",
+      "description": "Something like `my-iot-hub.azure-devices.net`; empty string when not properly configured",
       "fields": [
         {
           "name": "_",

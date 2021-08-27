@@ -330,6 +330,15 @@ Some members (registers, commands) are considered `lowlevel` in the sense that t
 
 For example, the `play_tone` command is expressed in terms of electrical terms, period, duty but a typically user would expect frequency and volume.
 
+## Volatile
+
+A ``volatile`` register's values can change due to changes to the physical environment, even if the register was not programmatically modified.
+If the register changes generated an event, it should not be marked as volatile.
+
+```markdown
+    ro volatile core_temperature: u32 K @ 0x180
+```
+
 ## Client
 
 Some members (registers, commands, events) are not implemented on the server and should be implemented by clients. For example, the `play_note` command uses frequency and volume and should do the conversion math to `period`, `duty`

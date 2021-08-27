@@ -23,8 +23,10 @@ Name of the connected hub, if any.
 Indicates the status of connection. A message beyond the [0..3] range represents an HTTP error code. 
 
     ro volatile statistics @ 0x182 {
-        reading_sent: u32
-        event_sent: u32
+        reading: u32
+        event: u32
+        twin_reported: u32
+        twin_desired: u32
     }
     
 Reads internal statistics about messages sent to the hub.

@@ -52,16 +52,6 @@ typedef struct jd_azure_iot_hub_health_statistics {
 #define JD_AZURE_IOT_HUB_HEALTH_CMD_DISCONNECT 0x82
 
 /**
- * Argument: device_id uint64_t. Route an `identify` commands to the selected device
- */
-#define JD_AZURE_IOT_HUB_HEALTH_CMD_IDENTIFY 0x83
-
-/**
- * Argument: device_id uint64_t. Route a `reset` commands to the selected device
- */
-#define JD_AZURE_IOT_HUB_HEALTH_CMD_RESET 0x84
-
-/**
  * Argument: payload uint32_t. Commands the device to send a `ping` message to the hub with the given payload.
  */
 #define JD_AZURE_IOT_HUB_HEALTH_CMD_PING 0x85

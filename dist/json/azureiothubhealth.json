@@ -198,36 +198,6 @@
     },
     {
       "kind": "command",
-      "name": "identify",
-      "identifier": 131,
-      "description": "Route an `identify` commands to the selected device",
-      "fields": [
-        {
-          "name": "device_id",
-          "type": "u64",
-          "storage": 8,
-          "isSimpleType": true
-        }
-      ],
-      "packFormat": "u64"
-    },
-    {
-      "kind": "command",
-      "name": "reset",
-      "identifier": 132,
-      "description": "Route a `reset` commands to the selected device",
-      "fields": [
-        {
-          "name": "device_id",
-          "type": "u64",
-          "storage": 8,
-          "isSimpleType": true
-        }
-      ],
-      "packFormat": "u64"
-    },
-    {
-      "kind": "command",
       "name": "ping",
       "identifier": 133,
       "description": "Commands the device to send a `ping` message to the hub with the given payload.",

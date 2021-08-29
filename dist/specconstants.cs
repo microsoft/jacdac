@@ -695,24 +695,6 @@ namespace Jacdac {
         Disconnect = 0x82,
 
         /**
-         * Argument: device_id uint64_t. Route an `identify` commands to the selected device
-         *
-         * ```
-         * const [deviceId] = jdunpack<[number]>(buf, "u64")
-         * ```
-         */
-        Identify = 0x83,
-
-        /**
-         * Argument: device_id uint64_t. Route a `reset` commands to the selected device
-         *
-         * ```
-         * const [deviceId] = jdunpack<[number]>(buf, "u64")
-         * ```
-         */
-        Reset = 0x84,
-
-        /**
          * Argument: payload uint32_t. Commands the device to send a `ping` message to the hub with the given payload.
          *
          * ```

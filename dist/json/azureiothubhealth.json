@@ -216,25 +216,15 @@
       "name": "set_connection_string",
       "identifier": 134,
       "description": "Restricted command to override the existing connection string to the Azure IoT Hub.",
-      "fields": [],
-      "restricted": true,
-      "hasReport": true
-    },
-    {
-      "kind": "report",
-      "name": "set_connection_string",
-      "identifier": 134,
-      "description": "Restricted command to override the existing connection string to the Azure IoT Hub.",
       "fields": [
         {
-          "name": "connection_string_port",
-          "type": "pipe_port",
-          "storage": 2
+          "name": "connection_string",
+          "type": "string",
+          "storage": 0
         }
       ],
-      "secondary": true,
-      "pipeType": "set_connection_string",
-      "packFormat": "u16"
+      "restricted": true,
+      "packFormat": "s"
     },
     {
       "kind": "event",

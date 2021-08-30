@@ -704,16 +704,13 @@ namespace Jacdac {
         Ping = 0x85,
 
         /**
-         * No args. Restricted command to override the existing connection string to the Azure IoT Hub.
+         * Argument: connection_string string (bytes). Restricted command to override the existing connection string to the Azure IoT Hub.
+         *
+         * ```
+         * const [connectionString] = jdunpack<[string]>(buf, "s")
+         * ```
          */
         SetConnectionString = 0x86,
-
-        /**
-         * report SetConnectionString
-         * ```
-         * const [connectionStringPort] = jdunpack<[number]>(buf, "u16")
-         * ```
-         */
     }
 
 

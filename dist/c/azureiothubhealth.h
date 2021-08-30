@@ -57,13 +57,9 @@ typedef struct jd_azure_iot_hub_health_statistics {
 #define JD_AZURE_IOT_HUB_HEALTH_CMD_PING 0x85
 
 /**
- * No args. Restricted command to override the existing connection string to the Azure IoT Hub.
+ * Argument: connection_string string (bytes). Restricted command to override the existing connection string to the Azure IoT Hub.
  */
 #define JD_AZURE_IOT_HUB_HEALTH_CMD_SET_CONNECTION_STRING 0x86
-
-/**
- * Report: Argument: connection_string_port pipe_port (uint16_t)
- */
 
 /**
  * Argument: connection_status ConnectionStatus (uint16_t). Raised when the connection status changes

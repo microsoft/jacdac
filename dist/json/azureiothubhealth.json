@@ -238,16 +238,8 @@
     },
     {
       "kind": "event",
-      "name": "twin_change",
-      "identifier": 3,
-      "description": "Raised when the twin model or reported values are modified.",
-      "fields": [],
-      "identifierName": "change"
-    },
-    {
-      "kind": "event",
       "name": "connection_status_change",
-      "identifier": 128,
+      "identifier": 3,
       "description": "Raised when the connection status changes",
       "fields": [
         {
@@ -256,7 +248,15 @@
           "storage": 2
         }
       ],
+      "identifierName": "change",
       "packFormat": "u16"
+    },
+    {
+      "kind": "event",
+      "name": "twin_change",
+      "identifier": 128,
+      "description": "Raised when the twin model is modified.",
+      "fields": []
     }
   ],
   "tags": [],

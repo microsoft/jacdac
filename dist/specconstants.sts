@@ -726,12 +726,6 @@ namespace jacdac {
 
     export const enum AzureIotHubHealthEvent {
         /**
-         * Raised when the twin model or reported values are modified.
-         */
-        //% block="twin change"
-        TwinChange = 0x3,
-
-        /**
          * Argument: connection_status ConnectionStatus (uint16_t). Raised when the connection status changes
          *
          * ```
@@ -739,7 +733,13 @@ namespace jacdac {
          * ```
          */
         //% block="connection status change"
-        ConnectionStatusChange = 0x80,
+        ConnectionStatusChange = 0x3,
+
+        /**
+         * Raised when the twin model is modified.
+         */
+        //% block="twin change"
+        TwinChange = 0x80,
     }
 
 }

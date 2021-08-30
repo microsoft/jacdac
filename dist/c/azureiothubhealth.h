@@ -66,13 +66,13 @@ typedef struct jd_azure_iot_hub_health_statistics {
  */
 
 /**
- * Raised when the twin model or reported values are modified.
- */
-#define JD_AZURE_IOT_HUB_HEALTH_EV_TWIN_CHANGE JD_EV_CHANGE
-
-/**
  * Argument: connection_status ConnectionStatus (uint16_t). Raised when the connection status changes
  */
-#define JD_AZURE_IOT_HUB_HEALTH_EV_CONNECTION_STATUS_CHANGE 0x80
+#define JD_AZURE_IOT_HUB_HEALTH_EV_CONNECTION_STATUS_CHANGE JD_EV_CHANGE
+
+/**
+ * Raised when the twin model is modified.
+ */
+#define JD_AZURE_IOT_HUB_HEALTH_EV_TWIN_CHANGE 0x80
 
 #endif

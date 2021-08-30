@@ -41,7 +41,7 @@ Reads internal statistics about messages sent to the hub.
         content: string
     }
 
-Returns the twin json payload
+Returns the twin json payload.
 
     command connect @ 0x81 { }
 
@@ -66,12 +66,12 @@ Restricted command to override the existing connection string to the Azure IoT H
 
 ## Events
 
-    event twin_change @ change { }
-
-Raised when the twin model or reported values are modified.
-
-    event connection_status_change @ 0x80 {
+    event connection_status_change @ change {
         connection_status: ConnectionStatus
     }
 
 Raised when the connection status changes
+
+    event twin_change @ 0x80 { }
+
+Raised when the twin model is modified.

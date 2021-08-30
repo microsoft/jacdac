@@ -676,7 +676,7 @@ namespace Jacdac {
 
     public enum AzureIotHubHealthCmd {
         /**
-         * Argument: twin_report pipe (bytes). Returns the twin json payload
+         * Argument: twin_report pipe (bytes). Returns the twin json payload.
          *
          * ```
          * const [twinReport] = jdunpack<[Uint8Array]>(buf, "b[12]")

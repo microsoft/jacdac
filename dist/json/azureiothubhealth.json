@@ -156,7 +156,7 @@
       "kind": "command",
       "name": "twin",
       "identifier": 128,
-      "description": "Returns the twin json payload",
+      "description": "Returns the twin json payload.",
       "fields": [
         {
           "name": "twin_report",
@@ -171,7 +171,7 @@
       "kind": "pipe_report",
       "name": "twin_report",
       "identifier": 0,
-      "description": "Returns the twin json payload",
+      "description": "Returns the twin json payload.",
       "fields": [
         {
           "name": "content",

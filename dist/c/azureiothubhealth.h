@@ -33,12 +33,12 @@ typedef struct jd_azure_iot_hub_health_statistics {
 
 
 /**
- * Argument: twin_report pipe (bytes). Returns the twin json payload
+ * Argument: twin_report pipe (bytes). Returns the twin json payload.
  */
 #define JD_AZURE_IOT_HUB_HEALTH_CMD_TWIN 0x80
 
 /**
- * Argument: content string (bytes). Returns the twin json payload
+ * Argument: content string (bytes). Returns the twin json payload.
  */
 
 /**

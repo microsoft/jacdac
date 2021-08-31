@@ -125,7 +125,7 @@ A service is globally and uniquely identified by its service class, which should
 
 Commands are 16-bit and specified in the `service_command` field of a Jacdac packet. A command is composed of a 4-bit operation and a 12-bit code.
 
-The operation is stored in the top most nibble of the `service_command` field. The following table below outlines all possible operations; XXX represents any 12-bit command code:
+The operation is stored in the top most nibble of the `service_command` field. The following table below outlines all possible operations; `XXX` represents any 12-bit command code:
 
 | Operation number | Command 	|
 |--------|------------	|
@@ -372,8 +372,7 @@ multiple packets per frame and is currently out of scope.
 
 Pipes should be considered closed when the device at the other end resets.
 
-TODO: Zero-length pipe commands can be sent as keep-alive packets.
-Is this needed?
+TODO: Zero-length pipe commands can be sent as keep-alive packets. Is this needed?
 
 Note that pipes are transmit streams of Jacdac packets, not streams of bytes.
 They should not be recombined at any layer in the implementation.
@@ -445,7 +444,8 @@ It is therefore extremely important that all devices have some randomness in the
 to reduce the likelihood of data loss.
 
 A complete Jacdac transmission and the beginning of another are captured in the image below.
-TODO the picture uses outdated delays.
+
+TODO: the picture uses outdated delays.
 
 ![An image depicting a Jacdac transmission. A Jacdac transmission begins with a start pulse of 11-14 us, a inter lo data spacing of minimally 50 us before data commences. A Jacdac transmission ends with an end pulse of 11-14 us.](../images/jacdac-activity.png)
 

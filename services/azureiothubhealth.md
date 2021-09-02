@@ -45,12 +45,6 @@ Starts a connection to the IoT hub service
 
 Starts disconnecting from the IoT hub service
 
-    command ping @ 0x85 {
-        payload: u32
-    }
-
-Commands the device to send a `ping` message to the hub with the given payload.
-
     restricted command set_connection_string @ 0x86 {
         connection_string: string
     }

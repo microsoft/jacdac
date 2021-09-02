@@ -580,15 +580,6 @@ export enum AzureIotHubHealthCmd {
     Disconnect = 0x82,
 
     /**
-     * Argument: payload uint32_t. Commands the device to send a `ping` message to the hub with the given payload.
-     *
-     * ```
-     * const [payload] = jdunpack<[number]>(buf, "u32")
-     * ```
-     */
-    Ping = 0x85,
-
-    /**
      * Argument: connection_string string (bytes). Restricted command to override the existing connection string to the Azure IoT Hub.
      *
      * ```

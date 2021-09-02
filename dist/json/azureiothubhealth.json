@@ -182,21 +182,6 @@
     },
     {
       "kind": "command",
-      "name": "ping",
-      "identifier": 133,
-      "description": "Commands the device to send a `ping` message to the hub with the given payload.",
-      "fields": [
-        {
-          "name": "payload",
-          "type": "u32",
-          "storage": 4,
-          "isSimpleType": true
-        }
-      ],
-      "packFormat": "u32"
-    },
-    {
-      "kind": "command",
       "name": "set_connection_string",
       "identifier": 134,
       "description": "Restricted command to override the existing connection string to the Azure IoT Hub.",

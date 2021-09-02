@@ -52,15 +52,6 @@ namespace Jacdac {
 
     public enum AzureIotHubHealthCmd {
         /**
-         * Argument: twin_report pipe (bytes). Returns the twin json payload.
-         *
-         * ```
-         * const [twinReport] = jdunpack<[Uint8Array]>(buf, "b[12]")
-         * ```
-         */
-        Twin = 0x80,
-
-        /**
          * No args. Starts a connection to the IoT hub service
          */
         Connect = 0x81,
@@ -69,6 +60,15 @@ namespace Jacdac {
          * No args. Starts disconnecting from the IoT hub service
          */
         Disconnect = 0x82,
+
+        /**
+         * Argument: payload uint32_t. Commands the device to send a `ping` message to the hub with the given payload.
+         *
+         * ```
+         * const [payload] = jdunpack<[number]>(buf, "u32")
+         * ```
+         */
+        Ping = 0x85,
 
         /**
          * Argument: connection_string string (bytes). Restricted command to override the existing connection string to the Azure IoT Hub.
@@ -80,15 +80,6 @@ namespace Jacdac {
         SetConnectionString = 0x86,
     }
 
-
-    /**
-     * pipe_report TwinReport
-     * ```
-     * const [content] = jdunpack<[string]>(buf, "s")
-     * ```
-     */
-
-
     public enum AzureIotHubHealthEvent {
         /**
          * Argument: connection_status ConnectionStatus (uint16_t). Raised when the connection status changes
@@ -98,11 +89,6 @@ namespace Jacdac {
          * ```
          */
         ConnectionStatusChange = 0x3,
-
-        /**
-         * Raised when the twin model is modified.
-         */
-        TwinChange = 0x80,
     }
 
 }

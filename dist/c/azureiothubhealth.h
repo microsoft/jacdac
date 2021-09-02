@@ -38,15 +38,6 @@ typedef struct jd_azure_iot_hub_health_statistics {
 
 
 /**
- * Argument: twin_report pipe (bytes). Returns the twin json payload.
- */
-#define JD_AZURE_IOT_HUB_HEALTH_CMD_TWIN 0x80
-
-/**
- * Argument: content string (bytes). Returns the twin json payload.
- */
-
-/**
  * No args. Starts a connection to the IoT hub service
  */
 #define JD_AZURE_IOT_HUB_HEALTH_CMD_CONNECT 0x81
@@ -57,6 +48,11 @@ typedef struct jd_azure_iot_hub_health_statistics {
 #define JD_AZURE_IOT_HUB_HEALTH_CMD_DISCONNECT 0x82
 
 /**
+ * Argument: payload uint32_t. Commands the device to send a `ping` message to the hub with the given payload.
+ */
+#define JD_AZURE_IOT_HUB_HEALTH_CMD_PING 0x85
+
+/**
  * Argument: connection_string string (bytes). Restricted command to override the existing connection string to the Azure IoT Hub.
  */
 #define JD_AZURE_IOT_HUB_HEALTH_CMD_SET_CONNECTION_STRING 0x86
@@ -65,10 +61,5 @@ typedef struct jd_azure_iot_hub_health_statistics {
  * Argument: connection_status ConnectionStatus (uint16_t). Raised when the connection status changes
  */
 #define JD_AZURE_IOT_HUB_HEALTH_EV_CONNECTION_STATUS_CHANGE JD_EV_CHANGE
-
-/**
- * Raised when the twin model is modified.
- */
-#define JD_AZURE_IOT_HUB_HEALTH_EV_TWIN_CHANGE 0x80
 
 #endif

@@ -168,36 +168,6 @@
     },
     {
       "kind": "command",
-      "name": "twin",
-      "identifier": 128,
-      "description": "Returns the twin json payload.",
-      "fields": [
-        {
-          "name": "twin_report",
-          "type": "pipe",
-          "storage": 12
-        }
-      ],
-      "pipeType": "twin",
-      "packFormat": "b[12]"
-    },
-    {
-      "kind": "pipe_report",
-      "name": "twin_report",
-      "identifier": 0,
-      "description": "Returns the twin json payload.",
-      "fields": [
-        {
-          "name": "content",
-          "type": "string",
-          "storage": 0
-        }
-      ],
-      "pipeType": "twin",
-      "packFormat": "s"
-    },
-    {
-      "kind": "command",
       "name": "connect",
       "identifier": 129,
       "description": "Starts a connection to the IoT hub service",
@@ -209,6 +179,21 @@
       "identifier": 130,
       "description": "Starts disconnecting from the IoT hub service",
       "fields": []
+    },
+    {
+      "kind": "command",
+      "name": "ping",
+      "identifier": 133,
+      "description": "Commands the device to send a `ping` message to the hub with the given payload.",
+      "fields": [
+        {
+          "name": "payload",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u32"
     },
     {
       "kind": "command",
@@ -239,13 +224,6 @@
       ],
       "identifierName": "change",
       "packFormat": "u16"
-    },
-    {
-      "kind": "event",
-      "name": "twin_change",
-      "identifier": 128,
-      "description": "Raised when the twin model is modified.",
-      "fields": []
     }
   ],
   "tags": [],

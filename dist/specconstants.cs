@@ -575,13 +575,22 @@ namespace Jacdac {
         HubName = 0x180,
 
         /**
+         * Read-only string (bytes). Device identifier in Azure Iot Hub
+         *
+         * ```
+         * const [hubDeviceId] = jdunpack<[string]>(buf, "s")
+         * ```
+         */
+        HubDeviceId = 0x181,
+
+        /**
          * Read-only ConnectionStatus (uint16_t). Indicates the status of connection. A message beyond the [0..3] range represents an HTTP error code.
          *
          * ```
          * const [connectionStatus] = jdunpack<[AzureIotHubHealthConnectionStatus]>(buf, "u16")
          * ```
          */
-        ConnectionStatus = 0x181,
+        ConnectionStatus = 0x182,
 
         /**
          * Reads internal statistics about messages sent to the hub.
@@ -590,7 +599,7 @@ namespace Jacdac {
          * const [reading, event, twinReported, twinDesired] = jdunpack<[number, number, number, number]>(buf, "u32 u32 u32 u32")
          * ```
          */
-        Statistics = 0x182,
+        Statistics = 0x183,
     }
 
     public enum AzureIotHubHealthCmd {
@@ -612,15 +621,6 @@ namespace Jacdac {
          * No args. Starts disconnecting from the IoT hub service
          */
         Disconnect = 0x82,
-
-        /**
-         * Argument: payload uint32_t. Commands the device to send a `ping` message to the hub with the given payload.
-         *
-         * ```
-         * const [payload] = jdunpack<[number]>(buf, "u32")
-         * ```
-         */
-        Ping = 0x85,
 
         /**
          * Argument: connection_string string (bytes). Restricted command to override the existing connection string to the Azure IoT Hub.

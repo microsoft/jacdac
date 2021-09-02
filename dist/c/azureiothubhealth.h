@@ -16,14 +16,19 @@
 #define JD_AZURE_IOT_HUB_HEALTH_REG_HUB_NAME 0x180
 
 /**
+ * Read-only string (bytes). Device identifier in Azure Iot Hub
+ */
+#define JD_AZURE_IOT_HUB_HEALTH_REG_HUB_DEVICE_ID 0x181
+
+/**
  * Read-only ConnectionStatus (uint16_t). Indicates the status of connection. A message beyond the [0..3] range represents an HTTP error code.
  */
-#define JD_AZURE_IOT_HUB_HEALTH_REG_CONNECTION_STATUS 0x181
+#define JD_AZURE_IOT_HUB_HEALTH_REG_CONNECTION_STATUS 0x182
 
 /**
  * Reads internal statistics about messages sent to the hub.
  */
-#define JD_AZURE_IOT_HUB_HEALTH_REG_STATISTICS 0x182
+#define JD_AZURE_IOT_HUB_HEALTH_REG_STATISTICS 0x183
 typedef struct jd_azure_iot_hub_health_statistics {
     uint32_t reading;
     uint32_t event;
@@ -50,11 +55,6 @@ typedef struct jd_azure_iot_hub_health_statistics {
  * No args. Starts disconnecting from the IoT hub service
  */
 #define JD_AZURE_IOT_HUB_HEALTH_CMD_DISCONNECT 0x82
-
-/**
- * Argument: payload uint32_t. Commands the device to send a `ping` message to the hub with the given payload.
- */
-#define JD_AZURE_IOT_HUB_HEALTH_CMD_PING 0x85
 
 /**
  * Argument: connection_string string (bytes). Restricted command to override the existing connection string to the Azure IoT Hub.

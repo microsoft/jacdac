@@ -106,8 +106,22 @@
     },
     {
       "kind": "ro",
-      "name": "connection_status",
+      "name": "hub_device_id",
       "identifier": 385,
+      "description": "Device identifier in Azure Iot Hub",
+      "fields": [
+        {
+          "name": "_",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "packFormat": "s"
+    },
+    {
+      "kind": "ro",
+      "name": "connection_status",
+      "identifier": 386,
       "description": "Indicates the status of connection. A message beyond the [0..3] range represents an HTTP error code.",
       "fields": [
         {
@@ -121,7 +135,7 @@
     {
       "kind": "ro",
       "name": "statistics",
-      "identifier": 386,
+      "identifier": 387,
       "description": "Reads internal statistics about messages sent to the hub.",
       "fields": [
         {
@@ -195,21 +209,6 @@
       "identifier": 130,
       "description": "Starts disconnecting from the IoT hub service",
       "fields": []
-    },
-    {
-      "kind": "command",
-      "name": "ping",
-      "identifier": 133,
-      "description": "Commands the device to send a `ping` message to the hub with the given payload.",
-      "fields": [
-        {
-          "name": "payload",
-          "type": "u32",
-          "storage": 4,
-          "isSimpleType": true
-        }
-      ],
-      "packFormat": "u32"
     },
     {
       "kind": "command",

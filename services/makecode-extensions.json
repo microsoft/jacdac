@@ -9,6 +9,15 @@
     }
   },
   {
+    "service": "azureiothubhealth",
+    "client": {
+      "name": "jacdac-azure-iot-hub-health",
+      "repo": "microsoft/pxt-jacdac/azure-iot-hub-health",
+      "qName": "modules.AzureIotHubHealthClient",
+      "default": "modules.azureIotHubHealth"
+    }
+  },
+  {
     "service": "barometer",
     "client": {
       "name": "jacdac-barometer",

@@ -17,10 +17,10 @@ Something like `my-iot-hub.azure-devices.net`; empty string when not properly co
 Device identifier in Azure Iot Hub
 
     enum ConnectionStatus: u16 {
-        Connected = 0
-        Disconnected = 1
-        Connecting = 2
-        Disconnecting = 3
+        Connected = 1
+        Disconnected = 2
+        Connecting = 3
+        Disconnecting = 4
     }
     ro connection_status: ConnectionStatus @ 0x182
 

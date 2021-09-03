@@ -6,10 +6,10 @@ namespace Jacdac {
     }
 
     public enum AzureIotHubHealthConnectionStatus: ushort { // uint16_t
-        Connected = 0x0,
-        Disconnected = 0x1,
-        Connecting = 0x2,
-        Disconnecting = 0x3,
+        Connected = 0x1,
+        Disconnected = 0x2,
+        Connecting = 0x3,
+        Disconnecting = 0x4,
     }
 
     public enum AzureIotHubHealthReg {

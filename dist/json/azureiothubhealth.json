@@ -16,10 +16,10 @@
       "name": "ConnectionStatus",
       "storage": 2,
       "members": {
-        "Connected": 0,
-        "Disconnected": 1,
-        "Connecting": 2,
-        "Disconnecting": 3
+        "Connected": 1,
+        "Disconnected": 2,
+        "Connecting": 3,
+        "Disconnecting": 4
       }
     }
   },

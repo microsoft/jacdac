@@ -26,18 +26,6 @@
 #define JD_AZURE_IOT_HUB_HEALTH_REG_CONNECTION_STATUS 0x182
 
 /**
- * Reads internal statistics about messages sent to the hub.
- */
-#define JD_AZURE_IOT_HUB_HEALTH_REG_STATISTICS 0x183
-typedef struct jd_azure_iot_hub_health_statistics {
-    uint32_t reading;
-    uint32_t event;
-    uint32_t twin_reported;
-    uint32_t twin_desired;
-} jd_azure_iot_hub_health_statistics_t;
-
-
-/**
  * No args. Starts a connection to the IoT hub service
  */
 #define JD_AZURE_IOT_HUB_HEALTH_CMD_CONNECT 0x81

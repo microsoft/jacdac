@@ -557,15 +557,6 @@ export enum AzureIotHubHealthReg {
      * ```
      */
     ConnectionStatus = 0x182,
-
-    /**
-     * Reads internal statistics about messages sent to the hub.
-     *
-     * ```
-     * const [reading, event, twinReported, twinDesired] = jdunpack<[number, number, number, number]>(buf, "u32 u32 u32 u32")
-     * ```
-     */
-    Statistics = 0x183,
 }
 
 export enum AzureIotHubHealthCmd {

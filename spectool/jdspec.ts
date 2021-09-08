@@ -1679,15 +1679,14 @@ export function packInfo(
         isStatic?: boolean
         useBooleans?: boolean
         useJDOM?: boolean
-        useSet?: boolean
     }
 ) {
     const {
         isStatic = false,
         useBooleans = false,
         useJDOM = false,
-        useSet = false,
     } = options || {}
+    const { kind } = pkt
     const vars: string[] = []
     const vartp: string[] = []
     let fmt = ""
@@ -1737,17 +1736,27 @@ export function packInfo(
     const pktName = camelize(pkt.name)
     let buffers = ""
     if (useJDOM) {
-        buffers += `const ${pktName}Reg = service.register(${capitalize(
-            info.camelName
-        )}Reg.${capitalize(pktName)})\n`
-        if (useSet) {
-            buffers += `await ${pktName}Reg.sendSetPackedAsync([${vars.join(
-                ", "
-            )}])\n`
-        } else {
+        if (kind === "command") {
+            for (let i = 0; i < vars.length; ++i)
+                buffers += `const ${vars[i]}: ${vartp[i]} = ...\n`
+            buffers += `await service.sendCmdPackedAsync(${capitalize(
+                info.camelName
+            )}Reg.${capitalize(pktName)}, [${vars.join(", ")}])\n`
+        } else if (isRegister(kind)) {
+            buffers +=
+                "// get (register to REPORT_UPDATE event to enable background refresh)\n"
+            buffers += `const ${pktName}Reg = service.register(${capitalize(
+                info.camelName
+            )}Reg.${capitalize(pktName)})\n`
             buffers += `const [${vars.join(", ")}] : [${vartp.join(
                 ", "
             )}] = ${pktName}Reg.unpackedValue\n`
+            if (kind === "rw") {
+                buffers += "// set\n"
+                buffers += `await ${pktName}Reg.sendSetPackedAsync([${vars.join(
+                    ", "
+                )}])\n`
+            }
         }
     } else {
         buffers += `const [${vars.join(", ")}] = jdunpack<[${vartp.join(

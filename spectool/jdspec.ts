@@ -607,7 +607,7 @@ export function parseServiceSpecificationMarkdownToJSON(
             client,
             lowLevel,
             volatile,
-            restricted
+            restricted,
         }
         if (isReport && lastCmd && name == lastCmd.name) {
             packetInfo.secondary = true
@@ -1675,9 +1675,19 @@ export function packFormat(
 export function packInfo(
     info: jdspec.ServiceSpec,
     pkt: jdspec.PacketInfo,
-    isStatic: boolean,
-    useBooleans?: boolean
+    options?: {
+        isStatic?: boolean
+        useBooleans?: boolean
+        useJDOM?: boolean
+        useSet?: boolean
+    }
 ) {
+    const {
+        isStatic = false,
+        useBooleans = false,
+        useJDOM = false,
+        useSet = false,
+    } = options || {}
     const vars: string[] = []
     const vartp: string[] = []
     let fmt = ""
@@ -1724,10 +1734,26 @@ export function packInfo(
 
     if (reptp) vartp.push("([" + reptp.join(", ") + "])[]")
 
+    const pktName = camelize(pkt.name)
     let buffers = ""
-    buffers += `const [${vars.join(", ")}] = jdunpack<[${vartp.join(
-        ", "
-    )}]>(buf, "${fmt}")\n`
+    if (useJDOM) {
+        buffers += `const ${pktName}Reg = service.register(${capitalize(
+            info.camelName
+        )}Reg.${capitalize(pktName)})\n`
+        if (useSet) {
+            buffers += `await ${pktName}Reg.sendSetPackedAsync([${vars.join(
+                ", "
+            )}])\n`
+        } else {
+            buffers += `const [${vars.join(", ")}] : [${vartp.join(
+                ", "
+            )}] = ${pktName}Reg.unpackedValue\n`
+        }
+    } else {
+        buffers += `const [${vars.join(", ")}] = jdunpack<[${vartp.join(
+            ", "
+        )}]>(buf, "${fmt}")\n`
+    }
     if (repeats) buffers += `const [${repeats.join(", ")}] = rest[0]\n`
 
     buffers = buffers.replace(/\n*$/, "")
@@ -1815,7 +1841,10 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
 
         const cmt = addComment(pkt)
         const pack = pkt.fields.length
-            ? packInfo(info, pkt, staticTypeScript).buffers
+            ? packInfo(info, pkt, {
+                  isStatic: staticTypeScript,
+                  useBooleans: false,
+              }).buffers
             : ""
 
         let inner = "Cmd"

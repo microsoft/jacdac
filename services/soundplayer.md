@@ -13,7 +13,9 @@ Global volume of the output. ``0`` means completely off. This volume is mixed wi
 
 ## Commands
 
-    command play: string @ 0x80
+    command play @ 0x80 {
+        name: string
+    }
 
 Starts playing a sound.
 

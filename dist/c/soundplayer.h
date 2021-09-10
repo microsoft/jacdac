@@ -10,7 +10,7 @@
 #define JD_SOUND_PLAYER_REG_VOLUME JD_REG_INTENSITY
 
 /**
- * Argument: string (bytes). Starts playing a sound.
+ * Argument: name string (bytes). Starts playing a sound.
  */
 #define JD_SOUND_PLAYER_CMD_PLAY 0x80
 

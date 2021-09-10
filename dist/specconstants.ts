@@ -3969,10 +3969,10 @@ export enum SoundPlayerReg {
 
 export enum SoundPlayerCmd {
     /**
-     * Argument: string (bytes). Starts playing a sound.
+     * Argument: name string (bytes). Starts playing a sound.
      *
      * ```
-     * const [play] = jdunpack<[string]>(buf, "s")
+     * const [name] = jdunpack<[string]>(buf, "s")
      * ```
      */
     Play = 0x80,

@@ -149,6 +149,7 @@
           "storage": 0
         }
       ],
+      "restricted": true,
       "packFormat": "s"
     },
     {
@@ -222,7 +223,8 @@
       "name": "clear",
       "identifier": 133,
       "description": "Clears all keys.",
-      "fields": []
+      "fields": [],
+      "restricted": true
     },
     {
       "kind": "event",

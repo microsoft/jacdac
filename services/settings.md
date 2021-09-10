@@ -31,7 +31,7 @@ Get the value of given setting. If no such entry exists, the value returned is e
 
 Set the value of a given setting.
 
-    command delete @ 0x84 {
+    restricted command delete @ 0x84 {
         key: string
     }
 
@@ -56,7 +56,7 @@ Return keys of all settings.
 
 Return keys and values of all settings.
 
-    command clear @ 0x85 { }
+    restricted command clear @ 0x85 { }
 
 Clears all keys.
 

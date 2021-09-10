@@ -2,8 +2,8 @@
   "name": "HID Adapter",
   "status": "experimental",
   "shortId": "hidadapter",
-  "camelName": "hIDAdapter",
-  "shortName": "hIDAdapter",
+  "camelName": "hidAdapter",
+  "shortName": "hidAdapter",
   "extends": [
     "_base"
   ],

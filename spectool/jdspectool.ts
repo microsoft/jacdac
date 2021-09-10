@@ -89,6 +89,7 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
     const commands = packets.filter(
         pkt =>
             !pkt.derived &&
+            !pkt.restricted &&
             pkt.kind === "command" &&
             pkt.fields.every(f => f.type !== "pipe")
     )
@@ -320,7 +321,13 @@ ${commands
 ${toMetaComments(
     `group="${group}"`,
     `blockId=jacdac_${shortId}_${command.name}_cmd`,
-    `block="%${shortId} ${humanify(name)}"`,
+    `block="%${shortId} ${humanify(name)}${
+        !fnames?.length
+            ? ""
+            : fnames?.length == 1
+            ? ` $${fnames[0]}`
+            : " " + fnames.map(fn => `|${fn} $${fn}`).join(" ")
+    }"`,
     `weight=${weight--}`
 )}
         ${camelize(name)}(${fnames

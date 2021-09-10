@@ -1,6 +1,8 @@
 # HID Adapter
 
     identifier: 0x1e5758b5
+    status: experimental
+    camel: hidAdapter
     
 A service for configuring how Jacdac device map to HID input events. Users can have multiple configurations and swap between them by writing to `current_configuration`.
 

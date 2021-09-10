@@ -134,6 +134,7 @@
           "isSimpleType": true
         }
       ],
+      "restricted": true,
       "packFormat": "z b"
     },
     {

@@ -83,7 +83,7 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
     let isSimpleSensorClient = false
     const ctorArgs = [`${nsc}.SRV_${snakify(camelName).toUpperCase()}`, `role`]
     const reading = registers.find(reg => reg.identifier === Reading)
-    const regs = registers.filter(r => !!r)
+    const regs = registers.filter(r => !!r).filter(r => !r.restricted)
     const events = packets.filter(pkt => !pkt.derived && pkt.kind === "event")
     // TODO: pipes support
     const commands = packets.filter(

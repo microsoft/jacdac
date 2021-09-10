@@ -24,7 +24,7 @@ These are typically used by other services on the same device.
 
 Get the value of given setting. If no such entry exists, the value returned is empty.
 
-    command set @ 0x81 {
+    restricted command set @ 0x81 {
         key: string0
         value: bytes
     }

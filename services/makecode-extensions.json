@@ -342,6 +342,15 @@
     }
   },
   {
+    "service": "speechsynthesis",
+    "client": {
+      "name": "jacdac-speech-synthesis",
+      "repo": "microsoft/pxt-jacdac/speech-synthesis",
+      "qName": "modules.SpeechSynthesisClient",
+      "default": "modules.speechSynthesis"
+    }
+  },
+  {
     "service": "tcp",
     "client": {
       "name": "jacdac-tcp",

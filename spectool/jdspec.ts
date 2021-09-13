@@ -405,7 +405,9 @@ export function parseServiceSpecificationMarkdownToJSON(
                 case "rw":
                 case "event":
                 case "client":
+                case "volatile":
                 case "lowlevel":
+                case "restricted":
                     startPacket(words)
                     break
                 case "}":
@@ -541,7 +543,11 @@ export function parseServiceSpecificationMarkdownToJSON(
 
         let client: boolean = undefined
         let lowLevel: boolean = undefined
-        if (words[0] === "client") {
+        let restricted: boolean = undefined
+        if (words[0] === "restricted") {
+            restricted = true
+            words.shift()
+        } else if (words[0] === "client") {
             client = true
             words.shift()
         } else if (words[0] === "lowlevel") {
@@ -567,9 +573,20 @@ export function parseServiceSpecificationMarkdownToJSON(
             kind = kindSt as any
         }
 
+        if (restricted && kind !== "command")
+            error("restricted only applies to commands")
+
         let internal: boolean = undefined
         if (words[0] === "internal") {
             internal = true
+            words.shift()
+        }
+
+        let volatile: boolean = undefined
+        if (words[0] === "volatile") {
+            if (kind != "ro" && kind != "rw")
+                error("volatile can only modify ro or rw")
+            volatile = true
             words.shift()
         }
 
@@ -579,6 +596,7 @@ export function parseServiceSpecificationMarkdownToJSON(
             words.unshift(name)
             name = lastCmd.name
         }
+
         packetInfo = {
             kind,
             name: normalizeName(name),
@@ -588,6 +606,8 @@ export function parseServiceSpecificationMarkdownToJSON(
             internal,
             client,
             lowLevel,
+            volatile,
+            restricted,
         }
         if (isReport && lastCmd && name == lastCmd.name) {
             packetInfo.secondary = true
@@ -649,6 +669,10 @@ export function parseServiceSpecificationMarkdownToJSON(
                     error(`${w} cannot be resolved, since _system is missing`)
                 }
             }
+
+            // if we are accessing the reading or reading_error register, mark it volatile
+            if (kind === "ro" && (v === 0x101 || v === 0x106))
+                packetInfo.volatile = true
 
             let isUser = false
             let isSystem = false
@@ -1267,13 +1291,19 @@ function cStorage(tp: jdspec.StorageType) {
 
 function cSharpStorage(tp: jdspec.StorageType) {
     if (tp == 0 || [1, 2, 4, 8].indexOf(Math.abs(tp)) < 0) return "bytes"
-    switch(tp) {
-        case -1: return "sbyte"
-        case 1: return "byte"
-        case -2: return "short"
-        case 2: return "ushort"
-        case -4: return "int"
-        case 4: return "uint"
+    switch (tp) {
+        case -1:
+            return "sbyte"
+        case 1:
+            return "byte"
+        case -2:
+            return "short"
+        case 2:
+            return "ushort"
+        case -4:
+            return "int"
+        case 4:
+            return "uint"
     }
     return `unknown({${tp})`
 }
@@ -1490,7 +1520,9 @@ export function snakify(name: string) {
 
 export function dashify(name: string) {
     if (!name) return name
-    return snakify(name.replace(/^_+/, "")).replace(/(_|\s)+/g, "-").toLowerCase()
+    return snakify(name.replace(/^_+/, ""))
+        .replace(/(_|\s)+/g, "-")
+        .toLowerCase()
 }
 
 export function humanify(name: string) {
@@ -1643,9 +1675,18 @@ export function packFormat(
 export function packInfo(
     info: jdspec.ServiceSpec,
     pkt: jdspec.PacketInfo,
-    isStatic: boolean,
-    useBooleans?: boolean
+    options?: {
+        isStatic?: boolean
+        useBooleans?: boolean
+        useJDOM?: boolean
+    }
 ) {
+    const {
+        isStatic = false,
+        useBooleans = false,
+        useJDOM = false,
+    } = options || {}
+    const { kind } = pkt
     const vars: string[] = []
     const vartp: string[] = []
     let fmt = ""
@@ -1692,10 +1733,36 @@ export function packInfo(
 
     if (reptp) vartp.push("([" + reptp.join(", ") + "])[]")
 
+    const pktName = camelize(pkt.name)
     let buffers = ""
-    buffers += `const [${vars.join(", ")}] = jdunpack<[${vartp.join(
-        ", "
-    )}]>(buf, "${fmt}")\n`
+    if (useJDOM) {
+        if (kind === "command") {
+            for (let i = 0; i < vars.length; ++i)
+                buffers += `const ${vars[i]}: ${vartp[i]} = ...\n`
+            buffers += `await service.sendCmdPackedAsync(${capitalize(
+                info.camelName
+            )}Reg.${capitalize(pktName)}, [${vars.join(", ")}])\n`
+        } else if (isRegister(kind)) {
+            buffers +=
+                "// get (register to REPORT_UPDATE event to enable background refresh)\n"
+            buffers += `const ${pktName}Reg = service.register(${capitalize(
+                info.camelName
+            )}Reg.${capitalize(pktName)})\n`
+            buffers += `const [${vars.join(", ")}] : [${vartp.join(
+                ", "
+            )}] = ${pktName}Reg.unpackedValue\n`
+            if (kind === "rw") {
+                buffers += "// set\n"
+                buffers += `await ${pktName}Reg.sendSetPackedAsync([${vars.join(
+                    ", "
+                )}])\n`
+            }
+        }
+    } else {
+        buffers += `const [${vars.join(", ")}] = jdunpack<[${vartp.join(
+            ", "
+        )}]>(buf, "${fmt}")\n`
+    }
     if (repeats) buffers += `const [${repeats.join(", ")}] = rest[0]\n`
 
     buffers = buffers.replace(/\n*$/, "")
@@ -1769,7 +1836,9 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
 
     for (const en of values(info.enums)) {
         const enPref = pref + upperCamel(en.name)
-        r += `\n${enumkw} ${enPref}${csharp ? `: ${cSharpStorage(en.storage)}` : ""} { // ${cStorage(en.storage)}\n`
+        r += `\n${enumkw} ${enPref}${
+            csharp ? `: ${cSharpStorage(en.storage)}` : ""
+        } { // ${cStorage(en.storage)}\n`
         for (const k of Object.keys(en.members))
             r += indent2 + k + " = " + toHex(en.members[k]) + ",\n"
         r += indent + "}\n\n"
@@ -1781,7 +1850,10 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
 
         const cmt = addComment(pkt)
         const pack = pkt.fields.length
-            ? packInfo(info, pkt, staticTypeScript).buffers
+            ? packInfo(info, pkt, {
+                  isStatic: staticTypeScript,
+                  useBooleans: false,
+              }).buffers
             : ""
 
         let inner = "Cmd"
@@ -1853,6 +1925,7 @@ export function normalizeDeviceSpecification(dev: jdspec.DeviceSpec) {
         services: dev.services || [],
         productIdentifiers: dev.productIdentifiers || [],
     }
+    if (dev.status !== undefined) clone.status = dev.status
     return clone
 }
 
@@ -1862,6 +1935,7 @@ export function escapeDeviceIdentifier(text: string) {
         .trim()
         .toLowerCase()
         .replace(/([^a-z0-9_-])+/gi, "-")
+        .replace(/\./g, "") // routing does not like dots
         .replace(/^-+/, "")
         .replace(/-+$/, "")
     const id = snakify(escaped)

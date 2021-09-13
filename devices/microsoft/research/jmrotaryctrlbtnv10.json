@@ -1,0 +1,15 @@
+{
+    "id": "microsoft-research-jm-rotary-ctrl-btn-v1.0",
+    "name": "JM Rotary Ctrl + Btn v1.0",
+    "company": "Microsoft Research",
+    "description": "",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+        284830153,
+        343122531
+    ],
+    "productIdentifiers": [
+        1060754715
+    ]
+}

@@ -103,7 +103,7 @@
       "description": "Starts playing a sound.",
       "fields": [
         {
-          "name": "_",
+          "name": "name",
           "type": "string",
           "storage": 0
         }

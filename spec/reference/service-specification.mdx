@@ -55,7 +55,7 @@ All register writes incur 1.25ms delay.
 
 The time to wait after starting hydrogen flow, before starting oxygen flow.
 
-    ro core_temperature: u32 K @ 0x180
+    ro volatile core_temperature: u32 K @ 0x180
 
 The temperature at engine core.
 
@@ -63,7 +63,7 @@ The temperature at engine core.
 
 The number of exhaust nozzles in this rocket.
 
-    ro acceleration @ 0x182 {
+    ro volatile acceleration @ 0x182 {
         x: i16.16 m/s2
         y: i16.16 m/s2
         z: i16.16 m/s2
@@ -86,7 +86,8 @@ The register code is `0x80` (code ranges are specified in `_system.md`).
 The text after the register definition ends up in `description` field in JSON.
 Neither the register name (nor description) is ever sent over wire (the same applies to commands and events).
 
-The next line specifies a read-only register (`core_temperature`), giving the current temperature in degrees Kelvin. A 32 bit value is used to avoid overflows.
+The next line specifies a read-only volatile register (`core_temperature`), giving the current temperature in degrees Kelvin. A 32 bit value is used to avoid overflows.
+Volatile registers's values can change due to changes to the physical environment, even if the register was not programmatically modified.
 
 The third register (`num_nozzles`) is unit-less and constant, at least until the device resets
 (in the case of this service, the reset is usually quite spectacular).
@@ -105,7 +106,7 @@ In fact, the `core_temperature` could be also expressed using the more verbose s
 using `_` as the field name:
 
 ```
-ro core_temperature @ 0x180 {
+ro volatile core_temperature @ 0x180 {
     _: u32 K
 }
 ```
@@ -117,7 +118,7 @@ You can specify a preferred interval for refreshing the register in the specific
 as for the `mcu_temperature` register in the control service.
 
 ```
-ro mcu_temperature?: i16 °C { preferred_interval=60000, typical_min = -10, typical_max = 150 } @ 0x182
+ro volatile mcu_temperature?: i16 °C { preferred_interval=60000, typical_min = -10, typical_max = 150 } @ 0x182
 ```
 
 ### Pack Format
@@ -329,6 +330,15 @@ Some members (registers, commands) are considered `lowlevel` in the sense that t
 
 For example, the `play_tone` command is expressed in terms of electrical terms, period, duty but a typically user would expect frequency and volume.
 
+## Volatile
+
+A ``volatile`` register's values can change due to changes to the physical environment, even if the register was not programmatically modified.
+If the register changes generated an event, it should not be marked as volatile.
+
+```markdown
+    ro volatile core_temperature: u32 K @ 0x180
+```
+
 ## Client
 
 Some members (registers, commands, events) are not implemented on the server and should be implemented by clients. For example, the `play_note` command uses frequency and volume and should do the conversion math to `period`, `duty`
@@ -336,6 +346,17 @@ on the client.
 
 ```markdown
     client command play_note @ 0x81 { frequency: u16 Hz, volume: u0.16 /, ... }
+```
+
+## Restricted
+
+Certain command cannot be issued over the bus and are only allowed through a WebUSB or WebSerial connection
+
+```markdown
+    restricted command set_connection_string @ 0x86 { }
+    report {
+        connection_string_port: pipe_port
+    }
 ```
 
 ### Pipes

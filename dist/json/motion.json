@@ -160,6 +160,7 @@
           "storage": 1
         }
       ],
+      "volatile": true,
       "identifierName": "reading",
       "preferredInterval": 1000,
       "packFormat": "u8"

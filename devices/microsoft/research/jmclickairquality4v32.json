@@ -1,0 +1,15 @@
+{
+    "id": "microsoft-research-jm-click-airquality4-v3.2",
+    "name": "JM-Click Airquality4 v3.2",
+    "company": "Microsoft Research",
+    "description": "",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+        379362758,
+        312849815
+    ],
+    "productIdentifiers": [
+        878106432
+    ]
+}

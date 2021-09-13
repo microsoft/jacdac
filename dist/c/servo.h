@@ -5,7 +5,7 @@
 #define JD_SERVICE_CLASS_SERVO  0x12fc9103
 
 /**
- * Read-write ° i16.16 (int32_t). Specifies the angle of the arm.
+ * Read-write ° i16.16 (int32_t). Specifies the angle of the arm (request).
  */
 #define JD_SERVO_REG_ANGLE JD_REG_VALUE
 
@@ -48,5 +48,10 @@
  * Constant s/60° u16.16 (uint32_t). Time to move 60°.
  */
 #define JD_SERVO_REG_RESPONSE_SPEED 0x181
+
+/**
+ * Read-only ° i16.16 (int32_t). The current physical position of the arm.
+ */
+#define JD_SERVO_REG_CURRENT_ANGLE JD_REG_READING
 
 #endif

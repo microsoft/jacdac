@@ -154,6 +154,7 @@
           "isSimpleType": true
         }
       ],
+      "volatile": true,
       "identifierName": "reading",
       "packFormat": "i32"
     },

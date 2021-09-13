@@ -1,15 +1,11 @@
 {
-  "id": "microsoft-research-jmcrankbtnv2",
-  "name": "JM Crank+Btn v2",
-  "company": "Microsoft Research",
-  "description": "A rotary encoder with a push button.",
-  "repo": "https://github.com/microsoft/jacdac-msr-modules",
-  "link": "https://github.com/microsoft/jacdac-msr-modules",
-  "services": [
-    284830153,
-    343122531
-  ],
-  "productIdentifiers": [
-    813927310
-  ]
+    "id": "microsoft-research-jmcrankbtnv2",
+    "name": "JM Crank+Btn v2",
+    "company": "Microsoft Research",
+    "description": "A rotary encoder with a push button.",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [284830153, 343122531],
+    "productIdentifiers": [813927310],
+    "status": "deprecated"
 }

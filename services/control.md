@@ -89,7 +89,7 @@ on, and `0` (for all three channels) should be considered off.
 
 ## Registers
 
-    rw reset_in? : u32 us @ 0x80
+    rw internal reset_in? : u32 us @ 0x80
 
 When set to value other than `0`, it asks the device to reset after specified number of microseconds.
 This is typically used to implement watchdog functionality, where a brain device sets `reset_in` to
@@ -111,22 +111,10 @@ Typically the same as `product_identifier` unless device was flashed by hand; th
 
 A string describing firmware version; typically semver.
 
-    ro mcu_temperature?: i16 °C { preferred_interval=60000, typical_min = -10, typical_max = 150 } @ 0x182
+    ro volatile mcu_temperature?: i16 °C { preferred_interval=60000, typical_min = -10, typical_max = 150 } @ 0x182
 
 MCU temperature in degrees Celsius (approximate).
 
-    ro uptime?: u64 us { preferred_interval=60000 } @ 0x186
+    ro volatile uptime?: u64 us { preferred_interval=60000 } @ 0x186
 
 Number of microseconds since boot.
-
-    const device_url?: string @ 0x187
-
-Request the information web site for this device
-
-    const device_specification_url?: string @ 0x189
-
-URL pointing to device JSON specification.
-
-    const firmware_url?: string @ 0x188
-
-URL with machine-readable metadata information about updating device firmware

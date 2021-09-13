@@ -211,6 +211,7 @@
           "absoluteMax": 60
         }
       ],
+      "volatile": true,
       "identifierName": "reading",
       "preferredInterval": 1000,
       "packFormat": "u16 u8 u8 u8 u8 u8 u8"
@@ -229,6 +230,7 @@
           "storage": 4
         }
       ],
+      "volatile": true,
       "optional": true,
       "packFormat": "u16.16"
     },

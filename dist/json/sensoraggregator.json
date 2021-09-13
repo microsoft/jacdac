@@ -216,6 +216,7 @@
           "isSimpleType": true
         }
       ],
+      "volatile": true,
       "identifierName": "reading",
       "packFormat": "b"
     }

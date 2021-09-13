@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/triple-slash-reference */
 /// <reference path="jdspec.d.ts" />
-/// <reference path="jdtest.d.ts" />
 
 import {
     camelize,
@@ -14,9 +13,8 @@ import {
     parseServiceSpecificationMarkdownToJSON,
     snakify,
     TYPESCRIPT_STATIC_NAMESPACE,
-    isNumericType
+    isNumericType,
 } from "./jdspec"
-import { parseSpecificationTestMarkdownToJSON } from "./jdtest"
 import { packetsToRegisters } from "./jdutils"
 
 // eslint-disable-next-line no-var, @typescript-eslint/no-explicit-any
@@ -85,23 +83,21 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
     let isSimpleSensorClient = false
     const ctorArgs = [`${nsc}.SRV_${snakify(camelName).toUpperCase()}`, `role`]
     const reading = registers.find(reg => reg.identifier === Reading)
-    const regs = registers.filter(r => !!r)
+    const regs = registers.filter(r => !!r).filter(r => !r.restricted)
     const events = packets.filter(pkt => !pkt.derived && pkt.kind === "event")
     // TODO: pipes support
     const commands = packets.filter(
         pkt =>
             !pkt.derived &&
+            !pkt.restricted &&
             pkt.kind === "action" &&
             pkt.fields.every(f => f.type !== "pipe")
     )
-
     // use sensor base class if reading present
     if (reading) {
-        const { types } = packInfo(spec, reading, true, true)
-        isSimpleSensorClient = reading.fields.length === 1
-            && isNumericType(reading.fields[0])
-        baseType = isSimpleSensorClient
-            ? `SimpleSensorClient` : `SensorClient`
+        isSimpleSensorClient =
+            reading.fields.length === 1 && isNumericType(reading.fields[0])
+        baseType = isSimpleSensorClient ? `SimpleSensorClient` : `SensorClient`
         ctorArgs.push(`"${reading.packFormat}"`)
     }
     const className = `${capitalize(camelName)}Client`
@@ -121,118 +117,136 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
     //% fixedInstances blockGap=8
     export class ${className} extends jacdac.${baseType} {
 ${regs
-            .filter(reg => reg.identifier !== Reading)
-            .map(
-                reg => `
-        private readonly _${camelize(reg.name)} : jacdac.RegisterClient<[${packInfo(spec, reg, true, true).types
-                    }]>;`
-            )
-            .join("")}            
+    .filter(reg => reg.identifier !== Reading)
+    .map(
+        reg => `
+        private readonly _${camelize(reg.name)} : jacdac.RegisterClient<[${
+            packInfo(spec, reg, { isStatic: true, useBooleans: true }).types
+        }]>;`
+    )
+    .join("")}            
 
         constructor(role: string) {
             super(${ctorArgs.join(", ")});
 ${regs
-            .filter(reg => reg.identifier !== Reading)
-            .map(
-                reg => `
-            this._${camelize(reg.name)} = this.addRegister<[${packInfo(spec, reg, true, true).types
-                    }]>(${nsc}.${capitalize(spec.camelName)}Reg.${capitalize(
-                        camelize(reg.name)
-                    )}, "${reg.packFormat}");`
-            )
-            .join("")}            
+    .filter(reg => reg.identifier !== Reading)
+    .map(
+        reg => `
+            this._${camelize(reg.name)} = this.addRegister<[${
+            packInfo(spec, reg, { isStatic: true, useBooleans: true }).types
+        }]>(${nsc}.${capitalize(spec.camelName)}Reg.${capitalize(
+            camelize(reg.name)
+        )}, "${reg.packFormat}");`
+    )
+    .join("")}            
         }
     
 ${regs
-            .map(reg => {
-                const { types } = packInfo(spec, reg, true, true)
-                const { fields } = reg
-                const isReading = reg.identifier === Reading
-                const fieldName = `this._${isReading ? "reading" : camelize(reg.name)}`
-                const enabled =
-                    reg.identifier === Intensity &&
-                    reg.name === "enabled" &&
-                    reg.fields.length === 1 &&
-                    reg.fields[0].type === "bool"
-                const hasBlocks =
-                    reg.identifier == Reading ||
-                    reg.identifier == Intensity ||
-                    reg.identifier == Value
+    .map(reg => {
+        const { types } = packInfo(spec, reg, {
+            isStatic: true,
+            useBooleans: true,
+        })
+        const { fields } = reg
+        const isReading = reg.identifier === Reading
+        const fieldName = `this._${isReading ? "reading" : camelize(reg.name)}`
+        const enabled =
+            reg.identifier === Intensity &&
+            reg.name === "enabled" &&
+            reg.fields.length === 1 &&
+            reg.fields[0].type === "bool"
+        const hasBlocks =
+            reg.identifier == Reading ||
+            reg.identifier == Intensity ||
+            reg.identifier == Value
 
-                return fields
-                    .map((field, fieldi) => {
-                        const name =
-                            field.name === "_"
-                                ? reg.name
-                                : isReading
-                                    ? field.name
-                                    : `${reg.name}${capitalize(field.name)}`
-                        const min = pick(
-                            field.typicalMin,
-                            field.absoluteMin,
-                            field.unit === "/"
-                                ? field.type[0] === "i"
-                                    ? -100
-                                    : 0
-                                : undefined,
-                            field.type === "u8" ? 0 : undefined
-                        )
-                        const max = pick(
-                            field.typicalMax,
-                            field.absoluteMax,
-                            field.unit === "/" ? 100 : undefined,
-                            field.type === "u8" ? 0xff : undefined
-                        )
-                        const defl = field.defaultValue || (field.unit === "/" ? "100" : undefined);
-                        const valueScaler: (s: string) => string =
-                            field.unit === "/" ? s => `${s} * 100`
-                                : field.type === "bool" ? s => `!!${s}`
-                                    : s => s;
-                        const valueUnscaler: (s: string) => string =
-                            field.unit === "/" ? s => `${s} / 100`
-                                : field.type === "bool" ? s => `${s} ? 1 : 0`
-                                    : s => s
+        return fields
+            .map((field, fieldi) => {
+                const name =
+                    field.name === "_"
+                        ? reg.name
+                        : isReading
+                        ? field.name
+                        : `${reg.name}${capitalize(field.name)}`
+                const min = pick(
+                    field.typicalMin,
+                    field.absoluteMin,
+                    field.unit === "/"
+                        ? field.type[0] === "i"
+                            ? -100
+                            : 0
+                        : undefined,
+                    field.type === "u8" ? 0 : undefined
+                )
+                const max = pick(
+                    field.typicalMax,
+                    field.absoluteMax,
+                    field.unit === "/" ? 100 : undefined,
+                    field.type === "u8" ? 0xff : undefined
+                )
+                const defl =
+                    field.defaultValue ||
+                    (field.unit === "/" ? "100" : undefined)
+                const valueScaler: (s: string) => string =
+                    field.unit === "/"
+                        ? s => `${s} * 100`
+                        : field.type === "bool"
+                        ? s => `!!${s}`
+                        : s => s
+                const valueUnscaler: (s: string) => string =
+                    field.unit === "/"
+                        ? s => `${s} / 100`
+                        : field.type === "bool"
+                        ? s => `${s} ? 1 : 0`
+                        : s => s
 
-                        return `
+                return `
         /**
         * ${(reg.description || "").split("\n").join("\n        * ")}
         */
 ${toMetaComments(
-                            "callInDebugger",
-                            `group="${group}"`,
-                            hasBlocks && `block="%${shortId} ${humanify(name)}"`,
-                            hasBlocks && `blockId=jacdac_${shortId}_${reg.name}_${field.name}_get`,
-                            `weight=${weight--}`
-                        )}
-        ${camelize(name)}(): ${types[fieldi]} {${isReading && isSimpleSensorClient ? `
+    "callInDebugger",
+    `group="${group}"`,
+    hasBlocks && `block="%${shortId} ${humanify(name)}"`,
+    hasBlocks && `blockId=jacdac_${shortId}_${reg.name}_${field.name}_get`,
+    `weight=${weight--}`
+)}
+        ${camelize(name)}(): ${types[fieldi]} {${
+                    isReading && isSimpleSensorClient
+                        ? `
             return ${valueScaler(`this.reading()`)};
-        `  : `${isReading
-                                ? `
+        `
+                        : `${
+                              isReading
+                                  ? `
             this.setStreaming(true);`
-                                : `
+                                  : `
             this.start();`
-                            }            
+                          }            
             const values = ${fieldName}.pauseUntilValues() as any[];
-            return ${valueScaler(`values[${fieldi}]`)};`}
+            return ${valueScaler(`values[${fieldi}]`)};`
+                }
         }
-${reg.kind === "rw"
-                                ? `
+${
+    reg.kind === "rw"
+        ? `
         /**
         * ${(reg.description || "").split("\n").join("\n        * ")}
         */
 ${toMetaComments(
-                                    `group="${group}"`,
-                                    hasBlocks && `blockId=jacdac_${shortId}_${reg.name}_${field.name}_set`,
-                                    hasBlocks &&
-                                    `block="${enabled
-                                        ? `set %${shortId} %value=toggleOnOff`
-                                        : `set %${shortId} ${humanify(name)} to %value`
-                                    }"`,
-                                    `weight=${weight--}`,
-                                    min !== undefined && `value.min=${min}`,
-                                    max !== undefined && `value.max=${max}`,
-                                    defl !== undefined && `value.defl=${defl}`
-                                )}
+    `group="${group}"`,
+    hasBlocks && `blockId=jacdac_${shortId}_${reg.name}_${field.name}_set`,
+    hasBlocks &&
+        `block="${
+            enabled
+                ? `set %${shortId} %value=toggleOnOff`
+                : `set %${shortId} ${humanify(name)} to %value`
+        }"`,
+    `weight=${weight--}`,
+    min !== undefined && `value.min=${min}`,
+    max !== undefined && `value.max=${max}`,
+    defl !== undefined && `value.defl=${defl}`
+)}
         set${capitalize(camelize(name))}(value: ${types[fieldi]}) {
             this.start();
             const values = ${fieldName}.values as any[];
@@ -240,81 +254,101 @@ ${toMetaComments(
             ${fieldName}.values = values as [${types}];
         }
 `
-                                : ""
-                            }`
-                    })
-                    .join("")
+        : ""
+}`
             })
-            .join("")}${isSimpleSensorClient ? `
+            .join("")
+    })
+    .join("")}${
+        isSimpleSensorClient
+            ? `
         /**
-         * Run code when the ${humanify(reading.name)} changes by the given threshold value.
+         * Run code when the ${humanify(
+             reading.name
+         )} changes by the given threshold value.
         */
 ${toMetaComments(
-                `group="${group}"`,
-                `blockId=jacdac_${shortId}_on_${reading.name}_change`,
-                `block="on %${shortId} ${humanify(reading.name)} changed by %threshold"`,
-                `weight=${weight--}`,
-                `threshold.defl=${/[ui]0\./.test(reading.fields[0].type) ? "0.1" : "1"}`
-            )}
-        on${capitalize(camelize(reading.name))}ChangedBy(threshold: number, handler: () => void): void {
+    `group="${group}"`,
+    `blockId=jacdac_${shortId}_on_${reading.name}_change`,
+    `block="on %${shortId} ${humanify(reading.name)} changed by %threshold"`,
+    `weight=${weight--}`,
+    `threshold.defl=${/[ui]0\./.test(reading.fields[0].type) ? "0.1" : "1"}`
+)}
+        on${capitalize(
+            camelize(reading.name)
+        )}ChangedBy(threshold: number, handler: () => void): void {
             this.onReadingChangedBy(threshold, handler);
         }
-` : ''}${events
-            .map(event => {
-                return `
+`
+            : ""
+    }${events
+        .map(event => {
+            return `
         /**
          * ${(event.description || "").split("\n").join("\n        * ")}
          */
 ${toMetaComments(
-                    `group="${group}"`,
-                    `blockId=jacdac_on_${spec.shortId}_${event.name}`,
-                    `block="on %${shortId} ${humanify(event.name)}"`,
-                    `weight=${weight--}`
-                )}
+    `group="${group}"`,
+    `blockId=jacdac_on_${spec.shortId}_${event.name}`,
+    `block="on %${shortId} ${humanify(event.name)}"`,
+    `weight=${weight--}`
+)}
         on${capitalize(camelize(event.name))}(handler: () => void): void {
             this.registerEvent(${nsc}.${capitalize(
-                    spec.camelName
-                )}Event.${capitalize(camelize(event.name))}, handler);
+                spec.camelName
+            )}Event.${capitalize(camelize(event.name))}, handler);
         }`
-            })
-            .join("")}
+        })
+        .join("")}
 ${commands
-            .map(command => {
-                const { name } = command
-                const { types } = packInfo(spec, command, true, true)
-                const { fields } = command
-                const fnames = fields.map(f => camelize(f.name))
-                const cmd = `${nsc}.${capitalize(spec.camelName)}Cmd.${capitalize(
-                    camelize(command.name)
-                )}`
-                const fmt = command.packFormat
-                return `
+    .map(command => {
+        const { name } = command
+        const { types } = packInfo(spec, command, {
+            isStatic: true,
+            useBooleans: true,
+        })
+        const { fields } = command
+        const fnames = fields.map(f => camelize(f.name))
+        const cmd = `${nsc}.${capitalize(spec.camelName)}Cmd.${capitalize(
+            camelize(command.name)
+        )}`
+        const fmt = command.packFormat
+        return `
         /**
         * ${(command.description || "").split("\n").join("\n        * ")}
         */
 ${toMetaComments(
-                    `group="${group}"`,
-                    `blockId=jacdac_${shortId}_${command.name}_cmd`,
-                    `block="%${shortId} ${humanify(name)}"`,
-                    `weight=${weight--}`
-                )}
+    `group="${group}"`,
+    `blockId=jacdac_${shortId}_${command.name}_cmd`,
+    `block="%${shortId} ${humanify(name)}${
+        !fnames?.length
+            ? ""
+            : fnames?.length == 1
+            ? ` $${fnames[0]}`
+            : " " + fnames.map(fn => `|${fn} $${fn}`).join(" ")
+    }"`,
+    `weight=${weight--}`
+)}
         ${camelize(name)}(${fnames
-                        .map((fname, fieldi) => `${fname}: ${types[fieldi]}`)
-                        .join(", ")}): void {
+            .map((fname, fieldi) => `${fname}: ${types[fieldi]}`)
+            .join(", ")}): void {
             this.start();
-            this.sendCommand(jacdac.JDPacket.${types.length === 0
-                        ? `onlyHeader(${cmd})`
-                        : `jdpacked(${cmd}, "${fmt}", [${fnames.join(", ")}])`
-                    })
+            this.sendCommand(jacdac.JDPacket.${
+                types.length === 0
+                    ? `onlyHeader(${cmd})`
+                    : `jdpacked(${cmd}, "${fmt}", [${fnames.join(", ")}])`
+            })
         }
 `
-            })
-            .join("")}    
+    })
+    .join("")}    
     }
-    //% fixedInstance whenUsed block="${humanify(spec.camelName).toLocaleLowerCase()} 1"
+    //% fixedInstance whenUsed block="${humanify(
+        spec.camelName
+    ).toLocaleLowerCase()} 1"
     export const ${tsify(spec.camelName)}1 = new ${className}("${humanify(
-                spec.camelName
-            )}1");
+        spec.camelName
+    )}1");
 }`
 }
 
@@ -342,7 +376,6 @@ function processSpec(dn: string) {
     const fmtStats: { [index: string]: number } = {}
     const concats: jdspec.SMap<string> = {}
     const markdowns: jdspec.ServiceMarkdownSpec[] = []
-    const tests: jdtest.ServiceTestSpec[] = []
     for (const fn of files) {
         if (!/\.md$/.test(fn) || fn[0] == ".") continue
         console.log(`process ${fn}`)
@@ -363,22 +396,6 @@ function processSpec(dn: string) {
             .forEach(fmt => (fmtStats[fmt] = (fmtStats[fmt] || 0) + 1))
 
         reportErrors(json.errors, dn, fn)
-
-        // check if there is a test for this service
-        const testFile = path.join(dn, "tests", fn)
-        if (fs.existsSync(testFile)) {
-            const testCont = readString(testFile, "")
-            const testJson = parseSpecificationTestMarkdownToJSON(
-                testCont,
-                json
-            )
-            reportErrors(testJson.errors, path.join(dn, "tests"), fn)
-            tests.push(testJson)
-
-            const cfn = path.join(outp, "json", fn.slice(0, -3) + ".test")
-            fs.writeFileSync(cfn, JSON.stringify(testJson, null, 2))
-            console.log(`written ${cfn}`)
-        }
 
         // check if there is a makecode project folder for this service
         const mkcdsrvdirname = dashify(json.camelName)
@@ -445,11 +462,6 @@ function processSpec(dn: string) {
     fs.writeFileSync(
         path.join(outp, "services.json"),
         JSON.stringify(values(includes)),
-        "utf-8"
-    )
-    fs.writeFileSync(
-        path.join(outp, "services-tests.json"),
-        JSON.stringify(tests),
         "utf-8"
     )
     fs.writeFileSync(path.join(outp, "specconstants.ts"), concats["ts"])

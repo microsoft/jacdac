@@ -9,6 +9,15 @@
     }
   },
   {
+    "service": "azureiothubhealth",
+    "client": {
+      "name": "jacdac-azure-iot-hub-health",
+      "repo": "microsoft/pxt-jacdac/azure-iot-hub-health",
+      "qName": "modules.AzureIotHubHealthClient",
+      "default": "modules.azureIotHubHealth"
+    }
+  },
+  {
     "service": "barometer",
     "client": {
       "name": "jacdac-barometer",
@@ -42,6 +51,15 @@
       "repo": "microsoft/pxt-jacdac/character-screen",
       "qName": "modules.CharacterScreenClient",
       "default": "modules.characterScreen"
+    }
+  },
+  {
+    "service": "color",
+    "client": {
+      "name": "jacdac-color",
+      "repo": "microsoft/pxt-jacdac/color",
+      "qName": "modules.ColorClient",
+      "default": "modules.color"
     }
   },
   {
@@ -321,6 +339,15 @@
       "repo": "microsoft/pxt-jacdac/sound-level",
       "qName": "modules.SoundLevelClient",
       "default": "modules.soundLevel"
+    }
+  },
+  {
+    "service": "speechsynthesis",
+    "client": {
+      "name": "jacdac-speech-synthesis",
+      "repo": "microsoft/pxt-jacdac/speech-synthesis",
+      "qName": "modules.SpeechSynthesisClient",
+      "default": "modules.speechSynthesis"
     }
   },
   {

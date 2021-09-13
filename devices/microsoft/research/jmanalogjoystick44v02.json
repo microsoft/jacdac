@@ -1,0 +1,13 @@
+{
+    "id": "microsoft-research-jm-analog-joystick-44-v0.2",
+    "name": "JM Analog Joystick 44 v0.2",
+    "company": "Microsoft Research",
+    "description": "",
+    "link": "https://github.com/microsoft/jacdac-padauk",
+    "services": [
+        277836886
+    ],
+    "productIdentifiers": [
+        976429228
+    ]
+}

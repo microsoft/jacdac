@@ -140,6 +140,7 @@
           "storage": 1
         }
       ],
+      "volatile": true,
       "packFormat": "u8"
     },
     {
@@ -156,6 +157,7 @@
           "isSimpleType": true
         }
       ],
+      "volatile": true,
       "optional": true,
       "identifierName": "reading",
       "packFormat": "u16"
@@ -176,6 +178,7 @@
           "typicalMax": 5500
         }
       ],
+      "volatile": true,
       "optional": true,
       "packFormat": "u16"
     },
@@ -193,6 +196,7 @@
           "storage": 2
         }
       ],
+      "volatile": true,
       "optional": true,
       "packFormat": "u0.16"
     },

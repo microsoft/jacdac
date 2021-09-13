@@ -520,80 +520,75 @@ export enum ArcadeSoundReg {
     BufferPending = 0x181,
 }
 
-// Service: Azure IoT Hub
-export const SRV_AZURE_IOT_HUB = 0x19ed364c
-export enum AzureIotHubCmd {
-    /**
-     * Argument: body string (bytes). Sends a short message in string format (it's typically JSON-encoded).
-     *
-     * ```
-     * const [body] = jdunpack<[string]>(buf, "s")
-     * ```
-     */
-    SendMessage = 0x82,
+// Service: Azure IoT Hub Health
+export const SRV_AZURE_IOT_HUB_HEALTH = 0x1462eefc
 
-    /**
-     * No args. Try connecting using currently set `connection_string`.
-     * The service normally periodically tries to connect automatically.
-     */
-    Connect = 0x80,
-
-    /**
-     * No args. Disconnect from current Hub if any.
-     * This disables auto-connect behavior, until a `connect` command is issued.
-     */
-    Disconnect = 0x81,
+export enum AzureIotHubHealthConnectionStatus { // uint16_t
+    Connected = 0x1,
+    Disconnected = 0x2,
+    Connecting = 0x3,
+    Disconnecting = 0x4,
 }
 
-export enum AzureIotHubReg {
+export enum AzureIotHubHealthReg {
     /**
-     * Read-only string (bytes). Returns `"ok"` when connected, empty `""` when disconnected, and an error description otherwise.
-     *
-     * ```
-     * const [connectionStatus] = jdunpack<[string]>(buf, "s")
-     * ```
-     */
-    ConnectionStatus = 0x180,
-
-    /**
-     * Constant string (bytes). Something like `my-iot-hub.azure-devices.net`; empty string when not properly configured
+     * Read-only string (bytes). Something like `my-iot-hub.azure-devices.net`; empty string when not properly configured
      *
      * ```
      * const [hubName] = jdunpack<[string]>(buf, "s")
      * ```
      */
-    HubName = 0x181,
+    HubName = 0x180,
 
     /**
-     * Constant string (bytes). Something like `my-dev-007`; empty string when `connection_string` is not set.
+     * Read-only string (bytes). Device identifier in Azure Iot Hub
      *
      * ```
-     * const [deviceId] = jdunpack<[string]>(buf, "s")
+     * const [hubDeviceId] = jdunpack<[string]>(buf, "s")
      * ```
      */
-    DeviceId = 0x182,
+    HubDeviceId = 0x181,
+
+    /**
+     * Read-only ConnectionStatus (uint16_t). Indicates the status of connection. A message beyond the [0..3] range represents an HTTP error code.
+     *
+     * ```
+     * const [connectionStatus] = jdunpack<[AzureIotHubHealthConnectionStatus]>(buf, "u16")
+     * ```
+     */
+    ConnectionStatus = 0x182,
 }
 
-export enum AzureIotHubEvent {
+export enum AzureIotHubHealthCmd {
     /**
-     * Argument: body string (bytes). This event is emitted upon reception of a cloud to device message, that is a string
-     * (doesn't contain NUL bytes) and fits in a single event packet.
+     * No args. Starts a connection to the IoT hub service
+     */
+    Connect = 0x81,
+
+    /**
+     * No args. Starts disconnecting from the IoT hub service
+     */
+    Disconnect = 0x82,
+
+    /**
+     * Argument: connection_string string (bytes). Restricted command to override the existing connection string to the Azure IoT Hub.
      *
      * ```
-     * const [body] = jdunpack<[string]>(buf, "s")
+     * const [connectionString] = jdunpack<[string]>(buf, "s")
      * ```
      */
-    Message = 0x82,
+    SetConnectionString = 0x86,
+}
 
+export enum AzureIotHubHealthEvent {
     /**
-     * Raised when the device is connected to the hub.
+     * Argument: connection_status ConnectionStatus (uint16_t). Raised when the connection status changes
+     *
+     * ```
+     * const [connectionStatus] = jdunpack<[AzureIotHubHealthConnectionStatus]>(buf, "u16")
+     * ```
      */
-    Connected = 0x80,
-
-    /**
-     * Raised when the device is disconnected to the hub. ``connection_status`` may contain information about the error.
-     */
-    Disconnected = 0x81,
+    ConnectionStatusChange = 0x3,
 }
 
 // Service: Barcode reader
@@ -1235,33 +1230,6 @@ export enum ControlReg {
      * ```
      */
     Uptime = 0x186,
-
-    /**
-     * Constant string (bytes). Request the information web site for this device
-     *
-     * ```
-     * const [deviceUrl] = jdunpack<[string]>(buf, "s")
-     * ```
-     */
-    DeviceUrl = 0x187,
-
-    /**
-     * Constant string (bytes). URL pointing to device JSON specification.
-     *
-     * ```
-     * const [deviceSpecificationUrl] = jdunpack<[string]>(buf, "s")
-     * ```
-     */
-    DeviceSpecificationUrl = 0x189,
-
-    /**
-     * Constant string (bytes). URL with machine-readable metadata information about updating device firmware
-     *
-     * ```
-     * const [firmwareUrl] = jdunpack<[string]>(buf, "s")
-     * ```
-     */
-    FirmwareUrl = 0x188,
 }
 
 // Service: Dimmer
@@ -1501,8 +1469,8 @@ export enum HeartRateReg {
 }
 
 // Service: HID Adapter
-export const SRV_H_IDADAPTER = 0x1e5758b5
-export enum HIDAdapterReg {
+export const SRV_HID_ADAPTER = 0x1e5758b5
+export enum HidAdapterReg {
     /**
      * Read-write uint8_t. The number of configurations stored on the server.
      *
@@ -1522,7 +1490,7 @@ export enum HIDAdapterReg {
     CurrentConfiguration = 0x81,
 }
 
-export enum HIDAdapterCmd {
+export enum HidAdapterCmd {
     /**
      * Retrieves a configuration stored on the server. If the configuration does not exist, an empty report will be returned
      *
@@ -1574,7 +1542,7 @@ export enum HIDAdapterCmd {
  */
 
 
-export enum HIDAdapterEvent {
+export enum HidAdapterEvent {
     /**
      * Event that notifies clients that the server has swapped to a new configuration or changed key bindings.
      */
@@ -3614,7 +3582,7 @@ export enum SensorAggregatorReg {
 export const SRV_SERVO = 0x12fc9103
 export enum ServoReg {
     /**
-     * Read-write ° i16.16 (int32_t). Specifies the angle of the arm.
+     * Read-write ° i16.16 (int32_t). Specifies the angle of the arm (request).
      *
      * ```
      * const [angle] = jdunpack<[number]>(buf, "i16.16")
@@ -3693,6 +3661,15 @@ export enum ServoReg {
      * ```
      */
     ResponseSpeed = 0x181,
+
+    /**
+     * Read-only ° i16.16 (int32_t). The current physical position of the arm.
+     *
+     * ```
+     * const [currentAngle] = jdunpack<[number]>(buf, "i16.16")
+     * ```
+     */
+    CurrentAngle = 0x101,
 }
 
 // Service: Settings
@@ -3992,10 +3969,10 @@ export enum SoundPlayerReg {
 
 export enum SoundPlayerCmd {
     /**
-     * Argument: string (bytes). Starts playing a sound.
+     * Argument: name string (bytes). Starts playing a sound.
      *
      * ```
-     * const [play] = jdunpack<[string]>(buf, "s")
+     * const [name] = jdunpack<[string]>(buf, "s")
      * ```
      */
     Play = 0x80,
@@ -4827,15 +4804,6 @@ export enum WindDirectionReg {
      * ```
      */
     WindDirectionError = 0x106,
-
-    /**
-     * Read-only ° int16_t. Offset added to direction to account for sensor calibration.
-     *
-     * ```
-     * const [windDirectionOffset] = jdunpack<[number]>(buf, "i16")
-     * ```
-     */
-    WindDirectionOffset = 0x180,
 }
 
 // Service: Wind speed

@@ -1,0 +1,10 @@
+{
+    "id": "microsoft-research-jm-temp-humidity-18-v1.0a",
+    "name": "JM TEMP HUMIDITY 18-v1.0A",
+    "company": "Microsoft Research",
+    "description": "",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [337754823, 382210232],
+    "productIdentifiers": [899442616]
+}

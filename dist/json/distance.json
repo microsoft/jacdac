@@ -167,6 +167,7 @@
           "typicalMax": 4
         }
       ],
+      "volatile": true,
       "identifierName": "reading",
       "packFormat": "u16.16"
     },

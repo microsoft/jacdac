@@ -1,10 +1,10 @@
 namespace Jacdac {
     // Service: HID Adapter
-    public static class HIDAdapterConstants
+    public static class HidAdapterConstants
     {
         public const uint ServiceClass = 0x1e5758b5;
     }
-    public enum HIDAdapterReg {
+    public enum HidAdapterReg {
         /**
          * Read-write uint8_t. The number of configurations stored on the server.
          *
@@ -24,7 +24,7 @@ namespace Jacdac {
         CurrentConfiguration = 0x81,
     }
 
-    public enum HIDAdapterCmd {
+    public enum HidAdapterCmd {
         /**
          * Retrieves a configuration stored on the server. If the configuration does not exist, an empty report will be returned
          *
@@ -76,7 +76,7 @@ namespace Jacdac {
      */
 
 
-    public enum HIDAdapterEvent {
+    public enum HidAdapterEvent {
         /**
          * Event that notifies clients that the server has swapped to a new configuration or changed key bindings.
          */

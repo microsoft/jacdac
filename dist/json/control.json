@@ -265,6 +265,7 @@
           "isSimpleType": true
         }
       ],
+      "internal": true,
       "optional": true,
       "packFormat": "u32"
     },
@@ -350,6 +351,7 @@
           "typicalMax": 150
         }
       ],
+      "volatile": true,
       "optional": true,
       "preferredInterval": 60000,
       "packFormat": "i16"
@@ -368,54 +370,10 @@
           "isSimpleType": true
         }
       ],
+      "volatile": true,
       "optional": true,
       "preferredInterval": 60000,
       "packFormat": "u64"
-    },
-    {
-      "kind": "const",
-      "name": "device_url",
-      "identifier": 391,
-      "description": "Request the information web site for this device",
-      "fields": [
-        {
-          "name": "_",
-          "type": "string",
-          "storage": 0
-        }
-      ],
-      "optional": true,
-      "packFormat": "s"
-    },
-    {
-      "kind": "const",
-      "name": "device_specification_url",
-      "identifier": 393,
-      "description": "URL pointing to device JSON specification.",
-      "fields": [
-        {
-          "name": "_",
-          "type": "string",
-          "storage": 0
-        }
-      ],
-      "optional": true,
-      "packFormat": "s"
-    },
-    {
-      "kind": "const",
-      "name": "firmware_url",
-      "identifier": 392,
-      "description": "URL with machine-readable metadata information about updating device firmware",
-      "fields": [
-        {
-          "name": "_",
-          "type": "string",
-          "storage": 0
-        }
-      ],
-      "optional": true,
-      "packFormat": "s"
     }
   ],
   "tags": [

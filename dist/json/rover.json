@@ -182,6 +182,7 @@
           "storage": -4
         }
       ],
+      "volatile": true,
       "identifierName": "reading",
       "packFormat": "i16.16 i16.16 i16.16 i16.16 i16.16"
     }

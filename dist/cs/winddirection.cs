@@ -22,15 +22,6 @@ namespace Jacdac {
          * ```
          */
         WindDirectionError = 0x106,
-
-        /**
-         * Read-only ° int16_t. Offset added to direction to account for sensor calibration.
-         *
-         * ```
-         * const [windDirectionOffset] = jdunpack<[number]>(buf, "i16")
-         * ```
-         */
-        WindDirectionOffset = 0x180,
     }
 
 }

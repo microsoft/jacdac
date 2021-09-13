@@ -170,6 +170,7 @@
           "storage": -4
         }
       ],
+      "volatile": true,
       "identifierName": "reading",
       "packFormat": "i12.20 i12.20 i12.20"
     },
@@ -187,6 +188,7 @@
           "storage": -4
         }
       ],
+      "volatile": true,
       "optional": true,
       "identifierName": "reading_error",
       "packFormat": "i12.20"

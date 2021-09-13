@@ -197,7 +197,7 @@ This field may be read-only in some implementations - you should read it back af
         Overload = 2
         Overprovision = 3
     }
-    ro power_status: PowerStatus @ 0x181
+    ro volatile power_status: PowerStatus @ 0x181
 
 Indicates whether the power provider is currently providing power (`Powering` state), and if not, why not.
 `Overprovision` means there was another power provider, and we stopped not to overprovision the bus.
@@ -206,11 +206,11 @@ Indicates whether the power provider is currently providing power (`Powering` st
 
 Present current draw from the bus.
 
-    ro battery_voltage?: u16 mV {typical_min = 4500, typical_max = 5500} @ 0x180
+    ro volatile battery_voltage?: u16 mV {typical_min = 4500, typical_max = 5500} @ 0x180
 
 Voltage on input.
 
-    ro battery_charge?: u0.16 / @ 0x182
+    ro volatile battery_charge?: u0.16 / @ 0x182
 
 Fraction of charge in the battery.
 

@@ -91,7 +91,7 @@ Asks device to stream a given number of samples
 
 Period between packets of data when streaming in milliseconds.
 
-    ro reading: i32 @ 0x101
+    ro volatile reading: i32 @ 0x101
 
 Read-only value of the sensor, also reported in streaming.
 
@@ -103,7 +103,7 @@ The lowest value that can be reported by the sensor.
 
 The highest value that can be reported by the sensor.
 
-    ro reading_error: u32 @ 0x106
+    ro volatile reading_error: u32 @ 0x106
 
 The real value of whatever is measured is between `reading - reading_error` and `reading + reading_error`. It should be computed from the internal state of the sensor. This register is often, but not always `const`. If the register value is modified,
 send a report in the same frame of the ``reading`` report.

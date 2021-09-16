@@ -8,7 +8,7 @@
     "_base"
   ],
   "notes": {
-    "short": "A rectangular dot matrix display, made of monochrome LEDs or braille pins."
+    "short": "A rectangular dot matrix display, made of monochrome LEDs or Braille pins."
   },
   "classIdentifier": 286070091,
   "enums": {

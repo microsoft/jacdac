@@ -3750,7 +3750,7 @@ namespace Jacdac {
 
     public enum RoleManagerEvent {
         /**
-         * Emit notifying that the internal state of the service changed.
+         * Notifies that role bindings have changed.
          */
         Change = 0x3,
     }

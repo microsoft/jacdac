@@ -3635,7 +3635,7 @@ namespace jacdac {
 
     export const enum RoleManagerEvent {
         /**
-         * Emit notifying that the internal state of the service changed.
+         * Notifies that role bindings have changed.
          */
         //% block="change"
         Change = 0x3,

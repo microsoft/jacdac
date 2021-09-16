@@ -87,7 +87,7 @@ typedef struct jd_role_manager_required_roles {
 
 
 /**
- * Emit notifying that the internal state of the service changed.
+ * Notifies that role bindings have changed.
  */
 #define JD_ROLE_MANAGER_EV_CHANGE JD_EV_CHANGE
 

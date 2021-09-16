@@ -279,7 +279,7 @@
       "kind": "event",
       "name": "change",
       "identifier": 3,
-      "description": "Emit notifying that the internal state of the service changed.",
+      "description": "Notifies that role bindings have changed.",
       "fields": [],
       "identifierName": "change"
     }

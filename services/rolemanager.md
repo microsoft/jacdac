@@ -83,4 +83,4 @@ List all roles required by the current program. `device_id` and `service_idx` ar
 
     event change @ change { }
 
-Emit notifying that the internal state of the service changed.
+Notifies that role bindings have changed.

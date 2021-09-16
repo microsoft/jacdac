@@ -288,6 +288,15 @@
     }
   },
   {
+    "service": "relay",
+    "client": {
+      "name": "jacdac-relay",
+      "repo": "microsoft/pxt-jacdac/relay",
+      "qName": "modules.RelayClient",
+      "default": "modules.relay"
+    }
+  },
+  {
     "service": "rotaryencoder",
     "client": {
       "name": "jacdac-rotary-encoder",

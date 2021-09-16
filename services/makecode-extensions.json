@@ -90,6 +90,15 @@
     }
   },
   {
+    "service": "dotmatrix",
+    "client": {
+      "name": "jacdac-dot-matrix",
+      "repo": "microsoft/pxt-jacdac/dot-matrix",
+      "qName": "modules.DotMatrixClient",
+      "default": "modules.dotMatrix"
+    }
+  },
+  {
     "service": "eco2",
     "client": {
       "name": "jacdac-e-co2",

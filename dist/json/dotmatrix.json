@@ -1,17 +1,26 @@
 {
-  "name": "LED Matrix",
+  "name": "Dot Matrix",
   "status": "experimental",
-  "shortId": "ledmatrix",
-  "camelName": "ledMatrix",
-  "shortName": "ledMatrix",
+  "shortId": "dotmatrix",
+  "camelName": "dotMatrix",
+  "shortName": "dotMatrix",
   "extends": [
     "_base"
   ],
   "notes": {
-    "short": "A rectangular monochrome LED matrix controller."
+    "short": "A rectangular dot matrix display, made of monochrome LEDs or braille pins."
   },
   "classIdentifier": 286070091,
-  "enums": {},
+  "enums": {
+    "Variant": {
+      "name": "Variant",
+      "storage": 1,
+      "members": {
+        "LED": 1,
+        "Braille": 2
+      }
+    }
+  },
   "constants": {},
   "packets": [
     {
@@ -81,9 +90,9 @@
     },
     {
       "kind": "rw",
-      "name": "leds",
+      "name": "dots",
       "identifier": 2,
-      "description": "The state of the screen where pixel on/off state is \nstored as a bit, column by column. The column should be byte aligned.",
+      "description": "The state of the screen where dot on/off state is\nstored as a bit, column by column. The column should be byte aligned.",
       "fields": [
         {
           "name": "_",
@@ -99,7 +108,7 @@
       "kind": "rw",
       "name": "brightness",
       "identifier": 1,
-      "description": "Reads the general brightness of the LEDs. ``0`` when the screen is off.",
+      "description": "Reads the general brightness of the display, brightness for LEDs. `0` when the screen is off.",
       "fields": [
         {
           "name": "_",
@@ -109,6 +118,7 @@
           "storage": 1
         }
       ],
+      "optional": true,
       "identifierName": "intensity",
       "packFormat": "u0.8"
     },
@@ -143,6 +153,22 @@
         }
       ],
       "packFormat": "u16"
+    },
+    {
+      "kind": "const",
+      "name": "variant",
+      "identifier": 263,
+      "description": "Describes the type of matrix used.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "Variant",
+          "storage": 1
+        }
+      ],
+      "optional": true,
+      "identifierName": "variant",
+      "packFormat": "u8"
     }
   ],
   "tags": [],

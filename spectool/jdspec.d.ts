@@ -578,7 +578,7 @@ declare namespace jdspec {
         description?: string
 
         /**
-         * Service class identifiers for services supported by this device.
+         * Service class identifiers for services supported by this device. Leave empty for brain.
          */
         services: number[]
     }
@@ -607,7 +607,7 @@ declare namespace jdspec {
         /**
          * Github repository containing the firmware releases
          */
-        repo: string
+        repo?: string
 
         /**
          * Links image urls

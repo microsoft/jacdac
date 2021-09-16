@@ -405,5 +405,16 @@
       1067172458
     ],
     "status": "deprecated"
+  },
+  {
+    "id": "microbit-foundation-microbitv2",
+    "name": "micro:bit V2",
+    "company": "microbit foundation",
+    "description": "The new micro:bit V2 has a built-in microphone and speaker to allow sound-sensing and sound-making without the need to attach another device. It also introduces capacitive touch sensing, a power-saving mode and more computing power for the classroom.",
+    "link": "https://github.com/microsoft/pxt-jacdac",
+    "services": [],
+    "productIdentifiers": [
+      854992189
+    ]
   }
 ]

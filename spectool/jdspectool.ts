@@ -71,11 +71,11 @@ function tsify(name: string) {
     return name
 }
 
+const Reading = 0x101
+const Intensity = 0x1
+const Value = 0x2
 function toMakeCodeClient(spec: jdspec.ServiceSpec) {
     const { shortId, name, camelName, packets } = spec
-    const Reading = 0x101
-    const Intensity = 0x1
-    const Value = 0x2
 
     const nsc = TYPESCRIPT_STATIC_NAMESPACE
     const registers = packetsToRegisters(packets)
@@ -163,48 +163,8 @@ ${regs
 
         return fields
             .map((field, fieldi) => {
-                const name =
-                    field.name === "_"
-                        ? reg.name
-                        : isReading
-                        ? field.name
-                        : `${reg.name}${capitalize(field.name)}`
-                const min = pick(
-                    field.typicalMin,
-                    field.absoluteMin,
-                    field.unit === "/"
-                        ? field.type[0] === "i"
-                            ? -100
-                            : 0
-                        : undefined,
-                    field.type === "u8" || field.type === "u16" ? 0 : undefined
-                )
-                const max = pick(
-                    field.typicalMax,
-                    field.absoluteMax,
-                    field.unit === "/" ? 100 : undefined,
-                    field.type === "u8"
-                        ? 0xff
-                        : field.type === "u16"
-                        ? 0xffff
-                        : undefined
-                )
-                const defl =
-                    field.defaultValue ||
-                    (field.unit === "/" ? "100" : undefined)
-                const valueScaler: (s: string) => string =
-                    field.unit === "/"
-                        ? s => `${s} * 100`
-                        : field.type === "bool"
-                        ? s => `!!${s}`
-                        : s => s
-                const valueUnscaler: (s: string) => string =
-                    field.unit === "/"
-                        ? s => `${s} / 100`
-                        : field.type === "bool"
-                        ? s => `${s} ? 1 : 0`
-                        : s => s
-
+                const { name, min, max, defl, valueScaler, valueUnscaler } =
+                    genFieldInfo(reg, field)
                 return `
         /**
         * ${(reg.description || "").split("\n").join("\n        * ")}
@@ -277,12 +237,24 @@ ${toMetaComments(
     `blockId=jacdac_${shortId}_on_${reading.name}_change`,
     `block="on %${shortId} ${humanify(reading.name)} changed by %threshold"`,
     `weight=${weight--}`,
-    `threshold.defl=${/[ui]0\./.test(reading.fields[0].type) ? "0.1" : "1"}`
+    `threshold.min=0`,
+    genFieldInfo(reading, reading.fields[0]).max !== undefined &&
+        `threshold.max=${genFieldInfo(reading, reading.fields[0]).max}`,
+    `threshold.defl=${
+        reading.fields[0].unit === "/"
+            ? "5"
+            : /[ui]0\./.test(reading.fields[0].type)
+            ? "0.1"
+            : "1"
+    }`
 )}
         on${capitalize(
             camelize(reading.name)
         )}ChangedBy(threshold: number, handler: () => void): void {
-            this.onReadingChangedBy(threshold, handler);
+            this.onReadingChangedBy(${genFieldInfo(
+                reading,
+                reading.fields[0]
+            ).valueUnscaler("threshold")}, handler);
         }
 `
             : ""
@@ -355,6 +327,42 @@ ${toMetaComments(
         spec.camelName
     )}1");
 }`
+}
+
+function genFieldInfo(reg: jdspec.PacketInfo, field: jdspec.PacketMember) {
+    const isReading = reg.identifier === Reading
+    const name =
+        field.name === "_"
+            ? reg.name
+            : isReading
+            ? field.name
+            : `${reg.name}${capitalize(field.name)}`
+    const min = pick(
+        field.typicalMin,
+        field.absoluteMin,
+        field.unit === "/" ? (field.type[0] === "i" ? -100 : 0) : undefined,
+        field.type === "u8" || field.type === "u16" ? 0 : undefined
+    )
+    const max = pick(
+        field.typicalMax,
+        field.absoluteMax,
+        field.unit === "/" ? 100 : undefined,
+        field.type === "u8" ? 0xff : field.type === "u16" ? 0xffff : undefined
+    )
+    const defl = field.defaultValue || (field.unit === "/" ? "100" : undefined)
+    const valueScaler: (s: string) => string =
+        field.unit === "/"
+            ? s => `${s} * 100`
+            : field.type === "bool"
+            ? s => `!!${s}`
+            : s => s
+    const valueUnscaler: (s: string) => string =
+        field.unit === "/"
+            ? s => `${s} / 100`
+            : field.type === "bool"
+            ? s => `${s} ? 1 : 0`
+            : s => s
+    return { name, min, max, defl, valueScaler, valueUnscaler }
 }
 
 function processSpec(dn: string) {

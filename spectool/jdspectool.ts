@@ -177,13 +177,17 @@ ${regs
                             ? -100
                             : 0
                         : undefined,
-                    field.type === "u8" ? 0 : undefined
+                    field.type === "u8" || field.type === "u16" ? 0 : undefined
                 )
                 const max = pick(
                     field.typicalMax,
                     field.absoluteMax,
                     field.unit === "/" ? 100 : undefined,
-                    field.type === "u8" ? 0xff : undefined
+                    field.type === "u8"
+                        ? 0xff
+                        : field.type === "u16"
+                        ? 0xffff
+                        : undefined
                 )
                 const defl =
                     field.defaultValue ||

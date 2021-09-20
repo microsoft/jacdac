@@ -414,6 +414,15 @@
     }
   },
   {
+    "service": "vibration",
+    "client": {
+      "name": "jacdac-vibration-motor",
+      "repo": "microsoft/pxt-jacdac/vibration-motor",
+      "qName": "modules.VibrationMotorClient",
+      "default": "modules.vibrationMotor"
+    }
+  },
+  {
     "service": "waterlevel",
     "client": {
       "name": "jacdac-water-level",

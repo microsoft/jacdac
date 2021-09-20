@@ -6,7 +6,7 @@ namespace Jacdac {
     }
     public enum ButtonReg {
         /**
-         * Read-only ratio u0.16 (uint16_t). Indicates the pressure state of the button, where ``0`` is open and ``0xffff`` is fully pressed.
+         * Read-only ratio u0.16 (uint16_t). Indicates the pressure state of the button, where ``0`` is open.
          *
          * ```
          * const [pressure] = jdunpack<[number]>(buf, "u0.16")

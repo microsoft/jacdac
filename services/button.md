@@ -11,7 +11,7 @@ A push-button, which returns to inactive position when not operated anymore.
 
     lowlevel ro pressure: u0.16 / @ reading
 
-Indicates the pressure state of the button, where ``0`` is open and ``0xffff`` is fully pressed.
+Indicates the pressure state of the button, where ``0`` is open.
 
     const analog?: bool @ 0x180
 

@@ -12,7 +12,7 @@ namespace Jacdac {
 
     public enum PotentiometerReg {
         /**
-         * Read-only ratio u0.16 (uint16_t). The relative position of the slider between `0` and `1`.
+         * Read-only ratio u0.16 (uint16_t). The relative position of the slider.
          *
          * ```
          * const [position] = jdunpack<[number]>(buf, "u0.16")

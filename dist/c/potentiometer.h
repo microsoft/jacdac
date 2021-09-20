@@ -9,7 +9,7 @@
 #define JD_POTENTIOMETER_VARIANT_ROTARY 0x2
 
 /**
- * Read-only ratio u0.16 (uint16_t). The relative position of the slider between `0` and `1`.
+ * Read-only ratio u0.16 (uint16_t). The relative position of the slider.
  */
 #define JD_POTENTIOMETER_REG_POSITION JD_REG_READING
 

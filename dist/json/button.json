@@ -144,7 +144,7 @@
       "kind": "ro",
       "name": "pressure",
       "identifier": 257,
-      "description": "Indicates the pressure state of the button, where ``0`` is open and ``0xffff`` is fully pressed.",
+      "description": "Indicates the pressure state of the button, where ``0`` is open.",
       "fields": [
         {
           "name": "_",

@@ -834,7 +834,7 @@ export enum BootloaderCmd {
 export const SRV_BUTTON = 0x1473a263
 export enum ButtonReg {
     /**
-     * Read-only ratio u0.16 (uint16_t). Indicates the pressure state of the button, where ``0`` is open and ``0xffff`` is fully pressed.
+     * Read-only ratio u0.16 (uint16_t). Indicates the pressure state of the button, where ``0`` is open.
      *
      * ```
      * const [pressure] = jdunpack<[number]>(buf, "u0.16")
@@ -2739,7 +2739,7 @@ export enum PotentiometerVariant { // uint8_t
 
 export enum PotentiometerReg {
     /**
-     * Read-only ratio u0.16 (uint16_t). The relative position of the slider between `0` and `1`.
+     * Read-only ratio u0.16 (uint16_t). The relative position of the slider.
      *
      * ```
      * const [position] = jdunpack<[number]>(buf, "u0.16")

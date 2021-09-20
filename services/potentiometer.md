@@ -11,7 +11,7 @@ A slider or rotary potentiometer.
 
     ro position: u0.16 / @ reading
 
-The relative position of the slider between `0` and `1`.
+The relative position of the slider.
 
     enum Variant: u8 {
         Slider = 1,

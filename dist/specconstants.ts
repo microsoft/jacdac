@@ -1453,6 +1453,34 @@ export enum ECO2Reg {
     Variant = 0x107,
 }
 
+// Service: Flex sensor
+export const SRV_FLEX_SENSOR = 0x1f47c6c6
+
+export enum FlexSensorVariant { // uint8_t
+    Linear22Inch = 0x1,
+    Linear45Inch = 0x2,
+}
+
+export enum FlexSensorReg {
+    /**
+     * Read-only ratio u0.16 (uint16_t). The relative position of the slider.
+     *
+     * ```
+     * const [bending] = jdunpack<[number]>(buf, "u0.16")
+     * ```
+     */
+    Bending = 0x101,
+
+    /**
+     * Constant Variant (uint8_t). Specifies the physical layout of the flex sensor.
+     *
+     * ```
+     * const [variant] = jdunpack<[FlexSensorVariant]>(buf, "u8")
+     * ```
+     */
+    Variant = 0x107,
+}
+
 // Service: Gyroscope
 export const SRV_GYROSCOPE = 0x1e1b06f2
 export enum GyroscopeReg {

@@ -1,4 +1,4 @@
-# Flex sensor
+# Flex
 
     identifier: 0x1f47c6c6
     extends: _sensor

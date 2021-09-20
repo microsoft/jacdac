@@ -108,6 +108,15 @@
     }
   },
   {
+    "service": "flex",
+    "client": {
+      "name": "jacdac-flex",
+      "repo": "microsoft/pxt-jacdac/flex",
+      "qName": "modules.FlexClient",
+      "default": "modules.flex"
+    }
+  },
+  {
     "service": "gyroscope",
     "client": {
       "name": "jacdac-gyroscope",

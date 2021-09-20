@@ -1,9 +1,9 @@
 {
-  "name": "Flex sensor",
+  "name": "Flex",
   "status": "experimental",
   "shortId": "flex",
-  "camelName": "flexSensor",
-  "shortName": "flexSensor",
+  "camelName": "flex",
+  "shortName": "flex",
   "extends": [
     "_base",
     "_sensor"

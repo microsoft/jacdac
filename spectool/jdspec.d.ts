@@ -633,6 +633,11 @@ declare namespace jdspec {
          * Hooks for parser.
          */
         errors?: Diagnostic[]
+
+        /**
+         * Supported bus transport if any
+         */
+        transport?: string
     }
 
     /**

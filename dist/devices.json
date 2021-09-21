@@ -415,6 +415,7 @@
     "services": [],
     "productIdentifiers": [
       854992189
-    ]
+    ],
+    "transport": "USB"
   }
 ]

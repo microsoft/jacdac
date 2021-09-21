@@ -521,15 +521,15 @@ function processDevices(upperName: string) {
             const stat = fs.statSync(f)
             if (stat.isDirectory()) todo.push(f)
             else if (/\.json/.test(f)) {
+                console.log(`  ${f}`)
                 const dev = JSON.parse(readString(dir, fn)) as jdspec.DeviceSpec
                 allDevices.push(normalizeDeviceSpecification(dev))
             }
         }
     }
-    fs.writeFileSync(
-        path.join("../dist", "devices.json"),
-        JSON.stringify(allDevices, null, 2)
-    )
+    const ofn = path.join("../dist", "devices.json")
+    console.log(`writing ${ofn}`)
+    fs.writeFileSync(ofn, JSON.stringify(allDevices, null, 2))
 }
 
 function reportErrors(

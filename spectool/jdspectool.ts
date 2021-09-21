@@ -118,7 +118,7 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
     //% fixedInstances blockGap=8
     export class ${className} extends jacdac.${baseType} {
 ${regs
-    .filter(reg => reg.identifier !== Reading)
+    .filter(reg => reg.identifier !== Reading && !reg.client)
     .map(
         reg => `
         private readonly _${camelize(reg.name)} : jacdac.RegisterClient<[${
@@ -130,7 +130,7 @@ ${regs
         constructor(role: string) {
             super(${ctorArgs.join(", ")});
 ${regs
-    .filter(reg => reg.identifier !== Reading)
+    .filter(reg => reg.identifier !== Reading && !reg.client)
     .map(
         reg => `
             this._${camelize(reg.name)} = this.addRegister<[${
@@ -148,7 +148,7 @@ ${regs
             isStatic: true,
             useBooleans: true,
         })
-        const { fields } = reg
+        const { fields, client } = reg
         const isReading = reg.identifier === Reading
         const fieldName = `this._${isReading ? "reading" : camelize(reg.name)}`
         const enabled =
@@ -177,7 +177,11 @@ ${toMetaComments(
     `weight=${weight--}`
 )}
         ${camelize(name)}(): ${types[fieldi]} {${
-                    isReading && isSimpleSensorClient
+                    client
+                        ? `
+            // TODO: implement client register
+            throw "client register not implement";`
+                        : isReading && isSimpleSensorClient
                         ? `
             return ${valueScaler(`this.reading()`)};
         `
@@ -279,7 +283,7 @@ ${toMetaComments(
         .join("")}
 ${commands
     .map(command => {
-        const { name } = command
+        const { name, client } = command
         const { types } = packInfo(spec, command, {
             isStatic: true,
             useBooleans: true,
@@ -309,12 +313,17 @@ ${toMetaComments(
         ${camelize(name)}(${fnames
             .map((fname, fieldi) => `${fname}: ${types[fieldi]}`)
             .join(", ")}): void {
-            this.start();
+            ${
+                client
+                    ? `// TODO: implement client command
+            throw "client command not implemented"`
+                    : `this.start();
             this.sendCommand(jacdac.JDPacket.${
                 types.length === 0
                     ? `onlyHeader(${cmd})`
                     : `jdpacked(${cmd}, "${fmt}", [${fnames.join(", ")}])`
-            })
+            })`
+            }
         }
 `
     })

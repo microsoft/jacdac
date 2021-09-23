@@ -4,12 +4,4 @@
 
 #define JD_SERVICE_CLASS_INFRASTRUCTURE  0x1e1589eb
 
-// enum Variant (uint8_t)
-#define JD_INFRASTRUCTURE_VARIANT_PIPE 0x1
-
-/**
- * Constant Variant (uint8_t). Describes the type of infrastructure feature supported.
- */
-#define JD_INFRASTRUCTURE_REG_VARIANT JD_REG_VARIANT
-
 #endif

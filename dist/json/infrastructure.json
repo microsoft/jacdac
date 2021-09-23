@@ -11,15 +11,7 @@
     "short": "A service that tags a device as purely infrastructure device.\n\n\nA Jacdac user interface can ignore any device that hosts this service."
   },
   "classIdentifier": 504728043,
-  "enums": {
-    "Variant": {
-      "name": "Variant",
-      "storage": 1,
-      "members": {
-        "Pipe": 1
-      }
-    }
-  },
+  "enums": {},
   "constants": {},
   "packets": [
     {
@@ -86,22 +78,6 @@
       "identifierName": "status_code_changed",
       "packFormat": "u16 u16",
       "derived": "_base"
-    },
-    {
-      "kind": "const",
-      "name": "variant",
-      "identifier": 263,
-      "description": "Describes the type of infrastructure feature supported.",
-      "fields": [
-        {
-          "name": "_",
-          "type": "Variant",
-          "storage": 1
-        }
-      ],
-      "optional": true,
-      "identifierName": "variant",
-      "packFormat": "u8"
     }
   ],
   "tags": []

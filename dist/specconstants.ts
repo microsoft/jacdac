@@ -1895,6 +1895,24 @@ export enum IndexedScreenReg {
     Rotation = 0x83,
 }
 
+// Service: Infrastructure
+export const SRV_INFRASTRUCTURE = 0x1e1589eb
+
+export enum InfrastructureVariant { // uint8_t
+    Pipe = 0x1,
+}
+
+export enum InfrastructureReg {
+    /**
+     * Constant Variant (uint8_t). Describes the type of infrastructure feature supported.
+     *
+     * ```
+     * const [variant] = jdunpack<[InfrastructureVariant]>(buf, "u8")
+     * ```
+     */
+    Variant = 0x107,
+}
+
 // Service: Joystick
 export const SRV_JOYSTICK = 0x108f7456
 

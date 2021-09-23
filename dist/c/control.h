@@ -100,7 +100,7 @@ typedef struct jd_control_set_status_light {
 
 
 /**
- * No args. Force device into proxy mode where Jacdac packets are forwarded but user code is not executed.
+ * No args. Force client device into proxy mode.
  */
 #define JD_CONTROL_CMD_PROXY 0x85
 

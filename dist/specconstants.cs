@@ -1252,6 +1252,11 @@ namespace Jacdac {
          * ```
          */
         SetStatusLight = 0x84,
+
+        /**
+         * No args. Force device into proxy mode where Jacdac packets are forwarded but user code is not executed.
+         */
+        Proxy = 0x85,
     }
 
     public enum ControlReg {

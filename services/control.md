@@ -87,6 +87,10 @@ If a monochrome LEDs is fitted, the average value of ``red``, ``green``, ``blue`
 If intensity of a monochrome LED cannot be controlled, any value larger than `0` should be considered
 on, and `0` (for all three channels) should be considered off.
 
+    command proxy? @ 0x85 {}
+
+Force client device into proxy mode.
+
 ## Registers
 
     rw internal reset_in? : u32 us @ 0x80

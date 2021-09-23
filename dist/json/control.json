@@ -252,6 +252,14 @@
       "packFormat": "u8 u8 u8 u8"
     },
     {
+      "kind": "command",
+      "name": "proxy",
+      "identifier": 133,
+      "description": "Force device into proxy mode where Jacdac packets are forwarded but user code is not executed.",
+      "fields": [],
+      "optional": true
+    },
+    {
       "kind": "rw",
       "name": "reset_in",
       "identifier": 128,

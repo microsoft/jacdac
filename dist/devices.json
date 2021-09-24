@@ -215,6 +215,21 @@
     ]
   },
   {
+    "id": "microsoft-research-jmhidserversf441v02",
+    "name": "JM HID Servers F4 41 v0.2",
+    "company": "Microsoft Research",
+    "description": "",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      414210922,
+      411425820
+    ],
+    "productIdentifiers": [
+      1003209864
+    ]
+  },
+  {
     "id": "microsoft-research-jmkeyboardkey46v10",
     "name": "JM Keyboard Key 46 v1.0",
     "company": "Microsoft Research",

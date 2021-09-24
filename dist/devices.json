@@ -14,6 +14,20 @@
     ]
   },
   {
+    "id": "microsoft-research-jmaccessswitchoutput11",
+    "name": "JM Access Switch Output-1.1",
+    "company": "Microsoft Research",
+    "description": "",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      406840918
+    ],
+    "productIdentifiers": [
+      942325999
+    ]
+  },
+  {
     "id": "microsoft-research-jmaccv2",
     "name": "JM Acc v2",
     "company": "Microsoft Research",
@@ -27,6 +41,20 @@
       1020174761
     ],
     "status": "deprecated"
+  },
+  {
+    "id": "microsoft-research-jmambientlight55v01",
+    "name": "JM Ambient Light 55 v0.1",
+    "company": "Microsoft Research",
+    "description": "",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      400333340
+    ],
+    "productIdentifiers": [
+      896864987
+    ]
   },
   {
     "id": "microsoft-research-jmanalogjoystick44v02",
@@ -82,6 +110,20 @@
     ],
     "productIdentifiers": [
       896566497
+    ]
+  },
+  {
+    "id": "microsoft-research-jmbuttonterminal62v01",
+    "name": "JM Button Terminal 62 v0.1",
+    "company": "Microsoft Research",
+    "description": "",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      343122531
+    ],
+    "productIdentifiers": [
+      1047530059
     ]
   },
   {
@@ -143,6 +185,20 @@
       866678795
     ],
     "status": "deprecated"
+  },
+  {
+    "id": "microsoft-research-jmflexv10",
+    "name": "JM Flex v1.0",
+    "company": "Microsoft Research",
+    "description": "",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      524797638
+    ],
+    "productIdentifiers": [
+      840841542
+    ]
   },
   {
     "id": "microsoft-research-jmgamepadv2",
@@ -289,6 +345,34 @@
     "status": "deprecated"
   },
   {
+    "id": "microsoft-research-jmrgbledbar10v01",
+    "name": "JM RGB LED BAR 10 v0.1",
+    "company": "Microsoft Research",
+    "description": "",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      309264608
+    ],
+    "productIdentifiers": [
+      1046525691
+    ]
+  },
+  {
+    "id": "microsoft-research-jmrgbledgenericv01",
+    "name": "JM RGB LED GENERIC v0.1",
+    "company": "Microsoft Research",
+    "description": "",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      309264608
+    ],
+    "productIdentifiers": [
+      967723905
+    ]
+  },
+  {
     "id": "microsoft-research-jmrgbledringv21",
     "name": "JM RGB LED RING v2.1",
     "company": "Microsoft Research",
@@ -315,6 +399,20 @@
     ],
     "productIdentifiers": [
       1060754715
+    ]
+  },
+  {
+    "id": "microsoft-research-jmsinglergbled42v01",
+    "name": "JM Single RGB LED 42 v0.1",
+    "company": "Microsoft Research",
+    "description": "",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      506480888
+    ],
+    "productIdentifiers": [
+      917828732
     ]
   },
   {

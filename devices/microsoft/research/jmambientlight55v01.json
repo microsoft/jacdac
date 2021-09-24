@@ -1,0 +1,14 @@
+{
+    "id": "microsoft-research-jm-ambient-light-55-v0.1",
+    "name": "JM Ambient Light 55 v0.1",
+    "company": "Microsoft Research",
+    "description": "",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+        400333340
+    ],
+    "productIdentifiers": [
+        896864987
+    ]
+}

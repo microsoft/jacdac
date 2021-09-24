@@ -1,0 +1,14 @@
+{
+    "id": "microsoft-research-jm-single-rgb-led-42-v0.1",
+    "name": "JM Single RGB LED 42 v0.1",
+    "company": "Microsoft Research",
+    "description": "",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+        506480888
+    ],
+    "productIdentifiers": [
+        917828732
+    ]
+}

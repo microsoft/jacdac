@@ -228,6 +228,20 @@
     ]
   },
   {
+    "id": "microsoft-research-jmkeyboardkey46v11",
+    "name": "JM Keyboard Key 46 v1.1",
+    "company": "Microsoft Research",
+    "description": "",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      343122531
+    ],
+    "productIdentifiers": [
+      911541523
+    ]
+  },
+  {
     "id": "microsoft-research-jmmachinelearning",
     "name": "JM Machine Learning",
     "company": "Microsoft Research",

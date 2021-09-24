@@ -3359,7 +3359,7 @@ export enum RelayVariant { // uint8_t
 
 export enum RelayReg {
     /**
-     * Read-write bool (uint8_t). Indicates whether the relay circuit is currently on (closed) or off (closed).
+     * Read-write bool (uint8_t). Indicates whether the relay circuit is currently energized (closed) or not.
      *
      * ```
      * const [closed] = jdunpack<[number]>(buf, "u8")
@@ -3388,14 +3388,16 @@ export enum RelayReg {
 
 export enum RelayEvent {
     /**
-     * Emitted when relay goes from ``off`` to ``on`` state.
+     * Emitted when relay goes from `inactive` to `active` state.
+     * Normally open (NO) relays close the circuit when activated.
      */
-    On = 0x1,
+    Active = 0x1,
 
     /**
-     * Emitted when relay goes from ``on`` to ``off`` state.
+     * Emitted when relay goes from `active` to `inactive` state.
+     * Normally closed (NC) relays open the circuit when activated.
      */
-    Off = 0x2,
+    Inactive = 0x2,
 }
 
 // Service: Random Number Generator

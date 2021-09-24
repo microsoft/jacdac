@@ -93,7 +93,7 @@
       "kind": "rw",
       "name": "closed",
       "identifier": 1,
-      "description": "Indicates whether the relay circuit is currently on (closed) or off (closed).",
+      "description": "Indicates whether the relay circuit is currently energized (closed) or not.",
       "fields": [
         {
           "name": "_",
@@ -139,17 +139,17 @@
     },
     {
       "kind": "event",
-      "name": "on",
+      "name": "active",
       "identifier": 1,
-      "description": "Emitted when relay goes from ``off`` to ``on`` state.",
+      "description": "Emitted when relay goes from `inactive` to `active` state.\nNormally open (NO) relays close the circuit when activated.",
       "fields": [],
       "identifierName": "active"
     },
     {
       "kind": "event",
-      "name": "off",
+      "name": "inactive",
       "identifier": 2,
-      "description": "Emitted when relay goes from ``on`` to ``off`` state.",
+      "description": "Emitted when relay goes from `active` to `inactive` state.\nNormally closed (NC) relays open the circuit when activated.",
       "fields": [],
       "identifierName": "inactive"
     }

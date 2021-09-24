@@ -3,18 +3,27 @@ namespace jacdac {
     export const ANNOUNCE_INTERVAL = 0x1f4
 
     export const enum SystemReadingThreshold { // uint8_t
+        //% block="neutral"
         Neutral = 0x1,
+        //% block="inactive"
         Inactive = 0x2,
+        //% block="active"
         Active = 0x3,
     }
 
 
     export const enum SystemStatusCodes { // uint16_t
+        //% block="ready"
         Ready = 0x0,
+        //% block="initializing"
         Initializing = 0x1,
+        //% block="calibrating"
         Calibrating = 0x2,
+        //% block="sleeping"
         Sleeping = 0x3,
+        //% block="waiting for input"
         WaitingForInput = 0x4,
+        //% block="calibration needed"
         CalibrationNeeded = 0x64,
     }
 
@@ -447,15 +456,25 @@ namespace jacdac {
     export const SRV_ARCADE_GAMEPAD = 0x1deaa06e
 
     export const enum ArcadeGamepadButton { // uint8_t
+        //% block="left"
         Left = 0x1,
+        //% block="up"
         Up = 0x2,
+        //% block="right"
         Right = 0x3,
+        //% block="down"
         Down = 0x4,
+        //% block="a"
         A = 0x5,
+        //% block="b"
         B = 0x6,
+        //% block="menu"
         Menu = 0x7,
+        //% block="select"
         Select = 0x8,
+        //% block="reset"
         Reset = 0x9,
+        //% block="exit"
         Exit = 0xa,
     }
 
@@ -557,9 +576,13 @@ namespace jacdac {
     export const SRV_AZURE_IOT_HUB_HEALTH = 0x1462eefc
 
     export const enum AzureIotHubHealthConnectionStatus { // uint16_t
+        //% block="connected"
         Connected = 0x1,
+        //% block="disconnected"
         Disconnected = 0x2,
+        //% block="connecting"
         Connecting = 0x3,
+        //% block="disconnecting"
         Disconnecting = 0x4,
     }
 
@@ -631,18 +654,31 @@ namespace jacdac {
     export const SRV_BARCODE_READER = 0x1c739e6c
 
     export const enum BarcodeReaderFormat { // uint8_t
+        //% block="aztec"
         Aztec = 0x1,
+        //% block="code128"
         Code128 = 0x2,
+        //% block="code39"
         Code39 = 0x3,
+        //% block="code93"
         Code93 = 0x4,
+        //% block="codabar"
         Codabar = 0x5,
+        //% block="data matrix"
         DataMatrix = 0x6,
+        //% block="ean13"
         Ean13 = 0x8,
+        //% block="ean8"
         Ean8 = 0x9,
+        //% block="itf"
         ITF = 0xa,
+        //% block="pdf417"
         Pdf417 = 0xb,
+        //% block="qr code"
         QrCode = 0xc,
+        //% block="upc a"
         UpcA = 0xd,
+        //% block="upc e"
         UpcE = 0xe,
     }
 
@@ -816,10 +852,15 @@ namespace jacdac {
     export const SRV_BOOTLOADER = 0x1ffa9948
 
     export const enum BootloaderError { // uint32_t
+        //% block="no error"
         NoError = 0x0,
+        //% block="packet too small"
         PacketTooSmall = 0x1,
+        //% block="out of flashable range"
         OutOfFlashableRange = 0x2,
+        //% block="invalid page offset"
         InvalidPageOffset = 0x3,
+        //% block="not page aligned"
         NotPageAligned = 0x4,
     }
 
@@ -996,13 +1037,17 @@ namespace jacdac {
     export const SRV_CHARACTER_SCREEN = 0x1f37c56a
 
     export const enum CharacterScreenVariant { // uint8_t
+        //% block="lcd"
         LCD = 0x1,
+        //% block="oled"
         OLED = 0x2,
     }
 
 
     export const enum CharacterScreenTextDirection { // uint8_t
+        //% block="left to right"
         LeftToRight = 0x1,
+        //% block="right to left"
         RightToLeft = 0x2,
     }
 
@@ -1139,18 +1184,31 @@ namespace jacdac {
     export const SRV_CONTROL = 0x0
 
     export const enum ControlAnnounceFlags { // uint16_t
+        //% block="restart counter steady"
         RestartCounterSteady = 0xf,
+        //% block="restart counter1"
         RestartCounter1 = 0x1,
+        //% block="restart counter2"
         RestartCounter2 = 0x2,
+        //% block="restart counter4"
         RestartCounter4 = 0x4,
+        //% block="restart counter8"
         RestartCounter8 = 0x8,
+        //% block="status light none"
         StatusLightNone = 0x0,
+        //% block="status light mono"
         StatusLightMono = 0x10,
+        //% block="status light rgb no fade"
         StatusLightRgbNoFade = 0x20,
+        //% block="status light rgb fade"
         StatusLightRgbFade = 0x30,
+        //% block="supports ack"
         SupportsACK = 0x100,
+        //% block="supports broadcast"
         SupportsBroadcast = 0x200,
+        //% block="supports frames"
         SupportsFrames = 0x400,
+        //% block="is client"
         IsClient = 0x800,
     }
 
@@ -1303,8 +1361,11 @@ namespace jacdac {
     export const SRV_DIMMER = 0x1fb02645
 
     export const enum DimmerVariant { // uint8_t
+        //% block="light"
         Light = 0x1,
+        //% block="fan"
         Fan = 0x2,
+        //% block="pump"
         Pump = 0x3,
     }
 
@@ -1334,9 +1395,13 @@ namespace jacdac {
     export const SRV_DISTANCE = 0x141a6b8a
 
     export const enum DistanceVariant { // uint8_t
+        //% block="ultrasonic"
         Ultrasonic = 0x1,
+        //% block="infrared"
         Infrared = 0x2,
+        //% block="li dar"
         LiDAR = 0x3,
+        //% block="laser"
         Laser = 0x4,
     }
 
@@ -1410,7 +1475,9 @@ namespace jacdac {
     export const SRV_DOT_MATRIX = 0x110d154b
 
     export const enum DotMatrixVariant { // uint8_t
+        //% block="led"
         LED = 0x1,
+        //% block="braille"
         Braille = 0x2,
     }
 
@@ -1468,7 +1535,9 @@ namespace jacdac {
     export const SRV_E_CO2 = 0x169c9dc6
 
     export const enum ECO2Variant { // uint8_t
+        //% block="voc"
         VOC = 0x1,
+        //% block="ndir"
         NDIR = 0x2,
     }
 
@@ -1534,7 +1603,9 @@ namespace jacdac {
     export const SRV_FLEX = 0x1f47c6c6
 
     export const enum FlexVariant { // uint8_t
+        //% block="linear22inch"
         Linear22Inch = 0x1,
+        //% block="linear45inch"
         Linear45Inch = 0x2,
     }
 
@@ -1597,10 +1668,15 @@ namespace jacdac {
     export const SRV_HEART_RATE = 0x166c6dc4
 
     export const enum HeartRateVariant { // uint8_t
+        //% block="finger"
         Finger = 0x1,
+        //% block="chest"
         Chest = 0x2,
+        //% block="wrist"
         Wrist = 0x3,
+        //% block="pump"
         Pump = 0x4,
+        //% block="web cam"
         WebCam = 0x5,
     }
 
@@ -1723,21 +1799,33 @@ namespace jacdac {
     export const SRV_HID_KEYBOARD = 0x18b05b6a
 
     export const enum HidKeyboardModifiers { // uint8_t
+        //% block="none"
         None = 0x0,
+        //% block="left control"
         LeftControl = 0x1,
+        //% block="left shift"
         LeftShift = 0x2,
+        //% block="left alt"
         LeftAlt = 0x4,
+        //% block="left gui"
         LeftGUI = 0x8,
+        //% block="right control"
         RightControl = 0x10,
+        //% block="right shift"
         RightShift = 0x20,
+        //% block="right alt"
         RightAlt = 0x40,
+        //% block="right gui"
         RightGUI = 0x80,
     }
 
 
     export const enum HidKeyboardAction { // uint8_t
+        //% block="press"
         Press = 0x0,
+        //% block="up"
         Up = 0x1,
+        //% block="down"
         Down = 0x2,
     }
 
@@ -1764,16 +1852,23 @@ namespace jacdac {
     export const SRV_HID_MOUSE = 0x1885dc1c
 
     export const enum HidMouseButton { // uint16_t
+        //% block="left"
         Left = 0x1,
+        //% block="right"
         Right = 0x2,
+        //% block="middle"
         Middle = 0x4,
     }
 
 
     export const enum HidMouseButtonEvent { // uint8_t
+        //% block="up"
         Up = 0x1,
+        //% block="down"
         Down = 0x2,
+        //% block="click"
         Click = 0x3,
+        //% block="double click"
         DoubleClick = 0x4,
     }
 
@@ -1999,25 +2094,41 @@ namespace jacdac {
     export const SRV_JOYSTICK = 0x108f7456
 
     export const enum JoystickButtons { // uint32_t
+        //% block="left"
         Left = 0x1,
+        //% block="up"
         Up = 0x2,
+        //% block="right"
         Right = 0x4,
+        //% block="down"
         Down = 0x8,
+        //% block="a"
         A = 0x10,
+        //% block="b"
         B = 0x20,
+        //% block="menu"
         Menu = 0x40,
+        //% block="select"
         Select = 0x80,
+        //% block="reset"
         Reset = 0x100,
+        //% block="exit"
         Exit = 0x200,
+        //% block="x"
         X = 0x400,
+        //% block="y"
         Y = 0x800,
     }
 
 
     export const enum JoystickVariant { // uint8_t
+        //% block="thumb"
         Thumb = 0x1,
+        //% block="arcade ball"
         ArcadeBall = 0x2,
+        //% block="arcade stick"
         ArcadeStick = 0x3,
+        //% block="gamepad"
         Gamepad = 0x4,
     }
 
@@ -2073,9 +2184,13 @@ namespace jacdac {
     export const SRV_LED = 0x1e3048f8
 
     export const enum LedVariant { // uint8_t
+        //% block="through hole"
         ThroughHole = 0x1,
+        //% block="smd"
         SMD = 0x2,
+        //% block="power"
         Power = 0x3,
+        //% block="bead"
         Bead = 0x4,
     }
 
@@ -2152,17 +2267,25 @@ namespace jacdac {
     export const SRV_LED_PIXEL = 0x126f00e0
 
     export const enum LedPixelLightType { // uint8_t
+        //% block="ws2812b grb"
         WS2812B_GRB = 0x0,
+        //% block="apa102"
         APA102 = 0x10,
+        //% block="sk9822"
         SK9822 = 0x11,
     }
 
 
     export const enum LedPixelVariant { // uint8_t
+        //% block="strip"
         Strip = 0x1,
+        //% block="ring"
         Ring = 0x2,
+        //% block="stick"
         Stick = 0x3,
+        //% block="jewel"
         Jewel = 0x4,
+        //% block="matrix"
         Matrix = 0x5,
     }
 
@@ -2277,8 +2400,11 @@ namespace jacdac {
     export const SRV_LIGHT_LEVEL = 0x17dc9a1c
 
     export const enum LightLevelVariant { // uint8_t
+        //% block="photo resistor"
         PhotoResistor = 0x1,
+        //% block="ledmatrix"
         LEDMatrix = 0x2,
+        //% block="ambient"
         Ambient = 0x3,
     }
 
@@ -2308,10 +2434,15 @@ namespace jacdac {
     export const SRV_LOGGER = 0x12dc1fca
 
     export const enum LoggerPriority { // uint8_t
+        //% block="debug"
         Debug = 0x0,
+        //% block="log"
         Log = 0x1,
+        //% block="warning"
         Warning = 0x2,
+        //% block="error"
         Error = 0x3,
+        //% block="silent"
         Silent = 0x4,
     }
 
@@ -2407,9 +2538,13 @@ namespace jacdac {
     export const SRV_MATRIX_KEYPAD = 0x13062dc8
 
     export const enum MatrixKeypadVariant { // uint8_t
+        //% block="membrane"
         Membrane = 0x1,
+        //% block="keyboard"
         Keyboard = 0x2,
+        //% block="elastomer"
         Elastomer = 0x3,
+        //% block="elastomer ledpixel"
         ElastomerLEDPixel = 0x4,
     }
 
@@ -2572,8 +2707,11 @@ namespace jacdac {
     export const SRV_MODEL_RUNNER = 0x140f9a78
 
     export const enum ModelRunnerModelFormat { // uint32_t
+        //% block="tflite"
         TFLite = 0x334c4654,
+        //% block="ml4f"
         ML4F = 0x30470f62,
+        //% block="edge impulse compiled"
         EdgeImpulseCompiled = 0x30564945,
     }
 
@@ -2729,6 +2867,7 @@ namespace jacdac {
     export const SRV_MOTION = 0x1179a749
 
     export const enum MotionVariant { // uint8_t
+        //% block="pir"
         PIR = 0x1,
     }
 
@@ -2899,7 +3038,9 @@ namespace jacdac {
     export const SRV_POTENTIOMETER = 0x1f274746
 
     export const enum PotentiometerVariant { // uint8_t
+        //% block="slider"
         Slider = 0x1,
+        //% block="rotary"
         Rotary = 0x2,
     }
 
@@ -2929,9 +3070,13 @@ namespace jacdac {
     export const SRV_POWER = 0x1fa4c95a
 
     export const enum PowerPowerStatus { // uint8_t
+        //% block="disallowed"
         Disallowed = 0x0,
+        //% block="powering"
         Powering = 0x1,
+        //% block="overload"
         Overload = 0x2,
+        //% block="overprovision"
         Overprovision = 0x3,
     }
 
@@ -3402,8 +3547,11 @@ namespace jacdac {
     export const SRV_REAL_TIME_CLOCK = 0x1a8b1a28
 
     export const enum RealTimeClockVariant { // uint8_t
+        //% block="computer"
         Computer = 0x1,
+        //% block="crystal"
         Crystal = 0x2,
+        //% block="cuckoo"
         Cuckoo = 0x3,
     }
 
@@ -3465,7 +3613,9 @@ namespace jacdac {
     export const SRV_REFLECTED_LIGHT = 0x126c4cb2
 
     export const enum ReflectedLightVariant { // uint8_t
+        //% block="infrared digital"
         InfraredDigital = 0x1,
+        //% block="infrared analog"
         InfraredAnalog = 0x2,
     }
 
@@ -3509,8 +3659,11 @@ namespace jacdac {
     export const SRV_RELAY = 0x183fe656
 
     export const enum RelayVariant { // uint8_t
+        //% block="electromechanical"
         Electromechanical = 0x1,
+        //% block="solid state"
         SolidState = 0x2,
+        //% block="reed"
         Reed = 0x3,
     }
 
@@ -3565,8 +3718,11 @@ namespace jacdac {
     export const SRV_RNG = 0x1789f0a2
 
     export const enum RngVariant { // uint8_t
+        //% block="quantum"
         Quantum = 0x1,
+        //% block="adcnoise"
         ADCNoise = 0x2,
+        //% block="web crypto"
         WebCrypto = 0x3,
     }
 
@@ -3743,11 +3899,17 @@ namespace jacdac {
     export const SRV_SENSOR_AGGREGATOR = 0x1d90e1c5
 
     export const enum SensorAggregatorSampleType { // uint8_t
+        //% block="u8"
         U8 = 0x8,
+        //% block="i8"
         I8 = 0x88,
+        //% block="u16"
         U16 = 0x10,
+        //% block="i16"
         I16 = 0x90,
+        //% block="u32"
         U32 = 0x20,
+        //% block="i32"
         I32 = 0xa0,
     }
 
@@ -4056,7 +4218,9 @@ namespace jacdac {
     export const SRV_SOIL_MOISTURE = 0x1d4aa3b3
 
     export const enum SoilMoistureVariant { // uint8_t
+        //% block="resistive"
         Resistive = 0x1,
+        //% block="capacitive"
         Capacitive = 0x2,
     }
 
@@ -4086,8 +4250,11 @@ namespace jacdac {
     export const SRV_SOLENOID = 0x171723ca
 
     export const enum SolenoidVariant { // uint8_t
+        //% block="push pull"
         PushPull = 0x1,
+        //% block="valve"
         Valve = 0x2,
+        //% block="latch"
         Latch = 0x3,
     }
 
@@ -4369,13 +4536,21 @@ namespace jacdac {
     export const SRV_SWITCH = 0x1ad29402
 
     export const enum SwitchVariant { // uint8_t
+        //% block="slide"
         Slide = 0x1,
+        //% block="tilt"
         Tilt = 0x2,
+        //% block="push button"
         PushButton = 0x3,
+        //% block="tactile"
         Tactile = 0x4,
+        //% block="toggle"
         Toggle = 0x5,
+        //% block="proximity"
         Proximity = 0x6,
+        //% block="magnetic"
         Magnetic = 0x7,
+        //% block="foot pedal"
         FootPedal = 0x8,
     }
 
@@ -4429,7 +4604,9 @@ namespace jacdac {
     export const SRV_TCP = 0x1b43b70b
 
     export const enum TcpTcpError { // int32_t
+        //% block="invalid command"
         InvalidCommand = 0x1,
+        //% block="invalid command payload"
         InvalidCommandPayload = 0x2,
     }
 
@@ -4495,13 +4672,21 @@ namespace jacdac {
     export const SRV_THERMOCOUPLE = 0x143ac061
 
     export const enum ThermocoupleVariant { // uint8_t
+        //% block="type k"
         TypeK = 0x1,
+        //% block="type j"
         TypeJ = 0x2,
+        //% block="type t"
         TypeT = 0x3,
+        //% block="type e"
         TypeE = 0x4,
+        //% block="type n"
         TypeN = 0x5,
+        //% block="type s"
         TypeS = 0x6,
+        //% block="type r"
         TypeR = 0x7,
+        //% block="type b"
         TypeB = 0x8,
     }
 
@@ -4558,8 +4743,11 @@ namespace jacdac {
     export const SRV_THERMOMETER = 0x1421bac7
 
     export const enum ThermometerVariant { // uint8_t
+        //% block="outdoor"
         Outdoor = 0x1,
+        //% block="indoor"
         Indoor = 0x2,
+        //% block="body"
         Body = 0x3,
     }
 
@@ -4700,7 +4888,9 @@ namespace jacdac {
     export const SRV_UV_INDEX = 0x1f6e0d90
 
     export const enum UvIndexVariant { // uint8_t
+        //% block="uva uvb"
         UVA_UVB = 0x1,
+        //% block="visible ir"
         Visible_IR = 0x2,
     }
 
@@ -4739,15 +4929,21 @@ namespace jacdac {
     export const SRV_VERIFIED_TELEMETRY = 0x2194841f
 
     export const enum VerifiedTelemetryStatus { // uint8_t
+        //% block="unknown"
         Unknown = 0x0,
+        //% block="working"
         Working = 0x1,
+        //% block="faulty"
         Faulty = 0x2,
     }
 
 
     export const enum VerifiedTelemetryFingerprintType { // uint8_t
+        //% block="fall curve"
         FallCurve = 0x1,
+        //% block="current sense"
         CurrentSense = 0x2,
+        //% block="custom"
         Custom = 0x3,
     }
 
@@ -4852,8 +5048,11 @@ namespace jacdac {
     export const SRV_WATER_LEVEL = 0x147b62ed
 
     export const enum WaterLevelVariant { // uint8_t
+        //% block="resistive"
         Resistive = 0x1,
+        //% block="contact photo electric"
         ContactPhotoElectric = 0x2,
+        //% block="non contact photo electric"
         NonContactPhotoElectric = 0x3,
     }
 
@@ -4883,8 +5082,11 @@ namespace jacdac {
     export const SRV_WEIGHT_SCALE = 0x1f4d5040
 
     export const enum WeightScaleVariant { // uint8_t
+        //% block="body"
         Body = 0x1,
+        //% block="food"
         Food = 0x2,
+        //% block="jewelry"
         Jewelry = 0x3,
     }
 
@@ -4985,16 +5187,27 @@ namespace jacdac {
     export const SRV_WIFI = 0x18aae1fa
 
     export const enum WifiAPFlags { // uint32_t
+        //% block="has password"
         HasPassword = 0x1,
+        //% block="wps"
         WPS = 0x2,
+        //% block="has secondary channel above"
         HasSecondaryChannelAbove = 0x4,
+        //% block="has secondary channel below"
         HasSecondaryChannelBelow = 0x8,
+        //% block="ieee 802 11b"
         IEEE_802_11B = 0x100,
+        //% block="ieee 802 11a"
         IEEE_802_11A = 0x200,
+        //% block="ieee 802 11g"
         IEEE_802_11G = 0x400,
+        //% block="ieee 802 11n"
         IEEE_802_11N = 0x800,
+        //% block="ieee 802 11ac"
         IEEE_802_11AC = 0x1000,
+        //% block="ieee 802 11ax"
         IEEE_802_11AX = 0x2000,
+        //% block="ieee 802 long range"
         IEEE_802_LongRange = 0x8000,
     }
 

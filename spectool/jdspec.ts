@@ -1779,9 +1779,9 @@ function memberSize(fld: jdspec.PacketMember) {
 }
 
 function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
-    const staticTypeScript = language === "sts"
+    const sts = language === "sts"
     const csharp = language === "c#"
-    const useNamespace = staticTypeScript || csharp
+    const useNamespace = sts || csharp
 
     const indent = useNamespace ? "    " : ""
     const indent2 = indent + "    "
@@ -1789,7 +1789,7 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
     const hexkw = csharp ? "byte[]" : ""
     const enumkw = csharp
         ? indent + "public enum"
-        : staticTypeScript
+        : sts
         ? indent + "export const enum"
         : "export enum"
     const exportkw = csharp ? "public" : "export"
@@ -1839,8 +1839,10 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
         r += `\n${enumkw} ${enPref}${
             csharp ? `: ${cSharpStorage(en.storage)}` : ""
         } { // ${cStorage(en.storage)}\n`
-        for (const k of Object.keys(en.members))
+        for (const k of Object.keys(en.members)) {
+            if (sts) r += indent2 + `//% block="${humanify(k).toLowerCase()}"\n`
             r += indent2 + k + " = " + toHex(en.members[k]) + ",\n"
+        }
         r += indent + "}\n\n"
     }
     const tsEnums: jdspec.SMap<string> = {}
@@ -1851,7 +1853,7 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
         const cmt = addComment(pkt)
         const pack = pkt.fields.length
             ? packInfo(info, pkt, {
-                  isStatic: staticTypeScript,
+                  isStatic: sts,
                   useBooleans: false,
               }).buffers
             : ""
@@ -1878,7 +1880,7 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
                 )
         } else {
             const val = toHex(pkt.identifier)
-            if (staticTypeScript && pkt.kind === "event") {
+            if (sts && pkt.kind === "event") {
                 meta = `//% block="${snakify(pkt.name).replace(/_/g, " ")}"\n`
             }
             text = `${

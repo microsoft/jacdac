@@ -643,6 +643,20 @@ declare namespace jdspec {
          * Optional list of tags
          */
         tags?: string[]
+
+        /**
+         * Optiona list of firmware binaries
+         */
+        firmwares?: {
+            /**
+             * Description of the firmware
+             */
+            name: string
+            /**
+             * Location of the compiled firmware
+             */
+            url: string
+        }[]
     }
 
     /**

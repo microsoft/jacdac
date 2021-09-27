@@ -1924,10 +1924,11 @@ export function normalizeDeviceSpecification(dev: jdspec.DeviceSpec) {
         description: dev.description,
         repo: dev.repo,
         link: dev.link,
-        services: dev.services || [],
-        productIdentifiers: dev.productIdentifiers || [],
+        services: dev.services,
+        productIdentifiers: dev.productIdentifiers,
         transport: dev.transport,
-        tags: dev.tags || [],
+        tags: dev.tags,
+        firmwares: dev.firmwares,
     }
     if (dev.status !== undefined) clone.status = dev.status
     return clone

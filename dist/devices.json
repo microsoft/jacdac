@@ -46,7 +46,6 @@
     "productIdentifiers": [
       1020174761
     ],
-    "tags": [],
     "status": "deprecated"
   },
   {
@@ -95,7 +94,6 @@
     "productIdentifiers": [
       886919574
     ],
-    "tags": [],
     "status": "deprecated"
   },
   {
@@ -111,7 +109,6 @@
     "productIdentifiers": [
       954450524
     ],
-    "tags": [],
     "status": "deprecated"
   },
   {
@@ -196,7 +193,6 @@
     "productIdentifiers": [
       813927310
     ],
-    "tags": [],
     "status": "deprecated"
   },
   {
@@ -212,7 +208,6 @@
     "productIdentifiers": [
       866678795
     ],
-    "tags": [],
     "status": "deprecated"
   },
   {
@@ -244,8 +239,7 @@
     ],
     "productIdentifiers": [
       919754666
-    ],
-    "tags": []
+    ]
   },
   {
     "id": "microsoft-research-jmhidserversf441v02",
@@ -263,6 +257,12 @@
     ],
     "tags": [
       "kit"
+    ],
+    "firmwares": [
+      {
+        "name": "HID Keyboard + Mouse",
+        "url": "https://github.com/microsoft/pxt-jacdac/raw/master/tools/hid-servers/firmware.uf2"
+      }
     ]
   },
   {
@@ -310,7 +310,6 @@
       496034245
     ],
     "productIdentifiers": [],
-    "tags": [],
     "status": "deprecated"
   },
   {
@@ -326,7 +325,6 @@
     "productIdentifiers": [
       809626198
     ],
-    "tags": [],
     "status": "deprecated"
   },
   {
@@ -342,7 +340,6 @@
     "productIdentifiers": [
       815885628
     ],
-    "tags": [],
     "status": "deprecated"
   },
   {
@@ -356,7 +353,6 @@
     "productIdentifiers": [
       1052138004
     ],
-    "tags": [],
     "status": "deprecated"
   },
   {
@@ -372,7 +368,6 @@
     "productIdentifiers": [
       895762065
     ],
-    "tags": [],
     "status": "deprecated"
   },
   {
@@ -388,7 +383,6 @@
     "productIdentifiers": [
       1013705700
     ],
-    "tags": [],
     "status": "deprecated"
   },
   {
@@ -404,7 +398,6 @@
     "productIdentifiers": [
       816890446
     ],
-    "tags": [],
     "status": "deprecated"
   },
   {
@@ -420,7 +413,6 @@
     "productIdentifiers": [
       986140247
     ],
-    "tags": [],
     "status": "deprecated"
   },
   {
@@ -539,7 +531,6 @@
     "productIdentifiers": [
       1043615261
     ],
-    "tags": [],
     "status": "deprecated"
   },
   {
@@ -555,7 +546,6 @@
     "productIdentifiers": [
       854957595
     ],
-    "tags": [],
     "status": "deprecated"
   },
   {
@@ -571,8 +561,7 @@
     ],
     "productIdentifiers": [
       899442616
-    ],
-    "tags": []
+    ]
   },
   {
     "id": "microsoft-research-jmtemphumidity18v11",
@@ -605,7 +594,6 @@
     "productIdentifiers": [
       1067172458
     ],
-    "tags": [],
     "status": "deprecated"
   },
   {
@@ -621,6 +609,12 @@
     "transport": "USB",
     "tags": [
       "kit"
+    ],
+    "firmwares": [
+      {
+        "name": "Kit Out-Of-the-Box Experience",
+        "url": "https://github.com/microsoft/pxt-jacdac/blob/master/tools/microbit-oob/firmware.hex"
+      }
     ]
   }
 ]

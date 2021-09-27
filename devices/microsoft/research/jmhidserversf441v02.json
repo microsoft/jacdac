@@ -7,5 +7,11 @@
     "link": "https://github.com/microsoft/jacdac-msr-modules",
     "tags": ["kit"],
     "services": [414210922, 411425820],
-    "productIdentifiers": [1003209864]
+    "productIdentifiers": [1003209864],
+    "firmwares": [
+        {
+            "name": "HID Keyboard + Mouse",
+            "url": "https://github.com/microsoft/pxt-jacdac/raw/master/tools/hid-servers/firmware.uf2"
+        }
+    ]
 }

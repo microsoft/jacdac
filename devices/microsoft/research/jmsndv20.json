@@ -1,6 +1,6 @@
 {
     "id": "microsoft-research-jmsnd-v2.0",
-    "name": "JM SND v2.0",
+    "name": "JM Buzzer v2.0",
     "company": "Microsoft Research",
     "description": "A simple buzzer.",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",

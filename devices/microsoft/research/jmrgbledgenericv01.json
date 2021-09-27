@@ -1,6 +1,6 @@
 {
     "id": "microsoft-research-jm-rgb-led-generic-v0.1",
-    "name": "JM RGB LED GENERIC v0.1",
+    "name": "JM RGB LED Generic v0.1",
     "company": "Microsoft Research",
     "description": "",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",

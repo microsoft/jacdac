@@ -1,8 +1,7 @@
 {
-  "id": "microsoft-research-keyboardkey",
-  "name": "Keyboard Key",
+  "id": "microsoft-research-jmkeyboardkey-46-v1.2",
+  "name": "JM Keyboard Key 46 v1.2",
   "company": "Microsoft Research",
-  "description": "JM Keyboard Key 46-1.2",
   "repo": "https://github.com/microsoft/jacdac-padauk",
   "services": [
     343122531

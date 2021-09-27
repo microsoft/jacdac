@@ -641,6 +641,20 @@
     "status": "deprecated"
   },
   {
+    "id": "microsoft-research-keyboardkey",
+    "name": "Keyboard Key",
+    "company": "Microsoft Research",
+    "description": "JM Keyboard Key 46-1.2",
+    "repo": "https://github.com/microsoft/jacdac-padauk",
+    "services": [
+      343122531
+    ],
+    "productIdentifiers": [
+      876567534
+    ],
+    "tags": []
+  },
+  {
     "id": "microbit-foundation-microbitv2",
     "name": "micro:bit V2",
     "company": "microbit foundation",

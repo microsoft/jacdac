@@ -1,8 +1,7 @@
 {
-  "id": "microsoft-research-accessswitchinput",
-  "name": "Access Switch Input",
+  "id": "microsoft-research-jmaccessswitchinput-34-v1.3",
+  "name": "JM Access Switch Input 34 v1.3",
   "company": "Microsoft Research",
-  "description": "JM Access Switch Input 34-1.3",
   "repo": "https://github.com/microsoft/jacdac-msr-modules",
   "services": [
     343122531,
@@ -12,5 +11,5 @@
   "productIdentifiers": [
     964964313
   ],
-  "tags": []
+  "tags": ["kit"]
 }

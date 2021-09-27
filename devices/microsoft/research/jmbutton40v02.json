@@ -1,8 +1,7 @@
 {
-  "id": "microsoft-research-g0button",
-  "name": "G0 Button",
+  "id": "microsoft-research-jmbutton40-v0.2",
+  "name": "JM Button 40 v0.2",
   "company": "Microsoft Research",
-  "description": "JM Button 40-0.2",
   "repo": "https://github.com/microsoft/jacdac-msr-modules",
   "services": [
     343122531
@@ -10,5 +9,5 @@
   "productIdentifiers": [
     946173966
   ],
-  "tags": []
+  "tags": ["kit"]
 }

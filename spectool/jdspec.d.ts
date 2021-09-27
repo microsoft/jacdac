@@ -605,6 +605,16 @@ declare namespace jdspec {
         productIdentifiers: number[]
 
         /**
+         * A unique id that identifies the hardware design
+         */
+        hardwareDesignIdentifier?: string
+
+        /**
+         * A version number for this particular hardware design
+         */
+        hardwareDesignVersion?: string
+
+        /**
          * Github repository containing the firmware releases
          */
         repo?: string

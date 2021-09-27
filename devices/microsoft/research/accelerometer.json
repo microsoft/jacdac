@@ -1,0 +1,14 @@
+{
+  "id": "microsoft-research-accelerometer",
+  "name": "Accelerometer",
+  "company": "Microsoft Research",
+  "description": "JM Accelerometer 30-1.0",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "services": [
+    521405449
+  ],
+  "productIdentifiers": [
+    952491663
+  ],
+  "tags": []
+}

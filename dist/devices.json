@@ -1,7 +1,7 @@
 [
   {
     "id": "microsoft-research-jmaccelerometer30v02",
-    "name": "JM Accelerometer 30-v0.2",
+    "name": "JM Accelerometer 30 v0.2",
     "company": "Microsoft Research",
     "description": "",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -11,14 +11,11 @@
     ],
     "productIdentifiers": [
       872001670
-    ],
-    "tags": [
-      "tags"
     ]
   },
   {
-    "id": "microsoft-research-jmaccessswitchoutput11",
-    "name": "JM Access Switch Output-1.1",
+    "id": "microsoft-research-jmaccessswitchoutputv11",
+    "name": "JM Access Switch Output v1.1",
     "company": "Microsoft Research",
     "description": "",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -34,8 +31,8 @@
     ]
   },
   {
-    "id": "microsoft-research-jmaccv2",
-    "name": "JM Acc v2",
+    "id": "microsoft-research-jmaccelerometerv20",
+    "name": "JM Accelerometer v2.0",
     "company": "Microsoft Research",
     "description": "A 3-axis accelerometer. 16G range.",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -97,8 +94,8 @@
     "status": "deprecated"
   },
   {
-    "id": "microsoft-research-jmarcadecontrolsv2",
-    "name": "JM Arcade Controls v2",
+    "id": "microsoft-research-jmarcadecontrolsv20",
+    "name": "JM Arcade Controls v2.0",
     "company": "Microsoft Research",
     "description": "Lets you connect arcade buttons and joystick to a Jacdac network.",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -180,8 +177,8 @@
     ]
   },
   {
-    "id": "microsoft-research-jmcrankbtnv2",
-    "name": "JM Crank+Btn v2",
+    "id": "microsoft-research-jmcrankbuttonv2",
+    "name": "JM Crank + Button v2",
     "company": "Microsoft Research",
     "description": "A rotary encoder with a push button.",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -196,8 +193,8 @@
     "status": "deprecated"
   },
   {
-    "id": "microsoft-research-jmcrankv2",
-    "name": "JM Crank v2",
+    "id": "microsoft-research-jmcrankv20",
+    "name": "JM Crank v2.0",
     "company": "Microsoft Research",
     "description": "A rotary encoder without a push button.",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -228,8 +225,8 @@
     ]
   },
   {
-    "id": "microsoft-research-jmgamepadv2",
-    "name": "JM GamePad v2",
+    "id": "microsoft-research-jmgamepadv20",
+    "name": "JM GamePad v2.0",
     "company": "Microsoft Research",
     "description": "Lets you convert a plastic d-pad controller, so that it can be connected to a Jacdac network.",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -417,7 +414,7 @@
   },
   {
     "id": "microsoft-research-jmrgbledbar10v01",
-    "name": "JM RGB LED BAR 10 v0.1",
+    "name": "JM RGB LED Bar 10 v0.1",
     "company": "Microsoft Research",
     "description": "",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -434,7 +431,7 @@
   },
   {
     "id": "microsoft-research-jmrgbledgenericv01",
-    "name": "JM RGB LED GENERIC v0.1",
+    "name": "JM RGB LED Generic v0.1",
     "company": "Microsoft Research",
     "description": "",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -451,7 +448,7 @@
   },
   {
     "id": "microsoft-research-jmrgbledringv21",
-    "name": "JM RGB LED RING v2.1",
+    "name": "JM RGB LED Ring v2.1",
     "company": "Microsoft Research",
     "description": "",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -467,8 +464,8 @@
     ]
   },
   {
-    "id": "microsoft-research-jmrotaryctrlbtnv10",
-    "name": "JM Rotary Ctrl + Btn v1.0",
+    "id": "microsoft-research-jmrotarycontrolbuttonv10",
+    "name": "JM Rotary Control + Button v1.0",
     "company": "Microsoft Research",
     "description": "",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -534,8 +531,8 @@
     "status": "deprecated"
   },
   {
-    "id": "microsoft-research-jmsndv20",
-    "name": "JM SND v2.0",
+    "id": "microsoft-research-jmbuzzerv20",
+    "name": "JM Buzzer v2.0",
     "company": "Microsoft Research",
     "description": "A simple buzzer.",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -549,8 +546,8 @@
     "status": "deprecated"
   },
   {
-    "id": "microsoft-research-jmtemphumidity18v10a",
-    "name": "JM TEMP HUMIDITY 18-v1.0A",
+    "id": "microsoft-research-jmtemperaturehumidity18v10a",
+    "name": "JM Temperature + Humidity 18 v1.0A",
     "company": "Microsoft Research",
     "description": "",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -564,8 +561,8 @@
     ]
   },
   {
-    "id": "microsoft-research-jmtemphumidity18v11",
-    "name": "JM TEMP HUMIDITY 18-v1.1",
+    "id": "microsoft-research-jmtemperaturehumidity18v11",
+    "name": "JM Temperature + Humidity 18 v1.1",
     "company": "Microsoft Research",
     "description": "",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",

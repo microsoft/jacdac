@@ -11,7 +11,7 @@
     "firmwares": [
         {
             "name": "Kit Out-Of-the-Box Experience",
-            "url": "https://raw.githubusercontent.com/microsoft/pxt-jacdac/master/tools/microbit-oob/firmware.hex"
+            "url": "https://raw.githubusercontent.com/microsoft/pxt-jacdac/master/tools/microbit-oob/microbit-oob.hex"
         }
     ]
 }

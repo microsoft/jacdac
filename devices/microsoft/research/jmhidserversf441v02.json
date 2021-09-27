@@ -11,7 +11,7 @@
     "firmwares": [
         {
             "name": "HID Keyboard + Mouse",
-            "url": "https://github.com/microsoft/pxt-jacdac/raw/master/tools/hid-servers/firmware.uf2"
+            "url": "https://github.com/microsoft/pxt-jacdac/raw/master/tools/hid-servers/hid-servers.uf2"
         }
     ]
 }

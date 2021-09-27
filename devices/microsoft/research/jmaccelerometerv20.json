@@ -1,5 +1,5 @@
 {
-    "id": "microsoft-research-jmaccv2",
+    "id": "microsoft-research-jmacc-v2.0",
     "name": "JM Accelerometer v2.0",
     "company": "Microsoft Research",
     "description": "A 3-axis accelerometer. 16G range.",

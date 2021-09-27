@@ -14,6 +14,21 @@
     ]
   },
   {
+    "id": "microsoft-research-jmaccelerometerv20",
+    "name": "JM Accelerometer v2.0",
+    "company": "Microsoft Research",
+    "description": "A 3-axis accelerometer. 16G range.",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      521405449
+    ],
+    "productIdentifiers": [
+      1020174761
+    ],
+    "status": "deprecated"
+  },
+  {
     "id": "microsoft-research-jmaccessswitchoutputv11",
     "name": "JM Access Switch Output v1.1",
     "company": "Microsoft Research",
@@ -29,21 +44,6 @@
     "tags": [
       "kit"
     ]
-  },
-  {
-    "id": "microsoft-research-jmaccelerometerv20",
-    "name": "JM Accelerometer v2.0",
-    "company": "Microsoft Research",
-    "description": "A 3-axis accelerometer. 16G range.",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
-    "services": [
-      521405449
-    ],
-    "productIdentifiers": [
-      1020174761
-    ],
-    "status": "deprecated"
   },
   {
     "id": "microsoft-research-jmambientlight55v01",
@@ -142,6 +142,21 @@
     ]
   },
   {
+    "id": "microsoft-research-jmbuzzerv20",
+    "name": "JM Buzzer v2.0",
+    "company": "Microsoft Research",
+    "description": "A simple buzzer.",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      458731991
+    ],
+    "productIdentifiers": [
+      854957595
+    ],
+    "status": "deprecated"
+  },
+  {
     "id": "microsoft-research-jmclickairquality4v32",
     "name": "JM-Click Airquality4 v3.2",
     "company": "Microsoft Research",
@@ -177,8 +192,8 @@
     ]
   },
   {
-    "id": "microsoft-research-jmcrankbuttonv2",
-    "name": "JM Crank + Button v2",
+    "id": "microsoft-research-jmcrankbuttonv20",
+    "name": "JM Crank + Button v2.0",
     "company": "Microsoft Research",
     "description": "A rotary encoder with a push button.",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -527,21 +542,6 @@
     ],
     "productIdentifiers": [
       1043615261
-    ],
-    "status": "deprecated"
-  },
-  {
-    "id": "microsoft-research-jmbuzzerv20",
-    "name": "JM Buzzer v2.0",
-    "company": "Microsoft Research",
-    "description": "A simple buzzer.",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
-    "services": [
-      458731991
-    ],
-    "productIdentifiers": [
-      854957595
     ],
     "status": "deprecated"
   },

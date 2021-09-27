@@ -1,11 +1,11 @@
 {
-    "id": "microsoft-research-jm-rotary-ctrl-btn-v1.0",
-    "name": "JM Rotary Control + Button v1.0",
+    "id": "microsoft-research-jm-access-switch-output-v1.1",
+    "name": "JM Access Switch Output v1.1",
     "company": "Microsoft Research",
     "description": "",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [406840918],
     "tags": ["kit"],
-    "services": [284830153, 343122531],
-    "productIdentifiers": [1060754715]
+    "productIdentifiers": [942325999]
 }

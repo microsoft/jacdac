@@ -638,6 +638,11 @@ declare namespace jdspec {
          * Supported bus transport if any
          */
         transport?: string
+
+        /**
+         * Optional list of tags
+         */
+        tags?: string[]
     }
 
     /**

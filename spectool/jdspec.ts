@@ -1927,6 +1927,7 @@ export function normalizeDeviceSpecification(dev: jdspec.DeviceSpec) {
         services: dev.services || [],
         productIdentifiers: dev.productIdentifiers || [],
         transport: dev.transport,
+        tags: dev.tags || [],
     }
     if (dev.status !== undefined) clone.status = dev.status
     return clone

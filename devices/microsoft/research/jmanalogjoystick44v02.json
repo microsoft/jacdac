@@ -4,10 +4,7 @@
     "company": "Microsoft Research",
     "description": "",
     "link": "https://github.com/microsoft/jacdac-padauk",
-    "services": [
-        277836886
-    ],
-    "productIdentifiers": [
-        976429228
-    ]
+    "tags": ["kit"],
+    "services": [277836886],
+    "productIdentifiers": [976429228]
 }

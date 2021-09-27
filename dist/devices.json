@@ -11,6 +11,9 @@
     ],
     "productIdentifiers": [
       872001670
+    ],
+    "tags": [
+      "tags"
     ]
   },
   {
@@ -25,6 +28,9 @@
     ],
     "productIdentifiers": [
       942325999
+    ],
+    "tags": [
+      "kit"
     ]
   },
   {
@@ -40,6 +46,7 @@
     "productIdentifiers": [
       1020174761
     ],
+    "tags": [],
     "status": "deprecated"
   },
   {
@@ -54,6 +61,9 @@
     ],
     "productIdentifiers": [
       896864987
+    ],
+    "tags": [
+      "kit"
     ]
   },
   {
@@ -67,6 +77,9 @@
     ],
     "productIdentifiers": [
       976429228
+    ],
+    "tags": [
+      "kit"
     ]
   },
   {
@@ -82,6 +95,7 @@
     "productIdentifiers": [
       886919574
     ],
+    "tags": [],
     "status": "deprecated"
   },
   {
@@ -97,6 +111,7 @@
     "productIdentifiers": [
       954450524
     ],
+    "tags": [],
     "status": "deprecated"
   },
   {
@@ -110,6 +125,9 @@
     ],
     "productIdentifiers": [
       896566497
+    ],
+    "tags": [
+      "kit"
     ]
   },
   {
@@ -124,6 +142,9 @@
     ],
     "productIdentifiers": [
       1047530059
+    ],
+    "tags": [
+      "kit"
     ]
   },
   {
@@ -139,6 +160,9 @@
     ],
     "productIdentifiers": [
       878106432
+    ],
+    "tags": [
+      "kit"
     ]
   },
   {
@@ -153,6 +177,9 @@
     ],
     "productIdentifiers": [
       1020991645
+    ],
+    "tags": [
+      "kit"
     ]
   },
   {
@@ -169,6 +196,7 @@
     "productIdentifiers": [
       813927310
     ],
+    "tags": [],
     "status": "deprecated"
   },
   {
@@ -184,6 +212,7 @@
     "productIdentifiers": [
       866678795
     ],
+    "tags": [],
     "status": "deprecated"
   },
   {
@@ -198,6 +227,9 @@
     ],
     "productIdentifiers": [
       840841542
+    ],
+    "tags": [
+      "kit"
     ]
   },
   {
@@ -212,7 +244,8 @@
     ],
     "productIdentifiers": [
       919754666
-    ]
+    ],
+    "tags": []
   },
   {
     "id": "microsoft-research-jmhidserversf441v02",
@@ -227,6 +260,9 @@
     ],
     "productIdentifiers": [
       1003209864
+    ],
+    "tags": [
+      "kit"
     ]
   },
   {
@@ -240,6 +276,9 @@
     ],
     "productIdentifiers": [
       1067229774
+    ],
+    "tags": [
+      "kit"
     ]
   },
   {
@@ -254,6 +293,9 @@
     ],
     "productIdentifiers": [
       911541523
+    ],
+    "tags": [
+      "kit"
     ]
   },
   {
@@ -268,6 +310,7 @@
       496034245
     ],
     "productIdentifiers": [],
+    "tags": [],
     "status": "deprecated"
   },
   {
@@ -283,6 +326,7 @@
     "productIdentifiers": [
       809626198
     ],
+    "tags": [],
     "status": "deprecated"
   },
   {
@@ -298,6 +342,7 @@
     "productIdentifiers": [
       815885628
     ],
+    "tags": [],
     "status": "deprecated"
   },
   {
@@ -311,6 +356,7 @@
     "productIdentifiers": [
       1052138004
     ],
+    "tags": [],
     "status": "deprecated"
   },
   {
@@ -326,6 +372,7 @@
     "productIdentifiers": [
       895762065
     ],
+    "tags": [],
     "status": "deprecated"
   },
   {
@@ -341,6 +388,7 @@
     "productIdentifiers": [
       1013705700
     ],
+    "tags": [],
     "status": "deprecated"
   },
   {
@@ -356,6 +404,7 @@
     "productIdentifiers": [
       816890446
     ],
+    "tags": [],
     "status": "deprecated"
   },
   {
@@ -371,6 +420,7 @@
     "productIdentifiers": [
       986140247
     ],
+    "tags": [],
     "status": "deprecated"
   },
   {
@@ -385,6 +435,9 @@
     ],
     "productIdentifiers": [
       1046525691
+    ],
+    "tags": [
+      "kit"
     ]
   },
   {
@@ -399,6 +452,9 @@
     ],
     "productIdentifiers": [
       967723905
+    ],
+    "tags": [
+      "kit"
     ]
   },
   {
@@ -413,6 +469,9 @@
     ],
     "productIdentifiers": [
       807926135
+    ],
+    "tags": [
+      "kit"
     ]
   },
   {
@@ -428,6 +487,9 @@
     ],
     "productIdentifiers": [
       1060754715
+    ],
+    "tags": [
+      "kit"
     ]
   },
   {
@@ -442,6 +504,9 @@
     ],
     "productIdentifiers": [
       917828732
+    ],
+    "tags": [
+      "kit"
     ]
   },
   {
@@ -456,6 +521,9 @@
     ],
     "productIdentifiers": [
       981005156
+    ],
+    "tags": [
+      "kit"
     ]
   },
   {
@@ -471,6 +539,7 @@
     "productIdentifiers": [
       1043615261
     ],
+    "tags": [],
     "status": "deprecated"
   },
   {
@@ -486,6 +555,7 @@
     "productIdentifiers": [
       854957595
     ],
+    "tags": [],
     "status": "deprecated"
   },
   {
@@ -501,7 +571,8 @@
     ],
     "productIdentifiers": [
       899442616
-    ]
+    ],
+    "tags": []
   },
   {
     "id": "microsoft-research-jmtemphumidity18v11",
@@ -516,6 +587,9 @@
     ],
     "productIdentifiers": [
       827772887
+    ],
+    "tags": [
+      "kit"
     ]
   },
   {
@@ -531,6 +605,7 @@
     "productIdentifiers": [
       1067172458
     ],
+    "tags": [],
     "status": "deprecated"
   },
   {
@@ -543,6 +618,9 @@
     "productIdentifiers": [
       854992189
     ],
-    "transport": "USB"
+    "transport": "USB",
+    "tags": [
+      "kit"
+    ]
   }
 ]

@@ -6,5 +6,6 @@
     "link": "https://github.com/microsoft/pxt-jacdac",
     "services": [],
     "productIdentifiers": [854992189],
-    "transport": "USB"
+    "transport": "USB",
+    "tags": ["kit"]
 }

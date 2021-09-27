@@ -5,11 +5,7 @@
     "description": "",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "link": "https://github.com/microsoft/jacdac-msr-modules",
-    "services": [
-        414210922,
-        411425820
-    ],
-    "productIdentifiers": [
-        1003209864
-    ]
+    "tags": ["kit"],
+    "services": [414210922, 411425820],
+    "productIdentifiers": [1003209864]
 }

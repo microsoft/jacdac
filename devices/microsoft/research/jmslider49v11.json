@@ -1,10 +1,11 @@
 {
-    "id": "microsoft-research-jm-slider-49-v1.0",
-    "name": "JM Slider 49 v1.0",
+    "id": "microsoft-research-jm-slider-49-v1.1",
+    "name": "JM Slider 49 v1.1",
     "company": "Microsoft Research",
     "description": "",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "tags": ["kit"],
     "services": [522667846],
-    "productIdentifiers": [981005156]
+    "productIdentifiers": [966423091]
 }

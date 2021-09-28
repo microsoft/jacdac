@@ -1,8 +1,9 @@
 {
     "id": "microsoft-research-jm-flex-v1.0",
-    "name": "JM Flex v1.0",
+    "name": "JM Flex",
     "company": "Microsoft Research",
     "description": "",
+    "version": "1.0",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "link": "https://github.com/microsoft/jacdac-msr-modules",
     "tags": ["kit"],

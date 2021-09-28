@@ -1,7 +1,8 @@
 {
     "id": "microsoft-research-jmproto-v2.0",
-    "name": "JM Proto v2.0",
+    "name": "JM Proto",
     "company": "Microsoft Research",
+    "version": "2.0",
     "description": "A prototype multi-function board.\n* ``0x3f9bc26a`` JM Touch-Proto v2.0",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "link": "https://github.com/microsoft/jacdac-msr-modules",

@@ -1,7 +1,8 @@
 {
     "id": "microsoft-research-jmpwmnpx-v2.0",
-    "name": "JM PWM (npx) v2.0",
+    "name": "JM PWM (npx)",
     "company": "Microsoft Research",
+    "version": "2.0",
     "description": "A light-strip controller. Supports WS2812B, APA102, and SK9822.",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "link": "https://github.com/microsoft/jacdac-msr-modules",

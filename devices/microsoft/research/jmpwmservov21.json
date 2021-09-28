@@ -1,7 +1,8 @@
 {
     "id": "microsoft-research-jmpwmservo-v2.1",
-    "name": "JM PWM (Servo) v2.1",
+    "name": "JM PWM (Servo)",
     "company": "Microsoft Research",
+    "version": "2.1",
     "description": "A controller for a 5V servo, with MicroUSB connector for power.",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "link": "https://github.com/microsoft/jacdac-msr-modules",

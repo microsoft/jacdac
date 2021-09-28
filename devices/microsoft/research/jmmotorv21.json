@@ -1,7 +1,8 @@
 {
     "id": "microsoft-research-jmmotor-v2.1",
-    "name": "JM Motor v2.1",
+    "name": "JM Motor",
     "company": "Microsoft Research",
+    "version": "2.1",
     "description": "Lets you control a single DC motor (up to 5V; yellow plastic ones work well).",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "link": "https://github.com/microsoft/jacdac-msr-modules",

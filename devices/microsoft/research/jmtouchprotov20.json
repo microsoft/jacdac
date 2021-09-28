@@ -1,7 +1,8 @@
 {
-    "id": "microsoft-research-jmtouchproto-v2.0",
-    "name": "JM Touch-Proto v2.0",
+    "id": "microsoft-research-jmtouchprotov20",
+    "name": "JM Touch-Proto",
     "company": "Microsoft Research",
+    "version": "2.0",
     "description": "A multi-touch sensor based on proto board.",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "link": "https://github.com/microsoft/jacdac-msr-modules",

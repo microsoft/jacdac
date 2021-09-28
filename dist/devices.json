@@ -1,7 +1,7 @@
 [
   {
     "id": "microsoft-research-jmaccelerometer30v02",
-    "name": "JM Accelerometer 30 v0.2",
+    "name": "JM Accelerometer",
     "company": "Microsoft Research",
     "description": "",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -17,7 +17,7 @@
   },
   {
     "id": "microsoft-research-jmaccelerometer30v10",
-    "name": "JM Accelerometer 30 v1.0",
+    "name": "JM Accelerometer",
     "company": "Microsoft Research",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "services": [
@@ -49,7 +49,7 @@
   },
   {
     "id": "microsoft-research-jmaccessswitchinput34v13",
-    "name": "JM Access Switch Input 34 v1.3",
+    "name": "JM Access Switch Input",
     "company": "Microsoft Research",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "services": [
@@ -68,7 +68,7 @@
   },
   {
     "id": "microsoft-research-jmaccessswitchoutputv11",
-    "name": "JM Access Switch Output v1.1",
+    "name": "JM Access Switch Output",
     "company": "Microsoft Research",
     "description": "",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -86,7 +86,7 @@
   },
   {
     "id": "microsoft-research-jmambientlight55v01",
-    "name": "JM Ambient Light 55 v0.1",
+    "name": "JM Ambient Light",
     "company": "Microsoft Research",
     "description": "",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -105,7 +105,7 @@
   },
   {
     "id": "microsoft-research-jmanalogjoystick44v02",
-    "name": "JM Analog Joystick 44 v0.2",
+    "name": "JM Analog Joystick",
     "company": "Microsoft Research",
     "description": "",
     "link": "https://github.com/microsoft/jacdac-padauk",
@@ -153,7 +153,7 @@
   },
   {
     "id": "microsoft-research-jmbutton10v13",
-    "name": "JM Button 10 v1.3",
+    "name": "JM Button",
     "company": "Microsoft Research",
     "description": "",
     "link": "https://github.com/microsoft/jacdac-padauk",
@@ -171,7 +171,7 @@
   },
   {
     "id": "microsoft-research-jmbutton40v02",
-    "name": "JM Button 40 v0.2",
+    "name": "JM Button",
     "company": "Microsoft Research",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "services": [
@@ -188,7 +188,7 @@
   },
   {
     "id": "microsoft-research-jmbuttonterminal62v01",
-    "name": "JM Button Terminal 62 v0.1",
+    "name": "JM Button Terminal",
     "company": "Microsoft Research",
     "description": "",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -222,7 +222,7 @@
   },
   {
     "id": "microsoft-research-jmclickairquality4v32",
-    "name": "JM-Click Airquality4 v3.2",
+    "name": "JM-Click Airquality4",
     "company": "Microsoft Research",
     "description": "",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -241,7 +241,7 @@
   },
   {
     "id": "microsoft-research-jmclickcolorv32",
-    "name": "JM-Click Color v3.2",
+    "name": "JM-Click Color",
     "company": "Microsoft Research",
     "description": "",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -259,7 +259,7 @@
   },
   {
     "id": "microsoft-research-jmcrankbuttonv20",
-    "name": "JM Crank + Button v2.0",
+    "name": "JM Crank + Button",
     "company": "Microsoft Research",
     "description": "A rotary encoder with a push button.",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -271,11 +271,12 @@
     "productIdentifiers": [
       813927310
     ],
+    "version": "2.0",
     "status": "deprecated"
   },
   {
     "id": "microsoft-research-jmcrankv20",
-    "name": "JM Crank v2.0",
+    "name": "JM Crank",
     "company": "Microsoft Research",
     "description": "A rotary encoder without a push button.",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -286,11 +287,12 @@
     "productIdentifiers": [
       866678795
     ],
+    "version": "2.0",
     "status": "deprecated"
   },
   {
     "id": "microsoft-research-jmflexv10",
-    "name": "JM Flex v1.0",
+    "name": "JM Flex",
     "company": "Microsoft Research",
     "description": "",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -303,11 +305,12 @@
     ],
     "tags": [
       "kit"
-    ]
+    ],
+    "version": "1.0"
   },
   {
     "id": "microsoft-research-jmgamepadv20",
-    "name": "JM GamePad v2.0",
+    "name": "JM GamePad",
     "company": "Microsoft Research",
     "description": "Lets you convert a plastic d-pad controller, so that it can be connected to a Jacdac network.",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -317,11 +320,12 @@
     ],
     "productIdentifiers": [
       919754666
-    ]
+    ],
+    "version": "2.0"
   },
   {
     "id": "microsoft-research-jmhidserversf441v02",
-    "name": "JM HID Servers F4 41 v0.2",
+    "name": "JM HID Servers F4",
     "company": "Microsoft Research",
     "description": "",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -347,7 +351,7 @@
   },
   {
     "id": "microsoft-research-jmkeyboardkey46v10",
-    "name": "JM Keyboard Key 46 v1.0",
+    "name": "JM Keyboard Key",
     "company": "Microsoft Research",
     "description": "",
     "link": "https://github.com/microsoft/jacdac-padauk",
@@ -365,7 +369,7 @@
   },
   {
     "id": "microsoft-research-jmkeyboardkey46v11",
-    "name": "JM Keyboard Key 46 v1.1",
+    "name": "JM Keyboard Key",
     "company": "Microsoft Research",
     "description": "",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -384,7 +388,7 @@
   },
   {
     "id": "microsoft-research-jmkeyboardkey46v12",
-    "name": "JM Keyboard Key 46 v1.2",
+    "name": "JM Keyboard Key",
     "company": "Microsoft Research",
     "repo": "https://github.com/microsoft/jacdac-padauk",
     "services": [
@@ -413,7 +417,7 @@
   },
   {
     "id": "microsoft-research-jmmotorv21",
-    "name": "JM Motor v2.1",
+    "name": "JM Motor",
     "company": "Microsoft Research",
     "description": "Lets you control a single DC motor (up to 5V; yellow plastic ones work well).",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -424,6 +428,7 @@
     "productIdentifiers": [
       809626198
     ],
+    "version": "2.1",
     "status": "deprecated"
   },
   {
@@ -443,7 +448,7 @@
   },
   {
     "id": "microsoft-research-jmprotov20",
-    "name": "JM Proto v2.0",
+    "name": "JM Proto",
     "company": "Microsoft Research",
     "description": "A prototype multi-function board.\n* ``0x3f9bc26a`` JM Touch-Proto v2.0",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -452,11 +457,12 @@
     "productIdentifiers": [
       1052138004
     ],
+    "version": "2.0",
     "status": "deprecated"
   },
   {
     "id": "microsoft-research-jmpwmnpxv20",
-    "name": "JM PWM (npx) v2.0",
+    "name": "JM PWM (npx)",
     "company": "Microsoft Research",
     "description": "A light-strip controller. Supports WS2812B, APA102, and SK9822.",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -467,11 +473,12 @@
     "productIdentifiers": [
       895762065
     ],
+    "version": "2.0",
     "status": "deprecated"
   },
   {
     "id": "microsoft-research-jmpwmnpxv21",
-    "name": "JM PWM (npx) v2.1",
+    "name": "JM PWM (npx)",
     "company": "Microsoft Research",
     "description": "A light-strip controller with MicroUSB connector for power. Supports WS2812B, APA102, and SK9822.",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -482,11 +489,12 @@
     "productIdentifiers": [
       1013705700
     ],
+    "version": "2.1",
     "status": "deprecated"
   },
   {
     "id": "microsoft-research-jmpwmservov20",
-    "name": "JM PWM (Servo) v2.0",
+    "name": "JM PWM (Servo)",
     "company": "Microsoft Research",
     "description": "A controller for a 5V servo.",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -497,11 +505,12 @@
     "productIdentifiers": [
       816890446
     ],
+    "version": "2.0",
     "status": "deprecated"
   },
   {
     "id": "microsoft-research-jmpwmservov21",
-    "name": "JM PWM (Servo) v2.1",
+    "name": "JM PWM (Servo)",
     "company": "Microsoft Research",
     "description": "A controller for a 5V servo, with MicroUSB connector for power.",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -512,11 +521,12 @@
     "productIdentifiers": [
       986140247
     ],
+    "version": "2.1",
     "status": "deprecated"
   },
   {
-    "id": "microsoft-research-jmrgbledbar10v01",
-    "name": "JM RGB LED Bar 10 v0.1",
+    "id": "microsoft-research-jmrgbledbar58v01",
+    "name": "JM RGB LED Bar",
     "company": "Microsoft Research",
     "description": "",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -534,8 +544,8 @@
     "designIdentifier": "58"
   },
   {
-    "id": "microsoft-research-jmrgbledgenericv01",
-    "name": "JM RGB LED Generic v0.1",
+    "id": "microsoft-research-jmrgbledgeneric60v01",
+    "name": "JM RGB LED Generic",
     "company": "Microsoft Research",
     "description": "",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -553,8 +563,8 @@
     "designIdentifier": "60"
   },
   {
-    "id": "microsoft-research-jmrgbledringv21",
-    "name": "JM RGB LED Ring v2.1",
+    "id": "microsoft-research-jmrgbledring37v21",
+    "name": "JM RGB LED Ring",
     "company": "Microsoft Research",
     "description": "",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -573,7 +583,7 @@
   },
   {
     "id": "microsoft-research-jmrotarycontrolbuttonv10",
-    "name": "JM Rotary Control + Button v1.0",
+    "name": "JM Rotary Control + Button",
     "company": "Microsoft Research",
     "description": "",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -588,11 +598,11 @@
     "tags": [
       "kit"
     ],
-    "version": "0.1"
+    "version": "1.0"
   },
   {
     "id": "microsoft-research-jmsinglergbled42v01",
-    "name": "JM Single RGB LED 42 v0.1",
+    "name": "JM Single RGB LED",
     "company": "Microsoft Research",
     "description": "",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -611,7 +621,7 @@
   },
   {
     "id": "microsoft-research-jmslider49v10",
-    "name": "JM Slider 49 v1.0",
+    "name": "JM Slider",
     "company": "Microsoft Research",
     "description": "",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -627,7 +637,7 @@
   },
   {
     "id": "microsoft-research-jmslider49v11",
-    "name": "JM Slider 49 v1.1",
+    "name": "JM Slider",
     "company": "Microsoft Research",
     "description": "",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -645,8 +655,8 @@
     "designIdentifier": "49"
   },
   {
-    "id": "microsoft-research-jmsliderv2",
-    "name": "JM Slider v2",
+    "id": "microsoft-research-jmsliderv20",
+    "name": "JM Slider",
     "company": "Microsoft Research",
     "description": "A linear potentiometer (slider).",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -657,11 +667,12 @@
     "productIdentifiers": [
       1043615261
     ],
+    "version": "2.0",
     "status": "deprecated"
   },
   {
     "id": "microsoft-research-jmtemperaturehumidity18v10a",
-    "name": "JM Temperature + Humidity 18 v1.0A",
+    "name": "JM Temperature + Humidity",
     "company": "Microsoft Research",
     "description": "",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -678,7 +689,7 @@
   },
   {
     "id": "microsoft-research-jmtemperaturehumidity18v11",
-    "name": "JM Temperature + Humidity 18 v1.1",
+    "name": "JM Temperature + Humidity",
     "company": "Microsoft Research",
     "description": "",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -698,7 +709,7 @@
   },
   {
     "id": "microsoft-research-jmtouchprotov20",
-    "name": "JM Touch-Proto v2.0",
+    "name": "JM Touch-Proto",
     "company": "Microsoft Research",
     "description": "A multi-touch sensor based on proto board.",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -709,6 +720,7 @@
     "productIdentifiers": [
       1067172458
     ],
+    "version": "2.0",
     "status": "deprecated"
   },
   {

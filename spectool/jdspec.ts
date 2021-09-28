@@ -1915,10 +1915,15 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
 export function normalizeDeviceSpecification(dev: jdspec.DeviceSpec) {
     // reorder fields
     const clone: jdspec.DeviceSpec = {
-        id: (dev.id =
-            escapeDeviceIdentifier(dev.company) +
-            "-" +
-            escapeDeviceNameIdentifier(dev.name)),
+        id:
+            (dev.id =
+                escapeDeviceIdentifier(dev.company) +
+                "-" +
+                escapeDeviceNameIdentifier(dev.name)) +
+            (dev.designIdentifier || "") +
+            (dev.version
+                ? `v${dev.version.toLowerCase().replace(/\./g, "")}`
+                : ""),
         name: dev.name,
         company: dev.company,
         description: dev.description,
@@ -1929,7 +1934,7 @@ export function normalizeDeviceSpecification(dev: jdspec.DeviceSpec) {
         transport: dev.transport,
         tags: dev.tags,
         firmwares: dev.firmwares,
-        version: dev.version,
+        version: dev.version ? dev.version.replace(/^v/, "") : undefined,
         designIdentifier: dev.designIdentifier,
     }
     if (dev.status !== undefined) clone.status = dev.status

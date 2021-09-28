@@ -1,13 +1,13 @@
 {
-    "id": "microsoft-research-jm-rgb-led-generic-v0.1",
-    "name": "JM RGB LED Generic v0.1",
+    "id": "microsoft-research-jm-rgb-led-bar-10-v0.1",
+    "name": "JM RGB LED Bar",
     "company": "Microsoft Research",
     "description": "",
-    "designIdentifier": "60",
+    "designIdentifier": "58",
     "version": "0.1",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "link": "https://github.com/microsoft/jacdac-msr-modules",
     "tags": ["kit"],
     "services": [309264608],
-    "productIdentifiers": [967723905]
+    "productIdentifiers": [1046525691]
 }

@@ -11,7 +11,9 @@
     ],
     "productIdentifiers": [
       872001670
-    ]
+    ],
+    "version": "0.2",
+    "designIdentifier": "30"
   },
   {
     "id": "microsoft-research-jmaccelerometer30v10",
@@ -26,7 +28,9 @@
     ],
     "tags": [
       "kit"
-    ]
+    ],
+    "version": "1.0",
+    "designIdentifier": "30"
   },
   {
     "id": "microsoft-research-jmaccelerometerv20",
@@ -58,7 +62,9 @@
     ],
     "tags": [
       "kit"
-    ]
+    ],
+    "version": "1.3",
+    "designIdentifier": "34"
   },
   {
     "id": "microsoft-research-jmaccessswitchoutputv11",
@@ -75,7 +81,8 @@
     ],
     "tags": [
       "kit"
-    ]
+    ],
+    "version": "1.1"
   },
   {
     "id": "microsoft-research-jmambientlight55v01",
@@ -92,7 +99,9 @@
     ],
     "tags": [
       "kit"
-    ]
+    ],
+    "version": "0.1",
+    "designIdentifier": "55"
   },
   {
     "id": "microsoft-research-jmanalogjoystick44v02",
@@ -108,7 +117,9 @@
     ],
     "tags": [
       "kit"
-    ]
+    ],
+    "version": "0.2",
+    "designIdentifier": "44"
   },
   {
     "id": "microsoft-research-jmarcadebtnv20",
@@ -154,7 +165,9 @@
     ],
     "tags": [
       "kit"
-    ]
+    ],
+    "version": "1.3",
+    "designIdentifier": "10"
   },
   {
     "id": "microsoft-research-jmbutton40v02",
@@ -169,7 +182,9 @@
     ],
     "tags": [
       "kit"
-    ]
+    ],
+    "version": "0.2",
+    "designIdentifier": "40"
   },
   {
     "id": "microsoft-research-jmbuttonterminal62v01",
@@ -186,7 +201,9 @@
     ],
     "tags": [
       "kit"
-    ]
+    ],
+    "version": "0.1",
+    "designIdentifier": "62"
   },
   {
     "id": "microsoft-research-jmbuzzerv20",
@@ -219,7 +236,8 @@
     ],
     "tags": [
       "kit"
-    ]
+    ],
+    "version": "3.2"
   },
   {
     "id": "microsoft-research-jmclickcolorv32",
@@ -236,7 +254,8 @@
     ],
     "tags": [
       "kit"
-    ]
+    ],
+    "version": "3.2"
   },
   {
     "id": "microsoft-research-jmcrankbuttonv20",
@@ -322,7 +341,9 @@
         "name": "HID Keyboard + Mouse",
         "url": "https://github.com/microsoft/pxt-jacdac/raw/master/tools/hid-servers/hid-servers.uf2"
       }
-    ]
+    ],
+    "version": "0.2",
+    "designIdentifier": "41"
   },
   {
     "id": "microsoft-research-jmkeyboardkey46v10",
@@ -338,7 +359,9 @@
     ],
     "tags": [
       "kit"
-    ]
+    ],
+    "version": "1.0",
+    "designIdentifier": "46"
   },
   {
     "id": "microsoft-research-jmkeyboardkey46v11",
@@ -355,7 +378,9 @@
     ],
     "tags": [
       "kit"
-    ]
+    ],
+    "version": "1.1",
+    "designIdentifier": "46"
   },
   {
     "id": "microsoft-research-jmkeyboardkey46v12",
@@ -368,7 +393,9 @@
     "productIdentifiers": [
       876567534
     ],
-    "tags": []
+    "tags": [],
+    "version": "1.2",
+    "designIdentifier": "46"
   },
   {
     "id": "microsoft-research-jmmachinelearning",
@@ -502,7 +529,9 @@
     ],
     "tags": [
       "kit"
-    ]
+    ],
+    "version": "0.1",
+    "designIdentifier": "58"
   },
   {
     "id": "microsoft-research-jmrgbledgenericv01",
@@ -519,7 +548,9 @@
     ],
     "tags": [
       "kit"
-    ]
+    ],
+    "version": "0.1",
+    "designIdentifier": "60"
   },
   {
     "id": "microsoft-research-jmrgbledringv21",
@@ -536,7 +567,9 @@
     ],
     "tags": [
       "kit"
-    ]
+    ],
+    "version": "2.1",
+    "designIdentifier": "37"
   },
   {
     "id": "microsoft-research-jmrotarycontrolbuttonv10",
@@ -554,7 +587,8 @@
     ],
     "tags": [
       "kit"
-    ]
+    ],
+    "version": "0.1"
   },
   {
     "id": "microsoft-research-jmsinglergbled42v01",
@@ -571,7 +605,9 @@
     ],
     "tags": [
       "kit"
-    ]
+    ],
+    "version": "0.1",
+    "designIdentifier": "42"
   },
   {
     "id": "microsoft-research-jmslider49v10",
@@ -585,7 +621,9 @@
     ],
     "productIdentifiers": [
       981005156
-    ]
+    ],
+    "version": "1.0",
+    "designIdentifier": "49"
   },
   {
     "id": "microsoft-research-jmslider49v11",
@@ -602,7 +640,9 @@
     ],
     "tags": [
       "kit"
-    ]
+    ],
+    "version": "1.1",
+    "designIdentifier": "49"
   },
   {
     "id": "microsoft-research-jmsliderv2",
@@ -632,7 +672,9 @@
     ],
     "productIdentifiers": [
       899442616
-    ]
+    ],
+    "version": "1.0A",
+    "designIdentifier": "18"
   },
   {
     "id": "microsoft-research-jmtemperaturehumidity18v11",
@@ -650,7 +692,9 @@
     ],
     "tags": [
       "kit"
-    ]
+    ],
+    "version": "1.1",
+    "designIdentifier": "18"
   },
   {
     "id": "microsoft-research-jmtouchprotov20",

@@ -1929,6 +1929,8 @@ export function normalizeDeviceSpecification(dev: jdspec.DeviceSpec) {
         transport: dev.transport,
         tags: dev.tags,
         firmwares: dev.firmwares,
+        version: dev.version,
+        designIdentifier: dev.designIdentifier,
     }
     if (dev.status !== undefined) clone.status = dev.status
     return clone

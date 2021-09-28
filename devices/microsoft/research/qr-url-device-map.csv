@@ -17,11 +17,11 @@ aaaaao,49,1.1,Slider,aka.ms,0x399a7233
 aaaaap,41,0.2,JacdacBrainF4 ,aka.ms,
 aaaaaq,53,0.1,MikrobusCarrierBoard,aka.ms,
 aaaaar,54,0.1,JacdacMotionDetection,aka.ms,
-aaaaas,55,0.1,JacdacAmbientLight,aka.ms,
-aaaaat,58,0.1,JacdacRgbLedBar10,aka.ms,
+aaaaas,55,0.1,JacdacAmbientLight,aka.ms,0x357512db
+aaaaat,58,0.1,JacdacRgbLedBar10,aka.ms,0x3e60b6fb
 aaaaau,48,0.3,JacdacBrainESP32,aka.ms,
-aaaaav,61,3.4,JM-mikroBUS,aka.ms,
-aaaaaw,60,0.1,JacdacRgbLedGeneric,aka.ms,
-aaaaax,44,0.3,JacdacJoystick,aka.ms,
+aaaaav,61,3.4,JM-mikroBUS,aka.ms,0x32b36f38
+aaaaaw,60,0.1,JacdacRgbLedGeneric,aka.ms,0x39ae4b81
+aaaaax,44,0.3,JacdacJoystick,aka.ms,0x3a3320ac
 aaaaay,59,0.1,JacdacBrainRP2040,aka.ms,
 aaaaaz,29,0.4,JacDacMicroBitShieldLP,aka.ms,

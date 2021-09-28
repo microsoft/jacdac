@@ -607,12 +607,12 @@ declare namespace jdspec {
         /**
          * A unique id that identifies the hardware design
          */
-        hardwareDesignIdentifier?: string
+        designIdentifier?: string
 
         /**
-         * A version number for this particular hardware design
+         * A version for this particular hardware design
          */
-        hardwareDesignVersion?: string
+        version?: string
 
         /**
          * Github repository containing the firmware releases

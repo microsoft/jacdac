@@ -3,6 +3,8 @@
     "name": "JM RGB LED Bar 10 v0.1",
     "company": "Microsoft Research",
     "description": "",
+    "designIdentifier": "58",
+    "version": "0.1",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "link": "https://github.com/microsoft/jacdac-msr-modules",
     "tags": ["kit"],

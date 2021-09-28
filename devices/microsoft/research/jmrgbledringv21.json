@@ -3,6 +3,8 @@
     "name": "JM RGB LED Ring v2.1",
     "company": "Microsoft Research",
     "description": "",
+    "designIdentifier": "37",
+    "version": "2.1",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "link": "https://github.com/microsoft/jacdac-msr-modules",
     "tags": ["kit"],

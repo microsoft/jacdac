@@ -3,6 +3,8 @@
     "name": "JM Analog Joystick 44 v0.2",
     "company": "Microsoft Research",
     "description": "",
+    "designIdentifier": "44",
+    "version": "0.2",
     "link": "https://github.com/microsoft/jacdac-padauk",
     "tags": ["kit"],
     "services": [277836886],

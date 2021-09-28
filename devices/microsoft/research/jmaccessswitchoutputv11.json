@@ -3,6 +3,7 @@
     "name": "JM Access Switch Output v1.1",
     "company": "Microsoft Research",
     "description": "",
+    "version": "1.1",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "link": "https://github.com/microsoft/jacdac-msr-modules",
     "services": [406840918],

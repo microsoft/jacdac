@@ -1,13 +1,11 @@
 {
-  "id": "microsoft-research-jmaccelerometer-30-v1.0",
-  "name": "JM Accelerometer 30 v1.0",
-  "company": "Microsoft Research",
-  "repo": "https://github.com/microsoft/jacdac-msr-modules",
-  "services": [
-    521405449
-  ],
-  "productIdentifiers": [
-    952491663
-  ],
-  "tags": ["kit"]
+    "id": "microsoft-research-jmaccelerometer-30-v1.0",
+    "name": "JM Accelerometer 30 v1.0",
+    "company": "Microsoft Research",
+    "designIdentifier": "30",
+    "version": "1.0",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [521405449],
+    "productIdentifiers": [952491663],
+    "tags": ["kit"]
 }

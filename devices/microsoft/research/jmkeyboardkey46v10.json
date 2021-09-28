@@ -3,6 +3,8 @@
     "name": "JM Keyboard Key 46 v1.0",
     "company": "Microsoft Research",
     "description": "",
+    "designIdentifier": "46",
+    "version": "1.0",
     "link": "https://github.com/microsoft/jacdac-padauk",
     "tags": ["kit"],
     "services": [343122531],

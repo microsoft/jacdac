@@ -3,6 +3,7 @@
     "name": "JM-Click Airquality4 v3.2",
     "company": "Microsoft Research",
     "description": "",
+    "version": "3.2",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "link": "https://github.com/microsoft/jacdac-msr-modules",
     "tags": ["kit"],

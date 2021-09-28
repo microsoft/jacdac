@@ -3,6 +3,8 @@
     "name": "JM HID Servers F4 41 v0.2",
     "company": "Microsoft Research",
     "description": "",
+    "designIdentifier": "41",
+    "version": "0.2",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "link": "https://github.com/microsoft/jacdac-msr-modules",
     "tags": ["kit"],

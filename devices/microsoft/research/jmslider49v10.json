@@ -3,6 +3,8 @@
     "name": "JM Slider 49 v1.0",
     "company": "Microsoft Research",
     "description": "",
+    "designIdentifier": "49",
+    "version": "1.0",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "link": "https://github.com/microsoft/jacdac-msr-modules",
     "services": [522667846],

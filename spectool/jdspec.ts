@@ -3,8 +3,8 @@
 /// <reference path="jdspec.d.ts" />
 import { parseIntFloat } from "./jdutils"
 
-export const DEVICE_IMAGE_WIDTH = 600
-export const DEVICE_IMAGE_HEIGHT = 450
+export const DEVICE_IMAGE_WIDTH = 1024
+export const DEVICE_IMAGE_HEIGHT = 768
 
 // modified subset of SenML
 export const unitDescription: jdspec.SMap<string> = {

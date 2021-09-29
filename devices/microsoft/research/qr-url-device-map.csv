@@ -11,7 +11,7 @@ aaaaai,23,1.1,JacdacServoDual,aka.ms,0x3daf1cf6
 aaaaaj,48,0.2,JacdacIoT,aka.ms,
 aaaaak,50,0.1,JacdacPower,aka.ms,0x3592dcb4
 aaaaal,34,1.3,JacdacAccessSwitchInput,aka.ms,0x39842fd9
-aaaaam,44,0.2,JacdacJoystick,aka.ms,0x328d0f9d
+aaaaam,44,0.2,JacdacJoystick,aka.ms,0x3a3320ac
 aaaaan,40,0.2,JacdacG0Button,aka.ms,0x3865780e
 aaaaao,49,1.1,Slider,aka.ms,0x399a7233
 aaaaap,41,0.2,JacdacBrainF4 ,aka.ms,0x3bcbc488
@@ -22,6 +22,6 @@ aaaaat,58,0.1,JacdacRgbLedBar10,aka.ms,0x3e60b6fb
 aaaaau,48,0.3,JacdacBrainESP32,aka.ms,
 aaaaav,61,3.4,JM-mikroBUS,aka.ms,0x32b36f38
 aaaaaw,60,0.1,JacdacRgbLedGeneric,aka.ms,0x39ae4b81
-aaaaax,44,0.3,JacdacJoystick,aka.ms,0x3a3320ac
+aaaaax,44,0.3,JacdacJoystick,aka.ms,
 aaaaay,59,0.1,JacdacBrainRP2040,aka.ms,
 aaaaaz,29,0.4,JacDacMicroBitShieldLP,aka.ms,

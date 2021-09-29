@@ -671,10 +671,9 @@
     "status": "deprecated"
   },
   {
-    "id": "microsoft-research-jmspeechsynthesisv331vl",
-    "name": "JM Speech Synthesis v3.3",
+    "id": "microsoft-research-jmspeechsynthesis61v33",
+    "name": "JM Speech Synthesis",
     "company": "Microsoft Research",
-    "description": "JM Speech Synthesis v3.3",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "services": [
       302307733
@@ -682,8 +681,8 @@
     "productIdentifiers": [
       934541191
     ],
-    "version": "l",
-    "designIdentifier": "1"
+    "version": "3.3",
+    "designIdentifier": "61"
   },
   {
     "id": "microsoft-research-jmtemperaturehumidity18v10a",

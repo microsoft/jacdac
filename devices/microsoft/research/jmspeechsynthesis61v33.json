@@ -1,0 +1,10 @@
+{
+    "id": "microsoft-research-jmspeechsynthesisv33",
+    "name": "JM Speech Synthesis",
+    "company": "Microsoft Research",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [302307733],
+    "productIdentifiers": [934541191],
+    "version": "3.3",
+    "designIdentifier": "61"
+}

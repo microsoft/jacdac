@@ -1,15 +1,15 @@
 {
-    "id": "microsoft-research-jm-hid-servers-f4-41-v0.2",
-    "name": "JM HID Servers F4",
+    "id": "microsoft-research-jm-brain-f4-41-v0.2",
+    "name": "JM Brain F4",
     "company": "Microsoft Research",
     "description": "",
     "designIdentifier": "41",
     "version": "0.2",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/microsoft/pxt-jacdac",
+    "link": "https://github.com/microsoft/pxt-jacdac",
     "tags": ["kit"],
     "services": [414210922, 411425820],
-    "productIdentifiers": [1003209864],
+    "productIdentifiers": [1003209864, 970267564],
     "firmwares": [
         {
             "name": "HID Keyboard + Mouse",

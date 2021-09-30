@@ -1,6 +1,6 @@
 {
     "id": "microsoft-research-jm-pin-header-45-v0.2",
-    "name": "Pin Header with Regulator",
+    "name": "JM Pin Header",
     "company": "Microsoft Research",
     "description": "A regulated passive adapter from Jacdac to pin headers.",
     "designIdentifier": "45",

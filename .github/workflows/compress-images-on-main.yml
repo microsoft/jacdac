@@ -1,4 +1,4 @@
-name: Compress Images on Push to main branch
+name: Compress Images on Main
 on:
   workflow_dispatch:
   push:

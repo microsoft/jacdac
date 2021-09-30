@@ -1912,18 +1912,26 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
     return r.replace(/ *$/gm, "")
 }
 
+export function generateDeviceSpecificationId(dev: jdspec.DeviceSpec) {
+    return (
+        escapeDeviceIdentifier(dev.company) +
+        "-" +
+        escapeDeviceNameIdentifier(dev.name) +
+        (dev.designIdentifier || "") +
+        (dev.version
+            ? `v${dev.version
+                  .toLowerCase()
+                  .replace(/^v/, "")
+                  .replace(/\./g, "")}`
+            : ""
+        ).toLowerCase()
+    )
+}
+
 export function normalizeDeviceSpecification(dev: jdspec.DeviceSpec) {
     // reorder fields
     const clone: jdspec.DeviceSpec = {
-        id:
-            (dev.id =
-                escapeDeviceIdentifier(dev.company) +
-                "-" +
-                escapeDeviceNameIdentifier(dev.name)) +
-            (dev.designIdentifier || "") +
-            (dev.version
-                ? `v${dev.version.toLowerCase().replace(/\./g, "")}`
-                : "").toLowerCase(),
+        id: generateDeviceSpecificationId(dev),
         name: dev.name,
         company: dev.company,
         description: dev.description,

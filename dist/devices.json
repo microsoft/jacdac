@@ -182,7 +182,6 @@
     "name": "JM Brain F4",
     "company": "Microsoft Research",
     "description": "",
-    "repo": "https://github.com/microsoft/pxt-jacdac",
     "link": "https://github.com/microsoft/pxt-jacdac",
     "services": [
       414210922,
@@ -198,7 +197,7 @@
     "firmwares": [
       {
         "name": "HID Keyboard + Mouse",
-        "url": "https://github.com/microsoft/pxt-jacdac/raw/master/tools/hid-servers/hid-servers.uf2"
+        "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/hid-servers-f4.uf2"
       }
     ],
     "version": "0.2",
@@ -209,7 +208,6 @@
     "name": "JM Brain RP2040",
     "company": "Microsoft Research",
     "description": "",
-    "repo": "https://github.com/microsoft/pxt-jacdac",
     "link": "https://github.com/microsoft/pxt-jacdac",
     "services": [
       414210922,
@@ -225,7 +223,7 @@
     "firmwares": [
       {
         "name": "HID Keyboard + Mouse",
-        "url": "https://github.com/microsoft/pxt-jacdac/raw/master/tools/hid-servers/hid-servers-rp2040.uf2"
+        "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/hid-servers-rp2040.uf2"
       }
     ],
     "version": "0.1",
@@ -796,7 +794,7 @@
     "name": "micro:bit V2",
     "company": "microbit foundation",
     "description": "The new micro:bit V2 has a built-in microphone and speaker to allow sound-sensing and sound-making without the need to attach another device. It also introduces capacitive touch sensing, a power-saving mode and more computing power for the classroom.",
-    "link": "https://github.com/microsoft/pxt-jacdac",
+    "link": "https://microsoft.github.io/jacdac-docs/hardware/kit/oob/",
     "services": [],
     "productIdentifiers": [
       854992189
@@ -808,7 +806,7 @@
     "firmwares": [
       {
         "name": "Kit Out-Of-the-Box Experience",
-        "url": "https://raw.githubusercontent.com/microsoft/pxt-jacdac/master/tools/microbit-oob/microbit-oob.hex"
+        "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/multitool-microbit.hex"
       }
     ]
   }

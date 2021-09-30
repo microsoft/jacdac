@@ -1,47 +1,5 @@
 [
   {
-    "id": "microsoft-research-jacdacbrainesp32JacdacBrainESP32v03",
-    "name": "JacdacBrainESP32",
-    "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/pxt-jacdac/",
-    "services": [
-      342028028
-    ],
-    "productIdentifiers": [
-      917230668
-    ],
-    "version": "0.3",
-    "designIdentifier": "JacdacBrainESP32"
-  },
-  {
-    "id": "microsoft-research-jacdacbrainrp2040JacdacBrainRP2040v01",
-    "name": "JacdacBrainRP2040",
-    "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/pxt-jacdac/",
-    "services": [
-      411425820,
-      509040821,
-      411425820
-    ],
-    "productIdentifiers": [
-      856210312
-    ],
-    "version": "0.1",
-    "designIdentifier": "JacdacBrainRP2040"
-  },
-  {
-    "id": "microsoft-research-jacdaciotJacdacIoTv02",
-    "name": "JacdacIoT",
-    "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/pxt-jacdac/",
-    "services": [
-      342028028
-    ],
-    "productIdentifiers": [],
-    "version": "0.2",
-    "designIdentifier": "JacdacIoT"
-  },
-  {
     "id": "microsoft-research-jmaccelerometer30v02",
     "name": "JM Accelerometer",
     "company": "Microsoft Research",
@@ -192,6 +150,32 @@
       954450524
     ],
     "status": "deprecated"
+  },
+  {
+    "id": "microsoft-research-jmbrainesp3248v02",
+    "name": "JM Brain ESP32",
+    "company": "Microsoft Research",
+    "repo": "https://github.com/microsoft/pxt-jacdac/",
+    "services": [
+      342028028
+    ],
+    "productIdentifiers": [],
+    "version": "0.2",
+    "designIdentifier": "48"
+  },
+  {
+    "id": "microsoft-research-jmbrainesp3248v03",
+    "name": "JM Brain ESP32",
+    "company": "Microsoft Research",
+    "repo": "https://github.com/microsoft/pxt-jacdac/",
+    "services": [
+      342028028
+    ],
+    "productIdentifiers": [
+      917230668
+    ],
+    "version": "0.3",
+    "designIdentifier": "48"
   },
   {
     "id": "microsoft-research-jmbrainf441v02",

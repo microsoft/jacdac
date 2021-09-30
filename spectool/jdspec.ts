@@ -1923,7 +1923,7 @@ export function normalizeDeviceSpecification(dev: jdspec.DeviceSpec) {
             (dev.designIdentifier || "") +
             (dev.version
                 ? `v${dev.version.toLowerCase().replace(/\./g, "")}`
-                : ""),
+                : "").toLowerCase(),
         name: dev.name,
         company: dev.company,
         description: dev.description,

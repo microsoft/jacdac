@@ -1,0 +1,14 @@
+{
+  "id": "microsoft-research-jacdacbrainesp32JacdacBrainESP32vv03",
+  "name": "JacdacBrainESP32",
+  "company": "Microsoft Research",
+  "repo": "https://github.com/microsoft/pxt-jacdac/",
+  "services": [
+    342028028
+  ],
+  "productIdentifiers": [
+    917230668
+  ],
+  "version": "0.3",
+  "designIdentifier": "JacdacBrainESP32"
+}

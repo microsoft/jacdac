@@ -806,7 +806,7 @@
     "firmwares": [
       {
         "name": "Kit Out-Of-the-Box Experience",
-        "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/multitool-microbit.hex"
+        "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/microbit-oob.hex"
       }
     ]
   }

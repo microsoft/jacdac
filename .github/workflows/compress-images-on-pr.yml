@@ -1,6 +1,5 @@
 name: Compress Images
 on:
-  workflow_dispatch:
   pull_request:
     paths:
       - '**.jpg'

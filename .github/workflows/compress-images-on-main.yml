@@ -1,5 +1,6 @@
 name: Compress Images on Push to main branch
 on:
+  workflow_dispatch:
   push:
     branches:
       - main

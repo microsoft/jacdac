@@ -152,6 +152,60 @@
     "status": "deprecated"
   },
   {
+    "id": "microsoft-research-jmbrainf441v02",
+    "name": "JM Brain F4",
+    "company": "Microsoft Research",
+    "description": "",
+    "repo": "https://github.com/microsoft/pxt-jacdac",
+    "link": "https://github.com/microsoft/pxt-jacdac",
+    "services": [
+      414210922,
+      411425820
+    ],
+    "productIdentifiers": [
+      1003209864,
+      970267564
+    ],
+    "tags": [
+      "kit"
+    ],
+    "firmwares": [
+      {
+        "name": "HID Keyboard + Mouse",
+        "url": "https://github.com/microsoft/pxt-jacdac/raw/master/tools/hid-servers/hid-servers.uf2"
+      }
+    ],
+    "version": "0.2",
+    "designIdentifier": "41"
+  },
+  {
+    "id": "microsoft-research-jmbrainrp204059v01",
+    "name": "JM Brain RP2040",
+    "company": "Microsoft Research",
+    "description": "",
+    "repo": "https://github.com/microsoft/pxt-jacdac",
+    "link": "https://github.com/microsoft/pxt-jacdac",
+    "services": [
+      414210922,
+      411425820
+    ],
+    "productIdentifiers": [
+      884301483,
+      999933064
+    ],
+    "tags": [
+      "kit"
+    ],
+    "firmwares": [
+      {
+        "name": "HID Keyboard + Mouse",
+        "url": "https://github.com/microsoft/pxt-jacdac/raw/master/tools/hid-servers/hid-servers-rp2040.uf2"
+      }
+    ],
+    "version": "0.1",
+    "designIdentifier": "59"
+  },
+  {
     "id": "microsoft-research-jmbutton10v13",
     "name": "JM Button",
     "company": "Microsoft Research",
@@ -322,32 +376,6 @@
       919754666
     ],
     "version": "2.0"
-  },
-  {
-    "id": "microsoft-research-jmhidserversf441v02",
-    "name": "JM HID Servers F4",
-    "company": "Microsoft Research",
-    "description": "",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
-    "services": [
-      414210922,
-      411425820
-    ],
-    "productIdentifiers": [
-      1003209864
-    ],
-    "tags": [
-      "kit"
-    ],
-    "firmwares": [
-      {
-        "name": "HID Keyboard + Mouse",
-        "url": "https://github.com/microsoft/pxt-jacdac/raw/master/tools/hid-servers/hid-servers.uf2"
-      }
-    ],
-    "version": "0.2",
-    "designIdentifier": "41"
   },
   {
     "id": "microsoft-research-jmkeyboardkey46v10",

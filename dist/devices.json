@@ -1,5 +1,21 @@
 [
   {
+    "id": "microsoft-research-jacdacbrainrp2040JacdacBrainRP2040v01",
+    "name": "JacdacBrainRP2040",
+    "company": "Microsoft Research",
+    "repo": "https://github.com/microsoft/pxt-jacdac/",
+    "services": [
+      411425820,
+      509040821,
+      411425820
+    ],
+    "productIdentifiers": [
+      856210312
+    ],
+    "version": "0.1",
+    "designIdentifier": "JacdacBrainRP2040"
+  },
+  {
     "id": "microsoft-research-jmaccelerometer30v02",
     "name": "JM Accelerometer",
     "company": "Microsoft Research",

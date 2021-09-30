@@ -5,7 +5,6 @@
     "description": "",
     "designIdentifier": "41",
     "version": "0.2",
-    "repo": "https://github.com/microsoft/pxt-jacdac",
     "link": "https://github.com/microsoft/pxt-jacdac",
     "tags": ["kit"],
     "services": [414210922, 411425820],
@@ -13,7 +12,7 @@
     "firmwares": [
         {
             "name": "HID Keyboard + Mouse",
-            "url": "https://github.com/microsoft/pxt-jacdac/raw/master/tools/hid-servers/hid-servers.uf2"
+            "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/hid-servers-f4.uf2"
         }
     ]
 }

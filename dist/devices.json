@@ -484,6 +484,32 @@
     "status": "deprecated"
   },
   {
+    "id": "microsoft-research-pinheader45v01",
+    "name": "Pin Header",
+    "company": "Microsoft Research",
+    "description": "",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [],
+    "productIdentifiers": [
+      939230090
+    ],
+    "version": "0.1",
+    "designIdentifier": "45"
+  },
+  {
+    "id": "microsoft-research-pinheaderwithregulator45v02",
+    "name": "Pin Header with Regulator",
+    "company": "Microsoft Research",
+    "description": "",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [],
+    "productIdentifiers": [
+      994328823
+    ],
+    "version": "0.2",
+    "designIdentifier": "45"
+  },
+  {
     "id": "microsoft-research-jmpower",
     "name": "JM Power",
     "company": "Microsoft Research",

@@ -1,0 +1,11 @@
+{
+    "id": "microsoft-research-jm-pin-header-45-v0.1",
+    "name": "Pin Header",
+    "company": "Microsoft Research",
+    "description": "",
+    "designIdentifier": "45",
+    "version": "0.1",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [],
+    "productIdentifiers": [939230090]
+}

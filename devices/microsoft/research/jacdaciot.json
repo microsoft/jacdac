@@ -1,0 +1,12 @@
+{
+  "id": "microsoft-research-jacdaciotJacdacIoTvv02",
+  "name": "JacdacIoT",
+  "company": "Microsoft Research",
+  "repo": "https://github.com/microsoft/pxt-jacdac/",
+  "services": [
+    342028028
+  ],
+  "productIdentifiers": [],
+  "version": "0.2",
+  "designIdentifier": "JacdacIoT"
+}

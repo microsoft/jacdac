@@ -13,7 +13,8 @@
       872001670
     ],
     "version": "0.2",
-    "designIdentifier": "30"
+    "designIdentifier": "30",
+    "status": "deprecated"
   },
   {
     "id": "microsoft-research-jmaccelerometer30v10",
@@ -161,7 +162,8 @@
     ],
     "productIdentifiers": [],
     "version": "0.2",
-    "designIdentifier": "48"
+    "designIdentifier": "48",
+    "status": "deprecated"
   },
   {
     "id": "microsoft-research-jmbrainesp3248v03",
@@ -417,7 +419,8 @@
       "kit"
     ],
     "version": "1.0",
-    "designIdentifier": "46"
+    "designIdentifier": "46",
+    "status": "deprecated"
   },
   {
     "id": "microsoft-research-jmkeyboardkey46v11",
@@ -436,7 +439,8 @@
       "kit"
     ],
     "version": "1.1",
-    "designIdentifier": "46"
+    "designIdentifier": "46",
+    "status": "deprecated"
   },
   {
     "id": "microsoft-research-jmkeyboardkey46v12",
@@ -494,7 +498,8 @@
       939230090
     ],
     "version": "0.1",
-    "designIdentifier": "45"
+    "designIdentifier": "45",
+    "status": "deprecated"
   },
   {
     "id": "microsoft-research-jmpinheader45v02",
@@ -711,7 +716,8 @@
       981005156
     ],
     "version": "1.0",
-    "designIdentifier": "49"
+    "designIdentifier": "49",
+    "status": "deprecated"
   },
   {
     "id": "microsoft-research-jmslider49v11",
@@ -777,7 +783,8 @@
       899442616
     ],
     "version": "1.0A",
-    "designIdentifier": "18"
+    "designIdentifier": "18",
+    "status": "deprecated"
   },
   {
     "id": "microsoft-research-jmtemperaturehumidity18v11",

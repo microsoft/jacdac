@@ -9,5 +9,6 @@
     "link": "https://github.com/microsoft/jacdac-msr-modules",
     "tags": ["kit"],
     "services": [343122531],
+    "status": "deprecated",
     "productIdentifiers": [911541523]
 }

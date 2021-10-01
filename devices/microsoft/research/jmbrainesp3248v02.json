@@ -1,12 +1,11 @@
 {
-  "id": "microsoft-research-jmbrainesp3248v02",
-  "name": "JM Brain ESP32",
-  "company": "Microsoft Research",
-  "repo": "https://github.com/microsoft/pxt-jacdac/",
-  "services": [
-    342028028
-  ],
-  "productIdentifiers": [],
-  "version": "0.2",
-  "designIdentifier": "48"
+    "id": "microsoft-research-jmbrainesp3248v02",
+    "name": "JM Brain ESP32",
+    "company": "Microsoft Research",
+    "repo": "https://github.com/microsoft/pxt-jacdac/",
+    "services": [342028028],
+    "status": "deprecated",
+    "productIdentifiers": [],
+    "version": "0.2",
+    "designIdentifier": "48"
 }

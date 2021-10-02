@@ -847,6 +847,18 @@
     "status": "deprecated"
   },
   {
+    "id": "microsoft-research-mikrobuscarrierboard53v01",
+    "name": "MikrobusCarrierBoard ",
+    "company": "Microsoft Research",
+    "repo": "",
+    "services": [],
+    "productIdentifiers": [
+      961789360
+    ],
+    "version": "0.1",
+    "designIdentifier": "53"
+  },
+  {
     "id": "microbit-foundation-microbitv2",
     "name": "micro:bit V2",
     "company": "microbit foundation",

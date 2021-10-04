@@ -1,5 +1,97 @@
 [
   {
+    "id": "microsoft-research-jacdaccableextender38v10",
+    "name": "JacdacCableExtender ",
+    "company": "Microsoft Research",
+    "repo": "",
+    "services": [],
+    "productIdentifiers": [
+      928595161
+    ],
+    "version": "1.0",
+    "designIdentifier": "38"
+  },
+  {
+    "id": "microsoft-research-jacdacjoystick440344v03",
+    "name": "JacdacJoystick 44-0.3",
+    "company": "Microsoft Research",
+    "repo": "https://github.com/microsoft/jacdac-padauk",
+    "services": [
+      277836886
+    ],
+    "productIdentifiers": [
+      832285283
+    ],
+    "version": "0.3",
+    "designIdentifier": "44"
+  },
+  {
+    "id": "microsoft-research-jacdacmicrobitshieldlp29v03",
+    "name": "JacDacMicroBitShieldLP",
+    "company": "Microsoft Research",
+    "repo": "",
+    "services": [],
+    "productIdentifiers": [
+      1009620586
+    ],
+    "version": "0.3",
+    "designIdentifier": "29"
+  },
+  {
+    "id": "microsoft-research-jacdacmotiondetection54v01",
+    "name": "JacdacMotionDetection ",
+    "company": "Microsoft Research",
+    "repo": "https://github.com/microsoft/jacdac-padauk",
+    "services": [
+      293185353
+    ],
+    "productIdentifiers": [
+      1030407429
+    ],
+    "version": "0.1",
+    "designIdentifier": "54"
+  },
+  {
+    "id": "microsoft-research-jacdacpinheaders45v02",
+    "name": "JacdacPinHeaders ",
+    "company": "Microsoft Research",
+    "repo": "",
+    "services": [],
+    "productIdentifiers": [
+      970939382
+    ],
+    "version": "0.2",
+    "designIdentifier": "45"
+  },
+  {
+    "id": "microsoft-research-jacdactouchtest35v10",
+    "name": "JacdacTouchTest",
+    "company": "Microsoft Research",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      677752265
+    ],
+    "productIdentifiers": [
+      933677864
+    ],
+    "version": "1.0",
+    "designIdentifier": "35"
+  },
+  {
+    "id": "microsoft-research-jacdactouchtestelectrode36v10",
+    "name": "JacdacTouchTestElectrode",
+    "company": "Microsoft Research",
+    "repo": "",
+    "services": [
+      677752265
+    ],
+    "productIdentifiers": [
+      1026187559
+    ],
+    "version": "1.0",
+    "designIdentifier": "36"
+  },
+  {
     "id": "microsoft-research-jmaccelerometer30v02",
     "name": "JM Accelerometer",
     "company": "Microsoft Research",

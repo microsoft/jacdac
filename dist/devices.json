@@ -9,7 +9,8 @@
       928595161
     ],
     "version": "1.0",
-    "designIdentifier": "38"
+    "designIdentifier": "38",
+    "status": "experimental"
   },
   {
     "id": "microsoft-research-jacdacjoystick440344v03",
@@ -23,7 +24,8 @@
       832285283
     ],
     "version": "0.3",
-    "designIdentifier": "44"
+    "designIdentifier": "44",
+    "status": "experimental"
   },
   {
     "id": "microsoft-research-jacdacmicrobitshieldlp29v03",
@@ -35,7 +37,8 @@
       1009620586
     ],
     "version": "0.3",
-    "designIdentifier": "29"
+    "designIdentifier": "29",
+    "status": "experimental"
   },
   {
     "id": "microsoft-research-jacdacmotiondetection54v01",
@@ -49,7 +52,8 @@
       1030407429
     ],
     "version": "0.1",
-    "designIdentifier": "54"
+    "designIdentifier": "54",
+    "status": "experimental"
   },
   {
     "id": "microsoft-research-jacdacpinheaders45v02",
@@ -61,7 +65,8 @@
       970939382
     ],
     "version": "0.2",
-    "designIdentifier": "45"
+    "designIdentifier": "45",
+    "status": "experimental"
   },
   {
     "id": "microsoft-research-jacdactouchtest35v10",
@@ -75,7 +80,8 @@
       933677864
     ],
     "version": "1.0",
-    "designIdentifier": "35"
+    "designIdentifier": "35",
+    "status": "experimental"
   },
   {
     "id": "microsoft-research-jacdactouchtestelectrode36v10",
@@ -89,7 +95,8 @@
       1026187559
     ],
     "version": "1.0",
-    "designIdentifier": "36"
+    "designIdentifier": "36",
+    "status": "experimental"
   },
   {
     "id": "microsoft-research-jmaccelerometer30v02",

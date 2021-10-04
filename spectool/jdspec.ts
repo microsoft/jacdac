@@ -1939,7 +1939,7 @@ export function normalizeDeviceSpecification(dev: jdspec.DeviceSpec) {
         link: dev.link,
         services: dev.services,
         productIdentifiers: dev.productIdentifiers,
-        transport: dev.transport,
+        transport: dev.transport?.toLowerCase(),
         tags: dev.tags,
         firmwares: dev.firmwares,
         version: dev.version ? dev.version.replace(/^v/, "") : undefined,

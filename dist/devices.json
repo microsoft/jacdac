@@ -185,6 +185,7 @@
       342028028
     ],
     "productIdentifiers": [],
+    "transport": "serial",
     "version": "0.2",
     "designIdentifier": "48",
     "status": "deprecated"
@@ -200,6 +201,7 @@
     "productIdentifiers": [
       917230668
     ],
+    "transport": "serial",
     "version": "0.3",
     "designIdentifier": "48"
   },
@@ -868,7 +870,7 @@
     "productIdentifiers": [
       854992189
     ],
-    "transport": "USB",
+    "transport": "usb",
     "tags": [
       "kit"
     ],

@@ -1,12 +1,11 @@
 {
-  "id": "microsoft-research-jacdacmicrobitshieldlp29v03",
-  "name": "JacDacMicroBitShieldLP",
-  "company": "Microsoft Research",
-  "repo": "",
-  "services": [],
-  "productIdentifiers": [
-    1009620586
-  ],
-  "version": "0.3",
-  "designIdentifier": "29"
+    "id": "microsoft-research-jacdacmicrobitshieldlp29v03",
+    "name": "JacDacMicroBitShieldLP",
+    "company": "Microsoft Research",
+    "repo": "",
+    "services": [],
+    "productIdentifiers": [1009620586],
+    "version": "0.3",
+    "designIdentifier": "29",
+    "status": "experimental"
 }

@@ -1,29 +1,5 @@
 [
   {
-    "id": "microsoft-research-jacdachub39v03",
-    "name": "JacdacHub",
-    "company": "Microsoft Research",
-    "repo": "",
-    "services": [],
-    "productIdentifiers": [
-      917230668
-    ],
-    "version": "0.3",
-    "designIdentifier": "39"
-  },
-  {
-    "id": "microsoft-research-jacdacmicrobitshieldlp29v05",
-    "name": "JacDacMicroBitShieldLP ",
-    "company": "Microsoft Research",
-    "repo": "",
-    "services": [],
-    "productIdentifiers": [
-      974031363
-    ],
-    "version": "0.5",
-    "designIdentifier": "29"
-  },
-  {
     "id": "microsoft-research-jmaccelerometer30v02",
     "name": "JM Accelerometer",
     "company": "Microsoft Research",
@@ -430,6 +406,18 @@
     "version": "2.0"
   },
   {
+    "id": "microsoft-research-jmhub39v03",
+    "name": "JM Hub",
+    "company": "Microsoft Research",
+    "repo": "",
+    "services": [],
+    "productIdentifiers": [
+      917230668
+    ],
+    "version": "0.3",
+    "designIdentifier": "39"
+  },
+  {
     "id": "microsoft-research-jmkeyboardkey46v10",
     "name": "JM Keyboard Key",
     "company": "Microsoft Research",
@@ -496,6 +484,18 @@
     ],
     "productIdentifiers": [],
     "status": "deprecated"
+  },
+  {
+    "id": "microsoft-research-jmmicrobitshieldlp29v05",
+    "name": "JM MicroBit Shield LP",
+    "company": "Microsoft Research",
+    "repo": "",
+    "services": [],
+    "productIdentifiers": [
+      974031363
+    ],
+    "version": "0.5",
+    "designIdentifier": "29"
   },
   {
     "id": "microsoft-research-jmmotorv21",

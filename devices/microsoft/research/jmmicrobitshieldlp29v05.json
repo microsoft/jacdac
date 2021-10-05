@@ -1,12 +1,10 @@
 {
-  "id": "microsoft-research-jmmicrobitshieldlp29v05",
-  "name": "JM MicroBit Shield LP",
-  "company": "Microsoft Research",
-  "repo": "",
-  "services": [],
-  "productIdentifiers": [
-    974031363
-  ],
-  "version": "0.5",
-  "designIdentifier": "29"
+    "id": "microsoft-research-jmmicrobitshieldlp-29-v0.5",
+    "name": "JM MicroBit Shield LP",
+    "company": "Microsoft Research",
+    "repo": "",
+    "services": [],
+    "productIdentifiers": [974031363],
+    "version": "0.5",
+    "designIdentifier": "29"
 }

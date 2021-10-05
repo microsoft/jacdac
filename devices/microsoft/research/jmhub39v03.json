@@ -1,12 +1,10 @@
 {
-  "id": "microsoft-research-jmhub-39-v0.3",
-  "name": "JM Hub",
-  "company": "Microsoft Research",
-  "repo": "",
-  "services": [],
-  "productIdentifiers": [
-    917230668
-  ],
-  "version": "0.3",
-  "designIdentifier": "39"
+    "id": "microsoft-research-jmhub-39-v0.3",
+    "name": "JM Hub",
+    "company": "Microsoft Research",
+    "repo": "",
+    "services": [],
+    "productIdentifiers": [917230668],
+    "version": "0.3",
+    "designIdentifier": "39"
 }

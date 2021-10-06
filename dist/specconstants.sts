@@ -5213,27 +5213,70 @@ namespace jacdac {
 
     export const enum WifiCmd {
         /**
-         * Argument: results pipe (bytes). Initiate search for WiFi networks. Results are returned via pipe, one entry per packet.
+         * Argument: results pipe (bytes). Return list of WiFi network from the last scan.
+         * Scans are performed periodically while not connected (in particular, on startup and after current connection drops),
+         * as well as upon `reconnect` and `scan` commands.
          *
          * ```
          * const [results] = jdunpack<[Buffer]>(buf, "b[12]")
          * ```
          */
-        Scan = 0x80,
+        LastScanResults = 0x80,
 
         /**
-         * Connect to named network.
+         * Automatically connect to named network if available. Also set password if network is not open.
          *
          * ```
          * const [ssid, password] = jdunpack<[string, string]>(buf, "z z")
          * ```
          */
-        Connect = 0x81,
+        AddNetwork = 0x81,
 
         /**
-         * No args. Disconnect from current WiFi network if any.
+         * No args. Initiate a scan, wait for results, disconnect from current WiFi network if any,
+         * and then reconnect (using regular algorithm, see `set_network_priority`).
          */
-        Disconnect = 0x82,
+        Reconnect = 0x82,
+
+        /**
+         * Argument: ssid string (bytes). Prevent from automatically connecting to named network in future.
+         * Forgetting a network resets its priority to `0`.
+         *
+         * ```
+         * const [ssid] = jdunpack<[string]>(buf, "s")
+         * ```
+         */
+        ForgetNetwork = 0x83,
+
+        /**
+         * No args. Clear the list of known networks.
+         */
+        ForgetAllNetworks = 0x84,
+
+        /**
+         * Set connection priority for a network.
+         * By default, all known networks have priority of `0`.
+         *
+         * ```
+         * const [priority, ssid] = jdunpack<[number, string]>(buf, "i16 s")
+         * ```
+         */
+        SetNetworkPriority = 0x85,
+
+        /**
+         * No args. Initiate search for WiFi networks. Generates `scan_complete` event.
+         */
+        Scan = 0x86,
+
+        /**
+         * Argument: results pipe (bytes). Return list of known WiFi networks.
+         * `flags` is currently always 0.
+         *
+         * ```
+         * const [results] = jdunpack<[Buffer]>(buf, "b[12]")
+         * ```
+         */
+        ListKnownNetworks = 0x87,
     }
 
 
@@ -5244,8 +5287,24 @@ namespace jacdac {
      * ```
      */
 
+    /**
+     * pipe_report NetworkResults
+     * ```
+     * const [priority, flags, ssid] = jdunpack<[number, number, string]>(buf, "i16 i16 s")
+     * ```
+     */
+
 
     export const enum WifiReg {
+        /**
+         * Read-write bool (uint8_t). Determines whether the WiFi radio is enabled. It starts enabled upon reset.
+         *
+         * ```
+         * const [enabled] = jdunpack<[number]>(buf, "u8")
+         * ```
+         */
+        Enabled = 0x1,
+
         /**
          * Read-only bool (uint8_t). Indicates whether or not we currently have an IP address assigned.
          *
@@ -5254,6 +5313,34 @@ namespace jacdac {
          * ```
          */
         Connected = 0x180,
+
+        /**
+         * Read-only bytes. 0, 4 or 16 byte buffer with the IPv4 or IPv6 address assigned to device if any.
+         *
+         * ```
+         * const [ipAddress] = jdunpack<[Buffer]>(buf, "b[16]")
+         * ```
+         */
+        IpAddress = 0x181,
+
+        /**
+         * Read-only bytes. The 6-byte MAC address of the device.
+         *
+         * ```
+         * const [eui48] = jdunpack<[Buffer]>(buf, "b[6]")
+         * ```
+         */
+        Eui48 = 0x182,
+
+        /**
+         * Read-only string (bytes). SSID of the access-point to which device is currently connected.
+         * Empty string if not connected.
+         *
+         * ```
+         * const [ssid] = jdunpack<[string]>(buf, "s[32]")
+         * ```
+         */
+        Ssid = 0x183,
     }
 
     export const enum WifiEvent {
@@ -5268,6 +5355,18 @@ namespace jacdac {
          */
         //% block="lost ip"
         LostIp = 0x2,
+
+        /**
+         * A WiFi network scan has completed. Results can be read with the `last_scan_results` command.
+         * The event indicates how many networks where found, and how many are considered
+         * as candidates for connection.
+         *
+         * ```
+         * const [numNetworks, numKnownNetworks] = jdunpack<[number, number]>(buf, "u16 u16")
+         * ```
+         */
+        //% block="scan complete"
+        ScanComplete = 0x80,
     }
 
 }

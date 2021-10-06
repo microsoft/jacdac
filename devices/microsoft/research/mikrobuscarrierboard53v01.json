@@ -6,5 +6,6 @@
     "services": [],
     "productIdentifiers": [961789360],
     "version": "0.1",
-    "designIdentifier": "53"
+    "designIdentifier": "53",
+    "status": "experimental"
 }

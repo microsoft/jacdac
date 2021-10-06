@@ -1,6 +1,6 @@
 # WIFI
 
-    identifier: 0x172dd15d
+    identifier: 0x18aae1fa
     camel: wifi
     group: iot
 

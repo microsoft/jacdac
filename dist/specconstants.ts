@@ -4932,6 +4932,11 @@ export enum WifiEvent {
      * ```
      */
     ScanComplete = 0x80,
+
+    /**
+     * Emitted whenever the list of known networks is updated.
+     */
+    NetworksChanged = 0x81,
 }
 
 // Service: Wind direction

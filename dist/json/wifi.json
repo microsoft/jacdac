@@ -391,6 +391,13 @@
         }
       ],
       "packFormat": "u16 u16"
+    },
+    {
+      "kind": "event",
+      "name": "networks_changed",
+      "identifier": 129,
+      "description": "Emitted whenever the list of known networks is updated.",
+      "fields": []
     }
   ],
   "tags": [],

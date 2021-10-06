@@ -130,3 +130,7 @@ Emitted when disconnected from network.
 A WiFi network scan has completed. Results can be read with the `last_scan_results` command.
 The event indicates how many networks where found, and how many are considered
 as candidates for connection.
+
+    event networks_changed @ 0x81
+
+Emitted whenever the list of known networks is updated.

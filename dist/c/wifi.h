@@ -147,4 +147,9 @@ typedef struct jd_wifi_scan_complete {
 } jd_wifi_scan_complete_t;
 
 
+/**
+ * Emitted whenever the list of known networks is updated.
+ */
+#define JD_WIFI_EV_NETWORKS_CHANGED 0x81
+
 #endif

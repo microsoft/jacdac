@@ -515,7 +515,8 @@
       917230668
     ],
     "version": "0.3",
-    "designIdentifier": "39"
+    "designIdentifier": "39",
+    "status": "experimental"
   },
   {
     "id": "microsoft-research-jmkeyboardkey46v10",
@@ -595,7 +596,8 @@
       974031363
     ],
     "version": "0.5",
-    "designIdentifier": "29"
+    "designIdentifier": "29",
+    "status": "experimental"
   },
   {
     "id": "microsoft-research-jmmotorv21",
@@ -958,7 +960,8 @@
       961789360
     ],
     "version": "0.1",
-    "designIdentifier": "53"
+    "designIdentifier": "53",
+    "status": "experimental"
   },
   {
     "id": "microbit-foundation-microbitv2",

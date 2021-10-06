@@ -8,7 +8,7 @@
     "_base"
   ],
   "notes": {
-    "short": "Discovery and connection to WiFi networks. Separate TCP service is used for data transfer."
+    "short": "Discovery and connection to WiFi networks. Separate TCP service can be used for data transfer.\n\nThe device controlled by this service is meant to connect automatically, once configured.\nTo that end, it keeps a list of known WiFi networks, with priorities and passwords.\nIt will connect to the available network with numerically highest priority,\nbreaking ties in priority by signal strength (typically all known networks have priority of `0`)."
   },
   "classIdentifier": 413852154,
   "enums": {
@@ -100,9 +100,9 @@
     },
     {
       "kind": "command",
-      "name": "scan",
+      "name": "last_scan_results",
       "identifier": 128,
-      "description": "Initiate search for WiFi networks. Results are returned via pipe, one entry per packet.",
+      "description": "Return list of WiFi network from the last scan.\nScans are performed periodically while not connected (in particular, on startup and after current connection drops),\nas well as upon `reconnect` and `scan` commands.",
       "fields": [
         {
           "name": "results",
@@ -110,14 +110,14 @@
           "storage": 12
         }
       ],
-      "pipeType": "scan",
+      "pipeType": "last_scan_results",
       "packFormat": "b[12]"
     },
     {
       "kind": "pipe_report",
       "name": "results",
       "identifier": 0,
-      "description": "Initiate search for WiFi networks. Results are returned via pipe, one entry per packet.",
+      "description": "Return list of WiFi network from the last scan.\nScans are performed periodically while not connected (in particular, on startup and after current connection drops),\nas well as upon `reconnect` and `scan` commands.",
       "fields": [
         {
           "name": "flags",
@@ -159,14 +159,14 @@
           "maxBytes": 33
         }
       ],
-      "pipeType": "scan",
+      "pipeType": "last_scan_results",
       "packFormat": "u32 u32 i8 u8 b[6] s[33]"
     },
     {
       "kind": "command",
-      "name": "connect",
+      "name": "add_network",
       "identifier": 129,
-      "description": "Connect to named network.",
+      "description": "Automatically connect to named network if available. Also set password if network is not open.",
       "fields": [
         {
           "name": "ssid",
@@ -184,10 +184,115 @@
     },
     {
       "kind": "command",
-      "name": "disconnect",
+      "name": "reconnect",
       "identifier": 130,
-      "description": "Disconnect from current WiFi network if any.",
+      "description": "Initiate a scan, wait for results, disconnect from current WiFi network if any,\nand then reconnect (using regular algorithm, see `set_network_priority`).",
       "fields": []
+    },
+    {
+      "kind": "command",
+      "name": "forget_network",
+      "identifier": 131,
+      "description": "Prevent from automatically connecting to named network in future.\nForgetting a network resets its priority to `0`.",
+      "fields": [
+        {
+          "name": "ssid",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "packFormat": "s"
+    },
+    {
+      "kind": "command",
+      "name": "forget_all_networks",
+      "identifier": 132,
+      "description": "Clear the list of known networks.",
+      "fields": []
+    },
+    {
+      "kind": "command",
+      "name": "set_network_priority",
+      "identifier": 133,
+      "description": "Set connection priority for a network.\nBy default, all known networks have priority of `0`.",
+      "fields": [
+        {
+          "name": "priority",
+          "type": "i16",
+          "storage": -2,
+          "isSimpleType": true
+        },
+        {
+          "name": "ssid",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "packFormat": "i16 s"
+    },
+    {
+      "kind": "command",
+      "name": "scan",
+      "identifier": 134,
+      "description": "Initiate search for WiFi networks. Generates `scan_complete` event.",
+      "fields": []
+    },
+    {
+      "kind": "command",
+      "name": "list_known_networks",
+      "identifier": 135,
+      "description": "Return list of known WiFi networks.\n`flags` is currently always 0.",
+      "fields": [
+        {
+          "name": "results",
+          "type": "pipe",
+          "storage": 12
+        }
+      ],
+      "pipeType": "list_known_networks",
+      "packFormat": "b[12]"
+    },
+    {
+      "kind": "pipe_report",
+      "name": "network_results",
+      "identifier": 0,
+      "description": "Return list of known WiFi networks.\n`flags` is currently always 0.",
+      "fields": [
+        {
+          "name": "priority",
+          "type": "i16",
+          "storage": -2,
+          "isSimpleType": true
+        },
+        {
+          "name": "flags",
+          "type": "i16",
+          "storage": -2,
+          "isSimpleType": true
+        },
+        {
+          "name": "ssid",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "pipeType": "list_known_networks",
+      "packFormat": "i16 i16 s"
+    },
+    {
+      "kind": "rw",
+      "name": "enabled",
+      "identifier": 1,
+      "description": "Determines whether the WiFi radio is enabled. It starts enabled upon reset.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "bool",
+          "storage": 1
+        }
+      ],
+      "identifierName": "intensity",
+      "packFormat": "u8"
     },
     {
       "kind": "ro",
@@ -204,6 +309,53 @@
       "packFormat": "u8"
     },
     {
+      "kind": "ro",
+      "name": "ip_address",
+      "identifier": 385,
+      "description": "0, 4 or 16 byte buffer with the IPv4 or IPv6 address assigned to device if any.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "bytes",
+          "storage": 16,
+          "isSimpleType": true,
+          "maxBytes": 16
+        }
+      ],
+      "packFormat": "b[16]"
+    },
+    {
+      "kind": "ro",
+      "name": "eui_48",
+      "identifier": 386,
+      "description": "The 6-byte MAC address of the device.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "bytes",
+          "storage": 6,
+          "isSimpleType": true,
+          "maxBytes": 6
+        }
+      ],
+      "packFormat": "b[6]"
+    },
+    {
+      "kind": "ro",
+      "name": "ssid",
+      "identifier": 387,
+      "description": "SSID of the access-point to which device is currently connected.\nEmpty string if not connected.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "string",
+          "storage": 32,
+          "maxBytes": 32
+        }
+      ],
+      "packFormat": "s[32]"
+    },
+    {
       "kind": "event",
       "name": "got_ip",
       "identifier": 1,
@@ -218,6 +370,27 @@
       "description": "Emitted when disconnected from network.",
       "fields": [],
       "identifierName": "inactive"
+    },
+    {
+      "kind": "event",
+      "name": "scan_complete",
+      "identifier": 128,
+      "description": "A WiFi network scan has completed. Results can be read with the `last_scan_results` command.\nThe event indicates how many networks where found, and how many are considered\nas candidates for connection.",
+      "fields": [
+        {
+          "name": "num_networks",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "num_known_networks",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u16 u16"
     }
   ],
   "tags": [],

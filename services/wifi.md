@@ -4,7 +4,12 @@
     camel: wifi
     group: iot
 
-Discovery and connection to WiFi networks. Separate TCP service is used for data transfer.
+Discovery and connection to WiFi networks. Separate TCP service can be used for data transfer.
+
+The device controlled by this service is meant to connect automatically, once configured.
+To that end, it keeps a list of known WiFi networks, with priorities and passwords.
+It will connect to the available network with numerically highest priority,
+breaking ties in priority by signal strength (typically all known networks have priority of `0`).
 
 ## Commands
 
@@ -21,7 +26,7 @@ Discovery and connection to WiFi networks. Separate TCP service is used for data
         IEEE_802_11AX = 0x2000
         IEEE_802_LongRange = 0x8000
     }
-    command scan @ 0x80 {
+    command last_scan_results @ 0x80 {
         results: pipe
     }
     pipe report results {
@@ -30,27 +35,82 @@ Discovery and connection to WiFi networks. Separate TCP service is used for data
         rssi: i8 dB {typical_min = -100, typical_max = -20}
         channel: u8 {typical_min = 1, typical_max = 13}
         bssid: u8[6]
-        ssid: string { max_bytes = 33}
+        ssid: string {max_bytes = 33}
     }
 
-Initiate search for WiFi networks. Results are returned via pipe, one entry per packet.
+Return list of WiFi network from the last scan.
+Scans are performed periodically while not connected (in particular, on startup and after current connection drops),
+as well as upon `reconnect` and `scan` commands.
 
-    command connect @ 0x81 {
+    command add_network @ 0x81 {
         ssid: string0
         password?: string0
     }
 
-Connect to named network.
+Automatically connect to named network if available. Also set password if network is not open.
 
-    command disconnect @ 0x82 {}
+    command reconnect @ 0x82 {}
 
-Disconnect from current WiFi network if any.
+Initiate a scan, wait for results, disconnect from current WiFi network if any,
+and then reconnect (using regular algorithm, see `set_network_priority`).
+
+    command forget_network @ 0x83 {
+        ssid: string
+    }
+
+Prevent from automatically connecting to named network in future.
+Forgetting a network resets its priority to `0`.
+
+    command forget_all_networks @ 0x84 {}
+
+Clear the list of known networks.
+
+    command set_network_priority @ 0x85 {
+        priority: i16
+        ssid: string
+    }
+
+Set connection priority for a network.
+By default, all known networks have priority of `0`.
+
+    command scan @ 0x86 {}
+
+Initiate search for WiFi networks. Generates `scan_complete` event.
+
+    command list_known_networks @ 0x87 {
+        results: pipe
+    }
+    pipe report network_results {
+        priority: i16
+        flags: i16
+        ssid: string
+    }
+
+Return list of known WiFi networks.
+`flags` is currently always 0.
 
 ## Registers
+
+    rw enabled: bool @ intensity
+
+Determines whether the WiFi radio is enabled. It starts enabled upon reset.
 
     ro connected: bool @ 0x180
 
 Indicates whether or not we currently have an IP address assigned.
+
+    ro ip_address: bytes {max_bytes = 16} @ 0x181
+
+0, 4 or 16 byte buffer with the IPv4 or IPv6 address assigned to device if any.
+
+    ro eui_48: bytes {max_bytes = 6} @ 0x182
+
+The 6-byte MAC address of the device.
+
+    ro ssid: string {max_bytes = 32} @ 0x183
+
+SSID of the access-point to which device is currently connected.
+Empty string if not connected.
 
 ## Events
 
@@ -61,3 +121,12 @@ Emitted upon successful join and IP address assignment.
     event lost_ip @ inactive
 
 Emitted when disconnected from network.
+
+    event scan_complete @ 0x80 {
+        num_networks: u16
+        num_known_networks: u16
+    }
+
+A WiFi network scan has completed. Results can be read with the `last_scan_results` command.
+The event indicates how many networks where found, and how many are considered
+as candidates for connection.

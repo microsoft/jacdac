@@ -16,7 +16,7 @@
     "id": "microsoft-research-jacdacjoystick440344v03",
     "name": "JacdacJoystick 44-0.3",
     "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/jacdac-padauk",
+    "link": "https://github.com/microsoft/jacdac-padauk",
     "services": [
       277836886
     ],
@@ -44,7 +44,7 @@
     "id": "microsoft-research-jacdacmotiondetection54v01",
     "name": "JacdacMotionDetection ",
     "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/jacdac-padauk",
+    "link": "https://github.com/microsoft/jacdac-padauk",
     "services": [
       293185353
     ],
@@ -561,7 +561,7 @@
     "id": "microsoft-research-jmkeyboardkey46v12",
     "name": "JM Keyboard Key",
     "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/jacdac-padauk",
+    "link": "https://github.com/microsoft/jacdac-padauk",
     "services": [
       343122531
     ],

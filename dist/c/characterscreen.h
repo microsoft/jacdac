@@ -34,12 +34,12 @@
 #define JD_CHARACTER_SCREEN_REG_TEXT_DIRECTION 0x82
 
 /**
- * Constant uint8_t. Gets the number of rows.
+ * Constant # uint8_t. Gets the number of rows.
  */
 #define JD_CHARACTER_SCREEN_REG_ROWS 0x180
 
 /**
- * Constant uint8_t. Gets the number of columns.
+ * Constant # uint8_t. Gets the number of columns.
  */
 #define JD_CHARACTER_SCREEN_REG_COLUMNS 0x181
 

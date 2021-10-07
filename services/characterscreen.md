@@ -32,11 +32,11 @@ Describes the type of character LED screen.
 
 Specifies the RTL or LTR direction of the text.
 
-    const rows: u8 @ 0x180
+    const rows: u8 # @ 0x180
 
 Gets the number of rows.
 
-    const columns: u8 @ 0x181
+    const columns: u8 # @ 0x181
 
 Gets the number of columns.
 

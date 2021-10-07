@@ -1065,7 +1065,7 @@ namespace Jacdac {
         TextDirection = 0x82,
 
         /**
-         * Constant uint8_t. Gets the number of rows.
+         * Constant # uint8_t. Gets the number of rows.
          *
          * ```
          * const [rows] = jdunpack<[number]>(buf, "u8")
@@ -1074,7 +1074,7 @@ namespace Jacdac {
         Rows = 0x180,
 
         /**
-         * Constant uint8_t. Gets the number of columns.
+         * Constant # uint8_t. Gets the number of columns.
          *
          * ```
          * const [columns] = jdunpack<[number]>(buf, "u8")

@@ -325,10 +325,10 @@
       "packFormat": "b[16]"
     },
     {
-      "kind": "ro",
+      "kind": "const",
       "name": "eui_48",
       "identifier": 386,
-      "description": "The 6-byte MAC address of the device.",
+      "description": "The 6-byte MAC address of the device. If a device does MAC address randomization it will have to \"restart\".",
       "fields": [
         {
           "name": "_",

@@ -4892,7 +4892,7 @@ export enum WifiReg {
     IpAddress = 0x181,
 
     /**
-     * Read-only bytes. The 6-byte MAC address of the device.
+     * Constant bytes. The 6-byte MAC address of the device. If a device does MAC address randomization it will have to "restart".
      *
      * ```
      * const [eui48] = jdunpack<[Uint8Array]>(buf, "b[6]")

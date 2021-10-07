@@ -103,9 +103,9 @@ Indicates whether or not we currently have an IP address assigned.
 
 0, 4 or 16 byte buffer with the IPv4 or IPv6 address assigned to device if any.
 
-    ro eui_48: bytes {max_bytes = 6} @ 0x182
+    const eui_48: bytes {max_bytes = 6} @ 0x182
 
-The 6-byte MAC address of the device.
+The 6-byte MAC address of the device. If a device does MAC address randomization it will have to "restart".
 
     ro ssid: string {max_bytes = 32} @ 0x183
 

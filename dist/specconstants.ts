@@ -944,6 +944,7 @@ export const SRV_CHARACTER_SCREEN = 0x1f37c56a
 export enum CharacterScreenVariant { // uint8_t
     LCD = 0x1,
     OLED = 0x2,
+    Braille = 0x3,
 }
 
 

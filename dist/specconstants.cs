@@ -1018,6 +1018,7 @@ namespace Jacdac {
     public enum CharacterScreenVariant: byte { // uint8_t
         LCD = 0x1,
         OLED = 0x2,
+        Braille = 0x3,
     }
 
 

@@ -17,7 +17,8 @@
       "storage": 1,
       "members": {
         "LCD": 1,
-        "OLED": 2
+        "OLED": 2,
+        "Braille": 3
       }
     },
     "TextDirection": {
@@ -126,6 +127,7 @@
           "storage": 1
         }
       ],
+      "optional": true,
       "identifierName": "intensity",
       "packFormat": "u0.8"
     },

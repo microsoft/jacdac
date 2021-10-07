@@ -11,13 +11,14 @@ A screen that displays characters.
 
 Text to show. Use `\n` to break lines.
 
-    rw brightness: u0.8 / @ intensity
+    rw brightness?: u0.8 / @ intensity
 
 Brightness of the screen. `0` means off.
 
     enum Variant : u8 {
         LCD = 1,
-        OLED = 2
+        OLED = 2,
+        Braille = 3,
     }
     const variant?: Variant @ variant
 

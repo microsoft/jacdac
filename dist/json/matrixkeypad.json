@@ -177,6 +177,7 @@
       "fields": [
         {
           "name": "_",
+          "unit": "#",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true
@@ -192,6 +193,7 @@
       "fields": [
         {
           "name": "_",
+          "unit": "#",
           "type": "u8",
           "storage": 1,
           "isSimpleType": true

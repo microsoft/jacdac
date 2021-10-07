@@ -16,11 +16,11 @@ A matrix of buttons connected as a keypad
 The coordinate of the button currently pressed. Keys are zero-indexed from left to right, top to bottom:
 ``row = index / columns``, ``column = index % columns``.
 
-    const rows: u8 @ 0x180
+    const rows: u8 # @ 0x180
 
 Number of rows in the matrix
 
-    const columns: u8 @ 0x181
+    const columns: u8 # @ 0x181
 
 Number of columns in the matrix
 

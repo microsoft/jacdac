@@ -21,12 +21,12 @@ typedef struct jd_matrix_keypad_pressed {
 
 
 /**
- * Constant uint8_t. Number of rows in the matrix
+ * Constant # uint8_t. Number of rows in the matrix
  */
 #define JD_MATRIX_KEYPAD_REG_ROWS 0x180
 
 /**
- * Constant uint8_t. Number of columns in the matrix
+ * Constant # uint8_t. Number of columns in the matrix
  */
 #define JD_MATRIX_KEYPAD_REG_COLUMNS 0x181
 

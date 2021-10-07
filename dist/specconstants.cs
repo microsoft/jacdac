@@ -2519,7 +2519,7 @@ namespace Jacdac {
         Pressed = 0x101,
 
         /**
-         * Constant uint8_t. Number of rows in the matrix
+         * Constant # uint8_t. Number of rows in the matrix
          *
          * ```
          * const [rows] = jdunpack<[number]>(buf, "u8")
@@ -2528,7 +2528,7 @@ namespace Jacdac {
         Rows = 0x180,
 
         /**
-         * Constant uint8_t. Number of columns in the matrix
+         * Constant # uint8_t. Number of columns in the matrix
          *
          * ```
          * const [columns] = jdunpack<[number]>(buf, "u8")

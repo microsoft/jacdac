@@ -356,6 +356,25 @@
       "packFormat": "s[32]"
     },
     {
+      "kind": "ro",
+      "name": "rssi",
+      "identifier": 388,
+      "description": "Current signal strength. Returns -128 when not connected.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "dB",
+          "type": "i8",
+          "storage": -1,
+          "isSimpleType": true,
+          "typicalMin": -128,
+          "typicalMax": -20
+        }
+      ],
+      "volatile": true,
+      "packFormat": "i8"
+    },
+    {
       "kind": "event",
       "name": "got_ip",
       "identifier": 1,

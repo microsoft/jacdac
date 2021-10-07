@@ -4910,6 +4910,15 @@ export enum WifiReg {
      * ```
      */
     Ssid = 0x183,
+
+    /**
+     * Read-only dB int8_t. Current signal strength. Returns -128 when not connected.
+     *
+     * ```
+     * const [rssi] = jdunpack<[number]>(buf, "i8")
+     * ```
+     */
+    Rssi = 0x184,
 }
 
 export enum WifiEvent {

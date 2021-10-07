@@ -126,6 +126,11 @@ typedef struct jd_wifi_network_results {
 #define JD_WIFI_REG_SSID 0x183
 
 /**
+ * Read-only dB int8_t. Current signal strength. Returns -128 when not connected.
+ */
+#define JD_WIFI_REG_RSSI 0x184
+
+/**
  * Emitted upon successful join and IP address assignment.
  */
 #define JD_WIFI_EV_GOT_IP JD_EV_ACTIVE

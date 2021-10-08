@@ -14,6 +14,7 @@ aaaaad,29,0.3,Low power micro:bit jacdapter,aka.ms,0x3c2d966a
 aaaaae,10,1.3,PADAUK Button,aka.ms,0x357084e1
 aaaaaf,49,1.0,Slider,aka.ms,0x3a78f364
 aaaaag,18,1.1,Temperature and humidity,aka.ms,0x3156cfd7
+aaaaah,26,1.1,JacdacRotary,aka.ms,0x31736afd
 aaaaal,34,1.3,JacdacAccessSwitchInput,aka.ms,0x39842fd9
 aaaaam,44,0.2,JacdacJoystick,aka.ms,0x3a3320ac
 aaaaan,40,0.2,JacdacG0Button,aka.ms,0x3865780e
@@ -25,4 +26,5 @@ aaaaat,58,0.1,JacdacRgbLedBar10,aka.ms,0x3e60b6fb
 aaaaau,48,0.3,JacdacBrainESP32,aka.ms,0x36abd44c
 aaaaaw,60,0.1,JacdacRgbLedGeneric,aka.ms,0x39ae4b81
 aaaaax,44,0.3,JacdacJoystick,aka.ms,0x319baa63
+aaaaay,59,0.1,JacdacBrainRP2040,aka.ms,0x3308bb88
 aaaaaz,29,0.4,JacDacMicroBitShieldLP,aka.ms,0x3a0e8a03

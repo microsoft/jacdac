@@ -506,6 +506,21 @@
     "version": "2.0"
   },
   {
+    "id": "microsoft-research-jmhapticmach101v10",
+    "name": "JM Haptic MACH-1.0",
+    "company": "Microsoft Research",
+    "description": "JM Haptic MACH-1.0",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      406832290
+    ],
+    "productIdentifiers": [
+      1022649261
+    ],
+    "version": "1.0",
+    "designIdentifier": "1"
+  },
+  {
     "id": "microsoft-research-jmhub39v03",
     "name": "JM Hub",
     "company": "Microsoft Research",

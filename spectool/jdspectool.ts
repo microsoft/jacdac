@@ -41,13 +41,10 @@ function toPxtJson(spec: jdspec.ServiceSpec) {
             description: notes["short"],
             files: ["constants.ts", "client.g.ts"],
             testFiles: ["test.ts"],
-            supportedTargets: ["arcade", "microbit", "maker"],
+            supportedTargets: ["microbit", "arcade", "maker"],
             dependencies: {
                 core: "*",
                 jacdac: "github:microsoft/pxt-jacdac",
-            },
-            testDependencies: {
-                "nucleo-f411re": "*",
             },
         },
         null,

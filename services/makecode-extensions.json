@@ -54,6 +54,15 @@
     }
   },
   {
+    "service": "codalmessagebus",
+    "client": {
+      "name": "jacdac-codal-message-bus",
+      "repo": "microsoft/pxt-jacdac/codal-message-bus",
+      "qName": "modules.CodalMessageBusClient",
+      "default": "modules.codalMessageBus"
+    }
+  },
+  {
     "service": "color",
     "client": {
       "name": "jacdac-color",

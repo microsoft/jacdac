@@ -33,10 +33,10 @@ function values<T>(o: jdspec.SMap<T>): T[] {
 }
 
 function toPxtJson(spec: jdspec.ServiceSpec) {
-    const { shortId, notes } = spec
+    const { camelName, notes } = spec
     return JSON.stringify(
         {
-            name: `jacdac-${shortId}`,
+            name: `jacdac-${dashify(camelName)}`,
             version: "0.0.0",
             description: notes["short"],
             files: ["constants.ts", "client.g.ts"],

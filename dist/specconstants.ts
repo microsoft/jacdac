@@ -3228,6 +3228,8 @@ export enum ProtoTestCmd {
  */
 
 
+// Service: Proxy
+export const SRV_PROXY = 0x16f19949
 // Service: Pulse Oximeter
 export const SRV_PULSE_OXIMETER = 0x10bb4eb6
 export enum PulseOximeterReg {

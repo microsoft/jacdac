@@ -3524,6 +3524,10 @@ namespace jacdac {
 
 }
 namespace jacdac {
+    // Service: Proxy
+    export const SRV_PROXY = 0x16f19949
+}
+namespace jacdac {
     // Service: Pulse Oximeter
     export const SRV_PULSE_OXIMETER = 0x10bb4eb6
     export const enum PulseOximeterReg {

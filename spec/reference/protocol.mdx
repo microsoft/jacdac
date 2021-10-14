@@ -224,6 +224,27 @@ If these are handled purely through events, the client will maintain the pressed
 For this, it's critical not to swap order of up/down events.
 To recognize button combinations, it's important not to swap order of events from the two services.
 
+#### Reliable actions
+
+Devices can support reliable actions, which use the same encoding as events, but are commands, not reports.
+The `service_command` field is subdivided as follows:
+
+| Bits | Function 
+|------|----------------------
+| 15   | Always set for reliable actions
+| 14:8 | Sequential counter
+| 7:0  | Action code
+
+Only action codes in range `0x00-0xff` are supported.
+Just as for events, the sequential counter is per-device (but separate from the event sequential counter).
+Reliable actions should be processed exactly like events - if a command comes out of order, it should be ignored.
+The repetition scheme is the same as for events.
+
+Unlike events, reliable actions can be sent with ACK requested.
+If an ACK is received, further re-transmissions of action can be skipped.
+
+Support for reliable actions is announced as a flag in the announce packet.
+
 
 ### The control service
 
@@ -271,7 +292,8 @@ The following table lists allowed values for `service_index`.
 `0x3d`           | Reserved
 `0x3e`           | Pipe packet (see below)
 `0x3f`           | ACK packet (see below)
-`0x40`-`0xff`    | Reserved
+`0x40`-`0x7a`    | Error responses for services
+`0x7b`-`0xff`    | Reserved
 
 #### flags
 
@@ -281,12 +303,12 @@ If the second bit of `flags` is set
 
 If the third bit of `flags` is set (_multicast commands_), then the low order 32 bits of the `device_identifier` field are treated as a service class. The command is then directed to all services with that service class.
 
-| Flag bit | Interpretation 	|
-|--------|------------	|
-| `0x01` | if set, the `device_identifier` is the recipient of command; if clear, the `device_identifier` is the sender of a report;
-| `0x02` | if set, an ACK should be issued with CRC |
-| `0x04` | if set, the device_identifier contains target service class number (multicast) |
-| `0x80` | if set, the packet comes from Jacdac vNext and should be ignored by the current implementation |
+| Flag bit | Interpretation
+|----------|-------------------------------------
+| `0x01`   | if set, the `device_identifier` is the recipient of command; if clear, the `device_identifier` is the sender of a report
+| `0x02`   | if set, an ACK should be issued with CRC
+| `0x04`   | if set, the device_identifier contains target service class number (multicast)
+| `0x80`   | if set, the packet comes from Jacdac vNext and should be ignored by the current implementation
 
 ### Acks
 
@@ -382,14 +404,27 @@ pipe packet, without any additional info about how to chunk the data
 Multiple packets can be grouped in a frame, but are still handled separately at the
 destination.
 
-### Event subscriptions
+### Error responses
 
-A device like accelerometer can send events eg. when a 2g shock is detected,
-when it's moved face-down, etc.
-These events a normally just broadcast on the bus, using standard command `0x001`.
+When a device cannot handle a command, it can send an error response.
+This is to indicate that it correctly received the command packet, but will not handle it.
+An error response uses the same `service_command`, `device_identifier`, and `service_index`
+as the offending command, except that it sets the second-highest bit of `service_index`
+(`service_index` values between `0x40` and `0x7a` are allocated for this purpose).
 
-For reliable event delivery, a pipe can be established, and events delivered
-over that pipe.
+The payload of the error response can be empty, indicating a general error.
+Otherwise, the first byte of the response indicates the error code,
+and the rest is service- or device-specific.
+
+| Code          | Description
+|--------------:| ------------------------------------
+| `0x00`        | General error
+| `0x01`        | Command not supported
+| `0x02`        | Invalid command arguments
+| `0x03`        | Invalid state
+| `0x04`-`0x7f` | Reserved
+| `0x80`-`0x8f` | Busy, try again in approx. `16 << (code - 0x80)` ms
+| `0x90`-`0xff` | Reserved
 
 ## Physical Layer
 

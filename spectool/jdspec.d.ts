@@ -684,6 +684,10 @@ declare namespace jdspec {
             /** project name */
             name: string
             /**
+             * Supported targets if restricted
+             */
+            targets?: string[]
+            /**
              * GitHub slub and path (OWNER/NAME[/PATH])
              */
             repo: string

@@ -423,10 +423,14 @@ function processSpec(dn: string) {
         console.log(`check exists ${mkcdpxtjson}: ${hasMakeCodeProject}`)
 
         if (hasMakeCodeProject) {
+            const pxtjson: { supportedTargets?: string[] } = JSON.parse(
+                fs.readFileSync(mkcdpxtjson, { encoding: "utf8" })
+            )
             mkcdServices.push({
                 service: json.shortId,
                 client: {
                     name: `jacdac-${mkcdsrvdirname}`,
+                    targets: pxtjson.supportedTargets,
                     repo: `microsoft/pxt-jacdac/${mkcdsrvdirname}`,
                     qName: `modules.${capitalize(json.camelName)}Client`,
                     default: `modules.${json.camelName}`,

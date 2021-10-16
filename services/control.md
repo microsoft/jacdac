@@ -92,6 +92,26 @@ on, and `0` (for all three channels) should be considered off.
 
 Force client device into proxy mode.
 
+    command reliable_commands? @ 0x86 {
+        seed: u32
+    }
+    report {
+        commands: pipe
+    }
+    pipe command wrapped_command {
+        service_size: u8
+        service_index: u8
+        service_command: u16
+        payload: bytes
+    }
+
+This opens a pipe to the device to provide an alternative, reliable transport of actions
+(and possibly other commands).
+The commands are wrapped as pipe data packets.
+Multiple invocations of this command with the same `seed` are dropped
+(and thus the command is not `unique`); otherwise `seed` carries no meaning
+and should be set to a random value by the client.
+
 ## Registers
 
     rw internal reset_in? : u32 us @ 0x80

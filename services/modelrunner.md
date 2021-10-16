@@ -10,7 +10,7 @@ Multiple instances of this service may be present, if more than one model format
 
 ## Commands
 
-    command set_model @ 0x80 {
+    unique command set_model @ 0x80 {
         model_size: u32 B
     }
     report {

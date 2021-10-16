@@ -34,7 +34,7 @@ The flashing server should generate a random id, and use this command to set it.
         InvalidPageOffset = 3
         NotPageAligned = 4
     }
-    command page_data @ 0x80 {
+    unique command page_data @ 0x80 {
         page_address: u32
         page_offset: u16
         chunk_no: u8

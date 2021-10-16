@@ -17,7 +17,7 @@ This is often run over an SPI connection, not regular single-wire JACDAC.
 
 Sets the update window for subsequent `set_pixels` commands.
 
-    command set_pixels @ 0x83 {
+    unique command set_pixels @ 0x83 {
         pixels: bytes
     }
 

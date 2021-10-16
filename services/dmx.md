@@ -12,7 +12,7 @@ A service that can send DMX512-A packets with limited size. This service is desi
 Determines if the DMX bridge is active
 ## Commands
 
-    command send @ 0x80 {
+    unique command send @ 0x80 {
         channels: bytes
     }
 

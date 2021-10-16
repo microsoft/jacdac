@@ -58,7 +58,7 @@ send the sequence of status light command to generate the identify animation.
 
 Reset device. ACK may or may not be sent.
 
-    command flood_ping? @ 0x83 {
+    unique command flood_ping? @ 0x83 {
         num_responses: u32
         start_counter: u32
         size: u8 B

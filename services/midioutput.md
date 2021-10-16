@@ -18,7 +18,7 @@ Opens or closes the port to the MIDI device
 
 Clears any pending send data that has not yet been sent from the MIDIOutput's queue.
 
-    command send @ 0x81 {
+    unique command send @ 0x81 {
         data: bytes
     }
 

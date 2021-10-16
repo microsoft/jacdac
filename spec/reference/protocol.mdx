@@ -224,28 +224,6 @@ If these are handled purely through events, the client will maintain the pressed
 For this, it's critical not to swap order of up/down events.
 To recognize button combinations, it's important not to swap order of events from the two services.
 
-#### Reliable actions
-
-Devices can support reliable actions, which use the same encoding as events, but are commands, not reports.
-The `service_command` field is subdivided as follows:
-
-| Bits | Function 
-|------|----------------------
-| 15   | Always set for reliable actions
-| 14:8 | Sequential counter
-| 7:0  | Action code
-
-Only action codes in range `0x00-0xff` are supported.
-Just as for events, the sequential counter is per-device (but separate from the event sequential counter).
-Reliable actions should be processed exactly like events - if a command comes out of order, it should be ignored.
-The repetition scheme is the same as for events.
-
-Unlike events, reliable actions can be sent with ACK requested.
-If an ACK is received, further re-transmissions of action can be skipped.
-
-Support for reliable actions is announced as a flag in the announce packet.
-
-
 ### The control service
 
 Each device runs its own control service, which emits advertisement packets roughly every 500 milliseconds. The service class of the control service is zero (0). Each advertisement contains the device's identifier (as usual) as well a list of services offered by the device; other devices on the bus can inspect these advertisements and subsequently communicate with the advertised services to incorporate them in user applications.
@@ -403,6 +381,29 @@ pipe packet, without any additional info about how to chunk the data
 (provided each thing fits in a packet).
 Multiple packets can be grouped in a frame, but are still handled separately at the
 destination.
+
+### Reliable actions
+
+Actions can be invoked reliably by requesting an ACK.
+However, since this may involve excessive re-transmission, it only works correctly
+for idempotent actions.
+
+We say an action is _idempotent_, when it doesn't matter if it is invoked once or multiple times
+within ~100ms (without interleaving of other commands).
+For example, `clear all`, `set` and `remove` actions on a configuration store are idempotent.
+Another example is when an action is likely to take much longer than 100ms, and new invocations
+while in progress are ignored, for example `calibrate` command on a sensor.
+Yet another example is when the difference between single and multiple invocations is not perceptible to 
+the user (eg., starting a fade-glow operation on an LED).
+Actions that are **not** idempotent are marked with `unique` attribute in the specifications.
+
+Multiple invocations of actions that specify a pipe in the arguments are implicitly ignored
+(since, it's not possible to open the same pipe multiple times simultaneously).
+Thus, they do not require the `unique` attribute.
+
+For non-idempotent actions, a pipe can be opened with a command on the control service.
+Commands (or any other packets) can then be sent over that pipe.
+Support for this is indicated as a flag in the advertisement packet.
 
 ### Error responses
 

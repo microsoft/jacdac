@@ -278,8 +278,7 @@
     ],
     "transport": "serial",
     "version": "0.3",
-    "designIdentifier": "48",
-    "status": "experimental"
+    "designIdentifier": "48"
   },
   {
     "id": "microsoft-research-jmbrainf441v02",

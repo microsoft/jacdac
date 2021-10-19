@@ -7,6 +7,5 @@
     "productIdentifiers": [917230668],
     "version": "0.3",
     "designIdentifier": "48",
-    "transport": "serial",
-    "status": "experimental"
+    "transport": "serial"
 }

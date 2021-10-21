@@ -583,6 +583,12 @@ declare namespace jdspec {
         services: number[]
     }
 
+    interface TransportSpec {
+        vendorId?: number
+        productId?: number
+        type: "usb" | "serial" | "bluetooth"
+    }
+
     interface DeviceSpec extends DeviceClassSpec {
         /**
          * URL-friendly id.
@@ -647,7 +653,7 @@ declare namespace jdspec {
         /**
          * Supported bus transport if any
          */
-        transport?: string
+        transport?: TransportSpec
 
         /**
          * Optional list of tags

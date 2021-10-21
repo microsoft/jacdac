@@ -6,7 +6,9 @@
     "link": "https://microsoft.github.io/jacdac-docs/hardware/kit/oob/",
     "services": [],
     "productIdentifiers": [854992189],
-    "transport": "usb",
+    "transport": {
+        "type": "usb"
+    },
     "tags": ["kit"],
     "firmwares": [
         {

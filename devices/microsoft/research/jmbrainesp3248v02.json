@@ -8,5 +8,8 @@
     "productIdentifiers": [],
     "version": "0.2",
     "designIdentifier": "48",
-    "transport": "serial"
+    "transport": {
+        "type": "serial",
+        "vendorId": 12346
+    }
 }

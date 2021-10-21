@@ -21,6 +21,15 @@ namespace Jacdac {
         Moisture = 0x101,
 
         /**
+         * Read-only ratio u0.16 (uint16_t). The error on the moisture reading.
+         *
+         * ```
+         * const [moistureError] = jdunpack<[number]>(buf, "u0.16")
+         * ```
+         */
+        MoistureError = 0x106,
+
+        /**
          * Constant Variant (uint8_t). Describe the type of physical sensor.
          *
          * ```

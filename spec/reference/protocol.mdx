@@ -397,17 +397,17 @@ Yet another example is when the difference between single and multiple invocatio
 the user (eg., starting a fade-glow operation on an LED).
 Actions that are **not** idempotent are marked with `unique` attribute in the specifications.
 
-Multiple invocations of actions that specify a pipe in the arguments are implicitly ignored
+Multiple invocations of actions that specify the same pipe in the arguments are implicitly ignored
 (since, it's not possible to open the same pipe multiple times simultaneously).
 Thus, they do not require the `unique` attribute.
 
-For non-idempotent actions, a pipe can be opened with a command on the control service.
-Commands (or any other packets) can then be sent over that pipe.
+For non-idempotent actions, a pipe can be opened with a `reliable_commands` action on the control service.
+Actions (or any other commands) can then be sent over that pipe.
 Support for this is indicated as a flag in the advertisement packet.
 
 ### Error responses
 
-When a device cannot handle a command, it can send an error response.
+When a device cannot handle a command, it can send an error response (instead of ignoring the command).
 This is to indicate that it correctly received the command packet, but will not handle it.
 An error response uses the same `service_command`, `device_identifier`, and `service_index`
 as the offending command, except that it sets the second-highest bit of `service_index`

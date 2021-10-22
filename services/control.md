@@ -12,20 +12,20 @@ are not implemented in `8bit` version.
 ## Commands
 
     flags AnnounceFlags : u16 {
-        RestartCounterSteady =    0x000F,
-        RestartCounter1 =         0x0001,
-        RestartCounter2 =         0x0002,
-        RestartCounter4 =         0x0004,
-        RestartCounter8 =         0x0008,
-        StatusLightNone =         0x0000,
-        StatusLightMono =         0x0010,
-        StatusLightRgbNoFade =    0x0020,
-        StatusLightRgbFade =      0x0030,
-        SupportsACK =             0x0100,
-        SupportsBroadcast =       0x0200,
-        SupportsFrames =          0x0400,
-        IsClient =                0x0800,
-        SupportsReliableActions = 0x1000,
+        RestartCounterSteady =        0x000F,
+        RestartCounter1 =             0x0001,
+        RestartCounter2 =             0x0002,
+        RestartCounter4 =             0x0004,
+        RestartCounter8 =             0x0008,
+        StatusLightNone =             0x0000,
+        StatusLightMono =             0x0010,
+        StatusLightRgbNoFade =        0x0020,
+        StatusLightRgbFade =          0x0030,
+        SupportsACK =                 0x0100,
+        SupportsBroadcast =           0x0200,
+        SupportsFrames =              0x0400,
+        IsClient =                    0x0800,
+        SupportsReliableCommands =    0x1000,
     }
     command services @ announce { }
     report {
@@ -111,6 +111,8 @@ The commands are wrapped as pipe data packets.
 Multiple invocations of this command with the same `seed` are dropped
 (and thus the command is not `unique`); otherwise `seed` carries no meaning
 and should be set to a random value by the client.
+Note that while the commands sends this way are delivered exactly once, the
+responses might get lost.
 
 ## Registers
 

@@ -58,3 +58,6 @@ and is included in response.
 Only the last chunk causes writing to flash and elicits response.
 
 Errors not listed are also possible. Errors larger than `0xffff` indicate de-synchronization on chunk numbers.
+
+While this command is technically `unique`, the bootloader client will retry failed pages.
+Bootloaders typically will not support reliable commands delivered over pipes.

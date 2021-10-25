@@ -4,7 +4,7 @@
     "company": "Microsoft Research",
     "repo": "https://github.com/microsoft/pxt-jacdac/",
     "services": [342028028],
-    "productIdentifiers": [917230668],
+    "productIdentifiers": [917230668, 983264687],
     "version": "0.3",
     "designIdentifier": "48",
     "transport": {

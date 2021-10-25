@@ -8,7 +8,7 @@
     "_base"
   ],
   "notes": {
-    "short": "Discovery and connection to WiFi networks. Separate TCP service can be used for data transfer.\n\nThe device controlled by this service is meant to connect automatically, once configured.\nTo that end, it keeps a list of known WiFi networks, with priorities and passwords.\nIt will connect to the available network with numerically highest priority,\nbreaking ties in priority by signal strength (typically all known networks have priority of `0`)."
+    "short": "Discovery and connection to WiFi networks. Separate TCP service can be used for data transfer.\n\nThe device controlled by this service is meant to connect automatically, once configured.\nTo that end, it keeps a list of known WiFi networks, with priorities and passwords.\nIt will connect to the available network with numerically highest priority,\nbreaking ties in priority by signal strength (typically all known networks have priority of `0`).\nIf the connection fails (due to wrong password, radio failure, or other problem)\nan `connection_failed` event is emitted, and the device will try to connect to the next eligible network.\nWhen networks are exhausted, the scan is performed again and the connection process restarts.\n\nUpdating networks (setting password, priorties, forgetting) does not trigger an automatic reconnect."
   },
   "classIdentifier": 413852154,
   "enums": {
@@ -186,7 +186,7 @@
       "kind": "command",
       "name": "reconnect",
       "identifier": 130,
-      "description": "Initiate a scan, wait for results, disconnect from current WiFi network if any,\nand then reconnect (using regular algorithm, see `set_network_priority`).",
+      "description": "Enable the WiFi (if disabled), initiate a scan, wait for results, disconnect from current WiFi network if any,\nand then reconnect (using regular algorithm, see `set_network_priority`).",
       "fields": []
     },
     {
@@ -292,20 +292,6 @@
         }
       ],
       "identifierName": "intensity",
-      "packFormat": "u8"
-    },
-    {
-      "kind": "ro",
-      "name": "connected",
-      "identifier": 384,
-      "description": "Indicates whether or not we currently have an IP address assigned.",
-      "fields": [
-        {
-          "name": "_",
-          "type": "bool",
-          "storage": 1
-        }
-      ],
       "packFormat": "u8"
     },
     {
@@ -417,6 +403,20 @@
       "identifier": 129,
       "description": "Emitted whenever the list of known networks is updated.",
       "fields": []
+    },
+    {
+      "kind": "event",
+      "name": "connection_failed",
+      "identifier": 130,
+      "description": "Emitted when when a network was detected in scan, the device tried to connect to it\nand failed.\nThis may be because of wrong password or other random failure.",
+      "fields": [
+        {
+          "name": "ssid",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "packFormat": "s"
     }
   ],
   "tags": [],

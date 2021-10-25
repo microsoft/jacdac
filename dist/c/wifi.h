@@ -50,7 +50,7 @@ typedef struct jd_wifi_add_network {
 
 
 /**
- * No args. Initiate a scan, wait for results, disconnect from current WiFi network if any,
+ * No args. Enable the WiFi (if disabled), initiate a scan, wait for results, disconnect from current WiFi network if any,
  * and then reconnect (using regular algorithm, see `set_network_priority`).
  */
 #define JD_WIFI_CMD_RECONNECT 0x82
@@ -105,11 +105,6 @@ typedef struct jd_wifi_network_results {
 #define JD_WIFI_REG_ENABLED JD_REG_INTENSITY
 
 /**
- * Read-only bool (uint8_t). Indicates whether or not we currently have an IP address assigned.
- */
-#define JD_WIFI_REG_CONNECTED 0x180
-
-/**
  * Read-only bytes. 0, 4 or 16 byte buffer with the IPv4 or IPv6 address assigned to device if any.
  */
 #define JD_WIFI_REG_IP_ADDRESS 0x181
@@ -156,5 +151,12 @@ typedef struct jd_wifi_scan_complete {
  * Emitted whenever the list of known networks is updated.
  */
 #define JD_WIFI_EV_NETWORKS_CHANGED 0x81
+
+/**
+ * Argument: ssid string (bytes). Emitted when when a network was detected in scan, the device tried to connect to it
+ * and failed.
+ * This may be because of wrong password or other random failure.
+ */
+#define JD_WIFI_EV_CONNECTION_FAILED 0x82
 
 #endif

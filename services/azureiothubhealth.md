@@ -49,3 +49,7 @@ Restricted command to override the existing connection string to the Azure IoT H
     }
 
 Raised when the connection status changes
+
+    event message_sent @ 0x80
+
+Raised when a message has been sent to the hub.

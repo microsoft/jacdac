@@ -589,6 +589,11 @@ export enum AzureIotHubHealthEvent {
      * ```
      */
     ConnectionStatusChange = 0x3,
+
+    /**
+     * Raised when a message has been sent to the hub.
+     */
+    MessageSent = 0x80,
 }
 
 // Service: Barcode reader
@@ -4525,6 +4530,8 @@ export enum TvocReg {
     ConditioningPeriod = 0x180,
 }
 
+// Service: Unique Brain
+export const SRV_UNIQUE_BRAIN = 0x103c4ee5
 // Service: UV index
 export const SRV_UV_INDEX = 0x1f6e0d90
 

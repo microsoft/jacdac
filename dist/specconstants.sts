@@ -646,6 +646,12 @@ namespace jacdac {
          */
         //% block="connection status change"
         ConnectionStatusChange = 0x3,
+
+        /**
+         * Raised when a message has been sent to the hub.
+         */
+        //% block="message sent"
+        MessageSent = 0x80,
     }
 
 }
@@ -4924,6 +4930,10 @@ namespace jacdac {
         ConditioningPeriod = 0x180,
     }
 
+}
+namespace jacdac {
+    // Service: Unique Brain
+    export const SRV_UNIQUE_BRAIN = 0x103c4ee5
 }
 namespace jacdac {
     // Service: UV index

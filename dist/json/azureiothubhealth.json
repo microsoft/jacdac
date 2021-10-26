@@ -175,6 +175,13 @@
       ],
       "identifierName": "change",
       "packFormat": "u16"
+    },
+    {
+      "kind": "event",
+      "name": "message_sent",
+      "identifier": 128,
+      "description": "Raised when a message has been sent to the hub.",
+      "fields": []
     }
   ],
   "tags": [],

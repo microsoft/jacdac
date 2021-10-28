@@ -2396,11 +2396,11 @@ namespace Jacdac {
     }
     public enum LightBulbReg {
         /**
-         * Read-write uint16_t. Indicates the brightness of the light bulb. Zero means completely off and 0xffff means completely on.
+         * Read-write ratio u0.16 (uint16_t). Indicates the brightness of the light bulb. Zero means completely off and 0xffff means completely on.
          * For non-dimmeable lights, the value should be clamp to 0xffff for any non-zero value.
          *
          * ```
-         * const [brightness] = jdunpack<[number]>(buf, "u16")
+         * const [brightness] = jdunpack<[number]>(buf, "u0.16")
          * ```
          */
         Brightness = 0x1,

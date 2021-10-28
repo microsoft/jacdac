@@ -7,7 +7,7 @@ A light bulb controller.
 
 ## Registers
 
-    rw brightness: u16 @ intensity
+    rw brightness: u0.16 / @ intensity
 
 Indicates the brightness of the light bulb. Zero means completely off and 0xffff means completely on.
 For non-dimmeable lights, the value should be clamp to 0xffff for any non-zero value.

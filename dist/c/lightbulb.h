@@ -5,7 +5,7 @@
 #define JD_SERVICE_CLASS_LIGHT_BULB  0x1cab054c
 
 /**
- * Read-write uint16_t. Indicates the brightness of the light bulb. Zero means completely off and 0xffff means completely on.
+ * Read-write ratio u0.16 (uint16_t). Indicates the brightness of the light bulb. Zero means completely off and 0xffff means completely on.
  * For non-dimmeable lights, the value should be clamp to 0xffff for any non-zero value.
  */
 #define JD_LIGHT_BULB_REG_BRIGHTNESS JD_REG_INTENSITY

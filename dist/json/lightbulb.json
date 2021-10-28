@@ -87,13 +87,14 @@
       "fields": [
         {
           "name": "_",
-          "type": "u16",
-          "storage": 2,
-          "isSimpleType": true
+          "unit": "/",
+          "shift": 16,
+          "type": "u0.16",
+          "storage": 2
         }
       ],
       "identifierName": "intensity",
-      "packFormat": "u16"
+      "packFormat": "u0.16"
     },
     {
       "kind": "const",

@@ -14,12 +14,20 @@ A 3-axis gyroscope.
         z: i12.20 °/s
     }
 
-Indicates the current forces acting on accelerometer.
+Indicates the current rates acting on gyroscope.
 
-    ro rotation_rates_error?: i12.20 °/s @ reading_error
+    ro rotation_rates_error?: u12.20 °/s @ reading_error
 
 Error on the reading value.
 
-    rw max_rate?: i12.20 °/s @ 0x80
+    rw max_rate?: u12.20 °/s @ reading_range
 
-Configures the range of range of rotation rates.
+Configures the range of rotation rates.
+The value will be "rounded up" to one of `max_rates_supported`.
+
+    const max_rates_supported? @ supported_ranges {
+    repeats:
+        max_rate: u12.20 °/s
+    }
+
+Lists values supported for writing `max_rate`.

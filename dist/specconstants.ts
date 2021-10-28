@@ -126,6 +126,27 @@ export enum SystemReg {
     Reading = 0x101,
 
     /**
+     * Read-write uint32_t. For sensors that support it, sets the range (sometimes also described `min`/`max_reading`).
+     * Typically only a small set of values is supported.
+     * Setting it to `X` will select the smallest possible range that is at least `X`,
+     * or if it doesn't exist, the largest supported range.
+     *
+     * ```
+     * const [readingRange] = jdunpack<[number]>(buf, "u32")
+     * ```
+     */
+    ReadingRange = 0x8,
+
+    /**
+     * Constant. Lists the values supported as `reading_range`.
+     *
+     * ```
+     * const [range] = jdunpack<[number[]]>(buf, "u32[]")
+     * ```
+     */
+    SupportedRanges = 0x10a,
+
+    /**
      * Constant int32_t. The lowest value that can be reported by the sensor.
      *
      * ```
@@ -335,23 +356,32 @@ export enum AccelerometerReg {
     Forces = 0x101,
 
     /**
-     * Read-only g i12.20 (int32_t). Error on the reading value.
+     * Read-only g u12.20 (uint32_t). Error on the reading value.
      *
      * ```
-     * const [forcesError] = jdunpack<[number]>(buf, "i12.20")
+     * const [forcesError] = jdunpack<[number]>(buf, "u12.20")
      * ```
      */
     ForcesError = 0x106,
 
     /**
-     * Read-write g i12.20 (int32_t). Configures the range forces detected.
-     * Read-back after setting to get current value.
+     * Read-write g u12.20 (uint32_t). Configures the range forces detected.
+     * The value will be "rounded up" to one of `max_forces_supported`.
      *
      * ```
-     * const [maxForce] = jdunpack<[number]>(buf, "i12.20")
+     * const [maxForce] = jdunpack<[number]>(buf, "u12.20")
      * ```
      */
-    MaxForce = 0x80,
+    MaxForce = 0x8,
+
+    /**
+     * Constant. Lists values supported for writing `max_force`.
+     *
+     * ```
+     * const [maxForce] = jdunpack<[number[]]>(buf, "u12.20[]")
+     * ```
+     */
+    MaxForcesSupported = 0x10a,
 }
 
 export enum AccelerometerEvent {
@@ -1520,7 +1550,7 @@ export enum FlexReg {
 export const SRV_GYROSCOPE = 0x1e1b06f2
 export enum GyroscopeReg {
     /**
-     * Indicates the current forces acting on accelerometer.
+     * Indicates the current rates acting on gyroscope.
      *
      * ```
      * const [x, y, z] = jdunpack<[number, number, number]>(buf, "i12.20 i12.20 i12.20")
@@ -1529,22 +1559,32 @@ export enum GyroscopeReg {
     RotationRates = 0x101,
 
     /**
-     * Read-only °/s i12.20 (int32_t). Error on the reading value.
+     * Read-only °/s u12.20 (uint32_t). Error on the reading value.
      *
      * ```
-     * const [rotationRatesError] = jdunpack<[number]>(buf, "i12.20")
+     * const [rotationRatesError] = jdunpack<[number]>(buf, "u12.20")
      * ```
      */
     RotationRatesError = 0x106,
 
     /**
-     * Read-write °/s i12.20 (int32_t). Configures the range of range of rotation rates.
+     * Read-write °/s u12.20 (uint32_t). Configures the range of rotation rates.
+     * The value will be "rounded up" to one of `max_rates_supported`.
      *
      * ```
-     * const [maxRate] = jdunpack<[number]>(buf, "i12.20")
+     * const [maxRate] = jdunpack<[number]>(buf, "u12.20")
      * ```
      */
-    MaxRate = 0x80,
+    MaxRate = 0x8,
+
+    /**
+     * Constant. Lists values supported for writing `max_rate`.
+     *
+     * ```
+     * const [maxRate] = jdunpack<[number[]]>(buf, "u12.20[]")
+     * ```
+     */
+    MaxRatesSupported = 0x10a,
 }
 
 // Service: Heart Rate

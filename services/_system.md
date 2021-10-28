@@ -95,6 +95,20 @@ Period between packets of data when streaming in milliseconds.
 
 Read-only value of the sensor, also reported in streaming.
 
+    rw reading_range: u32 @ 0x08
+
+For sensors that support it, sets the range (sometimes also described `min`/`max_reading`).
+Typically only a small set of values is supported.
+Setting it to `X` will select the smallest possible range that is at least `X`,
+or if it doesn't exist, the largest supported range.
+
+    const supported_ranges @ 0x10a {
+    repeats:
+        range: u32
+    }
+
+Lists the values supported as `reading_range`.
+
     const min_reading: i32 @ 0x104
 
 The lowest value that can be reported by the sensor.

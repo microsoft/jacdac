@@ -5,7 +5,7 @@
 #define JD_SERVICE_CLASS_GYROSCOPE  0x1e1b06f2
 
 /**
- * Indicates the current forces acting on accelerometer.
+ * Indicates the current rates acting on gyroscope.
  */
 #define JD_GYROSCOPE_REG_ROTATION_RATES JD_REG_READING
 typedef struct jd_gyroscope_rotation_rates {
@@ -16,13 +16,23 @@ typedef struct jd_gyroscope_rotation_rates {
 
 
 /**
- * Read-only °/s i12.20 (int32_t). Error on the reading value.
+ * Read-only °/s u12.20 (uint32_t). Error on the reading value.
  */
 #define JD_GYROSCOPE_REG_ROTATION_RATES_ERROR JD_REG_READING_ERROR
 
 /**
- * Read-write °/s i12.20 (int32_t). Configures the range of range of rotation rates.
+ * Read-write °/s u12.20 (uint32_t). Configures the range of rotation rates.
+ * The value will be "rounded up" to one of `max_rates_supported`.
  */
-#define JD_GYROSCOPE_REG_MAX_RATE 0x80
+#define JD_GYROSCOPE_REG_MAX_RATE JD_REG_READING_RANGE
+
+/**
+ * Constant. Lists values supported for writing `max_rate`.
+ */
+#define JD_GYROSCOPE_REG_MAX_RATES_SUPPORTED JD_REG_SUPPORTED_RANGES
+typedef struct jd_gyroscope_max_rates_supported {
+    uint32_t max_rate[0];  // °/s u12.20
+} jd_gyroscope_max_rates_supported_t;
+
 
 #endif

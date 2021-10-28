@@ -29,14 +29,21 @@ We recommend an orientation marking on the PCB so that users can mount modules w
 
 Indicates the current forces acting on accelerometer.
 
-    ro forces_error?: i12.20 g @ reading_error
+    ro forces_error?: u12.20 g @ reading_error
 
 Error on the reading value.
 
-    rw max_force?: i12.20 g @ 0x80
+    rw max_force?: u12.20 g @ reading_range
 
 Configures the range forces detected.
-Read-back after setting to get current value.
+The value will be "rounded up" to one of `max_forces_supported`.
+
+    const max_forces_supported? @ supported_ranges {
+    repeats:
+        max_force: u12.20 g
+    }
+
+Lists values supported for writing `max_force`.
 
 ## Events
 

@@ -301,6 +301,9 @@
       1003209864,
       970267564
     ],
+    "transport": {
+      "type": "usb"
+    },
     "tags": [
       "kit"
     ],
@@ -327,6 +330,9 @@
       884301483,
       999933064
     ],
+    "transport": {
+      "type": "usb"
+    },
     "tags": [
       "kit"
     ],
@@ -844,7 +850,27 @@
     "tags": [
       "kit"
     ],
-    "version": "1.0"
+    "version": "1.0",
+    "status": "deprecated"
+  },
+  {
+    "id": "microsoft-research-jmrotarycontrolbuttonv11",
+    "name": "JM Rotary Control + Button",
+    "company": "Microsoft Research",
+    "description": "",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      284830153,
+      343122531
+    ],
+    "productIdentifiers": [
+      829647613
+    ],
+    "tags": [
+      "kit"
+    ],
+    "version": "1.1"
   },
   {
     "id": "microsoft-research-jmsinglergbled42v01",

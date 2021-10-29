@@ -1,13 +1,12 @@
 {
-    "id": "microsoft-research-jm-rotary-control-button-v1.0",
+    "id": "microsoft-research-jm-rotary-control-button-v1.1",
     "name": "JM Rotary Control + Button",
     "company": "Microsoft Research",
     "description": "",
-    "version": "1.0",
+    "version": "1.1",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "link": "https://github.com/microsoft/jacdac-msr-modules",
     "tags": ["kit"],
-    "status": "deprecated",
     "services": [284830153, 343122531],
-    "productIdentifiers": [1060754715]
+    "productIdentifiers": [829647613]
 }

@@ -9,6 +9,9 @@
     "tags": ["kit"],
     "services": [414210922, 411425820],
     "productIdentifiers": [884301483, 999933064],
+    "transport": {
+        "type": "usb"
+    },
     "firmwares": [
         {
             "name": "HID Keyboard + Mouse",

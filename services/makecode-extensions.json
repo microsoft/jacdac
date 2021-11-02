@@ -319,6 +319,20 @@
     }
   },
   {
+    "service": "lightbulb",
+    "client": {
+      "name": "jacdac-light-bulb",
+      "targets": [
+        "microbit",
+        "arcade",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/light-bulb",
+      "qName": "modules.LightBulbClient",
+      "default": "modules.lightBulb"
+    }
+  },
+  {
     "service": "lightlevel",
     "client": {
       "name": "jacdac-light-level",

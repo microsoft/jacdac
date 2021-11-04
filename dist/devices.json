@@ -271,6 +271,7 @@
     ],
     "version": "0.2",
     "designIdentifier": "48",
+    "driveName": "IOT-BOOT",
     "status": "deprecated"
   },
   {
@@ -295,7 +296,8 @@
       }
     ],
     "version": "0.3",
-    "designIdentifier": "48"
+    "designIdentifier": "48",
+    "driveName": "IOT-BOOT"
   },
   {
     "id": "microsoft-research-jmbrainf441v02",
@@ -324,7 +326,8 @@
       }
     ],
     "version": "0.2",
-    "designIdentifier": "41"
+    "designIdentifier": "41",
+    "driveName": "JACDACF4"
   },
   {
     "id": "microsoft-research-jmbrainrp204059v01",
@@ -353,7 +356,8 @@
       }
     ],
     "version": "0.1",
-    "designIdentifier": "59"
+    "designIdentifier": "59",
+    "driveName": "RPI-RP2"
   },
   {
     "id": "microsoft-research-jmbutton10v13",
@@ -1052,9 +1056,10 @@
     ],
     "firmwares": [
       {
-        "name": "Kit Out-Of-the-Box Experience",
+        "name": "Out-Of-the-Box Experience",
         "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/microbit-oob.hex"
       }
-    ]
+    ],
+    "driveName": "MICROBIT"
   }
 ]

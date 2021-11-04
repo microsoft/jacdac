@@ -1944,8 +1944,13 @@ export function normalizeDeviceSpecification(dev: jdspec.DeviceSpec) {
         firmwares: dev.firmwares,
         version: dev.version ? dev.version.replace(/^v/, "") : undefined,
         designIdentifier: dev.designIdentifier,
+        driveName: dev.driveName,
+        status: dev.status,
     }
-    if (dev.status !== undefined) clone.status = dev.status
+    // delete empty files
+    const anyClone: any = clone
+    for (const key of Object.keys(anyClone))
+        if (anyClone[key] === undefined) delete anyClone[key]
     return clone
 }
 

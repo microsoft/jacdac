@@ -17,5 +17,6 @@
             "name": "HID Keyboard + Mouse",
             "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/hid-servers-rp2040.uf2"
         }
-    ]
+    ],
+    "driveName": "RPI-RP2"
 }

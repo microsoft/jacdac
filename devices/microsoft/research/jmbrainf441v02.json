@@ -17,5 +17,6 @@
             "name": "HID Keyboard + Mouse",
             "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/hid-servers-f4.uf2"
         }
-    ]
+    ],
+    "driveName": "JACDACF4"
 }

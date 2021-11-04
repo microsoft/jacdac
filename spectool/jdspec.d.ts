@@ -673,6 +673,10 @@ declare namespace jdspec {
              */
             url: string
         }[]
+        /**
+         * Known bootloader drive name for flashing
+         */
+        driveName?: string
     }
 
     /**

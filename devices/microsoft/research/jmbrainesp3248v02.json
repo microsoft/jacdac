@@ -16,5 +16,6 @@
             "name": "IoT Uploader",
             "url": "https://github.com/microsoft/pxt-jacdac/releases/download/v0.7.21/uploader-esp32s2.uf2"
         }
-    ]
+    ],
+    "driveName": "IOT-BOOT"
 }

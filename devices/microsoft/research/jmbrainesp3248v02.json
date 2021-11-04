@@ -2,7 +2,6 @@
     "id": "microsoft-research-jmbrainesp3248v02",
     "name": "JM Brain ESP32",
     "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/pxt-jacdac/",
     "services": [342028028],
     "status": "deprecated",
     "productIdentifiers": [],

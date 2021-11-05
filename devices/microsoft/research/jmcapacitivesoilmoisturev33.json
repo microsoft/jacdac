@@ -1,0 +1,14 @@
+{
+  "id": "microsoft-research-jmcapacitivesoilmoisturev33",
+  "name": "JM Capacitive Soil Moisture",
+  "company": "Microsoft Research",
+  "description": "JM Capacitive Soil Moisture v3.3",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "services": [
+    491430835
+  ],
+  "productIdentifiers": [
+    959462330
+  ],
+  "version": "3.3"
+}

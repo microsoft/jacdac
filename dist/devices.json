@@ -429,6 +429,20 @@
     "status": "deprecated"
   },
   {
+    "id": "microsoft-research-jmcapacitivesoilmoisturev33",
+    "name": "JM Capacitive Soil Moisture",
+    "company": "Microsoft Research",
+    "description": "JM Capacitive Soil Moisture v3.3",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      491430835
+    ],
+    "productIdentifiers": [
+      959462330
+    ],
+    "version": "3.3"
+  },
+  {
     "id": "microsoft-research-jmclickairquality4v32",
     "name": "JM-Click Airquality4",
     "company": "Microsoft Research",
@@ -956,6 +970,20 @@
     ],
     "version": "2.0",
     "status": "deprecated"
+  },
+  {
+    "id": "microsoft-research-jmsoiltemperatureds18b20v33",
+    "name": "JM Soil Temperature DS18B20",
+    "company": "Microsoft Research",
+    "description": "JM Soil Temperature DS18B20 v3.3",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      337754823
+    ],
+    "productIdentifiers": [
+      1039295899
+    ],
+    "version": "3.3"
   },
   {
     "id": "microsoft-research-jmspeechsynthesis61v33",

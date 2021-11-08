@@ -16,15 +16,24 @@ typedef struct jd_accelerometer_forces {
 
 
 /**
- * Read-only g i12.20 (int32_t). Error on the reading value.
+ * Read-only g u12.20 (uint32_t). Error on the reading value.
  */
 #define JD_ACCELEROMETER_REG_FORCES_ERROR JD_REG_READING_ERROR
 
 /**
- * Read-write g i12.20 (int32_t). Configures the range forces detected.
- * Read-back after setting to get current value.
+ * Read-write g u12.20 (uint32_t). Configures the range forces detected.
+ * The value will be "rounded up" to one of `max_forces_supported`.
  */
-#define JD_ACCELEROMETER_REG_MAX_FORCE 0x80
+#define JD_ACCELEROMETER_REG_MAX_FORCE JD_REG_READING_RANGE
+
+/**
+ * Constant. Lists values supported for writing `max_force`.
+ */
+#define JD_ACCELEROMETER_REG_MAX_FORCES_SUPPORTED JD_REG_SUPPORTED_RANGES
+typedef struct jd_accelerometer_max_forces_supported {
+    uint32_t max_force[0];  // g u12.20
+} jd_accelerometer_max_forces_supported_t;
+
 
 /**
  * Emitted when accelerometer is tilted in the given direction.

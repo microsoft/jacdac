@@ -15,23 +15,32 @@ namespace Jacdac {
         Forces = 0x101,
 
         /**
-         * Read-only g i12.20 (int32_t). Error on the reading value.
+         * Read-only g u12.20 (uint32_t). Error on the reading value.
          *
          * ```
-         * const [forcesError] = jdunpack<[number]>(buf, "i12.20")
+         * const [forcesError] = jdunpack<[number]>(buf, "u12.20")
          * ```
          */
         ForcesError = 0x106,
 
         /**
-         * Read-write g i12.20 (int32_t). Configures the range forces detected.
-         * Read-back after setting to get current value.
+         * Read-write g u12.20 (uint32_t). Configures the range forces detected.
+         * The value will be "rounded up" to one of `max_forces_supported`.
          *
          * ```
-         * const [maxForce] = jdunpack<[number]>(buf, "i12.20")
+         * const [maxForce] = jdunpack<[number]>(buf, "u12.20")
          * ```
          */
-        MaxForce = 0x80,
+        MaxForce = 0x8,
+
+        /**
+         * Constant. Lists values supported for writing `max_force`.
+         *
+         * ```
+         * const [maxForce] = jdunpack<[number[]]>(buf, "u12.20[]")
+         * ```
+         */
+        MaxForcesSupported = 0x10a,
     }
 
     public enum AccelerometerEvent {

@@ -255,31 +255,49 @@
     "id": "microsoft-research-jmbrainesp3248v02",
     "name": "JM Brain ESP32",
     "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/pxt-jacdac/",
     "services": [
       342028028
     ],
     "productIdentifiers": [],
-    "transport": "serial",
+    "transport": {
+      "type": "serial",
+      "vendorId": 12346
+    },
+    "firmwares": [
+      {
+        "name": "IoT Uploader",
+        "url": "https://github.com/microsoft/pxt-jacdac/releases/download/v0.7.21/uploader-esp32s2.uf2"
+      }
+    ],
     "version": "0.2",
     "designIdentifier": "48",
+    "driveName": "IOT-BOOT",
     "status": "deprecated"
   },
   {
     "id": "microsoft-research-jmbrainesp3248v03",
     "name": "JM Brain ESP32",
     "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/pxt-jacdac/",
     "services": [
       342028028
     ],
     "productIdentifiers": [
-      917230668
+      917230668,
+      983264687
     ],
-    "transport": "serial",
+    "transport": {
+      "type": "serial",
+      "vendorId": 12346
+    },
+    "firmwares": [
+      {
+        "name": "IoT Uploader",
+        "url": "https://github.com/microsoft/pxt-jacdac/releases/download/v0.7.21/uploader-esp32s2.uf2"
+      }
+    ],
     "version": "0.3",
     "designIdentifier": "48",
-    "status": "experimental"
+    "driveName": "IOT-BOOT"
   },
   {
     "id": "microsoft-research-jmbrainf441v02",
@@ -295,6 +313,9 @@
       1003209864,
       970267564
     ],
+    "transport": {
+      "type": "usb"
+    },
     "tags": [
       "kit"
     ],
@@ -305,7 +326,8 @@
       }
     ],
     "version": "0.2",
-    "designIdentifier": "41"
+    "designIdentifier": "41",
+    "driveName": "JACDACF4"
   },
   {
     "id": "microsoft-research-jmbrainrp204059v01",
@@ -321,6 +343,9 @@
       884301483,
       999933064
     ],
+    "transport": {
+      "type": "usb"
+    },
     "tags": [
       "kit"
     ],
@@ -331,7 +356,8 @@
       }
     ],
     "version": "0.1",
-    "designIdentifier": "59"
+    "designIdentifier": "59",
+    "driveName": "RPI-RP2"
   },
   {
     "id": "microsoft-research-jmbutton10v13",
@@ -401,6 +427,20 @@
       854957595
     ],
     "status": "deprecated"
+  },
+  {
+    "id": "microsoft-research-jmcapacitivesoilmoisturev33",
+    "name": "JM Capacitive Soil Moisture",
+    "company": "Microsoft Research",
+    "description": "JM Capacitive Soil Moisture v3.3",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      491430835
+    ],
+    "productIdentifiers": [
+      959462330
+    ],
+    "version": "3.3"
   },
   {
     "id": "microsoft-research-jmclickairquality4v32",
@@ -751,6 +791,20 @@
     "status": "deprecated"
   },
   {
+    "id": "microsoft-research-jmrelaymach01v10",
+    "name": "JM Relay MACH-0.1",
+    "company": "Microsoft Research",
+    "description": "JM Relay MACH-0.1",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      406840918
+    ],
+    "productIdentifiers": [
+      900132124
+    ],
+    "version": "1.0"
+  },
+  {
     "id": "microsoft-research-jmrgbledbar58v01",
     "name": "JM RGB LED Bar",
     "company": "Microsoft Research",
@@ -824,7 +878,27 @@
     "tags": [
       "kit"
     ],
-    "version": "1.0"
+    "version": "1.0",
+    "status": "deprecated"
+  },
+  {
+    "id": "microsoft-research-jmrotarycontrolbuttonv11",
+    "name": "JM Rotary Control + Button",
+    "company": "Microsoft Research",
+    "description": "",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      284830153,
+      343122531
+    ],
+    "productIdentifiers": [
+      829647613
+    ],
+    "tags": [
+      "kit"
+    ],
+    "version": "1.1"
   },
   {
     "id": "microsoft-research-jmsinglergbled42v01",
@@ -896,6 +970,20 @@
     ],
     "version": "2.0",
     "status": "deprecated"
+  },
+  {
+    "id": "microsoft-research-jmsoiltemperatureds18b20v33",
+    "name": "JM Soil Temperature DS18B20",
+    "company": "Microsoft Research",
+    "description": "JM Soil Temperature DS18B20 v3.3",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      337754823
+    ],
+    "productIdentifiers": [
+      1039295899
+    ],
+    "version": "3.3"
   },
   {
     "id": "microsoft-research-jmspeechsynthesis61v33",
@@ -988,15 +1076,18 @@
     "productIdentifiers": [
       854992189
     ],
-    "transport": "usb",
+    "transport": {
+      "type": "usb"
+    },
     "tags": [
       "kit"
     ],
     "firmwares": [
       {
-        "name": "Kit Out-Of-the-Box Experience",
+        "name": "Out-Of-the-Box Experience",
         "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/microbit-oob.hex"
       }
-    ]
+    ],
+    "driveName": "MICROBIT"
   }
 ]

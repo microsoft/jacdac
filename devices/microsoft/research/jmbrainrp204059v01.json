@@ -9,10 +9,14 @@
     "tags": ["kit"],
     "services": [414210922, 411425820],
     "productIdentifiers": [884301483, 999933064],
+    "transport": {
+        "type": "usb"
+    },
     "firmwares": [
         {
             "name": "HID Keyboard + Mouse",
             "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/hid-servers-rp2040.uf2"
         }
-    ]
+    ],
+    "driveName": "RPI-RP2"
 }

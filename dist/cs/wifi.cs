@@ -41,7 +41,7 @@ namespace Jacdac {
         AddNetwork = 0x81,
 
         /**
-         * No args. Initiate a scan, wait for results, disconnect from current WiFi network if any,
+         * No args. Enable the WiFi (if disabled), initiate a scan, wait for results, disconnect from current WiFi network if any,
          * and then reconnect (using regular algorithm, see `set_network_priority`).
          */
         Reconnect = 0x82,
@@ -114,15 +114,6 @@ namespace Jacdac {
         Enabled = 0x1,
 
         /**
-         * Read-only bool (uint8_t). Indicates whether or not we currently have an IP address assigned.
-         *
-         * ```
-         * const [connected] = jdunpack<[number]>(buf, "u8")
-         * ```
-         */
-        Connected = 0x180,
-
-        /**
          * Read-only bytes. 0, 4 or 16 byte buffer with the IPv4 or IPv6 address assigned to device if any.
          *
          * ```
@@ -186,6 +177,17 @@ namespace Jacdac {
          * Emitted whenever the list of known networks is updated.
          */
         NetworksChanged = 0x81,
+
+        /**
+         * Argument: ssid string (bytes). Emitted when when a network was detected in scan, the device tried to connect to it
+         * and failed.
+         * This may be because of wrong password or other random failure.
+         *
+         * ```
+         * const [ssid] = jdunpack<[string]>(buf, "s")
+         * ```
+         */
+        ConnectionFailed = 0x82,
     }
 
 }

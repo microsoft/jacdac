@@ -10,6 +10,11 @@ The device controlled by this service is meant to connect automatically, once co
 To that end, it keeps a list of known WiFi networks, with priorities and passwords.
 It will connect to the available network with numerically highest priority,
 breaking ties in priority by signal strength (typically all known networks have priority of `0`).
+If the connection fails (due to wrong password, radio failure, or other problem)
+an `connection_failed` event is emitted, and the device will try to connect to the next eligible network.
+When networks are exhausted, the scan is performed again and the connection process restarts.
+
+Updating networks (setting password, priorties, forgetting) does not trigger an automatic reconnect.
 
 ## Commands
 
@@ -51,7 +56,7 @@ Automatically connect to named network if available. Also set password if networ
 
     command reconnect @ 0x82 {}
 
-Initiate a scan, wait for results, disconnect from current WiFi network if any,
+Enable the WiFi (if disabled), initiate a scan, wait for results, disconnect from current WiFi network if any,
 and then reconnect (using regular algorithm, see `set_network_priority`).
 
     command forget_network @ 0x83 {
@@ -95,10 +100,6 @@ Return list of known WiFi networks.
 
 Determines whether the WiFi radio is enabled. It starts enabled upon reset.
 
-    ro connected: bool @ 0x180
-
-Indicates whether or not we currently have an IP address assigned.
-
     ro ip_address: bytes {max_bytes = 16} @ 0x181
 
 0, 4 or 16 byte buffer with the IPv4 or IPv6 address assigned to device if any.
@@ -138,3 +139,11 @@ as candidates for connection.
     event networks_changed @ 0x81
 
 Emitted whenever the list of known networks is updated.
+
+    event connection_failed @ 0x82 {
+        ssid: string
+    }
+
+Emitted when when a network was detected in scan, the device tried to connect to it
+and failed.
+This may be because of wrong password or other random failure.

@@ -130,6 +130,27 @@ namespace Jacdac {
         Reading = 0x101,
 
         /**
+         * Read-write uint32_t. For sensors that support it, sets the range (sometimes also described `min`/`max_reading`).
+         * Typically only a small set of values is supported.
+         * Setting it to `X` will select the smallest possible range that is at least `X`,
+         * or if it doesn't exist, the largest supported range.
+         *
+         * ```
+         * const [readingRange] = jdunpack<[number]>(buf, "u32")
+         * ```
+         */
+        ReadingRange = 0x8,
+
+        /**
+         * Constant. Lists the values supported as `reading_range`.
+         *
+         * ```
+         * const [range] = jdunpack<[number[]]>(buf, "u32[]")
+         * ```
+         */
+        SupportedRanges = 0x10a,
+
+        /**
          * Constant int32_t. The lowest value that can be reported by the sensor.
          *
          * ```
@@ -354,23 +375,32 @@ namespace Jacdac {
         Forces = 0x101,
 
         /**
-         * Read-only g i12.20 (int32_t). Error on the reading value.
+         * Read-only g u12.20 (uint32_t). Error on the reading value.
          *
          * ```
-         * const [forcesError] = jdunpack<[number]>(buf, "i12.20")
+         * const [forcesError] = jdunpack<[number]>(buf, "u12.20")
          * ```
          */
         ForcesError = 0x106,
 
         /**
-         * Read-write g i12.20 (int32_t). Configures the range forces detected.
-         * Read-back after setting to get current value.
+         * Read-write g u12.20 (uint32_t). Configures the range forces detected.
+         * The value will be "rounded up" to one of `max_forces_supported`.
          *
          * ```
-         * const [maxForce] = jdunpack<[number]>(buf, "i12.20")
+         * const [maxForce] = jdunpack<[number]>(buf, "u12.20")
          * ```
          */
-        MaxForce = 0x80,
+        MaxForce = 0x8,
+
+        /**
+         * Constant. Lists values supported for writing `max_force`.
+         *
+         * ```
+         * const [maxForce] = jdunpack<[number[]]>(buf, "u12.20[]")
+         * ```
+         */
+        MaxForcesSupported = 0x10a,
     }
 
     public enum AccelerometerEvent {
@@ -623,6 +653,11 @@ namespace Jacdac {
          * ```
          */
         ConnectionStatusChange = 0x3,
+
+        /**
+         * Raised when a message has been sent to the hub.
+         */
+        MessageSent = 0x80,
     }
 
 }
@@ -882,6 +917,42 @@ namespace Jacdac {
          * const [sessionId, pageError, pageAddress] = jdunpack<[number, BootloaderError, number]>(buf, "u32 u32 u32")
          * ```
          */
+    }
+
+}
+namespace Jacdac {
+    // Service: Braille display
+    public static class BrailleDisplayConstants
+    {
+        public const uint ServiceClass = 0x13bfb7cc;
+    }
+    public enum BrailleDisplayReg {
+        /**
+         * Read-write bool (uint8_t). Determins if the braille display is active.
+         *
+         * ```
+         * const [enabled] = jdunpack<[number]>(buf, "u8")
+         * ```
+         */
+        Enabled = 0x1,
+
+        /**
+         * Read-write string (bytes). Braille patterns to show. Must be unicode characters between `0x2800` and `0x28ff`.
+         *
+         * ```
+         * const [patterns] = jdunpack<[string]>(buf, "s")
+         * ```
+         */
+        Patterns = 0x2,
+
+        /**
+         * Constant # uint8_t. Gets the number of patterns that can be displayed.
+         *
+         * ```
+         * const [length] = jdunpack<[number]>(buf, "u8")
+         * ```
+         */
+        Length = 0x181,
     }
 
 }
@@ -1644,7 +1715,7 @@ namespace Jacdac {
     }
     public enum GyroscopeReg {
         /**
-         * Indicates the current forces acting on accelerometer.
+         * Indicates the current rates acting on gyroscope.
          *
          * ```
          * const [x, y, z] = jdunpack<[number, number, number]>(buf, "i12.20 i12.20 i12.20")
@@ -1653,22 +1724,32 @@ namespace Jacdac {
         RotationRates = 0x101,
 
         /**
-         * Read-only °/s i12.20 (int32_t). Error on the reading value.
+         * Read-only °/s u12.20 (uint32_t). Error on the reading value.
          *
          * ```
-         * const [rotationRatesError] = jdunpack<[number]>(buf, "i12.20")
+         * const [rotationRatesError] = jdunpack<[number]>(buf, "u12.20")
          * ```
          */
         RotationRatesError = 0x106,
 
         /**
-         * Read-write °/s i12.20 (int32_t). Configures the range of range of rotation rates.
+         * Read-write °/s u12.20 (uint32_t). Configures the range of rotation rates.
+         * The value will be "rounded up" to one of `max_rates_supported`.
          *
          * ```
-         * const [maxRate] = jdunpack<[number]>(buf, "i12.20")
+         * const [maxRate] = jdunpack<[number]>(buf, "u12.20")
          * ```
          */
-        MaxRate = 0x80,
+        MaxRate = 0x8,
+
+        /**
+         * Constant. Lists values supported for writing `max_rate`.
+         *
+         * ```
+         * const [maxRate] = jdunpack<[number[]]>(buf, "u12.20[]")
+         * ```
+         */
+        MaxRatesSupported = 0x10a,
     }
 
 }
@@ -2380,6 +2461,46 @@ namespace Jacdac {
          * ```
          */
         Run = 0x81,
+    }
+
+}
+namespace Jacdac {
+    // Service: Light bulb
+    public static class LightBulbConstants
+    {
+        public const uint ServiceClass = 0x1cab054c;
+    }
+    public enum LightBulbReg {
+        /**
+         * Read-write ratio u0.16 (uint16_t). Indicates the brightness of the light bulb. Zero means completely off and 0xffff means completely on.
+         * For non-dimmeable lights, the value should be clamp to 0xffff for any non-zero value.
+         *
+         * ```
+         * const [brightness] = jdunpack<[number]>(buf, "u0.16")
+         * ```
+         */
+        Brightness = 0x1,
+
+        /**
+         * Constant bool (uint8_t). Indicates if the light supports dimming.
+         *
+         * ```
+         * const [dimmeable] = jdunpack<[number]>(buf, "u8")
+         * ```
+         */
+        Dimmeable = 0x180,
+    }
+
+    public enum LightBulbEvent {
+        /**
+         * Emitted when the light brightness is greater than 0.
+         */
+        On = 0x1,
+
+        /**
+         * Emitted when the light is completely off with brightness to 0.
+         */
+        Off = 0x2,
     }
 
 }
@@ -4248,6 +4369,15 @@ namespace Jacdac {
         Moisture = 0x101,
 
         /**
+         * Read-only ratio u0.16 (uint16_t). The error on the moisture reading.
+         *
+         * ```
+         * const [moistureError] = jdunpack<[number]>(buf, "u0.16")
+         * ```
+         */
+        MoistureError = 0x106,
+
+        /**
          * Constant Variant (uint8_t). Describe the type of physical sensor.
          *
          * ```
@@ -4902,6 +5032,13 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Unique Brain
+    public static class UniqueBrainConstants
+    {
+        public const uint ServiceClass = 0x103c4ee5;
+    }
+}
+namespace Jacdac {
     // Service: UV index
     public static class UvIndexConstants
     {
@@ -5242,7 +5379,7 @@ namespace Jacdac {
         AddNetwork = 0x81,
 
         /**
-         * No args. Initiate a scan, wait for results, disconnect from current WiFi network if any,
+         * No args. Enable the WiFi (if disabled), initiate a scan, wait for results, disconnect from current WiFi network if any,
          * and then reconnect (using regular algorithm, see `set_network_priority`).
          */
         Reconnect = 0x82,
@@ -5315,15 +5452,6 @@ namespace Jacdac {
         Enabled = 0x1,
 
         /**
-         * Read-only bool (uint8_t). Indicates whether or not we currently have an IP address assigned.
-         *
-         * ```
-         * const [connected] = jdunpack<[number]>(buf, "u8")
-         * ```
-         */
-        Connected = 0x180,
-
-        /**
          * Read-only bytes. 0, 4 or 16 byte buffer with the IPv4 or IPv6 address assigned to device if any.
          *
          * ```
@@ -5387,6 +5515,17 @@ namespace Jacdac {
          * Emitted whenever the list of known networks is updated.
          */
         NetworksChanged = 0x81,
+
+        /**
+         * Argument: ssid string (bytes). Emitted when when a network was detected in scan, the device tried to connect to it
+         * and failed.
+         * This may be because of wrong password or other random failure.
+         *
+         * ```
+         * const [ssid] = jdunpack<[string]>(buf, "s")
+         * ```
+         */
+        ConnectionFailed = 0x82,
     }
 
 }

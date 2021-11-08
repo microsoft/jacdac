@@ -13,6 +13,10 @@ A soil moisture sensor.
 
 Indicates the wetness of the soil, from ``dry`` to ``wet``.
 
+    ro moisture_error?: u0.16 /  @ reading_error
+
+The error on the moisture reading.
+
     enum Variant: u8 {
          Resistive = 1
          Capacitive = 2

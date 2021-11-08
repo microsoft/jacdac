@@ -130,6 +130,27 @@ namespace Jacdac {
         Reading = 0x101,
 
         /**
+         * Read-write uint32_t. For sensors that support it, sets the range (sometimes also described `min`/`max_reading`).
+         * Typically only a small set of values is supported.
+         * Setting it to `X` will select the smallest possible range that is at least `X`,
+         * or if it doesn't exist, the largest supported range.
+         *
+         * ```
+         * const [readingRange] = jdunpack<[number]>(buf, "u32")
+         * ```
+         */
+        ReadingRange = 0x8,
+
+        /**
+         * Constant. Lists the values supported as `reading_range`.
+         *
+         * ```
+         * const [range] = jdunpack<[number[]]>(buf, "u32[]")
+         * ```
+         */
+        SupportedRanges = 0x10a,
+
+        /**
          * Constant int32_t. The lowest value that can be reported by the sensor.
          *
          * ```

@@ -103,6 +103,23 @@ typedef struct jd_system_event_report {
 #define JD_REG_READING 0x101
 
 /**
+ * Read-write uint32_t. For sensors that support it, sets the range (sometimes also described `min`/`max_reading`).
+ * Typically only a small set of values is supported.
+ * Setting it to `X` will select the smallest possible range that is at least `X`,
+ * or if it doesn't exist, the largest supported range.
+ */
+#define JD_REG_READING_RANGE 0x8
+
+/**
+ * Constant. Lists the values supported as `reading_range`.
+ */
+#define JD_REG_SUPPORTED_RANGES 0x10a
+typedef struct jd_system_supported_ranges {
+    uint32_t range[0];
+} jd_system_supported_ranges_t;
+
+
+/**
  * Constant int32_t. The lowest value that can be reported by the sensor.
  */
 #define JD_REG_MIN_READING 0x104

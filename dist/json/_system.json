@@ -247,6 +247,37 @@
       "packFormat": "i32"
     },
     {
+      "kind": "rw",
+      "name": "reading_range",
+      "identifier": 8,
+      "description": "For sensors that support it, sets the range (sometimes also described `min`/`max_reading`).\nTypically only a small set of values is supported.\nSetting it to `X` will select the smallest possible range that is at least `X`,\nor if it doesn't exist, the largest supported range.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u32"
+    },
+    {
+      "kind": "const",
+      "name": "supported_ranges",
+      "identifier": 266,
+      "description": "Lists the values supported as `reading_range`.",
+      "fields": [
+        {
+          "name": "range",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true,
+          "startRepeats": true
+        }
+      ],
+      "packFormat": "r: u32"
+    },
+    {
       "kind": "const",
       "name": "min_reading",
       "identifier": 260,

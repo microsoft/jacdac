@@ -1,0 +1,14 @@
+{
+  "id": "microsoft-research-jmrelaymach01v10",
+  "name": "JM Relay MACH-0.1",
+  "company": "Microsoft Research",
+  "description": "JM Relay MACH-0.1",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "services": [
+    406840918
+  ],
+  "productIdentifiers": [
+    900132124
+  ],
+  "version": "1.0"
+}

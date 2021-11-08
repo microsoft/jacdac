@@ -2,11 +2,20 @@
     "id": "microsoft-research-jmbrainesp3248v02",
     "name": "JM Brain ESP32",
     "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/pxt-jacdac/",
     "services": [342028028],
     "status": "deprecated",
     "productIdentifiers": [],
     "version": "0.2",
     "designIdentifier": "48",
-    "transport": "serial"
+    "transport": {
+        "type": "serial",
+        "vendorId": 12346
+    },
+    "firmwares": [
+        {
+            "name": "IoT Uploader",
+            "url": "https://github.com/microsoft/pxt-jacdac/releases/download/v0.7.21/uploader-esp32s2.uf2"
+        }
+    ],
+    "driveName": "IOT-BOOT"
 }

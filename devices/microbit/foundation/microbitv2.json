@@ -6,11 +6,14 @@
     "link": "https://microsoft.github.io/jacdac-docs/hardware/kit/oob/",
     "services": [],
     "productIdentifiers": [854992189],
-    "transport": "usb",
+    "transport": {
+        "type": "usb"
+    },
     "tags": ["kit"],
+    "driveName": "MICROBIT",
     "firmwares": [
         {
-            "name": "Kit Out-Of-the-Box Experience",
+            "name": "Out-Of-the-Box Experience",
             "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/microbit-oob.hex"
         }
     ]

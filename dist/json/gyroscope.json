@@ -144,7 +144,7 @@
       "kind": "ro",
       "name": "rotation_rates",
       "identifier": 257,
-      "description": "Indicates the current forces acting on accelerometer.",
+      "description": "Indicates the current rates acting on gyroscope.",
       "fields": [
         {
           "name": "x",
@@ -182,31 +182,51 @@
           "name": "_",
           "unit": "°/s",
           "shift": 20,
-          "type": "i12.20",
-          "storage": -4
+          "type": "u12.20",
+          "storage": 4
         }
       ],
       "volatile": true,
       "optional": true,
       "identifierName": "reading_error",
-      "packFormat": "i12.20"
+      "packFormat": "u12.20"
     },
     {
       "kind": "rw",
       "name": "max_rate",
-      "identifier": 128,
-      "description": "Configures the range of range of rotation rates.",
+      "identifier": 8,
+      "description": "Configures the range of rotation rates.\nThe value will be \"rounded up\" to one of `max_rates_supported`.",
       "fields": [
         {
           "name": "_",
           "unit": "°/s",
           "shift": 20,
-          "type": "i12.20",
-          "storage": -4
+          "type": "u12.20",
+          "storage": 4
         }
       ],
       "optional": true,
-      "packFormat": "i12.20"
+      "identifierName": "reading_range",
+      "packFormat": "u12.20"
+    },
+    {
+      "kind": "const",
+      "name": "max_rates_supported",
+      "identifier": 266,
+      "description": "Lists values supported for writing `max_rate`.",
+      "fields": [
+        {
+          "name": "max_rate",
+          "unit": "°/s",
+          "shift": 20,
+          "type": "u12.20",
+          "storage": 4,
+          "startRepeats": true
+        }
+      ],
+      "optional": true,
+      "identifierName": "supported_ranges",
+      "packFormat": "r: u12.20"
     }
   ],
   "tags": [],

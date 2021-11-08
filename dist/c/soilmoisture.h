@@ -14,6 +14,11 @@
 #define JD_SOIL_MOISTURE_REG_MOISTURE JD_REG_READING
 
 /**
+ * Read-only ratio u0.16 (uint16_t). The error on the moisture reading.
+ */
+#define JD_SOIL_MOISTURE_REG_MOISTURE_ERROR JD_REG_READING_ERROR
+
+/**
  * Constant Variant (uint8_t). Describe the type of physical sensor.
  */
 #define JD_SOIL_MOISTURE_REG_VARIANT JD_REG_VARIANT

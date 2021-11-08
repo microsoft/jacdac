@@ -9,10 +9,14 @@
     "tags": ["kit"],
     "services": [414210922, 411425820],
     "productIdentifiers": [1003209864, 970267564],
+    "transport": {
+        "type": "usb"
+    },
     "firmwares": [
         {
             "name": "HID Keyboard + Mouse",
             "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/hid-servers-f4.uf2"
         }
-    ]
+    ],
+    "driveName": "JACDACF4"
 }

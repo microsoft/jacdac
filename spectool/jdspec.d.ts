@@ -588,6 +588,12 @@ declare namespace jdspec {
         services: number[]
     }
 
+    interface TransportSpec {
+        vendorId?: number
+        productId?: number
+        type: "usb" | "serial" | "bluetooth"
+    }
+
     interface DeviceSpec extends DeviceClassSpec {
         /**
          * URL-friendly id.
@@ -652,7 +658,7 @@ declare namespace jdspec {
         /**
          * Supported bus transport if any
          */
-        transport?: string
+        transport?: TransportSpec
 
         /**
          * Optional list of tags
@@ -672,6 +678,10 @@ declare namespace jdspec {
              */
             url: string
         }[]
+        /**
+         * Known bootloader drive name for flashing
+         */
+        driveName?: string
     }
 
     /**
@@ -688,6 +698,10 @@ declare namespace jdspec {
         client: {
             /** project name */
             name: string
+            /**
+             * Supported targets if restricted
+             */
+            targets?: string[]
             /**
              * GitHub slub and path (OWNER/NAME[/PATH])
              */

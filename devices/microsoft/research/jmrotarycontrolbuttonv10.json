@@ -7,6 +7,7 @@
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "link": "https://github.com/microsoft/jacdac-msr-modules",
     "tags": ["kit"],
+    "status": "deprecated",
     "services": [284830153, 343122531],
     "productIdentifiers": [1060754715]
 }

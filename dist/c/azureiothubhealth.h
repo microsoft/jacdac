@@ -45,4 +45,9 @@
  */
 #define JD_AZURE_IOT_HUB_HEALTH_EV_CONNECTION_STATUS_CHANGE JD_EV_CHANGE
 
+/**
+ * Raised when a message has been sent to the hub.
+ */
+#define JD_AZURE_IOT_HUB_HEALTH_EV_MESSAGE_SENT 0x80
+
 #endif

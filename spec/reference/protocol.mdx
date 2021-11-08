@@ -419,13 +419,14 @@ and the rest is service- or device-specific.
 
 | Code          | Description
 |--------------:| ------------------------------------
-| `0x00`        | General error
-| `0x01`        | Command not supported
-| `0x02`        | Invalid command arguments
-| `0x03`        | Invalid state
-| `0x04`-`0x7f` | Reserved
+| `0x00`        | Reserved
+| `0x01`        | Command (action, register) not supported
+| `0x02`        | Invalid command arguments (will never succeed)
+| `0x03`        | Invalid state (can succeed in future)
+| `0x04`        | Hardware failure (possibly transient)
+| `0x05`        | Payload too big
 | `0x80`-`0x8f` | Busy, try again in approx. `16 << (code - 0x80)` ms
-| `0x90`-`0xff` | Reserved
+| Others        | Reserved
 
 ## Physical Layer
 

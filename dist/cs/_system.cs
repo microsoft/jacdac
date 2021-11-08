@@ -53,6 +53,18 @@ namespace Jacdac {
          * No args. Request to calibrate a sensor. The report indicates the calibration is done.
          */
         Calibrate = 0x2,
+
+        /**
+         * This report may be emitted by a server in response to a command (action or register operation)
+         * that it does not understand.
+         * The `service_command` and `packet_crc` fields are copied from the command packet that was unhandled.
+         * Note that it's possible to get an ACK, followed by such an error report.
+         *
+         * ```
+         * const [serviceCommand, packetCrc] = jdunpack<[number, number]>(buf, "u16 u16")
+         * ```
+         */
+        CommandNotImplemented = 0x3,
     }
 
     public enum SystemReg {

@@ -19,6 +19,7 @@ namespace Jacdac {
         SupportsBroadcast = 0x200,
         SupportsFrames = 0x400,
         IsClient = 0x800,
+        SupportsReliableCommands = 0x1000,
     }
 
     public enum ControlCmd {
@@ -95,7 +96,39 @@ namespace Jacdac {
          * No args. Force client device into proxy mode.
          */
         Proxy = 0x85,
+
+        /**
+         * Argument: seed uint32_t. This opens a pipe to the device to provide an alternative, reliable transport of actions
+         * (and possibly other commands).
+         * The commands are wrapped as pipe data packets.
+         * Multiple invocations of this command with the same `seed` are dropped
+         * (and thus the command is not `unique`); otherwise `seed` carries no meaning
+         * and should be set to a random value by the client.
+         * Note that while the commands sends this way are delivered exactly once, the
+         * responses might get lost.
+         *
+         * ```
+         * const [seed] = jdunpack<[number]>(buf, "u32")
+         * ```
+         */
+        ReliableCommands = 0x86,
+
+        /**
+         * report ReliableCommands
+         * ```
+         * const [commands] = jdunpack<[Uint8Array]>(buf, "b[12]")
+         * ```
+         */
     }
+
+
+    /**
+     * pipe_command WrappedCommand
+     * ```
+     * const [serviceSize, serviceIndex, serviceCommand, payload] = jdunpack<[number, number, number, Uint8Array]>(buf, "u8 u8 u16 b")
+     * ```
+     */
+
 
     public enum ControlReg {
         /**

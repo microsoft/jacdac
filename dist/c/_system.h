@@ -62,6 +62,19 @@ typedef struct jd_system_event_report {
  */
 
 /**
+ * This report may be emitted by a server in response to a command (action or register operation)
+ * that it does not understand.
+ * The `service_command` and `packet_crc` fields are copied from the command packet that was unhandled.
+ * Note that it's possible to get an ACK, followed by such an error report.
+ */
+#define JD_CMD_COMMAND_NOT_IMPLEMENTED 0x3
+typedef struct jd_system_command_not_implemented_report {
+    uint16_t service_command;
+    uint16_t packet_crc;
+} jd_system_command_not_implemented_report_t;
+
+
+/**
  * Read-write uint32_t. This is either binary on/off (0 or non-zero), or can be gradual (eg. brightness of an RGB LED strip).
  */
 #define JD_REG_INTENSITY 0x1

@@ -49,6 +49,18 @@ export enum SystemCmd {
      * No args. Request to calibrate a sensor. The report indicates the calibration is done.
      */
     Calibrate = 0x2,
+
+    /**
+     * This report may be emitted by a server in response to a command (action or register operation)
+     * that it does not understand.
+     * The `service_command` and `packet_crc` fields are copied from the command packet that was unhandled.
+     * Note that it's possible to get an ACK, followed by such an error report.
+     *
+     * ```
+     * const [serviceCommand, packetCrc] = jdunpack<[number, number]>(buf, "u16 u16")
+     * ```
+     */
+    CommandNotImplemented = 0x3,
 }
 
 export enum SystemReg {
@@ -274,6 +286,20 @@ export enum SystemEvent {
 }
 
 // Service: Base service
+export enum BaseCmd {
+    /**
+     * This report may be emitted by a server in response to a command (action or register operation)
+     * that it does not understand.
+     * The `service_command` and `packet_crc` fields are copied from the command packet that was unhandled.
+     * Note that it's possible to get an ACK, followed by such an error report.
+     *
+     * ```
+     * const [serviceCommand, packetCrc] = jdunpack<[number, number]>(buf, "u16 u16")
+     * ```
+     */
+    CommandNotImplemented = 0x3,
+}
+
 export enum BaseReg {
     /**
      * Constant string (bytes). A friendly name that describes the role of this service instance in the device.
@@ -1183,6 +1209,7 @@ export enum ControlAnnounceFlags { // uint16_t
     SupportsBroadcast = 0x200,
     SupportsFrames = 0x400,
     IsClient = 0x800,
+    SupportsReliableCommands = 0x1000,
 }
 
 export enum ControlCmd {
@@ -1259,7 +1286,39 @@ export enum ControlCmd {
      * No args. Force client device into proxy mode.
      */
     Proxy = 0x85,
+
+    /**
+     * Argument: seed uint32_t. This opens a pipe to the device to provide an alternative, reliable transport of actions
+     * (and possibly other commands).
+     * The commands are wrapped as pipe data packets.
+     * Multiple invocations of this command with the same `seed` are dropped
+     * (and thus the command is not `unique`); otherwise `seed` carries no meaning
+     * and should be set to a random value by the client.
+     * Note that while the commands sends this way are delivered exactly once, the
+     * responses might get lost.
+     *
+     * ```
+     * const [seed] = jdunpack<[number]>(buf, "u32")
+     * ```
+     */
+    ReliableCommands = 0x86,
+
+    /**
+     * report ReliableCommands
+     * ```
+     * const [commands] = jdunpack<[Uint8Array]>(buf, "b[12]")
+     * ```
+     */
 }
+
+
+/**
+ * pipe_command WrappedCommand
+ * ```
+ * const [serviceSize, serviceIndex, serviceCommand, payload] = jdunpack<[number, number, number, Uint8Array]>(buf, "u8 u8 u16 b")
+ * ```
+ */
+
 
 export enum ControlReg {
     /**

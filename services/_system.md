@@ -48,6 +48,16 @@ Event from sensor or a broadcast service.
 
 Request to calibrate a sensor. The report indicates the calibration is done.
 
+    report command_not_implemented @ 0x03 {
+        service_command: u16
+        packet_crc: u16
+    }
+
+This report may be emitted by a server in response to a command (action or register operation)
+that it does not understand.
+The `service_command` and `packet_crc` fields are copied from the command packet that was unhandled.
+Note that it's possible to get an ACK, followed by such an error report.
+
 ## Registers
 
 Register codes are subdivided as follows:

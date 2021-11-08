@@ -11,7 +11,7 @@ In MakeCode, you can listen for custom `source`, `value` values using [control.o
 
 ## Commands
 
-    command send @ 0x80 {
+    unique command send @ 0x80 {
        source: u16
        value: u16
     }

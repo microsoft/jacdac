@@ -442,6 +442,11 @@ declare namespace jdspec {
          * This member is designed to support small servers and typically is not exposed by high-level client.
          */
         lowLevel?: boolean
+
+        /**
+         * This action is not idempotent.
+         */
+        unique?: boolean
     }
 
     /**

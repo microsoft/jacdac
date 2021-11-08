@@ -130,7 +130,7 @@ Specifies the shape of the light strip.
 
 ## Commands
 
-    command run @ 0x81 {
+    unique command run @ 0x81 {
         program: bytes
     }
 

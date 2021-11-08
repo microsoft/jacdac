@@ -407,6 +407,7 @@ export function parseServiceSpecificationMarkdownToJSON(
                 case "client":
                 case "volatile":
                 case "lowlevel":
+                case "unique":
                 case "restricted":
                     startPacket(words)
                     break
@@ -544,16 +545,32 @@ export function parseServiceSpecificationMarkdownToJSON(
         let client: boolean = undefined
         let lowLevel: boolean = undefined
         let restricted: boolean = undefined
-        if (words[0] === "restricted") {
-            restricted = true
-            words.shift()
-        } else if (words[0] === "client") {
-            client = true
-            words.shift()
-        } else if (words[0] === "lowlevel") {
-            lowLevel = true
-            words.shift()
+        let unique: boolean = undefined
+        let internal: boolean = undefined
+        let volatile: boolean = undefined
+
+        function processAttributes() {
+            while (true) {
+                if (words[0] === "restricted") {
+                    restricted = true
+                } else if (words[0] === "client") {
+                    client = true
+                } else if (words[0] === "lowlevel") {
+                    lowLevel = true
+                } else if (words[0] === "unique") {
+                    unique = true
+                } else if (words[0] === "internal") {
+                    internal = true
+                } else if (words[0] === "volatile") {
+                    volatile = true
+                } else {
+                    break
+                }
+                words.shift()
+            }
         }
+
+        processAttributes()
 
         const kindSt = words.shift()
         let kind: jdspec.PacketKind = "command"
@@ -573,22 +590,16 @@ export function parseServiceSpecificationMarkdownToJSON(
             kind = kindSt as any
         }
 
+        processAttributes()
+
         if (restricted && kind !== "command")
             error("restricted only applies to commands")
 
-        let internal: boolean = undefined
-        if (words[0] === "internal") {
-            internal = true
-            words.shift()
-        }
+        if (unique && kind !== "command")
+            error("unique only applies to commands")
 
-        let volatile: boolean = undefined
-        if (words[0] === "volatile") {
-            if (kind != "ro" && kind != "rw")
-                error("volatile can only modify ro or rw")
-            volatile = true
-            words.shift()
-        }
+        if (volatile && kind != "ro" && kind != "rw")
+            error("volatile can only modify ro or rw")
 
         let name = words.shift()
         const isReport = kind == "report"
@@ -606,6 +617,7 @@ export function parseServiceSpecificationMarkdownToJSON(
             internal,
             client,
             lowLevel,
+            unique,
             volatile,
             restricted,
         }

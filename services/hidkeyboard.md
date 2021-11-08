@@ -31,7 +31,7 @@ The device keeps tracks of the key state and is able to clear it all with the cl
         Up = 1
         Down = 2
     }
-    lowlevel command key @ 0x80 {
+    lowlevel unique command key @ 0x80 {
     repeats:
         selector: u16
         modifiers: Modifiers

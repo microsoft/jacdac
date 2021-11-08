@@ -12,19 +12,20 @@ are not implemented in `8bit` version.
 ## Commands
 
     flags AnnounceFlags : u16 {
-        RestartCounterSteady =  0x000F,
-        RestartCounter1 =       0x0001,
-        RestartCounter2 =       0x0002,
-        RestartCounter4 =       0x0004,
-        RestartCounter8 =       0x0008,
-        StatusLightNone =       0x0000,
-        StatusLightMono =       0x0010,
-        StatusLightRgbNoFade =  0x0020,
-        StatusLightRgbFade =    0x0030,
-        SupportsACK =           0x0100,
-        SupportsBroadcast =     0x0200,
-        SupportsFrames =        0x0400,
-        IsClient =              0x0800,
+        RestartCounterSteady =        0x000F,
+        RestartCounter1 =             0x0001,
+        RestartCounter2 =             0x0002,
+        RestartCounter4 =             0x0004,
+        RestartCounter8 =             0x0008,
+        StatusLightNone =             0x0000,
+        StatusLightMono =             0x0010,
+        StatusLightRgbNoFade =        0x0020,
+        StatusLightRgbFade =          0x0030,
+        SupportsACK =                 0x0100,
+        SupportsBroadcast =           0x0200,
+        SupportsFrames =              0x0400,
+        IsClient =                    0x0800,
+        SupportsReliableCommands =    0x1000,
     }
     command services @ announce { }
     report {
@@ -57,7 +58,7 @@ send the sequence of status light command to generate the identify animation.
 
 Reset device. ACK may or may not be sent.
 
-    command flood_ping? @ 0x83 {
+    unique command flood_ping? @ 0x83 {
         num_responses: u32
         start_counter: u32
         size: u8 B
@@ -90,6 +91,28 @@ on, and `0` (for all three channels) should be considered off.
     command proxy? @ 0x85 {}
 
 Force client device into proxy mode.
+
+    command reliable_commands? @ 0x86 {
+        seed: u32
+    }
+    report {
+        commands: pipe
+    }
+    pipe command wrapped_command {
+        service_size: u8
+        service_index: u8
+        service_command: u16
+        payload: bytes
+    }
+
+This opens a pipe to the device to provide an alternative, reliable transport of actions
+(and possibly other commands).
+The commands are wrapped as pipe data packets.
+Multiple invocations of this command with the same `seed` are dropped
+(and thus the command is not `unique`); otherwise `seed` carries no meaning
+and should be set to a random value by the client.
+Note that while the commands sends this way are delivered exactly once, the
+responses might get lost.
 
 ## Registers
 

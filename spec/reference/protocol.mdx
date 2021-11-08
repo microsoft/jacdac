@@ -224,7 +224,6 @@ If these are handled purely through events, the client will maintain the pressed
 For this, it's critical not to swap order of up/down events.
 To recognize button combinations, it's important not to swap order of events from the two services.
 
-
 ### The control service
 
 Each device runs its own control service, which emits advertisement packets roughly every 500 milliseconds. The service class of the control service is zero (0). Each advertisement contains the device's identifier (as usual) as well a list of services offered by the device; other devices on the bus can inspect these advertisements and subsequently communicate with the advertised services to incorporate them in user applications.
@@ -281,12 +280,12 @@ If the second bit of `flags` is set
 
 If the third bit of `flags` is set (_multicast commands_), then the low order 32 bits of the `device_identifier` field are treated as a service class. The command is then directed to all services with that service class.
 
-| Flag bit | Interpretation 	|
-|--------|------------	|
-| `0x01` | if set, the `device_identifier` is the recipient of command; if clear, the `device_identifier` is the sender of a report;
-| `0x02` | if set, an ACK should be issued with CRC |
-| `0x04` | if set, the device_identifier contains target service class number (multicast) |
-| `0x80` | if set, the packet comes from Jacdac vNext and should be ignored by the current implementation |
+| Flag bit | Interpretation
+|----------|-------------------------------------
+| `0x01`   | if set, the `device_identifier` is the recipient of command; if clear, the `device_identifier` is the sender of a report
+| `0x02`   | if set, an ACK should be issued with CRC
+| `0x04`   | if set, the device_identifier contains target service class number (multicast)
+| `0x80`   | if set, the packet comes from Jacdac vNext and should be ignored by the current implementation
 
 ### Acks
 
@@ -303,6 +302,10 @@ The payload is zero-sized.
 All devices, except for the most resource-constrained bootloaders,
 should be able to send ACKs.
 They should indicate that in their advertisement packet.
+
+Note that ACK only means the packet was received and will be processed.
+It may still contain for example an unimplemented command.
+See also `command_not_implemented` report.
 
 ### Pipes
 
@@ -382,14 +385,28 @@ pipe packet, without any additional info about how to chunk the data
 Multiple packets can be grouped in a frame, but are still handled separately at the
 destination.
 
-### Event subscriptions
+### Reliable actions
 
-A device like accelerometer can send events eg. when a 2g shock is detected,
-when it's moved face-down, etc.
-These events a normally just broadcast on the bus, using standard command `0x001`.
+Actions can be invoked reliably by requesting an ACK.
+However, since this may involve excessive re-transmission, it only works correctly
+for idempotent actions.
 
-For reliable event delivery, a pipe can be established, and events delivered
-over that pipe.
+We say an action is _idempotent_, when it doesn't matter if it is invoked once or multiple times
+within ~100ms (without interleaving of other commands).
+For example, `clear all`, `set` and `remove` actions on a configuration store are idempotent.
+Another example is when an action is likely to take much longer than 100ms, and new invocations
+while in progress are ignored, for example `calibrate` command on a sensor.
+Yet another example is when the difference between single and multiple invocations is not perceptible to 
+the user (eg., starting a fade-glow operation on an LED).
+Actions that are **not** idempotent are marked with `unique` attribute in the specifications.
+
+Multiple invocations of actions that specify the same pipe in the arguments are implicitly ignored
+(since, it's not possible to open the same pipe multiple times simultaneously).
+Thus, they do not require the `unique` attribute.
+
+For non-idempotent actions, a pipe can be opened with a `reliable_commands` action on the control service.
+Actions (or any other commands) can then be sent over that pipe.
+Support for this is indicated as a flag in the advertisement packet.
 
 ## Physical Layer
 

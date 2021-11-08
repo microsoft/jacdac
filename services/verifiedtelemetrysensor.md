@@ -41,7 +41,7 @@ Template Fingerprint information of a working sensor.
 
 This command will clear the template fingerprint of a sensor and collect a new template fingerprint of the attached sensor.
 
-    command retrain_fingerprint_template @ 0x081 {}
+    unique command retrain_fingerprint_template @ 0x081 {}
 
 This command will append a new template fingerprint to the `fingerprintTemplate`. Appending more fingerprints will increase the accuracy in detecting the telemetry status.
 

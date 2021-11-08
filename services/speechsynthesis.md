@@ -28,7 +28,7 @@ Rate for utterances
 
 ## Commands
 
-    command speak @ 0x80 {
+    unique command speak @ 0x80 {
         text: string
     }
 

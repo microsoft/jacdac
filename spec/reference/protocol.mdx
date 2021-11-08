@@ -270,8 +270,7 @@ The following table lists allowed values for `service_index`.
 `0x3d`           | Reserved
 `0x3e`           | Pipe packet (see below)
 `0x3f`           | ACK packet (see below)
-`0x40`-`0x7a`    | Error responses for services
-`0x7b`-`0xff`    | Reserved
+`0x40`-`0xff`    | Reserved
 
 #### flags
 
@@ -303,6 +302,10 @@ The payload is zero-sized.
 All devices, except for the most resource-constrained bootloaders,
 should be able to send ACKs.
 They should indicate that in their advertisement packet.
+
+Note that ACK only means the packet was received and will be processed.
+It may still contain for example an unimplemented command.
+See also `command_not_implemented` report.
 
 ### Pipes
 
@@ -404,29 +407,6 @@ Thus, they do not require the `unique` attribute.
 For non-idempotent actions, a pipe can be opened with a `reliable_commands` action on the control service.
 Actions (or any other commands) can then be sent over that pipe.
 Support for this is indicated as a flag in the advertisement packet.
-
-### Error responses
-
-When a device cannot handle a command, it can send an error response (instead of ignoring the command).
-This is to indicate that it correctly received the command packet, but will not handle it.
-An error response uses the same `service_command`, `device_identifier`, and `service_index`
-as the offending command, except that it sets the second-highest bit of `service_index`
-(`service_index` values between `0x40` and `0x7a` are allocated for this purpose).
-
-The payload of the error response can be empty, indicating a general error.
-Otherwise, the first byte of the response indicates the error code,
-and the rest is service- or device-specific.
-
-| Code          | Description
-|--------------:| ------------------------------------
-| `0x00`        | Reserved
-| `0x01`        | Command (action, register) not supported
-| `0x02`        | Invalid command arguments (will never succeed)
-| `0x03`        | Invalid state (can succeed in future)
-| `0x04`        | Hardware failure (possibly transient)
-| `0x05`        | Payload too big
-| `0x80`-`0x8f` | Busy, try again in approx. `16 << (code - 0x80)` ms
-| Others        | Reserved
 
 ## Physical Layer
 

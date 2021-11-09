@@ -677,6 +677,10 @@ declare namespace jdspec {
              * Location of the compiled firmware
              */
             url: string
+            /**
+             * Unique product identifier for this firmware
+             */
+            productIdentifier?: number
         }[]
 
         /**

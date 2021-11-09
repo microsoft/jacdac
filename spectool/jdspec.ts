@@ -1941,6 +1941,15 @@ export function generateDeviceSpecificationId(dev: jdspec.DeviceSpec) {
 }
 
 export function normalizeDeviceSpecification(dev: jdspec.DeviceSpec) {
+    const productIdentifiers = Array.from(
+        new Set<number>([
+            ...(dev.productIdentifiers || []),
+            ...(dev.firmwares
+                ?.map(fw => fw.productIdentifier)
+                .filter(pi => !!pi) || []),
+        ]).values()
+    )
+
     // reorder fields
     const clone: jdspec.DeviceSpec = {
         id: generateDeviceSpecificationId(dev),
@@ -1950,7 +1959,7 @@ export function normalizeDeviceSpecification(dev: jdspec.DeviceSpec) {
         repo: dev.repo,
         link: dev.link,
         services: dev.services,
-        productIdentifiers: dev.productIdentifiers,
+        productIdentifiers: productIdentifiers,
         transport: dev.transport,
         tags: dev.tags,
         firmwares: dev.firmwares,

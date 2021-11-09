@@ -1087,7 +1087,8 @@
     "link": "https://microsoft.github.io/jacdac-docs/hardware/kit/oob/",
     "services": [],
     "productIdentifiers": [
-      854992189
+      854992189,
+      888455511
     ],
     "transport": {
       "type": "usb"
@@ -1098,7 +1099,8 @@
     "firmwares": [
       {
         "name": "Out-Of-the-Box Experience",
-        "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/microbit-oob.hex"
+        "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/microbit-oob.hex",
+        "productIdentifier": 888455511
       }
     ],
     "bootloader": {

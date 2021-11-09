@@ -15,7 +15,8 @@
     "firmwares": [
         {
             "name": "HID Keyboard + Mouse",
-            "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/hid-servers-rp2040.uf2"
+            "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/hid-servers-rp2040.uf2",
+            "productIdentifier": 883764657
         }
     ],
     "bootloader": {

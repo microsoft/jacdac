@@ -1956,7 +1956,7 @@ export function normalizeDeviceSpecification(dev: jdspec.DeviceSpec) {
         firmwares: dev.firmwares,
         version: dev.version ? dev.version.replace(/^v/, "") : undefined,
         designIdentifier: dev.designIdentifier,
-        driveName: dev.driveName,
+        bootloader: dev.bootloader,
         status: dev.status,
     }
     // delete empty files

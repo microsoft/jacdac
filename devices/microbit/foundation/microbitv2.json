@@ -10,11 +10,14 @@
         "type": "usb"
     },
     "tags": ["kit"],
-    "driveName": "MICROBIT",
     "firmwares": [
         {
             "name": "Out-Of-the-Box Experience",
             "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/microbit-oob.hex"
         }
-    ]
+    ],
+    "bootloader": {
+        "driveName": "MICROBIT",
+        "firmwareFormat": "hex"
+    }
 }

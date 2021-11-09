@@ -18,5 +18,9 @@
             "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/hid-servers-rp2040.uf2"
         }
     ],
-    "driveName": "RPI-RP2"
+    "bootloader": {
+        "sequence": "reset-boot",
+        "driveName": "RPI-RP2",
+        "firmwareFormat": "uf2"
+    }
 }

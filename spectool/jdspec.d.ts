@@ -678,10 +678,28 @@ declare namespace jdspec {
              */
             url: string
         }[]
+
         /**
-         * Known bootloader drive name for flashing
+         * Virtual drive that allows to upload new firmware
          */
-        driveName?: string
+        bootloader?: {
+            /**
+             * Known bootloader drive name for flashing
+             */
+            driveName: string
+            /**
+             * Button sequence to enter bootloader mode.
+             */
+            sequence?: "reset" | "reset-boot"
+            /**
+             * File format of firmware files
+             */
+            firmwareFormat?: "uf2" | "hex"
+            /**
+             * Led pattern when in bootloader mode
+             */
+            ledAnimation?: "blue-glow"
+        }
     }
 
     /**

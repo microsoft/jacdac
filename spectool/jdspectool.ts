@@ -71,6 +71,15 @@ function tsify(name: string) {
 const Reading = 0x101
 const Intensity = 0x1
 const Value = 0x2
+function isEnabledReg(reg: jdspec.PacketInfo) {
+    return (
+        reg.identifier === Intensity &&
+        reg.name === "enabled" &&
+        reg.fields.length === 1 &&
+        reg.fields[0].type === "bool"
+    )
+}
+
 function toMakeCodeClient(spec: jdspec.ServiceSpec) {
     const { shortId, name, camelName, packets } = spec
 
@@ -79,8 +88,9 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
     let baseType = "Client"
     let isSimpleSensorClient = false
     const ctorArgs = [`${nsc}.SRV_${snakify(camelName).toUpperCase()}`, `role`]
-    const reading = registers.find(reg => reg.identifier === Reading)
     const regs = registers.filter(r => !!r).filter(r => !r.restricted)
+    const reading = regs.find(reg => reg.identifier === Reading)
+    const enabledReg = regs.find(isEnabledReg)
     const events = packets.filter(pkt => !pkt.derived && pkt.kind === "event")
     // TODO: pipes support
     const commands = packets.filter(
@@ -146,13 +156,10 @@ ${regs
             useBooleans: true,
         })
         const { fields, client } = reg
-        const isReading = reg.identifier === Reading
-        const fieldName = `this._${isReading ? "reading" : camelize(reg.name)}`
-        const enabled =
-            reg.identifier === Intensity &&
-            reg.name === "enabled" &&
-            reg.fields.length === 1 &&
-            reg.fields[0].type === "bool"
+        const reading = reg.identifier === Reading
+        const value = reg.identifier === Value
+        const enabled = isEnabledReg(reg)
+        const fieldName = `this._${reading ? "reading" : camelize(reg.name)}`
         const hasBlocks =
             reg.identifier == Reading ||
             reg.identifier == Intensity ||
@@ -178,12 +185,12 @@ ${toMetaComments(
                         ? `
             // TODO: implement client register
             throw "client register not implement";`
-                        : isReading && isSimpleSensorClient
+                        : reading && isSimpleSensorClient
                         ? `
             return ${valueScaler(`this.reading()`)};
         `
                         : `${
-                              isReading
+                              reading
                                   ? `
             this.setStreaming(true);`
                                   : `
@@ -214,7 +221,12 @@ ${toMetaComments(
     defl !== undefined && `value.defl=${defl}`
 )}
         set${capitalize(camelize(name))}(value: ${types[fieldi]}) {
-            this.start();
+            this.start();${
+                enabledReg && value
+                    ? `
+            this.enabled = true;`
+                    : ""
+            }
             const values = ${fieldName}.values as any[];
             values[${fieldi}] = ${valueUnscaler("value")};
             ${fieldName}.values = values as [${types}];

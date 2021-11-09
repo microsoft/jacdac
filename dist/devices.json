@@ -258,7 +258,9 @@
     "services": [
       342028028
     ],
-    "productIdentifiers": [],
+    "productIdentifiers": [
+      1067560617
+    ],
     "transport": {
       "type": "serial",
       "vendorId": 12346
@@ -266,7 +268,8 @@
     "firmwares": [
       {
         "name": "IoT Uploader",
-        "url": "https://github.com/microsoft/pxt-jacdac/releases/download/v0.7.21/uploader-esp32s2.uf2"
+        "url": "https://github.com/microsoft/pxt-jacdac/releases/download/v0.7.21/uploader-esp32s2.uf2",
+        "productIdentifier": 1067560617
       }
     ],
     "version": "0.2",
@@ -282,7 +285,8 @@
     ],
     "productIdentifiers": [
       917230668,
-      983264687
+      983264687,
+      1067560617
     ],
     "transport": {
       "type": "serial",
@@ -291,7 +295,8 @@
     "firmwares": [
       {
         "name": "IoT Uploader",
-        "url": "https://github.com/microsoft/pxt-jacdac/releases/download/v0.7.21/uploader-esp32s2.uf2"
+        "url": "https://github.com/microsoft/pxt-jacdac/releases/download/v0.7.21/uploader-esp32s2.uf2",
+        "productIdentifier": 1067560617
       }
     ],
     "version": "0.3",
@@ -315,7 +320,8 @@
     ],
     "productIdentifiers": [
       1003209864,
-      970267564
+      970267564,
+      819577746
     ],
     "transport": {
       "type": "usb"
@@ -326,7 +332,8 @@
     "firmwares": [
       {
         "name": "HID Keyboard + Mouse",
-        "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/hid-servers-f4.uf2"
+        "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/hid-servers-f4.uf2",
+        "productIdentifier": 819577746
       }
     ],
     "version": "0.2",
@@ -350,7 +357,8 @@
     ],
     "productIdentifiers": [
       884301483,
-      999933064
+      999933064,
+      883764657
     ],
     "transport": {
       "type": "usb"
@@ -361,7 +369,8 @@
     "firmwares": [
       {
         "name": "HID Keyboard + Mouse",
-        "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/hid-servers-rp2040.uf2"
+        "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/hid-servers-rp2040.uf2",
+        "productIdentifier": 883764657
       }
     ],
     "version": "0.1",

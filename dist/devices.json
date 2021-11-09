@@ -865,6 +865,26 @@
     "designIdentifier": "60"
   },
   {
+    "id": "microsoft-research-jmrgbledring37v20",
+    "name": "JM RGB LED Ring",
+    "company": "Microsoft Research",
+    "description": "",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      309264608
+    ],
+    "productIdentifiers": [
+      892295887
+    ],
+    "tags": [
+      "kit"
+    ],
+    "version": "2.0",
+    "designIdentifier": "37",
+    "status": "deprecated"
+  },
+  {
     "id": "microsoft-research-jmrgbledring37v21",
     "name": "JM RGB LED Ring",
     "company": "Microsoft Research",

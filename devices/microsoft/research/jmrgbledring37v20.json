@@ -1,0 +1,14 @@
+{
+    "id": "microsoft-research-jm-rgb-led-ring-37-v2.0",
+    "name": "JM RGB LED Ring",
+    "company": "Microsoft Research",
+    "description": "",
+    "designIdentifier": "37",
+    "version": "2.0",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "tags": ["kit"],
+    "services": [309264608],
+    "productIdentifiers": [892295887],
+    "status": "deprecated"
+}

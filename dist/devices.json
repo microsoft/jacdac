@@ -1117,7 +1117,8 @@
     "services": [],
     "productIdentifiers": [
       854992189,
-      888455511
+      888455511,
+      508816440
     ],
     "transport": {
       "type": "usb"
@@ -1130,6 +1131,11 @@
         "name": "Out-Of-the-Box Experience",
         "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/microbit-oob.hex",
         "productIdentifier": 888455511
+      },
+      {
+        "name": "Farm Beats Data Collector",
+        "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/farm-beats.hex",
+        "productIdentifier": 508816440
       }
     ],
     "bootloader": {

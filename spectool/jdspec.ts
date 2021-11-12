@@ -1513,7 +1513,7 @@ export function camelize(name: string) {
         name[0].toLowerCase() +
         name
             .slice(1)
-            .replace(/\s+/, "_")
+            .replace(/\s+/g, "_")
             .replace(/_([a-z0-9])/gi, (_, l) => l.toUpperCase())
     )
 }

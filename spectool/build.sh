@@ -14,6 +14,4 @@ cp ../services/generated/*.ts ../dist/
 cp ../services/generated/*.sts ../dist/
 cp ../services/generated/*.cs ../dist/
 cp ../services/generated/c/*.h ../dist/c/
-cp ../services/generated/cs/*.cs ../dist/cs/
 cp ../services/generated/json/*.json ../dist/json/
-cp ../services/generated/py/*.py ../dist/py/

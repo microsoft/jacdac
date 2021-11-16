@@ -404,7 +404,7 @@ function processSpec(dn: string) {
     const pydir = path.join(outp, "python")
     mkdir(pydir)
     const mkcdServices: jdspec.MakeCodeServiceInfo[] = []
-    const pxtJacdacDir = path.join(dn, "..", "..", "pxt-jacdac")
+    const pxtJacdacDir = path.join(dn, "..", "..", "..", "pxt-jacdac")
 
     const fmtStats: { [index: string]: number } = {}
     const concats: jdspec.SMap<string> = {}
@@ -431,10 +431,11 @@ function processSpec(dn: string) {
         reportErrors(json.errors, dn, fn)
 
         // check if there is a makecode project folder for this service
-        const srvdirname = dashify(json.camelName)
-        const mkcdpxtjson = path.join(pxtJacdacDir, srvdirname, "pxt.json")
+        const mkcdsrvdirname = dashify(json.camelName)
+        const mkcdpxtjson = path.join(pxtJacdacDir, mkcdsrvdirname, "pxt.json")
         const hasMakeCodeProject = fs.existsSync(mkcdpxtjson)
         console.log(`check exists ${mkcdpxtjson}: ${hasMakeCodeProject}`)
+        const pysrvdirname = snakify(json.camelName).toLowerCase()
 
         if (hasMakeCodeProject) {
             const pxtjson: { supportedTargets?: string[] } = JSON.parse(
@@ -443,9 +444,9 @@ function processSpec(dn: string) {
             mkcdServices.push({
                 service: json.shortId,
                 client: {
-                    name: `jacdac-${srvdirname}`,
+                    name: `jacdac-${mkcdsrvdirname}`,
                     targets: pxtjson.supportedTargets,
-                    repo: `microsoft/pxt-jacdac/${srvdirname}`,
+                    repo: `microsoft/pxt-jacdac/${mkcdsrvdirname}`,
                     qName: `modules.${capitalize(json.camelName)}Client`,
                     default: `modules.${json.camelName}`,
                 },
@@ -465,7 +466,7 @@ function processSpec(dn: string) {
 
             if (n === "sts") {
                 const mkcdclient = toMakeCodeClient(json)
-                const srvdir = path.join(mkcdir, srvdirname)
+                const srvdir = path.join(mkcdir, mkcdsrvdirname)
                 mkdir(srvdir)
                 fs.writeFileSync(path.join(srvdir, "constants.ts"), convResult)
                 // generate project file and client template
@@ -489,7 +490,7 @@ function processSpec(dn: string) {
                 }
             } else if (n === "py") {
                 //const mkcdclient = toMakeCodeClient(json)
-                const srvdir = path.join(pydir, srvdirname)
+                const srvdir = path.join(pydir, pysrvdirname)
                 mkdir(srvdir)
                 fs.writeFileSync(path.join(srvdir, "constants.py"), convResult)
             }

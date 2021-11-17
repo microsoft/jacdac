@@ -1430,9 +1430,9 @@ function toPython(info: jdspec.ServiceSpec, language: "py" | "cpy" | "mpy") {
                 .join(",\n")
         )
         r.push(`}`)
-        r.push("")
     }
 
+    r.push("")
     return r.join("\n")
 }
 

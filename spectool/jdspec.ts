@@ -1416,7 +1416,7 @@ function toPython(info: jdspec.ServiceSpec, language: "py" | "cpy" | "mpy") {
         r.splice(2, 0, "from jacdac.system.constants import *")
 
     if (Object.keys(packFormats)) {
-        r.push(`${pref}_PACK_FORMATS = {`)
+        r.push(`${pref}PACK_FORMATS = {`)
         r.push(
             Object.keys(packFormats)
                 .map(k => `    ${k}: "${packFormats[k]}"`)

@@ -1386,15 +1386,21 @@ function toPython(info: jdspec.ServiceSpec, language: "py" | "cpy" | "mpy") {
         )
     }
 
-    for (const en of values(info.enums).filter(en => !en.derived)) {
-        r.push(
-            `class ${upperCamel(info.shortName)}${upperCamel(en.name)}(Enum):`
-        )
-        for (const k of Object.keys(en.members))
-            r.push(`    ${toUpper(k)} = const(${toHex(en.members[k])})`)
-        r.push(``)
+    if (Object.keys(info.enums).length) {
+        for (const en of values(info.enums).filter(en => !en.derived)) {
+            r.push("")
+            r.push("")
+            r.push(
+                `class ${upperCamel(info.shortName)}${upperCamel(
+                    en.name
+                )}(Enum):`
+            )
+            for (const k of Object.keys(en.members))
+                r.push(`    ${toUpper(k)} = const(${toHex(en.members[k])})`)
+        }
+        r.push("")
+        r.push("")
     }
-
     let useIdentifiers = false
     for (const pkt of info.packets) {
         if (pkt.derived) continue
@@ -1653,6 +1659,7 @@ function packFormatForField(
     let fmt = ""
     if (/^[fiu]\d+(\.\d+)?$/.test(fld.type) && 1 <= sz && sz <= 8) {
         fmt = fld.type
+        if (/^[iu]\d+$/.test(fld.type)) pyType = "int"
     } else if (/^u8\[\d*\]$/.exec(fld.type)) {
         fmt = "b" + szSuff
     } else if (info.enums[fld.type]) {

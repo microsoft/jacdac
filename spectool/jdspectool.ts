@@ -472,8 +472,7 @@ ${commands
         })
         const { fields } = command
         const fnames = fields.map(f => snakify(f.name))
-        const cmd = `JD_${snakify(spec.camelName)}_CMD_${snakify(cname)}`
-        const fmt = command.packFormat
+        const cmd = `JD_${snakify(spec.camelName)}_CMD_${snakify(cname)}`.toUpperCase()
         return `
     def ${snakify(cname)}(self, ${fnames
             .map((fname, fieldi) => `${fname}: ${pyTypes[fieldi]}`)
@@ -485,11 +484,7 @@ ${commands
             client
                 ? `# TODO: implement client command
         raise RuntimeError("client command not implemented")`
-                : `# TODO: self.sendCommand(jacdac.JDPacket.${
-                      pyTypes.length === 0
-                          ? `onlyHeader(${cmd})`
-                          : `jdpacked(${cmd}, "${fmt}", [${fnames.join(", ")}])`
-                  })`
+                : `self.send_cmd_packed(${cmd}, [${fnames.join(", ")}])`
         }
 `
     })

@@ -355,9 +355,8 @@ ${toMetaComments(
 }
 
 function toPythonClient(spec: jdspec.ServiceSpec) {
-    const { shortId, name, camelName, packets } = spec
+    const { camelName, packets } = spec
 
-    const nsc = TYPESCRIPT_STATIC_NAMESPACE
     const registers = packetsToRegisters(packets)
     const baseType = "Client"
     const ctorArgs = [
@@ -387,7 +386,11 @@ function toPythonClient(spec: jdspec.ServiceSpec) {
     return `from jacdac.bus import Bus, Client
 from .constants import *
 ${regs.length > 0 ? `from typing import Union` : ``}
-${events.length > 0 ? `from jacdac.events import HandlerFn` : ``}
+${
+    events.length > 0
+        ? `from jacdac.events import EventHandlerFn, UnsubscribeFn`
+        : ``
+}
 
 class ${className}(${baseType}):
     """
@@ -455,11 +458,15 @@ ${
     .join("")}${events
         .map(event => {
             return `
-    def on_${snakify(event.name)}(self, handler: HandlerFn) -> None:
+    def on_${snakify(
+        event.name
+    )}(self, handler: EventHandlerFn) -> UnsubscribeFn:
         """
         ${(event.description || "").split("\n").join("\n        ")}
         """
-        # TODO
+        return self.on_event(JD_${snakify(
+            camelName
+        ).toUpperCase()}_EV_${snakify(event.name).toUpperCase()}, handler)
 `
         })
         .join("")}
@@ -472,7 +479,9 @@ ${commands
         })
         const { fields } = command
         const fnames = fields.map(f => snakify(f.name))
-        const cmd = `JD_${snakify(spec.camelName)}_CMD_${snakify(cname)}`.toUpperCase()
+        const cmd = `JD_${snakify(spec.camelName)}_CMD_${snakify(
+            cname
+        )}`.toUpperCase()
         return `
     def ${snakify(cname)}(self, ${fnames
             .map((fname, fieldi) => `${fname}: ${pyTypes[fieldi]}`)

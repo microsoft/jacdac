@@ -556,7 +556,7 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
-    // Service: Arcade sound
+    // Service: Arcade Sound
     public static class ArcadeSoundConstants
     {
         public const uint ServiceClass = 0x1fc63606;

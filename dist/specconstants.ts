@@ -530,7 +530,7 @@ export enum ArcadeGamepadEvent {
     Up = 0x2,
 }
 
-// Service: Arcade sound
+// Service: Arcade Sound
 export const SRV_ARCADE_SOUND = 0x1fc63606
 export enum ArcadeSoundCmd {
     /**

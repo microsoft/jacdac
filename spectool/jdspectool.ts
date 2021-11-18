@@ -24,7 +24,14 @@ declare var require: any
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let fs: any
 
-const makecodBuiltins = ["bootloader", "logger", "control"]
+const serviceBuiltins = [
+    "bootloader",
+    "logger",
+    "control",
+    "infrastructure",
+    "proxy",
+    "uniquebrain",
+]
 
 function values<T>(o: jdspec.SMap<T>): T[] {
     const r: T[] = []
@@ -347,6 +354,149 @@ ${toMetaComments(
 }`
 }
 
+function toPythonClient(spec: jdspec.ServiceSpec) {
+    const { shortId, name, camelName, packets } = spec
+
+    const nsc = TYPESCRIPT_STATIC_NAMESPACE
+    const registers = packetsToRegisters(packets)
+    const baseType = "Client"
+    const ctorArgs = [
+        `bus`,
+        `JD_SERVICE_CLASS_${snakify(camelName).toUpperCase()}`,
+        `JD_${snakify(camelName).toUpperCase()}_PACK_FORMATS`,
+        `role`,
+    ]
+    const regs = registers
+        .filter(r => !!r)
+        .filter(r => !r.restricted)
+        .filter(r => !r.fields.some(f => f.startRepeats))
+    const enabledReg = regs.find(isEnabledReg)
+    const events = packets.filter(pkt => !pkt.derived && pkt.kind === "event")
+    // TODO: pipes support
+    const commands = packets.filter(
+        pkt =>
+            !pkt.derived &&
+            !pkt.restricted &&
+            pkt.kind === "command" &&
+            pkt.fields.every(f => f.type !== "pipe") &&
+            !pkt.fields.some(f => f.startRepeats)
+    )
+
+    const className = `${capitalize(camelName)}Client`
+
+    return `from jacdac.bus import Bus, Client
+from .constants import *
+${regs.length > 0 ? `from typing import Union` : ``}
+${events.length > 0 ? `from jacdac.events import HandlerFn` : ``}
+
+class ${className}(${baseType}):
+    """
+    ${(spec.notes["short"] || "").split("\n").join("\n     * ")}
+    """
+
+    def __init__(self, bus: Bus, role: str) -> None:
+        super().__init__(${ctorArgs.join(", ")})
+    
+${regs
+    .map(reg => {
+        const { kind } = reg
+        const { pyTypes: types } = packInfo(spec, reg, {
+            isStatic: true,
+            useBooleans: true,
+        })
+        const { fields, client } = reg
+        const value = reg.identifier === Value
+        const enabled = isEnabledReg(reg)
+        const fetchReg = `self.register(JD_${snakify(
+            camelName
+        ).toUpperCase()}_REG_${snakify(reg.name).toUpperCase()})`
+
+        return fields
+            .map((field, fieldi) => {
+                const { name: fieldName } = genFieldInfo(reg, field)
+                const fname = snakify(fieldName)
+                return `
+    @property
+    def ${fname}(self) -> Union[${types[fieldi]}, None]:
+        """
+        ${`${reg.optional ? "(Optional) " : ""}${reg.description || ""}${
+            field.unit ? `, ${field.unit}` : ""
+        }`
+            .split("\n")
+            .join("\n        ")}
+        """${
+            client
+                ? `
+        # TODO: implement client register
+        raise  RuntimeError("client register not implemented")`
+                : `
+        reg = ${fetchReg}
+        return reg.value(${fieldi})`
+        }
+${
+    kind === "rw"
+        ? `
+    @${fname}.setter
+    def ${fname}(self, value: ${types[fieldi]}) -> None:${
+              enabled && value
+                  ? `
+        self.enabled = True`
+                  : ""
+          }
+        reg = ${fetchReg}
+        reg.set_value(${fieldi}, value)
+
+`
+        : ""
+}`
+            })
+            .join("")
+    })
+    .join("")}${events
+        .map(event => {
+            return `
+    def on_${snakify(event.name)}(self, handler: HandlerFn) -> None:
+        """
+        ${(event.description || "").split("\n").join("\n        ")}
+        """
+        # TODO
+`
+        })
+        .join("")}
+${commands
+    .map(command => {
+        const { name: cname, client } = command
+        const { pyTypes } = packInfo(spec, command, {
+            isStatic: true,
+            useBooleans: true,
+        })
+        const { fields } = command
+        const fnames = fields.map(f => snakify(f.name))
+        const cmd = `JD_${snakify(spec.camelName)}_CMD_${snakify(cname)}`
+        const fmt = command.packFormat
+        return `
+    def ${snakify(cname)}(self, ${fnames
+            .map((fname, fieldi) => `${fname}: ${pyTypes[fieldi]}`)
+            .join(", ")}) -> None:
+        """
+        ${(command.description || "").split("\n").join("\n        ")}
+        """
+        ${
+            client
+                ? `# TODO: implement client command
+        raise RuntimeError("client command not implemented")`
+                : `# TODO: self.sendCommand(jacdac.JDPacket.${
+                      pyTypes.length === 0
+                          ? `onlyHeader(${cmd})`
+                          : `jdpacked(${cmd}, "${fmt}", [${fnames.join(", ")}])`
+                  })`
+        }
+`
+    })
+    .join("")}    
+`
+}
+
 function genFieldInfo(reg: jdspec.PacketInfo, field: jdspec.PacketMember) {
     const isReading = reg.identifier === Reading
     const name =
@@ -464,35 +614,48 @@ function processSpec(dn: string) {
             if (!concats[n]) concats[n] = ""
             concats[n] += convResult
 
-            if (n === "sts") {
-                const mkcdclient = toMakeCodeClient(json)
-                const srvdir = path.join(mkcdir, mkcdsrvdirname)
-                mkdir(srvdir)
-                fs.writeFileSync(path.join(srvdir, "constants.ts"), convResult)
-                // generate project file and client template
-                if (
-                    mkcdclient &&
-                    !/^_/.test(json.shortId) &&
-                    makecodBuiltins.indexOf(json.shortId) < 0
-                ) {
-                    if (!hasMakeCodeProject)
-                        fs.writeFileSync(
-                            path.join(srvdir, "pxt.g.json"),
-                            toPxtJson(json)
-                        )
-                    // only write client.g.ts if it already exists; otherwise use .gts to avoid confusing TS intellisense
+            if (
+                !/^_/.test(json.shortId) &&
+                serviceBuiltins.indexOf(json.shortId) < 0
+            ) {
+                if (n === "sts") {
+                    const mkcdclient = toMakeCodeClient(json)
+                    const srvdir = path.join(mkcdir, mkcdsrvdirname)
+                    mkdir(srvdir)
                     fs.writeFileSync(
-                        fs.existsSync(path.join(srvdir, "client.g.ts"))
-                            ? path.join(srvdir, "client.g.ts")
-                            : path.join(srvdir, "client.gts"),
-                        mkcdclient
+                        path.join(srvdir, "constants.ts"),
+                        convResult
                     )
+                    // generate project file and client template
+                    if (mkcdclient) {
+                        if (!hasMakeCodeProject)
+                            fs.writeFileSync(
+                                path.join(srvdir, "pxt.g.json"),
+                                toPxtJson(json)
+                            )
+                        // only write client.g.ts if it already exists; otherwise use .gts to avoid confusing TS intellisense
+                        fs.writeFileSync(
+                            fs.existsSync(path.join(srvdir, "client.g.ts"))
+                                ? path.join(srvdir, "client.g.ts")
+                                : path.join(srvdir, "client.gts"),
+                            mkcdclient
+                        )
+                    }
+                } else if (n === "py") {
+                    const pyclient = toPythonClient(json)
+                    const srvdir = path.join(pydir, pysrvdirname)
+                    mkdir(srvdir)
+                    fs.writeFileSync(
+                        path.join(srvdir, "constants.py"),
+                        convResult
+                    )
+                    if (pyclient) {
+                        fs.writeFileSync(
+                            path.join(srvdir, "client.gpy"),
+                            pyclient
+                        )
+                    }
                 }
-            } else if (n === "py") {
-                //const mkcdclient = toMakeCodeClient(json)
-                const srvdir = path.join(pydir, pysrvdirname)
-                mkdir(srvdir)
-                fs.writeFileSync(path.join(srvdir, "constants.py"), convResult)
             }
         }
     }

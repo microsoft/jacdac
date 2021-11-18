@@ -1,4 +1,4 @@
-# Arcade sound
+# Arcade Sound
 
     identifier: 0x1fc63606
 

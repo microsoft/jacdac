@@ -385,7 +385,7 @@ function toPythonClient(spec: jdspec.ServiceSpec) {
 
     return `from jacdac.bus import Bus, Client
 from .constants import *
-${regs.length > 0 ? `from typing import Union` : ``}
+from typing import Union, cast
 ${
     events.length > 0
         ? `from jacdac.events import EventHandlerFn, UnsubscribeFn`
@@ -434,14 +434,15 @@ ${regs
         raise  RuntimeError("client register not implemented")`
                 : `
         reg = ${fetchReg}
-        return reg.value(${fieldi})`
+        value = reg.value(${fieldi})
+        return cast(Union[${types[fieldi]}, None], value)`
         }
 ${
     kind === "rw"
         ? `
     @${fname}.setter
     def ${fname}(self, value: ${types[fieldi]}) -> None:${
-              enabled && value
+              enabledReg && value
                   ? `
         self.enabled = True`
                   : ""
@@ -493,7 +494,7 @@ ${commands
             client
                 ? `# TODO: implement client command
         raise RuntimeError("client command not implemented")`
-                : `self.send_cmd_packed(${cmd}, [${fnames.join(", ")}])`
+                : `self.send_cmd_packed(${cmd}, ${fnames.join(", ")})`
         }
 `
     })

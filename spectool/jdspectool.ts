@@ -409,7 +409,7 @@ class ${className}(${baseType}):
     
 ${regs
     .map(reg => {
-        const { kind } = reg
+        const { kind, name: rname } = reg
         const { pyTypes: types } = packInfo(spec, reg, {
             isStatic: true,
             useBooleans: true,
@@ -420,17 +420,15 @@ ${regs
             camelName
         ).toUpperCase()}_REG_${snakify(reg.name).toUpperCase()})`
 
-        return fields
-            .map((field, fieldi) => {
-                const { name: fieldName } = genFieldInfo(reg, field)
-                const fname = snakify(fieldName)
-                return `
+        const single = fields.length === 1
+        const rtype = single ? types[0] : `tuple[${types.join(", ")}]`
+        return `
     @property
-    def ${fname}(self) -> Optional[${types[fieldi]}]:
+    def ${snakify(rname)}(self) -> Optional[${rtype}]:
         """
-        ${`${reg.optional ? "(Optional) " : ""}${reg.description || ""}${
-            field.unit ? `, ${field.unit}` : ""
-        }`
+        ${`${reg.optional ? "(Optional) " : ""}${
+            reg.description || ""
+        }, ${fields.filter(f => f.unit).map(f => `${f.name}: ${f.unit}`)}`
             .split("\n")
             .join("\n        ")}
         """${
@@ -440,27 +438,27 @@ ${regs
         raise  RuntimeError("client register not implemented")`
                 : `
         reg = ${fetchReg}
-        value = reg.value(${fieldi})
-        return cast(Optional[${types[fieldi]}], value)`
+        values = reg.values()
+        return cast(Optional[${rtype}], ${
+                      single ? `values[0] if values else None` : `values`
+                  })`
         }
 ${
     kind === "rw"
         ? `
-    @${fname}.setter
-    def ${fname}(self, value: ${types[fieldi]}) -> None:${
+    @${snakify(rname)}.setter
+    def ${snakify(rname)}(self, value: ${rtype}) -> None:${
               enabledReg && value
                   ? `
         self.enabled = True`
                   : ""
           }
         reg = ${fetchReg}
-        reg.set_value(${fieldi}, value)
+        reg.set_values(value)
 
 `
         : ""
 }`
-            })
-            .join("")
     })
     .join("")}${events
         .map(event => {

@@ -488,15 +488,15 @@ ${
 ${commands
     .map(command => {
         const { name: cname, client } = command
-        const { pyTypes } = packInfo(spec, command, {
+        const { pyTypes, types, names } = packInfo(spec, command, {
             isStatic: true,
             useBooleans: true,
         })
-        const { fields } = command
-        const fnames = fields.map(f => snakify(f.name))
+        const fnames = names.map(f => snakify(f).toLowerCase())
         const cmd = `JD_${snakify(spec.camelName)}_CMD_${snakify(
             cname
         )}`.toUpperCase()
+        console.log("cmd", { cname, fnames, types, pyTypes, names })
         return `
     def ${snakify(cname)}(self, ${fnames
             .map((fname, fieldi) => `${fname}: ${pyTypes[fieldi]}`)

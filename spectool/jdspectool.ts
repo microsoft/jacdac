@@ -373,7 +373,8 @@ function toPythonClient(
         `JD_SERVICE_CLASS_${snakify(camelName).toUpperCase()}`,
         `JD_${snakify(camelName).toUpperCase()}_PACK_FORMATS`,
         `role`,
-        reading?.preferredInterval && `preferred_interval = ${reading.preferredInterval}`
+        reading?.preferredInterval &&
+            `preferred_interval = ${reading.preferredInterval}`,
     ].filter(a => !!a)
     const enabledReg = regs.find(isEnabledReg)
     const events = packets.filter(pkt => !pkt.derived && pkt.kind === "event")
@@ -445,7 +446,7 @@ ${regs
                 ? `
         # TODO: implement client register
         raise  RuntimeError("client register not implemented")`
-                : `
+                : `${reading === reg ? `\n        self.refresh_reading()` : ``}
         return ${fetchReg}.${
                       single && rtype === "bool"
                           ? "bool_"

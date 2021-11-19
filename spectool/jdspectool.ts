@@ -371,7 +371,7 @@ function toPythonClient(
     ]
     const regs = registers
         .filter(r => !!r)
-        .filter(r => !r.restricted)
+        .filter(r => !r.restricted && !r.client)
         .filter(r => !r.fields.some(f => f.startRepeats))
     const enabledReg = regs.find(isEnabledReg)
     const events = packets.filter(pkt => !pkt.derived && pkt.kind === "event")
@@ -428,6 +428,7 @@ ${regs
 
         const single = fields.length === 1
         const rtype = single ? types[0] : `tuple[${types.join(", ")}]`
+        const { scale } = genFieldInfo(reg, fields[0])
         return `
     @property
     def ${snakify(rname)}(self) -> Optional[${rtype}]:
@@ -443,7 +444,13 @@ ${regs
         # TODO: implement client register
         raise  RuntimeError("client register not implemented")`
                 : `
-        return ${fetchReg}.value()`
+        return ${fetchReg}.${
+                      single && rtype === "bool"
+                          ? "bool_"
+                          : single && scale
+                          ? "float_"
+                          : ""
+                  }value(${single && scale ? scale : ""})`
         }
 ${
     kind === "rw"
@@ -455,7 +462,9 @@ ${
         self.enabled = True`
                   : ""
           }
-        ${fetchReg}.set_values(${single ? "" : "*"}value)
+        ${fetchReg}.set_values(${single ? "" : "*"}value${
+              single && scale ? ` / ${scale}` : ""
+          })
 
 `
         : ""
@@ -540,7 +549,8 @@ function genFieldInfo(reg: jdspec.PacketInfo, field: jdspec.PacketMember) {
             : field.type === "bool"
             ? s => `${s} ? 1 : 0`
             : s => s
-    return { name, min, max, defl, valueScaler, valueUnscaler }
+    const scale = field.unit === "/" ? 100 : undefined
+    return { name, min, max, defl, scale, valueScaler, valueUnscaler }
 }
 
 function processSpec(dn: string) {

@@ -402,6 +402,11 @@ ${
 class ${className}(${baseType}):
     """
     ${(spec.notes["short"] || "").split("\n").join("\n     * ")}
+    Implements a client for the \`${
+        spec.name
+    } <https://microsoft.github.io/jacdac-docs/services/${
+        spec.shortId
+    }>\`_ service.
     """
 
     def __init__(self, bus: Bus, role: str) -> None:

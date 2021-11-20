@@ -3754,10 +3754,10 @@ namespace Jacdac {
          * Read-only s u16.16 (uint32_t). Time drift since the last call to the ``set_time`` command.
          *
          * ```
-         * const [error] = jdunpack<[number]>(buf, "u16.16")
+         * const [drift] = jdunpack<[number]>(buf, "u16.16")
          * ```
          */
-        Error = 0x180,
+        Drift = 0x180,
 
         /**
          * Constant ppm u16.16 (uint32_t). Error on the clock, in parts per million of seconds.

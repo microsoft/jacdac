@@ -30,7 +30,7 @@ typedef struct jd_real_time_clock_local_time {
 /**
  * Read-only s u16.16 (uint32_t). Time drift since the last call to the ``set_time`` command.
  */
-#define JD_REAL_TIME_CLOCK_REG_ERROR 0x180
+#define JD_REAL_TIME_CLOCK_REG_DRIFT 0x180
 
 /**
  * Constant ppm u16.16 (uint32_t). Error on the clock, in parts per million of seconds.

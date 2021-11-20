@@ -241,7 +241,7 @@
     },
     {
       "kind": "ro",
-      "name": "error",
+      "name": "drift",
       "identifier": 384,
       "description": "Time drift since the last call to the ``set_time`` command.",
       "fields": [

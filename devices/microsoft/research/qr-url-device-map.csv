@@ -28,3 +28,8 @@ aaaaaw,60,0.1,JacdacRgbLedGeneric,aka.ms,0x39ae4b81
 aaaaax,44,0.3,JacdacJoystick,aka.ms,0x319baa63
 aaaaay,59,0.1,JacdacBrainRP2040,aka.ms,0x3308bb88
 aaaaaz,29,0.4,JacDacMicroBitShieldLP,aka.ms,0x3a0e8a03
+aaaaai,64,3.6,JacdacTempHum,aka.ms,
+aaaaaj,65,3.6,JacdacLight,aka.ms,
+aaaaak,66,3.6,JacdacCO2,aka.ms,
+aaaaaq,67,3.7,JacdacRgbRing,aka.ms,
+aaaaav,68,3.7,JacdacRgbRing,aka.ms,

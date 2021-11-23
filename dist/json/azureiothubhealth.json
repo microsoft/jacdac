@@ -117,7 +117,7 @@
       "kind": "ro",
       "name": "hub_name",
       "identifier": 384,
-      "description": "Something like `my-iot-hub.azure-devices.net`; empty string when not properly configured",
+      "description": "Something like `my-iot-hub.azure-devices.net` if available.",
       "fields": [
         {
           "name": "_",
@@ -125,13 +125,14 @@
           "storage": 0
         }
       ],
+      "optional": true,
       "packFormat": "s"
     },
     {
       "kind": "ro",
       "name": "hub_device_id",
       "identifier": 385,
-      "description": "Device identifier in Azure Iot Hub",
+      "description": "Device identifier in Azure Iot Hub if available.",
       "fields": [
         {
           "name": "_",
@@ -139,6 +140,7 @@
           "storage": 0
         }
       ],
+      "optional": true,
       "packFormat": "s"
     },
     {

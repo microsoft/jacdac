@@ -622,7 +622,7 @@ namespace Jacdac {
 
     public enum AzureIotHubHealthReg {
         /**
-         * Read-only string (bytes). Something like `my-iot-hub.azure-devices.net`; empty string when not properly configured
+         * Read-only string (bytes). Something like `my-iot-hub.azure-devices.net` if available.
          *
          * ```
          * const [hubName] = jdunpack<[string]>(buf, "s")
@@ -631,7 +631,7 @@ namespace Jacdac {
         HubName = 0x180,
 
         /**
-         * Read-only string (bytes). Device identifier in Azure Iot Hub
+         * Read-only string (bytes). Device identifier in Azure Iot Hub if available.
          *
          * ```
          * const [hubDeviceId] = jdunpack<[string]>(buf, "s")

@@ -8,13 +8,13 @@ Health and diagnostics information about the Azure Iot Hub connection.
 
 ## Registers
 
-    ro hub_name: string @ 0x180
+    ro hub_name?: string @ 0x180
 
-Something like `my-iot-hub.azure-devices.net`; empty string when not properly configured
+Something like `my-iot-hub.azure-devices.net` if available.
 
-    ro hub_device_id: string @ 0x181
+    ro hub_device_id?: string @ 0x181
 
-Device identifier in Azure Iot Hub
+Device identifier in Azure Iot Hub if available.
 
     enum ConnectionStatus: u16 {
         Connected = 1

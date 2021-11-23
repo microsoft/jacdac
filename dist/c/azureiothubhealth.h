@@ -11,12 +11,12 @@
 #define JD_AZURE_IOT_HUB_HEALTH_CONNECTION_STATUS_DISCONNECTING 0x4
 
 /**
- * Read-only string (bytes). Something like `my-iot-hub.azure-devices.net`; empty string when not properly configured
+ * Read-only string (bytes). Something like `my-iot-hub.azure-devices.net` if available.
  */
 #define JD_AZURE_IOT_HUB_HEALTH_REG_HUB_NAME 0x180
 
 /**
- * Read-only string (bytes). Device identifier in Azure Iot Hub
+ * Read-only string (bytes). Device identifier in Azure Iot Hub if available.
  */
 #define JD_AZURE_IOT_HUB_HEALTH_REG_HUB_DEVICE_ID 0x181
 

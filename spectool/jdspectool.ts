@@ -367,6 +367,20 @@ function toPythonClient(
         .filter(r => !r.restricted && !r.client)
         .filter(r => !r.fields.some(f => f.startRepeats))
     const reading = regs.find(reg => reg.identifier === Reading)
+    const { pyTypes: readingTypes } = reading
+        ? packInfo(spec, reading, {
+              isStatic: true,
+              useBooleans: true,
+          })
+        : { pyTypes: undefined }
+    const readingType = readingTypes
+        ? readingTypes.length == 1
+            ? readingTypes[0]
+            : `Tuple[${readingTypes.join(", ")}]`
+        : undefined
+    const missingReadingField = reading
+        ? `missing_${snakify(reading.name)}_value`
+        : undefined
     const baseType = reading ? "SensorClient" : "Client"
     const ctorArgs = [
         `bus`,
@@ -411,11 +425,18 @@ class ${className}(${baseType}):
     } <https://microsoft.github.io/jacdac-docs/services/${
         spec.shortId
     }>\`_ service.
+
     """
 
-    def __init__(self, bus: Bus, role: str) -> None:
+    def __init__(self, bus: Bus, role: str${
+        reading ? `, *, ${missingReadingField}: ${readingType} = None` : ""
+    }) -> None:
         super().__init__(${ctorArgs.join(", ")})
-    
+${
+    missingReadingField
+        ? `        self.${missingReadingField} = ${missingReadingField}`
+        : ""
+}
 ${regs
     .map(reg => {
         const { kind, name: rname } = reg
@@ -425,6 +446,7 @@ ${regs
         })
         const { fields, client } = reg
         const value = reg.identifier === Value
+        const creading = reg === reading
         const regcst = `JD_${snakify(camelName).toUpperCase()}_REG_${snakify(
             reg.name
         ).toUpperCase()}`
@@ -454,7 +476,9 @@ ${regs
                           : single && scale
                           ? "float_"
                           : ""
-                  }value(${single && scale ? scale : ""})`
+                  }value(${[creading && `self.${missingReadingField}`, single && scale]
+                      .filter(v => !!v)
+                      .join(", ")})`
         }
 ${
     kind === "rw"

@@ -103,5 +103,7 @@
       "derived": "_base"
     }
   ],
-  "tags": []
+  "tags": [
+    "infrastructure"
+  ]
 }

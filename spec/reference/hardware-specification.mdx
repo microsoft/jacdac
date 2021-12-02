@@ -7,10 +7,10 @@ title: DDK
 The [Device Development Kit (DDK)](https://github.com/microsoft/jacdac-ddk) is for 3rd party hardware designers, firmware developers and manufacturers who wish to create their own Jacdac devices.
 A Jacdac device has at least the following three features:
 
--   it has a [Jacdac edge connector](/hardware/ddk/connector/) for joining the device to the Jacdac bus
-    using [Jacdac cables](/hardware/ddk/connector/#cable);
+-   it has a [Jacdac edge connector](/reference/connector/) for joining the device to the Jacdac bus
+    using [Jacdac cables](/reference/connector/#cable);
 -   it implements the [Jacdac protocol](/reference/protocol/) to communicate over the bus via the connector;
--   it follows the [design guidelines](/hardware/ddk/design/) in this DDK.
+-   it follows the [design guidelines](/reference/design/) in this DDK.
 
 Additionally, Jacdac devices may supply power to the bus and/or consume power from the bus.
 
@@ -62,9 +62,9 @@ WebUSB allows browser-based applications to connect to the Jacdac bus.
 
 The Jacdac DDK supports 3rd party module development via the following steps:
 
-1. choosing on-board components and incorporating them in a [hardware design](/hardware/ddk/design);
+1. choosing on-board components and incorporating them in a [hardware design](/reference/design);
 2. identifying the [services](/services/) to represent the chosen components;
-3. building [firmware](/hardware/ddk/firmware) to expose the components on the Jacdac bus;
+3. building [firmware](/reference/firmware/) to expose the components on the Jacdac bus;
 4. [validating](https://github.com/microsoft/jacdac-ddk/tree/main/validation) the hardware;
 5. [manufacturing](https://github.com/microsoft/jacdac-ddk/tree/main/manufacture) the hardware;
 6. [submitting](https://github.com/microsoft/jacdac-ddk/tree/main/submission) the finalised device to the Jacdac catalog;

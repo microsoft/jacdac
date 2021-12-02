@@ -5,32 +5,38 @@ order: 1
 
 # Protocol Specification
 
-Jacdac is a new protocol designed 
-to make it easier to connect low cost microcontrollers and sensors together. 
-Jacdac is not only designed for easier physical connectivity, 
-it is an entire hardware and software stack that bridges the world of the low cost 
-microcontroller to the web browser and beyond.
+Jacdac is an integrated hardware and software stack 
+that makes it easier to connect low cost microcontrollers 
+and sensors together. It also provides a bridge from the embedded
+world to the web browser and beyond. Key features of Jacdac are:
 
-* novel 3-wire cable and connector
-* bus topology
-* device discovery and service advertisement
-* standardized service abstraction
-* full stack from 8bit MCU to web development
+* a dedicated 3-wire cable and connector,
+* a true bus topology,
+* service advertisement and dynamic device discovery,
+* a standardized service abstraction, 
+* a full stack that supports platforms from 8 bit MCUs to web development.
+
+In addition to the functionality provided by common networking 
+stacks, the Jacdac protocol specifies electrical and mechanical
+requirements that improve interoperability at the hardware level.
+
+![OSI 7 layer stack vs Jacdac stack](../images/osi-and-jacdac-stack.png)
+
+A Jacdac device is any device that exposes the [Jacdac PCB edge connector](https://github.com/microsoft/jacdac-ddk/tree/main/design#pcb-edge-connector-in-detail)
+and implements the Jacdac protocol. 
+As illustrated above, the protocol consists of three core software/firmware layers and several hardware layers.
+An overview of these is given below, followed by detailed descriptions of each layer. 
 
 ## Overview
 
-A Jacdac device is any device that generates its own unique [device identifier](#device-identity) 
-and implements the Jacdac protocol.  The protocol consists of three core layers, described below,
-with link to more detail.
-
-### Service layer: how devices share hardware or software resources with one another
+### Service layer: how devices share hardware and software resources with one another
 
 The way Jacdac devices share resources with other devices on the bus are through __services__. 
 Services provide abstract, standardized interfaces that can be used to interact with 
 physical hardware resources (e.g. an accelerometer) or pure virtual resources 
 (e.g. the state of a video game). This abstraction brings plug-and-play dynamism to 
-Jacdac so that devices with different hardware, but the same overall functionality, 
-can replace one another without having to recompile user applications. For example, 
+Jacdac: devices with the same functionality but different hardware implementations 
+can be substituted without having to recompile the application that uses them. For example, 
 two different models of accelerometer hardware can replace each other 
 because they share the same software interface. 
 
@@ -49,60 +55,113 @@ requires a software stack that has a compatible Jacdac physical layer.
 Services are registered in the [service catalog](/services/) 
 and described by [service specifications](/reference/service-specification/).
 
-* [Read more about the service layer](#service-layer)
+[Read more about the service layer.](#service-layer)
 
-### Transport layer: responsible for reliably routing packets to and from services and applications
+### Transport layer: responsible for routing packets between services and applications
 
-Whenever a frame is received by the physical layer, the transport layer 
-divides that frame into data packets and forwards them to the appropriate service 
-or user application. At this point, services and applications can use packets 
-to perform actions based on new data.
+Fundamentally, the role of the Jacdac transport layer is to
+divide frames received by the network interface layer into data packets 
+and to forward them to the appropriate service 
+or user application. 
+<!-- At this point, services and applications can use packets to perform actions based on new data. -->
+
+The  transport layer integrates functionality that is split across multiple layers
+in other networking stacks, in order to improve efficiency.
+It includes naming, addressing, packet description, dynamic service discovery, 
+and power control (for power providers above 0.5W).
 
 In many cases it is important that data is received by a specific device. 
 Jacdac supports this mechanism using acknowledgements and pipes. 
-Acknowledgements are incredibly simple and require receiving devices 
+Acknowledgements are simple and require receiving devices 
 to recognize that a frame has successfully been received. 
-Pipes on the other hand set up a point to point connection between devices, 
+Pipes, on the other hand, set up a point-to-point connection between devices, 
 and every packet is acknowledged and received using a sliding window approach. 
 Only the most capable devices are expected to support pipes.
 
-* [Read more about the transport layer.](#transport-layer)
+The transport layer can optionally support over-the-wire firmware updates. 
 
-### Physical layer: transmits/receives packets to/from other Jacdac devices
+**A key element of the transport layer is Jacdac device identity. ** 
 
-There can be many various physical layer implementations responsible 
-for sending frames across a wired or wireless communication medium. 
-Frames contain one or more packets, and packets contain a service command or report. 
-Frames also have addressing metadata embedded inside them that the transport 
-layer uses to route packets correctly.
-
-* [Read more about the physical layer.](#physical-layer)
-
-## Device Identity
-
-**By design, the Jacdac protocol does not support allocation of unique device identifiers.** 
-Instead, each device must assign itself a 64-bit device identifier that uniquely identifies it on the bus. 
-This identifier is used to determine the sending or receiving device, and for devices to remember one another on the bus. 
-Once generated, a device's identifier must remain constant. As long identifiers are generated with appropriate entropy (see analysis below), there is little chance of identifier collision. 
+By design, the Jacdac protocol does not require central allocation of
+guaranteed-unique device identifiers (JDIDs). Instead, device designers and manufacturers are responsible
+for allocating a random 64-bit device identifier to each device. From a probabalistic
+point of view, this will most likely be unique on any given Jacdac bus and can therefore
+be used to identify a sending or receiving device, and allows devices to remember
+one another on the bus. Once generated and allocated, a device's identifier must remain constant.
+As long identifiers are generated with appropriate 
+entropy (see analysis below), there is little chance of identifier collision. 
 We recommend the following ways of generating a unique identifier:
 
-1. Use the random number generator (found below) to allocate an identifier for each device. 
-The number generator could even be included into automated flashing processes to ensure appropriate entropy.
+1. Many modern microcontrollers (MCUs) include a factory-programmed unique hardware ID, and this is ideal for creating the Jacdac device identifier - through hashing if needed.
 
-2. Use the generator below to seed a hardware random number generator. 
-The hardware random number generator could use sensor values to create further entropy.
+2. Use the random number generator (found below) to allocate an identifier for each device, and flash this number into the MCU during device production. The number generator itself could be included in the automated flashing process to ensure appropriate entropy.
 
-Most often, the device identifier will be assigned by the device's bootloader and stored in non-volatile flash. 
+2. Use a hardware random number generator in the MCU to generate a random 64 bit number during device commissioning - for example at first boot. This could use sensor values to create further entropy. Once generated it must be stored in non-volatile flash or EEPROM memory for future use.
+
 For an example, see [the Jacdac bootloader for STM32x0](https://github.com/microsoft/jacdac-stm32x0/blob/master/bl/blmain.c).
 
-<RandomGenerator device={true} />
+<!-- { <RandomGenerator device={true} />} -->
 
-If we consider one trillion Jacdac networks size of 200 devices with randomly chosen 64 bit JDIDs, 
+If we consider one trillion Jacdac networks of size 200 devices, with randomly chosen 64 bit JDIDs, 
 the probability of a JDID collision in at least one of the networks is 0.1%. 
-On the other hand, with 32 bit IDs and 2000 networks, the collision probability in any of them is already 1%, 
-and with 200k networks it's more than 60%.
+On the other hand, with 32 bit IDs and two thousand networks, the collision probability in any of them is already 1%, 
+and with two hundred thousand networks it's more than 60%.
+
+[Read more about the transport layer.](#transport-layer)
+
+### Network interface layer: low level data transfer between Jacdac devices
+
+Jacdac devices with a [Jacdac PCB edge connector](https://github.com/microsoft/jacdac-ddk/tree/main/design#pcb-edge-connector-in-detail)
+must run the Jacdac network interface protocol, which is a variant of 
+single wire serial (SWS) communications. This protocol was designed to be resource
+efficient, enabling it to be implemented on low cost microcontrollers right down to 
+8 bit one-time-programmable units with tens of bytes of RAM and hundreds of words 
+of instruction memory.
+
+<!-- Frames contain one or more packets, and packets contain a service command or report. 
+Frames also have addressing metadata embedded inside them that the transport 
+layer uses to route packets correctly. -->
+
+To support interoperability with existing devices and protocols without
+native Jacdac support, it is possible to substitute the Jacdac network interface
+protocol with a legacy protocol. For example, the Jacdac network interface and its 
+underlying layers can be replaced with a USB or Bluetooth stack. In this way, the Jacdac
+service layer and the transport layer that underpins it remain, but the relevant existing
+protocols are used below to implement data transfer.
+
+[Read more about the network interface layer.](#network-interface-layer)
+
+### Hardware layers: supporting electrical and mechanical interoperability
+
+Unlike many other networking protocol stacks, Jacdac specifies electrical and
+mechanical properties beyond the connector. These allow power sharing across the Jacdac
+bus, support different physical topologies that may be 'overlaid' on the 
+underlying bus topology, provide a common approach to physical characteristics 
+of Jacdac modules such as mounting hole size & position, module shape and labelling.
+
+At the electrical level, Jacdac is a true bus architecture 
+that uses three wires to support power delivery and data transfer. 
+One wire is used for ground (GND), one for data (JD_DATA) and one for power (JD_PWR). 
+In the simplest configurations, all devices on the Jacdac bus are connected
+directly to these three wires. 
+
+Jacdac leverages a purpose-built, [Creative Commons CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/) open-IP [connector standard](https://github.com/microsoft/jacdac-ddk/tree/main/connector#cable) that is optimized for cost, performance and user experience. One mating half of the connector takes the form of a three-conductor edge connector profile that is incorporated into the PCB design of Jacdac devices. The other mating half may be implemented in different ways, including a female-to-female cable.
+
+![jacdac module and cable picture](https://github.com/microsoft/jacdac-docs/blob/main/src/pages/images/cablepluggingintomodule.png?raw=true)
+
+[Read more about the hardware layers.](#hardware-layers)
 
 ## Service Layer
+
+Unlike many other embedded systems communications protocols, Jacdac inherently supports a distrbiuted systems architecture made up of one or more clients and one or more servers.
+
+A Jacdac server is simply a device that presents a service on the bus - for example a push button or a temperature sensor. So servers are often relatively impoverished devices - we have a reference implementation of a button module based on a ~$0.03 MCU. A server might provide multiple different services, for example a combined temperature and humidity sensor could provide two separate services, one for temperature and another for humidity. Multiple similar servers - for example multiple buttons - may be connected to the same bus.
+
+A Jacdac client is a device that consumes one or more services. Often a client can be reconfigured or re-programmed to alter its behavior to suit a particular application. There may be mutliple clients on the same Jacdac bus, in which case they may consume exactly the same set of services or different combinations of services. Sometimes a client will also provide services itself. This architecture is naturally composable and scalable, following the same principles used in established client/server solutions.
+
+So with Jacdac there is no notion of a bus 'controller', 'host', 'primary' or 'leader'. There is no need to assign roles when building a system with Jacdac, sensors and actuators will naturally provide services which are consumed by one or more clients.
+
+### Services
 
 The way Jacdac devices share resources with other devices on the bus are through __services__. 
 Services provide abstract, standardized interfaces that can be used to interact with 
@@ -253,7 +312,9 @@ struct {
 }
 ```
 
-The above structure omits the details about physical transmission of Jacdac packets over the wire and the packing of multiple packets within frames. For more information, see [the single wire serial protocol](../physical-layer/sws).
+The above structure omits the details about physical transmission of Jacdac packets 
+over the wire and the packing of multiple packets within frames. 
+For more information, see [the single wire serial protocol](../network-interface-layer/sws).
 
 A device will generally maintain device-specific state for each of the services that it supports. This state should be kept in an array, where each array entry contains the service class and (a pointer to) the device-specific state for that service. When a device advertises its service classes they are presented in the same order as in the list.  This allows clients of the device to refer to one of its services by list index (`service_index`, an 8 bit quantity) instead of service class (a 32 bit quantity). The zero index (service number) is reserved for the control service. 
 
@@ -408,7 +469,7 @@ For non-idempotent actions, a pipe can be opened with a `reliable_commands` acti
 Actions (or any other commands) can then be sent over that pipe.
 Support for this is indicated as a flag in the advertisement packet.
 
-## Physical Layer
+## Network Interface Layer
 
 The responsibility of the physical layer is to send/receive a byte buffer 
 (representing a Jacdac frame from the transport layer 
@@ -423,15 +484,16 @@ Jacdac requires devices have a microcontroller with UART, Timer, and GPIO interr
 
 ![An image depicting a Jacdac transmission. A Jacdac transmission begins with a start pulse of 11-14 us, a inter lo data spacing of minimally 40 us before data commences. A Jacdac transmission ends with an end pulse of 11-14 us.](../images/jacdac-activity.png)
 
-For communication Jacdac SWS reuses the often forgotten RS232 (UART) peripheral, 
+For communication Jacdac SWS reuses a standard RS232 UART peripheral, 
 common to many microcontrollers. Devices operate the UART peripheral in half-duplex mode 
 and are connected together to form a single bus. 
 This bus requires a common data and ground line to be shared between devices.
 
-Like with standard UART, a logical one is represented as 3.3V and a logical 0 as 0V. 
+<!-- Like with standard UART, a logical one is represented as 3.3V and a logical 0 as 0V.  -->
+
 Data bytes are 10 bits long and are composed of 1 start bit, 8 data bits, and one stop bit. 
 Jacdac devices must only communicate at 1 Mbaud and when no data is being transmitted, 
-the bus must read as a logical one (3.3V).
+the bus must read as a logical one.
 
 In Jacdac SWS, any device can initiate a transmission at any time.
 Because of this, devices must assert control over the bus before sending any data. 
@@ -468,14 +530,20 @@ TODO: the picture uses outdated delays.
 
 #### Hardware requirements
 
-There is no silicon implementation of Jacdac SWS and a microcontroller is currently required to implement the behavior above. The diversity of microcontrollers and the flexibility of UART hardware means that there are many pathways to reaching a specification compliant Jacdac SWS implementation.
+As yet, there is no silicon implementation of Jacdac SWS. 
+However, the diversity of readily-available microcontrollers and the flexibility of
+typical UART hardware means there are many ways to reach a specification compliant 
+Jacdac SWS implementation. It is also possible to implement Jacdac SWS by bit-banging, 
+if UART hardware is not available.
 
 To recap, Jacdac SWS requires the following basic functionality:
 
-* Transmitting / receiving UART-style (10 bits: 1 byte, 1 stop bit, 1 start bit) bytes at 1Mbaud in half-duplex mode (implemented in hardware or in software via bit-banging).
-* A GPIO with an internal or external 300k pull up and support for interrupts (implemented in hardware or in software by spin waiting).
+* Transmitting / receiving UART-style (10 bits: 1 byte, 1 stop bit, 1 start bit) bytes 
+at 1Mbaud in half-duplex mode, implemented in hardware or in software via bit-banging.
+* A GPIO with an internal or external 300k pull-up and support for interrupts, 
+implemented in hardware or in software by spin waiting.
 * The ability to keep time (whether through instruction counting or a hardware timer).
-* The ability to generate random numbers (or at least seed a software random number generator).
+* The ability to generate random numbers, or at least seed a software random number generator.
 
 <!--
 We enumerate a few of the options we have explored below.

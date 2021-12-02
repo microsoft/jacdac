@@ -4,5 +4,8 @@
     "eslint.format.enable": false,
     "eslint.debug": true,
     "eslint.lintTask.enable": true,
-    "files.eol": "\n"
+    "files.eol": "\n",
+    "files.associations": {
+        "*.mdx": "markdown"
+    }
 }

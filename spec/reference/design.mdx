@@ -1,7 +1,7 @@
 ---
 title: Hardware Design
 ---
-# Jacdac Hardware Design
+# Hardware Design
 
 # Electrical
 
@@ -96,7 +96,7 @@ The mechanical mating and umating process relies on two small, unplated slots in
 
 Please refer to the [technical drawing of the Jacdac PCB edge connector](https://github.com/microsoft/jacdac-ddk/blob/main/connector/JACDAC_PCB_Edge_Connector_Drawing_JD-PEC-02_rev_05.pdf) for full details. Note how the Jacdac electrical contacts are shorter on the bottom side of the PCB because they must not connect electrically to the adjacent plated through-holes.
 
-[![Jacdac PCB edge connector technical drawing](../connector/JACDAC_PCB_Edge_Connector_Drawing_JD-PEC-02_rev_05.png)](https://github.com/microsoft/jacdac-ddk/blob/main/connector/JACDAC_PCB_Edge_Connector_Drawing_JD-PEC-02_rev_05.pdf)
+[![Jacdac PCB edge connector technical drawing](../images/JACDAC_PCB_Edge_Connector_Drawing_JD-PEC-02_rev_05.png)](https://github.com/microsoft/jacdac-ddk/blob/main/connector/JACDAC_PCB_Edge_Connector_Drawing_JD-PEC-02_rev_05.pdf)
 
 We provide Jacdac PCB edge connector libraries for some electronics CAD tools including Altium, Eagle and KiCAD [here](https://github.com/microsoft/jacdac-ddk/tree/main/connector).
 
@@ -106,7 +106,7 @@ There are two optional improvements which provide a better connection. Electropl
 
 A purpose-built cable connector is used to interface with the Jacdac PCB edge connector desribed above. The cable connector is reversible (i.e. it is 180° rotationally symmetric) but internally it only needs to have contacts on one side due to the double-sided design of the mating Jacdac PCB edge connector.
 
-![Jacdac cable being unplugged and replugged animated image](https://github.com/microsoft/jacdac-docs/blob/main/src/pages/images/reversibleconnectoranimation.gif?raw=true)
+![Jacdac cable being unplugged and replugged animated image](../images/reversibleconnectoranimation.gif)
 
 Together with the Jacdac PCB edge connector, the mating half must give a mating and unmating force of 5-15N and each of the three electrical connections it provides should have a contact resistance of 30 mΩ or less and a current capacity of 1A DC. These characteristics should be consistent for a lifetime of at least 1500 mate/unmate cycles.
 
@@ -114,9 +114,9 @@ Jacdac cable assemblies contain three conductors and are terminated at both ends
 
 The first manufacturer of Jacdac cable connectors and cable assemblies is [Dongguan Yuliang Electronics](http://dgyuliang.net/) who are also known by their [Cylconn](http://www.cylconn.com/) brand.
 
-[![Jacdac cable aseembly technical drawing](../connector/JACDAC-Connector-by-Yuliang-2020-11-28-page2.png)](https://github.com/microsoft/jacdac-ddk/blob/main/connector/JACDAC-Connector-by-Yuliang-2020-11-28.pdf)
+[![Jacdac cable aseembly technical drawing](../images/JACDAC-Connector-by-Yuliang-2020-11-28-page2.png)](https://github.com/microsoft/jacdac-ddk/blob/main/connector/JACDAC-Connector-by-Yuliang-2020-11-28.pdf)
 
-[![Jacdac cable aseembly technical drawing](../connector/JACDAC-Connector-by-Yuliang-2020-11-28-page1.png)](https://github.com/microsoft/jacdac-ddk/blob/main/connector/JACDAC-Connector-by-Yuliang-2020-11-28.pdf)
+[![Jacdac cable aseembly technical drawing](../images/JACDAC-Connector-by-Yuliang-2020-11-28-page1.png)](https://github.com/microsoft/jacdac-ddk/blob/main/connector/JACDAC-Connector-by-Yuliang-2020-11-28.pdf)
 
 ## Multiple connectors
 
@@ -126,7 +126,7 @@ In the simplest configurations all devices on a Jacdac bus are connected directl
 -   **Hub devices**: Jacdac devices may include several Jacdac PCB edge connectors to allow direct connection to more than two other devices.
 -   **Decidated hubs**: Jacdac hubs are simply double-sided PCBs with mutiple Jacdac PCB edge connectors, wired to connect all JD_DATA signals together, all JD_PWR signals together and all GND signals together. They need contain no electronic components.
 
-![several Jacdac modules connected together](https://github.com/microsoft/jacdac-docs/blob/main/src/pages/images/manymodulestogether.png?raw=true)
+![several Jacdac modules connected together](../images/manymodulestogether.png)
 
 ## Mounting holes
 

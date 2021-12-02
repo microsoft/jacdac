@@ -1,16 +1,16 @@
 {
-  "name": "Infrastructure",
+  "name": "Dashboard",
   "status": "experimental",
-  "shortId": "infrastructure",
-  "camelName": "infrastructure",
-  "shortName": "infrastructure",
+  "shortId": "dashboard",
+  "camelName": "dashboard",
+  "shortName": "dashboard",
   "extends": [
     "_base"
   ],
   "notes": {
-    "short": "A service that tags a device as purely infrastructure device.\n\n\nA Jacdac user interface can hide any device that hosts this service."
+    "short": "Device that interacts, configure or inspects with the services on the bus. While a dashboard is on the bus, heuristics like device reset should be disabled."
   },
-  "classIdentifier": 504728043,
+  "classIdentifier": 468029703,
   "enums": {},
   "constants": {},
   "packets": [
@@ -103,5 +103,7 @@
       "derived": "_base"
     }
   ],
-  "tags": []
+  "tags": [
+    "infrastructure"
+  ]
 }

@@ -1515,6 +1515,10 @@ namespace jacdac {
 
 }
 namespace jacdac {
+    // Service: Dashboard
+    export const SRV_DASHBOARD = 0x1be59107
+}
+namespace jacdac {
     // Service: Dimmer
     export const SRV_DIMMER = 0x1fb02645
 

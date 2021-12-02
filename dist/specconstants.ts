@@ -1387,6 +1387,8 @@ export enum ControlReg {
     Uptime = 0x186,
 }
 
+// Service: Dashboard
+export const SRV_DASHBOARD = 0x1be59107
 // Service: Dimmer
 export const SRV_DIMMER = 0x1fb02645
 

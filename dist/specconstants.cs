@@ -1488,6 +1488,13 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Dashboard
+    public static class DashboardConstants
+    {
+        public const uint ServiceClass = 0x1be59107;
+    }
+}
+namespace Jacdac {
     // Service: Dimmer
     public static class DimmerConstants
     {

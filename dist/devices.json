@@ -502,6 +502,24 @@
     "version": "3.2"
   },
   {
+    "id": "microsoft-research-jmco2tvoctemphumsgp30sht3066v37",
+    "name": "JM CO2/TVOC/Temp/Hum SGP30+SHT30",
+    "company": "Microsoft Research",
+    "description": "JM CO2/TVOC/Temp/Hum SGP30+SHT30 66 v3.7",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      379362758,
+      312849815,
+      337754823,
+      382210232
+    ],
+    "productIdentifiers": [
+      912293656
+    ],
+    "version": "3.7",
+    "designIdentifier": "66"
+  },
+  {
     "id": "microsoft-research-jmcrankbuttonv20",
     "name": "JM Crank + Button",
     "company": "Microsoft Research",
@@ -533,6 +551,22 @@
     ],
     "version": "2.0",
     "status": "deprecated"
+  },
+  {
+    "id": "microsoft-research-jmdualkey69v37",
+    "name": "JM Dual Key",
+    "company": "Microsoft Research",
+    "description": "JM 2Key 69 v3.7",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      343122531,
+      343122531
+    ],
+    "productIdentifiers": [
+      958599316
+    ],
+    "version": "3.7",
+    "designIdentifier": "69"
   },
   {
     "id": "microsoft-research-jmflexv10",
@@ -648,6 +682,21 @@
     "tags": [],
     "version": "1.2",
     "designIdentifier": "46"
+  },
+  {
+    "id": "microsoft-research-jmkeyv3768v37",
+    "name": "JM Key v3.7",
+    "company": "Microsoft Research",
+    "description": "JM Key 68 v3.7",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      343122531
+    ],
+    "productIdentifiers": [
+      948311172
+    ],
+    "version": "3.7",
+    "designIdentifier": "68"
   },
   {
     "id": "microsoft-research-jmmachinelearning",
@@ -904,6 +953,21 @@
     "designIdentifier": "37"
   },
   {
+    "id": "microsoft-research-jmrgbring67v37",
+    "name": "JM RGB-Ring",
+    "company": "Microsoft Research",
+    "description": "JM RGB-Ring 67 v3.7",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      309264608
+    ],
+    "productIdentifiers": [
+      946180442
+    ],
+    "version": "3.7",
+    "designIdentifier": "67"
+  },
+  {
     "id": "microsoft-research-jmrotarycontrolbuttonv10",
     "name": "JM Rotary Control + Button",
     "company": "Microsoft Research",
@@ -941,6 +1005,22 @@
       "kit"
     ],
     "version": "1.1"
+  },
+  {
+    "id": "microsoft-research-jmsht30temperaturehumidity64v36",
+    "name": "JM SHT30 Temperature/Humidity",
+    "company": "Microsoft Research",
+    "description": "JM SHT30 64 v3.6",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      337754823,
+      382210232
+    ],
+    "productIdentifiers": [
+      819953075
+    ],
+    "version": "3.6",
+    "designIdentifier": "64"
   },
   {
     "id": "microsoft-research-jmsinglergbled42v01",
@@ -1042,6 +1122,21 @@
     "designIdentifier": "61"
   },
   {
+    "id": "microsoft-research-jmspibridgev37v37",
+    "name": "JM SPI bridge v3.7",
+    "company": "Microsoft Research",
+    "description": "JM SPI bridge v3.7",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      535147631,
+      530893146
+    ],
+    "productIdentifiers": [
+      882232420
+    ],
+    "version": "3.7"
+  },
+  {
     "id": "microsoft-research-jmtemperaturehumidity18v10a",
     "name": "JM Temperature + Humidity",
     "company": "Microsoft Research",
@@ -1094,6 +1189,22 @@
     ],
     "version": "2.0",
     "status": "deprecated"
+  },
+  {
+    "id": "microsoft-research-jmuviilluminance65v3665v36",
+    "name": "JM UVI/Illuminance 65 v3.6",
+    "company": "Microsoft Research",
+    "description": "JM UVI/Illuminance 65 v3.6",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      510577394,
+      527306128
+    ],
+    "productIdentifiers": [
+      1021617002
+    ],
+    "version": "3.6",
+    "designIdentifier": "65"
   },
   {
     "id": "microsoft-research-mikrobuscarrierboard53v01",

@@ -1,0 +1,15 @@
+{
+  "id": "microsoft-research-jmrgbring67v37",
+  "name": "JM RGB-Ring",
+  "company": "Microsoft Research",
+  "description": "JM RGB-Ring 67 v3.7",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "services": [
+    309264608
+  ],
+  "productIdentifiers": [
+    946180442
+  ],
+  "version": "3.7",
+  "designIdentifier": "67"
+}

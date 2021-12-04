@@ -4,6 +4,8 @@ title: Hardware Specification
 
 # Hardware Specification
 
+![Blueprint of the Jacdac PCB connector](../images/JACDAC_PCB_Edge_Connector_Drawing_JD-PEC-01_rev_01.png)
+
 The [Device Development Kit (DDK)](https://github.com/microsoft/jacdac-ddk) is for 3rd party hardware designers, firmware developers and manufacturers who wish to create their own Jacdac devices.
 A Jacdac device has at least the following three features:
 
@@ -65,9 +67,9 @@ The Jacdac DDK supports 3rd party module development via the following steps:
 1. choosing on-board components and incorporating them in a [hardware design](/reference/design);
 2. identifying the [services](/services/) to represent the chosen components;
 3. building [firmware](/reference/firmware/) to expose the components on the Jacdac bus;
-4. [validating](https://github.com/microsoft/jacdac-ddk/tree/main/validation) the hardware;
-5. [manufacturing](https://github.com/microsoft/jacdac-ddk/tree/main/manufacture) the hardware;
-6. [submitting](https://github.com/microsoft/jacdac-ddk/tree/main/submission) the finalised device to the Jacdac catalog;
+4. validating the hardware using the dashboard;
+5. manufacturing the hardware;
+6. [registration](/tools/device-registration) of the finalised device in the Jacdac catalog;
 
 Our current Jacdac module hardware and firmware designs target the PADAUK 8-bit and STM32x0 32-bit families of MCUs.
 STM32x0 support includes a Jacdac bootloader service that allows MCU firmware to be updated over Jacdac.

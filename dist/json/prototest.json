@@ -640,5 +640,7 @@
       "packFormat": "u8"
     }
   ],
-  "tags": []
+  "tags": [
+    "infrastructure"
+  ]
 }

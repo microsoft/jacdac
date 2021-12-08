@@ -1,7 +1,7 @@
 # Role Manager
 
     identifier: 0x1e4b7e66
-    status: stable
+    tags: infrastructure
 
 Assign roles to services on the Jacdac bus.
 

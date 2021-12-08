@@ -1,6 +1,6 @@
 {
   "name": "Thermocouple",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "thermocouple",
   "camelName": "thermocouple",
   "shortName": "thermocouple",
@@ -246,6 +246,7 @@
         }
       ],
       "volatile": true,
+      "optional": true,
       "identifierName": "reading_error",
       "packFormat": "u22.10"
     },

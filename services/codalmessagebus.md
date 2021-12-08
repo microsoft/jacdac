@@ -1,8 +1,8 @@
 # CODAL Message Bus
 
     identifier: 0x121ff81d
-    status: experimental
     camel: codalMessageBus
+    status: stable
     
 A service that uses the [CODAL message bus](https://lancaster-university.github.io/microbit-docs/ubit/messageBus/) to send and receive small messages.
 

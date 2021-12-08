@@ -12,10 +12,10 @@ Note that this is different from _luminance_, the amount of light that passes th
 
 ## Registers
 
-    ro light: u22.10 lux { typical_max=100000 } @ reading
+    ro illuminance: u22.10 lux { typical_max=100000 } @ reading
 
 The amount of illuminance, as lumens per square metre.
 
-    ro light_error?: u22.10 lux @ reading_error
+    ro illuminance_error?: u22.10 lux @ reading_error
 
 Error on the reported sensor value.

@@ -1,7 +1,6 @@
 # Dimmer
 
     identifier: 0x1fb02645
-    status: stable
 
 A light or fan controller that dims the current on a line.
 

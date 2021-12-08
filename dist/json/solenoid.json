@@ -1,6 +1,6 @@
 {
   "name": "Solenoid",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "solenoid",
   "camelName": "solenoid",
   "shortName": "solenoid",

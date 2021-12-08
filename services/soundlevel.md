@@ -4,6 +4,7 @@
      extends: _sensor
      group: sound
      tags: 8bit
+     status: stable
 
 A sound level detector sensor, gives a relative indication of the sound level.
 

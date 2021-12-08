@@ -2,6 +2,7 @@
 
     identifier: 0x13029088
     extends: _sensor
+    status: stable
 
 A 3-axis magnetometer.
 

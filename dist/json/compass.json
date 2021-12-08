@@ -1,6 +1,6 @@
 {
   "name": "Compass",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "compass",
   "camelName": "compass",
   "shortName": "compass",

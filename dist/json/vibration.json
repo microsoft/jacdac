@@ -1,6 +1,6 @@
 {
   "name": "Vibration motor",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "vibration",
   "camelName": "vibrationMotor",
   "shortName": "vibrationMotor",

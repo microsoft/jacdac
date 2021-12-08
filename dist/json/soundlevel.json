@@ -1,6 +1,6 @@
 {
   "name": "Sound level",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "soundlevel",
   "camelName": "soundLevel",
   "shortName": "soundLevel",

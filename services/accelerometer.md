@@ -4,6 +4,7 @@
     extends: _sensor
     tags: C
     group: movement
+    status: stable
 
 A 3-axis accelerometer.
 

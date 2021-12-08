@@ -403,20 +403,6 @@
     }
   },
   {
-    "service": "multitouch",
-    "client": {
-      "name": "jacdac-multitouch",
-      "targets": [
-        "arcade",
-        "maker",
-        "microbit"
-      ],
-      "repo": "microsoft/pxt-jacdac/multitouch",
-      "qName": "modules.MultitouchClient",
-      "default": "modules.multitouch"
-    }
-  },
-  {
     "service": "potentiometer",
     "client": {
       "name": "jacdac-potentiometer",

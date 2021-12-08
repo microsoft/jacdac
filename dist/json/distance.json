@@ -1,6 +1,6 @@
 {
   "name": "Distance",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "distance",
   "camelName": "distance",
   "shortName": "distance",

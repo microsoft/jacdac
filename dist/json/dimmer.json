@@ -1,6 +1,6 @@
 {
   "name": "Dimmer",
-  "status": "stable",
+  "status": "experimental",
   "shortId": "dimmer",
   "camelName": "dimmer",
   "shortName": "dimmer",

@@ -135,8 +135,15 @@
     },
     {
       "kind": "command",
-      "name": "list_sounds",
+      "name": "cancel",
       "identifier": 129,
+      "description": "Cancel any sound playing.",
+      "fields": []
+    },
+    {
+      "kind": "command",
+      "name": "list_sounds",
+      "identifier": 130,
       "description": "Returns the list of sounds available to play.",
       "fields": [
         {

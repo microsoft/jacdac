@@ -1901,92 +1901,6 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
-    // Service: HID Adapter
-    public static class HidAdapterConstants
-    {
-        public const uint ServiceClass = 0x1e5758b5;
-    }
-    public enum HidAdapterReg {
-        /**
-         * Read-write uint8_t. The number of configurations stored on the server.
-         *
-         * ```
-         * const [numConfigurations] = jdunpack<[number]>(buf, "u8")
-         * ```
-         */
-        NumConfigurations = 0x80,
-
-        /**
-         * Read-write uint8_t. The current configuration the server is using.
-         *
-         * ```
-         * const [currentConfiguration] = jdunpack<[number]>(buf, "u8")
-         * ```
-         */
-        CurrentConfiguration = 0x81,
-    }
-
-    public enum HidAdapterCmd {
-        /**
-         * Retrieves a configuration stored on the server. If the configuration does not exist, an empty report will be returned
-         *
-         * ```
-         * const [results, configurationNumber] = jdunpack<[Uint8Array, number]>(buf, "b[12] u8")
-         * ```
-         */
-        GetConfiguration = 0x80,
-
-        /**
-         * Stores the given binding on the server. If a binding exists at this index, the new binding will replace it.
-         *
-         * ```
-         * const [configurationNumber, bindingIndex, deviceId, serviceClass, triggerValue, triggerContext, serviceIndex, selector, modifiers] = jdunpack<[number, number, number, number, number, number, number, number, number]>(buf, "u8 u8 x[2] u64 u32 u32 u8 u8 u16 u16")
-         * ```
-         */
-        SetBinding = 0x82,
-
-        /**
-         * Clears a specific binding stored on the device.
-         *
-         * ```
-         * const [configurationNumber, bindingIndex] = jdunpack<[number, number]>(buf, "u8 u8")
-         * ```
-         */
-        ClearBinding = 0x83,
-
-        /**
-         * Argument: configuration_number uint8_t. Clears a specific configuration stored on the device.
-         *
-         * ```
-         * const [configurationNumber] = jdunpack<[number]>(buf, "u8")
-         * ```
-         */
-        ClearConfiguration = 0x84,
-
-        /**
-         * No args. Clears all configurations and bindings stored on the device.
-         */
-        Clear = 0x85,
-    }
-
-
-    /**
-     * pipe_report Configuration
-     * ```
-     * const [configurationNumber, bindingIndex, deviceId, serviceClass, triggerValue, triggerContext, serviceIndex, selector, modifiers] = jdunpack<[number, number, number, number, number, number, number, number, number]>(buf, "u8 u8 x[2] u64 u32 u32 u8 u8 u16 u16")
-     * ```
-     */
-
-
-    public enum HidAdapterEvent {
-        /**
-         * Event that notifies clients that the server has swapped to a new configuration or changed key bindings.
-         */
-        Changed = 0x3,
-    }
-
-}
-namespace Jacdac {
     // Service: HID Keyboard
     public static class HidKeyboardConstants
     {
@@ -2141,19 +2055,19 @@ namespace Jacdac {
          * Read-only lux u22.10 (uint32_t). The amount of illuminance, as lumens per square metre.
          *
          * ```
-         * const [light] = jdunpack<[number]>(buf, "u22.10")
+         * const [illuminance] = jdunpack<[number]>(buf, "u22.10")
          * ```
          */
-        Light = 0x101,
+        Illuminance = 0x101,
 
         /**
          * Read-only lux u22.10 (uint32_t). Error on the reported sensor value.
          *
          * ```
-         * const [lightError] = jdunpack<[number]>(buf, "u22.10")
+         * const [illuminanceError] = jdunpack<[number]>(buf, "u22.10")
          * ```
          */
-        LightError = 0x106,
+        IlluminanceError = 0x106,
     }
 
 }
@@ -2575,7 +2489,7 @@ namespace Jacdac {
     public enum LightBulbReg {
         /**
          * Read-write ratio u0.16 (uint16_t). Indicates the brightness of the light bulb. Zero means completely off and 0xffff means completely on.
-         * For non-dimmeable lights, the value should be clamp to 0xffff for any non-zero value.
+         * For non-dimmable lights, the value should be clamp to 0xffff for any non-zero value.
          *
          * ```
          * const [brightness] = jdunpack<[number]>(buf, "u0.16")
@@ -2587,10 +2501,10 @@ namespace Jacdac {
          * Constant bool (uint8_t). Indicates if the light supports dimming.
          *
          * ```
-         * const [dimmeable] = jdunpack<[number]>(buf, "u8")
+         * const [dimmable] = jdunpack<[number]>(buf, "u8")
          * ```
          */
-        Dimmeable = 0x180,
+        Dimmable = 0x180,
     }
 
     public enum LightBulbEvent {
@@ -3185,74 +3099,6 @@ namespace Jacdac {
          * ```
          */
         LoadSpeed = 0x181,
-    }
-
-}
-namespace Jacdac {
-    // Service: Multitouch
-    public static class MultitouchConstants
-    {
-        public const uint ServiceClass = 0x18d55e2b;
-    }
-    public enum MultitouchReg {
-        /**
-         * Read-only. Capacitance of channels. The capacitance is continuously calibrated, and a value of `0` indicates
-         * no touch, wheres a value of around `100` or more indicates touch.
-         * It's best to ignore this (unless debugging), and use events.
-         *
-         * ```
-         * const [capacitance] = jdunpack<[number[]]>(buf, "i32[]")
-         * ```
-         */
-        Capacity = 0x101,
-    }
-
-    public enum MultitouchEvent {
-        /**
-         * Argument: channel uint32_t. Emitted when an input is touched.
-         *
-         * ```
-         * const [channel] = jdunpack<[number]>(buf, "u32")
-         * ```
-         */
-        Touch = 0x1,
-
-        /**
-         * Argument: channel uint32_t. Emitted when an input is no longer touched.
-         *
-         * ```
-         * const [channel] = jdunpack<[number]>(buf, "u32")
-         * ```
-         */
-        Release = 0x2,
-
-        /**
-         * Argument: channel uint32_t. Emitted when an input is briefly touched. TODO Not implemented.
-         *
-         * ```
-         * const [channel] = jdunpack<[number]>(buf, "u32")
-         * ```
-         */
-        Tap = 0x80,
-
-        /**
-         * Argument: channel uint32_t. Emitted when an input is touched for longer than 500ms. TODO Not implemented.
-         *
-         * ```
-         * const [channel] = jdunpack<[number]>(buf, "u32")
-         * ```
-         */
-        LongPress = 0x81,
-
-        /**
-         * Emitted when input channels are successively touched in order of increasing channel numbers.
-         */
-        SwipePos = 0x90,
-
-        /**
-         * Emitted when input channels are successively touched in order of decreasing channel numbers.
-         */
-        SwipeNeg = 0x91,
     }
 
 }
@@ -4639,13 +4485,18 @@ namespace Jacdac {
         Play = 0x80,
 
         /**
+         * No args. Cancel any sound playing.
+         */
+        Cancel = 0x81,
+
+        /**
          * Argument: sounds_port pipe (bytes). Returns the list of sounds available to play.
          *
          * ```
          * const [soundsPort] = jdunpack<[Uint8Array]>(buf, "b[12]")
          * ```
          */
-        ListSounds = 0x81,
+        ListSounds = 0x82,
     }
 
 

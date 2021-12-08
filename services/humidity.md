@@ -16,7 +16,7 @@ Default streaming interval is 1s.
 
 The relative humidity in percentage of full water saturation.
 
-    ro humidity_error: u22.10 %RH @ reading_error
+    ro humidity_error?: u22.10 %RH @ reading_error
 
 The real humidity is between `humidity - humidity_error` and `humidity + humidity_error`.
 

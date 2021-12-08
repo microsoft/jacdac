@@ -1,6 +1,6 @@
 {
   "name": "Role Manager",
-  "status": "stable",
+  "status": "experimental",
   "shortId": "rolemanager",
   "camelName": "roleManager",
   "shortName": "roleManager",
@@ -307,5 +307,7 @@
       "identifierName": "change"
     }
   ],
-  "tags": []
+  "tags": [
+    "infrastructure"
+  ]
 }

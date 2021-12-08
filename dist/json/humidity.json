@@ -200,6 +200,7 @@
         }
       ],
       "volatile": true,
+      "optional": true,
       "identifierName": "reading_error",
       "packFormat": "u22.10"
     },

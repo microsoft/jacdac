@@ -106,7 +106,7 @@
       "kind": "rw",
       "name": "brightness",
       "identifier": 1,
-      "description": "Indicates the brightness of the light bulb. Zero means completely off and 0xffff means completely on.\nFor non-dimmeable lights, the value should be clamp to 0xffff for any non-zero value.",
+      "description": "Indicates the brightness of the light bulb. Zero means completely off and 0xffff means completely on.\nFor non-dimmable lights, the value should be clamp to 0xffff for any non-zero value.",
       "fields": [
         {
           "name": "_",
@@ -121,7 +121,7 @@
     },
     {
       "kind": "const",
-      "name": "dimmeable",
+      "name": "dimmable",
       "identifier": 384,
       "description": "Indicates if the light supports dimming.",
       "fields": [

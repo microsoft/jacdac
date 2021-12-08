@@ -15,9 +15,14 @@
 #define JD_SOUND_PLAYER_CMD_PLAY 0x80
 
 /**
+ * No args. Cancel any sound playing.
+ */
+#define JD_SOUND_PLAYER_CMD_CANCEL 0x81
+
+/**
  * Argument: sounds_port pipe (bytes). Returns the list of sounds available to play.
  */
-#define JD_SOUND_PLAYER_CMD_LIST_SOUNDS 0x81
+#define JD_SOUND_PLAYER_CMD_LIST_SOUNDS 0x82
 
 /**
  * Returns the list of sounds available to play.

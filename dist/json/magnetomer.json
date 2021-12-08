@@ -1,6 +1,6 @@
 {
   "name": "Magnetometer",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "magnetomer",
   "camelName": "magnetometer",
   "shortName": "magnetometer",

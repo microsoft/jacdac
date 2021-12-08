@@ -1,6 +1,6 @@
 {
   "name": "Speech synthesis",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "speechsynthesis",
   "camelName": "speechSynthesis",
   "shortName": "speechSynthesis",

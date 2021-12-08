@@ -1,6 +1,6 @@
 {
   "name": "Gyroscope",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "gyroscope",
   "camelName": "gyroscope",
   "shortName": "gyroscope",

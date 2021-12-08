@@ -2,6 +2,7 @@
 
     identifier: 0x183fe656
     tags: 8bit
+    status: stable
 
 A switching relay.
 

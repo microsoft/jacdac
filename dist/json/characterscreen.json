@@ -1,6 +1,6 @@
 {
   "name": "Character Screen",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "characterscreen",
   "camelName": "characterScreen",
   "shortName": "characterScreen",

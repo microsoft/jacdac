@@ -1,6 +1,6 @@
 {
   "name": "Azure IoT Hub Health",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "azureiothubhealth",
   "camelName": "azureIotHubHealth",
   "shortName": "azureIotHubHealth",

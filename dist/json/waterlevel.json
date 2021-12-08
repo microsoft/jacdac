@@ -1,6 +1,6 @@
 {
   "name": "Water level",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "waterlevel",
   "camelName": "waterLevel",
   "shortName": "waterLevel",
@@ -189,6 +189,25 @@
       ],
       "volatile": true,
       "identifierName": "reading",
+      "packFormat": "u0.16"
+    },
+    {
+      "kind": "ro",
+      "name": "level_error",
+      "identifier": 262,
+      "description": "The error rage on the current reading",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "/",
+          "shift": 16,
+          "type": "u0.16",
+          "storage": 2
+        }
+      ],
+      "volatile": true,
+      "optional": true,
+      "identifierName": "reading_error",
       "packFormat": "u0.16"
     },
     {

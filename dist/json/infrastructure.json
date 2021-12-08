@@ -1,6 +1,6 @@
 {
   "name": "Infrastructure",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "infrastructure",
   "camelName": "infrastructure",
   "shortName": "infrastructure",

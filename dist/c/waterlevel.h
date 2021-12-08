@@ -15,6 +15,11 @@
 #define JD_WATER_LEVEL_REG_LEVEL JD_REG_READING
 
 /**
+ * Read-only ratio u0.16 (uint16_t). The error rage on the current reading
+ */
+#define JD_WATER_LEVEL_REG_LEVEL_ERROR JD_REG_READING_ERROR
+
+/**
  * Constant Variant (uint8_t). The type of physical sensor.
  */
 #define JD_WATER_LEVEL_REG_VARIANT JD_REG_VARIANT

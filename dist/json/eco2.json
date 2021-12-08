@@ -1,6 +1,6 @@
 {
   "name": "Equivalent CO₂",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "eco2",
   "camelName": "eCO2",
   "shortName": "eCO2",
@@ -208,6 +208,7 @@
         }
       ],
       "volatile": true,
+      "optional": true,
       "identifierName": "reading_error",
       "packFormat": "u22.10"
     },

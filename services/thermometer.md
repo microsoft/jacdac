@@ -4,6 +4,7 @@
     extends: _sensor
     tags: C, 8bit
     group: environment
+    status: stable
 
 A thermometer measuring outside or inside environment.
 

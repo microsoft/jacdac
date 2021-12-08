@@ -4,6 +4,7 @@
     extends: _sensor
     group: slider
     tags: C, 8bit
+    status: stable
 
 A slider or rotary potentiometer.
 

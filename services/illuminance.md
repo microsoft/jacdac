@@ -4,10 +4,11 @@
     extends: _sensor
     group: environment
     tags: 8bit, padauk
+    status: stable
 
 Detects the amount of light falling onto a given surface area.
 
-Note that this is different from *luminance*, the amount of light that passes through, emits from, or reflects off an object.
+Note that this is different from _luminance_, the amount of light that passes through, emits from, or reflects off an object.
 
 ## Registers
 

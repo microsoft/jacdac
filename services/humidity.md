@@ -4,6 +4,7 @@
     extends: _sensor
     tags: C, 8bit
     group: environment
+    status: stable
 
 A sensor measuring humidity of outside environment.
 

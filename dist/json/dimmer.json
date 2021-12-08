@@ -1,6 +1,6 @@
 {
   "name": "Dimmer",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "dimmer",
   "camelName": "dimmer",
   "shortName": "dimmer",
@@ -116,7 +116,7 @@
       "kind": "rw",
       "name": "intensity",
       "identifier": 1,
-      "description": "The intensity of the current. Set to ``0`` to turn off completely the current.",
+      "description": "The intensity of the current. Set to `0` to turn off completely the current.",
       "fields": [
         {
           "name": "_",

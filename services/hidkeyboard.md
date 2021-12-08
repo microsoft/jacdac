@@ -4,8 +4,9 @@
     status: experimental
     camel: hidKeyboard
     tags: 8bit
-    
-Control a HID keyboard. 
+    status: stable
+
+Control a HID keyboard.
 
 The codes for the key (selectors) is defined in the [HID Keyboard
 specification](https://usb.org/sites/default/files/hut1_21.pdf), chapter 10 Keyboard/Keypad Page, page 81.
@@ -37,9 +38,9 @@ The device keeps tracks of the key state and is able to clear it all with the cl
         modifiers: Modifiers
         action: Action
     }
-    
+
 Presses a key or a sequence of keys down.
 
     command clear @ 0x81 {}
-    
+
 Clears all pressed keys.

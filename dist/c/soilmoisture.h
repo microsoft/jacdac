@@ -9,7 +9,7 @@
 #define JD_SOIL_MOISTURE_VARIANT_CAPACITIVE 0x2
 
 /**
- * Read-only ratio u0.16 (uint16_t). Indicates the wetness of the soil, from ``dry`` to ``wet``.
+ * Read-only ratio u0.16 (uint16_t). Indicates the wetness of the soil, from `dry` to `wet`.
  */
 #define JD_SOIL_MOISTURE_REG_MOISTURE JD_REG_READING
 

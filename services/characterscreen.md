@@ -2,6 +2,7 @@
 
     identifier: 0x1f37c56a
     group: display
+    status: stable
 
 A screen that displays characters.
 

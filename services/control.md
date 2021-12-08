@@ -2,6 +2,7 @@
 
     identifier: 0x00000000
     tags: C, 8bit
+    status: stable
 
 Control service is always service index `0`.
 It handles actions common to all services on a device.
@@ -50,7 +51,7 @@ Do nothing. Always ignored. Can be used to test ACKs.
 
     command identify? @ 0x81 { }
 
-Blink the status LED (262ms on, 262ms off, four times, with the blue LED) or otherwise draw user's attention to device with no status light. 
+Blink the status LED (262ms on, 262ms off, four times, with the blue LED) or otherwise draw user's attention to device with no status light.
 For devices with status light (this can be discovered in the announce flags), the client should
 send the sequence of status light command to generate the identify animation.
 
@@ -84,7 +85,7 @@ The transition will complete in about `512 / speed` frames
 (each frame is currently 100ms, so speed of `51` is about 1 second and `26` 0.5 second).
 As a special case, if speed is `0` the transition is immediate.
 If MCU is not capable of executing transitions, it can consider `speed` to be always `0`.
-If a monochrome LEDs is fitted, the average value of ``red``, ``green``, ``blue`` is used.
+If a monochrome LEDs is fitted, the average value of `red`, `green`, `blue` is used.
 If intensity of a monochrome LED cannot be controlled, any value larger than `0` should be considered
 on, and `0` (for all three channels) should be considered off.
 

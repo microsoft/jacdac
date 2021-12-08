@@ -1,6 +1,6 @@
 {
   "name": "Control",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "control",
   "camelName": "control",
   "shortName": "control",
@@ -178,7 +178,7 @@
       "kind": "command",
       "name": "identify",
       "identifier": 129,
-      "description": "Blink the status LED (262ms on, 262ms off, four times, with the blue LED) or otherwise draw user's attention to device with no status light. \nFor devices with status light (this can be discovered in the announce flags), the client should\nsend the sequence of status light command to generate the identify animation.",
+      "description": "Blink the status LED (262ms on, 262ms off, four times, with the blue LED) or otherwise draw user's attention to device with no status light.\nFor devices with status light (this can be discovered in the announce flags), the client should\nsend the sequence of status light command to generate the identify animation.",
       "fields": [],
       "optional": true
     },
@@ -247,7 +247,7 @@
       "kind": "command",
       "name": "set_status_light",
       "identifier": 132,
-      "description": "Initiates a color transition of the status light from its current color to the one specified.\nThe transition will complete in about `512 / speed` frames\n(each frame is currently 100ms, so speed of `51` is about 1 second and `26` 0.5 second).\nAs a special case, if speed is `0` the transition is immediate.\nIf MCU is not capable of executing transitions, it can consider `speed` to be always `0`.\nIf a monochrome LEDs is fitted, the average value of ``red``, ``green``, ``blue`` is used.\nIf intensity of a monochrome LED cannot be controlled, any value larger than `0` should be considered\non, and `0` (for all three channels) should be considered off.",
+      "description": "Initiates a color transition of the status light from its current color to the one specified.\nThe transition will complete in about `512 / speed` frames\n(each frame is currently 100ms, so speed of `51` is about 1 second and `26` 0.5 second).\nAs a special case, if speed is `0` the transition is immediate.\nIf MCU is not capable of executing transitions, it can consider `speed` to be always `0`.\nIf a monochrome LEDs is fitted, the average value of `red`, `green`, `blue` is used.\nIf intensity of a monochrome LED cannot be controlled, any value larger than `0` should be considered\non, and `0` (for all three channels) should be considered off.",
       "fields": [
         {
           "name": "to_red",

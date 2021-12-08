@@ -1,6 +1,6 @@
 {
   "name": "Real time clock",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "realtimeclock",
   "camelName": "realTimeClock",
   "shortName": "realTimeClock",
@@ -177,7 +177,7 @@
       "kind": "ro",
       "name": "local_time",
       "identifier": 257,
-      "description": "Current time in 24h representation. \n* ``day_of_month`` is day of the month, starting at ``1``\n* ``day_of_week`` is day of the week, starting at ``1`` as monday\nDefault streaming period is 1 second.",
+      "description": "Current time in 24h representation.\n\n-   `day_of_month` is day of the month, starting at `1`\n-   `day_of_week` is day of the week, starting at `1` as monday. Default streaming period is 1 second.",
       "fields": [
         {
           "name": "year",
@@ -243,7 +243,7 @@
       "kind": "ro",
       "name": "drift",
       "identifier": 384,
-      "description": "Time drift since the last call to the ``set_time`` command.",
+      "description": "Time drift since the last call to the `set_time` command.",
       "fields": [
         {
           "name": "_",

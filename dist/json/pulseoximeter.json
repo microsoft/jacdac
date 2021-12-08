@@ -1,6 +1,6 @@
 {
   "name": "Pulse Oximeter",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "pulseoximeter",
   "camelName": "pulseOximeter",
   "shortName": "pulseOximeter",
@@ -9,7 +9,7 @@
     "_sensor"
   ],
   "notes": {
-    "short": "A sensor approximating the oxygen level. \n\n**Jacdac is not suitable for medical devices and should NOT be used in any kind of device to diagnose or treat any medical conditions.**"
+    "short": "A sensor approximating the oxygen level.\n\n**Jacdac is not suitable for medical devices and should NOT be used in any kind of device to diagnose or treat any medical conditions.**"
   },
   "classIdentifier": 280710838,
   "enums": {},

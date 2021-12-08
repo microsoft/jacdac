@@ -10,7 +10,7 @@
 #define JD_DIMMER_VARIANT_PUMP 0x3
 
 /**
- * Read-write ratio u0.16 (uint16_t). The intensity of the current. Set to ``0`` to turn off completely the current.
+ * Read-write ratio u0.16 (uint16_t). The intensity of the current. Set to `0` to turn off completely the current.
  */
 #define JD_DIMMER_REG_INTENSITY JD_REG_INTENSITY
 

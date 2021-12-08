@@ -1,6 +1,6 @@
 {
   "name": "Barometer",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "barometer",
   "camelName": "barometer",
   "shortName": "barometer",
@@ -202,6 +202,7 @@
         }
       ],
       "volatile": true,
+      "optional": true,
       "identifierName": "reading_error",
       "packFormat": "u22.10"
     }

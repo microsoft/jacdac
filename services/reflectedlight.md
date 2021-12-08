@@ -4,6 +4,7 @@
     extends: _sensor
     group: environment
     tags: 8bit
+    status: stable
 
 A sensor that detects light and dark surfaces, commonly used for line following robots.
 

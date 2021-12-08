@@ -1,6 +1,6 @@
 {
   "name": "Bridge",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "bridge",
   "camelName": "bridge",
   "shortName": "bridge",

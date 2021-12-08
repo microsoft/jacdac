@@ -1,6 +1,6 @@
 {
   "name": "bit:radio",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "bitradio",
   "camelName": "bitRadio",
   "shortName": "bitRadio",

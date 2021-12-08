@@ -7,6 +7,7 @@ Measures equivalent CO₂ levels.
     camel: eCO2
     group: environment
     tags: 8bit
+    status: stable
 
 ## Registers
 
@@ -14,7 +15,7 @@ Measures equivalent CO₂ levels.
 
 Equivalent CO₂ (eCO₂) readings.
 
-    ro e_CO2_error: u22.10 ppm @ reading_error
+    ro e_CO2_error?: u22.10 ppm @ reading_error
 
 Error on the reading value.
 

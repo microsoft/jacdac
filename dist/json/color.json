@@ -1,6 +1,6 @@
 {
   "name": "Color",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "color",
   "camelName": "color",
   "shortName": "color",

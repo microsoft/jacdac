@@ -939,7 +939,7 @@ export enum BridgeReg {
 export const SRV_BUTTON = 0x1473a263
 export enum ButtonReg {
     /**
-     * Read-only ratio u0.16 (uint16_t). Indicates the pressure state of the button, where ``0`` is open.
+     * Read-only ratio u0.16 (uint16_t). Indicates the pressure state of the button, where `0` is open.
      *
      * ```
      * const [pressure] = jdunpack<[number]>(buf, "u0.16")
@@ -948,7 +948,7 @@ export enum ButtonReg {
     Pressure = 0x101,
 
     /**
-     * Constant bool (uint8_t). Indicates if the button provides analog ``pressure`` readings.
+     * Constant bool (uint8_t). Indicates if the button provides analog `pressure` readings.
      *
      * ```
      * const [analog] = jdunpack<[number]>(buf, "u8")
@@ -1285,7 +1285,7 @@ export enum ControlCmd {
      * (each frame is currently 100ms, so speed of `51` is about 1 second and `26` 0.5 second).
      * As a special case, if speed is `0` the transition is immediate.
      * If MCU is not capable of executing transitions, it can consider `speed` to be always `0`.
-     * If a monochrome LEDs is fitted, the average value of ``red``, ``green``, ``blue`` is used.
+     * If a monochrome LEDs is fitted, the average value of `red`, `green`, `blue` is used.
      * If intensity of a monochrome LED cannot be controlled, any value larger than `0` should be considered
      * on, and `0` (for all three channels) should be considered off.
      *
@@ -1413,7 +1413,7 @@ export enum DimmerVariant { // uint8_t
 
 export enum DimmerReg {
     /**
-     * Read-write ratio u0.16 (uint16_t). The intensity of the current. Set to ``0`` to turn off completely the current.
+     * Read-write ratio u0.16 (uint16_t). The intensity of the current. Set to `0` to turn off completely the current.
      *
      * ```
      * const [intensity] = jdunpack<[number]>(buf, "u0.16")
@@ -1450,6 +1450,15 @@ export enum DistanceReg {
      * ```
      */
     Distance = 0x101,
+
+    /**
+     * Read-only m u16.16 (uint32_t). Absolute error on the reading value.
+     *
+     * ```
+     * const [distanceError] = jdunpack<[number]>(buf, "u16.16")
+     * ```
+     */
+    DistanceError = 0x106,
 
     /**
      * Constant m u16.16 (uint32_t). Minimum measurable distance
@@ -1640,6 +1649,15 @@ export enum FlexReg {
      * ```
      */
     Bending = 0x101,
+
+    /**
+     * Read-only ratio u0.16 (uint16_t). Absolute error on the reading value.
+     *
+     * ```
+     * const [bendingError] = jdunpack<[number]>(buf, "u0.16")
+     * ```
+     */
+    BendingError = 0x106,
 
     /**
      * Constant Variant (uint8_t). Specifies the physical layout of the flex sensor.
@@ -1872,8 +1890,8 @@ export enum HidMouseButtonEvent { // uint8_t
 export enum HidMouseCmd {
     /**
      * Sets the up/down state of one or more buttons.
-     * A ``Click`` is the same as ``Down`` followed by ``Up`` after 100ms.
-     * A ``DoubleClick`` is two clicks with ``150ms`` gap between them (that is, ``100ms`` first click, ``150ms`` gap, ``100ms`` second click).
+     * A `Click` is the same as `Down` followed by `Up` after 100ms.
+     * A `DoubleClick` is two clicks with `150ms` gap between them (that is, `100ms` first click, `150ms` gap, `100ms` second click).
      *
      * ```
      * const [buttons, event] = jdunpack<[HidMouseButton, HidMouseButtonEvent]>(buf, "u16 u8")
@@ -2403,6 +2421,15 @@ export enum LightLevelReg {
     LightLevel = 0x101,
 
     /**
+     * Read-only ratio u0.16 (uint16_t). Absolute estimated error of the reading value
+     *
+     * ```
+     * const [lightLevelError] = jdunpack<[number]>(buf, "u0.16")
+     * ```
+     */
+    LightLevelError = 0x106,
+
+    /**
      * Constant Variant (uint8_t). The type of physical sensor.
      *
      * ```
@@ -2490,7 +2517,7 @@ export enum MagnetometerReg {
     Forces = 0x101,
 
     /**
-     * Read-only nT int32_t. Error on the readings.
+     * Read-only nT int32_t. Absolute estimated error on the readings.
      *
      * ```
      * const [forcesError] = jdunpack<[number]>(buf, "i32")
@@ -3471,9 +3498,6 @@ export enum RealTimeClockVariant { // uint8_t
 export enum RealTimeClockReg {
     /**
      * Current time in 24h representation.
-     * * ``day_of_month`` is day of the month, starting at ``1``
-     * * ``day_of_week`` is day of the week, starting at ``1`` as monday
-     * Default streaming period is 1 second.
      *
      * ```
      * const [year, month, dayOfMonth, dayOfWeek, hour, min, sec] = jdunpack<[number, number, number, number, number, number, number]>(buf, "u16 u8 u8 u8 u8 u8 u8")
@@ -3482,7 +3506,7 @@ export enum RealTimeClockReg {
     LocalTime = 0x101,
 
     /**
-     * Read-only s u16.16 (uint32_t). Time drift since the last call to the ``set_time`` command.
+     * Read-only s u16.16 (uint32_t). Time drift since the last call to the `set_time` command.
      *
      * ```
      * const [drift] = jdunpack<[number]>(buf, "u16.16")
@@ -4026,8 +4050,8 @@ export enum SevenSegmentDisplayReg {
     /**
      * Read-write bytes. Each byte encodes the display status of a digit using,
      * where bit 0 encodes segment `A`, bit 1 encodes segments `B`, ..., bit 6 encodes segments `G`, and bit 7 encodes the decimal point (if present).
-     * If incoming ``digits`` data is smaller than `digit_count`, the remaining digits will be cleared.
-     * Thus, sending an empty ``digits`` payload clears the screen.
+     * If incoming `digits` data is smaller than `digit_count`, the remaining digits will be cleared.
+     * Thus, sending an empty `digits` payload clears the screen.
      *
      * ```
      * const [digits] = jdunpack<[Uint8Array]>(buf, "b")
@@ -4036,7 +4060,7 @@ export enum SevenSegmentDisplayReg {
     Digits = 0x2,
 
     /**
-     * Read-write ratio u0.16 (uint16_t). Controls the brightness of the LEDs. ``0`` means off.
+     * Read-write ratio u0.16 (uint16_t). Controls the brightness of the LEDs. `0` means off.
      *
      * ```
      * const [brightness] = jdunpack<[number]>(buf, "u0.16")
@@ -4095,7 +4119,7 @@ export enum SoilMoistureVariant { // uint8_t
 
 export enum SoilMoistureReg {
     /**
-     * Read-only ratio u0.16 (uint16_t). Indicates the wetness of the soil, from ``dry`` to ``wet``.
+     * Read-only ratio u0.16 (uint16_t). Indicates the wetness of the soil, from `dry` to `wet`.
      *
      * ```
      * const [moisture] = jdunpack<[number]>(buf, "u0.16")
@@ -4174,9 +4198,9 @@ export enum SoundLevelReg {
 
     /**
      * Read-write dB int16_t. The minimum power value considered by the sensor.
-     * If both ``min_decibels`` and ``max_decibels`` are supported,
+     * If both `min_decibels` and `max_decibels` are supported,
      * the volume in deciment can be linearly interpolated between
-     * ``[min_decibels, max_decibels]``.
+     * `[min_decibels, max_decibels]`.
      *
      * ```
      * const [minDecibels] = jdunpack<[number]>(buf, "i16")
@@ -4186,9 +4210,9 @@ export enum SoundLevelReg {
 
     /**
      * Read-write dB int16_t. The maximum power value considered by the sensor.
-     * If both ``min_decibels`` and ``max_decibels`` are supported,
+     * If both `min_decibels` and `max_decibels` are supported,
      * the volume in deciment can be linearly interpolated between
-     * ``[min_decibels, max_decibels]``.
+     * `[min_decibels, max_decibels]`.
      *
      * ```
      * const [maxDecibels] = jdunpack<[number]>(buf, "i16")
@@ -4319,7 +4343,7 @@ export enum SoundSpectrumReg {
 
     /**
      * Read-write ratio u0.8 (uint8_t). The averaging constant with the last analysis frame.
-     * If ``0`` is set, there is no averaging done, whereas a value of ``1`` means "overlap the previous and current buffer quite a lot while computing the value".
+     * If `0` is set, there is no averaging done, whereas a value of `1` means "overlap the previous and current buffer quite a lot while computing the value".
      *
      * ```
      * const [smoothingTimeConstant] = jdunpack<[number]>(buf, "u0.8")
@@ -4439,12 +4463,12 @@ export enum SwitchReg {
 
 export enum SwitchEvent {
     /**
-     * Emitted when switch goes from ``off`` to ``on``.
+     * Emitted when switch goes from `off` to `on`.
      */
     On = 0x1,
 
     /**
-     * Emitted when switch goes from ``on`` to ``off``.
+     * Emitted when switch goes from `on` to `off`.
      */
     Off = 0x2,
 }
@@ -4874,6 +4898,15 @@ export enum WaterLevelReg {
      * ```
      */
     Level = 0x101,
+
+    /**
+     * Read-only ratio u0.16 (uint16_t). The error rage on the current reading
+     *
+     * ```
+     * const [levelError] = jdunpack<[number]>(buf, "u0.16")
+     * ```
+     */
+    LevelError = 0x106,
 
     /**
      * Constant Variant (uint8_t). The type of physical sensor.

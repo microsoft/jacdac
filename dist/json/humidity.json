@@ -1,6 +1,6 @@
 {
   "name": "Humidity",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "humidity",
   "camelName": "humidity",
   "shortName": "humidity",

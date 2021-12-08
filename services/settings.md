@@ -2,6 +2,7 @@
 
     identifier: 0x1107dc4a
     camel: settings
+    status: stable
 
 Non-volatile key-value storage interface for storing settings.
 

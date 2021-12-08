@@ -1,6 +1,6 @@
 {
   "name": "Thermometer",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "thermometer",
   "camelName": "thermometer",
   "shortName": "thermometer",

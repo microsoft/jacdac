@@ -200,7 +200,7 @@
       "kind": "rw",
       "name": "min_decibels",
       "identifier": 129,
-      "description": "The minimum power value considered by the sensor.\nIf both ``min_decibels`` and ``max_decibels`` are supported,\nthe volume in deciment can be linearly interpolated between\n``[min_decibels, max_decibels]``.",
+      "description": "The minimum power value considered by the sensor.\nIf both `min_decibels` and `max_decibels` are supported,\nthe volume in deciment can be linearly interpolated between\n`[min_decibels, max_decibels]`.",
       "fields": [
         {
           "name": "_",
@@ -217,7 +217,7 @@
       "kind": "rw",
       "name": "max_decibels",
       "identifier": 130,
-      "description": "The maximum power value considered by the sensor.\nIf both ``min_decibels`` and ``max_decibels`` are supported,\nthe volume in deciment can be linearly interpolated between\n``[min_decibels, max_decibels]``.",
+      "description": "The maximum power value considered by the sensor.\nIf both `min_decibels` and `max_decibels` are supported,\nthe volume in deciment can be linearly interpolated between\n`[min_decibels, max_decibels]`.",
       "fields": [
         {
           "name": "_",

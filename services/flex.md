@@ -4,6 +4,7 @@
     extends: _sensor
     group: slider
     tags: C, 8bit
+    status: stable
 
 A bending or deflection sensor.
 
@@ -12,6 +13,10 @@ A bending or deflection sensor.
     ro bending: u0.16 / @ reading
 
 The relative position of the slider.
+
+    ro bending_error?: u0.16 / @ reading_error
+
+Absolute error on the reading value.
 
     enum Variant: u8 {
         Linear22Inch = 1,

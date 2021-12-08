@@ -6,6 +6,7 @@ Senses RGB colors
     extends: _sensor
     group: environment
     tags: 8bit
+    status: stable
 
 ## Registers
 

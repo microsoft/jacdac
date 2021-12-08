@@ -1,6 +1,6 @@
 {
   "name": "WIFI",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "wifi",
   "camelName": "wifi",
   "shortName": "wifi",

@@ -3,6 +3,7 @@
     identifier: 0x1462eefc
     camel: azureIotHubHealth
     group: iot
+    status: stable
 
 Health and diagnostics information about the Azure Iot Hub connection.
 

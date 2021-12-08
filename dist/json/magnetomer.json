@@ -199,7 +199,7 @@
       "kind": "ro",
       "name": "forces_error",
       "identifier": 262,
-      "description": "Error on the readings.",
+      "description": "Absolute estimated error on the readings.",
       "fields": [
         {
           "name": "_",

@@ -1,6 +1,6 @@
 {
   "name": "Illuminance",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "illuminance",
   "camelName": "illuminance",
   "shortName": "illuminance",
@@ -9,7 +9,7 @@
     "_sensor"
   ],
   "notes": {
-    "short": "Detects the amount of light falling onto a given surface area.\n\nNote that this is different from *luminance*, the amount of light that passes through, emits from, or reflects off an object."
+    "short": "Detects the amount of light falling onto a given surface area.\n\nNote that this is different from _luminance_, the amount of light that passes through, emits from, or reflects off an object."
   },
   "classIdentifier": 510577394,
   "enums": {},

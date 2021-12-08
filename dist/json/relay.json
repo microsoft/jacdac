@@ -1,6 +1,6 @@
 {
   "name": "Relay",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "relay",
   "camelName": "relay",
   "shortName": "relay",

@@ -1,6 +1,6 @@
 {
   "name": "Proxy",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "proxy",
   "camelName": "proxy",
   "shortName": "proxy",

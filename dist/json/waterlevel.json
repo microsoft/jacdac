@@ -1,6 +1,6 @@
 {
   "name": "Water level",
-  "status": "stable",
+  "status": "rc",
   "shortId": "waterlevel",
   "camelName": "waterLevel",
   "shortName": "waterLevel",

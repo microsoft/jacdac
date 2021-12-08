@@ -5,7 +5,7 @@ A sensor that determines the distance of an object without any physical contact 
     identifier:  0x141a6b8a
     extends: _sensor
     tags: 8bit
-    status: stable
+    status: rc
 
 ## Registers
 

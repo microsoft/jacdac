@@ -3,7 +3,7 @@
     identifier: 0x1e1b06f2
     extends: _sensor
     group: movement
-    status: stable
+    status: rc
 
 A 3-axis gyroscope.
 

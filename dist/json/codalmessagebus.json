@@ -1,6 +1,6 @@
 {
   "name": "CODAL Message Bus",
-  "status": "stable",
+  "status": "experimental",
   "shortId": "codalmessagebus",
   "camelName": "codalMessageBus",
   "shortName": "codalMessageBus",

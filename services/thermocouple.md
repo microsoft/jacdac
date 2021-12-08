@@ -4,7 +4,7 @@
     extends: _sensor
     group: environment
     tags: 8bit
-    status: stable
+    status: rc
 
 A thermocouple using a heat probe to gather temperatures.
 

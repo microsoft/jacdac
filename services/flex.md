@@ -18,10 +18,6 @@ The relative position of the slider.
 
 Absolute error on the reading value.
 
-    enum Variant: u8 {
-        Linear22Inch = 1,
-        Linear45Inch = 2,
-    }
-    const variant?: Variant @ variant
+    const length?: u16 mm @ 0x180
 
-Specifies the physical layout of the flex sensor.
+Length of the flex sensor

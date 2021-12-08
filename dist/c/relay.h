@@ -24,16 +24,4 @@
  */
 #define JD_RELAY_REG_MAX_SWITCHING_CURRENT 0x180
 
-/**
- * Emitted when relay goes from `inactive` to `active` state.
- * Normally open (NO) relays close the circuit when activated.
- */
-#define JD_RELAY_EV_ACTIVE JD_EV_ACTIVE
-
-/**
- * Emitted when relay goes from `active` to `inactive` state.
- * Normally closed (NC) relays open the circuit when activated.
- */
-#define JD_RELAY_EV_INACTIVE JD_EV_INACTIVE
-
 #endif

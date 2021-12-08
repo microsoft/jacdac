@@ -1,6 +1,6 @@
 {
   "name": "Capacitive Button",
-  "status": "stable",
+  "status": "rc",
   "shortId": "capacitivebutton",
   "camelName": "capacitiveButton",
   "shortName": "capacitiveButton",

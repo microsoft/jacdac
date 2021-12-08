@@ -3,7 +3,7 @@
     identifier: 0x2865adc9
     tags: 8bit
     group: button
-    status: stable
+    status: rc
 
 A configuration service for a capacitive push-button.
 

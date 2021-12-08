@@ -1,6 +1,6 @@
 {
   "name": "Real time clock",
-  "status": "stable",
+  "status": "rc",
   "shortId": "realtimeclock",
   "camelName": "realTimeClock",
   "shortName": "realTimeClock",

@@ -1,6 +1,6 @@
 {
   "name": "Character Screen",
-  "status": "stable",
+  "status": "rc",
   "shortId": "characterscreen",
   "camelName": "characterScreen",
   "shortName": "characterScreen",
@@ -8,7 +8,7 @@
     "_base"
   ],
   "notes": {
-    "short": "A screen that displays characters."
+    "short": "A screen that displays characters, typically a LCD/OLED character screen."
   },
   "classIdentifier": 523748714,
   "enums": {
@@ -132,7 +132,6 @@
           "storage": 0
         }
       ],
-      "lowLevel": true,
       "identifierName": "value",
       "packFormat": "s"
     },
@@ -145,14 +144,14 @@
         {
           "name": "_",
           "unit": "/",
-          "shift": 8,
-          "type": "u0.8",
-          "storage": 1
+          "shift": 16,
+          "type": "u0.16",
+          "storage": 2
         }
       ],
       "optional": true,
       "identifierName": "intensity",
-      "packFormat": "u0.8"
+      "packFormat": "u0.16"
     },
     {
       "kind": "const",
@@ -216,33 +215,6 @@
         }
       ],
       "packFormat": "u8"
-    },
-    {
-      "kind": "command",
-      "name": "set_line",
-      "identifier": 128,
-      "description": "Overrides the content of a single line at a 0-based index.",
-      "fields": [
-        {
-          "name": "index",
-          "type": "u16",
-          "storage": 2,
-          "isSimpleType": true
-        },
-        {
-          "name": "message",
-          "type": "string",
-          "storage": 0
-        }
-      ],
-      "packFormat": "u16 s"
-    },
-    {
-      "kind": "command",
-      "name": "clear",
-      "identifier": 129,
-      "description": "Clears all text from the display.",
-      "fields": []
     }
   ],
   "tags": [],

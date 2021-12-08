@@ -1,6 +1,6 @@
 {
   "name": "Wind speed",
-  "status": "stable",
+  "status": "rc",
   "shortId": "windspeed",
   "camelName": "windSpeed",
   "shortName": "windSpeed",

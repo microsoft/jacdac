@@ -4,7 +4,7 @@
     camel:sevenSegmentDisplay
     group: display
     tags: 8bit
-    status: stable
+    status: rc
 
 A 7-segment numeric display, with one or more digits.
 

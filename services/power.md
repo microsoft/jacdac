@@ -1,6 +1,7 @@
 # Power
 
     identifier: 0x1fa4c95a
+    status: experimental
 
 A power-provider service.
 

@@ -1,6 +1,6 @@
 {
   "name": "LED Pixel",
-  "status": "experimental",
+  "status": "rc",
   "shortId": "ledpixel",
   "camelName": "ledPixel",
   "shortName": "ledPixel",

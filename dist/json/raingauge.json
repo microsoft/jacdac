@@ -1,6 +1,6 @@
 {
   "name": "Rain gauge",
-  "status": "stable",
+  "status": "rc",
   "shortId": "raingauge",
   "camelName": "rainGauge",
   "shortName": "rainGauge",

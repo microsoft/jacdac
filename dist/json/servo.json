@@ -1,6 +1,6 @@
 {
   "name": "Servo",
-  "status": "stable",
+  "status": "rc",
   "shortId": "servo",
   "camelName": "servo",
   "shortName": "servo",

@@ -1,6 +1,6 @@
 {
   "name": "7-segment display",
-  "status": "stable",
+  "status": "rc",
   "shortId": "sevensegmentdisplay",
   "camelName": "sevenSegmentDisplay",
   "shortName": "sevenSegmentDisplay",

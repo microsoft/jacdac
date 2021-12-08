@@ -12,16 +12,7 @@
     "short": "A bending or deflection sensor."
   },
   "classIdentifier": 524797638,
-  "enums": {
-    "Variant": {
-      "name": "Variant",
-      "storage": 1,
-      "members": {
-        "Linear22Inch": 1,
-        "Linear45Inch": 2
-      }
-    }
-  },
+  "enums": {},
   "constants": {},
   "packets": [
     {
@@ -211,19 +202,20 @@
     },
     {
       "kind": "const",
-      "name": "variant",
-      "identifier": 263,
-      "description": "Specifies the physical layout of the flex sensor.",
+      "name": "length",
+      "identifier": 384,
+      "description": "Length of the flex sensor",
       "fields": [
         {
           "name": "_",
-          "type": "Variant",
-          "storage": 1
+          "unit": "mm",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
         }
       ],
       "optional": true,
-      "identifierName": "variant",
-      "packFormat": "u8"
+      "packFormat": "u16"
     }
   ],
   "tags": [

@@ -1,6 +1,6 @@
 {
   "name": "Barometer",
-  "status": "stable",
+  "status": "rc",
   "shortId": "barometer",
   "camelName": "barometer",
   "shortName": "barometer",

@@ -4,6 +4,7 @@ A device that can play various sounds stored locally. This service is typically 
 
     identifier: 0x1403d338
     group: sound
+    status: rc
 
 ## Registers
 

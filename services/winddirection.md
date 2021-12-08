@@ -5,7 +5,7 @@ A sensor that measures wind direction.
     identifier: 0x186be92b
     extends: _sensor
     tags: 8bit
-    status: stable
+    status: rc
 
 ## Registers
 

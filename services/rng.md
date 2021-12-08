@@ -2,7 +2,7 @@
 
     identifier: 0x1789f0a2
     camel: rng
-    status: stable
+    status: rc
 
 Generates random numbers using entropy sourced from physical processes.
 

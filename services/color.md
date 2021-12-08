@@ -4,7 +4,6 @@
     extends: _sensor
     group: environment
     tags: 8bit
-    status: stable
 
 Senses RGB colors
 

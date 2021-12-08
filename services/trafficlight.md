@@ -2,6 +2,7 @@
 
     identifier: 0x15c38d9b
     tags: 8bit
+    status: rc
 
 Controls a mini traffic with a red, orange and green LED.
 

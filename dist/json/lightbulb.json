@@ -1,6 +1,6 @@
 {
   "name": "Light bulb",
-  "status": "experimental",
+  "status": "rc",
   "shortId": "lightbulb",
   "camelName": "lightBulb",
   "shortName": "lightBulb",
@@ -133,22 +133,6 @@
       ],
       "optional": true,
       "packFormat": "u8"
-    },
-    {
-      "kind": "event",
-      "name": "on",
-      "identifier": 1,
-      "description": "Emitted when the light brightness is greater than 0.",
-      "fields": [],
-      "identifierName": "active"
-    },
-    {
-      "kind": "event",
-      "name": "off",
-      "identifier": 2,
-      "description": "Emitted when the light is completely off with brightness to 0.",
-      "fields": [],
-      "identifierName": "inactive"
     }
   ],
   "tags": [],

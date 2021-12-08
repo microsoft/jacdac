@@ -1,7 +1,7 @@
 {
   "name": "Vibration motor",
-  "status": "stable",
-  "shortId": "vibration",
+  "status": "rc",
+  "shortId": "vibrationmotor",
   "camelName": "vibrationMotor",
   "shortName": "vibrationMotor",
   "extends": [
@@ -103,21 +103,6 @@
       "derived": "_base"
     },
     {
-      "kind": "rw",
-      "name": "enabled",
-      "identifier": 1,
-      "description": "Determines if the vibration motor responds to vibrate commands.",
-      "fields": [
-        {
-          "name": "_",
-          "type": "bool",
-          "storage": 1
-        }
-      ],
-      "identifierName": "intensity",
-      "packFormat": "u8"
-    },
-    {
       "kind": "command",
       "name": "vibrate",
       "identifier": 128,
@@ -132,7 +117,7 @@
           "startRepeats": true
         },
         {
-          "name": "speed",
+          "name": "intensity",
           "unit": "/",
           "shift": 8,
           "type": "u0.8",

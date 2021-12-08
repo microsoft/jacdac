@@ -1,6 +1,6 @@
 {
   "name": "Pressure Button",
-  "status": "experimental",
+  "status": "rc",
   "shortId": "pressurebutton",
   "camelName": "pressureButton",
   "shortName": "pressureButton",

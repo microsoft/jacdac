@@ -1,6 +1,6 @@
 {
   "name": "Traffic Light",
-  "status": "experimental",
+  "status": "rc",
   "shortId": "trafficlight",
   "camelName": "trafficLight",
   "shortName": "trafficLight",

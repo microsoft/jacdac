@@ -1,6 +1,6 @@
 {
   "name": "Wind direction",
-  "status": "stable",
+  "status": "rc",
   "shortId": "winddirection",
   "camelName": "windDirection",
   "shortName": "windDirection",

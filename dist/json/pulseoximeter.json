@@ -1,6 +1,6 @@
 {
   "name": "Pulse Oximeter",
-  "status": "stable",
+  "status": "experimental",
   "shortId": "pulseoximeter",
   "camelName": "pulseOximeter",
   "shortName": "pulseOximeter",

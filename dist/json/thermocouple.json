@@ -1,6 +1,6 @@
 {
   "name": "Thermocouple",
-  "status": "stable",
+  "status": "rc",
   "shortId": "thermocouple",
   "camelName": "thermocouple",
   "shortName": "thermocouple",

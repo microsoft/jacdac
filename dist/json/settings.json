@@ -1,6 +1,6 @@
 {
   "name": "Settings",
-  "status": "stable",
+  "status": "experimental",
   "shortId": "settings",
   "camelName": "settings",
   "shortName": "settings",

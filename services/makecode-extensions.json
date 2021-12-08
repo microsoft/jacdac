@@ -668,7 +668,7 @@
     }
   },
   {
-    "service": "vibration",
+    "service": "vibrationmotor",
     "client": {
       "name": "jacdac-vibration-motor",
       "targets": [

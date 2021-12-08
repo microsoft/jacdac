@@ -1101,7 +1101,7 @@ export function parseServiceSpecificationMarkdownToJSON(
                 break
             case "status":
                 if (
-                    ["stable", "experimental", "deprecated"].indexOf(words[2]) >
+                    ["stable", "experimental", "deprecated", "rc"].indexOf(words[2]) >
                     -1
                 )
                     info.status = <any>words[2]

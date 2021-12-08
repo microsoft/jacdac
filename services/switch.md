@@ -4,6 +4,7 @@
     extends: _sensor
     group: button
     tags: 8bit
+    status: rc
 
 A switch, which keeps its position.
 

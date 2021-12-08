@@ -15,14 +15,4 @@
  */
 #define JD_LIGHT_BULB_REG_DIMMABLE 0x180
 
-/**
- * Emitted when the light brightness is greater than 0.
- */
-#define JD_LIGHT_BULB_EV_ON JD_EV_ACTIVE
-
-/**
- * Emitted when the light is completely off with brightness to 0.
- */
-#define JD_LIGHT_BULB_EV_OFF JD_EV_INACTIVE
-
 #endif

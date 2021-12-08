@@ -1,6 +1,6 @@
 {
   "name": "Random Number Generator",
-  "status": "stable",
+  "status": "rc",
   "shortId": "rng",
   "camelName": "rng",
   "shortName": "rng",

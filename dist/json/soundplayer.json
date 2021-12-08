@@ -1,6 +1,6 @@
 {
   "name": "Sound player",
-  "status": "experimental",
+  "status": "rc",
   "shortId": "soundplayer",
   "camelName": "soundPlayer",
   "shortName": "soundPlayer",

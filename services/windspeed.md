@@ -5,7 +5,7 @@ A sensor that measures wind speed.
     identifier: 0x1b591bbf
     extends: _sensor
     tags: 8bit
-    status: stable
+    status: rc
 
 ## Registers
 

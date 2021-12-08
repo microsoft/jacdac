@@ -1069,10 +1069,10 @@ export enum CharacterScreenReg {
     Message = 0x2,
 
     /**
-     * Read-write ratio u0.8 (uint8_t). Brightness of the screen. `0` means off.
+     * Read-write ratio u0.16 (uint16_t). Brightness of the screen. `0` means off.
      *
      * ```
-     * const [brightness] = jdunpack<[number]>(buf, "u0.8")
+     * const [brightness] = jdunpack<[number]>(buf, "u0.16")
      * ```
      */
     Brightness = 0x1,
@@ -1112,22 +1112,6 @@ export enum CharacterScreenReg {
      * ```
      */
     Columns = 0x181,
-}
-
-export enum CharacterScreenCmd {
-    /**
-     * Overrides the content of a single line at a 0-based index.
-     *
-     * ```
-     * const [index, message] = jdunpack<[number, string]>(buf, "u16 s")
-     * ```
-     */
-    SetLine = 0x80,
-
-    /**
-     * No args. Clears all text from the display.
-     */
-    Clear = 0x81,
 }
 
 // Service: CODAL Message Bus
@@ -1402,35 +1386,6 @@ export enum ControlReg {
 
 // Service: Dashboard
 export const SRV_DASHBOARD = 0x1be59107
-// Service: Dimmer
-export const SRV_DIMMER = 0x1fb02645
-
-export enum DimmerVariant { // uint8_t
-    Light = 0x1,
-    Fan = 0x2,
-    Pump = 0x3,
-}
-
-export enum DimmerReg {
-    /**
-     * Read-write ratio u0.16 (uint16_t). The intensity of the current. Set to `0` to turn off completely the current.
-     *
-     * ```
-     * const [intensity] = jdunpack<[number]>(buf, "u0.16")
-     * ```
-     */
-    Intensity = 0x1,
-
-    /**
-     * Constant Variant (uint8_t). The type of physical device
-     *
-     * ```
-     * const [variant] = jdunpack<[DimmerVariant]>(buf, "u8")
-     * ```
-     */
-    Variant = 0x107,
-}
-
 // Service: Distance
 export const SRV_DISTANCE = 0x141a6b8a
 
@@ -1492,7 +1447,7 @@ export enum DistanceReg {
 export const SRV_DMX = 0x11cf8c05
 export enum DmxReg {
     /**
-     * Read-write bool (uint8_t). Determines if the DMX bridge is active
+     * Read-write bool (uint8_t). Determines if the DMX bridge is active.
      *
      * ```
      * const [enabled] = jdunpack<[number]>(buf, "u8")
@@ -1634,12 +1589,6 @@ export enum ECO2Reg {
 
 // Service: Flex
 export const SRV_FLEX = 0x1f47c6c6
-
-export enum FlexVariant { // uint8_t
-    Linear22Inch = 0x1,
-    Linear45Inch = 0x2,
-}
-
 export enum FlexReg {
     /**
      * Read-only ratio u0.16 (uint16_t). The relative position of the slider.
@@ -1660,13 +1609,13 @@ export enum FlexReg {
     BendingError = 0x106,
 
     /**
-     * Constant Variant (uint8_t). Specifies the physical layout of the flex sensor.
+     * Constant mm uint16_t. Length of the flex sensor
      *
      * ```
-     * const [variant] = jdunpack<[FlexVariant]>(buf, "u8")
+     * const [length] = jdunpack<[number]>(buf, "u16")
      * ```
      */
-    Variant = 0x107,
+    Length = 0x180,
 }
 
 // Service: Gyroscope
@@ -2308,18 +2257,6 @@ export enum LightBulbReg {
     Dimmable = 0x180,
 }
 
-export enum LightBulbEvent {
-    /**
-     * Emitted when the light brightness is greater than 0.
-     */
-    On = 0x1,
-
-    /**
-     * Emitted when the light is completely off with brightness to 0.
-     */
-    Off = 0x2,
-}
-
 // Service: Light level
 export const SRV_LIGHT_LEVEL = 0x17dc9a1c
 
@@ -2855,6 +2792,15 @@ export enum MotorReg {
      * ```
      */
     LoadSpeed = 0x181,
+
+    /**
+     * Constant bool (uint8_t). Indicates if the motor can run backwards.
+     *
+     * ```
+     * const [reversible] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Reversible = 0x182,
 }
 
 // Service: Potentiometer
@@ -3428,18 +3374,6 @@ export enum ReflectedLightReg {
     Variant = 0x107,
 }
 
-export enum ReflectedLightEvent {
-    /**
-     * The sensor detected a transition from light to dark
-     */
-    Dark = 0x2,
-
-    /**
-     * The sensor detected a transition from dark to light
-     */
-    Light = 0x1,
-}
-
 // Service: Relay
 export const SRV_RELAY = 0x183fe656
 
@@ -3476,20 +3410,6 @@ export enum RelayReg {
      * ```
      */
     MaxSwitchingCurrent = 0x180,
-}
-
-export enum RelayEvent {
-    /**
-     * Emitted when relay goes from `inactive` to `active` state.
-     * Normally open (NO) relays close the circuit when activated.
-     */
-    Active = 0x1,
-
-    /**
-     * Emitted when relay goes from `active` to `inactive` state.
-     * Normally closed (NC) relays open the circuit when activated.
-     */
-    Inactive = 0x2,
 }
 
 // Service: Random Number Generator
@@ -4051,30 +3971,6 @@ export enum SoundLevelReg {
      * ```
      */
     Enabled = 0x1,
-
-    /**
-     * Read-write dB int16_t. The minimum power value considered by the sensor.
-     * If both `min_decibels` and `max_decibels` are supported,
-     * the volume in deciment can be linearly interpolated between
-     * `[min_decibels, max_decibels]`.
-     *
-     * ```
-     * const [minDecibels] = jdunpack<[number]>(buf, "i16")
-     * ```
-     */
-    MinDecibels = 0x81,
-
-    /**
-     * Read-write dB int16_t. The maximum power value considered by the sensor.
-     * If both `min_decibels` and `max_decibels` are supported,
-     * the volume in deciment can be linearly interpolated between
-     * `[min_decibels, max_decibels]`.
-     *
-     * ```
-     * const [maxDecibels] = jdunpack<[number]>(buf, "i16")
-     * ```
-     */
-    MaxDecibels = 0x82,
 
     /**
      * Read-write ratio u0.16 (uint16_t). The sound level to trigger a loud event.
@@ -4718,24 +4614,13 @@ export enum VerifiedTelemetryEvent {
 
 // Service: Vibration motor
 export const SRV_VIBRATION_MOTOR = 0x183fc4a2
-export enum VibrationMotorReg {
-    /**
-     * Read-write bool (uint8_t). Determines if the vibration motor responds to vibrate commands.
-     *
-     * ```
-     * const [enabled] = jdunpack<[number]>(buf, "u8")
-     * ```
-     */
-    Enabled = 0x1,
-}
-
 export enum VibrationMotorCmd {
     /**
      * Starts a sequence of vibration and pauses. To stop any existing vibration, send an empty payload.
      *
      * ```
      * const [rest] = jdunpack<[([number, number])[]]>(buf, "r: u8 u0.8")
-     * const [duration, speed] = rest[0]
+     * const [duration, intensity] = rest[0]
      * ```
      */
     Vibrate = 0x80,

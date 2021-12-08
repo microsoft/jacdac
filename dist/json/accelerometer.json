@@ -1,6 +1,6 @@
 {
   "name": "Accelerometer",
-  "status": "stable",
+  "status": "experimental",
   "shortId": "accelerometer",
   "camelName": "accelerometer",
   "shortName": "accelerometer",

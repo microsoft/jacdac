@@ -6,6 +6,7 @@ A sensor approximating the heart rate.
     extends: _sensor
     group: biometric
     tags: 8bit
+    status: experimental
 
 **Jacdac is NOT suitable for medical devices and should NOT be used in any kind of device to diagnose or treat any medical conditions.**
 

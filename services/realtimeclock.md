@@ -3,7 +3,7 @@
     identifier: 0x1a8b1a28
     extends: _sensor
     tags: 8bit
-    status: stable
+    status: rc
 
 Real time clock to support collecting data with precise time stamps.
 

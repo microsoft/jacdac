@@ -4,7 +4,7 @@
     extends: _sensor
     group: environment
     tags: 8bit
-    status: stable
+    status: rc
 
 A sensor measuring air pressure of outside environment.
 

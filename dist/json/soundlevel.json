@@ -1,6 +1,6 @@
 {
   "name": "Sound level",
-  "status": "stable",
+  "status": "rc",
   "shortId": "soundlevel",
   "camelName": "soundLevel",
   "shortName": "soundLevel",
@@ -195,40 +195,6 @@
       ],
       "identifierName": "intensity",
       "packFormat": "u8"
-    },
-    {
-      "kind": "rw",
-      "name": "min_decibels",
-      "identifier": 129,
-      "description": "The minimum power value considered by the sensor.\nIf both `min_decibels` and `max_decibels` are supported,\nthe volume in deciment can be linearly interpolated between\n`[min_decibels, max_decibels]`.",
-      "fields": [
-        {
-          "name": "_",
-          "unit": "dB",
-          "type": "i16",
-          "storage": -2,
-          "isSimpleType": true
-        }
-      ],
-      "optional": true,
-      "packFormat": "i16"
-    },
-    {
-      "kind": "rw",
-      "name": "max_decibels",
-      "identifier": 130,
-      "description": "The maximum power value considered by the sensor.\nIf both `min_decibels` and `max_decibels` are supported,\nthe volume in deciment can be linearly interpolated between\n`[min_decibels, max_decibels]`.",
-      "fields": [
-        {
-          "name": "_",
-          "unit": "dB",
-          "type": "i16",
-          "storage": -2,
-          "isSimpleType": true
-        }
-      ],
-      "optional": true,
-      "packFormat": "i16"
     },
     {
       "kind": "rw",

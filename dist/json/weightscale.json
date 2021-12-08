@@ -1,6 +1,6 @@
 {
   "name": "Weight Scale",
-  "status": "stable",
+  "status": "rc",
   "shortId": "weightscale",
   "camelName": "weightScale",
   "shortName": "weightScale",

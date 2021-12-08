@@ -1,6 +1,7 @@
 # Barcode reader
 
     identifier: 0x1c739e6c
+    status: experimental
 
 A device that reads various barcodes, like QR codes. For the web, see [BarcodeDetector](https://developer.mozilla.org/en-US/docs/Web/API/BarcodeDetector).
 

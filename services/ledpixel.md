@@ -4,6 +4,7 @@
     camel: ledPixel
     tags: C
     group: light
+    status: rc
 
 A controller for strips of individually controlled RGB LEDs.
 

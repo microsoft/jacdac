@@ -1,6 +1,6 @@
 {
   "name": "Switch",
-  "status": "experimental",
+  "status": "rc",
   "shortId": "switch",
   "camelName": "switch",
   "shortName": "switch",

@@ -1,6 +1,6 @@
 {
   "name": "Dot Matrix",
-  "status": "stable",
+  "status": "rc",
   "shortId": "dotmatrix",
   "camelName": "dotMatrix",
   "shortName": "dotMatrix",

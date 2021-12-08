@@ -4,7 +4,7 @@
     extends: _sensor
     group: biometric
     tags: 8bit
-    status: stable
+    status: experimental
 
 A sensor approximating the oxygen level.
 

@@ -922,6 +922,19 @@ export enum BrailleDisplayReg {
     Length = 0x181,
 }
 
+// Service: Bridge
+export const SRV_BRIDGE = 0x1fe5b46f
+export enum BridgeReg {
+    /**
+     * Read-write bool (uint8_t). Enables or disables the bridge.
+     *
+     * ```
+     * const [enabled] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Enabled = 0x1,
+}
+
 // Service: Button
 export const SRV_BUTTON = 0x1473a263
 export enum ButtonReg {

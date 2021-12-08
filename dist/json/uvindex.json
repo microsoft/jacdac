@@ -1,6 +1,6 @@
 {
   "name": "UV index",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "uvindex",
   "camelName": "uvIndex",
   "shortName": "uvIndex",

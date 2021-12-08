@@ -17,8 +17,8 @@
 
 /**
  * Sets the up/down state of one or more buttons.
- * A ``Click`` is the same as ``Down`` followed by ``Up`` after 100ms.
- * A ``DoubleClick`` is two clicks with ``150ms`` gap between them (that is, ``100ms`` first click, ``150ms`` gap, ``100ms`` second click).
+ * A `Click` is the same as `Down` followed by `Up` after 100ms.
+ * A `DoubleClick` is two clicks with `150ms` gap between them (that is, `100ms` first click, `150ms` gap, `100ms` second click).
  */
 #define JD_HID_MOUSE_CMD_SET_BUTTON 0x80
 typedef struct jd_hid_mouse_set_button {

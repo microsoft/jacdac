@@ -30,8 +30,8 @@
 #define JD_SOUND_SPECTRUM_REG_MAX_DECIBELS 0x82
 
 /**
- * Read-write ratio u0.8 (uint8_t). The averaging constant with the last analysis frame. 
- * If ``0`` is set, there is no averaging done, whereas a value of ``1`` means "overlap the previous and current buffer quite a lot while computing the value".
+ * Read-write ratio u0.8 (uint8_t). The averaging constant with the last analysis frame.
+ * If `0` is set, there is no averaging done, whereas a value of `1` means "overlap the previous and current buffer quite a lot while computing the value".
  */
 #define JD_SOUND_SPECTRUM_REG_SMOOTHING_TIME_CONSTANT 0x83
 

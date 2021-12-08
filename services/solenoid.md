@@ -2,6 +2,7 @@
 
     identifier: 0x171723ca
     tags: 8bit
+    status: rc
 
 A push-pull solenoid is a type of relay that pulls a coil when activated.
 

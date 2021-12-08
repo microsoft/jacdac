@@ -922,11 +922,24 @@ export enum BrailleDisplayReg {
     Length = 0x181,
 }
 
+// Service: Bridge
+export const SRV_BRIDGE = 0x1fe5b46f
+export enum BridgeReg {
+    /**
+     * Read-write bool (uint8_t). Enables or disables the bridge.
+     *
+     * ```
+     * const [enabled] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Enabled = 0x1,
+}
+
 // Service: Button
 export const SRV_BUTTON = 0x1473a263
 export enum ButtonReg {
     /**
-     * Read-only ratio u0.16 (uint16_t). Indicates the pressure state of the button, where ``0`` is open.
+     * Read-only ratio u0.16 (uint16_t). Indicates the pressure state of the button, where `0` is open.
      *
      * ```
      * const [pressure] = jdunpack<[number]>(buf, "u0.16")
@@ -935,7 +948,7 @@ export enum ButtonReg {
     Pressure = 0x101,
 
     /**
-     * Constant bool (uint8_t). Indicates if the button provides analog ``pressure`` readings.
+     * Constant bool (uint8_t). Indicates if the button provides analog `pressure` readings.
      *
      * ```
      * const [analog] = jdunpack<[number]>(buf, "u8")
@@ -1056,10 +1069,10 @@ export enum CharacterScreenReg {
     Message = 0x2,
 
     /**
-     * Read-write ratio u0.8 (uint8_t). Brightness of the screen. `0` means off.
+     * Read-write ratio u0.16 (uint16_t). Brightness of the screen. `0` means off.
      *
      * ```
-     * const [brightness] = jdunpack<[number]>(buf, "u0.8")
+     * const [brightness] = jdunpack<[number]>(buf, "u0.16")
      * ```
      */
     Brightness = 0x1,
@@ -1099,22 +1112,6 @@ export enum CharacterScreenReg {
      * ```
      */
     Columns = 0x181,
-}
-
-export enum CharacterScreenCmd {
-    /**
-     * Overrides the content of a single line at a 0-based index.
-     *
-     * ```
-     * const [index, message] = jdunpack<[number, string]>(buf, "u16 s")
-     * ```
-     */
-    SetLine = 0x80,
-
-    /**
-     * No args. Clears all text from the display.
-     */
-    Clear = 0x81,
 }
 
 // Service: CODAL Message Bus
@@ -1272,7 +1269,7 @@ export enum ControlCmd {
      * (each frame is currently 100ms, so speed of `51` is about 1 second and `26` 0.5 second).
      * As a special case, if speed is `0` the transition is immediate.
      * If MCU is not capable of executing transitions, it can consider `speed` to be always `0`.
-     * If a monochrome LEDs is fitted, the average value of ``red``, ``green``, ``blue`` is used.
+     * If a monochrome LEDs is fitted, the average value of `red`, `green`, `blue` is used.
      * If intensity of a monochrome LED cannot be controlled, any value larger than `0` should be considered
      * on, and `0` (for all three channels) should be considered off.
      *
@@ -1389,35 +1386,6 @@ export enum ControlReg {
 
 // Service: Dashboard
 export const SRV_DASHBOARD = 0x1be59107
-// Service: Dimmer
-export const SRV_DIMMER = 0x1fb02645
-
-export enum DimmerVariant { // uint8_t
-    Light = 0x1,
-    Fan = 0x2,
-    Pump = 0x3,
-}
-
-export enum DimmerReg {
-    /**
-     * Read-write ratio u0.16 (uint16_t). The intensity of the current. Set to ``0`` to turn off completely the current.
-     *
-     * ```
-     * const [intensity] = jdunpack<[number]>(buf, "u0.16")
-     * ```
-     */
-    Intensity = 0x1,
-
-    /**
-     * Constant Variant (uint8_t). The type of physical device
-     *
-     * ```
-     * const [variant] = jdunpack<[DimmerVariant]>(buf, "u8")
-     * ```
-     */
-    Variant = 0x107,
-}
-
 // Service: Distance
 export const SRV_DISTANCE = 0x141a6b8a
 
@@ -1437,6 +1405,15 @@ export enum DistanceReg {
      * ```
      */
     Distance = 0x101,
+
+    /**
+     * Read-only m u16.16 (uint32_t). Absolute error on the reading value.
+     *
+     * ```
+     * const [distanceError] = jdunpack<[number]>(buf, "u16.16")
+     * ```
+     */
+    DistanceError = 0x106,
 
     /**
      * Constant m u16.16 (uint32_t). Minimum measurable distance
@@ -1470,7 +1447,7 @@ export enum DistanceReg {
 export const SRV_DMX = 0x11cf8c05
 export enum DmxReg {
     /**
-     * Read-write bool (uint8_t). Determines if the DMX bridge is active
+     * Read-write bool (uint8_t). Determines if the DMX bridge is active.
      *
      * ```
      * const [enabled] = jdunpack<[number]>(buf, "u8")
@@ -1612,12 +1589,6 @@ export enum ECO2Reg {
 
 // Service: Flex
 export const SRV_FLEX = 0x1f47c6c6
-
-export enum FlexVariant { // uint8_t
-    Linear22Inch = 0x1,
-    Linear45Inch = 0x2,
-}
-
 export enum FlexReg {
     /**
      * Read-only ratio u0.16 (uint16_t). The relative position of the slider.
@@ -1629,13 +1600,22 @@ export enum FlexReg {
     Bending = 0x101,
 
     /**
-     * Constant Variant (uint8_t). Specifies the physical layout of the flex sensor.
+     * Read-only ratio u0.16 (uint16_t). Absolute error on the reading value.
      *
      * ```
-     * const [variant] = jdunpack<[FlexVariant]>(buf, "u8")
+     * const [bendingError] = jdunpack<[number]>(buf, "u0.16")
      * ```
      */
-    Variant = 0x107,
+    BendingError = 0x106,
+
+    /**
+     * Constant mm uint16_t. Length of the flex sensor
+     *
+     * ```
+     * const [length] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    Length = 0x180,
 }
 
 // Service: Gyroscope
@@ -1719,87 +1699,6 @@ export enum HeartRateReg {
     Variant = 0x107,
 }
 
-// Service: HID Adapter
-export const SRV_HID_ADAPTER = 0x1e5758b5
-export enum HidAdapterReg {
-    /**
-     * Read-write uint8_t. The number of configurations stored on the server.
-     *
-     * ```
-     * const [numConfigurations] = jdunpack<[number]>(buf, "u8")
-     * ```
-     */
-    NumConfigurations = 0x80,
-
-    /**
-     * Read-write uint8_t. The current configuration the server is using.
-     *
-     * ```
-     * const [currentConfiguration] = jdunpack<[number]>(buf, "u8")
-     * ```
-     */
-    CurrentConfiguration = 0x81,
-}
-
-export enum HidAdapterCmd {
-    /**
-     * Retrieves a configuration stored on the server. If the configuration does not exist, an empty report will be returned
-     *
-     * ```
-     * const [results, configurationNumber] = jdunpack<[Uint8Array, number]>(buf, "b[12] u8")
-     * ```
-     */
-    GetConfiguration = 0x80,
-
-    /**
-     * Stores the given binding on the server. If a binding exists at this index, the new binding will replace it.
-     *
-     * ```
-     * const [configurationNumber, bindingIndex, deviceId, serviceClass, triggerValue, triggerContext, serviceIndex, selector, modifiers] = jdunpack<[number, number, number, number, number, number, number, number, number]>(buf, "u8 u8 x[2] u64 u32 u32 u8 u8 u16 u16")
-     * ```
-     */
-    SetBinding = 0x82,
-
-    /**
-     * Clears a specific binding stored on the device.
-     *
-     * ```
-     * const [configurationNumber, bindingIndex] = jdunpack<[number, number]>(buf, "u8 u8")
-     * ```
-     */
-    ClearBinding = 0x83,
-
-    /**
-     * Argument: configuration_number uint8_t. Clears a specific configuration stored on the device.
-     *
-     * ```
-     * const [configurationNumber] = jdunpack<[number]>(buf, "u8")
-     * ```
-     */
-    ClearConfiguration = 0x84,
-
-    /**
-     * No args. Clears all configurations and bindings stored on the device.
-     */
-    Clear = 0x85,
-}
-
-
-/**
- * pipe_report Configuration
- * ```
- * const [configurationNumber, bindingIndex, deviceId, serviceClass, triggerValue, triggerContext, serviceIndex, selector, modifiers] = jdunpack<[number, number, number, number, number, number, number, number, number]>(buf, "u8 u8 x[2] u64 u32 u32 u8 u8 u16 u16")
- * ```
- */
-
-
-export enum HidAdapterEvent {
-    /**
-     * Event that notifies clients that the server has swapped to a new configuration or changed key bindings.
-     */
-    Changed = 0x3,
-}
-
 // Service: HID Keyboard
 export const SRV_HID_KEYBOARD = 0x18b05b6a
 
@@ -1859,8 +1758,8 @@ export enum HidMouseButtonEvent { // uint8_t
 export enum HidMouseCmd {
     /**
      * Sets the up/down state of one or more buttons.
-     * A ``Click`` is the same as ``Down`` followed by ``Up`` after 100ms.
-     * A ``DoubleClick`` is two clicks with ``150ms`` gap between them (that is, ``100ms`` first click, ``150ms`` gap, ``100ms`` second click).
+     * A `Click` is the same as `Down` followed by `Up` after 100ms.
+     * A `DoubleClick` is two clicks with `150ms` gap between them (that is, `100ms` first click, `150ms` gap, `100ms` second click).
      *
      * ```
      * const [buttons, event] = jdunpack<[HidMouseButton, HidMouseButtonEvent]>(buf, "u16 u8")
@@ -1936,19 +1835,19 @@ export enum IlluminanceReg {
      * Read-only lux u22.10 (uint32_t). The amount of illuminance, as lumens per square metre.
      *
      * ```
-     * const [light] = jdunpack<[number]>(buf, "u22.10")
+     * const [illuminance] = jdunpack<[number]>(buf, "u22.10")
      * ```
      */
-    Light = 0x101,
+    Illuminance = 0x101,
 
     /**
      * Read-only lux u22.10 (uint32_t). Error on the reported sensor value.
      *
      * ```
-     * const [lightError] = jdunpack<[number]>(buf, "u22.10")
+     * const [illuminanceError] = jdunpack<[number]>(buf, "u22.10")
      * ```
      */
-    LightError = 0x106,
+    IlluminanceError = 0x106,
 }
 
 // Service: Indexed screen
@@ -2340,7 +2239,7 @@ export const SRV_LIGHT_BULB = 0x1cab054c
 export enum LightBulbReg {
     /**
      * Read-write ratio u0.16 (uint16_t). Indicates the brightness of the light bulb. Zero means completely off and 0xffff means completely on.
-     * For non-dimmeable lights, the value should be clamp to 0xffff for any non-zero value.
+     * For non-dimmable lights, the value should be clamp to 0xffff for any non-zero value.
      *
      * ```
      * const [brightness] = jdunpack<[number]>(buf, "u0.16")
@@ -2352,22 +2251,10 @@ export enum LightBulbReg {
      * Constant bool (uint8_t). Indicates if the light supports dimming.
      *
      * ```
-     * const [dimmeable] = jdunpack<[number]>(buf, "u8")
+     * const [dimmable] = jdunpack<[number]>(buf, "u8")
      * ```
      */
-    Dimmeable = 0x180,
-}
-
-export enum LightBulbEvent {
-    /**
-     * Emitted when the light brightness is greater than 0.
-     */
-    On = 0x1,
-
-    /**
-     * Emitted when the light is completely off with brightness to 0.
-     */
-    Off = 0x2,
+    Dimmable = 0x180,
 }
 
 // Service: Light level
@@ -2388,6 +2275,15 @@ export enum LightLevelReg {
      * ```
      */
     LightLevel = 0x101,
+
+    /**
+     * Read-only ratio u0.16 (uint16_t). Absolute estimated error of the reading value
+     *
+     * ```
+     * const [lightLevelError] = jdunpack<[number]>(buf, "u0.16")
+     * ```
+     */
+    LightLevelError = 0x106,
 
     /**
      * Constant Variant (uint8_t). The type of physical sensor.
@@ -2477,7 +2373,7 @@ export enum MagnetometerReg {
     Forces = 0x101,
 
     /**
-     * Read-only nT int32_t. Error on the readings.
+     * Read-only nT int32_t. Absolute estimated error on the readings.
      *
      * ```
      * const [forcesError] = jdunpack<[number]>(buf, "i32")
@@ -2896,69 +2792,15 @@ export enum MotorReg {
      * ```
      */
     LoadSpeed = 0x181,
-}
 
-// Service: Multitouch
-export const SRV_MULTITOUCH = 0x18d55e2b
-export enum MultitouchReg {
     /**
-     * Read-only. Capacitance of channels. The capacitance is continuously calibrated, and a value of `0` indicates
-     * no touch, wheres a value of around `100` or more indicates touch.
-     * It's best to ignore this (unless debugging), and use events.
+     * Constant bool (uint8_t). Indicates if the motor can run backwards.
      *
      * ```
-     * const [capacitance] = jdunpack<[number[]]>(buf, "i32[]")
+     * const [reversible] = jdunpack<[number]>(buf, "u8")
      * ```
      */
-    Capacity = 0x101,
-}
-
-export enum MultitouchEvent {
-    /**
-     * Argument: channel uint32_t. Emitted when an input is touched.
-     *
-     * ```
-     * const [channel] = jdunpack<[number]>(buf, "u32")
-     * ```
-     */
-    Touch = 0x1,
-
-    /**
-     * Argument: channel uint32_t. Emitted when an input is no longer touched.
-     *
-     * ```
-     * const [channel] = jdunpack<[number]>(buf, "u32")
-     * ```
-     */
-    Release = 0x2,
-
-    /**
-     * Argument: channel uint32_t. Emitted when an input is briefly touched. TODO Not implemented.
-     *
-     * ```
-     * const [channel] = jdunpack<[number]>(buf, "u32")
-     * ```
-     */
-    Tap = 0x80,
-
-    /**
-     * Argument: channel uint32_t. Emitted when an input is touched for longer than 500ms. TODO Not implemented.
-     *
-     * ```
-     * const [channel] = jdunpack<[number]>(buf, "u32")
-     * ```
-     */
-    LongPress = 0x81,
-
-    /**
-     * Emitted when input channels are successively touched in order of increasing channel numbers.
-     */
-    SwipePos = 0x90,
-
-    /**
-     * Emitted when input channels are successively touched in order of decreasing channel numbers.
-     */
-    SwipeNeg = 0x91,
+    Reversible = 0x182,
 }
 
 // Service: Potentiometer
@@ -3458,9 +3300,6 @@ export enum RealTimeClockVariant { // uint8_t
 export enum RealTimeClockReg {
     /**
      * Current time in 24h representation.
-     * * ``day_of_month`` is day of the month, starting at ``1``
-     * * ``day_of_week`` is day of the week, starting at ``1`` as monday
-     * Default streaming period is 1 second.
      *
      * ```
      * const [year, month, dayOfMonth, dayOfWeek, hour, min, sec] = jdunpack<[number, number, number, number, number, number, number]>(buf, "u16 u8 u8 u8 u8 u8 u8")
@@ -3469,7 +3308,7 @@ export enum RealTimeClockReg {
     LocalTime = 0x101,
 
     /**
-     * Read-only s u16.16 (uint32_t). Time drift since the last call to the ``set_time`` command.
+     * Read-only s u16.16 (uint32_t). Time drift since the last call to the `set_time` command.
      *
      * ```
      * const [drift] = jdunpack<[number]>(buf, "u16.16")
@@ -3535,18 +3374,6 @@ export enum ReflectedLightReg {
     Variant = 0x107,
 }
 
-export enum ReflectedLightEvent {
-    /**
-     * The sensor detected a transition from light to dark
-     */
-    Dark = 0x2,
-
-    /**
-     * The sensor detected a transition from dark to light
-     */
-    Light = 0x1,
-}
-
 // Service: Relay
 export const SRV_RELAY = 0x183fe656
 
@@ -3583,20 +3410,6 @@ export enum RelayReg {
      * ```
      */
     MaxSwitchingCurrent = 0x180,
-}
-
-export enum RelayEvent {
-    /**
-     * Emitted when relay goes from `inactive` to `active` state.
-     * Normally open (NO) relays close the circuit when activated.
-     */
-    Active = 0x1,
-
-    /**
-     * Emitted when relay goes from `active` to `inactive` state.
-     * Normally closed (NC) relays open the circuit when activated.
-     */
-    Inactive = 0x2,
 }
 
 // Service: Random Number Generator
@@ -4013,8 +3826,8 @@ export enum SevenSegmentDisplayReg {
     /**
      * Read-write bytes. Each byte encodes the display status of a digit using,
      * where bit 0 encodes segment `A`, bit 1 encodes segments `B`, ..., bit 6 encodes segments `G`, and bit 7 encodes the decimal point (if present).
-     * If incoming ``digits`` data is smaller than `digit_count`, the remaining digits will be cleared.
-     * Thus, sending an empty ``digits`` payload clears the screen.
+     * If incoming `digits` data is smaller than `digit_count`, the remaining digits will be cleared.
+     * Thus, sending an empty `digits` payload clears the screen.
      *
      * ```
      * const [digits] = jdunpack<[Uint8Array]>(buf, "b")
@@ -4023,7 +3836,7 @@ export enum SevenSegmentDisplayReg {
     Digits = 0x2,
 
     /**
-     * Read-write ratio u0.16 (uint16_t). Controls the brightness of the LEDs. ``0`` means off.
+     * Read-write ratio u0.16 (uint16_t). Controls the brightness of the LEDs. `0` means off.
      *
      * ```
      * const [brightness] = jdunpack<[number]>(buf, "u0.16")
@@ -4082,7 +3895,7 @@ export enum SoilMoistureVariant { // uint8_t
 
 export enum SoilMoistureReg {
     /**
-     * Read-only ratio u0.16 (uint16_t). Indicates the wetness of the soil, from ``dry`` to ``wet``.
+     * Read-only ratio u0.16 (uint16_t). Indicates the wetness of the soil, from `dry` to `wet`.
      *
      * ```
      * const [moisture] = jdunpack<[number]>(buf, "u0.16")
@@ -4160,30 +3973,6 @@ export enum SoundLevelReg {
     Enabled = 0x1,
 
     /**
-     * Read-write dB int16_t. The minimum power value considered by the sensor.
-     * If both ``min_decibels`` and ``max_decibels`` are supported,
-     * the volume in deciment can be linearly interpolated between
-     * ``[min_decibels, max_decibels]``.
-     *
-     * ```
-     * const [minDecibels] = jdunpack<[number]>(buf, "i16")
-     * ```
-     */
-    MinDecibels = 0x81,
-
-    /**
-     * Read-write dB int16_t. The maximum power value considered by the sensor.
-     * If both ``min_decibels`` and ``max_decibels`` are supported,
-     * the volume in deciment can be linearly interpolated between
-     * ``[min_decibels, max_decibels]``.
-     *
-     * ```
-     * const [maxDecibels] = jdunpack<[number]>(buf, "i16")
-     * ```
-     */
-    MaxDecibels = 0x82,
-
-    /**
      * Read-write ratio u0.16 (uint16_t). The sound level to trigger a loud event.
      *
      * ```
@@ -4238,13 +4027,18 @@ export enum SoundPlayerCmd {
     Play = 0x80,
 
     /**
+     * No args. Cancel any sound playing.
+     */
+    Cancel = 0x81,
+
+    /**
      * Argument: sounds_port pipe (bytes). Returns the list of sounds available to play.
      *
      * ```
      * const [soundsPort] = jdunpack<[Uint8Array]>(buf, "b[12]")
      * ```
      */
-    ListSounds = 0x81,
+    ListSounds = 0x82,
 }
 
 
@@ -4306,7 +4100,7 @@ export enum SoundSpectrumReg {
 
     /**
      * Read-write ratio u0.8 (uint8_t). The averaging constant with the last analysis frame.
-     * If ``0`` is set, there is no averaging done, whereas a value of ``1`` means "overlap the previous and current buffer quite a lot while computing the value".
+     * If `0` is set, there is no averaging done, whereas a value of `1` means "overlap the previous and current buffer quite a lot while computing the value".
      *
      * ```
      * const [smoothingTimeConstant] = jdunpack<[number]>(buf, "u0.8")
@@ -4426,12 +4220,12 @@ export enum SwitchReg {
 
 export enum SwitchEvent {
     /**
-     * Emitted when switch goes from ``off`` to ``on``.
+     * Emitted when switch goes from `off` to `on`.
      */
     On = 0x1,
 
     /**
-     * Emitted when switch goes from ``on`` to ``off``.
+     * Emitted when switch goes from `on` to `off`.
      */
     Off = 0x2,
 }
@@ -4820,24 +4614,13 @@ export enum VerifiedTelemetryEvent {
 
 // Service: Vibration motor
 export const SRV_VIBRATION_MOTOR = 0x183fc4a2
-export enum VibrationMotorReg {
-    /**
-     * Read-write bool (uint8_t). Determines if the vibration motor responds to vibrate commands.
-     *
-     * ```
-     * const [enabled] = jdunpack<[number]>(buf, "u8")
-     * ```
-     */
-    Enabled = 0x1,
-}
-
 export enum VibrationMotorCmd {
     /**
      * Starts a sequence of vibration and pauses. To stop any existing vibration, send an empty payload.
      *
      * ```
      * const [rest] = jdunpack<[([number, number])[]]>(buf, "r: u8 u0.8")
-     * const [duration, speed] = rest[0]
+     * const [duration, intensity] = rest[0]
      * ```
      */
     Vibrate = 0x80,
@@ -4861,6 +4644,15 @@ export enum WaterLevelReg {
      * ```
      */
     Level = 0x101,
+
+    /**
+     * Read-only ratio u0.16 (uint16_t). The error rage on the current reading
+     *
+     * ```
+     * const [levelError] = jdunpack<[number]>(buf, "u0.16")
+     * ```
+     */
+    LevelError = 0x106,
 
     /**
      * Constant Variant (uint8_t). The type of physical sensor.

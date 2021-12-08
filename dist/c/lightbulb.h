@@ -6,23 +6,13 @@
 
 /**
  * Read-write ratio u0.16 (uint16_t). Indicates the brightness of the light bulb. Zero means completely off and 0xffff means completely on.
- * For non-dimmeable lights, the value should be clamp to 0xffff for any non-zero value.
+ * For non-dimmable lights, the value should be clamp to 0xffff for any non-zero value.
  */
 #define JD_LIGHT_BULB_REG_BRIGHTNESS JD_REG_INTENSITY
 
 /**
  * Constant bool (uint8_t). Indicates if the light supports dimming.
  */
-#define JD_LIGHT_BULB_REG_DIMMEABLE 0x180
-
-/**
- * Emitted when the light brightness is greater than 0.
- */
-#define JD_LIGHT_BULB_EV_ON JD_EV_ACTIVE
-
-/**
- * Emitted when the light is completely off with brightness to 0.
- */
-#define JD_LIGHT_BULB_EV_OFF JD_EV_INACTIVE
+#define JD_LIGHT_BULB_REG_DIMMABLE 0x180
 
 #endif

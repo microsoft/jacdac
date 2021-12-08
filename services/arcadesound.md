@@ -1,6 +1,7 @@
 # Arcade Sound
 
     identifier: 0x1fc63606
+    tags: SPI
 
 A sound playing device.
 

@@ -3,6 +3,7 @@
     identifier: 0x1a8b1a28
     extends: _sensor
     tags: 8bit
+    status: rc
 
 Real time clock to support collecting data with precise time stamps.
 
@@ -18,14 +19,14 @@ Real time clock to support collecting data with precise time stamps.
         sec: u8 { absolute_min=0, absolute_max=60 }
     }
 
-Current time in 24h representation. 
-* ``day_of_month`` is day of the month, starting at ``1``
-* ``day_of_week`` is day of the week, starting at ``1`` as monday
-Default streaming period is 1 second.
+Current time in 24h representation.
 
-    ro volatile drift?: u16.16 s @ 0x180
+-   `day_of_month` is day of the month, starting at `1`
+-   `day_of_week` is day of the week, starting at `1` as monday. Default streaming period is 1 second.
 
-Time drift since the last call to the ``set_time`` command.
+        ro volatile drift?: u16.16 s @ 0x180
+
+Time drift since the last call to the `set_time` command.
 
     const precision?: u16.16 ppm @ 0x181
 
@@ -33,7 +34,7 @@ Error on the clock, in parts per million of seconds.
 
     enum Variant: u8 {
         Computer = 1
-        Crystal = 2        
+        Crystal = 2
         Cuckoo = 3
     }
     const variant?: Variant @ variant

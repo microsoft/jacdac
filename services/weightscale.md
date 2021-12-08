@@ -3,6 +3,7 @@
     identifier: 0x1f4d5040
     extends: _sensor
     tags: 8bit
+    status: rc
 
 A weight measuring sensor.
 

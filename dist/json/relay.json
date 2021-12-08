@@ -1,6 +1,6 @@
 {
   "name": "Relay",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "relay",
   "camelName": "relay",
   "shortName": "relay",
@@ -159,22 +159,6 @@
       ],
       "optional": true,
       "packFormat": "u32"
-    },
-    {
-      "kind": "event",
-      "name": "active",
-      "identifier": 1,
-      "description": "Emitted when relay goes from `inactive` to `active` state.\nNormally open (NO) relays close the circuit when activated.",
-      "fields": [],
-      "identifierName": "active"
-    },
-    {
-      "kind": "event",
-      "name": "inactive",
-      "identifier": 2,
-      "description": "Emitted when relay goes from `active` to `inactive` state.\nNormally closed (NC) relays open the circuit when activated.",
-      "fields": [],
-      "identifierName": "inactive"
     }
   ],
   "tags": [

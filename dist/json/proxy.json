@@ -1,6 +1,6 @@
 {
   "name": "Proxy",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "proxy",
   "camelName": "proxy",
   "shortName": "proxy",
@@ -8,7 +8,7 @@
     "_base"
   ],
   "notes": {
-    "short": "A service that tags a device as a packet proxy.\n\n\nA device in proxy mode will proxy Jacdac packets and typically has its core logic halted."
+    "short": "A service that tags a device as a packet proxy.\nA device in proxy mode will proxy Jacdac packets and typically has its core logic halted."
   },
   "classIdentifier": 384932169,
   "enums": {},
@@ -103,5 +103,7 @@
       "derived": "_base"
     }
   ],
-  "tags": []
+  "tags": [
+    "infrastructure"
+  ]
 }

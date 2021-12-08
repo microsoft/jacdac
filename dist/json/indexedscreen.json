@@ -1,6 +1,6 @@
 {
   "name": "Indexed screen",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "indexedscreen",
   "camelName": "indexedScreen",
   "shortName": "indexedScreen",
@@ -301,5 +301,7 @@
       "packFormat": "u16"
     }
   ],
-  "tags": []
+  "tags": [
+    "SPI"
+  ]
 }

@@ -1,6 +1,6 @@
 {
   "name": "Dashboard",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "dashboard",
   "camelName": "dashboard",
   "shortName": "dashboard",

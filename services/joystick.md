@@ -6,6 +6,7 @@ A two axis directional joystick
     extends: _sensor
     group: button
     tags: 8bit, padauk
+    status: stable
 
 ## Registers
 

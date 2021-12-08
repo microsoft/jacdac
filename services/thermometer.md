@@ -4,6 +4,7 @@
     extends: _sensor
     tags: C, 8bit
     group: environment
+    status: stable
 
 A thermometer measuring outside or inside environment.
 
@@ -21,7 +22,7 @@ Lowest temperature that can be reported.
 
 Highest temperature that can be reported.
 
-    ro temperature_error: u22.10 °C  @ reading_error
+    ro temperature_error?: u22.10 °C  @ reading_error
 
 The real temperature is between `temperature - temperature_error` and `temperature + temperature_error`.
 

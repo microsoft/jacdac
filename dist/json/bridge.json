@@ -1,27 +1,17 @@
 {
-  "name": "Dimmer",
-  "status": "experimental",
-  "shortId": "dimmer",
-  "camelName": "dimmer",
-  "shortName": "dimmer",
+  "name": "Bridge",
+  "status": "rc",
+  "shortId": "bridge",
+  "camelName": "bridge",
+  "shortName": "bridge",
   "extends": [
     "_base"
   ],
   "notes": {
-    "short": "A light or fan controller that dims the current on a line."
+    "short": "Indicates that the device acts as a bridge to the Jacdac bus."
   },
-  "classIdentifier": 531637829,
-  "enums": {
-    "Variant": {
-      "name": "Variant",
-      "storage": 1,
-      "members": {
-        "Light": 1,
-        "Fan": 2,
-        "Pump": 3
-      }
-    }
-  },
+  "classIdentifier": 535147631,
+  "enums": {},
   "constants": {},
   "packets": [
     {
@@ -114,37 +104,21 @@
     },
     {
       "kind": "rw",
-      "name": "intensity",
+      "name": "enabled",
       "identifier": 1,
-      "description": "The intensity of the current. Set to ``0`` to turn off completely the current.",
+      "description": "Enables or disables the bridge.",
       "fields": [
         {
           "name": "_",
-          "unit": "/",
-          "shift": 16,
-          "type": "u0.16",
-          "storage": 2
-        }
-      ],
-      "identifierName": "intensity",
-      "packFormat": "u0.16"
-    },
-    {
-      "kind": "const",
-      "name": "variant",
-      "identifier": 263,
-      "description": "The type of physical device",
-      "fields": [
-        {
-          "name": "_",
-          "type": "Variant",
+          "type": "bool",
           "storage": 1
         }
       ],
-      "optional": true,
-      "identifierName": "variant",
+      "identifierName": "intensity",
       "packFormat": "u8"
     }
   ],
-  "tags": []
+  "tags": [
+    "infrastructure"
+  ]
 }

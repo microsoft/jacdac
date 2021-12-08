@@ -7,11 +7,11 @@
 /**
  * Read-only lux u22.10 (uint32_t). The amount of illuminance, as lumens per square metre.
  */
-#define JD_ILLUMINANCE_REG_LIGHT JD_REG_READING
+#define JD_ILLUMINANCE_REG_ILLUMINANCE JD_REG_READING
 
 /**
  * Read-only lux u22.10 (uint32_t). Error on the reported sensor value.
  */
-#define JD_ILLUMINANCE_REG_LIGHT_ERROR JD_REG_READING_ERROR
+#define JD_ILLUMINANCE_REG_ILLUMINANCE_ERROR JD_REG_READING_ERROR
 
 #endif

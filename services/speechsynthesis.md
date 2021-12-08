@@ -1,6 +1,7 @@
-#  Speech synthesis
+# Speech synthesis
 
      identifier: 0x1204d995
+     status: rc
 
 A speech synthesizer
 

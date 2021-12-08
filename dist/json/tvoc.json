@@ -1,6 +1,6 @@
 {
   "name": "Total Volatile organic compound",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "tvoc",
   "camelName": "tvoc",
   "shortName": "tvoc",

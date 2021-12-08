@@ -1,6 +1,6 @@
 {
   "name": "Humidity",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "humidity",
   "camelName": "humidity",
   "shortName": "humidity",
@@ -200,6 +200,7 @@
         }
       ],
       "volatile": true,
+      "optional": true,
       "identifierName": "reading_error",
       "packFormat": "u22.10"
     },

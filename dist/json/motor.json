@@ -1,6 +1,6 @@
 {
   "name": "Motor",
-  "status": "experimental",
+  "status": "rc",
   "shortId": "motor",
   "camelName": "motor",
   "shortName": "motor",
@@ -8,7 +8,7 @@
     "_base"
   ],
   "notes": {
-    "short": "A bi-directional DC motor."
+    "short": "A DC motor."
   },
   "classIdentifier": 385895640,
   "enums": {},
@@ -167,6 +167,21 @@
       ],
       "optional": true,
       "packFormat": "u16.16"
+    },
+    {
+      "kind": "const",
+      "name": "reversible",
+      "identifier": 386,
+      "description": "Indicates if the motor can run backwards.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "bool",
+          "storage": 1
+        }
+      ],
+      "optional": true,
+      "packFormat": "u8"
     }
   ],
   "tags": [

@@ -7,6 +7,7 @@ Measures equivalent Total Volatile Organic Compound levels.
     camel: tvoc
     group: environment
     tags: 8bit
+    status: stable
 
 ## Registers
 

@@ -2,8 +2,9 @@
 
     identifier: 0x17004cd8
     tags: C, 8bit
+    status: rc
 
-A bi-directional DC motor.
+A DC motor.
 
 ## Registers
 
@@ -24,3 +25,7 @@ Torque required to produce the rated power of an electrical motor at load speed.
     const load_speed?: u16.16 rpm @ 0x181
 
 Revolutions per minute of the motor under full load.
+
+    const reversible?: bool @ 0x182
+
+Indicates if the motor can run backwards.

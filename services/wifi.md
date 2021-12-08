@@ -3,6 +3,7 @@
     identifier: 0x18aae1fa
     camel: wifi
     group: iot
+    status: rc
 
 Discovery and connection to WiFi networks. Separate TCP service can be used for data transfer.
 

@@ -1,6 +1,6 @@
 {
   "name": "Button",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "button",
   "camelName": "button",
   "shortName": "button",
@@ -167,7 +167,7 @@
       "kind": "ro",
       "name": "pressure",
       "identifier": 257,
-      "description": "Indicates the pressure state of the button, where ``0`` is open.",
+      "description": "Indicates the pressure state of the button, where `0` is open.",
       "fields": [
         {
           "name": "_",
@@ -186,7 +186,7 @@
       "kind": "const",
       "name": "analog",
       "identifier": 384,
-      "description": "Indicates if the button provides analog ``pressure`` readings.",
+      "description": "Indicates if the button provides analog `pressure` readings.",
       "fields": [
         {
           "name": "_",
@@ -201,7 +201,7 @@
       "kind": "ro",
       "name": "pressed",
       "identifier": 385,
-      "description": "Determines if the button is pressed currently.\n\nIf the event ``down`` is observed, ``pressed`` is true; if ``up`` or ``hold`` are observed, ``pressed`` is false.\nTo initialize, wait for any event or timeout to ``pressed`` is true after 750ms (1.5x hold time).",
+      "description": "Determines if the button is pressed currently.\n\nIf the event `down` is observed, `pressed` is true; if `up` or `hold` are observed, `pressed` is false.\nTo initialize, wait for any event or timeout to `pressed` is true after 750ms (1.5x hold time).",
       "fields": [
         {
           "name": "_",
@@ -224,7 +224,7 @@
       "kind": "event",
       "name": "up",
       "identifier": 2,
-      "description": "Emitted when button goes from active to inactive. The 'time' parameter \nrecords the amount of time between the down and up events.",
+      "description": "Emitted when button goes from active to inactive. The 'time' parameter\nrecords the amount of time between the down and up events.",
       "fields": [
         {
           "name": "time",
@@ -241,7 +241,7 @@
       "kind": "event",
       "name": "hold",
       "identifier": 129,
-      "description": "Emitted when the press time is greater than 500ms, and then at least every 500ms \nas long as the button remains pressed. The 'time' parameter records the the amount of time\nthat the button has been held (since the down event).",
+      "description": "Emitted when the press time is greater than 500ms, and then at least every 500ms\nas long as the button remains pressed. The 'time' parameter records the the amount of time\nthat the button has been held (since the down event).",
       "fields": [
         {
           "name": "time",

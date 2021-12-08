@@ -1,6 +1,6 @@
 {
   "name": "Joystick",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "joystick",
   "camelName": "joystick",
   "shortName": "joystick",

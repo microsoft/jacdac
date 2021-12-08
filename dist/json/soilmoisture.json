@@ -1,6 +1,6 @@
 {
   "name": "Soil moisture",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "soilmoisture",
   "camelName": "soilMoisture",
   "shortName": "soilMoisture",
@@ -176,7 +176,7 @@
       "kind": "ro",
       "name": "moisture",
       "identifier": 257,
-      "description": "Indicates the wetness of the soil, from ``dry`` to ``wet``.",
+      "description": "Indicates the wetness of the soil, from `dry` to `wet`.",
       "fields": [
         {
           "name": "_",

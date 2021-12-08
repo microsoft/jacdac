@@ -3,6 +3,7 @@
     identifier: 0x1a848cd7
     camel: midiOutput
     group: sound
+    status: experimental
 
 A MIDI output device.
 

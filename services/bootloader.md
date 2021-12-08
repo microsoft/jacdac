@@ -2,6 +2,7 @@
 
     identifier: 0x1ffa9948
     tags: C
+    status: stable
 
 Allows flashing (reprogramming) devices over Jacdac.
 

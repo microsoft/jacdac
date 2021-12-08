@@ -1,6 +1,6 @@
 {
   "name": "HID Mouse",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "hidmouse",
   "camelName": "hidMouse",
   "shortName": "hidMouse",
@@ -127,7 +127,7 @@
       "kind": "command",
       "name": "set_button",
       "identifier": 128,
-      "description": "Sets the up/down state of one or more buttons.\nA ``Click`` is the same as ``Down`` followed by ``Up`` after 100ms.\nA ``DoubleClick`` is two clicks with ``150ms`` gap between them (that is, ``100ms`` first click, ``150ms`` gap, ``100ms`` second click).",
+      "description": "Sets the up/down state of one or more buttons.\nA `Click` is the same as `Down` followed by `Up` after 100ms.\nA `DoubleClick` is two clicks with `150ms` gap between them (that is, `100ms` first click, `150ms` gap, `100ms` second click).",
       "fields": [
         {
           "name": "buttons",

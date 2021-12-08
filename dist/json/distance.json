@@ -1,6 +1,6 @@
 {
   "name": "Distance",
-  "status": "experimental",
+  "status": "rc",
   "shortId": "distance",
   "camelName": "distance",
   "shortName": "distance",
@@ -192,6 +192,25 @@
       ],
       "volatile": true,
       "identifierName": "reading",
+      "packFormat": "u16.16"
+    },
+    {
+      "kind": "ro",
+      "name": "distance_error",
+      "identifier": 262,
+      "description": "Absolute error on the reading value.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "m",
+          "shift": 16,
+          "type": "u16.16",
+          "storage": 4
+        }
+      ],
+      "volatile": true,
+      "optional": true,
+      "identifierName": "reading_error",
       "packFormat": "u16.16"
     },
     {

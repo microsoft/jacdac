@@ -1,6 +1,6 @@
 {
   "name": "Flex",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "flex",
   "camelName": "flex",
   "shortName": "flex",
@@ -12,16 +12,7 @@
     "short": "A bending or deflection sensor."
   },
   "classIdentifier": 524797638,
-  "enums": {
-    "Variant": {
-      "name": "Variant",
-      "storage": 1,
-      "members": {
-        "Linear22Inch": 1,
-        "Linear45Inch": 2
-      }
-    }
-  },
+  "enums": {},
   "constants": {},
   "packets": [
     {
@@ -191,20 +182,40 @@
       "packFormat": "u0.16"
     },
     {
-      "kind": "const",
-      "name": "variant",
-      "identifier": 263,
-      "description": "Specifies the physical layout of the flex sensor.",
+      "kind": "ro",
+      "name": "bending_error",
+      "identifier": 262,
+      "description": "Absolute error on the reading value.",
       "fields": [
         {
           "name": "_",
-          "type": "Variant",
-          "storage": 1
+          "unit": "/",
+          "shift": 16,
+          "type": "u0.16",
+          "storage": 2
+        }
+      ],
+      "volatile": true,
+      "optional": true,
+      "identifierName": "reading_error",
+      "packFormat": "u0.16"
+    },
+    {
+      "kind": "const",
+      "name": "length",
+      "identifier": 384,
+      "description": "Length of the flex sensor",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "mm",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
         }
       ],
       "optional": true,
-      "identifierName": "variant",
-      "packFormat": "u8"
+      "packFormat": "u16"
     }
   ],
   "tags": [

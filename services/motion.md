@@ -6,6 +6,7 @@ A sensor, typically PIR, that detects object motion within a certain range
     extends: _sensor
     group: movement
     tags: 8bit
+    status: experimental
 
 ## Registers
 

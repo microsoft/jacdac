@@ -1,6 +1,6 @@
 {
   "name": "Reflected light",
-  "status": "experimental",
+  "status": "rc",
   "shortId": "reflectedlight",
   "camelName": "reflectedLight",
   "shortName": "reflectedLight",
@@ -205,22 +205,6 @@
       "optional": true,
       "identifierName": "variant",
       "packFormat": "u8"
-    },
-    {
-      "kind": "event",
-      "name": "dark",
-      "identifier": 2,
-      "description": "The sensor detected a transition from light to dark",
-      "fields": [],
-      "identifierName": "inactive"
-    },
-    {
-      "kind": "event",
-      "name": "light",
-      "identifier": 1,
-      "description": "The sensor detected a transition from dark to light",
-      "fields": [],
-      "identifierName": "active"
     }
   ],
   "tags": [

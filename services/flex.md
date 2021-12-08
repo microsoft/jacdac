@@ -4,6 +4,7 @@
     extends: _sensor
     group: slider
     tags: C, 8bit
+    status: stable
 
 A bending or deflection sensor.
 
@@ -13,10 +14,10 @@ A bending or deflection sensor.
 
 The relative position of the slider.
 
-    enum Variant: u8 {
-        Linear22Inch = 1,
-        Linear45Inch = 2,
-    }
-    const variant?: Variant @ variant
+    ro bending_error?: u0.16 / @ reading_error
 
-Specifies the physical layout of the flex sensor.
+Absolute error on the reading value.
+
+    const length?: u16 mm @ 0x180
+
+Length of the flex sensor

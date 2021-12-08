@@ -1,6 +1,8 @@
 # Indexed screen
 
     identifier: 0x16fa36e5
+    tags: SPI
+    status: stable
 
 A screen with indexed colors.
 

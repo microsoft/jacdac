@@ -106,7 +106,7 @@
       "kind": "rw",
       "name": "enabled",
       "identifier": 1,
-      "description": "Determines if the DMX bridge is active",
+      "description": "Determines if the DMX bridge is active.",
       "fields": [
         {
           "name": "_",

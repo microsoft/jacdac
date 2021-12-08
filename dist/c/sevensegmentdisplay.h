@@ -5,15 +5,15 @@
 #define JD_SERVICE_CLASS_SEVEN_SEGMENT_DISPLAY  0x196158f7
 
 /**
- * Read-write bytes. Each byte encodes the display status of a digit using, 
+ * Read-write bytes. Each byte encodes the display status of a digit using,
  * where bit 0 encodes segment `A`, bit 1 encodes segments `B`, ..., bit 6 encodes segments `G`, and bit 7 encodes the decimal point (if present).
- * If incoming ``digits`` data is smaller than `digit_count`, the remaining digits will be cleared.
- * Thus, sending an empty ``digits`` payload clears the screen.
+ * If incoming `digits` data is smaller than `digit_count`, the remaining digits will be cleared.
+ * Thus, sending an empty `digits` payload clears the screen.
  */
 #define JD_SEVEN_SEGMENT_DISPLAY_REG_DIGITS JD_REG_VALUE
 
 /**
- * Read-write ratio u0.16 (uint16_t). Controls the brightness of the LEDs. ``0`` means off.
+ * Read-write ratio u0.16 (uint16_t). Controls the brightness of the LEDs. `0` means off.
  */
 #define JD_SEVEN_SEGMENT_DISPLAY_REG_BRIGHTNESS JD_REG_INTENSITY
 

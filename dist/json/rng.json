@@ -1,6 +1,6 @@
 {
   "name": "Random Number Generator",
-  "status": "experimental",
+  "status": "rc",
   "shortId": "rng",
   "camelName": "rng",
   "shortName": "rng",
@@ -8,7 +8,7 @@
     "_base"
   ],
   "notes": {
-    "short": "Generates random numbers using entropy sourced from physical processes.\n\nThis typically uses a cryptographical pseudo-random number generator (for example [Fortuna](https://en.wikipedia.org/wiki/Fortuna_(PRNG))),\nwhich is periodically re-seeded with entropy coming from some hardware source."
+    "short": "Generates random numbers using entropy sourced from physical processes.\n\nThis typically uses a cryptographical pseudo-random number generator (for example [Fortuna](<https://en.wikipedia.org/wiki/Fortuna_(PRNG)>)),\nwhich is periodically re-seeded with entropy coming from some hardware source."
   },
   "classIdentifier": 394916002,
   "enums": {

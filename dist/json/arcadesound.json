@@ -167,5 +167,7 @@
       "packFormat": "u32"
     }
   ],
-  "tags": []
+  "tags": [
+    "SPI"
+  ]
 }

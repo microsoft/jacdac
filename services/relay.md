@@ -2,6 +2,7 @@
 
     identifier: 0x183fe656
     tags: 8bit
+    status: stable
 
 A switching relay.
 
@@ -23,15 +24,3 @@ Describes the type of relay used.
     const max_switching_current?: u32 mA @ 0x180
 
 Maximum switching current for a resistive load.
-
-## Events
-
-    event active @ active
-
-Emitted when relay goes from `inactive` to `active` state.
-Normally open (NO) relays close the circuit when activated.
-
-    event inactive @ inactive
-
-Emitted when relay goes from `active` to `inactive` state.
-Normally closed (NC) relays open the circuit when activated.

@@ -5,6 +5,7 @@ A sensor that measures wind speed.
     identifier: 0x1b591bbf
     extends: _sensor
     tags: 8bit
+    status: rc
 
 ## Registers
 
@@ -12,7 +13,7 @@ A sensor that measures wind speed.
 
 The velocity of the wind.
 
-    ro wind_speed_error: u16.16 m/s @ reading_error
+    ro wind_speed_error?: u16.16 m/s @ reading_error
 
 Error on the reading
 

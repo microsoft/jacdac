@@ -2,6 +2,7 @@
 
     identifier: 0x16c7466a
     camel: protoTest
+    tags: infrastructure
 
 This is test service to validate the protocol packet transmissions between the browser and a MCU.
 Use this page if you are porting Jacdac to a new platform.

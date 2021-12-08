@@ -4,6 +4,7 @@
     extends: _sensor
     group: button
     tags: 8bit
+    status: rc
 
 A switch, which keeps its position.
 
@@ -36,8 +37,8 @@ For example, some light switches in staircases have such a capability.
 
     event on @ active
 
-Emitted when switch goes from ``off`` to ``on``.
+Emitted when switch goes from `off` to `on`.
 
     event off @ inactive
 
-Emitted when switch goes from ``on`` to ``off``.
+Emitted when switch goes from `on` to `off`.

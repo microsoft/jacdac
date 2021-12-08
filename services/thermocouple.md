@@ -4,6 +4,7 @@
     extends: _sensor
     group: environment
     tags: 8bit
+    status: rc
 
 A thermocouple using a heat probe to gather temperatures.
 
@@ -21,7 +22,7 @@ Lowest temperature that can be reported.
 
 Highest temperature that can be reported.
 
-    ro temperature_error: u22.10 °C  @ reading_error
+    ro temperature_error?: u22.10 °C  @ reading_error
 
 The real temperature is between `temperature - temperature_error` and `temperature + temperature_error`.
 

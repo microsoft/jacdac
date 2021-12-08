@@ -1,6 +1,6 @@
 {
   "name": "Wind speed",
-  "status": "experimental",
+  "status": "rc",
   "shortId": "windspeed",
   "camelName": "windSpeed",
   "shortName": "windSpeed",
@@ -197,6 +197,7 @@
         }
       ],
       "volatile": true,
+      "optional": true,
       "identifierName": "reading_error",
       "packFormat": "u16.16"
     },

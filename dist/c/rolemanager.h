@@ -7,7 +7,7 @@
 /**
  * Read-write bool (uint8_t). Normally, if some roles are unfilled, and there are idle services that can fulfill them,
  * the brain device will assign roles (bind) automatically.
- * Such automatic assignment happens every second or so, and is trying to be smart about 
+ * Such automatic assignment happens every second or so, and is trying to be smart about
  * co-locating roles that share "host" (part before first slash),
  * as well as reasonably stable assignments.
  * Once user start assigning roles manually using this service, auto-binding should be disabled to avoid confusion.

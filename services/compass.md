@@ -4,6 +4,7 @@ A sensor that measures the heading.
 
     identifier: 0x15b7b9bf
     extends: _sensor
+    status: rc
 
 ## Registers
 

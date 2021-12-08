@@ -106,7 +106,7 @@
       "kind": "rw",
       "name": "auto_bind",
       "identifier": 128,
-      "description": "Normally, if some roles are unfilled, and there are idle services that can fulfill them,\nthe brain device will assign roles (bind) automatically.\nSuch automatic assignment happens every second or so, and is trying to be smart about \nco-locating roles that share \"host\" (part before first slash),\nas well as reasonably stable assignments.\nOnce user start assigning roles manually using this service, auto-binding should be disabled to avoid confusion.",
+      "description": "Normally, if some roles are unfilled, and there are idle services that can fulfill them,\nthe brain device will assign roles (bind) automatically.\nSuch automatic assignment happens every second or so, and is trying to be smart about\nco-locating roles that share \"host\" (part before first slash),\nas well as reasonably stable assignments.\nOnce user start assigning roles manually using this service, auto-binding should be disabled to avoid confusion.",
       "fields": [
         {
           "name": "_",
@@ -307,5 +307,7 @@
       "identifierName": "change"
     }
   ],
-  "tags": []
+  "tags": [
+    "infrastructure"
+  ]
 }

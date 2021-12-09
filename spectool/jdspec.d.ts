@@ -166,7 +166,7 @@ declare namespace jdspec {
     /**
      * Stability status of a feature
      */
-    type StabilityStatus = "stable" | "experimental" | "deprecated"
+    type StabilityStatus = "stable" | "experimental" | "deprecated" | "rc"
 
     interface ServiceMarkdownSpec {
         /**

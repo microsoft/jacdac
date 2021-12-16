@@ -1,6 +1,6 @@
 {
   "name": "Rotary encoder",
-  "status": "stable",
+  "status": "rc",
   "shortId": "rotaryencoder",
   "camelName": "rotaryEncoder",
   "shortName": "rotaryEncoder",
@@ -195,8 +195,22 @@
           "isSimpleType": true
         }
       ],
-      "optional": true,
       "packFormat": "u16"
+    },
+    {
+      "kind": "const",
+      "name": "clicker",
+      "identifier": 385,
+      "description": "The encoder is combined with a clicker. If this is the case, the clicker button service\nshould follow this service in the service list of the device.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "bool",
+          "storage": 1
+        }
+      ],
+      "optional": true,
+      "packFormat": "u8"
     }
   ],
   "tags": [

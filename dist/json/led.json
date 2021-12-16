@@ -1,6 +1,6 @@
 {
   "name": "LED",
-  "status": "stable",
+  "status": "rc",
   "shortId": "led",
   "camelName": "led",
   "shortName": "led",

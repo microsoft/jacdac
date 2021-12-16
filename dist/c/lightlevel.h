@@ -6,8 +6,7 @@
 
 // enum Variant (uint8_t)
 #define JD_LIGHT_LEVEL_VARIANT_PHOTO_RESISTOR 0x1
-#define JD_LIGHT_LEVEL_VARIANT_LEDMATRIX 0x2
-#define JD_LIGHT_LEVEL_VARIANT_AMBIENT 0x3
+#define JD_LIGHT_LEVEL_VARIANT_REVERSE_BIASED_LED 0x2
 
 /**
  * Read-only ratio u0.16 (uint16_t). Detect light level

@@ -1,6 +1,6 @@
 {
   "name": "Flex",
-  "status": "stable",
+  "status": "rc",
   "shortId": "flex",
   "camelName": "flex",
   "shortName": "flex",
@@ -167,38 +167,19 @@
       "kind": "ro",
       "name": "bending",
       "identifier": 257,
-      "description": "The relative position of the slider.",
+      "description": "A measure of the bending.",
       "fields": [
         {
           "name": "_",
           "unit": "/",
-          "shift": 16,
-          "type": "u0.16",
-          "storage": 2
+          "shift": 15,
+          "type": "i1.15",
+          "storage": -2
         }
       ],
       "volatile": true,
       "identifierName": "reading",
-      "packFormat": "u0.16"
-    },
-    {
-      "kind": "ro",
-      "name": "bending_error",
-      "identifier": 262,
-      "description": "Absolute error on the reading value.",
-      "fields": [
-        {
-          "name": "_",
-          "unit": "/",
-          "shift": 16,
-          "type": "u0.16",
-          "storage": 2
-        }
-      ],
-      "volatile": true,
-      "optional": true,
-      "identifierName": "reading_error",
-      "packFormat": "u0.16"
+      "packFormat": "i1.15"
     },
     {
       "kind": "const",
@@ -222,5 +203,5 @@
     "C",
     "8bit"
   ],
-  "group": "Slider"
+  "group": "Sensor"
 }

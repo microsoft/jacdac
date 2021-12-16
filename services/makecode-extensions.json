@@ -195,6 +195,18 @@
     }
   },
   {
+    "service": "gamepad",
+    "client": {
+      "name": "jacdac-gamepad",
+      "targets": [
+        "arcade"
+      ],
+      "repo": "microsoft/pxt-jacdac/gamepad",
+      "qName": "modules.GamepadClient",
+      "default": "modules.gamepad"
+    }
+  },
+  {
     "service": "gyroscope",
     "client": {
       "name": "jacdac-gyroscope",
@@ -274,20 +286,6 @@
       "repo": "microsoft/pxt-jacdac/illuminance",
       "qName": "modules.IlluminanceClient",
       "default": "modules.illuminance"
-    }
-  },
-  {
-    "service": "joystick",
-    "client": {
-      "name": "jacdac-joystick",
-      "targets": [
-        "arcade",
-        "microbit",
-        "maker"
-      ],
-      "repo": "microsoft/pxt-jacdac/joystick",
-      "qName": "modules.JoystickClient",
-      "default": "modules.joystick"
     }
   },
   {
@@ -609,34 +607,6 @@
       "repo": "microsoft/pxt-jacdac/tcp",
       "qName": "modules.TcpClient",
       "default": "modules.tcp"
-    }
-  },
-  {
-    "service": "thermocouple",
-    "client": {
-      "name": "jacdac-thermocouple",
-      "targets": [
-        "arcade",
-        "microbit",
-        "maker"
-      ],
-      "repo": "microsoft/pxt-jacdac/thermocouple",
-      "qName": "modules.ThermocoupleClient",
-      "default": "modules.thermocouple"
-    }
-  },
-  {
-    "service": "thermometer",
-    "client": {
-      "name": "jacdac-thermometer",
-      "targets": [
-        "arcade",
-        "maker",
-        "microbit"
-      ],
-      "repo": "microsoft/pxt-jacdac/thermometer",
-      "qName": "modules.ThermometerClient",
-      "default": "modules.thermometer"
     }
   },
   {

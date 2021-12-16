@@ -1,12 +1,12 @@
-# Joystick
-
-A two axis directional joystick
+# Gamepad
 
     identifier: 0x108f7456
     extends: _sensor
     group: button
     tags: 8bit, padauk
-    status: stable
+    status: rc
+
+A two axis directional joystick with optional buttons.
 
 ## Registers
 

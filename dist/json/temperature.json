@@ -1,9 +1,9 @@
 {
-  "name": "Thermometer",
-  "status": "stable",
-  "shortId": "thermometer",
-  "camelName": "thermometer",
-  "shortName": "thermometer",
+  "name": "Temperature",
+  "status": "rc",
+  "shortId": "temperature",
+  "camelName": "temperature",
+  "shortName": "temperature",
   "extends": [
     "_base",
     "_sensor"

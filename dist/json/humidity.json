@@ -9,8 +9,7 @@
     "_sensor"
   ],
   "notes": {
-    "short": "A sensor measuring humidity of outside environment.",
-    "registers": "Default streaming interval is 1s."
+    "short": "A sensor measuring humidity of outside environment."
   },
   "classIdentifier": 382210232,
   "enums": {},
@@ -175,9 +174,7 @@
           "unit": "%RH",
           "shift": 10,
           "type": "u22.10",
-          "storage": 4,
-          "typicalMax": 100,
-          "typicalMin": 0
+          "storage": 4
         }
       ],
       "volatile": true,
@@ -215,8 +212,7 @@
           "unit": "%RH",
           "shift": 10,
           "type": "u22.10",
-          "storage": 4,
-          "defaultValue": 0
+          "storage": 4
         }
       ],
       "identifierName": "min_reading",
@@ -233,8 +229,7 @@
           "unit": "%RH",
           "shift": 10,
           "type": "u22.10",
-          "storage": 4,
-          "defaultValue": 100
+          "storage": 4
         }
       ],
       "identifierName": "max_reading",

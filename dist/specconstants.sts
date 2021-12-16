@@ -1236,7 +1236,7 @@ namespace jacdac {
 
     export const enum CodalMessageBusEvent {
         /**
-         * Raised by the server is triggered by the server. The filtering logic of which event to send over JACDAC is up to the server implementation.
+         * Raised by the server is triggered by the server. The filtering logic of which event to send over Jacdac is up to the server implementation.
          *
          * ```
          * const [source, value] = jdunpack<[number, number]>(buf, "u16 u16")
@@ -1715,15 +1715,6 @@ namespace jacdac {
         MaxECO2 = 0x105,
 
         /**
-         * Constant s uint32_t. Time required to achieve good sensor stability before measuring after long idle period.
-         *
-         * ```
-         * const [conditioningPeriod] = jdunpack<[number]>(buf, "u32")
-         * ```
-         */
-        ConditioningPeriod = 0x180,
-
-        /**
          * Constant Variant (uint8_t). Type of physical sensor and capabilities.
          *
          * ```
@@ -1739,22 +1730,13 @@ namespace jacdac {
     export const SRV_FLEX = 0x1f47c6c6
     export const enum FlexReg {
         /**
-         * Read-only ratio u0.16 (uint16_t). The relative position of the slider.
+         * Read-only ratio i1.15 (int16_t). A measure of the bending.
          *
          * ```
-         * const [bending] = jdunpack<[number]>(buf, "u0.16")
+         * const [bending] = jdunpack<[number]>(buf, "i1.15")
          * ```
          */
         Bending = 0x101,
-
-        /**
-         * Read-only ratio u0.16 (uint16_t). Absolute error on the reading value.
-         *
-         * ```
-         * const [bendingError] = jdunpack<[number]>(buf, "u0.16")
-         * ```
-         */
-        BendingError = 0x106,
 
         /**
          * Constant mm uint16_t. Length of the flex sensor
@@ -1764,6 +1746,96 @@ namespace jacdac {
          * ```
          */
         Length = 0x180,
+    }
+
+}
+namespace jacdac {
+    // Service: Gamepad
+    export const SRV_GAMEPAD = 0x108f7456
+
+    export const enum GamepadButtons { // uint32_t
+        //% block="left"
+        Left = 0x1,
+        //% block="up"
+        Up = 0x2,
+        //% block="right"
+        Right = 0x4,
+        //% block="down"
+        Down = 0x8,
+        //% block="a"
+        A = 0x10,
+        //% block="b"
+        B = 0x20,
+        //% block="menu"
+        Menu = 0x40,
+        //% block="select"
+        Select = 0x80,
+        //% block="reset"
+        Reset = 0x100,
+        //% block="exit"
+        Exit = 0x200,
+        //% block="x"
+        X = 0x400,
+        //% block="y"
+        Y = 0x800,
+    }
+
+
+    export const enum GamepadVariant { // uint8_t
+        //% block="thumb"
+        Thumb = 0x1,
+        //% block="arcade ball"
+        ArcadeBall = 0x2,
+        //% block="arcade stick"
+        ArcadeStick = 0x3,
+        //% block="gamepad"
+        Gamepad = 0x4,
+    }
+
+    export const enum GamepadReg {
+        /**
+         * If the joystick is analog, the directional buttons should be "simulated", based on joystick position
+         * (`Left` is `{ x = -1, y = 0 }`, `Up` is `{ x = 0, y = -1}`).
+         * If the joystick is digital, then each direction will read as either `-1`, `0`, or `1` (in fixed representation).
+         * The primary button on the joystick is `A`.
+         *
+         * ```
+         * const [buttons, x, y] = jdunpack<[jacdac.GamepadButtons, number, number]>(buf, "u32 i1.15 i1.15")
+         * ```
+         */
+        Direction = 0x101,
+
+        /**
+         * Constant Variant (uint8_t). The type of physical joystick.
+         *
+         * ```
+         * const [variant] = jdunpack<[jacdac.GamepadVariant]>(buf, "u8")
+         * ```
+         */
+        Variant = 0x107,
+
+        /**
+         * Constant Buttons (uint32_t). Indicates a bitmask of the buttons that are mounted on the joystick.
+         * If the `Left`/`Up`/`Right`/`Down` buttons are marked as available here, the joystick is digital.
+         * Even when marked as not available, they will still be simulated based on the analog joystick.
+         *
+         * ```
+         * const [buttonsAvailable] = jdunpack<[jacdac.GamepadButtons]>(buf, "u32")
+         * ```
+         */
+        ButtonsAvailable = 0x180,
+    }
+
+    export const enum GamepadEvent {
+        /**
+         * Argument: buttons Buttons (uint32_t). Emitted whenever the state of buttons changes.
+         *
+         * ```
+         * const [buttons] = jdunpack<[jacdac.GamepadButtons]>(buf, "u32")
+         * ```
+         */
+        //% block="buttons changed"
+        ButtonsChanged = 0x3,
     }
 
 }
@@ -2153,96 +2225,6 @@ namespace jacdac {
     export const SRV_INFRASTRUCTURE = 0x1e1589eb
 }
 namespace jacdac {
-    // Service: Joystick
-    export const SRV_JOYSTICK = 0x108f7456
-
-    export const enum JoystickButtons { // uint32_t
-        //% block="left"
-        Left = 0x1,
-        //% block="up"
-        Up = 0x2,
-        //% block="right"
-        Right = 0x4,
-        //% block="down"
-        Down = 0x8,
-        //% block="a"
-        A = 0x10,
-        //% block="b"
-        B = 0x20,
-        //% block="menu"
-        Menu = 0x40,
-        //% block="select"
-        Select = 0x80,
-        //% block="reset"
-        Reset = 0x100,
-        //% block="exit"
-        Exit = 0x200,
-        //% block="x"
-        X = 0x400,
-        //% block="y"
-        Y = 0x800,
-    }
-
-
-    export const enum JoystickVariant { // uint8_t
-        //% block="thumb"
-        Thumb = 0x1,
-        //% block="arcade ball"
-        ArcadeBall = 0x2,
-        //% block="arcade stick"
-        ArcadeStick = 0x3,
-        //% block="gamepad"
-        Gamepad = 0x4,
-    }
-
-    export const enum JoystickReg {
-        /**
-         * If the joystick is analog, the directional buttons should be "simulated", based on joystick position
-         * (`Left` is `{ x = -1, y = 0 }`, `Up` is `{ x = 0, y = -1}`).
-         * If the joystick is digital, then each direction will read as either `-1`, `0`, or `1` (in fixed representation).
-         * The primary button on the joystick is `A`.
-         *
-         * ```
-         * const [buttons, x, y] = jdunpack<[jacdac.JoystickButtons, number, number]>(buf, "u32 i1.15 i1.15")
-         * ```
-         */
-        Direction = 0x101,
-
-        /**
-         * Constant Variant (uint8_t). The type of physical joystick.
-         *
-         * ```
-         * const [variant] = jdunpack<[jacdac.JoystickVariant]>(buf, "u8")
-         * ```
-         */
-        Variant = 0x107,
-
-        /**
-         * Constant Buttons (uint32_t). Indicates a bitmask of the buttons that are mounted on the joystick.
-         * If the `Left`/`Up`/`Right`/`Down` buttons are marked as available here, the joystick is digital.
-         * Even when marked as not available, they will still be simulated based on the analog joystick.
-         *
-         * ```
-         * const [buttonsAvailable] = jdunpack<[jacdac.JoystickButtons]>(buf, "u32")
-         * ```
-         */
-        ButtonsAvailable = 0x180,
-    }
-
-    export const enum JoystickEvent {
-        /**
-         * Argument: buttons Buttons (uint32_t). Emitted whenever the state of buttons changes.
-         *
-         * ```
-         * const [buttons] = jdunpack<[jacdac.JoystickButtons]>(buf, "u32")
-         * ```
-         */
-        //% block="buttons changed"
-        ButtonsChanged = 0x3,
-    }
-
-}
-namespace jacdac {
     // Service: LED
     export const SRV_LED = 0x1e3048f8
 
@@ -2490,10 +2472,8 @@ namespace jacdac {
     export const enum LightLevelVariant { // uint8_t
         //% block="photo resistor"
         PhotoResistor = 0x1,
-        //% block="ledmatrix"
-        LEDMatrix = 0x2,
-        //% block="ambient"
-        Ambient = 0x3,
+        //% block="reverse biased led"
+        ReverseBiasedLED = 0x2,
     }
 
     export const enum LightLevelReg {
@@ -3882,6 +3862,16 @@ namespace jacdac {
          * ```
          */
         ClicksPerTurn = 0x180,
+
+        /**
+         * Constant bool (uint8_t). The encoder is combined with a clicker. If this is the case, the clicker button service
+         * should follow this service in the service list of the device.
+         *
+         * ```
+         * const [clicker] = jdunpack<[number]>(buf, "u8")
+         * ```
+         */
+        Clicker = 0x181,
     }
 
 }
@@ -4664,81 +4654,10 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Thermocouple
-    export const SRV_THERMOCOUPLE = 0x143ac061
+    // Service: Temperature
+    export const SRV_TEMPERATURE = 0x1421bac7
 
-    export const enum ThermocoupleVariant { // uint8_t
-        //% block="type k"
-        TypeK = 0x1,
-        //% block="type j"
-        TypeJ = 0x2,
-        //% block="type t"
-        TypeT = 0x3,
-        //% block="type e"
-        TypeE = 0x4,
-        //% block="type n"
-        TypeN = 0x5,
-        //% block="type s"
-        TypeS = 0x6,
-        //% block="type r"
-        TypeR = 0x7,
-        //% block="type b"
-        TypeB = 0x8,
-    }
-
-    export const enum ThermocoupleReg {
-        /**
-         * Read-only °C i22.10 (int32_t). The temperature.
-         *
-         * ```
-         * const [temperature] = jdunpack<[number]>(buf, "i22.10")
-         * ```
-         */
-        Temperature = 0x101,
-
-        /**
-         * Constant °C i22.10 (int32_t). Lowest temperature that can be reported.
-         *
-         * ```
-         * const [minTemperature] = jdunpack<[number]>(buf, "i22.10")
-         * ```
-         */
-        MinTemperature = 0x104,
-
-        /**
-         * Constant °C i22.10 (int32_t). Highest temperature that can be reported.
-         *
-         * ```
-         * const [maxTemperature] = jdunpack<[number]>(buf, "i22.10")
-         * ```
-         */
-        MaxTemperature = 0x105,
-
-        /**
-         * Read-only °C u22.10 (uint32_t). The real temperature is between `temperature - temperature_error` and `temperature + temperature_error`.
-         *
-         * ```
-         * const [temperatureError] = jdunpack<[number]>(buf, "u22.10")
-         * ```
-         */
-        TemperatureError = 0x106,
-
-        /**
-         * Constant Variant (uint8_t). Specifies the type of thermometer.
-         *
-         * ```
-         * const [variant] = jdunpack<[jacdac.ThermocoupleVariant]>(buf, "u8")
-         * ```
-         */
-        Variant = 0x107,
-    }
-
-}
-namespace jacdac {
-    // Service: Thermometer
-    export const SRV_THERMOMETER = 0x1421bac7
-
-    export const enum ThermometerVariant { // uint8_t
+    export const enum TemperatureVariant { // uint8_t
         //% block="outdoor"
         Outdoor = 0x1,
         //% block="indoor"
@@ -4747,7 +4666,7 @@ namespace jacdac {
         Body = 0x3,
     }
 
-    export const enum ThermometerReg {
+    export const enum TemperatureReg {
         /**
          * Read-only °C i22.10 (int32_t). The temperature.
          *
@@ -4788,7 +4707,7 @@ namespace jacdac {
          * Constant Variant (uint8_t). Specifies the type of thermometer.
          *
          * ```
-         * const [variant] = jdunpack<[jacdac.ThermometerVariant]>(buf, "u8")
+         * const [variant] = jdunpack<[jacdac.TemperatureVariant]>(buf, "u8")
          * ```
          */
         Variant = 0x107,
@@ -4860,22 +4779,13 @@ namespace jacdac {
         MinTVOC = 0x104,
 
         /**
-         * Constant ppb u22.10 (uint32_t). Minimum measurable value
+         * Constant ppb u22.10 (uint32_t). Minimum measurable value.
          *
          * ```
          * const [maxTVOC] = jdunpack<[number]>(buf, "u22.10")
          * ```
          */
         MaxTVOC = 0x105,
-
-        /**
-         * Constant s uint32_t. Time required to achieve good sensor stability before measuring after long idle period.
-         *
-         * ```
-         * const [conditioningPeriod] = jdunpack<[number]>(buf, "u32")
-         * ```
-         */
-        ConditioningPeriod = 0x180,
     }
 
 }

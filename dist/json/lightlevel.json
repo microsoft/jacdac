@@ -1,6 +1,6 @@
 {
   "name": "Light level",
-  "status": "stable",
+  "status": "rc",
   "shortId": "lightlevel",
   "camelName": "lightLevel",
   "shortName": "lightLevel",
@@ -18,8 +18,7 @@
       "storage": 1,
       "members": {
         "PhotoResistor": 1,
-        "LEDMatrix": 2,
-        "Ambient": 3
+        "ReverseBiasedLED": 2
       }
     }
   },

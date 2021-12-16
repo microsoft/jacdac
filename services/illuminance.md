@@ -4,7 +4,7 @@
     extends: _sensor
     group: environment
     tags: 8bit, padauk
-    status: stable
+    status: rc
 
 Detects the amount of light falling onto a given surface area.
 

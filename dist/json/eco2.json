@@ -1,6 +1,6 @@
 {
   "name": "Equivalent CO₂",
-  "status": "stable",
+  "status": "rc",
   "shortId": "eco2",
   "camelName": "eCO2",
   "shortName": "eCO2",
@@ -226,7 +226,6 @@
           "storage": 4
         }
       ],
-      "optional": true,
       "identifierName": "min_reading",
       "packFormat": "u22.10"
     },
@@ -244,26 +243,8 @@
           "storage": 4
         }
       ],
-      "optional": true,
       "identifierName": "max_reading",
       "packFormat": "u22.10"
-    },
-    {
-      "kind": "const",
-      "name": "conditioning_period",
-      "identifier": 384,
-      "description": "Time required to achieve good sensor stability before measuring after long idle period.",
-      "fields": [
-        {
-          "name": "_",
-          "unit": "s",
-          "type": "u32",
-          "storage": 4,
-          "isSimpleType": true
-        }
-      ],
-      "optional": true,
-      "packFormat": "u32"
     },
     {
       "kind": "const",

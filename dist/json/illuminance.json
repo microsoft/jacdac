@@ -1,6 +1,6 @@
 {
   "name": "Illuminance",
-  "status": "stable",
+  "status": "rc",
   "shortId": "illuminance",
   "camelName": "illuminance",
   "shortName": "illuminance",

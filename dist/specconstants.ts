@@ -1129,7 +1129,7 @@ export enum CodalMessageBusCmd {
 
 export enum CodalMessageBusEvent {
     /**
-     * Raised by the server is triggered by the server. The filtering logic of which event to send over JACDAC is up to the server implementation.
+     * Raised by the server is triggered by the server. The filtering logic of which event to send over Jacdac is up to the server implementation.
      *
      * ```
      * const [source, value] = jdunpack<[number, number]>(buf, "u16 u16")
@@ -1569,15 +1569,6 @@ export enum ECO2Reg {
     MaxECO2 = 0x105,
 
     /**
-     * Constant s uint32_t. Time required to achieve good sensor stability before measuring after long idle period.
-     *
-     * ```
-     * const [conditioningPeriod] = jdunpack<[number]>(buf, "u32")
-     * ```
-     */
-    ConditioningPeriod = 0x180,
-
-    /**
      * Constant Variant (uint8_t). Type of physical sensor and capabilities.
      *
      * ```
@@ -1591,22 +1582,13 @@ export enum ECO2Reg {
 export const SRV_FLEX = 0x1f47c6c6
 export enum FlexReg {
     /**
-     * Read-only ratio u0.16 (uint16_t). The relative position of the slider.
+     * Read-only ratio i1.15 (int16_t). A measure of the bending.
      *
      * ```
-     * const [bending] = jdunpack<[number]>(buf, "u0.16")
+     * const [bending] = jdunpack<[number]>(buf, "i1.15")
      * ```
      */
     Bending = 0x101,
-
-    /**
-     * Read-only ratio u0.16 (uint16_t). Absolute error on the reading value.
-     *
-     * ```
-     * const [bendingError] = jdunpack<[number]>(buf, "u0.16")
-     * ```
-     */
-    BendingError = 0x106,
 
     /**
      * Constant mm uint16_t. Length of the flex sensor
@@ -1616,6 +1598,77 @@ export enum FlexReg {
      * ```
      */
     Length = 0x180,
+}
+
+// Service: Gamepad
+export const SRV_GAMEPAD = 0x108f7456
+
+export enum GamepadButtons { // uint32_t
+    Left = 0x1,
+    Up = 0x2,
+    Right = 0x4,
+    Down = 0x8,
+    A = 0x10,
+    B = 0x20,
+    Menu = 0x40,
+    Select = 0x80,
+    Reset = 0x100,
+    Exit = 0x200,
+    X = 0x400,
+    Y = 0x800,
+}
+
+
+export enum GamepadVariant { // uint8_t
+    Thumb = 0x1,
+    ArcadeBall = 0x2,
+    ArcadeStick = 0x3,
+    Gamepad = 0x4,
+}
+
+export enum GamepadReg {
+    /**
+     * If the joystick is analog, the directional buttons should be "simulated", based on joystick position
+     * (`Left` is `{ x = -1, y = 0 }`, `Up` is `{ x = 0, y = -1}`).
+     * If the joystick is digital, then each direction will read as either `-1`, `0`, or `1` (in fixed representation).
+     * The primary button on the joystick is `A`.
+     *
+     * ```
+     * const [buttons, x, y] = jdunpack<[GamepadButtons, number, number]>(buf, "u32 i1.15 i1.15")
+     * ```
+     */
+    Direction = 0x101,
+
+    /**
+     * Constant Variant (uint8_t). The type of physical joystick.
+     *
+     * ```
+     * const [variant] = jdunpack<[GamepadVariant]>(buf, "u8")
+     * ```
+     */
+    Variant = 0x107,
+
+    /**
+     * Constant Buttons (uint32_t). Indicates a bitmask of the buttons that are mounted on the joystick.
+     * If the `Left`/`Up`/`Right`/`Down` buttons are marked as available here, the joystick is digital.
+     * Even when marked as not available, they will still be simulated based on the analog joystick.
+     *
+     * ```
+     * const [buttonsAvailable] = jdunpack<[GamepadButtons]>(buf, "u32")
+     * ```
+     */
+    ButtonsAvailable = 0x180,
+}
+
+export enum GamepadEvent {
+    /**
+     * Argument: buttons Buttons (uint32_t). Emitted whenever the state of buttons changes.
+     *
+     * ```
+     * const [buttons] = jdunpack<[GamepadButtons]>(buf, "u32")
+     * ```
+     */
+    ButtonsChanged = 0x3,
 }
 
 // Service: Gyroscope
@@ -1963,77 +2016,6 @@ export enum IndexedScreenReg {
 
 // Service: Infrastructure
 export const SRV_INFRASTRUCTURE = 0x1e1589eb
-// Service: Joystick
-export const SRV_JOYSTICK = 0x108f7456
-
-export enum JoystickButtons { // uint32_t
-    Left = 0x1,
-    Up = 0x2,
-    Right = 0x4,
-    Down = 0x8,
-    A = 0x10,
-    B = 0x20,
-    Menu = 0x40,
-    Select = 0x80,
-    Reset = 0x100,
-    Exit = 0x200,
-    X = 0x400,
-    Y = 0x800,
-}
-
-
-export enum JoystickVariant { // uint8_t
-    Thumb = 0x1,
-    ArcadeBall = 0x2,
-    ArcadeStick = 0x3,
-    Gamepad = 0x4,
-}
-
-export enum JoystickReg {
-    /**
-     * If the joystick is analog, the directional buttons should be "simulated", based on joystick position
-     * (`Left` is `{ x = -1, y = 0 }`, `Up` is `{ x = 0, y = -1}`).
-     * If the joystick is digital, then each direction will read as either `-1`, `0`, or `1` (in fixed representation).
-     * The primary button on the joystick is `A`.
-     *
-     * ```
-     * const [buttons, x, y] = jdunpack<[JoystickButtons, number, number]>(buf, "u32 i1.15 i1.15")
-     * ```
-     */
-    Direction = 0x101,
-
-    /**
-     * Constant Variant (uint8_t). The type of physical joystick.
-     *
-     * ```
-     * const [variant] = jdunpack<[JoystickVariant]>(buf, "u8")
-     * ```
-     */
-    Variant = 0x107,
-
-    /**
-     * Constant Buttons (uint32_t). Indicates a bitmask of the buttons that are mounted on the joystick.
-     * If the `Left`/`Up`/`Right`/`Down` buttons are marked as available here, the joystick is digital.
-     * Even when marked as not available, they will still be simulated based on the analog joystick.
-     *
-     * ```
-     * const [buttonsAvailable] = jdunpack<[JoystickButtons]>(buf, "u32")
-     * ```
-     */
-    ButtonsAvailable = 0x180,
-}
-
-export enum JoystickEvent {
-    /**
-     * Argument: buttons Buttons (uint32_t). Emitted whenever the state of buttons changes.
-     *
-     * ```
-     * const [buttons] = jdunpack<[JoystickButtons]>(buf, "u32")
-     * ```
-     */
-    ButtonsChanged = 0x3,
-}
-
 // Service: LED
 export const SRV_LED = 0x1e3048f8
 
@@ -2262,8 +2244,7 @@ export const SRV_LIGHT_LEVEL = 0x17dc9a1c
 
 export enum LightLevelVariant { // uint8_t
     PhotoResistor = 0x1,
-    LEDMatrix = 0x2,
-    Ambient = 0x3,
+    ReverseBiasedLED = 0x2,
 }
 
 export enum LightLevelReg {
@@ -3566,6 +3547,16 @@ export enum RotaryEncoderReg {
      * ```
      */
     ClicksPerTurn = 0x180,
+
+    /**
+     * Constant bool (uint8_t). The encoder is combined with a clicker. If this is the case, the clicker button service
+     * should follow this service in the service list of the device.
+     *
+     * ```
+     * const [clicker] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Clicker = 0x181,
 }
 
 // Service: Rover
@@ -4294,77 +4285,16 @@ export enum TcpPipeCmd {
  */
 
 
-// Service: Thermocouple
-export const SRV_THERMOCOUPLE = 0x143ac061
+// Service: Temperature
+export const SRV_TEMPERATURE = 0x1421bac7
 
-export enum ThermocoupleVariant { // uint8_t
-    TypeK = 0x1,
-    TypeJ = 0x2,
-    TypeT = 0x3,
-    TypeE = 0x4,
-    TypeN = 0x5,
-    TypeS = 0x6,
-    TypeR = 0x7,
-    TypeB = 0x8,
-}
-
-export enum ThermocoupleReg {
-    /**
-     * Read-only °C i22.10 (int32_t). The temperature.
-     *
-     * ```
-     * const [temperature] = jdunpack<[number]>(buf, "i22.10")
-     * ```
-     */
-    Temperature = 0x101,
-
-    /**
-     * Constant °C i22.10 (int32_t). Lowest temperature that can be reported.
-     *
-     * ```
-     * const [minTemperature] = jdunpack<[number]>(buf, "i22.10")
-     * ```
-     */
-    MinTemperature = 0x104,
-
-    /**
-     * Constant °C i22.10 (int32_t). Highest temperature that can be reported.
-     *
-     * ```
-     * const [maxTemperature] = jdunpack<[number]>(buf, "i22.10")
-     * ```
-     */
-    MaxTemperature = 0x105,
-
-    /**
-     * Read-only °C u22.10 (uint32_t). The real temperature is between `temperature - temperature_error` and `temperature + temperature_error`.
-     *
-     * ```
-     * const [temperatureError] = jdunpack<[number]>(buf, "u22.10")
-     * ```
-     */
-    TemperatureError = 0x106,
-
-    /**
-     * Constant Variant (uint8_t). Specifies the type of thermometer.
-     *
-     * ```
-     * const [variant] = jdunpack<[ThermocoupleVariant]>(buf, "u8")
-     * ```
-     */
-    Variant = 0x107,
-}
-
-// Service: Thermometer
-export const SRV_THERMOMETER = 0x1421bac7
-
-export enum ThermometerVariant { // uint8_t
+export enum TemperatureVariant { // uint8_t
     Outdoor = 0x1,
     Indoor = 0x2,
     Body = 0x3,
 }
 
-export enum ThermometerReg {
+export enum TemperatureReg {
     /**
      * Read-only °C i22.10 (int32_t). The temperature.
      *
@@ -4405,7 +4335,7 @@ export enum ThermometerReg {
      * Constant Variant (uint8_t). Specifies the type of thermometer.
      *
      * ```
-     * const [variant] = jdunpack<[ThermometerVariant]>(buf, "u8")
+     * const [variant] = jdunpack<[TemperatureVariant]>(buf, "u8")
      * ```
      */
     Variant = 0x107,
@@ -4473,22 +4403,13 @@ export enum TvocReg {
     MinTVOC = 0x104,
 
     /**
-     * Constant ppb u22.10 (uint32_t). Minimum measurable value
+     * Constant ppb u22.10 (uint32_t). Minimum measurable value.
      *
      * ```
      * const [maxTVOC] = jdunpack<[number]>(buf, "u22.10")
      * ```
      */
     MaxTVOC = 0x105,
-
-    /**
-     * Constant s uint32_t. Time required to achieve good sensor stability before measuring after long idle period.
-     *
-     * ```
-     * const [conditioningPeriod] = jdunpack<[number]>(buf, "u32")
-     * ```
-     */
-    ConditioningPeriod = 0x180,
 }
 
 // Service: Unique Brain

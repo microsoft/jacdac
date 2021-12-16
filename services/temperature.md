@@ -1,12 +1,12 @@
-# Thermocouple
+# Temperature
 
-    identifier: 0x143ac061
+    identifier: 0x1421bac7
     extends: _sensor
+    tags: C, 8bit
     group: environment
-    tags: 8bit
     status: rc
 
-A thermocouple using a heat probe to gather temperatures.
+A thermometer measuring outside or inside environment.
 
 ## Registers
 
@@ -27,14 +27,9 @@ Highest temperature that can be reported.
 The real temperature is between `temperature - temperature_error` and `temperature + temperature_error`.
 
     enum Variant: u8 {
-        TypeK = 1
-        TypeJ = 2
-        TypeT = 3
-        TypeE = 4
-        TypeN = 5
-        TypeS = 6
-        TypeR = 7
-        TypeB = 8
+        Outdoor = 1,
+        Indoor = 2,
+        Body = 3,
     }
     const variant?: Variant @ variant
 

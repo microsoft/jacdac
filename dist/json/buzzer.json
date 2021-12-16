@@ -1,6 +1,6 @@
 {
   "name": "Buzzer",
-  "status": "stable",
+  "status": "rc",
   "shortId": "buzzer",
   "camelName": "buzzer",
   "shortName": "buzzer",

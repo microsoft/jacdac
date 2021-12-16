@@ -24,4 +24,4 @@ Send a message on the CODAL bus. If `source` is `0`, it is treated as wildcard.
        value: u16
     }
 
-Raised by the server is triggered by the server. The filtering logic of which event to send over JACDAC is up to the server implementation.
+Raised by the server is triggered by the server. The filtering logic of which event to send over Jacdac is up to the server implementation.

@@ -8,7 +8,7 @@
     "_base"
   ],
   "notes": {
-    "short": "A sound playing device.\n\nThis is typically run over an SPI connection, not regular single-wire JACDAC."
+    "short": "A sound playing device.\n\nThis is typically run over an SPI connection, not regular single-wire Jacdac."
   },
   "classIdentifier": 533083654,
   "enums": {},

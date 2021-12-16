@@ -7,7 +7,7 @@ Measures equivalent CO₂ levels.
     camel: eCO2
     group: environment
     tags: 8bit
-    status: stable
+    status: rc
 
 ## Registers
 
@@ -19,17 +19,13 @@ Equivalent CO₂ (eCO₂) readings.
 
 Error on the reading value.
 
-    const min_e_CO2?: u22.10 ppm @ min_reading
+    const min_e_CO2: u22.10 ppm @ min_reading
 
 Minimum measurable value
 
-    const max_e_CO2?: u22.10 ppm @ max_reading
+    const max_e_CO2: u22.10 ppm @ max_reading
 
 Minimum measurable value
-
-    const conditioning_period?: u32 s @ 0x180
-
-Time required to achieve good sensor stability before measuring after long idle period.
 
     enum Variant: u8 {
         VOC = 1,

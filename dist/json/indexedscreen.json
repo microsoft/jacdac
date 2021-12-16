@@ -1,6 +1,6 @@
 {
   "name": "Indexed screen",
-  "status": "stable",
+  "status": "rc",
   "shortId": "indexedscreen",
   "camelName": "indexedScreen",
   "shortName": "indexedScreen",
@@ -8,7 +8,7 @@
     "_base"
   ],
   "notes": {
-    "short": "A screen with indexed colors.\n\nThis is often run over an SPI connection, not regular single-wire JACDAC."
+    "short": "A screen with indexed colors.\n\nThis is often run over an SPI connection, not regular single-wire Jacdac."
   },
   "classIdentifier": 385496805,
   "enums": {},

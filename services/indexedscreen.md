@@ -2,11 +2,11 @@
 
     identifier: 0x16fa36e5
     tags: SPI
-    status: stable
+    status: rc
 
 A screen with indexed colors.
 
-This is often run over an SPI connection, not regular single-wire JACDAC.
+This is often run over an SPI connection, not regular single-wire Jacdac.
 
 ## Commands
 

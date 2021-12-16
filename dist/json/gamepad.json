@@ -1,30 +1,45 @@
 {
-  "name": "Thermocouple",
+  "name": "Gamepad",
   "status": "rc",
-  "shortId": "thermocouple",
-  "camelName": "thermocouple",
-  "shortName": "thermocouple",
+  "shortId": "gamepad",
+  "camelName": "gamepad",
+  "shortName": "gamepad",
   "extends": [
     "_base",
     "_sensor"
   ],
   "notes": {
-    "short": "A thermocouple using a heat probe to gather temperatures."
+    "short": "A two axis directional joystick with optional buttons."
   },
-  "classIdentifier": 339394657,
+  "classIdentifier": 277836886,
   "enums": {
+    "Buttons": {
+      "name": "Buttons",
+      "storage": 4,
+      "isFlags": true,
+      "members": {
+        "Left": 1,
+        "Up": 2,
+        "Right": 4,
+        "Down": 8,
+        "A": 16,
+        "B": 32,
+        "Menu": 64,
+        "Select": 128,
+        "Reset": 256,
+        "Exit": 512,
+        "X": 1024,
+        "Y": 2048
+      }
+    },
     "Variant": {
       "name": "Variant",
       "storage": 1,
       "members": {
-        "TypeK": 1,
-        "TypeJ": 2,
-        "TypeT": 3,
-        "TypeE": 4,
-        "TypeN": 5,
-        "TypeS": 6,
-        "TypeR": 7,
-        "TypeB": 8
+        "Thumb": 1,
+        "ArcadeBall": 2,
+        "ArcadeStick": 3,
+        "Gamepad": 4
       }
     }
   },
@@ -180,81 +195,39 @@
     },
     {
       "kind": "ro",
-      "name": "temperature",
+      "name": "direction",
       "identifier": 257,
-      "description": "The temperature.",
+      "description": "If the joystick is analog, the directional buttons should be \"simulated\", based on joystick position\n(`Left` is `{ x = -1, y = 0 }`, `Up` is `{ x = 0, y = -1}`).\nIf the joystick is digital, then each direction will read as either `-1`, `0`, or `1` (in fixed representation).\nThe primary button on the joystick is `A`.",
       "fields": [
         {
-          "name": "_",
-          "unit": "°C",
-          "shift": 10,
-          "type": "i22.10",
-          "storage": -4
+          "name": "buttons",
+          "type": "Buttons",
+          "storage": 4
+        },
+        {
+          "name": "x",
+          "unit": "/",
+          "shift": 15,
+          "type": "i1.15",
+          "storage": -2
+        },
+        {
+          "name": "y",
+          "unit": "/",
+          "shift": 15,
+          "type": "i1.15",
+          "storage": -2
         }
       ],
       "volatile": true,
       "identifierName": "reading",
-      "preferredInterval": 1000,
-      "packFormat": "i22.10"
-    },
-    {
-      "kind": "const",
-      "name": "min_temperature",
-      "identifier": 260,
-      "description": "Lowest temperature that can be reported.",
-      "fields": [
-        {
-          "name": "_",
-          "unit": "°C",
-          "shift": 10,
-          "type": "i22.10",
-          "storage": -4
-        }
-      ],
-      "identifierName": "min_reading",
-      "packFormat": "i22.10"
-    },
-    {
-      "kind": "const",
-      "name": "max_temperature",
-      "identifier": 261,
-      "description": "Highest temperature that can be reported.",
-      "fields": [
-        {
-          "name": "_",
-          "unit": "°C",
-          "shift": 10,
-          "type": "i22.10",
-          "storage": -4
-        }
-      ],
-      "identifierName": "max_reading",
-      "packFormat": "i22.10"
-    },
-    {
-      "kind": "ro",
-      "name": "temperature_error",
-      "identifier": 262,
-      "description": "The real temperature is between `temperature - temperature_error` and `temperature + temperature_error`.",
-      "fields": [
-        {
-          "name": "_",
-          "unit": "°C",
-          "shift": 10,
-          "type": "u22.10",
-          "storage": 4
-        }
-      ],
-      "volatile": true,
-      "optional": true,
-      "identifierName": "reading_error",
-      "packFormat": "u22.10"
+      "packFormat": "u32 i1.15 i1.15"
     },
     {
       "kind": "const",
       "name": "variant",
       "identifier": 263,
-      "description": "Specifies the type of thermometer.",
+      "description": "The type of physical joystick.",
       "fields": [
         {
           "name": "_",
@@ -265,10 +238,40 @@
       "optional": true,
       "identifierName": "variant",
       "packFormat": "u8"
+    },
+    {
+      "kind": "const",
+      "name": "buttons_available",
+      "identifier": 384,
+      "description": "Indicates a bitmask of the buttons that are mounted on the joystick.\nIf the `Left`/`Up`/`Right`/`Down` buttons are marked as available here, the joystick is digital.\nEven when marked as not available, they will still be simulated based on the analog joystick.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "Buttons",
+          "storage": 4
+        }
+      ],
+      "packFormat": "u32"
+    },
+    {
+      "kind": "event",
+      "name": "buttons_changed",
+      "identifier": 3,
+      "description": "Emitted whenever the state of buttons changes.",
+      "fields": [
+        {
+          "name": "buttons",
+          "type": "Buttons",
+          "storage": 4
+        }
+      ],
+      "identifierName": "change",
+      "packFormat": "u32"
     }
   ],
   "tags": [
-    "8bit"
+    "8bit",
+    "padauk"
   ],
-  "group": "Environment"
+  "group": "Button"
 }

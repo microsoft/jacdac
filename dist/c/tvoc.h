@@ -20,13 +20,8 @@
 #define JD_TVOC_REG_MIN_TVOC JD_REG_MIN_READING
 
 /**
- * Constant ppb u22.10 (uint32_t). Minimum measurable value
+ * Constant ppb u22.10 (uint32_t). Minimum measurable value.
  */
 #define JD_TVOC_REG_MAX_TVOC JD_REG_MAX_READING
-
-/**
- * Constant s uint32_t. Time required to achieve good sensor stability before measuring after long idle period.
- */
-#define JD_TVOC_REG_CONDITIONING_PERIOD 0x180
 
 #endif

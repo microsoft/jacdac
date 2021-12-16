@@ -6,7 +6,7 @@ A sensor that measures luminosity level.
     extends: _sensor
     group: environment
     tags: 8bit, padauk
-    status: stable
+    status: rc
 
 ## Registers
 
@@ -20,8 +20,7 @@ Absolute estimated error of the reading value
 
     enum Variant: u8 {
         PhotoResistor = 1,
-        LEDMatrix = 2,
-        Ambient = 3
+        ReverseBiasedLED = 2
     }
     const variant?: Variant @ variant
 

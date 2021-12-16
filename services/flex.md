@@ -2,21 +2,17 @@
 
     identifier: 0x1f47c6c6
     extends: _sensor
-    group: slider
+    group: sensor
     tags: C, 8bit
-    status: stable
+    status: rc
 
 A bending or deflection sensor.
 
 ## Registers
 
-    ro bending: u0.16 / @ reading
+    ro bending: i1.15 / @ reading
 
-The relative position of the slider.
-
-    ro bending_error?: u0.16 / @ reading_error
-
-Absolute error on the reading value.
+A measure of the bending.
 
     const length?: u16 mm @ 0x180
 

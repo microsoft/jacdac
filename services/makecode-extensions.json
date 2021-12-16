@@ -622,6 +622,20 @@
     }
   },
   {
+    "service": "temperature",
+    "client": {
+      "name": "jacdac-temperature",
+      "targets": [
+        "microbit",
+        "arcade",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/temperature",
+      "qName": "modules.TemperatureClient",
+      "default": "modules.temperature"
+    }
+  },
+  {
     "service": "tvoc",
     "client": {
       "name": "jacdac-tvoc",

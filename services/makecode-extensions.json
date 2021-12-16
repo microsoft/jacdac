@@ -14,6 +14,18 @@
     }
   },
   {
+    "service": "arcadegamepad",
+    "client": {
+      "name": "jacdac-arcade-gamepad",
+      "targets": [
+        "arcade"
+      ],
+      "repo": "microsoft/pxt-jacdac/arcade-gamepad",
+      "qName": "modules.ArcadeGamepadClient",
+      "default": "modules.arcadeGamepad"
+    }
+  },
+  {
     "service": "azureiothubhealth",
     "client": {
       "name": "jacdac-azure-iot-hub-health",

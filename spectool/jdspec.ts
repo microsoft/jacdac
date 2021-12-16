@@ -1901,7 +1901,7 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
 
     for (const en of values(info.enums)) {
         const enPref = pref + upperCamel(en.name)
-        r += `\n${enumkw} ${enPref}${
+        r += `\n${csharp && en.isFlags ? "    [System.Flags]\n" : ""}${enumkw} ${enPref}${
             csharp ? `: ${cSharpStorage(en.storage)}` : ""
         } { // ${cStorage(en.storage)}\n`
         for (const k of Object.keys(en.members)) {

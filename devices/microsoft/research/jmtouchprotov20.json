@@ -6,6 +6,7 @@
     "description": "A multi-touch sensor based on proto board.",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "firmwareSource": "https://github.dev/microsoft/jacdac-msr-modules/blob/main/targets/jm-v2.0p/profile/multitouch.c",
     "services": [416636459],
     "productIdentifiers": [1067172458],
     "status": "deprecated"

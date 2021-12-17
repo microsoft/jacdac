@@ -31,7 +31,9 @@ const serviceBuiltins = [
     "infrastructure",
     "proxy",
     "uniquebrain",
-    "rolemanager"
+    "rolemanager",
+    "bridge",
+    "dashboard"
 ]
 
 function values<T>(o: jdspec.SMap<T>): T[] {

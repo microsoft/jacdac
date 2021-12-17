@@ -1959,6 +1959,11 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
 
         // don't line const strings in makecode,
         // they don't get dropped efficiently
+        if (csharp && pkt.packFormat) {
+            const packName = inner + "Pack";
+            tsEnums[packName] = (tsEnums[packName] || "") +
+                `${wrapComment(`Pack format for '${pkt.name}' register data.`)}public const string ${upperCamel(pkt.name)} = "${pkt.packFormat}";\n`;
+        }
     }
 
     for (const k of Object.keys(tsEnums)) {
@@ -1968,7 +1973,10 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
                 .replace(/^\n+/, "")
                 .replace(/\n$/, "")
                 .replace(/\n/g, "\n    " + indent)
-            r += `${enumkw} ${pref}${k} {\n    ${indent}${inner}\n${indent}}\n\n`
+            if (inner.indexOf("public const") > -1)
+                r += `    public static class ${pref}${k} {\n    ${indent}${inner}\n${indent}}\n\n`
+            else
+                r += `${enumkw} ${pref}${k} {\n    ${indent}${inner}\n${indent}}\n\n`
         }
     }
 

@@ -1962,7 +1962,7 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
         if (csharp && pkt.packFormat) {
             const packName = inner + "Pack";
             tsEnums[packName] = (tsEnums[packName] || "") +
-                `${wrapComment(`Pack format for '${pkt.name}' register data.`)}public const string ${upperCamel(pkt.name)} = "${pkt.packFormat}";\n`;
+                `${wrapComment(`Pack format for '${pkt.name}' register data.`)}public const string ${upperCamel(pkt.name)}${pkt.secondary ? "Report" : ""} = "${pkt.packFormat}";\n`;
         }
     }
 

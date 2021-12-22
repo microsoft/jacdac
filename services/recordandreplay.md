@@ -13,14 +13,32 @@ A record and replay module. You can record a few seconds of audio and play it ba
 Replay cached audio.
     
     command record @ 0x81 {
-        seconds: u16
+        milliseconds: u16 ms
     }
     
-Record audio for N seconds.
+Record audio for N milliseconds.
+
+    cancel record @ 0x82 {}
+    
+Cancel record, the `time` register will be updated by already cached data.
 
 ## Registers
 
-    rw seconds: u0.16 / @ intensity
+    enum Status: u8 {
+        Idle = 0
+        Recording = 1
+        Playing = 2
+    }
+
+    ro status: Status @ value
+
+Indicate the current status 
+
+    ro time: u16 ms / @ intensity
     
-Seconds of audio to record and play back.
+Milliseconds of audio recorded.
+
+    rw volumn?: u8 @ 0x180
+
+Playback volumn control 
 

@@ -1,1 +1,748 @@
-[]
+[
+  {
+    "service": "accelerometer",
+    "client": {
+      "name": "jacdac-accelerometer",
+      "targets": [
+        "arcade",
+        "maker",
+        "microbit"
+      ],
+      "repo": "microsoft/pxt-jacdac/accelerometer",
+      "qName": "modules.AccelerometerClient",
+      "default": "modules.accelerometer"
+    }
+  },
+  {
+    "service": "arcadegamepad",
+    "client": {
+      "name": "jacdac-arcade-gamepad",
+      "targets": [
+        "arcade"
+      ],
+      "repo": "microsoft/pxt-jacdac/arcade-gamepad",
+      "qName": "modules.ArcadeGamepadClient",
+      "default": "modules.arcadeGamepad"
+    }
+  },
+  {
+    "service": "azureiothubhealth",
+    "client": {
+      "name": "jacdac-azure-iot-hub-health",
+      "targets": [
+        "arcade",
+        "microbit",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/azure-iot-hub-health",
+      "qName": "modules.AzureIotHubHealthClient",
+      "default": "modules.azureIotHubHealth"
+    }
+  },
+  {
+    "service": "barometer",
+    "client": {
+      "name": "jacdac-barometer",
+      "targets": [
+        "arcade",
+        "microbit",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/barometer",
+      "qName": "modules.BarometerClient",
+      "default": "modules.barometer"
+    }
+  },
+  {
+    "service": "button",
+    "client": {
+      "name": "jacdac-button",
+      "targets": [
+        "arcade",
+        "microbit",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/button",
+      "qName": "modules.ButtonClient",
+      "default": "modules.button"
+    }
+  },
+  {
+    "service": "buzzer",
+    "client": {
+      "name": "jacdac-buzzer",
+      "targets": [
+        "arcade",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/buzzer",
+      "qName": "modules.BuzzerClient",
+      "default": "modules.buzzer"
+    }
+  },
+  {
+    "service": "characterscreen",
+    "client": {
+      "name": "jacdac-character-screen",
+      "targets": [
+        "arcade",
+        "microbit",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/character-screen",
+      "qName": "modules.CharacterScreenClient",
+      "default": "modules.characterScreen"
+    }
+  },
+  {
+    "service": "codalmessagebus",
+    "client": {
+      "name": "jacdac-codal-message-bus",
+      "targets": [
+        "microbit",
+        "arcade",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/codal-message-bus",
+      "qName": "modules.CodalMessageBusClient",
+      "default": "modules.codalMessageBus"
+    }
+  },
+  {
+    "service": "color",
+    "client": {
+      "name": "jacdac-color",
+      "targets": [
+        "arcade",
+        "microbit",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/color",
+      "qName": "modules.ColorClient",
+      "default": "modules.color"
+    }
+  },
+  {
+    "service": "compass",
+    "client": {
+      "name": "jacdac-compass",
+      "targets": [
+        "arcade",
+        "microbit",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/compass",
+      "qName": "modules.CompassClient",
+      "default": "modules.compass"
+    }
+  },
+  {
+    "service": "distance",
+    "client": {
+      "name": "jacdac-distance",
+      "targets": [
+        "arcade",
+        "microbit",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/distance",
+      "qName": "modules.DistanceClient",
+      "default": "modules.distance"
+    }
+  },
+  {
+    "service": "dmx",
+    "client": {
+      "name": "jacdac-dmx",
+      "targets": [
+        "arcade",
+        "microbit",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/dmx",
+      "qName": "modules.DmxClient",
+      "default": "modules.dmx"
+    }
+  },
+  {
+    "service": "dotmatrix",
+    "client": {
+      "name": "jacdac-dot-matrix",
+      "targets": [
+        "microbit",
+        "arcade",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/dot-matrix",
+      "qName": "modules.DotMatrixClient",
+      "default": "modules.dotMatrix"
+    }
+  },
+  {
+    "service": "eco2",
+    "client": {
+      "name": "jacdac-e-co2",
+      "targets": [
+        "arcade",
+        "microbit",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/e-co2",
+      "qName": "modules.ECO2Client",
+      "default": "modules.eCO2"
+    }
+  },
+  {
+    "service": "flex",
+    "client": {
+      "name": "jacdac-flex",
+      "targets": [
+        "arcade",
+        "microbit",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/flex",
+      "qName": "modules.FlexClient",
+      "default": "modules.flex"
+    }
+  },
+  {
+    "service": "gamepad",
+    "client": {
+      "name": "jacdac-gamepad",
+      "targets": [
+        "arcade"
+      ],
+      "repo": "microsoft/pxt-jacdac/gamepad",
+      "qName": "modules.GamepadClient",
+      "default": "modules.gamepad"
+    }
+  },
+  {
+    "service": "gyroscope",
+    "client": {
+      "name": "jacdac-gyroscope",
+      "targets": [
+        "arcade",
+        "microbit",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/gyroscope",
+      "qName": "modules.GyroscopeClient",
+      "default": "modules.gyroscope"
+    }
+  },
+  {
+    "service": "heartrate",
+    "client": {
+      "name": "jacdac-heart-rate",
+      "targets": [
+        "arcade",
+        "microbit",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/heart-rate",
+      "qName": "modules.HeartRateClient",
+      "default": "modules.heartRate"
+    }
+  },
+  {
+    "service": "hidkeyboard",
+    "client": {
+      "name": "jacdac-hid-keyboard",
+      "targets": [
+        "arcade",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/hid-keyboard",
+      "qName": "modules.HidKeyboardClient",
+      "default": "modules.hidKeyboard"
+    }
+  },
+  {
+    "service": "hidmouse",
+    "client": {
+      "name": "jacdac-hid-mouse",
+      "targets": [
+        "arcade",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/hid-mouse",
+      "qName": "modules.HidMouseClient",
+      "default": "modules.hidMouse"
+    }
+  },
+  {
+    "service": "humidity",
+    "client": {
+      "name": "jacdac-humidity",
+      "targets": [
+        "arcade",
+        "microbit",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/humidity",
+      "qName": "modules.HumidityClient",
+      "default": "modules.humidity"
+    }
+  },
+  {
+    "service": "illuminance",
+    "client": {
+      "name": "jacdac-illuminance",
+      "targets": [
+        "arcade",
+        "microbit",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/illuminance",
+      "qName": "modules.IlluminanceClient",
+      "default": "modules.illuminance"
+    }
+  },
+  {
+    "service": "led",
+    "client": {
+      "name": "jacdac-led",
+      "targets": [
+        "arcade",
+        "microbit",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/led",
+      "qName": "modules.LedClient",
+      "default": "modules.led"
+    }
+  },
+  {
+    "service": "ledpixel",
+    "client": {
+      "name": "jacdac-led-pixel",
+      "targets": [
+        "arcade",
+        "maker",
+        "microbit"
+      ],
+      "repo": "microsoft/pxt-jacdac/led-pixel",
+      "qName": "modules.LedPixelClient",
+      "default": "modules.ledPixel"
+    }
+  },
+  {
+    "service": "lightbulb",
+    "client": {
+      "name": "jacdac-light-bulb",
+      "targets": [
+        "microbit",
+        "arcade",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/light-bulb",
+      "qName": "modules.LightBulbClient",
+      "default": "modules.lightBulb"
+    }
+  },
+  {
+    "service": "lightlevel",
+    "client": {
+      "name": "jacdac-light-level",
+      "targets": [
+        "arcade",
+        "microbit",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/light-level",
+      "qName": "modules.LightLevelClient",
+      "default": "modules.lightLevel"
+    }
+  },
+  {
+    "service": "magnetomer",
+    "client": {
+      "name": "jacdac-magnetometer",
+      "targets": [
+        "arcade",
+        "microbit",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/magnetometer",
+      "qName": "modules.MagnetometerClient",
+      "default": "modules.magnetometer"
+    }
+  },
+  {
+    "service": "modelrunner",
+    "client": {
+      "name": "jacdac-model-runner",
+      "targets": [
+        "arcade",
+        "maker",
+        "microbit"
+      ],
+      "repo": "microsoft/pxt-jacdac/model-runner",
+      "qName": "modules.ModelRunnerClient",
+      "default": "modules.modelRunner"
+    }
+  },
+  {
+    "service": "motion",
+    "client": {
+      "name": "jacdac-motion",
+      "targets": [
+        "arcade",
+        "microbit",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/motion",
+      "qName": "modules.MotionClient",
+      "default": "modules.motion"
+    }
+  },
+  {
+    "service": "motor",
+    "client": {
+      "name": "jacdac-motor",
+      "targets": [
+        "arcade",
+        "maker",
+        "microbit"
+      ],
+      "repo": "microsoft/pxt-jacdac/motor",
+      "qName": "modules.MotorClient",
+      "default": "modules.motor"
+    }
+  },
+  {
+    "service": "potentiometer",
+    "client": {
+      "name": "jacdac-potentiometer",
+      "targets": [
+        "arcade",
+        "maker",
+        "microbit"
+      ],
+      "repo": "microsoft/pxt-jacdac/potentiometer",
+      "qName": "modules.PotentiometerClient",
+      "default": "modules.potentiometer"
+    }
+  },
+  {
+    "service": "power",
+    "client": {
+      "name": "jacdac-power",
+      "targets": [
+        "arcade",
+        "microbit",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/power",
+      "qName": "modules.PowerClient",
+      "default": "modules.power"
+    }
+  },
+  {
+    "service": "pulseoximeter",
+    "client": {
+      "name": "jacdac-pulse-oximeter",
+      "targets": [
+        "arcade",
+        "microbit",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/pulse-oximeter",
+      "qName": "modules.PulseOximeterClient",
+      "default": "modules.pulseOximeter"
+    }
+  },
+  {
+    "service": "raingauge",
+    "client": {
+      "name": "jacdac-rain-gauge",
+      "targets": [
+        "arcade",
+        "microbit",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/rain-gauge",
+      "qName": "modules.RainGaugeClient",
+      "default": "modules.rainGauge"
+    }
+  },
+  {
+    "service": "realtimeclock",
+    "client": {
+      "name": "jacdac-real-time-clock",
+      "targets": [
+        "arcade",
+        "microbit",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/real-time-clock",
+      "qName": "modules.RealTimeClockClient",
+      "default": "modules.realTimeClock"
+    }
+  },
+  {
+    "service": "reflectedlight",
+    "client": {
+      "name": "jacdac-reflected-light",
+      "targets": [
+        "arcade",
+        "microbit",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/reflected-light",
+      "qName": "modules.ReflectedLightClient",
+      "default": "modules.reflectedLight"
+    }
+  },
+  {
+    "service": "relay",
+    "client": {
+      "name": "jacdac-relay",
+      "targets": [
+        "arcade",
+        "microbit",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/relay",
+      "qName": "modules.RelayClient",
+      "default": "modules.relay"
+    }
+  },
+  {
+    "service": "rotaryencoder",
+    "client": {
+      "name": "jacdac-rotary-encoder",
+      "targets": [
+        "arcade",
+        "microbit",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/rotary-encoder",
+      "qName": "modules.RotaryEncoderClient",
+      "default": "modules.rotaryEncoder"
+    }
+  },
+  {
+    "service": "sensoraggregator",
+    "client": {
+      "name": "jacdac-sensor-aggregator",
+      "targets": [
+        "arcade",
+        "maker",
+        "microbit"
+      ],
+      "repo": "microsoft/pxt-jacdac/sensor-aggregator",
+      "qName": "modules.SensorAggregatorClient",
+      "default": "modules.sensorAggregator"
+    }
+  },
+  {
+    "service": "servo",
+    "client": {
+      "name": "jacdac-servo",
+      "targets": [
+        "arcade",
+        "maker",
+        "microbit"
+      ],
+      "repo": "microsoft/pxt-jacdac/servo",
+      "qName": "modules.ServoClient",
+      "default": "modules.servo"
+    }
+  },
+  {
+    "service": "soilmoisture",
+    "client": {
+      "name": "jacdac-soil-moisture",
+      "targets": [
+        "arcade",
+        "microbit",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/soil-moisture",
+      "qName": "modules.SoilMoistureClient",
+      "default": "modules.soilMoisture"
+    }
+  },
+  {
+    "service": "solenoid",
+    "client": {
+      "name": "jacdac-solenoid",
+      "targets": [
+        "arcade",
+        "microbit",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/solenoid",
+      "qName": "modules.SolenoidClient",
+      "default": "modules.solenoid"
+    }
+  },
+  {
+    "service": "soundlevel",
+    "client": {
+      "name": "jacdac-sound-level",
+      "targets": [
+        "arcade",
+        "maker",
+        "microbit"
+      ],
+      "repo": "microsoft/pxt-jacdac/sound-level",
+      "qName": "modules.SoundLevelClient",
+      "default": "modules.soundLevel"
+    }
+  },
+  {
+    "service": "speechsynthesis",
+    "client": {
+      "name": "jacdac-speech-synthesis",
+      "targets": [
+        "arcade",
+        "microbit",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/speech-synthesis",
+      "qName": "modules.SpeechSynthesisClient",
+      "default": "modules.speechSynthesis"
+    }
+  },
+  {
+    "service": "tcp",
+    "client": {
+      "name": "jacdac-tcp",
+      "targets": [
+        "arcade",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/tcp",
+      "qName": "modules.TcpClient",
+      "default": "modules.tcp"
+    }
+  },
+  {
+    "service": "temperature",
+    "client": {
+      "name": "jacdac-temperature",
+      "targets": [
+        "microbit",
+        "arcade",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/temperature",
+      "qName": "modules.TemperatureClient",
+      "default": "modules.temperature"
+    }
+  },
+  {
+    "service": "tvoc",
+    "client": {
+      "name": "jacdac-tvoc",
+      "targets": [
+        "arcade",
+        "microbit",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/tvoc",
+      "qName": "modules.TvocClient",
+      "default": "modules.tvoc"
+    }
+  },
+  {
+    "service": "uvindex",
+    "client": {
+      "name": "jacdac-uv-index",
+      "targets": [
+        "arcade",
+        "microbit",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/uv-index",
+      "qName": "modules.UvIndexClient",
+      "default": "modules.uvIndex"
+    }
+  },
+  {
+    "service": "vibrationmotor",
+    "client": {
+      "name": "jacdac-vibration-motor",
+      "targets": [
+        "arcade",
+        "microbit",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/vibration-motor",
+      "qName": "modules.VibrationMotorClient",
+      "default": "modules.vibrationMotor"
+    }
+  },
+  {
+    "service": "waterlevel",
+    "client": {
+      "name": "jacdac-water-level",
+      "targets": [
+        "arcade",
+        "microbit",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/water-level",
+      "qName": "modules.WaterLevelClient",
+      "default": "modules.waterLevel"
+    }
+  },
+  {
+    "service": "weightscale",
+    "client": {
+      "name": "jacdac-weight-scale",
+      "targets": [
+        "arcade",
+        "microbit",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/weight-scale",
+      "qName": "modules.WeightScaleClient",
+      "default": "modules.weightScale"
+    }
+  },
+  {
+    "service": "wifi",
+    "client": {
+      "name": "jacdac-wifi",
+      "targets": [
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/wifi",
+      "qName": "modules.WifiClient",
+      "default": "modules.wifi"
+    }
+  },
+  {
+    "service": "winddirection",
+    "client": {
+      "name": "jacdac-wind-direction",
+      "targets": [
+        "arcade",
+        "microbit",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/wind-direction",
+      "qName": "modules.WindDirectionClient",
+      "default": "modules.windDirection"
+    }
+  },
+  {
+    "service": "windspeed",
+    "client": {
+      "name": "jacdac-wind-speed",
+      "targets": [
+        "arcade",
+        "microbit",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/wind-speed",
+      "qName": "modules.WindSpeedClient",
+      "default": "modules.windSpeed"
+    }
+  }
+]

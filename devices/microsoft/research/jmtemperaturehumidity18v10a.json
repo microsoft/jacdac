@@ -7,6 +7,7 @@
     "version": "1.0A",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-temp-humidity-18-1.0A/profile/env3.c",
     "services": [337754823, 382210232],
     "status": "deprecated",
     "productIdentifiers": [899442616]

@@ -5,6 +5,7 @@
     "designIdentifier": "34",
     "version": "1.3",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-access-switch-input-34-1.3/profile/xac.c",
     "services": [343122531, 522667846, 277836886],
     "productIdentifiers": [964964313],
     "tags": ["kit"]

@@ -4,6 +4,7 @@
   "company": "Microsoft Research",
   "description": "JM Key 68 v3.7",
   "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v3.6/profile/key.c",
   "services": [
     343122531
   ],

@@ -6,6 +6,7 @@
     "description": "Lets you control a single DC motor (up to 5V; yellow plastic ones work well).",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v2.1/profile/motor.c",
     "services": [385895640],
     "productIdentifiers": [809626198],
     "status": "deprecated"

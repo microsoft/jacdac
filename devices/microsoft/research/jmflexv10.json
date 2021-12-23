@@ -6,6 +6,7 @@
     "version": "1.0",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-flex-sensor-1.0/profile/flex.c",
     "tags": ["kit"],
     "services": [524797638],
     "productIdentifiers": [840841542]

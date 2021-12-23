@@ -2018,6 +2018,8 @@ export function normalizeDeviceSpecification(dev: jdspec.DeviceSpec) {
         company: dev.company,
         description: dev.description,
         repo: dev.repo,
+        firmwareSource: dev.firmwareSource,
+        hardwareDesign: dev.hardwareDesign,
         link: dev.link,
         services: dev.services,
         productIdentifiers: productIdentifiers,

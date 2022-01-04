@@ -746,6 +746,7 @@ from .client import ${capitalize(json.camelName)}Client # type: ignore
     fs.writeFileSync(path.join(outp, "specconstants.ts"), concats["ts"])
     fs.writeFileSync(path.join(outp, "specconstants.sts"), concats["sts"])
     fs.writeFileSync(path.join(outp, "specconstants.cs"), concats["cs"])
+    fs.writeFileSync(path.join(outp, "jacscript-spec.d.ts"), concats["jacs"])
     if (fs.existsSync(pxtJacdacDir))
         // only available locally
         fs.writeFileSync(

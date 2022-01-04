@@ -1101,8 +1101,9 @@ export function parseServiceSpecificationMarkdownToJSON(
                 break
             case "status":
                 if (
-                    ["stable", "experimental", "deprecated", "rc"].indexOf(words[2]) >
-                    -1
+                    ["stable", "experimental", "deprecated", "rc"].indexOf(
+                        words[2]
+                    ) > -1
                 )
                     info.status = <any>words[2]
                 else error("unknown status")
@@ -1901,7 +1902,9 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
 
     for (const en of values(info.enums)) {
         const enPref = pref + upperCamel(en.name)
-        r += `\n${csharp && en.isFlags ? "    [System.Flags]\n" : ""}${enumkw} ${enPref}${
+        r += `\n${
+            csharp && en.isFlags ? "    [System.Flags]\n" : ""
+        }${enumkw} ${enPref}${
             csharp ? `: ${cSharpStorage(en.storage)}` : ""
         } { // ${cStorage(en.storage)}\n`
         for (const k of Object.keys(en.members)) {
@@ -1960,9 +1963,14 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
         // don't line const strings in makecode,
         // they don't get dropped efficiently
         if (csharp && pkt.packFormat) {
-            const packName = inner + "Pack";
-            tsEnums[packName] = (tsEnums[packName] || "") +
-                `${wrapComment(`Pack format for '${pkt.name}' register data.`)}public const string ${upperCamel(pkt.name)}${pkt.secondary ? "Report" : ""} = "${pkt.packFormat}";\n`;
+            const packName = inner + "Pack"
+            tsEnums[packName] =
+                (tsEnums[packName] || "") +
+                `${wrapComment(
+                    `Pack format for '${pkt.name}' register data.`
+                )}public const string ${upperCamel(pkt.name)}${
+                    pkt.secondary ? "Report" : ""
+                } = "${pkt.packFormat}";\n`
         }
     }
 
@@ -1981,6 +1989,51 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
     }
 
     if (useNamespace) r += "}\n"
+
+    return r.replace(/ *$/gm, "")
+}
+
+const jsKeywords = {
+    switch: 1,
+}
+
+function jsQuote(n: string) {
+    if (jsKeywords.hasOwnProperty(n)) n += "_"
+    return n
+}
+
+function toJacscript(info: jdspec.ServiceSpec) {
+    let r = `// Service: ${info.name}\n`
+    const clname = upperCamel(info.camelName) + "Role"
+    const baseclass =
+        info.extends.indexOf("_sensor") >= 0 ? "SensorRole" : "Role"
+    r += `declare class ${clname} extends ${baseclass} {\n`
+
+    for (const pkt of info.packets) {
+        if (pkt.derived) continue // ???
+        const cmt = addComment(pkt)
+
+        let tp = ""
+        if (isRegister(pkt.kind)) {
+            tp = cmt.needsStruct ? "JDRegisterArray" : "JDRegisterNum"
+            if (pkt.fields.length == 1 && pkt.fields[0].type == "string")
+                tp = "JDRegisterString"
+        } else if (pkt.kind == "event") {
+            tp = "JDEvent"
+        }
+
+        if (tp) r += `    ${camelize(pkt.name)}: ${tp}\n`
+    }
+
+    r += "}\n"
+
+    if (info.shortId[0] != "_") {
+        r += "declare namespace roles {\n"
+        r += `    function ${jsQuote(info.camelName)}(): ${clname}\n`
+        r += "}\n\n"
+    } else {
+        r += "\n"
+    }
 
     return r.replace(/ *$/gm, "")
 }
@@ -2063,6 +2116,7 @@ export function converters(): jdspec.SMap<(s: jdspec.ServiceSpec) => string> {
         sts: j => toTypescript(j, "sts"),
         cs: j => toTypescript(j, "c#"),
         py: j => toPython(j, "py"),
+        jacs: toJacscript,
         /*
         "cpp": toHPP,
         */

@@ -18,7 +18,7 @@ declare class SystemRole extends Role {
     activeThreshold: JDRegisterNum
     streamingPreferredInterval: JDRegisterNum
     variant: JDRegisterNum
-    statusCode: JDRegisterArray
+    statusCode: JDRegisterArray & { code: number, vendor_code: number }
     instanceName: JDRegisterString
     active: JDEvent
     inactive: JDEvent
@@ -30,7 +30,7 @@ declare class SystemRole extends Role {
 // Service: Base service
 declare class BaseRole extends Role {
     instanceName: JDRegisterString
-    statusCode: JDRegisterArray
+    statusCode: JDRegisterArray & { code: number, vendor_code: number }
     statusCodeChanged: JDEvent
 }
 
@@ -43,7 +43,7 @@ declare class SensorRole extends Role {
 
 // Service: Accelerometer
 declare class AccelerometerRole extends SensorRole {
-    forces: JDRegisterArray
+    forces: JDRegisterArray & { x: number, y: number, z: number }
     forcesError: JDRegisterNum
     maxForce: JDRegisterNum
     maxForcesSupported: JDRegisterArray
@@ -66,7 +66,7 @@ declare namespace roles {
 
 // Service: Arcade Gamepad
 declare class ArcadeGamepadRole extends SensorRole {
-    buttons: JDRegisterArray
+    buttons: JDRegisterArray & { button: number, pressure: number }
     availableButtons: JDRegisterArray
     down: JDEvent
     up: JDEvent
@@ -204,7 +204,7 @@ declare namespace roles {
 
 // Service: Color
 declare class ColorRole extends SensorRole {
-    color: JDRegisterArray
+    color: JDRegisterArray & { red: number, green: number, blue: number }
 }
 declare namespace roles {
     function color(): ColorRole
@@ -296,7 +296,7 @@ declare namespace roles {
 
 // Service: Gamepad
 declare class GamepadRole extends SensorRole {
-    direction: JDRegisterArray
+    direction: JDRegisterArray & { buttons: number, x: number, y: number }
     variant: JDRegisterNum
     buttonsAvailable: JDRegisterNum
     buttonsChanged: JDEvent
@@ -307,7 +307,7 @@ declare namespace roles {
 
 // Service: Gyroscope
 declare class GyroscopeRole extends SensorRole {
-    rotationRates: JDRegisterArray
+    rotationRates: JDRegisterArray & { x: number, y: number, z: number }
     rotationRatesError: JDRegisterNum
     maxRate: JDRegisterNum
     maxRatesSupported: JDRegisterArray
@@ -363,7 +363,7 @@ declare namespace roles {
 // Service: Indexed screen
 declare class IndexedScreenRole extends Role {
     brightness: JDRegisterNum
-    palette: JDRegisterArray
+    palette: JDRegisterArray & { blue: number, green: number, red: number, padding: number }
     bitsPerPixel: JDRegisterNum
     width: JDRegisterNum
     height: JDRegisterNum
@@ -384,7 +384,7 @@ declare namespace roles {
 
 // Service: LED
 declare class LedRole extends Role {
-    color: JDRegisterArray
+    color: JDRegisterArray & { red: number, green: number, blue: number }
     maxPower: JDRegisterNum
     ledCount: JDRegisterNum
     waveLength: JDRegisterNum
@@ -440,7 +440,7 @@ declare namespace roles {
 
 // Service: Magnetometer
 declare class MagnetometerRole extends SensorRole {
-    forces: JDRegisterArray
+    forces: JDRegisterArray & { x: number, y: number, z: number }
     forcesError: JDRegisterNum
 }
 declare namespace roles {
@@ -567,10 +567,10 @@ declare class ProtoTestRole extends Role {
     roString: JDRegisterString
     rwBytes: JDRegisterNum
     roBytes: JDRegisterNum
-    rwI8U8U16I32: JDRegisterArray
-    roI8U8U16I32: JDRegisterArray
-    rwU8String: JDRegisterArray
-    roU8String: JDRegisterArray
+    rwI8U8U16I32: JDRegisterArray & { i8: number, u8: number, u16: number, i32: number }
+    roI8U8U16I32: JDRegisterArray & { i8: number, u8: number, u16: number, i32: number }
+    rwU8String: JDRegisterArray & { u8: number, string: number }
+    roU8String: JDRegisterArray & { u8: number, string: number }
     eBool: JDEvent
     eU32: JDEvent
     eI32: JDEvent
@@ -610,7 +610,7 @@ declare namespace roles {
 
 // Service: Real time clock
 declare class RealTimeClockRole extends SensorRole {
-    localTime: JDRegisterArray
+    localTime: JDRegisterArray & { year: number, month: number, day_of_month: number, day_of_week: number, hour: number, min: number, sec: number }
     drift: JDRegisterNum
     precision: JDRegisterNum
     variant: JDRegisterNum
@@ -669,7 +669,7 @@ declare namespace roles {
 
 // Service: Rover
 declare class RoverRole extends SensorRole {
-    kinematics: JDRegisterArray
+    kinematics: JDRegisterArray & { x: number, y: number, vx: number, vy: number, heading: number }
 }
 declare namespace roles {
     function rover(): RoverRole
@@ -677,7 +677,7 @@ declare namespace roles {
 
 // Service: Sensor Aggregator
 declare class SensorAggregatorRole extends Role {
-    inputs: JDRegisterArray
+    inputs: JDRegisterArray & { sampling_interval: number, samples_in_window: number, reserved: number, device_id: number, service_class: number, service_num: number, sample_size: number, sample_type: number, sample_shift: number }
     numSamples: JDRegisterNum
     sampleSize: JDRegisterNum
     streamingSamples: JDRegisterNum
@@ -863,7 +863,7 @@ declare class VerifiedTelemetryRole extends Role {
     telemetryStatus: JDRegisterNum
     telemetryStatusInterval: JDRegisterNum
     fingerprintType: JDRegisterNum
-    fingerprintTemplate: JDRegisterArray
+    fingerprintTemplate: JDRegisterArray & { confidence: number, template: number }
     telemetryStatusChange: JDEvent
     fingerprintTemplateChange: JDEvent
 }

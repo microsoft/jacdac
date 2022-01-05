@@ -2015,9 +2015,19 @@ function toJacscript(info: jdspec.ServiceSpec) {
 
         let tp = ""
         if (isRegister(pkt.kind)) {
-            tp = cmt.needsStruct ? "JDRegisterArray" : "JDRegisterNum"
-            if (pkt.fields.length == 1 && pkt.fields[0].type == "string")
-                tp = "JDRegisterString"
+            if (cmt.needsStruct) {
+                tp = `JDRegisterArray`
+                if (pkt.fields.length > 1) {
+                    const fields = pkt.fields
+                        .map(f => `${f.name}: number`)
+                        .join(", ")
+                    tp += ` & { ${fields} }`
+                }
+            } else {
+                if (pkt.fields.length == 1 && pkt.fields[0].type == "string")
+                    tp = "JDRegisterString"
+                else tp = "JDRegisterNum"
+            }
         } else if (pkt.kind == "event") {
             tp = "JDEvent"
         }

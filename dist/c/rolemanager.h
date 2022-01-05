@@ -56,34 +56,19 @@ typedef struct jd_role_manager_set_role {
 #define JD_ROLE_MANAGER_CMD_CLEAR_ALL_ROLES 0x84
 
 /**
- * Argument: stored_roles pipe (bytes). Return all roles stored internally.
+ * Argument: roles pipe (bytes). List all roles and bindings required by the current program. `device_id` and `service_idx` are `0` if role is unbound.
  */
-#define JD_ROLE_MANAGER_CMD_LIST_STORED_ROLES 0x82
+#define JD_ROLE_MANAGER_CMD_LIST_ROLES 0x83
 
 /**
- * Return all roles stored internally.
+ * List all roles and bindings required by the current program. `device_id` and `service_idx` are `0` if role is unbound.
  */
-typedef struct jd_role_manager_stored_roles {
-    uint64_t device_id;
-    uint8_t service_idx;
-    char role[0];  // string
-} jd_role_manager_stored_roles_t;
-
-
-/**
- * Argument: required_roles pipe (bytes). List all roles required by the current program. `device_id` and `service_idx` are `0` if role is unbound.
- */
-#define JD_ROLE_MANAGER_CMD_LIST_REQUIRED_ROLES 0x83
-
-/**
- * List all roles required by the current program. `device_id` and `service_idx` are `0` if role is unbound.
- */
-typedef struct jd_role_manager_required_roles {
+typedef struct jd_role_manager_roles {
     uint64_t device_id;
     uint32_t service_class;
     uint8_t service_idx;
     char role[0];  // string
-} jd_role_manager_required_roles_t;
+} jd_role_manager_roles_t;
 
 
 /**

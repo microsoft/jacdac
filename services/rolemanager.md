@@ -57,28 +57,17 @@ Set role. Can set to empty to remove role binding.
 
 Remove all role bindings.
 
-    command list_stored_roles @ 0x82 {
-        stored_roles: pipe
+    command list_roles @ 0x83 {
+        roles: pipe
     }
-    pipe report stored_roles {
-        device_id: devid
-        service_idx: u8
-        role: string
-    }
-
-Return all roles stored internally.
-
-    command list_required_roles @ 0x83 {
-        required_roles: pipe
-    }
-    pipe report required_roles {
+    pipe report roles {
         device_id: devid
         service_class: u32
         service_idx: u8
         role: string
     }
 
-List all roles required by the current program. `device_id` and `service_idx` are `0` if role is unbound.
+List all roles and bindings required by the current program. `device_id` and `service_idx` are `0` if role is unbound.
 
 ## Events
 

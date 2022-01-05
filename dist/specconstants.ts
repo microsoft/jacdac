@@ -3485,34 +3485,18 @@ export enum RoleManagerCmd {
     ClearAllRoles = 0x84,
 
     /**
-     * Argument: stored_roles pipe (bytes). Return all roles stored internally.
+     * Argument: roles pipe (bytes). List all roles and bindings required by the current program. `device_id` and `service_idx` are `0` if role is unbound.
      *
      * ```
-     * const [storedRoles] = jdunpack<[Uint8Array]>(buf, "b[12]")
+     * const [roles] = jdunpack<[Uint8Array]>(buf, "b[12]")
      * ```
      */
-    ListStoredRoles = 0x82,
-
-    /**
-     * Argument: required_roles pipe (bytes). List all roles required by the current program. `device_id` and `service_idx` are `0` if role is unbound.
-     *
-     * ```
-     * const [requiredRoles] = jdunpack<[Uint8Array]>(buf, "b[12]")
-     * ```
-     */
-    ListRequiredRoles = 0x83,
+    ListRoles = 0x83,
 }
 
 
 /**
- * pipe_report StoredRoles
- * ```
- * const [deviceId, serviceIdx, role] = jdunpack<[Uint8Array, number, string]>(buf, "b[8] u8 s")
- * ```
- */
-
-/**
- * pipe_report RequiredRoles
+ * pipe_report Roles
  * ```
  * const [deviceId, serviceClass, serviceIdx, role] = jdunpack<[Uint8Array, number, number, string]>(buf, "b[8] u32 u8 s")
  * ```

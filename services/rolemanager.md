@@ -33,18 +33,6 @@ Indicates if all required roles have been allocated to devices.
 
 ## Commands
 
-    command get_role @ 0x80 {
-        device_id: devid
-        service_idx: u8
-    }
-    report {
-        device_id: devid
-        service_idx: u8
-        role: string
-    }
-
-Get the role corresponding to given device identifer. Returns empty string if unset.
-
     command set_role @ 0x81 {
         device_id: devid
         service_idx: u8

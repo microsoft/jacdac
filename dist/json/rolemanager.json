@@ -133,53 +133,6 @@
     },
     {
       "kind": "command",
-      "name": "get_role",
-      "identifier": 128,
-      "description": "Get the role corresponding to given device identifer. Returns empty string if unset.",
-      "fields": [
-        {
-          "name": "device_id",
-          "type": "devid",
-          "storage": 8
-        },
-        {
-          "name": "service_idx",
-          "type": "u8",
-          "storage": 1,
-          "isSimpleType": true
-        }
-      ],
-      "hasReport": true,
-      "packFormat": "b[8] u8"
-    },
-    {
-      "kind": "report",
-      "name": "get_role",
-      "identifier": 128,
-      "description": "Get the role corresponding to given device identifer. Returns empty string if unset.",
-      "fields": [
-        {
-          "name": "device_id",
-          "type": "devid",
-          "storage": 8
-        },
-        {
-          "name": "service_idx",
-          "type": "u8",
-          "storage": 1,
-          "isSimpleType": true
-        },
-        {
-          "name": "role",
-          "type": "string",
-          "storage": 0
-        }
-      ],
-      "secondary": true,
-      "packFormat": "b[8] u8 s"
-    },
-    {
-      "kind": "command",
       "name": "set_role",
       "identifier": 129,
       "description": "Set role. Can set to empty to remove role binding.",

@@ -20,26 +20,6 @@
 #define JD_ROLE_MANAGER_REG_ALL_ROLES_ALLOCATED 0x181
 
 /**
- * Get the role corresponding to given device identifer. Returns empty string if unset.
- */
-#define JD_ROLE_MANAGER_CMD_GET_ROLE 0x80
-typedef struct jd_role_manager_get_role {
-    uint64_t device_id;
-    uint8_t service_idx;
-} jd_role_manager_get_role_t;
-
-
-/**
- * Report: 
- */
-typedef struct jd_role_manager_get_role_report {
-    uint64_t device_id;
-    uint8_t service_idx;
-    char role[0];  // string
-} jd_role_manager_get_role_report_t;
-
-
-/**
  * Set role. Can set to empty to remove role binding.
  */
 #define JD_ROLE_MANAGER_CMD_SET_ROLE 0x81

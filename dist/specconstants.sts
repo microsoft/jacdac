@@ -3767,22 +3767,6 @@ namespace jacdac {
 
     export const enum RoleManagerCmd {
         /**
-         * Get the role corresponding to given device identifer. Returns empty string if unset.
-         *
-         * ```
-         * const [deviceId, serviceIdx] = jdunpack<[Buffer, number]>(buf, "b[8] u8")
-         * ```
-         */
-        GetRole = 0x80,
-
-        /**
-         * report GetRole
-         * ```
-         * const [deviceId, serviceIdx, role] = jdunpack<[Buffer, number, string]>(buf, "b[8] u8 s")
-         * ```
-         */
-
-        /**
          * Set role. Can set to empty to remove role binding.
          *
          * ```

@@ -3455,22 +3455,6 @@ export enum RoleManagerReg {
 
 export enum RoleManagerCmd {
     /**
-     * Get the role corresponding to given device identifer. Returns empty string if unset.
-     *
-     * ```
-     * const [deviceId, serviceIdx] = jdunpack<[Uint8Array, number]>(buf, "b[8] u8")
-     * ```
-     */
-    GetRole = 0x80,
-
-    /**
-     * report GetRole
-     * ```
-     * const [deviceId, serviceIdx, role] = jdunpack<[Uint8Array, number, string]>(buf, "b[8] u8 s")
-     * ```
-     */
-
-    /**
      * Set role. Can set to empty to remove role binding.
      *
      * ```

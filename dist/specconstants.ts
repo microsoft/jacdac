@@ -1815,7 +1815,7 @@ export enum HidMouseCmd {
      * A `DoubleClick` is two clicks with `150ms` gap between them (that is, `100ms` first click, `150ms` gap, `100ms` second click).
      *
      * ```
-     * const [buttons, event] = jdunpack<[HidMouseButton, HidMouseButtonEvent]>(buf, "u16 u8")
+     * const [buttons, ev] = jdunpack<[HidMouseButton, HidMouseButtonEvent]>(buf, "u16 u8")
      * ```
      */
     SetButton = 0x80,
@@ -3060,7 +3060,7 @@ export enum ProtoTestReg {
      * A read write u8, string register.
      *
      * ```
-     * const [u8, string] = jdunpack<[number, string]>(buf, "u8 s")
+     * const [u8, str] = jdunpack<[number, string]>(buf, "u8 s")
      * ```
      */
     RwU8String = 0x87,
@@ -3069,7 +3069,7 @@ export enum ProtoTestReg {
      * A read only u8, string register.. Mirrors rw_u8_string.
      *
      * ```
-     * const [u8, string] = jdunpack<[number, string]>(buf, "u8 s")
+     * const [u8, str] = jdunpack<[number, string]>(buf, "u8 s")
      * ```
      */
     RoU8String = 0x187,
@@ -3077,10 +3077,10 @@ export enum ProtoTestReg {
 
 export enum ProtoTestEvent {
     /**
-     * Argument: bool bool (uint8_t). An event raised when rw_bool is modified
+     * Argument: bo bool (uint8_t). An event raised when rw_bool is modified
      *
      * ```
-     * const [bool] = jdunpack<[number]>(buf, "u8")
+     * const [bo] = jdunpack<[number]>(buf, "u8")
      * ```
      */
     EBool = 0x81,
@@ -3104,10 +3104,10 @@ export enum ProtoTestEvent {
     EI32 = 0x83,
 
     /**
-     * Argument: string string (bytes). An event raised when rw_string is modified
+     * Argument: str string (bytes). An event raised when rw_string is modified
      *
      * ```
-     * const [string] = jdunpack<[string]>(buf, "s")
+     * const [str] = jdunpack<[string]>(buf, "s")
      * ```
      */
     EString = 0x84,
@@ -3134,7 +3134,7 @@ export enum ProtoTestEvent {
      * An event raised when rw_u8_string is modified
      *
      * ```
-     * const [u8, string] = jdunpack<[number, string]>(buf, "u8 s")
+     * const [u8, str] = jdunpack<[number, string]>(buf, "u8 s")
      * ```
      */
     EU8String = 0x87,
@@ -3142,10 +3142,10 @@ export enum ProtoTestEvent {
 
 export enum ProtoTestCmd {
     /**
-     * Argument: bool bool (uint8_t). A command to set rw_bool.
+     * Argument: bo bool (uint8_t). A command to set rw_bool.
      *
      * ```
-     * const [bool] = jdunpack<[number]>(buf, "u8")
+     * const [bo] = jdunpack<[number]>(buf, "u8")
      * ```
      */
     CBool = 0x81,
@@ -3169,10 +3169,10 @@ export enum ProtoTestCmd {
     CI32 = 0x83,
 
     /**
-     * Argument: string string (bytes). A command to set rw_string.
+     * Argument: str string (bytes). A command to set rw_string.
      *
      * ```
-     * const [string] = jdunpack<[string]>(buf, "s")
+     * const [str] = jdunpack<[string]>(buf, "s")
      * ```
      */
     CString = 0x84,
@@ -3199,7 +3199,7 @@ export enum ProtoTestCmd {
      * A command to set rw_u8_string.
      *
      * ```
-     * const [u8, string] = jdunpack<[number, string]>(buf, "u8 s")
+     * const [u8, str] = jdunpack<[number, string]>(buf, "u8 s")
      * ```
      */
     CU8String = 0x87,

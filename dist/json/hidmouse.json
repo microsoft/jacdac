@@ -135,7 +135,7 @@
           "storage": 2
         },
         {
-          "name": "event",
+          "name": "ev",
           "type": "ButtonEvent",
           "storage": 1
         }

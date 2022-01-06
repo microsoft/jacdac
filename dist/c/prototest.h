@@ -84,7 +84,7 @@ typedef struct jd_proto_test_ro_i8_u8_u16_i32 {
 #define JD_PROTO_TEST_REG_RW_U8_STRING 0x87
 typedef struct jd_proto_test_rw_u8_string {
     uint8_t u8;
-    char string[0];  // string
+    char str[0];  // string
 } jd_proto_test_rw_u8_string_t;
 
 
@@ -94,12 +94,12 @@ typedef struct jd_proto_test_rw_u8_string {
 #define JD_PROTO_TEST_REG_RO_U8_STRING 0x187
 typedef struct jd_proto_test_ro_u8_string {
     uint8_t u8;
-    char string[0];  // string
+    char str[0];  // string
 } jd_proto_test_ro_u8_string_t;
 
 
 /**
- * Argument: bool bool (uint8_t). An event raised when rw_bool is modified
+ * Argument: bo bool (uint8_t). An event raised when rw_bool is modified
  */
 #define JD_PROTO_TEST_EV_E_BOOL 0x81
 
@@ -114,7 +114,7 @@ typedef struct jd_proto_test_ro_u8_string {
 #define JD_PROTO_TEST_EV_E_I32 0x83
 
 /**
- * Argument: string string (bytes). An event raised when rw_string is modified
+ * Argument: str string (bytes). An event raised when rw_string is modified
  */
 #define JD_PROTO_TEST_EV_E_STRING 0x84
 
@@ -141,12 +141,12 @@ typedef struct jd_proto_test_e_i8_u8_u16_i32 {
 #define JD_PROTO_TEST_EV_E_U8_STRING 0x87
 typedef struct jd_proto_test_e_u8_string {
     uint8_t u8;
-    char string[0];  // string
+    char str[0];  // string
 } jd_proto_test_e_u8_string_t;
 
 
 /**
- * Argument: bool bool (uint8_t). A command to set rw_bool.
+ * Argument: bo bool (uint8_t). A command to set rw_bool.
  */
 #define JD_PROTO_TEST_CMD_C_BOOL 0x81
 
@@ -161,7 +161,7 @@ typedef struct jd_proto_test_e_u8_string {
 #define JD_PROTO_TEST_CMD_C_I32 0x83
 
 /**
- * Argument: string string (bytes). A command to set rw_string.
+ * Argument: str string (bytes). A command to set rw_string.
  */
 #define JD_PROTO_TEST_CMD_C_STRING 0x84
 
@@ -188,7 +188,7 @@ typedef struct jd_proto_test_c_i8_u8_u16_i32 {
 #define JD_PROTO_TEST_CMD_C_U8_STRING 0x87
 typedef struct jd_proto_test_c_u8_string {
     uint8_t u8;
-    char string[0];  // string
+    char str[0];  // string
 } jd_proto_test_c_u8_string_t;
 
 

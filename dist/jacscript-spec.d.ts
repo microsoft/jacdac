@@ -569,8 +569,8 @@ declare class ProtoTestRole extends Role {
     roBytes: JDRegisterNum
     rwI8U8U16I32: JDRegisterArray & { i8: number, u8: number, u16: number, i32: number }
     roI8U8U16I32: JDRegisterArray & { i8: number, u8: number, u16: number, i32: number }
-    rwU8String: JDRegisterArray & { u8: number, string: number }
-    roU8String: JDRegisterArray & { u8: number, string: number }
+    rwU8String: JDRegisterArray & { u8: number, str: number }
+    roU8String: JDRegisterArray & { u8: number, str: number }
     eBool: JDEvent
     eU32: JDEvent
     eI32: JDEvent

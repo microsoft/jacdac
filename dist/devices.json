@@ -933,6 +933,7 @@
     "description": "",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-rgb-led-generic-60-0.1/profile/npx.c",
+    "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/altium/reference-designs/JacdacRgbLedGeneric%2060-0.2",
     "link": "https://github.com/microsoft/jacdac-msr-modules",
     "services": [
       309264608
@@ -974,6 +975,7 @@
     "description": "",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-rgb-led-ring-37-2.1/profile/npx.c",
+    "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/altium/reference-designs/JacdacRgbLedRing8%2037-2.2",
     "link": "https://github.com/microsoft/jacdac-msr-modules",
     "services": [
       309264608
@@ -1207,6 +1209,7 @@
     "description": "",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-temp-humidity-18-1.1/profile/env3.c",
+    "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/altium/reference-designs/JacdacRHTemp%2018-1.2",
     "link": "https://github.com/microsoft/jacdac-msr-modules",
     "services": [
       337754823,

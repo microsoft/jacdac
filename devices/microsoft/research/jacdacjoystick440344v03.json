@@ -4,6 +4,8 @@
     "company": "Microsoft Research",
     "link": "https://github.com/microsoft/jacdac-padauk",
     "services": [277836886],
+    "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/altium/reference-designs/JacdacJoystick%2044-0.4",
+    "firmwareSource": "https://github.com/microsoft/jacdac-padauk/tree/main/jm-joystick-44-0.2",
     "productIdentifiers": [832285283],
     "version": "0.3",
     "designIdentifier": "44",

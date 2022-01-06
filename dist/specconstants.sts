@@ -1,5 +1,5 @@
 namespace jacdac {
-    // Service: Common registers and commands
+    // Service Common registers and commands constants
     export const ANNOUNCE_INTERVAL = 0x1f4
 
     export const enum SystemReadingThreshold { // uint8_t
@@ -302,7 +302,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Base service
+    // Service Base service constants
     export const enum BaseCmd {
         /**
          * This report may be emitted by a server in response to a command (action or register operation)
@@ -358,7 +358,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Sensor
+    // Service Sensor constants
     export const enum SensorReg {
         /**
          * Read-write # uint8_t. Asks device to stream a given number of samples
@@ -391,7 +391,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Accelerometer
+    // Service Accelerometer constants
     export const SRV_ACCELEROMETER = 0x1f140409
     export const enum AccelerometerReg {
         /**
@@ -508,7 +508,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Arcade Gamepad
+    // Service Arcade Gamepad constants
     export const SRV_ARCADE_GAMEPAD = 0x1deaa06e
 
     export const enum ArcadeGamepadButton { // uint8_t
@@ -580,7 +580,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Arcade Sound
+    // Service Arcade Sound constants
     export const SRV_ARCADE_SOUND = 0x1fc63606
     export const enum ArcadeSoundCmd {
         /**
@@ -628,7 +628,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Azure IoT Hub Health
+    // Service Azure IoT Hub Health constants
     export const SRV_AZURE_IOT_HUB_HEALTH = 0x1462eefc
 
     export const enum AzureIotHubHealthConnectionStatus { // uint16_t
@@ -712,7 +712,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Barcode reader
+    // Service Barcode reader constants
     export const SRV_BARCODE_READER = 0x1c739e6c
 
     export const enum BarcodeReaderFormat { // uint8_t
@@ -779,7 +779,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Barometer
+    // Service Barometer constants
     export const SRV_BAROMETER = 0x1e117cea
     export const enum BarometerReg {
         /**
@@ -803,7 +803,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: bit:radio
+    // Service bit:radio constants
     export const SRV_BIT_RADIO = 0x1ac986cf
     export const enum BitRadioReg {
         /**
@@ -910,7 +910,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Bootloader
+    // Service Bootloader constants
     export const SRV_BOOTLOADER = 0x1ffa9948
 
     export const enum BootloaderError { // uint32_t
@@ -978,7 +978,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Braille display
+    // Service Braille display constants
     export const SRV_BRAILLE_DISPLAY = 0x13bfb7cc
     export const enum BrailleDisplayReg {
         /**
@@ -1011,7 +1011,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Bridge
+    // Service Bridge constants
     export const SRV_BRIDGE = 0x1fe5b46f
     export const enum BridgeReg {
         /**
@@ -1026,7 +1026,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Button
+    // Service Button constants
     export const SRV_BUTTON = 0x1473a263
     export const enum ButtonReg {
         /**
@@ -1086,7 +1086,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Buzzer
+    // Service Buzzer constants
     export const SRV_BUZZER = 0x1b57b1d7
     export const enum BuzzerReg {
         /**
@@ -1120,7 +1120,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Capacitive Button
+    // Service Capacitive Button constants
     export const SRV_CAPACITIVE_BUTTON = 0x2865adc9
     export const enum CapacitiveButtonReg {
         /**
@@ -1143,7 +1143,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Character Screen
+    // Service Character Screen constants
     export const SRV_CHARACTER_SCREEN = 0x1f37c56a
 
     export const enum CharacterScreenVariant { // uint8_t
@@ -1221,7 +1221,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: CODAL Message Bus
+    // Service CODAL Message Bus constants
     export const SRV_CODAL_MESSAGE_BUS = 0x121ff81d
     export const enum CodalMessageBusCmd {
         /**
@@ -1248,7 +1248,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Color
+    // Service Color constants
     export const SRV_COLOR = 0x1630d567
     export const enum ColorReg {
         /**
@@ -1263,7 +1263,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Compass
+    // Service Compass constants
     export const SRV_COMPASS = 0x15b7b9bf
     export const enum CompassReg {
         /**
@@ -1303,7 +1303,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Control
+    // Service Control constants
     export const SRV_CONTROL = 0x0
 
     export const enum ControlAnnounceFlags { // uint16_t
@@ -1514,11 +1514,11 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Dashboard
+    // Service Dashboard constants
     export const SRV_DASHBOARD = 0x1be59107
 }
 namespace jacdac {
-    // Service: Distance
+    // Service Distance constants
     export const SRV_DISTANCE = 0x141a6b8a
 
     export const enum DistanceVariant { // uint8_t
@@ -1581,7 +1581,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: DMX
+    // Service DMX constants
     export const SRV_DMX = 0x11cf8c05
     export const enum DmxReg {
         /**
@@ -1607,7 +1607,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Dot Matrix
+    // Service Dot Matrix constants
     export const SRV_DOT_MATRIX = 0x110d154b
 
     export const enum DotMatrixVariant { // uint8_t
@@ -1667,7 +1667,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Equivalent CO₂
+    // Service Equivalent CO₂ constants
     export const SRV_E_CO2 = 0x169c9dc6
 
     export const enum ECO2Variant { // uint8_t
@@ -1726,7 +1726,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Flex
+    // Service Flex constants
     export const SRV_FLEX = 0x1f47c6c6
     export const enum FlexReg {
         /**
@@ -1750,7 +1750,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Gamepad
+    // Service Gamepad constants
     export const SRV_GAMEPAD = 0x108f7456
 
     export const enum GamepadButtons { // uint32_t
@@ -1840,7 +1840,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Gyroscope
+    // Service Gyroscope constants
     export const SRV_GYROSCOPE = 0x1e1b06f2
     export const enum GyroscopeReg {
         /**
@@ -1883,7 +1883,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Heart Rate
+    // Service Heart Rate constants
     export const SRV_HEART_RATE = 0x166c6dc4
 
     export const enum HeartRateVariant { // uint8_t
@@ -1930,7 +1930,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: HID Keyboard
+    // Service HID Keyboard constants
     export const SRV_HID_KEYBOARD = 0x18b05b6a
 
     export const enum HidKeyboardModifiers { // uint8_t
@@ -1983,7 +1983,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: HID Mouse
+    // Service HID Mouse constants
     export const SRV_HID_MOUSE = 0x1885dc1c
 
     export const enum HidMouseButton { // uint16_t
@@ -2042,7 +2042,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Humidity
+    // Service Humidity constants
     export const SRV_HUMIDITY = 0x16c810b8
     export const enum HumidityReg {
         /**
@@ -2084,7 +2084,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Illuminance
+    // Service Illuminance constants
     export const SRV_ILLUMINANCE = 0x1e6ecaf2
     export const enum IlluminanceReg {
         /**
@@ -2108,7 +2108,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Indexed screen
+    // Service Indexed screen constants
     export const SRV_INDEXED_SCREEN = 0x16fa36e5
     export const enum IndexedScreenCmd {
         /**
@@ -2221,11 +2221,11 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Infrastructure
+    // Service Infrastructure constants
     export const SRV_INFRASTRUCTURE = 0x1e1589eb
 }
 namespace jacdac {
-    // Service: LED
+    // Service LED constants
     export const SRV_LED = 0x1e3048f8
 
     export const enum LedVariant { // uint8_t
@@ -2308,7 +2308,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: LED Pixel
+    // Service LED Pixel constants
     export const SRV_LED_PIXEL = 0x126f00e0
 
     export const enum LedPixelLightType { // uint8_t
@@ -2441,7 +2441,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Light bulb
+    // Service Light bulb constants
     export const SRV_LIGHT_BULB = 0x1cab054c
     export const enum LightBulbReg {
         /**
@@ -2466,7 +2466,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Light level
+    // Service Light level constants
     export const SRV_LIGHT_LEVEL = 0x17dc9a1c
 
     export const enum LightLevelVariant { // uint8_t
@@ -2507,7 +2507,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Logger
+    // Service Logger constants
     export const SRV_LOGGER = 0x12dc1fca
 
     export const enum LoggerPriority { // uint8_t
@@ -2578,7 +2578,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Magnetometer
+    // Service Magnetometer constants
     export const SRV_MAGNETOMETER = 0x13029088
     export const enum MagnetometerReg {
         /**
@@ -2611,7 +2611,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Matrix Keypad
+    // Service Matrix Keypad constants
     export const SRV_MATRIX_KEYPAD = 0x13062dc8
 
     export const enum MatrixKeypadVariant { // uint8_t
@@ -2719,7 +2719,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Microphone
+    // Service Microphone constants
     export const SRV_MICROPHONE = 0x113dac86
     export const enum MicrophoneCmd {
         /**
@@ -2749,7 +2749,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: MIDI output
+    // Service MIDI output constants
     export const SRV_MIDI_OUTPUT = 0x1a848cd7
     export const enum MidiOutputReg {
         /**
@@ -2780,7 +2780,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Model Runner
+    // Service Model Runner constants
     export const SRV_MODEL_RUNNER = 0x140f9a78
 
     export const enum ModelRunnerModelFormat { // uint32_t
@@ -2940,7 +2940,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Motion
+    // Service Motion constants
     export const SRV_MOTION = 0x1179a749
 
     export const enum MotionVariant { // uint8_t
@@ -2996,7 +2996,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Motor
+    // Service Motor constants
     export const SRV_MOTOR = 0x17004cd8
     export const enum MotorReg {
         /**
@@ -3049,7 +3049,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Potentiometer
+    // Service Potentiometer constants
     export const SRV_POTENTIOMETER = 0x1f274746
 
     export const enum PotentiometerVariant { // uint8_t
@@ -3081,7 +3081,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Power
+    // Service Power constants
     export const SRV_POWER = 0x1fa4c95a
 
     export const enum PowerPowerStatus { // uint8_t
@@ -3208,7 +3208,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Pressure Button
+    // Service Pressure Button constants
     export const SRV_PRESSURE_BUTTON = 0x281740c3
     export const enum PressureButtonReg {
         /**
@@ -3223,7 +3223,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Protocol Test
+    // Service Protocol Test constants
     export const SRV_PROTO_TEST = 0x16c7466a
     export const enum ProtoTestReg {
         /**
@@ -3510,11 +3510,11 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Proxy
+    // Service Proxy constants
     export const SRV_PROXY = 0x16f19949
 }
 namespace jacdac {
-    // Service: Pulse Oximeter
+    // Service Pulse Oximeter constants
     export const SRV_PULSE_OXIMETER = 0x10bb4eb6
     export const enum PulseOximeterReg {
         /**
@@ -3538,7 +3538,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Rain gauge
+    // Service Rain gauge constants
     export const SRV_RAIN_GAUGE = 0x13734c95
     export const enum RainGaugeReg {
         /**
@@ -3562,7 +3562,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Real time clock
+    // Service Real time clock constants
     export const SRV_REAL_TIME_CLOCK = 0x1a8b1a28
 
     export const enum RealTimeClockVariant { // uint8_t
@@ -3625,7 +3625,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Reflected light
+    // Service Reflected light constants
     export const SRV_REFLECTED_LIGHT = 0x126c4cb2
 
     export const enum ReflectedLightVariant { // uint8_t
@@ -3657,7 +3657,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Relay
+    // Service Relay constants
     export const SRV_RELAY = 0x183fe656
 
     export const enum RelayVariant { // uint8_t
@@ -3700,7 +3700,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Random Number Generator
+    // Service Random Number Generator constants
     export const SRV_RNG = 0x1789f0a2
 
     export const enum RngVariant { // uint8_t
@@ -3738,7 +3738,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Role Manager
+    // Service Role Manager constants
     export const SRV_ROLE_MANAGER = 0x1e4b7e66
     export const enum RoleManagerReg {
         /**
@@ -3809,7 +3809,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Rotary encoder
+    // Service Rotary encoder constants
     export const SRV_ROTARY_ENCODER = 0x10fa29c9
     export const enum RotaryEncoderReg {
         /**
@@ -3844,7 +3844,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Rover
+    // Service Rover constants
     export const SRV_ROVER = 0x19f4d06b
     export const enum RoverReg {
         /**
@@ -3859,7 +3859,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Sensor Aggregator
+    // Service Sensor Aggregator constants
     export const SRV_SENSOR_AGGREGATOR = 0x1d90e1c5
 
     export const enum SensorAggregatorSampleType { // uint8_t
@@ -3928,7 +3928,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Servo
+    // Service Servo constants
     export const SRV_SERVO = 0x12fc9103
     export const enum ServoReg {
         /**
@@ -4024,7 +4024,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Settings
+    // Service Settings constants
     export const SRV_SETTINGS = 0x1107dc4a
     export const enum SettingsCmd {
         /**
@@ -4111,7 +4111,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: 7-segment display
+    // Service 7-segment display constants
     export const SRV_SEVEN_SEGMENT_DISPLAY = 0x196158f7
     export const enum SevenSegmentDisplayReg {
         /**
@@ -4178,7 +4178,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Soil moisture
+    // Service Soil moisture constants
     export const SRV_SOIL_MOISTURE = 0x1d4aa3b3
 
     export const enum SoilMoistureVariant { // uint8_t
@@ -4219,7 +4219,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Solenoid
+    // Service Solenoid constants
     export const SRV_SOLENOID = 0x171723ca
 
     export const enum SolenoidVariant { // uint8_t
@@ -4253,7 +4253,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Sound level
+    // Service Sound level constants
     export const SRV_SOUND_LEVEL = 0x14ad1a5d
     export const enum SoundLevelReg {
         /**
@@ -4309,7 +4309,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Sound player
+    // Service Sound player constants
     export const SRV_SOUND_PLAYER = 0x1403d338
     export const enum SoundPlayerReg {
         /**
@@ -4358,7 +4358,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Sound Spectrum
+    // Service Sound Spectrum constants
     export const SRV_SOUND_SPECTRUM = 0x157abc1e
     export const enum SoundSpectrumReg {
         /**
@@ -4419,7 +4419,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Speech synthesis
+    // Service Speech synthesis constants
     export const SRV_SPEECH_SYNTHESIS = 0x1204d995
     export const enum SpeechSynthesisReg {
         /**
@@ -4486,7 +4486,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Switch
+    // Service Switch constants
     export const SRV_SWITCH = 0x1ad29402
 
     export const enum SwitchVariant { // uint8_t
@@ -4554,7 +4554,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: TCP
+    // Service TCP constants
     export const SRV_TCP = 0x1b43b70b
 
     export const enum TcpTcpError { // int32_t
@@ -4622,7 +4622,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Temperature
+    // Service Temperature constants
     export const SRV_TEMPERATURE = 0x1421bac7
 
     export const enum TemperatureVariant { // uint8_t
@@ -4683,7 +4683,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Traffic Light
+    // Service Traffic Light constants
     export const SRV_TRAFFIC_LIGHT = 0x15c38d9b
     export const enum TrafficLightReg {
         /**
@@ -4716,7 +4716,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Total Volatile organic compound
+    // Service Total Volatile organic compound constants
     export const SRV_TVOC = 0x12a5b597
     export const enum TvocReg {
         /**
@@ -4758,11 +4758,11 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Unique Brain
+    // Service Unique Brain constants
     export const SRV_UNIQUE_BRAIN = 0x103c4ee5
 }
 namespace jacdac {
-    // Service: UV index
+    // Service UV index constants
     export const SRV_UV_INDEX = 0x1f6e0d90
 
     export const enum UvIndexVariant { // uint8_t
@@ -4803,7 +4803,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Verified Telemetry
+    // Service Verified Telemetry constants
     export const SRV_VERIFIED_TELEMETRY = 0x2194841f
 
     export const enum VerifiedTelemetryStatus { // uint8_t
@@ -4895,7 +4895,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Vibration motor
+    // Service Vibration motor constants
     export const SRV_VIBRATION_MOTOR = 0x183fc4a2
     export const enum VibrationMotorCmd {
         /**
@@ -4911,7 +4911,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Water level
+    // Service Water level constants
     export const SRV_WATER_LEVEL = 0x147b62ed
 
     export const enum WaterLevelVariant { // uint8_t
@@ -4954,7 +4954,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Weight Scale
+    // Service Weight Scale constants
     export const SRV_WEIGHT_SCALE = 0x1f4d5040
 
     export const enum WeightScaleVariant { // uint8_t
@@ -5059,7 +5059,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: WIFI
+    // Service WIFI constants
     export const SRV_WIFI = 0x18aae1fa
 
     export const enum WifiAPFlags { // uint32_t
@@ -5265,7 +5265,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Wind direction
+    // Service Wind direction constants
     export const SRV_WIND_DIRECTION = 0x186be92b
     export const enum WindDirectionReg {
         /**
@@ -5289,7 +5289,7 @@ namespace jacdac {
 
 }
 namespace jacdac {
-    // Service: Wind speed
+    // Service Wind speed constants
     export const SRV_WIND_SPEED = 0x1b591bbf
     export const enum WindSpeedReg {
         /**

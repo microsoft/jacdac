@@ -1481,7 +1481,7 @@ function toH(info: jdspec.ServiceSpec) {
         if (pkt.derived) continue
 
         const cmt = addComment(pkt)
-        r += wrapComment(cmt.comment)
+        r += wrapComment("h", cmt.comment)
 
         if (
             !pkt.secondary &&
@@ -1625,12 +1625,19 @@ function addComment(pkt: jdspec.PacketInfo) {
     }
 }
 
-function wrapComment(comment: string) {
-    return (
-        "\n/**\n * " +
-        comment.replace(/\n+$/, "").replace(/\n/g, "\n * ") +
-        "\n */\n"
-    )
+function wrapComment(lang: string, comment: string) {
+    if (lang === "cs")
+        return (
+            "\n/// <summary>\n/// " +
+            comment.replace(/\n+$/, "").replace(/\n/g, "\n/// ") +
+            "\n/// </summary>\n"
+        )
+    else
+        return (
+            "\n/**\n * " +
+            comment.replace(/\n+$/, "").replace(/\n/g, "\n * ") +
+            "\n */\n"
+        )
 }
 
 function wrapSnippet(code: string) {
@@ -1653,21 +1660,31 @@ function packFormatForField(
     const szSuff = sz ? `[${sz}]` : ``
     let tsType = "number"
     let pyType = "float"
+    let csType = "float"
     let fmt = ""
     if (/^[fiu]\d+(\.\d+)?$/.test(fld.type) && 1 <= sz && sz <= 8) {
         fmt = fld.type
-        if (/^[iu]\d+$/.test(fld.type)) pyType = "int"
+        if (/^[iu]\d+$/.test(fld.type)) {
+            pyType = "int"
+            csType = "int"
+        }
+        if (/^[u]\d+$/.test(fld.type)) {
+            csType = "uint"
+        }
     } else if (/^u8\[\d*\]$/.exec(fld.type)) {
         fmt = "b" + szSuff
     } else if (info.enums[fld.type]) {
         fmt = canonicalType(info.enums[fld.type].storage)
-        pyType = tsType = upperCamel(info.camelName) + upperCamel(fld.type)
+        pyType =
+            tsType =
+            csType =
+                upperCamel(info.camelName) + upperCamel(fld.type)
         if (isStatic) tsType = TYPESCRIPT_STATIC_NAMESPACE + "." + tsType
     } else {
         switch (fld.type) {
             case "string":
                 fmt = "s" + szSuff
-                tsType = "string"
+                csType = tsType = "string"
                 pyType = "str"
                 break
             case "bytes":
@@ -1675,7 +1692,7 @@ function packFormatForField(
                 break
             case "string0":
                 fmt = "z"
-                tsType = "string"
+                csType = tsType = "string"
                 pyType = "str"
                 break
             case "devid":
@@ -1692,7 +1709,7 @@ function packFormatForField(
                 fmt = "u8"
                 if (useBooleans) {
                     tsType = "boolean"
-                    pyType = "bool"
+                    csType = pyType = "bool"
                 }
                 break
             default:
@@ -1703,8 +1720,9 @@ function packFormatForField(
     if (tsType == "number" && fmt && fmt[0] == "b") {
         tsType = "Buffer"
         pyType = "bytes"
+        csType = "byte[]"
     }
-    return { fmt, tsType, pyType }
+    return { fmt, tsType, pyType, csType }
 }
 
 /**
@@ -1748,6 +1766,7 @@ export function packInfo(
     const vars: string[] = []
     const vartp: string[] = []
     const vartppy: string[] = []
+    const vartpcs: string[] = []
     let fmt = ""
     let repeats: string[]
     let reptp: string[]
@@ -1777,9 +1796,11 @@ export function packInfo(
             fmt += f0.fmt + isArray + " "
             let tp = f0.tsType
             let tpy = f0.pyType
+            let tcs = f0.csType
             if (tp == "Buffer" && !isStatic) {
                 tp = "Uint8Array"
                 tpy = "bytes"
+                tcs = "byte[]"
             }
             tp += isArray
             if (isArray) tpy = "[" + tpy + "]"
@@ -1790,6 +1811,7 @@ export function packInfo(
                 vars.push(varname)
                 vartp.push(tp)
                 vartppy.push(tpy)
+                vartpcs.push(tcs)
             }
         }
     }
@@ -1837,6 +1859,7 @@ export function packInfo(
         names: vars,
         types: vartp,
         pyTypes: vartppy,
+        csTypes: vartpcs,
     }
 }
 
@@ -1844,9 +1867,9 @@ function memberSize(fld: jdspec.PacketMember) {
     return Math.abs(fld.storage)
 }
 
-function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
+function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "cs") {
     const sts = language === "sts"
-    const csharp = language === "c#"
+    const csharp = language === "cs"
     const useNamespace = sts || csharp
 
     const indent = useNamespace ? "    " : ""
@@ -1868,15 +1891,12 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
           } {\n`
         : ""
 
-    r += indent + "// Service: " + info.name + "\n"
     if (csharp) {
-        r += `${indent}public static class ${capitalize(
-            info.camelName
-        )}Constants\n${indent}{\n`
-    }
+        r += `${indent}public static partial class ServiceClasses\n${indent}{\n`
+    } else r += indent + "// Service " + info.name + " constants\n"
     if (info.shortId[0] != "_") {
         const name = csharp
-            ? "ServiceClass"
+            ? capitalize(info.camelName)
             : `SRV_${snakify(info.camelName).toLocaleUpperCase()}`
         r +=
             indent +
@@ -1941,7 +1961,7 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
         let meta = ""
         if (pkt.secondary || inner == "info") {
             if (pack)
-                text = wrapComment(
+                text = wrapComment(language,
                     `${pkt.kind} ${upperCamel(pkt.name)}${
                         pkt.client ? "" : wrapSnippet(pack)
                     }`
@@ -1952,7 +1972,7 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
                 meta = `//% block="${snakify(pkt.name).replace(/_/g, " ")}"\n`
             }
             text = `${
-                wrapComment(
+                wrapComment(language,
                     cmt.comment + (pkt.client ? "" : wrapSnippet(pack))
                 ) + meta
             }${upperCamel(pkt.name)} = ${val},\n`
@@ -1966,7 +1986,7 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
             const packName = inner + "Pack"
             tsEnums[packName] =
                 (tsEnums[packName] || "") +
-                `${wrapComment(
+                `${wrapComment(language,
                     `Pack format for '${pkt.name}' register data.`
                 )}public const string ${upperCamel(pkt.name)}${
                     pkt.secondary ? "Report" : ""
@@ -1993,12 +2013,12 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
     return r.replace(/ *$/gm, "")
 }
 
-const jsKeywords = {
+const jsKeywords: Record<string, number> = {
     switch: 1,
 }
 
 function jsQuote(n: string) {
-    if (jsKeywords.hasOwnProperty(n)) n += "_"
+    if (jsKeywords[n]) n += "_"
     return n
 }
 
@@ -2124,7 +2144,7 @@ export function converters(): jdspec.SMap<(s: jdspec.ServiceSpec) => string> {
         c: toH,
         ts: j => toTypescript(j, "ts"),
         sts: j => toTypescript(j, "sts"),
-        cs: j => toTypescript(j, "c#"),
+        cs: j => toTypescript(j, "cs"),
         py: j => toPython(j, "py"),
         jacs: toJacscript,
         /*

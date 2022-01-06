@@ -672,7 +672,17 @@ ${regs
         /// <summary>
         /// ${(event.description || "").split("\n").join("\n        /// ")}
         /// </summary>
-        public event NodeEventHandler ${capitalize(camelize(event.name))};
+        public event ClientEventHandler ${capitalize(camelize(event.name))}
+        {
+            add
+            {
+                this.AddEvent((ushort)${capitalize(camelName)}Event.${capitalize(camelize(event.name))}, value);
+            }
+            remove
+            {
+                this.RemoveEvent((ushort)${capitalize(camelName)}Event.${capitalize(camelize(event.name))}, value);
+            }
+        }
 `
         })
         .join("")}

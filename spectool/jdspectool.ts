@@ -570,7 +570,7 @@ function toCSharpClient(
     ].filter(a => !!a)
     const ctorArgs = [
         `bus`,
-        `(ushort)${capitalize(camelName)}Constants.ServiceClass`,
+        `ServiceClasses.${capitalize(camelName)}`,
         `name`,
     ].filter(a => !!a)
     const enabledReg = regs.find(isEnabledReg)

@@ -570,8 +570,8 @@ function toCSharpClient(
     ].filter(a => !!a)
     const ctorArgs = [
         `bus`,
-        `ServiceClasses.${capitalize(camelName)}`,
         `name`,
+        `ServiceClasses.${capitalize(camelName)}`,
     ].filter(a => !!a)
     const enabledReg = regs.find(isEnabledReg)
     const events = packets.filter(pkt => !pkt.derived && pkt.kind === "event")

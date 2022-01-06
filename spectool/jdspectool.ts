@@ -691,6 +691,7 @@ ${commands
             camelize(cname)
         )}`
         return `
+        ${client ? "/* client command" : ""}
         /// <summary>
         /// ${(command.description || "").split("\n").join("\n        /// ")}
         /// </summary>
@@ -698,13 +699,8 @@ ${commands
             .map((fname, fieldi) => `${types[fieldi]} ${fname}`)
             .join(", ")})
         {
-            ${
-            client
-                ? `// TODO: implement client command
-            throw new NotSupportedException("client command not implemented");`
-                : `this.SendCmd${!fnames.length ? '' : 'Packed'}(${cmd}${fnames.length > 0 ? `, ${pack}, new object[] { ${fnames.join(", ")} }` : ''});`
-        }
-        }
+            this.SendCmd${!fnames.length ? '' : 'Packed'}(${cmd}${fnames.length > 0 ? `, ${pack}, new object[] { ${fnames.join(", ")} }` : ''});
+        }${client ? "*/" : ""}
 `
     })
     .join("")}

@@ -622,10 +622,10 @@ ${regs
 
         const single = fields.length === 1
         const rtype = single ? types[0] : `object[] /*(${types.join(", ")})*/`
-        const fetchReg = `(${rtype})this.GetRegisterValue(${regcst}, ${capitalize(
+        const fetchReg = `(${rtype})this.GetRegisterValue${single ? "" : "s"}(${regcst}, ${capitalize(
             camelName
         )}RegPack.${capitalize(camelize(reg.name))})`
-        const setReg = `this.SetRegisterValue(${regcst}, ${capitalize(
+        const setReg = `this.SetRegisterValue${single ? "" : "s"}(${regcst}, ${capitalize(
             camelName
         )}RegPack.${capitalize(camelize(reg.name))}, value)`
 

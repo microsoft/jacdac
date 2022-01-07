@@ -1844,6 +1844,14 @@ export function packInfo(
                     ", "
                 )}])\n`
             }
+        } else if (kind === "event") {
+            buffers += `const ${pktName}Event = service.event(${capitalize(
+                info.camelName
+            )}Event.${capitalize(pktName)})\n`
+            buffers += `${pktName}Event.on("change", () => {
+    // if you need to read the event values
+    // const values = ${pktName}Event.unpackedValue
+})\n`
         }
     } else {
         buffers += `const [${vars.join(", ")}] = jdunpack<[${vartp.join(

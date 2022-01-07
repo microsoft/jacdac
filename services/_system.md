@@ -36,13 +36,6 @@ The report format is the same as the format of the register.
 Registers number `N` is set by issuing command `0x2000 | N`, with the format
 the same as the format of the register.
 
-    report event @ 0x01 {
-        event_id: u32
-        event_argument: u32
-    }
-
-Event from sensor or a broadcast service. 
-
     command calibrate @ 0x02 { }
     report { }
 

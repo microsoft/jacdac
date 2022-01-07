@@ -34,11 +34,11 @@ Cancel record, the `time` register will be updated by already cached data.
 
 Indicate the current status 
 
-    ro time: u16 ms / @ intensity
+    ro time: u16 ms / @ 0x180
     
 Milliseconds of audio recorded.
 
-    rw volumn?: u8 @ 0x180
+    rw volumn?: u8 @ intensity
 
 Playback volumn control 
 

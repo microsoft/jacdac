@@ -43,16 +43,6 @@
 #define JD_CMD_SET_REGISTER 0x2000
 
 /**
- * Event from sensor or a broadcast service.
- */
-#define JD_CMD_EVENT 0x1
-typedef struct jd_system_event_report {
-    uint32_t event_id;
-    uint32_t event_argument;
-} jd_system_event_report_t;
-
-
-/**
  * No args. Request to calibrate a sensor. The report indicates the calibration is done.
  */
 #define JD_CMD_CALIBRATE 0x2

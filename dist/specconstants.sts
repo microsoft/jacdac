@@ -47,15 +47,6 @@ namespace jacdac {
         SetRegister = 0x2000,
 
         /**
-         * Event from sensor or a broadcast service.
-         *
-         * ```
-         * const [eventId, eventArgument] = jdunpack<[number, number]>(buf, "u32 u32")
-         * ```
-         */
-        Event = 0x1,
-
-        /**
          * No args. Request to calibrate a sensor. The report indicates the calibration is done.
          */
         Calibrate = 0x2,
@@ -3671,13 +3662,13 @@ namespace jacdac {
 
     export const enum RelayReg {
         /**
-         * Read-write bool (uint8_t). Indicates whether the relay circuit is currently energized (closed) or not.
+         * Read-write bool (uint8_t). Indicates whether the relay circuit is currently energized or not.
          *
          * ```
-         * const [closed] = jdunpack<[number]>(buf, "u8")
+         * const [active] = jdunpack<[number]>(buf, "u8")
          * ```
          */
-        Closed = 0x1,
+        Active = 0x1,
 
         /**
          * Constant Variant (uint8_t). Describes the type of relay used.
@@ -4528,11 +4519,11 @@ namespace jacdac {
         Variant = 0x107,
 
         /**
-         * Constant s u16.16 (uint32_t). Specifies the delay without activity to automatically turn off after turning on.
+         * Constant s u22.10 (uint32_t). Specifies the delay without activity to automatically turn off after turning on.
          * For example, some light switches in staircases have such a capability.
          *
          * ```
-         * const [autoOffDelay] = jdunpack<[number]>(buf, "u16.16")
+         * const [autoOffDelay] = jdunpack<[number]>(buf, "u22.10")
          * ```
          */
         AutoOffDelay = 0x180,

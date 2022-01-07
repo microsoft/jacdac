@@ -140,13 +140,15 @@ To recognize button combinations, it's important not to swap order of events fro
 
 Each device runs its own control service, which emits advertisement packets roughly every 500 milliseconds. The service class of the control service is zero (0). Each advertisement contains the device's identifier (as usual) as well a list of services offered by the device; other devices on the bus can inspect these advertisements and subsequently communicate with the advertised services to incorporate them in user applications.
 
+The advertisement packet also includes several flags indicating various protocol-level capabilities of the device, as well as "restart counter" that monotonically increases, and can be used to detect a device restart.
+
 The control service also offers a set of common commands that can be used to query/inspect each Jacdac device. For example, the `IDENTIFY` command causes a Jacdac device to perform an action that allows a user to locate a particular device, usually through blinking an LED. In addition to emiting an advertisement packet every 500 milliseconds, a device that hosts one or more services must respond to all commands listed in the [control service specification](../../../services/control).
 
 The implementation complexity of the control service scales with respect to the number of services a device implements. For instance, it is very simple to process packets for a single user service (in addition to the control service), but complexity increases as more services are added. This flexibility is a benefit as it allows ultra low-cost microcontrollers to be used in simple devices.
 
 ## Transport Layer
 
-A device's presence/absence on the bus is signified by the presence/absence of advertising packets containing its device identifier, which should be sent every 500 milliseconds. If a client of a Jacdac device does not receive an advertisement from the device for several advertisement periods (1-2 seconds), it should assume the device has left the bus. If the device rejoins the bus, it may present a different list of services. In fact, devices are free to change the list of services they advertise at any time.
+A device's presence/absence on the bus is signified by the presence/absence of advertising packets containing its device identifier, which should be sent every 500 milliseconds. If a client of a Jacdac device does not receive an advertisement from the device for several advertisement periods (1-2 seconds), it should assume the device has left the bus. If the device rejoins the bus, it may present a different list of services (the list cannot change otherwise).
 
 ### Jacdac frames, packets and service indices
 

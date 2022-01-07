@@ -8,7 +8,7 @@
     "_base"
   ],
   "notes": {
-    "short": "A switching relay."
+    "short": "A switching relay.\n\nThe contacts should be labelled `NO` (normally open), `COM` (common), and `NC` (normally closed).\nWhen relay is energized it connects `NO` and `COM`.\nWhen relay is not energized it connects `NC` and `COM`.\nSome relays may be missing `NO` or `NC` contacts.\nWhen relay module is not powered, or is in bootloader mode, it is not energized (connects `NC` and `COM`)."
   },
   "classIdentifier": 406840918,
   "enums": {
@@ -114,9 +114,9 @@
     },
     {
       "kind": "rw",
-      "name": "closed",
+      "name": "active",
       "identifier": 1,
-      "description": "Indicates whether the relay circuit is currently energized (closed) or not.",
+      "description": "Indicates whether the relay circuit is currently energized or not.",
       "fields": [
         {
           "name": "_",

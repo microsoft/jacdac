@@ -622,10 +622,10 @@ ${regs
 
         const single = fields.length === 1
         const rtype = single ? types[0] : `object[] /*(${types.join(", ")})*/`
-        const fetchReg = `(${rtype})this.GetRegisterValue(${regcst}, ${capitalize(
+        const fetchReg = `(${rtype})this.GetRegisterValue${single ? "" : "s"}(${regcst}, ${capitalize(
             camelName
         )}RegPack.${capitalize(camelize(reg.name))})`
-        const setReg = `this.SetRegisterValue(${regcst}, ${capitalize(
+        const setReg = `this.SetRegisterValue${single ? "" : "s"}(${regcst}, ${capitalize(
             camelName
         )}RegPack.${capitalize(camelize(reg.name))}, value)`
 
@@ -672,7 +672,17 @@ ${regs
         /// <summary>
         /// ${(event.description || "").split("\n").join("\n        /// ")}
         /// </summary>
-        public event NodeEventHandler ${capitalize(camelize(event.name))};
+        public event ClientEventHandler ${capitalize(camelize(event.name))}
+        {
+            add
+            {
+                this.AddEvent((ushort)${capitalize(camelName)}Event.${capitalize(camelize(event.name))}, value);
+            }
+            remove
+            {
+                this.RemoveEvent((ushort)${capitalize(camelName)}Event.${capitalize(camelize(event.name))}, value);
+            }
+        }
 `
         })
         .join("")}
@@ -691,6 +701,7 @@ ${commands
             camelize(cname)
         )}`
         return `
+        ${client ? "/* client command" : ""}
         /// <summary>
         /// ${(command.description || "").split("\n").join("\n        /// ")}
         /// </summary>
@@ -698,13 +709,8 @@ ${commands
             .map((fname, fieldi) => `${types[fieldi]} ${fname}`)
             .join(", ")})
         {
-            ${
-            client
-                ? `// TODO: implement client command
-            throw new NotSupportedException("client command not implemented");`
-                : `this.SendCmd${!fnames.length ? '' : 'Packed'}(${cmd}${fnames.length > 0 ? `, ${pack}, new object[] { ${fnames.join(", ")} }` : ''});`
-        }
-        }
+            this.SendCmd${!fnames.length ? '' : 'Packed'}(${cmd}${fnames.length > 0 ? `, ${pack}, new object[] { ${fnames.join(", ")} }` : ''});
+        }${client ? "*/" : ""}
 `
     })
     .join("")}

@@ -25,7 +25,7 @@
 #define JD_SWITCH_REG_VARIANT JD_REG_VARIANT
 
 /**
- * Constant s u16.16 (uint32_t). Specifies the delay without activity to automatically turn off after turning on.
+ * Constant s u22.10 (uint32_t). Specifies the delay without activity to automatically turn off after turning on.
  * For example, some light switches in staircases have such a capability.
  */
 #define JD_SWITCH_REG_AUTO_OFF_DELAY 0x180

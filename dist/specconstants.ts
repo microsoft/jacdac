@@ -1,4 +1,4 @@
-// Service: Common registers and commands
+// Service Common registers and commands constants
 export const ANNOUNCE_INTERVAL = 0x1f4
 
 export enum SystemReadingThreshold { // uint8_t
@@ -285,7 +285,7 @@ export enum SystemEvent {
     Neutral = 0x7,
 }
 
-// Service: Base service
+// Service Base service constants
 export enum BaseCmd {
     /**
      * This report may be emitted by a server in response to a command (action or register operation)
@@ -338,7 +338,7 @@ export enum BaseEvent {
     StatusCodeChanged = 0x4,
 }
 
-// Service: Sensor
+// Service Sensor constants
 export enum SensorReg {
     /**
      * Read-write # uint8_t. Asks device to stream a given number of samples
@@ -369,7 +369,7 @@ export enum SensorReg {
     StreamingPreferredInterval = 0x102,
 }
 
-// Service: Accelerometer
+// Service Accelerometer constants
 export const SRV_ACCELEROMETER = 0x1f140409
 export enum AccelerometerReg {
     /**
@@ -472,7 +472,7 @@ export enum AccelerometerEvent {
     Force8g = 0x8a,
 }
 
-// Service: Arcade Gamepad
+// Service Arcade Gamepad constants
 export const SRV_ARCADE_GAMEPAD = 0x1deaa06e
 
 export enum ArcadeGamepadButton { // uint8_t
@@ -530,7 +530,7 @@ export enum ArcadeGamepadEvent {
     Up = 0x2,
 }
 
-// Service: Arcade Sound
+// Service Arcade Sound constants
 export const SRV_ARCADE_SOUND = 0x1fc63606
 export enum ArcadeSoundCmd {
     /**
@@ -576,7 +576,7 @@ export enum ArcadeSoundReg {
     BufferPending = 0x181,
 }
 
-// Service: Azure IoT Hub Health
+// Service Azure IoT Hub Health constants
 export const SRV_AZURE_IOT_HUB_HEALTH = 0x1462eefc
 
 export enum AzureIotHubHealthConnectionStatus { // uint16_t
@@ -652,7 +652,7 @@ export enum AzureIotHubHealthEvent {
     MessageSent = 0x80,
 }
 
-// Service: Barcode reader
+// Service Barcode reader constants
 export const SRV_BARCODE_READER = 0x1c739e6c
 
 export enum BarcodeReaderFormat { // uint8_t
@@ -703,7 +703,7 @@ export enum BarcodeReaderEvent {
     Detect = 0x1,
 }
 
-// Service: Barometer
+// Service Barometer constants
 export const SRV_BAROMETER = 0x1e117cea
 export enum BarometerReg {
     /**
@@ -725,7 +725,7 @@ export enum BarometerReg {
     PressureError = 0x106,
 }
 
-// Service: bit:radio
+// Service bit:radio constants
 export const SRV_BIT_RADIO = 0x1ac986cf
 export enum BitRadioReg {
     /**
@@ -830,7 +830,7 @@ export enum BitRadioCmd {
     BufferReceived = 0x92,
 }
 
-// Service: Bootloader
+// Service Bootloader constants
 export const SRV_BOOTLOADER = 0x1ffa9948
 
 export enum BootloaderError { // uint32_t
@@ -891,7 +891,7 @@ export enum BootloaderCmd {
      */
 }
 
-// Service: Braille display
+// Service Braille display constants
 export const SRV_BRAILLE_DISPLAY = 0x13bfb7cc
 export enum BrailleDisplayReg {
     /**
@@ -922,7 +922,7 @@ export enum BrailleDisplayReg {
     Length = 0x181,
 }
 
-// Service: Bridge
+// Service Bridge constants
 export const SRV_BRIDGE = 0x1fe5b46f
 export enum BridgeReg {
     /**
@@ -935,7 +935,7 @@ export enum BridgeReg {
     Enabled = 0x1,
 }
 
-// Service: Button
+// Service Button constants
 export const SRV_BUTTON = 0x1473a263
 export enum ButtonReg {
     /**
@@ -990,7 +990,7 @@ export enum ButtonEvent {
     Hold = 0x81,
 }
 
-// Service: Buzzer
+// Service Buzzer constants
 export const SRV_BUZZER = 0x1b57b1d7
 export enum BuzzerReg {
     /**
@@ -1022,7 +1022,7 @@ export enum BuzzerCmd {
     PlayNote = 0x81,
 }
 
-// Service: Capacitive Button
+// Service Capacitive Button constants
 export const SRV_CAPACITIVE_BUTTON = 0x2865adc9
 export enum CapacitiveButtonReg {
     /**
@@ -1043,7 +1043,7 @@ export enum CapacitiveButtonCmd {
     Calibrate = 0x2,
 }
 
-// Service: Character Screen
+// Service Character Screen constants
 export const SRV_CHARACTER_SCREEN = 0x1f37c56a
 
 export enum CharacterScreenVariant { // uint8_t
@@ -1114,7 +1114,7 @@ export enum CharacterScreenReg {
     Columns = 0x181,
 }
 
-// Service: CODAL Message Bus
+// Service CODAL Message Bus constants
 export const SRV_CODAL_MESSAGE_BUS = 0x121ff81d
 export enum CodalMessageBusCmd {
     /**
@@ -1138,7 +1138,7 @@ export enum CodalMessageBusEvent {
     Message = 0x80,
 }
 
-// Service: Color
+// Service Color constants
 export const SRV_COLOR = 0x1630d567
 export enum ColorReg {
     /**
@@ -1151,7 +1151,7 @@ export enum ColorReg {
     Color = 0x101,
 }
 
-// Service: Compass
+// Service Compass constants
 export const SRV_COMPASS = 0x15b7b9bf
 export enum CompassReg {
     /**
@@ -1189,7 +1189,7 @@ export enum CompassCmd {
     Calibrate = 0x2,
 }
 
-// Service: Control
+// Service Control constants
 export const SRV_CONTROL = 0x0
 
 export enum ControlAnnounceFlags { // uint16_t
@@ -1384,9 +1384,9 @@ export enum ControlReg {
     Uptime = 0x186,
 }
 
-// Service: Dashboard
+// Service Dashboard constants
 export const SRV_DASHBOARD = 0x1be59107
-// Service: Distance
+// Service Distance constants
 export const SRV_DISTANCE = 0x141a6b8a
 
 export enum DistanceVariant { // uint8_t
@@ -1443,7 +1443,7 @@ export enum DistanceReg {
     Variant = 0x107,
 }
 
-// Service: DMX
+// Service DMX constants
 export const SRV_DMX = 0x11cf8c05
 export enum DmxReg {
     /**
@@ -1467,7 +1467,7 @@ export enum DmxCmd {
     Send = 0x80,
 }
 
-// Service: Dot Matrix
+// Service Dot Matrix constants
 export const SRV_DOT_MATRIX = 0x110d154b
 
 export enum DotMatrixVariant { // uint8_t
@@ -1523,7 +1523,7 @@ export enum DotMatrixReg {
     Variant = 0x107,
 }
 
-// Service: Equivalent CO₂
+// Service Equivalent CO₂ constants
 export const SRV_E_CO2 = 0x169c9dc6
 
 export enum ECO2Variant { // uint8_t
@@ -1578,7 +1578,7 @@ export enum ECO2Reg {
     Variant = 0x107,
 }
 
-// Service: Flex
+// Service Flex constants
 export const SRV_FLEX = 0x1f47c6c6
 export enum FlexReg {
     /**
@@ -1600,7 +1600,7 @@ export enum FlexReg {
     Length = 0x180,
 }
 
-// Service: Gamepad
+// Service Gamepad constants
 export const SRV_GAMEPAD = 0x108f7456
 
 export enum GamepadButtons { // uint32_t
@@ -1671,7 +1671,7 @@ export enum GamepadEvent {
     ButtonsChanged = 0x3,
 }
 
-// Service: Gyroscope
+// Service Gyroscope constants
 export const SRV_GYROSCOPE = 0x1e1b06f2
 export enum GyroscopeReg {
     /**
@@ -1712,7 +1712,7 @@ export enum GyroscopeReg {
     MaxRatesSupported = 0x10a,
 }
 
-// Service: Heart Rate
+// Service Heart Rate constants
 export const SRV_HEART_RATE = 0x166c6dc4
 
 export enum HeartRateVariant { // uint8_t
@@ -1752,7 +1752,7 @@ export enum HeartRateReg {
     Variant = 0x107,
 }
 
-// Service: HID Keyboard
+// Service HID Keyboard constants
 export const SRV_HID_KEYBOARD = 0x18b05b6a
 
 export enum HidKeyboardModifiers { // uint8_t
@@ -1791,7 +1791,7 @@ export enum HidKeyboardCmd {
     Clear = 0x81,
 }
 
-// Service: HID Mouse
+// Service HID Mouse constants
 export const SRV_HID_MOUSE = 0x1885dc1c
 
 export enum HidMouseButton { // uint16_t
@@ -1815,7 +1815,7 @@ export enum HidMouseCmd {
      * A `DoubleClick` is two clicks with `150ms` gap between them (that is, `100ms` first click, `150ms` gap, `100ms` second click).
      *
      * ```
-     * const [buttons, event] = jdunpack<[HidMouseButton, HidMouseButtonEvent]>(buf, "u16 u8")
+     * const [buttons, ev] = jdunpack<[HidMouseButton, HidMouseButtonEvent]>(buf, "u16 u8")
      * ```
      */
     SetButton = 0x80,
@@ -1841,7 +1841,7 @@ export enum HidMouseCmd {
     Wheel = 0x82,
 }
 
-// Service: Humidity
+// Service Humidity constants
 export const SRV_HUMIDITY = 0x16c810b8
 export enum HumidityReg {
     /**
@@ -1881,7 +1881,7 @@ export enum HumidityReg {
     MaxHumidity = 0x105,
 }
 
-// Service: Illuminance
+// Service Illuminance constants
 export const SRV_ILLUMINANCE = 0x1e6ecaf2
 export enum IlluminanceReg {
     /**
@@ -1903,7 +1903,7 @@ export enum IlluminanceReg {
     IlluminanceError = 0x106,
 }
 
-// Service: Indexed screen
+// Service Indexed screen constants
 export const SRV_INDEXED_SCREEN = 0x16fa36e5
 export enum IndexedScreenCmd {
     /**
@@ -2014,9 +2014,9 @@ export enum IndexedScreenReg {
     Rotation = 0x83,
 }
 
-// Service: Infrastructure
+// Service Infrastructure constants
 export const SRV_INFRASTRUCTURE = 0x1e1589eb
-// Service: LED
+// Service LED constants
 export const SRV_LED = 0x1e3048f8
 
 export enum LedVariant { // uint8_t
@@ -2093,7 +2093,7 @@ export enum LedReg {
     Variant = 0x107,
 }
 
-// Service: LED Pixel
+// Service LED Pixel constants
 export const SRV_LED_PIXEL = 0x126f00e0
 
 export enum LedPixelLightType { // uint8_t
@@ -2216,7 +2216,7 @@ export enum LedPixelCmd {
     Run = 0x81,
 }
 
-// Service: Light bulb
+// Service Light bulb constants
 export const SRV_LIGHT_BULB = 0x1cab054c
 export enum LightBulbReg {
     /**
@@ -2239,7 +2239,7 @@ export enum LightBulbReg {
     Dimmable = 0x180,
 }
 
-// Service: Light level
+// Service Light level constants
 export const SRV_LIGHT_LEVEL = 0x17dc9a1c
 
 export enum LightLevelVariant { // uint8_t
@@ -2276,7 +2276,7 @@ export enum LightLevelReg {
     Variant = 0x107,
 }
 
-// Service: Logger
+// Service Logger constants
 export const SRV_LOGGER = 0x12dc1fca
 
 export enum LoggerPriority { // uint8_t
@@ -2340,7 +2340,7 @@ export enum LoggerCmd {
     Error = 0x83,
 }
 
-// Service: Magnetometer
+// Service Magnetometer constants
 export const SRV_MAGNETOMETER = 0x13029088
 export enum MagnetometerReg {
     /**
@@ -2371,7 +2371,7 @@ export enum MagnetometerCmd {
     Calibrate = 0x2,
 }
 
-// Service: Matrix Keypad
+// Service Matrix Keypad constants
 export const SRV_MATRIX_KEYPAD = 0x13062dc8
 
 export enum MatrixKeypadVariant { // uint8_t
@@ -2469,7 +2469,7 @@ export enum MatrixKeypadEvent {
     LongClick = 0x81,
 }
 
-// Service: Microphone
+// Service Microphone constants
 export const SRV_MICROPHONE = 0x113dac86
 export enum MicrophoneCmd {
     /**
@@ -2497,7 +2497,7 @@ export enum MicrophoneReg {
     SamplingPeriod = 0x80,
 }
 
-// Service: MIDI output
+// Service MIDI output constants
 export const SRV_MIDI_OUTPUT = 0x1a848cd7
 export enum MidiOutputReg {
     /**
@@ -2526,7 +2526,7 @@ export enum MidiOutputCmd {
     Send = 0x81,
 }
 
-// Service: Model Runner
+// Service Model Runner constants
 export const SRV_MODEL_RUNNER = 0x140f9a78
 
 export enum ModelRunnerModelFormat { // uint32_t
@@ -2681,7 +2681,7 @@ export enum ModelRunnerReg {
     Parallel = 0x188,
 }
 
-// Service: Motion
+// Service Motion constants
 export const SRV_MOTION = 0x1179a749
 
 export enum MotionVariant { // uint8_t
@@ -2733,7 +2733,7 @@ export enum MotionEvent {
     Movement = 0x1,
 }
 
-// Service: Motor
+// Service Motor constants
 export const SRV_MOTOR = 0x17004cd8
 export enum MotorReg {
     /**
@@ -2784,7 +2784,7 @@ export enum MotorReg {
     Reversible = 0x182,
 }
 
-// Service: Potentiometer
+// Service Potentiometer constants
 export const SRV_POTENTIOMETER = 0x1f274746
 
 export enum PotentiometerVariant { // uint8_t
@@ -2812,7 +2812,7 @@ export enum PotentiometerReg {
     Variant = 0x107,
 }
 
-// Service: Power
+// Service Power constants
 export const SRV_POWER = 0x1fa4c95a
 
 export enum PowerPowerStatus { // uint8_t
@@ -2932,7 +2932,7 @@ export enum PowerEvent {
     PowerStatusChanged = 0x3,
 }
 
-// Service: Pressure Button
+// Service Pressure Button constants
 export const SRV_PRESSURE_BUTTON = 0x281740c3
 export enum PressureButtonReg {
     /**
@@ -2945,7 +2945,7 @@ export enum PressureButtonReg {
     Threshold = 0x6,
 }
 
-// Service: Protocol Test
+// Service Protocol Test constants
 export const SRV_PROTO_TEST = 0x16c7466a
 export enum ProtoTestReg {
     /**
@@ -3060,7 +3060,7 @@ export enum ProtoTestReg {
      * A read write u8, string register.
      *
      * ```
-     * const [u8, string] = jdunpack<[number, string]>(buf, "u8 s")
+     * const [u8, str] = jdunpack<[number, string]>(buf, "u8 s")
      * ```
      */
     RwU8String = 0x87,
@@ -3069,7 +3069,7 @@ export enum ProtoTestReg {
      * A read only u8, string register.. Mirrors rw_u8_string.
      *
      * ```
-     * const [u8, string] = jdunpack<[number, string]>(buf, "u8 s")
+     * const [u8, str] = jdunpack<[number, string]>(buf, "u8 s")
      * ```
      */
     RoU8String = 0x187,
@@ -3077,10 +3077,10 @@ export enum ProtoTestReg {
 
 export enum ProtoTestEvent {
     /**
-     * Argument: bool bool (uint8_t). An event raised when rw_bool is modified
+     * Argument: bo bool (uint8_t). An event raised when rw_bool is modified
      *
      * ```
-     * const [bool] = jdunpack<[number]>(buf, "u8")
+     * const [bo] = jdunpack<[number]>(buf, "u8")
      * ```
      */
     EBool = 0x81,
@@ -3104,10 +3104,10 @@ export enum ProtoTestEvent {
     EI32 = 0x83,
 
     /**
-     * Argument: string string (bytes). An event raised when rw_string is modified
+     * Argument: str string (bytes). An event raised when rw_string is modified
      *
      * ```
-     * const [string] = jdunpack<[string]>(buf, "s")
+     * const [str] = jdunpack<[string]>(buf, "s")
      * ```
      */
     EString = 0x84,
@@ -3134,7 +3134,7 @@ export enum ProtoTestEvent {
      * An event raised when rw_u8_string is modified
      *
      * ```
-     * const [u8, string] = jdunpack<[number, string]>(buf, "u8 s")
+     * const [u8, str] = jdunpack<[number, string]>(buf, "u8 s")
      * ```
      */
     EU8String = 0x87,
@@ -3142,10 +3142,10 @@ export enum ProtoTestEvent {
 
 export enum ProtoTestCmd {
     /**
-     * Argument: bool bool (uint8_t). A command to set rw_bool.
+     * Argument: bo bool (uint8_t). A command to set rw_bool.
      *
      * ```
-     * const [bool] = jdunpack<[number]>(buf, "u8")
+     * const [bo] = jdunpack<[number]>(buf, "u8")
      * ```
      */
     CBool = 0x81,
@@ -3169,10 +3169,10 @@ export enum ProtoTestCmd {
     CI32 = 0x83,
 
     /**
-     * Argument: string string (bytes). A command to set rw_string.
+     * Argument: str string (bytes). A command to set rw_string.
      *
      * ```
-     * const [string] = jdunpack<[string]>(buf, "s")
+     * const [str] = jdunpack<[string]>(buf, "s")
      * ```
      */
     CString = 0x84,
@@ -3199,7 +3199,7 @@ export enum ProtoTestCmd {
      * A command to set rw_u8_string.
      *
      * ```
-     * const [u8, string] = jdunpack<[number, string]>(buf, "u8 s")
+     * const [u8, str] = jdunpack<[number, string]>(buf, "u8 s")
      * ```
      */
     CU8String = 0x87,
@@ -3223,9 +3223,9 @@ export enum ProtoTestCmd {
  */
 
 
-// Service: Proxy
+// Service Proxy constants
 export const SRV_PROXY = 0x16f19949
-// Service: Pulse Oximeter
+// Service Pulse Oximeter constants
 export const SRV_PULSE_OXIMETER = 0x10bb4eb6
 export enum PulseOximeterReg {
     /**
@@ -3247,7 +3247,7 @@ export enum PulseOximeterReg {
     OxygenError = 0x106,
 }
 
-// Service: Rain gauge
+// Service Rain gauge constants
 export const SRV_RAIN_GAUGE = 0x13734c95
 export enum RainGaugeReg {
     /**
@@ -3269,7 +3269,7 @@ export enum RainGaugeReg {
     PrecipitationPrecision = 0x108,
 }
 
-// Service: Real time clock
+// Service Real time clock constants
 export const SRV_REAL_TIME_CLOCK = 0x1a8b1a28
 
 export enum RealTimeClockVariant { // uint8_t
@@ -3327,7 +3327,7 @@ export enum RealTimeClockCmd {
     SetTime = 0x80,
 }
 
-// Service: Reflected light
+// Service Reflected light constants
 export const SRV_REFLECTED_LIGHT = 0x126c4cb2
 
 export enum ReflectedLightVariant { // uint8_t
@@ -3355,7 +3355,7 @@ export enum ReflectedLightReg {
     Variant = 0x107,
 }
 
-// Service: Relay
+// Service Relay constants
 export const SRV_RELAY = 0x183fe656
 
 export enum RelayVariant { // uint8_t
@@ -3393,7 +3393,7 @@ export enum RelayReg {
     MaxSwitchingCurrent = 0x180,
 }
 
-// Service: Random Number Generator
+// Service Random Number Generator constants
 export const SRV_RNG = 0x1789f0a2
 
 export enum RngVariant { // uint8_t
@@ -3426,7 +3426,7 @@ export enum RngReg {
     Variant = 0x107,
 }
 
-// Service: Role Manager
+// Service Role Manager constants
 export const SRV_ROLE_MANAGER = 0x1e4b7e66
 export enum RoleManagerReg {
     /**
@@ -3455,22 +3455,6 @@ export enum RoleManagerReg {
 
 export enum RoleManagerCmd {
     /**
-     * Get the role corresponding to given device identifer. Returns empty string if unset.
-     *
-     * ```
-     * const [deviceId, serviceIdx] = jdunpack<[Uint8Array, number]>(buf, "b[8] u8")
-     * ```
-     */
-    GetRole = 0x80,
-
-    /**
-     * report GetRole
-     * ```
-     * const [deviceId, serviceIdx, role] = jdunpack<[Uint8Array, number, string]>(buf, "b[8] u8 s")
-     * ```
-     */
-
-    /**
      * Set role. Can set to empty to remove role binding.
      *
      * ```
@@ -3485,34 +3469,18 @@ export enum RoleManagerCmd {
     ClearAllRoles = 0x84,
 
     /**
-     * Argument: stored_roles pipe (bytes). Return all roles stored internally.
+     * Argument: roles pipe (bytes). List all roles and bindings required by the current program. `device_id` and `service_idx` are `0` if role is unbound.
      *
      * ```
-     * const [storedRoles] = jdunpack<[Uint8Array]>(buf, "b[12]")
+     * const [roles] = jdunpack<[Uint8Array]>(buf, "b[12]")
      * ```
      */
-    ListStoredRoles = 0x82,
-
-    /**
-     * Argument: required_roles pipe (bytes). List all roles required by the current program. `device_id` and `service_idx` are `0` if role is unbound.
-     *
-     * ```
-     * const [requiredRoles] = jdunpack<[Uint8Array]>(buf, "b[12]")
-     * ```
-     */
-    ListRequiredRoles = 0x83,
+    ListRoles = 0x83,
 }
 
 
 /**
- * pipe_report StoredRoles
- * ```
- * const [deviceId, serviceIdx, role] = jdunpack<[Uint8Array, number, string]>(buf, "b[8] u8 s")
- * ```
- */
-
-/**
- * pipe_report RequiredRoles
+ * pipe_report Roles
  * ```
  * const [deviceId, serviceClass, serviceIdx, role] = jdunpack<[Uint8Array, number, number, string]>(buf, "b[8] u32 u8 s")
  * ```
@@ -3526,7 +3494,7 @@ export enum RoleManagerEvent {
     Change = 0x3,
 }
 
-// Service: Rotary encoder
+// Service Rotary encoder constants
 export const SRV_ROTARY_ENCODER = 0x10fa29c9
 export enum RotaryEncoderReg {
     /**
@@ -3559,7 +3527,7 @@ export enum RotaryEncoderReg {
     Clicker = 0x181,
 }
 
-// Service: Rover
+// Service Rover constants
 export const SRV_ROVER = 0x19f4d06b
 export enum RoverReg {
     /**
@@ -3572,7 +3540,7 @@ export enum RoverReg {
     Kinematics = 0x101,
 }
 
-// Service: Sensor Aggregator
+// Service Sensor Aggregator constants
 export const SRV_SENSOR_AGGREGATOR = 0x1d90e1c5
 
 export enum SensorAggregatorSampleType { // uint8_t
@@ -3633,7 +3601,7 @@ export enum SensorAggregatorReg {
     CurrentSample = 0x101,
 }
 
-// Service: Servo
+// Service Servo constants
 export const SRV_SERVO = 0x12fc9103
 export enum ServoReg {
     /**
@@ -3727,7 +3695,7 @@ export enum ServoReg {
     CurrentAngle = 0x101,
 }
 
-// Service: Settings
+// Service Settings constants
 export const SRV_SETTINGS = 0x1107dc4a
 export enum SettingsCmd {
     /**
@@ -3811,7 +3779,7 @@ export enum SettingsEvent {
     Change = 0x3,
 }
 
-// Service: 7-segment display
+// Service 7-segment display constants
 export const SRV_SEVEN_SEGMENT_DISPLAY = 0x196158f7
 export enum SevenSegmentDisplayReg {
     /**
@@ -3876,7 +3844,7 @@ export enum SevenSegmentDisplayCmd {
     SetText = 0x81,
 }
 
-// Service: Soil moisture
+// Service Soil moisture constants
 export const SRV_SOIL_MOISTURE = 0x1d4aa3b3
 
 export enum SoilMoistureVariant { // uint8_t
@@ -3913,7 +3881,7 @@ export enum SoilMoistureReg {
     Variant = 0x107,
 }
 
-// Service: Solenoid
+// Service Solenoid constants
 export const SRV_SOLENOID = 0x171723ca
 
 export enum SolenoidVariant { // uint8_t
@@ -3942,7 +3910,7 @@ export enum SolenoidReg {
     Variant = 0x107,
 }
 
-// Service: Sound level
+// Service Sound level constants
 export const SRV_SOUND_LEVEL = 0x14ad1a5d
 export enum SoundLevelReg {
     /**
@@ -3994,7 +3962,7 @@ export enum SoundLevelEvent {
     Quiet = 0x2,
 }
 
-// Service: Sound player
+// Service Sound player constants
 export const SRV_SOUND_PLAYER = 0x1403d338
 export enum SoundPlayerReg {
     /**
@@ -4041,7 +4009,7 @@ export enum SoundPlayerCmd {
  */
 
 
-// Service: Sound Spectrum
+// Service Sound Spectrum constants
 export const SRV_SOUND_SPECTRUM = 0x157abc1e
 export enum SoundSpectrumReg {
     /**
@@ -4100,7 +4068,7 @@ export enum SoundSpectrumReg {
     SmoothingTimeConstant = 0x83,
 }
 
-// Service: Speech synthesis
+// Service Speech synthesis constants
 export const SRV_SPEECH_SYNTHESIS = 0x1204d995
 export enum SpeechSynthesisReg {
     /**
@@ -4165,7 +4133,7 @@ export enum SpeechSynthesisCmd {
     Cancel = 0x81,
 }
 
-// Service: Switch
+// Service Switch constants
 export const SRV_SWITCH = 0x1ad29402
 
 export enum SwitchVariant { // uint8_t
@@ -4221,7 +4189,7 @@ export enum SwitchEvent {
     Off = 0x2,
 }
 
-// Service: TCP
+// Service TCP constants
 export const SRV_TCP = 0x1b43b70b
 
 export enum TcpTcpError { // int32_t
@@ -4285,7 +4253,7 @@ export enum TcpPipeCmd {
  */
 
 
-// Service: Temperature
+// Service Temperature constants
 export const SRV_TEMPERATURE = 0x1421bac7
 
 export enum TemperatureVariant { // uint8_t
@@ -4341,7 +4309,7 @@ export enum TemperatureReg {
     Variant = 0x107,
 }
 
-// Service: Traffic Light
+// Service Traffic Light constants
 export const SRV_TRAFFIC_LIGHT = 0x15c38d9b
 export enum TrafficLightReg {
     /**
@@ -4372,7 +4340,7 @@ export enum TrafficLightReg {
     Green = 0x82,
 }
 
-// Service: Total Volatile organic compound
+// Service Total Volatile organic compound constants
 export const SRV_TVOC = 0x12a5b597
 export enum TvocReg {
     /**
@@ -4412,9 +4380,9 @@ export enum TvocReg {
     MaxTVOC = 0x105,
 }
 
-// Service: Unique Brain
+// Service Unique Brain constants
 export const SRV_UNIQUE_BRAIN = 0x103c4ee5
-// Service: UV index
+// Service UV index constants
 export const SRV_UV_INDEX = 0x1f6e0d90
 
 export enum UvIndexVariant { // uint8_t
@@ -4451,7 +4419,7 @@ export enum UvIndexReg {
     Variant = 0x107,
 }
 
-// Service: Verified Telemetry
+// Service Verified Telemetry constants
 export const SRV_VERIFIED_TELEMETRY = 0x2194841f
 
 export enum VerifiedTelemetryStatus { // uint8_t
@@ -4533,7 +4501,7 @@ export enum VerifiedTelemetryEvent {
     FingerprintTemplateChange = 0x80,
 }
 
-// Service: Vibration motor
+// Service Vibration motor constants
 export const SRV_VIBRATION_MOTOR = 0x183fc4a2
 export enum VibrationMotorCmd {
     /**
@@ -4547,7 +4515,7 @@ export enum VibrationMotorCmd {
     Vibrate = 0x80,
 }
 
-// Service: Water level
+// Service Water level constants
 export const SRV_WATER_LEVEL = 0x147b62ed
 
 export enum WaterLevelVariant { // uint8_t
@@ -4585,7 +4553,7 @@ export enum WaterLevelReg {
     Variant = 0x107,
 }
 
-// Service: Weight Scale
+// Service Weight Scale constants
 export const SRV_WEIGHT_SCALE = 0x1f4d5040
 
 export enum WeightScaleVariant { // uint8_t
@@ -4685,7 +4653,7 @@ export enum WeightScaleCmd {
     CalibrateGain = 0x81,
 }
 
-// Service: WIFI
+// Service WIFI constants
 export const SRV_WIFI = 0x18aae1fa
 
 export enum WifiAPFlags { // uint32_t
@@ -4873,7 +4841,7 @@ export enum WifiEvent {
     ConnectionFailed = 0x82,
 }
 
-// Service: Wind direction
+// Service Wind direction constants
 export const SRV_WIND_DIRECTION = 0x186be92b
 export enum WindDirectionReg {
     /**
@@ -4895,7 +4863,7 @@ export enum WindDirectionReg {
     WindDirectionError = 0x106,
 }
 
-// Service: Wind speed
+// Service Wind speed constants
 export const SRV_WIND_SPEED = 0x1b591bbf
 export enum WindSpeedReg {
     /**

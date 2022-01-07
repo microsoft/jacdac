@@ -23,7 +23,7 @@
 #define JD_HID_MOUSE_CMD_SET_BUTTON 0x80
 typedef struct jd_hid_mouse_set_button {
     uint16_t buttons;  // Button
-    uint8_t event;  // ButtonEvent
+    uint8_t ev;  // ButtonEvent
 } jd_hid_mouse_set_button_t;
 
 

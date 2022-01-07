@@ -6,6 +6,7 @@
     "description": "A controller for a 5V servo, with MicroUSB connector for power.",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v2.1/profile/servo.c",
     "services": [318542083],
     "productIdentifiers": [986140247],
     "status": "deprecated"

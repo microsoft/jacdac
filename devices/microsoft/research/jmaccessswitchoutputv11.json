@@ -6,6 +6,7 @@
     "version": "1.1",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-access-switch-output-1.1/profile/relay.c",
     "services": [406840918],
     "tags": ["kit"],
     "productIdentifiers": [942325999]

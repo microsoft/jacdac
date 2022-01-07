@@ -6,6 +6,7 @@
     "version": "3.2",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v3.2/profile/colorclick.c",
     "tags": ["kit"],
     "services": [372299111],
     "productIdentifiers": [1020991645]

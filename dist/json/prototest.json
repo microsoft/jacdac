@@ -329,7 +329,7 @@
           "isSimpleType": true
         },
         {
-          "name": "string",
+          "name": "str",
           "type": "string",
           "storage": 0
         }
@@ -349,7 +349,7 @@
           "isSimpleType": true
         },
         {
-          "name": "string",
+          "name": "str",
           "type": "string",
           "storage": 0
         }
@@ -363,7 +363,7 @@
       "description": "An event raised when rw_bool is modified",
       "fields": [
         {
-          "name": "bool",
+          "name": "bo",
           "type": "bool",
           "storage": 1
         }
@@ -407,7 +407,7 @@
       "description": "An event raised when rw_string is modified",
       "fields": [
         {
-          "name": "string",
+          "name": "str",
           "type": "string",
           "storage": 0
         }
@@ -475,7 +475,7 @@
           "isSimpleType": true
         },
         {
-          "name": "string",
+          "name": "str",
           "type": "string",
           "storage": 0
         }
@@ -489,7 +489,7 @@
       "description": "A command to set rw_bool.",
       "fields": [
         {
-          "name": "bool",
+          "name": "bo",
           "type": "bool",
           "storage": 1
         }
@@ -533,7 +533,7 @@
       "description": "A command to set rw_string.",
       "fields": [
         {
-          "name": "string",
+          "name": "str",
           "type": "string",
           "storage": 0
         }
@@ -601,7 +601,7 @@
           "isSimpleType": true
         },
         {
-          "name": "string",
+          "name": "str",
           "type": "string",
           "storage": 0
         }

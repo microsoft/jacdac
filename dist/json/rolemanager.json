@@ -133,53 +133,6 @@
     },
     {
       "kind": "command",
-      "name": "get_role",
-      "identifier": 128,
-      "description": "Get the role corresponding to given device identifer. Returns empty string if unset.",
-      "fields": [
-        {
-          "name": "device_id",
-          "type": "devid",
-          "storage": 8
-        },
-        {
-          "name": "service_idx",
-          "type": "u8",
-          "storage": 1,
-          "isSimpleType": true
-        }
-      ],
-      "hasReport": true,
-      "packFormat": "b[8] u8"
-    },
-    {
-      "kind": "report",
-      "name": "get_role",
-      "identifier": 128,
-      "description": "Get the role corresponding to given device identifer. Returns empty string if unset.",
-      "fields": [
-        {
-          "name": "device_id",
-          "type": "devid",
-          "storage": 8
-        },
-        {
-          "name": "service_idx",
-          "type": "u8",
-          "storage": 1,
-          "isSimpleType": true
-        },
-        {
-          "name": "role",
-          "type": "string",
-          "storage": 0
-        }
-      ],
-      "secondary": true,
-      "packFormat": "b[8] u8 s"
-    },
-    {
-      "kind": "command",
       "name": "set_role",
       "identifier": 129,
       "description": "Set role. Can set to empty to remove role binding.",
@@ -212,65 +165,24 @@
     },
     {
       "kind": "command",
-      "name": "list_stored_roles",
-      "identifier": 130,
-      "description": "Return all roles stored internally.",
-      "fields": [
-        {
-          "name": "stored_roles",
-          "type": "pipe",
-          "storage": 12
-        }
-      ],
-      "pipeType": "list_stored_roles",
-      "packFormat": "b[12]"
-    },
-    {
-      "kind": "pipe_report",
-      "name": "stored_roles",
-      "identifier": 0,
-      "description": "Return all roles stored internally.",
-      "fields": [
-        {
-          "name": "device_id",
-          "type": "devid",
-          "storage": 8
-        },
-        {
-          "name": "service_idx",
-          "type": "u8",
-          "storage": 1,
-          "isSimpleType": true
-        },
-        {
-          "name": "role",
-          "type": "string",
-          "storage": 0
-        }
-      ],
-      "pipeType": "list_stored_roles",
-      "packFormat": "b[8] u8 s"
-    },
-    {
-      "kind": "command",
-      "name": "list_required_roles",
+      "name": "list_roles",
       "identifier": 131,
-      "description": "List all roles required by the current program. `device_id` and `service_idx` are `0` if role is unbound.",
+      "description": "List all roles and bindings required by the current program. `device_id` and `service_idx` are `0` if role is unbound.",
       "fields": [
         {
-          "name": "required_roles",
+          "name": "roles",
           "type": "pipe",
           "storage": 12
         }
       ],
-      "pipeType": "list_required_roles",
+      "pipeType": "list_roles",
       "packFormat": "b[12]"
     },
     {
       "kind": "pipe_report",
-      "name": "required_roles",
+      "name": "roles",
       "identifier": 0,
-      "description": "List all roles required by the current program. `device_id` and `service_idx` are `0` if role is unbound.",
+      "description": "List all roles and bindings required by the current program. `device_id` and `service_idx` are `0` if role is unbound.",
       "fields": [
         {
           "name": "device_id",
@@ -295,7 +207,7 @@
           "storage": 0
         }
       ],
-      "pipeType": "list_required_roles",
+      "pipeType": "list_roles",
       "packFormat": "b[8] u32 u8 s"
     },
     {

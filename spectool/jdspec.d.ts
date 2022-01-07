@@ -611,6 +611,16 @@ declare namespace jdspec {
         link?: string
 
         /**
+         * A URL where the hardware design for the device resides
+         */
+        hardwareDesign?: string
+
+        /**
+         * A URL (e.g., a deep link into a GitHub repo) where the source code for the device's firmware resides
+         */
+        firmwareSource?: string
+
+        /**
          * Product identifiers associated with different versions of this device.
          */
         productIdentifiers: number[]

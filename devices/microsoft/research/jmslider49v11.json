@@ -7,6 +7,7 @@
     "version": "1.1",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-slider-49-1.1/profile/slider.c",
     "tags": ["kit"],
     "services": [522667846],
     "productIdentifiers": [966423091]

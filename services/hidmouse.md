@@ -23,7 +23,7 @@ Controls a HID mouse.
     }
     unique command set_button @ 0x80 {
         buttons: Button
-        event: ButtonEvent
+        ev: ButtonEvent
     }
 
 Sets the up/down state of one or more buttons.

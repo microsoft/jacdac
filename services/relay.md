@@ -6,11 +6,17 @@
 
 A switching relay.
 
+The contacts should be labelled `NO` (normally open), `COM` (common), and `NC` (normally closed).
+When relay is energized it connects `NO` and `COM`.
+When relay is not energized it connects `NC` and `COM`.
+Some relays may be missing `NO` or `NC` contacts.
+When relay module is not powered, or is in bootloader mode, it is not energized (connects `NC` and `COM`).
+
 ## Registers
 
-    rw closed: bool @ intensity
+    rw active: bool @ intensity
 
-Indicates whether the relay circuit is currently energized (closed) or not.
+Indicates whether the relay circuit is currently energized or not.
 
     enum Variant: u8 {
         Electromechanical = 1,

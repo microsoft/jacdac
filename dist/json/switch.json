@@ -219,13 +219,13 @@
         {
           "name": "_",
           "unit": "s",
-          "shift": 16,
-          "type": "u16.16",
+          "shift": 10,
+          "type": "u22.10",
           "storage": 4
         }
       ],
       "optional": true,
-      "packFormat": "u16.16"
+      "packFormat": "u22.10"
     },
     {
       "kind": "event",

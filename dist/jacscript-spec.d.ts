@@ -630,7 +630,7 @@ declare namespace roles {
 
 // Service: Relay
 declare class RelayRole extends Role {
-    closed: JDRegisterNum
+    active: JDRegisterNum
     variant: JDRegisterNum
     maxSwitchingCurrent: JDRegisterNum
 }

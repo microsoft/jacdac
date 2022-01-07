@@ -82,27 +82,6 @@
       "fields": []
     },
     {
-      "kind": "report",
-      "name": "event",
-      "identifier": 1,
-      "description": "Event from sensor or a broadcast service.",
-      "fields": [
-        {
-          "name": "event_id",
-          "type": "u32",
-          "storage": 4,
-          "isSimpleType": true
-        },
-        {
-          "name": "event_argument",
-          "type": "u32",
-          "storage": 4,
-          "isSimpleType": true
-        }
-      ],
-      "packFormat": "u32 u32"
-    },
-    {
       "kind": "command",
       "name": "calibrate",
       "identifier": 2,

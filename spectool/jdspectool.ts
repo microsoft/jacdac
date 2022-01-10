@@ -564,10 +564,7 @@ function toCSharpClient(
         .filter(r => !r.fields.some(f => f.startRepeats))
     const reading = regs.find(reg => reg.identifier === Reading)
     const baseType = reading ? "SensorClient" : "Client"
-    const ctorTypes = [
-        "JDBus bus",
-        "string name",
-    ].filter(a => !!a)
+    const ctorTypes = ["JDBus bus", "string name"].filter(a => !!a)
     const ctorArgs = [
         `bus`,
         `name`,
@@ -622,12 +619,16 @@ ${regs
 
         const single = fields.length === 1
         const rtype = single ? types[0] : `object[] /*(${types.join(", ")})*/`
-        const fetchReg = `(${rtype})this.GetRegisterValue${single ? "" : "s"}(${regcst}, ${capitalize(
-            camelName
-        )}RegPack.${capitalize(camelize(reg.name))})`
-        const setReg = `this.SetRegisterValue${single ? "" : "s"}(${regcst}, ${capitalize(
-            camelName
-        )}RegPack.${capitalize(camelize(reg.name))}, value)`
+        const fetchReg = `(${rtype})this.GetRegisterValue${
+            single ? "" : "s"
+        }(${regcst}, ${capitalize(camelName)}RegPack.${capitalize(
+            camelize(reg.name)
+        )})`
+        const setReg = `this.SetRegisterValue${
+            single ? "" : "s"
+        }(${regcst}, ${capitalize(camelName)}RegPack.${capitalize(
+            camelize(reg.name)
+        )}, value)`
 
         return `
         /// <summary>
@@ -676,11 +677,15 @@ ${regs
         {
             add
             {
-                this.AddEvent((ushort)${capitalize(camelName)}Event.${capitalize(camelize(event.name))}, value);
+                this.AddEvent((ushort)${capitalize(
+                    camelName
+                )}Event.${capitalize(camelize(event.name))}, value);
             }
             remove
             {
-                this.RemoveEvent((ushort)${capitalize(camelName)}Event.${capitalize(camelize(event.name))}, value);
+                this.RemoveEvent((ushort)${capitalize(
+                    camelName
+                )}Event.${capitalize(camelize(event.name))}, value);
             }
         }
 `
@@ -709,7 +714,11 @@ ${commands
             .map((fname, fieldi) => `${types[fieldi]} ${fname}`)
             .join(", ")})
         {
-            this.SendCmd${!fnames.length ? '' : 'Packed'}(${cmd}${fnames.length > 0 ? `, ${pack}, new object[] { ${fnames.join(", ")} }` : ''});
+            this.SendCmd${!fnames.length ? "" : "Packed"}(${cmd}${
+            fnames.length > 0
+                ? `, ${pack}, new object[] { ${fnames.join(", ")} }`
+                : ""
+        });
         }${client ? "*/" : ""}
 `
     })
@@ -843,9 +852,12 @@ function processSpec(dn: string) {
             const convResult = cnv[n](json)
             const ext =
                 n == "sts" ? "ts" : n == "c" ? "h" : n == "cs" ? "g.cs" : n
-            let fnn = fn.slice(0, -3);
+            let fnn = fn.slice(0, -3)
             if (n == "cs") {
-                fnn = path.join("Constants", capitalize(camelize(fnn)) + "Constants");
+                fnn = path.join(
+                    "Constants",
+                    capitalize(camelize(fnn)) + "Constants"
+                )
                 mkdir(path.join(path.join(outp, n, "Constants")))
             }
             const cfn = path.join(outp, n, fnn + "." + ext)

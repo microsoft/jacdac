@@ -588,10 +588,12 @@ declare namespace jdspec {
         services: number[]
     }
 
+    type TransportType = "usb" | "serial" | "bluetooth"
+
     interface TransportSpec {
         vendorId?: number
         productId?: number
-        type: "usb" | "serial" | "bluetooth"
+        type: TransportType
     }
 
     interface DeviceSpec extends DeviceClassSpec {

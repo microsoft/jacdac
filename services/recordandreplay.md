@@ -38,7 +38,7 @@ Indicate the current status
     
 Milliseconds of audio recorded.
 
-    rw volumn?: u8 @ intensity
+    rw volume?: u0.8 / @ intensity
 
 Playback volumn control 
 

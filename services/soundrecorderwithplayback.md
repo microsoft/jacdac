@@ -1,4 +1,4 @@
-# Record and Replay
+# Sound Recorder with Playback
 
     identifier: 0x1b72bf50
     group: sound
@@ -8,9 +8,9 @@ A record and replay module. You can record a few seconds of audio and play it ba
 
 ## Commands
 
-    command replay @ 0x80 {}
+    command play @ 0x80 {}
     
-Replay cached audio.
+Replay recorded audio.
     
     command record @ 0x81 {
         milliseconds: u16 ms
@@ -18,7 +18,7 @@ Replay cached audio.
     
 Record audio for N milliseconds.
 
-    cancel record @ 0x82 {}
+    command cancel @ 0x82 {}
     
 Cancel record, the `time` register will be updated by already cached data.
 
@@ -40,5 +40,5 @@ Milliseconds of audio recorded.
 
     rw volume?: u0.8 / @ intensity
 
-Playback volumn control 
+Playback volume control 
 

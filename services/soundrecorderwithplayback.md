@@ -13,7 +13,7 @@ A record and replay module. You can record a few seconds of audio and play it ba
 Replay recorded audio.
     
     command record @ 0x81 {
-        milliseconds: u16 ms
+        duration: u16 ms
     }
     
 Record audio for N milliseconds.

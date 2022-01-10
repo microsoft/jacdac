@@ -764,6 +764,16 @@ declare namespace roles {
     function soundPlayer(): SoundPlayerRole
 }
 
+// Service: Sound Recorder with Playback
+declare class SoundRecorderWithPlaybackRole extends Role {
+    status: JDRegisterNum
+    time: JDRegisterNum
+    volume: JDRegisterNum
+}
+declare namespace roles {
+    function soundRecorderWithPlayback(): SoundRecorderWithPlaybackRole
+}
+
 // Service: Sound Spectrum
 declare class SoundSpectrumRole extends SensorRole {
     frequencyBins: JDRegisterNum

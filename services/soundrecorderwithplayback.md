@@ -29,12 +29,11 @@ Cancel record, the `time` register will be updated by already cached data.
         Recording = 1
         Playing = 2
     }
-
-    ro status: Status @ value
+    ro status: Status @ 0x180
 
 Indicate the current status 
 
-    ro time: u16 ms @ 0x180
+    ro time: u16 ms @ 0x181
     
 Milliseconds of audio recorded.
 

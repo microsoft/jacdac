@@ -34,7 +34,7 @@ Cancel record, the `time` register will be updated by already cached data.
 
 Indicate the current status 
 
-    ro time: u16 ms / @ 0x180
+    ro time: u16 ms @ 0x180
     
 Milliseconds of audio recorded.
 

@@ -1038,7 +1038,7 @@ function mkdir(n: string) {
     try {
         fs.mkdirSync(n, "777")
     } catch (e) {
-        console.warn(e)
+        if (e.code != "EEXIST") console.warn(e)
     }
 }
 

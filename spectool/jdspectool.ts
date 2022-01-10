@@ -622,22 +622,49 @@ ${regs
 
         const single = fields.length === 1
         const rtype = single ? types[0] : `object[] /*(${types.join(", ")})*/`
-        const fetchReg = `(${rtype})this.GetRegisterValue${single ? "" : "s"}(${regcst}, ${capitalize(
+        const fetchArgs = `${regcst}, ${capitalize(
             camelName
-        )}RegPack.${capitalize(camelize(reg.name))})`
+        )}RegPack.${capitalize(camelize(reg.name))}`
+        const fetchReg = `(${rtype})this.GetRegisterValue${single ? "" : "s"}(${fetchArgs})`
         const setReg = `this.SetRegisterValue${single ? "" : "s"}(${regcst}, ${capitalize(
             camelName
         )}RegPack.${capitalize(camelize(reg.name))}, value)`
 
         return `
         /// <summary>
-        /// ${`${reg.optional ? "(Optional) " : ""}${
+        /// ${reg.optional ? `Tries to read the <c>${rname}</c> register value.` : `Reads the <c>${rname}</c> register value.`}
+        /// ${`${
             reg.description || ""
         }, ${fields.filter(f => f.unit).map(f => `${f.name}: ${f.unit}`)}`
             .split("\n")
             .join("\n        /// ")}
         /// </summary>
-        public ${rtype} ${capitalize(camelize(rname))}
+        ${reg.optional ? `bool TryGet${capitalize(camelize(rname))}(out ${rtype} value)
+        {
+            object[] values;
+            if (this.TryGetRegisterValues(${fetchArgs}, out values)) 
+            {
+                value = (${rtype})values[0];
+                return true;
+            }
+            else
+            {
+                value = default(${rtype});
+                return false;
+            }
+        }${
+            kind === "rw"
+                ? `
+        
+        /// <summary>
+        /// Sets the ${rname} value
+        /// </summary>
+        public void Set${capitalize(camelize(rname))}(${rtype} value)
+        {
+            ${setReg};
+        }
+` : ''}` : 
+        `public ${rtype} ${capitalize(camelize(rname))}
         {
             get
             {
@@ -663,7 +690,7 @@ ${regs
 `
                     : ""
             }
-        }
+        }`}
 `
     })
     .join("")}${events

@@ -624,7 +624,7 @@ ${regs
         const fetchArgs = `${regcst}, ${capitalize(
             camelName
         )}RegPack.${capitalize(camelize(reg.name))}`
-        const fetchReg = `(${rtype})this.GetRegisterValue${
+        const fetchReg = `(${rtype})this.GetRegisterValue${rtype == "bool" ? "AsBool" : ""}${
             single ? "" : "s"
         }(${fetchArgs})`
         const setReg = `this.SetRegisterValue${

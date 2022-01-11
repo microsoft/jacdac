@@ -589,8 +589,8 @@ function toCSharpClient(
 using Jacdac;
 using System;
 
-namespace Jacdac.Clients {
-
+namespace Jacdac.Clients 
+{
     /// <summary>
     /// ${(spec.notes["short"] || "").split("\n").join("\n     /// ")}
     /// Implements a client for the ${spec.name} service.

@@ -4000,6 +4000,65 @@ export enum SoundPlayerCmd {
  */
 
 
+// Service Sound Recorder with Playback constants
+export const SRV_SOUND_RECORDER_WITH_PLAYBACK = 0x1b72bf50
+
+export enum SoundRecorderWithPlaybackStatus { // uint8_t
+    Idle = 0x0,
+    Recording = 0x1,
+    Playing = 0x2,
+}
+
+export enum SoundRecorderWithPlaybackCmd {
+    /**
+     * No args. Replay recorded audio.
+     */
+    Play = 0x80,
+
+    /**
+     * Argument: duration ms uint16_t. Record audio for N milliseconds.
+     *
+     * ```
+     * const [duration] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    Record = 0x81,
+
+    /**
+     * No args. Cancel record, the `time` register will be updated by already cached data.
+     */
+    Cancel = 0x82,
+}
+
+export enum SoundRecorderWithPlaybackReg {
+    /**
+     * Read-only Status (uint8_t). Indicate the current status
+     *
+     * ```
+     * const [status] = jdunpack<[SoundRecorderWithPlaybackStatus]>(buf, "u8")
+     * ```
+     */
+    Status = 0x180,
+
+    /**
+     * Read-only ms uint16_t. Milliseconds of audio recorded.
+     *
+     * ```
+     * const [time] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    Time = 0x181,
+
+    /**
+     * Read-write ratio u0.8 (uint8_t). Playback volume control
+     *
+     * ```
+     * const [volume] = jdunpack<[number]>(buf, "u0.8")
+     * ```
+     */
+    Volume = 0x1,
+}
+
 // Service Sound Spectrum constants
 export const SRV_SOUND_SPECTRUM = 0x157abc1e
 export enum SoundSpectrumReg {

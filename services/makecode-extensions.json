@@ -609,6 +609,20 @@
     }
   },
   {
+    "service": "switch",
+    "client": {
+      "name": "jacdac-switch",
+      "targets": [
+        "microbit",
+        "arcade",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/switch",
+      "qName": "modules.SwitchClient",
+      "default": "modules.switch"
+    }
+  },
+  {
     "service": "tcp",
     "client": {
       "name": "jacdac-tcp",

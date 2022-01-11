@@ -1,5 +1,9 @@
 // Service: Common registers and commands
 declare class SystemRole extends Role {
+    announce(): void
+    getRegister(): void
+    setRegister(): void
+    calibrate(): void
     intensity: JDRegisterNum
     value: JDRegisterNum
     minValue: JDRegisterNum
@@ -77,6 +81,7 @@ declare namespace roles {
 
 // Service: Arcade Sound
 declare class ArcadeSoundRole extends Role {
+    play(samples: number): void
     sampleRate: JDRegisterNum
     bufferSize: JDRegisterNum
     bufferPending: JDRegisterNum
@@ -90,6 +95,9 @@ declare class AzureIotHubHealthRole extends Role {
     hubName: JDRegisterString
     hubDeviceId: JDRegisterString
     connectionStatus: JDRegisterNum
+    connect(): void
+    disconnect(): void
+    setConnectionString(connection_string: number): void
     connectionStatusChange: JDEvent
     messageSent: JDEvent
 }
@@ -122,6 +130,10 @@ declare class BitRadioRole extends Role {
     group: JDRegisterNum
     transmissionPower: JDRegisterNum
     frequencyBand: JDRegisterNum
+    sendString(message: number): void
+    sendNumber(value: number): void
+    sendValue(value: number, name: number): void
+    sendBuffer(data: number): void
 }
 declare namespace roles {
     function bitRadio(): BitRadioRole
@@ -129,6 +141,9 @@ declare namespace roles {
 
 // Service: Bootloader
 declare class BootloaderRole extends Role {
+    info(): void
+    setSession(session_id: number): void
+    pageData(page_address: number, page_offset: number, chunk_no: number, chunk_max: number, session_id: number, reserved0: number, reserved1: number, reserved2: number, reserved3: number, page_data: number): void
 }
 declare namespace roles {
     function bootloader(): BootloaderRole
@@ -168,6 +183,8 @@ declare namespace roles {
 // Service: Buzzer
 declare class BuzzerRole extends Role {
     volume: JDRegisterNum
+    playTone(period: number, duty: number, duration: number): void
+    playNote(frequency: number, volume: number, duration: number): void
 }
 declare namespace roles {
     function buzzer(): BuzzerRole
@@ -176,6 +193,7 @@ declare namespace roles {
 // Service: Capacitive Button
 declare class CapacitiveButtonRole extends Role {
     threshold: JDRegisterNum
+    calibrate(): void
 }
 declare namespace roles {
     function capacitiveButton(): CapacitiveButtonRole
@@ -196,6 +214,7 @@ declare namespace roles {
 
 // Service: CODAL Message Bus
 declare class CodalMessageBusRole extends Role {
+    send(source: number, value: number): void
     message: JDEvent
 }
 declare namespace roles {
@@ -215,6 +234,7 @@ declare class CompassRole extends SensorRole {
     heading: JDRegisterNum
     enabled: JDRegisterNum
     headingError: JDRegisterNum
+    calibrate(): void
 }
 declare namespace roles {
     function compass(): CompassRole
@@ -222,6 +242,14 @@ declare namespace roles {
 
 // Service: Control
 declare class ControlRole extends Role {
+    services(): void
+    noop(): void
+    identify(): void
+    reset(): void
+    floodPing(num_responses: number, start_counter: number, size: number): void
+    setStatusLight(to_red: number, to_green: number, to_blue: number, speed: number): void
+    proxy(): void
+    reliableCommands(seed: number): void
     resetIn: JDRegisterNum
     deviceDescription: JDRegisterString
     productIdentifier: JDRegisterNum
@@ -256,6 +284,7 @@ declare namespace roles {
 // Service: DMX
 declare class DmxRole extends Role {
     enabled: JDRegisterNum
+    send(channels: number): void
 }
 declare namespace roles {
     function dmx(): DmxRole
@@ -328,6 +357,8 @@ declare namespace roles {
 
 // Service: HID Keyboard
 declare class HidKeyboardRole extends Role {
+    key(selector: number, modifiers: number, action: number): void
+    clear(): void
 }
 declare namespace roles {
     function hidKeyboard(): HidKeyboardRole
@@ -335,6 +366,9 @@ declare namespace roles {
 
 // Service: HID Mouse
 declare class HidMouseRole extends Role {
+    setButton(buttons: number, ev: number): void
+    move(dx: number, dy: number, time: number): void
+    wheel(dy: number, time: number): void
 }
 declare namespace roles {
     function hidMouse(): HidMouseRole
@@ -362,6 +396,8 @@ declare namespace roles {
 
 // Service: Indexed screen
 declare class IndexedScreenRole extends Role {
+    startUpdate(x: number, y: number, width: number, height: number): void
+    setPixels(pixels: number): void
     brightness: JDRegisterNum
     palette: JDRegisterArray & { blue: number, green: number, red: number, padding: number }
     bitsPerPixel: JDRegisterNum
@@ -382,8 +418,32 @@ declare namespace roles {
     function infrastructure(): InfrastructureRole
 }
 
+// Service: Jacscript Cloud
+declare class JacscriptCloudRole extends Role {
+    upload(label: number, value: number): void
+    getTwin(path: number): void
+    subscribeTwin(path: number): void
+    ackCloudCommand(seq_no: number, result: number): void
+    connected: JDRegisterNum
+    twinChanged: JDEvent
+    cloudCommand: JDEvent
+}
+declare namespace roles {
+    function jacscriptCloud(): JacscriptCloudRole
+}
+
+// Service: Jacscript Condition
+declare class JacscriptConditionRole extends Role {
+    signal(): void
+    signalled: JDEvent
+}
+declare namespace roles {
+    function jacscriptCondition(): JacscriptConditionRole
+}
+
 // Service: LED
 declare class LedRole extends Role {
+    animate(to_red: number, to_green: number, to_blue: number, speed: number): void
     color: JDRegisterArray & { red: number, green: number, blue: number }
     maxPower: JDRegisterNum
     ledCount: JDRegisterNum
@@ -406,6 +466,7 @@ declare class LedPixelRole extends Role {
     maxPixels: JDRegisterNum
     numRepeats: JDRegisterNum
     variant: JDRegisterNum
+    run(program: number): void
 }
 declare namespace roles {
     function ledPixel(): LedPixelRole
@@ -442,6 +503,7 @@ declare namespace roles {
 declare class MagnetometerRole extends SensorRole {
     forces: JDRegisterArray & { x: number, y: number, z: number }
     forcesError: JDRegisterNum
+    calibrate(): void
 }
 declare namespace roles {
     function magnetometer(): MagnetometerRole
@@ -465,6 +527,7 @@ declare namespace roles {
 
 // Service: Microphone
 declare class MicrophoneRole extends Role {
+    sample(samples: number, num_samples: number): void
     samplingPeriod: JDRegisterNum
 }
 declare namespace roles {
@@ -474,6 +537,8 @@ declare namespace roles {
 // Service: MIDI output
 declare class MidiOutputRole extends Role {
     enabled: JDRegisterNum
+    clear(): void
+    send(data: number): void
 }
 declare namespace roles {
     function midiOutput(): MidiOutputRole
@@ -481,6 +546,8 @@ declare namespace roles {
 
 // Service: Model Runner
 declare class ModelRunnerRole extends Role {
+    setModel(model_size: number): void
+    predict(outputs: number): void
     autoInvokeEvery: JDRegisterNum
     outputs: JDRegisterArray
     inputShape: JDRegisterArray
@@ -541,6 +608,7 @@ declare class PowerRole extends Role {
     batteryCapacity: JDRegisterNum
     keepOnPulseDuration: JDRegisterNum
     keepOnPulsePeriod: JDRegisterNum
+    shutdown(): void
     powerStatusChanged: JDEvent
 }
 declare namespace roles {
@@ -578,6 +646,14 @@ declare class ProtoTestRole extends Role {
     eBytes: JDEvent
     eI8U8U16I32: JDEvent
     eU8String: JDEvent
+    cBool(bo: number): void
+    cU32(u32: number): void
+    cI32(i32: number): void
+    cString(str: number): void
+    cBytes(bytes: number): void
+    cI8U8U16I32(i8: number, u8: number, u16: number, i32: number): void
+    cU8String(u8: number, str: number): void
+    cReportPipe(p_bytes: number): void
 }
 declare namespace roles {
     function protoTest(): ProtoTestRole
@@ -614,6 +690,7 @@ declare class RealTimeClockRole extends SensorRole {
     drift: JDRegisterNum
     precision: JDRegisterNum
     variant: JDRegisterNum
+    setTime(year: number, month: number, day_of_month: number, day_of_week: number, hour: number, min: number, sec: number): void
 }
 declare namespace roles {
     function realTimeClock(): RealTimeClockRole
@@ -651,6 +728,9 @@ declare namespace roles {
 declare class RoleManagerRole extends Role {
     autoBind: JDRegisterNum
     allRolesAllocated: JDRegisterNum
+    setRole(device_id: number, service_idx: number, role: number): void
+    clearAllRoles(): void
+    listRoles(roles: number): void
     change: JDEvent
 }
 declare namespace roles {
@@ -706,6 +786,12 @@ declare namespace roles {
 
 // Service: Settings
 declare class SettingsRole extends Role {
+    get(key: number): void
+    set(key: number, value: number): void
+    delete(key: number): void
+    listKeys(results: number): void
+    list(results: number): void
+    clear(): void
     change: JDEvent
 }
 declare namespace roles {
@@ -719,6 +805,8 @@ declare class SevenSegmentDisplayRole extends Role {
     doubleDots: JDRegisterNum
     digitCount: JDRegisterNum
     decimalPoint: JDRegisterNum
+    setNumber(value: number): void
+    setText(text: number): void
 }
 declare namespace roles {
     function sevenSegmentDisplay(): SevenSegmentDisplayRole
@@ -759,6 +847,9 @@ declare namespace roles {
 // Service: Sound player
 declare class SoundPlayerRole extends Role {
     volume: JDRegisterNum
+    play(name: number): void
+    cancel(): void
+    listSounds(sounds_port: number): void
 }
 declare namespace roles {
     function soundPlayer(): SoundPlayerRole
@@ -766,6 +857,9 @@ declare namespace roles {
 
 // Service: Sound Recorder with Playback
 declare class SoundRecorderWithPlaybackRole extends Role {
+    play(): void
+    record(duration: number): void
+    cancel(): void
     status: JDRegisterNum
     time: JDRegisterNum
     volume: JDRegisterNum
@@ -794,6 +888,8 @@ declare class SpeechSynthesisRole extends Role {
     volume: JDRegisterNum
     pitch: JDRegisterNum
     rate: JDRegisterNum
+    speak(text: number): void
+    cancel(): void
 }
 declare namespace roles {
     function speechSynthesis(): SpeechSynthesisRole
@@ -813,6 +909,7 @@ declare namespace roles {
 
 // Service: TCP
 declare class TcpRole extends Role {
+    open(inbound: number): void
 }
 declare namespace roles {
     function tcp(): TcpRole
@@ -874,6 +971,8 @@ declare class VerifiedTelemetryRole extends Role {
     telemetryStatusInterval: JDRegisterNum
     fingerprintType: JDRegisterNum
     fingerprintTemplate: JDRegisterArray & { confidence: number, template: number }
+    resetFingerprintTemplate(): void
+    retrainFingerprintTemplate(): void
     telemetryStatusChange: JDEvent
     fingerprintTemplateChange: JDEvent
 }
@@ -883,6 +982,7 @@ declare namespace roles {
 
 // Service: Vibration motor
 declare class VibrationMotorRole extends Role {
+    vibrate(duration: number, intensity: number): void
 }
 declare namespace roles {
     function vibrationMotor(): VibrationMotorRole
@@ -908,6 +1008,8 @@ declare class WeightScaleRole extends SensorRole {
     minWeight: JDRegisterNum
     weightResolution: JDRegisterNum
     variant: JDRegisterNum
+    calibrateZeroOffset(): void
+    calibrateGain(weight: number): void
 }
 declare namespace roles {
     function weightScale(): WeightScaleRole
@@ -915,6 +1017,14 @@ declare namespace roles {
 
 // Service: WIFI
 declare class WifiRole extends Role {
+    lastScanResults(results: number): void
+    addNetwork(ssid: number, password: number): void
+    reconnect(): void
+    forgetNetwork(ssid: number): void
+    forgetAllNetworks(): void
+    setNetworkPriority(priority: number, ssid: number): void
+    scan(): void
+    listKnownNetworks(results: number): void
     enabled: JDRegisterNum
     ipAddress: JDRegisterNum
     eui48: JDRegisterNum

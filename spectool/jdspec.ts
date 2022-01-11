@@ -1969,7 +1969,8 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "cs") {
         let meta = ""
         if (pkt.secondary || inner == "info") {
             if (pack)
-                text = wrapComment(language,
+                text = wrapComment(
+                    language,
                     `${pkt.kind} ${upperCamel(pkt.name)}${
                         pkt.client ? "" : wrapSnippet(pack)
                     }`
@@ -1980,7 +1981,8 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "cs") {
                 meta = `//% block="${snakify(pkt.name).replace(/_/g, " ")}"\n`
             }
             text = `${
-                wrapComment(language,
+                wrapComment(
+                    language,
                     cmt.comment + (pkt.client ? "" : wrapSnippet(pack))
                 ) + meta
             }${upperCamel(pkt.name)} = ${val},\n`
@@ -1994,7 +1996,8 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "cs") {
             const packName = inner + "Pack"
             tsEnums[packName] =
                 (tsEnums[packName] || "") +
-                `${wrapComment(language,
+                `${wrapComment(
+                    language,
                     `Pack format for '${pkt.name}' register data.`
                 )}public const string ${upperCamel(pkt.name)}${
                     pkt.secondary ? "Report" : ""
@@ -2042,15 +2045,13 @@ function toJacscript(info: jdspec.ServiceSpec) {
         const cmt = addComment(pkt)
 
         let tp = ""
+
+        const fields = pkt.fields.map(f => `${f.name}: number`).join(", ")
+
         if (isRegister(pkt.kind)) {
             if (cmt.needsStruct) {
                 tp = `JDRegisterArray`
-                if (pkt.fields.length > 1) {
-                    const fields = pkt.fields
-                        .map(f => `${f.name}: number`)
-                        .join(", ")
-                    tp += ` & { ${fields} }`
-                }
+                if (pkt.fields.length > 1) tp += ` & { ${fields} }`
             } else {
                 if (pkt.fields.length == 1 && pkt.fields[0].type == "string")
                     tp = "JDRegisterString"
@@ -2058,6 +2059,8 @@ function toJacscript(info: jdspec.ServiceSpec) {
             }
         } else if (pkt.kind == "event") {
             tp = "JDEvent"
+        } else if (pkt.kind == "command") {
+            r += `    ${camelize(pkt.name)}(${fields}): void\n`
         }
 
         if (tp) r += `    ${camelize(pkt.name)}: ${tp}\n`

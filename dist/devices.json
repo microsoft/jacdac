@@ -1109,6 +1109,7 @@
     "description": "",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-slider-49-1.1/profile/slider.c",
+    "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/kicad/reference-designs/slider",
     "link": "https://github.com/microsoft/jacdac-msr-modules",
     "services": [
       522667846

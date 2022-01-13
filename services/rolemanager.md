@@ -5,16 +5,33 @@
 
 Assign roles to services on the Jacdac bus.
 
-Internally, the role manager stores a mapping from `(device_id, service_idx)` to role name.
+Internally, the role manager stores a mapping from role name to `(device_id, service_idx)`.
 Users refer to services by using role names (eg., they instantiate an accelerometer client with a given role name).
 Each client has a role, and roles are unique to clients
 (ie., one should not have both a gyro and accelerometer service with role `left_leg`).
 
-Role names can be hierarchical, using slash character as a separator.
-Examples: `left_leg/acc`, `left_leg/gyro`, `right_leg/acc`.
-If two roles share the prefix before first slash, it should be used as a hint that the services
-should be co-located on a single device
-(eg., here the `left_leg` "location" is expected to have both an accelerometer and a gyro service on a single device).
+The simplest recommended automatic role assignment algorithm is as follows:
+
+```text
+roles.sort(strcmp() on UTF-8 representation of role name)
+devices.sort(by device identifier (lexicographic on 8 byte string))
+for every role
+  if role is not assigned
+    for every device
+      for every service on device
+        if serviceClass matches role
+          if service is not assigned to any role
+            assign service to role
+```
+
+Due to sorting, role names sharing a prefix will tend to be co-located on the single device.
+For example, one can have roles `left_leg_acc`, `left_leg_gyro`, `right_leg_acc`, `right_leg_gyro`,
+and assuming combined gyro+accelerometer sensors, the pairs will tend to be allocated to a single leg,
+however the legs may be reversed.
+In such a case the user can swap the physical sensors (note that left leg will always be assigned to
+sensor with smaller device identifier).
+Alternatively, the user can manually modify assignment using `set_role` command.
+
 
 ## Registers
 

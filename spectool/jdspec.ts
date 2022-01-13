@@ -2018,7 +2018,7 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "cs") {
             if (inner.indexOf("public const") > -1)
                 r += `    public static class ${pref}${k} {\n    ${indent}${inner}\n${indent}}\n\n`
             else
-                r += `${enumkw} ${pref}${k} {\n    ${indent}${inner}\n${indent}}\n\n`
+                r += `${enumkw} ${pref}${k} ${csharp ? `: ushort ` : ''}{\n    ${indent}${inner}\n${indent}}\n\n`
         }
     }
 

@@ -273,7 +273,7 @@ export function parseServiceSpecificationMarkdownToJSON(
         tags: [],
     }
 
-    let backticksType = ""
+    let backticksType: string = null
     let enumInfo: jdspec.EnumInfo = null
     let packetInfo: jdspec.PacketInfo = null
     let pipePacket: jdspec.PacketInfo = null
@@ -329,19 +329,22 @@ export function parseServiceSpecificationMarkdownToJSON(
     function processLine(line: string) {
         if (backticksType) {
             if (line.trim() == "```") {
+                const prev = backticksType
                 backticksType = null
-                if (backticksType == "default") return
+                if (prev == "default") return
             }
         } else {
             const m = /^```(.*)/.exec(line)
             if (m) {
                 backticksType = m[1] || "default"
+                // if we just switched into code section, don't interpret this line and don't add to any description
                 if (backticksType == "default") return
             }
         }
 
         const interpret =
-            backticksType == "default" || line.slice(0, 4) == "    "
+            backticksType == "default" ||
+            (backticksType == null && line.slice(0, 4) == "    ")
 
         if (!interpret) {
             const m = /^(#+)\s*(.*)/.exec(line)

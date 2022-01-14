@@ -553,7 +553,7 @@ export function parseServiceSpecificationMarkdownToJSON(
         let volatile: boolean = undefined
 
         function processAttributes() {
-            while (true) {
+            while (words.length) {
                 if (words[0] === "restricted") {
                     restricted = true
                 } else if (words[0] === "client") {
@@ -1276,10 +1276,6 @@ function values<T>(o: jdspec.SMap<T>): T[] {
     const r: T[] = []
     for (const k of Object.keys(o)) r.push(o[k])
     return r
-}
-
-function fail(msg: string) {
-    throw new Error(msg)
 }
 
 function toUpper(name: string) {

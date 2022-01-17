@@ -29,9 +29,9 @@ Services act on __commands__ and optionally respond with __reports__.
 Reports can also be emitted separately from a service without prompting from another device. 
 This interface is specified in a [custom markdown language](/reference/service-specification/) 
 that lists the possible commands and reports that a service can consume and emit. 
-Specifications can also inherit from other specifications. An example of this can be seen in the [sensor specification](../../../services/_sensor). Jacdac sensors inherit commands and reports from this specification, creating a set of base functionality for _all_ sensors.
+Specifications can also inherit from other specifications. An example of this can be seen in the [sensor specification](../../services/_sensor). Jacdac sensors inherit commands and reports from this specification, creating a set of base functionality for _all_ sensors.
 
-A service is globally and uniquely identified by its service class, which should be found in the [service catalog](../../../services). For example, the service class of the [button service](../../../services/button) is `0x1473a263`, as specified in the button's [service specification](https://github.com/microsoft/jacdac/blob/main/services/button.md) in the GitHub repository that contains the registered services. (In contrast, the `service_index` field in the Jacdac packet is an index into the list of services advertised by a device. The control service has both service class 0 and service number 0.)
+A service is globally and uniquely identified by its service class, which should be found in the [service catalog](../../services). For example, the service class of the [button service](../../services/button) is `0x1473a263`, as specified in the button's [service specification](https://github.com/microsoft/jacdac/blob/main/services/button.md) in the GitHub repository that contains the registered services. (In contrast, the `service_index` field in the Jacdac packet is an index into the list of services advertised by a device. The control service has both service class 0 and service number 0.)
 
 ### Commands
 
@@ -64,7 +64,7 @@ However, services __must not__ allocate any of the common or reserved action com
 | `0x000-0x07f` | Common action command codes	|
 | `0xf00-0xfff` | Reserved action command codes	|
 
-Common action command codes are allocated in the [system specification](../../../services/_system).
+Common action command codes are allocated in the [system specification](../../services/_system).
 
 #### Registers
 
@@ -88,7 +88,7 @@ However, services __must not__ allocate any of the common or reserved register c
 | `0x100-0x17f` | Read-only registers common to all services	|
 | `0xf00-0xfff` | Reserved for future use.	|
 
-Common register command codes are allocated in the [system specification](../../../services/_system).
+Common register command codes are allocated in the [system specification](../../services/_system).
 
 #### Reports
 
@@ -142,7 +142,7 @@ Each device runs its own control service, which emits advertisement packets roug
 
 The advertisement packet also includes several flags indicating various protocol-level capabilities of the device, as well as "restart counter" that monotonically increases, and can be used to detect a device restart.
 
-The control service also offers a set of common commands that can be used to query/inspect each Jacdac device. For example, the `IDENTIFY` command causes a Jacdac device to perform an action that allows a user to locate a particular device, usually through blinking an LED. In addition to emiting an advertisement packet every 500 milliseconds, a device that hosts one or more services must respond to all commands listed in the [control service specification](../../../services/control).
+The control service also offers a set of common commands that can be used to query/inspect each Jacdac device. For example, the `IDENTIFY` command causes a Jacdac device to perform an action that allows a user to locate a particular device, usually through blinking an LED. In addition to emiting an advertisement packet every 500 milliseconds, a device that hosts one or more services must respond to all commands listed in the [control service specification](../../services/control).
 
 The implementation complexity of the control service scales with respect to the number of services a device implements. For instance, it is very simple to process packets for a single user service (in addition to the control service), but complexity increases as more services are added. This flexibility is a benefit as it allows ultra low-cost microcontrollers to be used in simple devices.
 

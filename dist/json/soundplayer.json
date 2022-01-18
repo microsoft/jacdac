@@ -116,6 +116,7 @@
           "storage": 2
         }
       ],
+      "optional": true,
       "identifierName": "intensity",
       "packFormat": "u0.16"
     },

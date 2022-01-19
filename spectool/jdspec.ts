@@ -1562,7 +1562,7 @@ function upperCamel(name: string) {
 }
 
 export function snakify(name: string) {
-    return name?.replace(/([a-z])([A-Z])/g, (_, a, b) => a + "_" + b)
+    return name?.replace(/([a-z])([A-Z])/g, (_, a, b) => a + "_" + b).replace(/\s+/g, "_")
 }
 
 export function dashify(name: string) {

@@ -2009,6 +2009,13 @@ export enum IndexedScreenReg {
 export const SRV_INFRASTRUCTURE = 0x1e1589eb
 // Service Jacscript Cloud constants
 export const SRV_JACSCRIPT_CLOUD = 0x14606e9c
+
+export enum JacscriptCloudCommandStatus { // uint32_t
+    OK = 0xc8,
+    NotFound = 0x194,
+    Busy = 0x1ad,
+}
+
 export enum JacscriptCloudCmd {
     /**
      * Upload a labelled tuple of values to the cloud.
@@ -2051,7 +2058,7 @@ export enum JacscriptCloudCmd {
      * Should be called by jacscript when it finishes handling a `cloud_command`.
      *
      * ```
-     * const [seqNo, result] = jdunpack<[number, number[]]>(buf, "u32 f64[]")
+     * const [seqNo, status, result] = jdunpack<[number, JacscriptCloudCommandStatus, number[]]>(buf, "u32 u32 f64[]")
      * ```
      */
     AckCloudCommand = 0x83,

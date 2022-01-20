@@ -423,7 +423,7 @@ declare class JacscriptCloudRole extends Role {
     upload(label: string, ...value: number[]): void
     getTwin(path: string): void
     subscribeTwin(path: string): void
-    ackCloudCommand(seq_no: number, ...result: number[]): void
+    ackCloudCommand(seq_no: number, status: number, ...result: number[]): void
     connected: JDRegisterNum
     twinChanged: JDEvent
     cloudCommand: JDEvent

@@ -36,8 +36,14 @@ Path is dot-separated.
 Subscribe to updates to twin at specific path.
 Generates `twin_changed` events.
 
+    enum CommandStatus : u32 {
+        OK = 200
+        NotFound = 404
+        Busy = 429
+    }
     command ack_cloud_command @ 0x83 {
         seq_no: u32
+        status: CommandStatus
     repeats:
         result: f64
     }

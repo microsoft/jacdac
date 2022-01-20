@@ -2218,6 +2218,16 @@ namespace jacdac {
 namespace jacdac {
     // Service Jacscript Cloud constants
     export const SRV_JACSCRIPT_CLOUD = 0x14606e9c
+
+    export const enum JacscriptCloudCommandStatus { // uint32_t
+        //% block="ok"
+        OK = 0xc8,
+        //% block="not found"
+        NotFound = 0x194,
+        //% block="busy"
+        Busy = 0x1ad,
+    }
+
     export const enum JacscriptCloudCmd {
         /**
          * Upload a labelled tuple of values to the cloud.
@@ -2260,7 +2270,7 @@ namespace jacdac {
          * Should be called by jacscript when it finishes handling a `cloud_command`.
          *
          * ```
-         * const [seqNo, result] = jdunpack<[number, number[]]>(buf, "u32 f64[]")
+         * const [seqNo, status, result] = jdunpack<[number, jacdac.JacscriptCloudCommandStatus, number[]]>(buf, "u32 u32 f64[]")
          * ```
          */
         AckCloudCommand = 0x83,

@@ -11,7 +11,17 @@
     "short": "Supports cloud connections for Jacscript programs.\nNote that `f64` values following a label are not necessarily aligned."
   },
   "classIdentifier": 341864092,
-  "enums": {},
+  "enums": {
+    "CommandStatus": {
+      "name": "CommandStatus",
+      "storage": 4,
+      "members": {
+        "OK": 200,
+        "NotFound": 404,
+        "Busy": 429
+      }
+    }
+  },
   "constants": {},
   "packets": [
     {
@@ -186,6 +196,11 @@
           "isSimpleType": true
         },
         {
+          "name": "status",
+          "type": "CommandStatus",
+          "storage": 4
+        },
+        {
           "name": "result",
           "isFloat": true,
           "type": "f64",
@@ -193,7 +208,7 @@
           "startRepeats": true
         }
       ],
-      "packFormat": "u32 r: f64"
+      "packFormat": "u32 u32 r: f64"
     },
     {
       "kind": "ro",

@@ -4,6 +4,11 @@
 
 #define JD_SERVICE_CLASS_JACSCRIPT_CLOUD  0x14606e9c
 
+// enum CommandStatus (uint32_t)
+#define JD_JACSCRIPT_CLOUD_COMMAND_STATUS_OK 0xc8
+#define JD_JACSCRIPT_CLOUD_COMMAND_STATUS_NOT_FOUND 0x194
+#define JD_JACSCRIPT_CLOUD_COMMAND_STATUS_BUSY 0x1ad
+
 /**
  * Upload a labelled tuple of values to the cloud.
  * The tuple will be automatically tagged with timestamp and originating device.
@@ -42,6 +47,7 @@ typedef struct jd_jacscript_cloud_get_twin_report {
 #define JD_JACSCRIPT_CLOUD_CMD_ACK_CLOUD_COMMAND 0x83
 typedef struct jd_jacscript_cloud_ack_cloud_command {
     uint32_t seq_no;
+    uint32_t status;  // CommandStatus
     uint64_t result[0];  // f64
 } jd_jacscript_cloud_ack_cloud_command_t;
 

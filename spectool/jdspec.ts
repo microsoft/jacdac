@@ -2014,7 +2014,9 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "cs") {
             if (inner.indexOf("public const") > -1)
                 r += `    public static class ${pref}${k} {\n    ${indent}${inner}\n${indent}}\n\n`
             else
-                r += `${enumkw} ${pref}${k} ${csharp ? `: ushort ` : ''}{\n    ${indent}${inner}\n${indent}}\n\n`
+                r += `${enumkw} ${pref}${k} ${
+                    csharp ? `: ushort ` : ""
+                }{\n    ${indent}${inner}\n${indent}}\n\n`
         }
     }
 
@@ -2045,7 +2047,22 @@ function toJacscript(info: jdspec.ServiceSpec) {
 
         let tp = ""
 
-        const fields = pkt.fields.map(f => `${f.name}: number`).join(", ")
+        // if there's a startRepeats before last field, we don't put ... before it
+        const earlyRepeats = pkt.fields
+            .slice(0, pkt.fields.length - 1)
+            .some(f => f.startRepeats)
+
+        const fields = pkt.fields
+            .map(f => {
+                const tp =
+                    f.type == "string" || f.type == "string0"
+                        ? "string"
+                        : "number"
+                if (f.startRepeats && !earlyRepeats)
+                    return `...${f.name}: ${tp}[]`
+                else return `${f.name}: ${tp}`
+            })
+            .join(", ")
 
         if (isRegister(pkt.kind)) {
             if (cmt.needsStruct) {

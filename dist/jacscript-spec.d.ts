@@ -97,7 +97,7 @@ declare class AzureIotHubHealthRole extends Role {
     connectionStatus: JDRegisterNum
     connect(): void
     disconnect(): void
-    setConnectionString(connection_string: number): void
+    setConnectionString(connection_string: string): void
     connectionStatusChange: JDEvent
     messageSent: JDEvent
 }
@@ -130,9 +130,9 @@ declare class BitRadioRole extends Role {
     group: JDRegisterNum
     transmissionPower: JDRegisterNum
     frequencyBand: JDRegisterNum
-    sendString(message: number): void
+    sendString(message: string): void
     sendNumber(value: number): void
-    sendValue(value: number, name: number): void
+    sendValue(value: number, name: string): void
     sendBuffer(data: number): void
 }
 declare namespace roles {
@@ -420,10 +420,10 @@ declare namespace roles {
 
 // Service: Jacscript Cloud
 declare class JacscriptCloudRole extends Role {
-    upload(label: number, value: number): void
-    getTwin(path: number): void
-    subscribeTwin(path: number): void
-    ackCloudCommand(seq_no: number, result: number): void
+    upload(label: string, ...value: number[]): void
+    getTwin(path: string): void
+    subscribeTwin(path: string): void
+    ackCloudCommand(seq_no: number, ...result: number[]): void
     connected: JDRegisterNum
     twinChanged: JDEvent
     cloudCommand: JDEvent
@@ -637,8 +637,8 @@ declare class ProtoTestRole extends Role {
     roBytes: JDRegisterNum
     rwI8U8U16I32: JDRegisterArray & { i8: number, u8: number, u16: number, i32: number }
     roI8U8U16I32: JDRegisterArray & { i8: number, u8: number, u16: number, i32: number }
-    rwU8String: JDRegisterArray & { u8: number, str: number }
-    roU8String: JDRegisterArray & { u8: number, str: number }
+    rwU8String: JDRegisterArray & { u8: number, str: string }
+    roU8String: JDRegisterArray & { u8: number, str: string }
     eBool: JDEvent
     eU32: JDEvent
     eI32: JDEvent
@@ -649,10 +649,10 @@ declare class ProtoTestRole extends Role {
     cBool(bo: number): void
     cU32(u32: number): void
     cI32(i32: number): void
-    cString(str: number): void
+    cString(str: string): void
     cBytes(bytes: number): void
     cI8U8U16I32(i8: number, u8: number, u16: number, i32: number): void
-    cU8String(u8: number, str: number): void
+    cU8String(u8: number, str: string): void
     cReportPipe(p_bytes: number): void
 }
 declare namespace roles {
@@ -728,7 +728,7 @@ declare namespace roles {
 declare class RoleManagerRole extends Role {
     autoBind: JDRegisterNum
     allRolesAllocated: JDRegisterNum
-    setRole(device_id: number, service_idx: number, role: number): void
+    setRole(device_id: number, service_idx: number, role: string): void
     clearAllRoles(): void
     listRoles(roles: number): void
     change: JDEvent
@@ -786,9 +786,9 @@ declare namespace roles {
 
 // Service: Settings
 declare class SettingsRole extends Role {
-    get(key: number): void
-    set(key: number, value: number): void
-    delete(key: number): void
+    get(key: string): void
+    set(key: string, value: number): void
+    delete(key: string): void
     listKeys(results: number): void
     list(results: number): void
     clear(): void
@@ -806,7 +806,7 @@ declare class SevenSegmentDisplayRole extends Role {
     digitCount: JDRegisterNum
     decimalPoint: JDRegisterNum
     setNumber(value: number): void
-    setText(text: number): void
+    setText(text: string): void
 }
 declare namespace roles {
     function sevenSegmentDisplay(): SevenSegmentDisplayRole
@@ -847,7 +847,7 @@ declare namespace roles {
 // Service: Sound player
 declare class SoundPlayerRole extends Role {
     volume: JDRegisterNum
-    play(name: number): void
+    play(name: string): void
     cancel(): void
     listSounds(sounds_port: number): void
 }
@@ -888,7 +888,7 @@ declare class SpeechSynthesisRole extends Role {
     volume: JDRegisterNum
     pitch: JDRegisterNum
     rate: JDRegisterNum
-    speak(text: number): void
+    speak(text: string): void
     cancel(): void
 }
 declare namespace roles {
@@ -1018,11 +1018,11 @@ declare namespace roles {
 // Service: WIFI
 declare class WifiRole extends Role {
     lastScanResults(results: number): void
-    addNetwork(ssid: number, password: number): void
+    addNetwork(ssid: string, password: string): void
     reconnect(): void
-    forgetNetwork(ssid: number): void
+    forgetNetwork(ssid: string): void
     forgetAllNetworks(): void
-    setNetworkPriority(priority: number, ssid: number): void
+    setNetworkPriority(priority: number, ssid: string): void
     scan(): void
     listKnownNetworks(results: number): void
     enabled: JDRegisterNum

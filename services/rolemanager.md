@@ -1,9 +1,11 @@
 # Role Manager
 
+Assign roles to services on the Jacdac bus.
+
     identifier: 0x1e4b7e66
     tags: infrastructure
 
-Assign roles to services on the Jacdac bus.
+## Role allocation
 
 Internally, the role manager stores a mapping from role name to `(device_id, service_idx)`.
 Users refer to services by using role names (eg., they instantiate an accelerometer client with a given role name).

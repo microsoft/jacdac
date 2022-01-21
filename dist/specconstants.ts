@@ -2045,16 +2045,6 @@ export enum JacscriptCloudCmd {
      */
 
     /**
-     * Argument: path string (bytes). Subscribe to updates to twin at specific path.
-     * Generates `twin_changed` events.
-     *
-     * ```
-     * const [path] = jdunpack<[string]>(buf, "s")
-     * ```
-     */
-    SubscribeTwin = 0x82,
-
-    /**
      * Should be called by jacscript when it finishes handling a `cloud_command`.
      *
      * ```
@@ -2078,16 +2068,6 @@ export enum JacscriptCloudReg {
 
 export enum JacscriptCloudEvent {
     /**
-     * Emitted when a twin is updated at given path.
-     * It will be also emitted once immediately after `subscribe_twin`.
-     *
-     * ```
-     * const [path, value] = jdunpack<[string, number]>(buf, "z f64")
-     * ```
-     */
-    TwinChanged = 0x80,
-
-    /**
      * Emitted when cloud requests jacscript to run some action.
      *
      * ```
@@ -2095,6 +2075,11 @@ export enum JacscriptCloudEvent {
      * ```
      */
     CloudCommand = 0x81,
+
+    /**
+     * Emitted whenever any of the twin properties change.
+     */
+    TwinChange = 0x3,
 }
 
 // Service Jacscript Condition constants

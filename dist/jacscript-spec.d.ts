@@ -422,11 +422,10 @@ declare namespace roles {
 declare class JacscriptCloudRole extends Role {
     upload(label: string, ...value: number[]): void
     getTwin(path: string): void
-    subscribeTwin(path: string): void
     ackCloudCommand(seq_no: number, status: number, ...result: number[]): void
     connected: JDRegisterNum
-    twinChanged: JDEvent
     cloudCommand: JDEvent
+    twinChange: JDEvent
 }
 declare namespace roles {
     function jacscriptCloud(): JacscriptCloudRole

@@ -29,13 +29,6 @@ The tuple will be automatically tagged with timestamp and originating device.
 Get a numeric field from the current device twin.
 Path is dot-separated.
 
-    command subscribe_twin @ 0x82 {
-        path: string
-    }
-
-Subscribe to updates to twin at specific path.
-Generates `twin_changed` events.
-
     enum CommandStatus : u32 {
         OK = 200
         NotFound = 404
@@ -59,14 +52,6 @@ When offline, `upload` commands are queued, and `get_twin` respond with cached v
 
 ## Events
 
-    event twin_changed @ 0x80 {
-        path: string0
-        value: f64
-    }
-
-Emitted when a twin is updated at given path.
-It will be also emitted once immediately after `subscribe_twin`.
-
     event cloud_command @ 0x81 {
         seq_no: u32
         command: string0
@@ -75,3 +60,7 @@ It will be also emitted once immediately after `subscribe_twin`.
     }
 
 Emitted when cloud requests jacscript to run some action.
+
+    event twin_change @ change
+
+Emitted whenever any of the twin properties change.

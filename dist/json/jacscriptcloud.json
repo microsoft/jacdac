@@ -171,20 +171,6 @@
     },
     {
       "kind": "command",
-      "name": "subscribe_twin",
-      "identifier": 130,
-      "description": "Subscribe to updates to twin at specific path.\nGenerates `twin_changed` events.",
-      "fields": [
-        {
-          "name": "path",
-          "type": "string",
-          "storage": 0
-        }
-      ],
-      "packFormat": "s"
-    },
-    {
-      "kind": "command",
       "name": "ack_cloud_command",
       "identifier": 131,
       "description": "Should be called by jacscript when it finishes handling a `cloud_command`.",
@@ -226,26 +212,6 @@
     },
     {
       "kind": "event",
-      "name": "twin_changed",
-      "identifier": 128,
-      "description": "Emitted when a twin is updated at given path.\nIt will be also emitted once immediately after `subscribe_twin`.",
-      "fields": [
-        {
-          "name": "path",
-          "type": "string0",
-          "storage": 0
-        },
-        {
-          "name": "value",
-          "isFloat": true,
-          "type": "f64",
-          "storage": 8
-        }
-      ],
-      "packFormat": "z f64"
-    },
-    {
-      "kind": "event",
       "name": "cloud_command",
       "identifier": 129,
       "description": "Emitted when cloud requests jacscript to run some action.",
@@ -270,6 +236,14 @@
         }
       ],
       "packFormat": "u32 z r: f64"
+    },
+    {
+      "kind": "event",
+      "name": "twin_change",
+      "identifier": 3,
+      "description": "Emitted whenever any of the twin properties change.",
+      "fields": [],
+      "identifierName": "change"
     }
   ],
   "tags": [

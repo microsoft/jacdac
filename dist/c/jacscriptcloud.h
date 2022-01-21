@@ -36,12 +36,6 @@ typedef struct jd_jacscript_cloud_get_twin_report {
 
 
 /**
- * Argument: path string (bytes). Subscribe to updates to twin at specific path.
- * Generates `twin_changed` events.
- */
-#define JD_JACSCRIPT_CLOUD_CMD_SUBSCRIBE_TWIN 0x82
-
-/**
  * Should be called by jacscript when it finishes handling a `cloud_command`.
  */
 #define JD_JACSCRIPT_CLOUD_CMD_ACK_CLOUD_COMMAND 0x83
@@ -59,17 +53,6 @@ typedef struct jd_jacscript_cloud_ack_cloud_command {
 #define JD_JACSCRIPT_CLOUD_REG_CONNECTED 0x180
 
 /**
- * Emitted when a twin is updated at given path.
- * It will be also emitted once immediately after `subscribe_twin`.
- */
-#define JD_JACSCRIPT_CLOUD_EV_TWIN_CHANGED 0x80
-typedef struct jd_jacscript_cloud_twin_changed {
-    char path[0];  // string0
-    // uint64_t value;  // f64
-} jd_jacscript_cloud_twin_changed_t;
-
-
-/**
  * Emitted when cloud requests jacscript to run some action.
  */
 #define JD_JACSCRIPT_CLOUD_EV_CLOUD_COMMAND 0x81
@@ -79,5 +62,10 @@ typedef struct jd_jacscript_cloud_cloud_command {
     // uint64_t argument[0];  // f64
 } jd_jacscript_cloud_cloud_command_t;
 
+
+/**
+ * Emitted whenever any of the twin properties change.
+ */
+#define JD_JACSCRIPT_CLOUD_EV_TWIN_CHANGE JD_EV_CHANGE
 
 #endif

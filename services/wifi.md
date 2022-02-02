@@ -7,6 +7,8 @@
 
 Discovery and connection to WiFi networks. Separate TCP service can be used for data transfer.
 
+## Connection
+
 The device controlled by this service is meant to connect automatically, once configured.
 To that end, it keeps a list of known WiFi networks, with priorities and passwords.
 It will connect to the available network with numerically highest priority,
@@ -16,6 +18,12 @@ an `connection_failed` event is emitted, and the device will try to connect to t
 When networks are exhausted, the scan is performed again and the connection process restarts.
 
 Updating networks (setting password, priorties, forgetting) does not trigger an automatic reconnect.
+
+## Captive portals
+
+If the Wifi is not able to join an AP because it needs to receive a password, it may decide to enter a mode 
+where it waits for user input. Typical example of this mode would be a captive portal or waiting for a BLE interaction.
+In that situation, the `status_code` should set to `WaitingForInput`.
 
 ## Commands
 

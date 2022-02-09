@@ -315,6 +315,20 @@
     }
   },
   {
+    "service": "ledstrip",
+    "client": {
+      "name": "jacdac-led-strip",
+      "targets": [
+        "arcade",
+        "maker",
+        "microbit"
+      ],
+      "repo": "microsoft/pxt-jacdac/led-strip",
+      "qName": "modules.LedStripClient",
+      "default": "modules.ledStrip"
+    }
+  },
+  {
     "service": "lightbulb",
     "client": {
       "name": "jacdac-light-bulb",

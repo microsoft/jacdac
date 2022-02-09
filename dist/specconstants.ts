@@ -2175,17 +2175,18 @@ export enum LedReg {
     Variant = 0x107,
 }
 
-// Service LED Pixel constants
-export const SRV_LED_PIXEL = 0x126f00e0
+// Service LED Display constants
+export const SRV_LED_DISPLAY = 0x1609d4f0
+export const MAX_PIXELS_LENGTH = 0x40
 
-export enum LedPixelLightType { // uint8_t
+export enum LedDisplayLightType { // uint8_t
     WS2812B_GRB = 0x0,
     APA102 = 0x10,
     SK9822 = 0x11,
 }
 
 
-export enum LedPixelVariant { // uint8_t
+export enum LedDisplayVariant { // uint8_t
     Strip = 0x1,
     Ring = 0x2,
     Stick = 0x3,
@@ -2193,7 +2194,107 @@ export enum LedPixelVariant { // uint8_t
     Matrix = 0x5,
 }
 
-export enum LedPixelReg {
+export enum LedDisplayReg {
+    /**
+     * Read-write bytes. For short LED strips, less than `max_pixels_length`, a buffer of 24bit RGB color entries for each LED.
+     *
+     * ```
+     * const [pixels] = jdunpack<[Uint8Array]>(buf, "b")
+     * ```
+     */
+    Pixels = 0x2,
+
+    /**
+     * Read-write ratio u0.8 (uint8_t). Set the luminosity of the strip.
+     * At `0` the power to the strip is completely shut down.
+     *
+     * ```
+     * const [brightness] = jdunpack<[number]>(buf, "u0.8")
+     * ```
+     */
+    Brightness = 0x1,
+
+    /**
+     * Read-only ratio u0.8 (uint8_t). This is the luminosity actually applied to the strip.
+     * May be lower than `brightness` if power-limited by the `max_power` register.
+     * It will rise slowly (few seconds) back to `brightness` is limits are no longer required.
+     *
+     * ```
+     * const [actualBrightness] = jdunpack<[number]>(buf, "u0.8")
+     * ```
+     */
+    ActualBrightness = 0x180,
+
+    /**
+     * Read-only LightType (uint8_t). Specifies the type of light strip connected to controller.
+     * Controllers which are sold with lights should default to the correct type
+     * and could not allow change.
+     *
+     * ```
+     * const [lightType] = jdunpack<[LedDisplayLightType]>(buf, "u8")
+     * ```
+     */
+    LightType = 0x181,
+
+    /**
+     * Read-only # uint16_t. Specifies the number of pixels in the strip.
+     * Controllers which are sold with lights should default to the correct length
+     * and could not allow change. Increasing length at runtime leads to ineffective use of memory and may lead to controller reboot.
+     *
+     * ```
+     * const [numPixels] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    NumPixels = 0x182,
+
+    /**
+     * Read-only # uint16_t. If the LED pixel strip is a matrix, specifies the number of columns. Otherwise, a square shape is assumed. Controllers which are sold with lights should default to the correct length
+     * and could not allow change. Increasing length at runtime leads to ineffective use of memory and may lead to controller reboot.
+     *
+     * ```
+     * const [numColumns] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    NumColumns = 0x183,
+
+    /**
+     * Read-write mA uint16_t. Limit the power drawn by the light-strip (and controller).
+     *
+     * ```
+     * const [maxPower] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    MaxPower = 0x7,
+
+    /**
+     * Constant Variant (uint8_t). Specifies the shape of the light strip.
+     *
+     * ```
+     * const [variant] = jdunpack<[LedDisplayVariant]>(buf, "u8")
+     * ```
+     */
+    Variant = 0x107,
+}
+
+// Service LED Strip constants
+export const SRV_LED_STRIP = 0x126f00e0
+
+export enum LedStripLightType { // uint8_t
+    WS2812B_GRB = 0x0,
+    APA102 = 0x10,
+    SK9822 = 0x11,
+}
+
+
+export enum LedStripVariant { // uint8_t
+    Strip = 0x1,
+    Ring = 0x2,
+    Stick = 0x3,
+    Jewel = 0x4,
+    Matrix = 0x5,
+}
+
+export enum LedStripReg {
     /**
      * Read-write ratio u0.8 (uint8_t). Set the luminosity of the strip.
      * At `0` the power to the strip is completely shut down.
@@ -2221,7 +2322,7 @@ export enum LedPixelReg {
      * and could not allow change.
      *
      * ```
-     * const [lightType] = jdunpack<[LedPixelLightType]>(buf, "u8")
+     * const [lightType] = jdunpack<[LedStripLightType]>(buf, "u8")
      * ```
      */
     LightType = 0x80,
@@ -2281,13 +2382,13 @@ export enum LedPixelReg {
      * Constant Variant (uint8_t). Specifies the shape of the light strip.
      *
      * ```
-     * const [variant] = jdunpack<[LedPixelVariant]>(buf, "u8")
+     * const [variant] = jdunpack<[LedStripVariant]>(buf, "u8")
      * ```
      */
     Variant = 0x107,
 }
 
-export enum LedPixelCmd {
+export enum LedStripCmd {
     /**
      * Argument: program bytes. Run the given light "program". See service description for details.
      *

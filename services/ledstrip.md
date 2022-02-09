@@ -1,7 +1,7 @@
-# LED Pixel
+# LED Strip
 
     identifier: 0x126f00e0
-    camel: ledPixel
+    camel: ledStrip
     tags: C
     group: light
     status: rc
@@ -15,7 +15,8 @@ If transmitting raw data that would be around 500 pixels, which is not enough fo
 installations and it would completely clog the network.
 
 Thus, light service defines a domain-specific language for describing light animations
-and efficiently transmitting them over wire.
+and efficiently transmitting them over wire. For short LED displays, less than 64 LEDs, 
+you can also use the [LED display service](/services/leddisplay).
 
 Light commands are not Jacdac commands.
 Light commands are efficiently encoded as sequences of bytes and typically sent as payload

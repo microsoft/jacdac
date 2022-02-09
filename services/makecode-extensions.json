@@ -315,20 +315,6 @@
     }
   },
   {
-    "service": "ledpixel",
-    "client": {
-      "name": "jacdac-led-pixel",
-      "targets": [
-        "arcade",
-        "maker",
-        "microbit"
-      ],
-      "repo": "microsoft/pxt-jacdac/led-pixel",
-      "qName": "modules.LedPixelClient",
-      "default": "modules.ledPixel"
-    }
-  },
-  {
     "service": "lightbulb",
     "client": {
       "name": "jacdac-light-bulb",

@@ -3,6 +3,7 @@
     identifier: 0x1609d4f0
     camel: ledDisplay
     group: light
+    status: rc
 
 A controller for small displays of individually controlled RGB LEDs.
 

@@ -1,6 +1,6 @@
 {
   "name": "LED Display",
-  "status": "experimental",
+  "status": "rc",
   "shortId": "leddisplay",
   "camelName": "ledDisplay",
   "shortName": "ledDisplay",
@@ -261,8 +261,6 @@
       "packFormat": "u8"
     }
   ],
-  "tags": [
-    "C"
-  ],
+  "tags": [],
   "group": "Light"
 }

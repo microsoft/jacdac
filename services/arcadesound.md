@@ -1,10 +1,11 @@
-# Arcade sound
+# Arcade Sound
 
     identifier: 0x1fc63606
+    tags: SPI
 
 A sound playing device.
 
-This is typically run over an SPI connection, not regular single-wire JACDAC.
+This is typically run over an SPI connection, not regular single-wire Jacdac.
 
 ## Commands
 

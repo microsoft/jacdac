@@ -4,6 +4,7 @@
     extends: _sensor
     group: environment
     tags: 8bit
+    status: rc
 
 A sensor measuring air pressure of outside environment.
 
@@ -15,6 +16,6 @@ Default streaming interval is 1s.
 
 The air pressure.
 
-    ro pressure_error: u22.10 hPa @ reading_error
+    ro pressure_error?: u22.10 hPa @ reading_error
 
 The real pressure is between `pressure - pressure_error` and `pressure + pressure_error`.

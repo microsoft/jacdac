@@ -14,6 +14,18 @@
     }
   },
   {
+    "service": "arcadegamepad",
+    "client": {
+      "name": "jacdac-arcade-gamepad",
+      "targets": [
+        "arcade"
+      ],
+      "repo": "microsoft/pxt-jacdac/arcade-gamepad",
+      "qName": "modules.ArcadeGamepadClient",
+      "default": "modules.arcadeGamepad"
+    }
+  },
+  {
     "service": "azureiothubhealth",
     "client": {
       "name": "jacdac-azure-iot-hub-health",
@@ -195,6 +207,18 @@
     }
   },
   {
+    "service": "gamepad",
+    "client": {
+      "name": "jacdac-gamepad",
+      "targets": [
+        "arcade"
+      ],
+      "repo": "microsoft/pxt-jacdac/gamepad",
+      "qName": "modules.GamepadClient",
+      "default": "modules.gamepad"
+    }
+  },
+  {
     "service": "gyroscope",
     "client": {
       "name": "jacdac-gyroscope",
@@ -274,20 +298,6 @@
       "repo": "microsoft/pxt-jacdac/illuminance",
       "qName": "modules.IlluminanceClient",
       "default": "modules.illuminance"
-    }
-  },
-  {
-    "service": "joystick",
-    "client": {
-      "name": "jacdac-joystick",
-      "targets": [
-        "arcade",
-        "microbit",
-        "maker"
-      ],
-      "repo": "microsoft/pxt-jacdac/joystick",
-      "qName": "modules.JoystickClient",
-      "default": "modules.joystick"
     }
   },
   {
@@ -400,20 +410,6 @@
       "repo": "microsoft/pxt-jacdac/motor",
       "qName": "modules.MotorClient",
       "default": "modules.motor"
-    }
-  },
-  {
-    "service": "multitouch",
-    "client": {
-      "name": "jacdac-multitouch",
-      "targets": [
-        "arcade",
-        "maker",
-        "microbit"
-      ],
-      "repo": "microsoft/pxt-jacdac/multitouch",
-      "qName": "modules.MultitouchClient",
-      "default": "modules.multitouch"
     }
   },
   {
@@ -613,6 +609,20 @@
     }
   },
   {
+    "service": "switch",
+    "client": {
+      "name": "jacdac-switch",
+      "targets": [
+        "microbit",
+        "arcade",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/switch",
+      "qName": "modules.SwitchClient",
+      "default": "modules.switch"
+    }
+  },
+  {
     "service": "tcp",
     "client": {
       "name": "jacdac-tcp",
@@ -626,31 +636,17 @@
     }
   },
   {
-    "service": "thermocouple",
+    "service": "temperature",
     "client": {
-      "name": "jacdac-thermocouple",
+      "name": "jacdac-temperature",
       "targets": [
-        "arcade",
         "microbit",
+        "arcade",
         "maker"
       ],
-      "repo": "microsoft/pxt-jacdac/thermocouple",
-      "qName": "modules.ThermocoupleClient",
-      "default": "modules.thermocouple"
-    }
-  },
-  {
-    "service": "thermometer",
-    "client": {
-      "name": "jacdac-thermometer",
-      "targets": [
-        "arcade",
-        "maker",
-        "microbit"
-      ],
-      "repo": "microsoft/pxt-jacdac/thermometer",
-      "qName": "modules.ThermometerClient",
-      "default": "modules.thermometer"
+      "repo": "microsoft/pxt-jacdac/temperature",
+      "qName": "modules.TemperatureClient",
+      "default": "modules.temperature"
     }
   },
   {
@@ -682,7 +678,7 @@
     }
   },
   {
-    "service": "vibration",
+    "service": "vibrationmotor",
     "client": {
       "name": "jacdac-vibration-motor",
       "targets": [

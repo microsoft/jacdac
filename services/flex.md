@@ -2,21 +2,18 @@
 
     identifier: 0x1f47c6c6
     extends: _sensor
-    group: slider
+    group: sensor
     tags: C, 8bit
+    status: rc
 
 A bending or deflection sensor.
 
 ## Registers
 
-    ro bending: u0.16 / @ reading
+    ro bending: i1.15 / @ reading
 
-The relative position of the slider.
+A measure of the bending.
 
-    enum Variant: u8 {
-        Linear22Inch = 1,
-        Linear45Inch = 2,
-    }
-    const variant?: Variant @ variant
+    const length?: u16 mm @ 0x180
 
-Specifies the physical layout of the flex sensor.
+Length of the flex sensor

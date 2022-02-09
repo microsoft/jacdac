@@ -7,6 +7,7 @@ Measures equivalent Total Volatile Organic Compound levels.
     camel: tvoc
     group: environment
     tags: 8bit
+    status: stable
 
 ## Registers
 
@@ -18,14 +19,10 @@ Total volatile organic compound readings in parts per billion.
 
 Error on the reading data
 
-    const min_TVOC?: u22.10 ppb @ min_reading
+    const min_TVOC: u22.10 ppb @ min_reading
 
 Minimum measurable value
 
-    const max_TVOC?: u22.10 ppb @ max_reading
+    const max_TVOC: u22.10 ppb @ max_reading
 
-Minimum measurable value
-
-    const conditioning_period?: u32 s @ 0x180
-
-Time required to achieve good sensor stability before measuring after long idle period.
+Minimum measurable value.

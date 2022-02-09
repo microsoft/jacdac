@@ -15,7 +15,14 @@
     "firmwares": [
         {
             "name": "HID Keyboard + Mouse",
-            "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/hid-servers-f4.uf2"
+            "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/hid-servers-f4.uf2",
+            "productIdentifier": 819577746
         }
-    ]
+    ],
+    "bootloader": {
+        "sequence": "reset",
+        "driveName": "JACDACF4",
+        "firmwareFormat": "uf2",
+        "ledAnimation": "blue-glow"
+    }
 }

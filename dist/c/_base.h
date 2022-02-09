@@ -3,6 +3,18 @@
 #define _JACDAC_SPEC_BASE_H 1
 
 /**
+ * This report may be emitted by a server in response to a command (action or register operation)
+ * that it does not understand.
+ * The `service_command` and `packet_crc` fields are copied from the command packet that was unhandled.
+ * Note that it's possible to get an ACK, followed by such an error report.
+ */
+typedef struct jd_base_command_not_implemented_report {
+    uint16_t service_command;
+    uint16_t packet_crc;
+} jd_base_command_not_implemented_report_t;
+
+
+/**
  * Constant string (bytes). A friendly name that describes the role of this service instance in the device.
  * It often corresponds to what's printed on the device:
  * for example, `A` for button A, or `S0` for servo channel 0.

@@ -7,6 +7,7 @@ The UV Index is a measure of the intensity of ultraviolet (UV) rays from the Sun
     camel: uvIndex
     group: environment
     tags: 8bit
+    status: stable
 
 ## Registers
 

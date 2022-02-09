@@ -1,0 +1,17 @@
+{
+  "id": "microsoft-research-jmsht30temperaturehumidity64v36",
+  "name": "JM SHT30 Temperature/Humidity",
+  "company": "Microsoft Research",
+  "description": "JM SHT30 64 v3.6",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v3.6/profile/env30.c",
+  "services": [
+    337754823,
+    382210232
+  ],
+  "productIdentifiers": [
+    819953075
+  ],
+  "version": "3.6",
+  "designIdentifier": "64"
+}

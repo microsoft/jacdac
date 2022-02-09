@@ -1,6 +1,6 @@
 {
   "name": "Humidity",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "humidity",
   "camelName": "humidity",
   "shortName": "humidity",
@@ -9,13 +9,35 @@
     "_sensor"
   ],
   "notes": {
-    "short": "A sensor measuring humidity of outside environment.",
-    "registers": "Default streaming interval is 1s."
+    "short": "A sensor measuring humidity of outside environment."
   },
   "classIdentifier": 382210232,
   "enums": {},
   "constants": {},
   "packets": [
+    {
+      "kind": "report",
+      "name": "command_not_implemented",
+      "identifier": 3,
+      "description": "This report may be emitted by a server in response to a command (action or register operation)\nthat it does not understand.\nThe `service_command` and `packet_crc` fields are copied from the command packet that was unhandled.\nNote that it's possible to get an ACK, followed by such an error report.",
+      "fields": [
+        {
+          "name": "service_command",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "packet_crc",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "identifierName": "command_not_implemented",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
     {
       "kind": "const",
       "name": "instance_name",
@@ -152,9 +174,7 @@
           "unit": "%RH",
           "shift": 10,
           "type": "u22.10",
-          "storage": 4,
-          "typicalMax": 100,
-          "typicalMin": 0
+          "storage": 4
         }
       ],
       "volatile": true,
@@ -177,6 +197,7 @@
         }
       ],
       "volatile": true,
+      "optional": true,
       "identifierName": "reading_error",
       "packFormat": "u22.10"
     },
@@ -191,8 +212,7 @@
           "unit": "%RH",
           "shift": 10,
           "type": "u22.10",
-          "storage": 4,
-          "defaultValue": 0
+          "storage": 4
         }
       ],
       "identifierName": "min_reading",
@@ -209,8 +229,7 @@
           "unit": "%RH",
           "shift": 10,
           "type": "u22.10",
-          "storage": 4,
-          "defaultValue": 100
+          "storage": 4
         }
       ],
       "identifierName": "max_reading",

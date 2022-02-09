@@ -1,6 +1,6 @@
 {
   "name": "Relay",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "relay",
   "camelName": "relay",
   "shortName": "relay",
@@ -8,7 +8,7 @@
     "_base"
   ],
   "notes": {
-    "short": "A switching relay."
+    "short": "A switching relay.\n\nThe contacts should be labelled `NO` (normally open), `COM` (common), and `NC` (normally closed).\nWhen relay is energized it connects `NO` and `COM`.\nWhen relay is not energized it connects `NC` and `COM`.\nSome relays may be missing `NO` or `NC` contacts.\nWhen relay module is not powered, or is in bootloader mode, it is not energized (connects `NC` and `COM`)."
   },
   "classIdentifier": 406840918,
   "enums": {
@@ -24,6 +24,29 @@
   },
   "constants": {},
   "packets": [
+    {
+      "kind": "report",
+      "name": "command_not_implemented",
+      "identifier": 3,
+      "description": "This report may be emitted by a server in response to a command (action or register operation)\nthat it does not understand.\nThe `service_command` and `packet_crc` fields are copied from the command packet that was unhandled.\nNote that it's possible to get an ACK, followed by such an error report.",
+      "fields": [
+        {
+          "name": "service_command",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "packet_crc",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "identifierName": "command_not_implemented",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
     {
       "kind": "const",
       "name": "instance_name",
@@ -91,9 +114,9 @@
     },
     {
       "kind": "rw",
-      "name": "closed",
+      "name": "active",
       "identifier": 1,
-      "description": "Indicates whether the relay circuit is currently energized (closed) or not.",
+      "description": "Indicates whether the relay circuit is currently energized or not.",
       "fields": [
         {
           "name": "_",
@@ -136,22 +159,6 @@
       ],
       "optional": true,
       "packFormat": "u32"
-    },
-    {
-      "kind": "event",
-      "name": "active",
-      "identifier": 1,
-      "description": "Emitted when relay goes from `inactive` to `active` state.\nNormally open (NO) relays close the circuit when activated.",
-      "fields": [],
-      "identifierName": "active"
-    },
-    {
-      "kind": "event",
-      "name": "inactive",
-      "identifier": 2,
-      "description": "Emitted when relay goes from `active` to `inactive` state.\nNormally closed (NC) relays open the circuit when activated.",
-      "fields": [],
-      "identifierName": "inactive"
     }
   ],
   "tags": [

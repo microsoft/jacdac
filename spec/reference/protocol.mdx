@@ -3,106 +3,18 @@ title: Protocol Specification
 order: 1
 ---
 
-# Protocol Specification
-
-Jacdac is a new protocol designed 
-to make it easier to connect low cost microcontrollers and sensors together. 
-Jacdac is not only designed for easier physical connectivity, 
-it is an entire hardware and software stack that bridges the world of the low cost 
-microcontroller to the web browser and beyond.
-
-* novel 3-wire cable and connector
-* bus topology
-* device discovery and service advertisement
-* standardized service abstraction
-* full stack from 8bit MCU to web development
-
-## Overview
-
-A Jacdac device is any device that generates its own unique [device identifier](#device-identity) 
-and implements the Jacdac protocol.  The protocol consists of three core layers, described below,
-with link to more detail.
-
-### Service layer: how devices share hardware or software resources with one another
-
-The way Jacdac devices share resources with other devices on the bus are through __services__. 
-Services provide abstract, standardized interfaces that can be used to interact with 
-physical hardware resources (e.g. an accelerometer) or pure virtual resources 
-(e.g. the state of a video game). This abstraction brings plug-and-play dynamism to 
-Jacdac so that devices with different hardware, but the same overall functionality, 
-can replace one another without having to recompile user applications. For example, 
-two different models of accelerometer hardware can replace each other 
-because they share the same software interface. 
-
-Any device that hosts a service must also run the control service. 
-The control service is responsible for advertising any services a device 
-is running every 500 milliseconds. Like any other service, 
-the packets emitted by the control service are standardized. 
-There also a set of common commands that must be implemented by Jacdac devices that operate services, 
-including functionality like `reset` and `time since boot`.
-
-Most Jacdac users will never need to write a service: the major use case is for users 
-to write applications that interact with Jacdac devices and services. 
-Using Jacdac in microcontroller applications is incredibly easy and only 
-requires a software stack that has a compatible Jacdac physical layer.
-
-Services are registered in the [service catalog](/services/) 
-and described by [service specifications](/reference/service-specification/).
-
-* [Read more about the service layer](#service-layer)
-
-### Transport layer: responsible for reliably routing packets to and from services and applications
-
-Whenever a frame is received by the physical layer, the transport layer 
-divides that frame into data packets and forwards them to the appropriate service 
-or user application. At this point, services and applications can use packets 
-to perform actions based on new data.
-
-In many cases it is important that data is received by a specific device. 
-Jacdac supports this mechanism using acknowledgements and pipes. 
-Acknowledgements are incredibly simple and require receiving devices 
-to recognize that a frame has successfully been received. 
-Pipes on the other hand set up a point to point connection between devices, 
-and every packet is acknowledged and received using a sliding window approach. 
-Only the most capable devices are expected to support pipes.
-
-* [Read more about the transport layer.](#transport-layer)
-
-### Physical layer: transmits/receives packets to/from other Jacdac devices
-
-There can be many various physical layer implementations responsible 
-for sending frames across a wired or wireless communication medium. 
-Frames contain one or more packets, and packets contain a service command or report. 
-Frames also have addressing metadata embedded inside them that the transport 
-layer uses to route packets correctly.
-
-* [Read more about the physical layer.](#physical-layer)
-
-## Device Identity
-
-**By design, the Jacdac protocol does not support allocation of unique device identifiers.** 
-Instead, each device must assign itself a 64-bit device identifier that uniquely identifies it on the bus. 
-This identifier is used to determine the sending or receiving device, and for devices to remember one another on the bus. 
-Once generated, a device's identifier must remain constant. As long identifiers are generated with appropriate entropy (see analysis below), there is little chance of identifier collision. 
-We recommend the following ways of generating a unique identifier:
-
-1. Use the random number generator (found below) to allocate an identifier for each device. 
-The number generator could even be included into automated flashing processes to ensure appropriate entropy.
-
-2. Use the generator below to seed a hardware random number generator. 
-The hardware random number generator could use sensor values to create further entropy.
-
-Most often, the device identifier will be assigned by the device's bootloader and stored in non-volatile flash. 
-For an example, see [the Jacdac bootloader for STM32x0](https://github.com/microsoft/jacdac-stm32x0/blob/master/bl/blmain.c).
-
-<RandomGenerator device={true} />
-
-If we consider one trillion Jacdac networks size of 200 devices with randomly chosen 64 bit JDIDs, 
-the probability of a JDID collision in at least one of the networks is 0.1%. 
-On the other hand, with 32 bit IDs and 2000 networks, the collision probability in any of them is already 1%, 
-and with 200k networks it's more than 60%.
 
 ## Service Layer
+
+Unlike many other embedded systems communications protocols, Jacdac inherently supports a distrbiuted systems architecture made up of one or more clients and one or more servers.
+
+A Jacdac server is simply a device that presents a service on the bus - for example a push button or a temperature sensor. So servers are often relatively impoverished devices - we have a reference implementation of a button module based on a ~$0.03 MCU. A server might provide multiple different services, for example a combined temperature and humidity sensor could provide two separate services, one for temperature and another for humidity. Multiple similar servers - for example multiple buttons - may be connected to the same bus.
+
+A Jacdac client is a device that consumes one or more services. Often a client can be reconfigured or re-programmed to alter its behavior to suit a particular application. There may be mutliple clients on the same Jacdac bus, in which case they may consume exactly the same set of services or different combinations of services. Sometimes a client will also provide services itself. This architecture is naturally composable and scalable, following the same principles used in established client/server solutions.
+
+So with Jacdac there is no notion of a bus 'controller', 'host', 'primary' or 'leader'. There is no need to assign roles when building a system with Jacdac, sensors and actuators will naturally provide services which are consumed by one or more clients.
+
+### Services
 
 The way Jacdac devices share resources with other devices on the bus are through __services__. 
 Services provide abstract, standardized interfaces that can be used to interact with 
@@ -117,9 +29,9 @@ Services act on __commands__ and optionally respond with __reports__.
 Reports can also be emitted separately from a service without prompting from another device. 
 This interface is specified in a [custom markdown language](/reference/service-specification/) 
 that lists the possible commands and reports that a service can consume and emit. 
-Specifications can also inherit from other specifications. An example of this can be seen in the [sensor specification](../../../services/_sensor). Jacdac sensors inherit commands and reports from this specification, creating a set of base functionality for _all_ sensors.
+Specifications can also inherit from other specifications. An example of this can be seen in the [sensor specification](../../services/_sensor). Jacdac sensors inherit commands and reports from this specification, creating a set of base functionality for _all_ sensors.
 
-A service is globally and uniquely identified by its service class, which should be found in the [service catalog](../../../services). For example, the service class of the [button service](../../../services/button) is `0x1473a263`, as specified in the button's [service specification](https://github.com/microsoft/jacdac/blob/main/services/button.md) in the GitHub repository that contains the registered services. (In contrast, the `service_index` field in the Jacdac packet is an index into the list of services advertised by a device. The control service has both service class 0 and service number 0.)
+A service is globally and uniquely identified by its service class, which should be found in the [service catalog](../../services). For example, the service class of the [button service](../../services/button) is `0x1473a263`, as specified in the button's [service specification](https://github.com/microsoft/jacdac/blob/main/services/button.md) in the GitHub repository that contains the registered services. (In contrast, the `service_index` field in the Jacdac packet is an index into the list of services advertised by a device. The control service has both service class 0 and service number 0.)
 
 ### Commands
 
@@ -152,7 +64,7 @@ However, services __must not__ allocate any of the common or reserved action com
 | `0x000-0x07f` | Common action command codes	|
 | `0xf00-0xfff` | Reserved action command codes	|
 
-Common action command codes are allocated in the [system specification](../../../services/_system).
+Common action command codes are allocated in the [system specification](../../services/_system).
 
 #### Registers
 
@@ -176,7 +88,7 @@ However, services __must not__ allocate any of the common or reserved register c
 | `0x100-0x17f` | Read-only registers common to all services	|
 | `0xf00-0xfff` | Reserved for future use.	|
 
-Common register command codes are allocated in the [system specification](../../../services/_system).
+Common register command codes are allocated in the [system specification](../../services/_system).
 
 #### Reports
 
@@ -224,18 +136,19 @@ If these are handled purely through events, the client will maintain the pressed
 For this, it's critical not to swap order of up/down events.
 To recognize button combinations, it's important not to swap order of events from the two services.
 
-
 ### The control service
 
 Each device runs its own control service, which emits advertisement packets roughly every 500 milliseconds. The service class of the control service is zero (0). Each advertisement contains the device's identifier (as usual) as well a list of services offered by the device; other devices on the bus can inspect these advertisements and subsequently communicate with the advertised services to incorporate them in user applications.
 
-The control service also offers a set of common commands that can be used to query/inspect each Jacdac device. For example, the `IDENTIFY` command causes a Jacdac device to perform an action that allows a user to locate a particular device, usually through blinking an LED. In addition to emiting an advertisement packet every 500 milliseconds, a device that hosts one or more services must respond to all commands listed in the [control service specification](../../../services/control).
+The advertisement packet also includes several flags indicating various protocol-level capabilities of the device, as well as "restart counter" that monotonically increases, and can be used to detect a device restart.
+
+The control service also offers a set of common commands that can be used to query/inspect each Jacdac device. For example, the `IDENTIFY` command causes a Jacdac device to perform an action that allows a user to locate a particular device, usually through blinking an LED. In addition to emiting an advertisement packet every 500 milliseconds, a device that hosts one or more services must respond to all commands listed in the [control service specification](../../services/control).
 
 The implementation complexity of the control service scales with respect to the number of services a device implements. For instance, it is very simple to process packets for a single user service (in addition to the control service), but complexity increases as more services are added. This flexibility is a benefit as it allows ultra low-cost microcontrollers to be used in simple devices.
 
 ## Transport Layer
 
-A device's presence/absence on the bus is signified by the presence/absence of advertising packets containing its device identifier, which should be sent every 500 milliseconds. If a client of a Jacdac device does not receive an advertisement from the device for several advertisement periods (1-2 seconds), it should assume the device has left the bus. If the device rejoins the bus, it may present a different list of services. In fact, devices are free to change the list of services they advertise at any time.
+A device's presence/absence on the bus is signified by the presence/absence of advertising packets containing its device identifier, which should be sent every 500 milliseconds. If a client of a Jacdac device does not receive an advertisement from the device for several advertisement periods (1-2 seconds), it should assume the device has left the bus. If the device rejoins the bus, it may present a different list of services (the list cannot change otherwise).
 
 ### Jacdac frames, packets and service indices
 
@@ -254,7 +167,9 @@ struct {
 }
 ```
 
-The above structure omits the details about physical transmission of Jacdac packets over the wire and the packing of multiple packets within frames. For more information, see [the single wire serial protocol](../physical-layer/sws).
+The above structure omits the details about physical transmission of Jacdac packets 
+over the wire and the packing of multiple packets within frames. 
+For more information, see [the single wire serial protocol](../network-interface-layer/sws).
 
 A device will generally maintain device-specific state for each of the services that it supports. This state should be kept in an array, where each array entry contains the service class and (a pointer to) the device-specific state for that service. When a device advertises its service classes they are presented in the same order as in the list.  This allows clients of the device to refer to one of its services by list index (`service_index`, an 8 bit quantity) instead of service class (a 32 bit quantity). The zero index (service number) is reserved for the control service. 
 
@@ -281,12 +196,12 @@ If the second bit of `flags` is set
 
 If the third bit of `flags` is set (_multicast commands_), then the low order 32 bits of the `device_identifier` field are treated as a service class. The command is then directed to all services with that service class.
 
-| Flag bit | Interpretation 	|
-|--------|------------	|
-| `0x01` | if set, the `device_identifier` is the recipient of command; if clear, the `device_identifier` is the sender of a report;
-| `0x02` | if set, an ACK should be issued with CRC |
-| `0x04` | if set, the device_identifier contains target service class number (multicast) |
-| `0x80` | if set, the packet comes from Jacdac vNext and should be ignored by the current implementation |
+| Flag bit | Interpretation
+|----------|-------------------------------------
+| `0x01`   | if set, the `device_identifier` is the recipient of command; if clear, the `device_identifier` is the sender of a report
+| `0x02`   | if set, an ACK should be issued with CRC
+| `0x04`   | if set, the device_identifier contains target service class number (multicast)
+| `0x80`   | if set, the packet comes from Jacdac vNext and should be ignored by the current implementation
 
 ### Acks
 
@@ -303,6 +218,10 @@ The payload is zero-sized.
 All devices, except for the most resource-constrained bootloaders,
 should be able to send ACKs.
 They should indicate that in their advertisement packet.
+
+Note that ACK only means the packet was received and will be processed.
+It may still contain for example an unimplemented command.
+See also `command_not_implemented` report.
 
 ### Pipes
 
@@ -382,16 +301,30 @@ pipe packet, without any additional info about how to chunk the data
 Multiple packets can be grouped in a frame, but are still handled separately at the
 destination.
 
-### Event subscriptions
+### Reliable actions
 
-A device like accelerometer can send events eg. when a 2g shock is detected,
-when it's moved face-down, etc.
-These events a normally just broadcast on the bus, using standard command `0x001`.
+Actions can be invoked reliably by requesting an ACK.
+However, since this may involve excessive re-transmission, it only works correctly
+for idempotent actions.
 
-For reliable event delivery, a pipe can be established, and events delivered
-over that pipe.
+We say an action is _idempotent_, when it doesn't matter if it is invoked once or multiple times
+within ~100ms (without interleaving of other commands).
+For example, `clear all`, `set` and `remove` actions on a configuration store are idempotent.
+Another example is when an action is likely to take much longer than 100ms, and new invocations
+while in progress are ignored, for example `calibrate` command on a sensor.
+Yet another example is when the difference between single and multiple invocations is not perceptible to 
+the user (eg., starting a fade-glow operation on an LED).
+Actions that are **not** idempotent are marked with `unique` attribute in the specifications.
 
-## Physical Layer
+Multiple invocations of actions that specify the same pipe in the arguments are implicitly ignored
+(since, it's not possible to open the same pipe multiple times simultaneously).
+Thus, they do not require the `unique` attribute.
+
+For non-idempotent actions, a pipe can be opened with a `reliable_commands` action on the control service.
+Actions (or any other commands) can then be sent over that pipe.
+Support for this is indicated as a flag in the advertisement packet.
+
+## Network Interface Layer
 
 The responsibility of the physical layer is to send/receive a byte buffer 
 (representing a Jacdac frame from the transport layer 
@@ -406,15 +339,16 @@ Jacdac requires devices have a microcontroller with UART, Timer, and GPIO interr
 
 ![An image depicting a Jacdac transmission. A Jacdac transmission begins with a start pulse of 11-14 us, a inter lo data spacing of minimally 40 us before data commences. A Jacdac transmission ends with an end pulse of 11-14 us.](../images/jacdac-activity.png)
 
-For communication Jacdac SWS reuses the often forgotten RS232 (UART) peripheral, 
+For communication Jacdac SWS reuses a standard RS232 UART peripheral, 
 common to many microcontrollers. Devices operate the UART peripheral in half-duplex mode 
 and are connected together to form a single bus. 
 This bus requires a common data and ground line to be shared between devices.
 
-Like with standard UART, a logical one is represented as 3.3V and a logical 0 as 0V. 
+<!-- Like with standard UART, a logical one is represented as 3.3V and a logical 0 as 0V.  -->
+
 Data bytes are 10 bits long and are composed of 1 start bit, 8 data bits, and one stop bit. 
 Jacdac devices must only communicate at 1 Mbaud and when no data is being transmitted, 
-the bus must read as a logical one (3.3V).
+the bus must read as a logical one.
 
 In Jacdac SWS, any device can initiate a transmission at any time.
 Because of this, devices must assert control over the bus before sending any data. 
@@ -451,14 +385,20 @@ TODO: the picture uses outdated delays.
 
 #### Hardware requirements
 
-There is no silicon implementation of Jacdac SWS and a microcontroller is currently required to implement the behavior above. The diversity of microcontrollers and the flexibility of UART hardware means that there are many pathways to reaching a specification compliant Jacdac SWS implementation.
+As yet, there is no silicon implementation of Jacdac SWS. 
+However, the diversity of readily-available microcontrollers and the flexibility of
+typical UART hardware means there are many ways to reach a specification compliant 
+Jacdac SWS implementation. It is also possible to implement Jacdac SWS by bit-banging, 
+if UART hardware is not available.
 
 To recap, Jacdac SWS requires the following basic functionality:
 
-* Transmitting / receiving UART-style (10 bits: 1 byte, 1 stop bit, 1 start bit) bytes at 1Mbaud in half-duplex mode (implemented in hardware or in software via bit-banging).
-* A GPIO with an internal or external 300k pull up and support for interrupts (implemented in hardware or in software by spin waiting).
+* Transmitting / receiving UART-style (10 bits: 1 byte, 1 stop bit, 1 start bit) bytes 
+at 1Mbaud in half-duplex mode, implemented in hardware or in software via bit-banging.
+* A GPIO with an internal or external 300k pull-up and support for interrupts, 
+implemented in hardware or in software by spin waiting.
 * The ability to keep time (whether through instruction counting or a hardware timer).
-* The ability to generate random numbers (or at least seed a software random number generator).
+* The ability to generate random numbers, or at least seed a software random number generator.
 
 <!--
 We enumerate a few of the options we have explored below.

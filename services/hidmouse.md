@@ -4,8 +4,9 @@
     status: experimental
     camel: hidMouse
     tags: 8bit
+    status: stable
 
-Controls a HID mouse. 
+Controls a HID mouse.
 
 ## Commands
 
@@ -20,16 +21,16 @@ Controls a HID mouse.
         Click = 0x03
         DoubleClick = 0x04
     }
-    command set_button @ 0x80 {
+    unique command set_button @ 0x80 {
         buttons: Button
-        event: ButtonEvent
+        ev: ButtonEvent
     }
 
 Sets the up/down state of one or more buttons.
-A ``Click`` is the same as ``Down`` followed by ``Up`` after 100ms.
-A ``DoubleClick`` is two clicks with ``150ms`` gap between them (that is, ``100ms`` first click, ``150ms`` gap, ``100ms`` second click).
+A `Click` is the same as `Down` followed by `Up` after 100ms.
+A `DoubleClick` is two clicks with `150ms` gap between them (that is, `100ms` first click, `150ms` gap, `100ms` second click).
 
-    command move @ 0x81 {
+    unique command move @ 0x81 {
       dx: i16 #
       dy: i16 #
       time: u16 ms
@@ -38,7 +39,7 @@ A ``DoubleClick`` is two clicks with ``150ms`` gap between them (that is, ``100m
 Moves the mouse by the distance specified.
 If the time is positive, it specifies how long to make the move.
 
-    command wheel @ 0x82 {
+    unique command wheel @ 0x82 {
         dy: i16 #
         time: u16 ms
     }

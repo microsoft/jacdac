@@ -2,6 +2,7 @@
 
     identifier: 0x110d154b
     group: display
+    status: rc
 
 A rectangular dot matrix display, made of monochrome LEDs or Braille pins.
 

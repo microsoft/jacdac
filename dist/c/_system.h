@@ -43,16 +43,6 @@
 #define JD_CMD_SET_REGISTER 0x2000
 
 /**
- * Event from sensor or a broadcast service.
- */
-#define JD_CMD_EVENT 0x1
-typedef struct jd_system_event_report {
-    uint32_t event_id;
-    uint32_t event_argument;
-} jd_system_event_report_t;
-
-
-/**
  * No args. Request to calibrate a sensor. The report indicates the calibration is done.
  */
 #define JD_CMD_CALIBRATE 0x2
@@ -60,6 +50,19 @@ typedef struct jd_system_event_report {
 /**
  * Report: No args
  */
+
+/**
+ * This report may be emitted by a server in response to a command (action or register operation)
+ * that it does not understand.
+ * The `service_command` and `packet_crc` fields are copied from the command packet that was unhandled.
+ * Note that it's possible to get an ACK, followed by such an error report.
+ */
+#define JD_CMD_COMMAND_NOT_IMPLEMENTED 0x3
+typedef struct jd_system_command_not_implemented_report {
+    uint16_t service_command;
+    uint16_t packet_crc;
+} jd_system_command_not_implemented_report_t;
+
 
 /**
  * Read-write uint32_t. This is either binary on/off (0 or non-zero), or can be gradual (eg. brightness of an RGB LED strip).

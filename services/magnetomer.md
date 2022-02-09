@@ -2,6 +2,7 @@
 
     identifier: 0x13029088
     extends: _sensor
+    status: rc
 
 A 3-axis magnetometer.
 
@@ -18,7 +19,7 @@ For reference: `1 mgauss` is `100 nT` (and `1 gauss` is `100 000 nT`).
 
     ro forces_error?: i32 nT @ reading_error
 
-Error on the readings.
+Absolute estimated error on the readings.
 
 ## Commands
 

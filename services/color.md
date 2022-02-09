@@ -1,11 +1,11 @@
 # Color
 
-Senses RGB colors
-
     identifier: 0x1630d567
     extends: _sensor
     group: environment
     tags: 8bit
+
+Senses RGB colors
 
 ## Registers
 

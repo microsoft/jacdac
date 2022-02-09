@@ -1,6 +1,6 @@
 {
   "name": "Water level",
-  "status": "experimental",
+  "status": "rc",
   "shortId": "waterlevel",
   "camelName": "waterLevel",
   "shortName": "waterLevel",
@@ -25,6 +25,29 @@
   },
   "constants": {},
   "packets": [
+    {
+      "kind": "report",
+      "name": "command_not_implemented",
+      "identifier": 3,
+      "description": "This report may be emitted by a server in response to a command (action or register operation)\nthat it does not understand.\nThe `service_command` and `packet_crc` fields are copied from the command packet that was unhandled.\nNote that it's possible to get an ACK, followed by such an error report.",
+      "fields": [
+        {
+          "name": "service_command",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "packet_crc",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "identifierName": "command_not_implemented",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
     {
       "kind": "const",
       "name": "instance_name",
@@ -166,6 +189,25 @@
       ],
       "volatile": true,
       "identifierName": "reading",
+      "packFormat": "u0.16"
+    },
+    {
+      "kind": "ro",
+      "name": "level_error",
+      "identifier": 262,
+      "description": "The error rage on the current reading",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "/",
+          "shift": 16,
+          "type": "u0.16",
+          "storage": 2
+        }
+      ],
+      "volatile": true,
+      "optional": true,
+      "identifierName": "reading_error",
       "packFormat": "u0.16"
     },
     {

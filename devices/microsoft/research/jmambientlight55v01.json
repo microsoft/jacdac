@@ -7,6 +7,8 @@
     "version": "0.1",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
     "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/altium/reference-designs/JacdacLightLevel%2055-0.2",
+    "firmwareSource": "https://github.com/microsoft/jacdac-padauk/tree/main/jm-ambient-lightsensor-55-0.1",
     "tags": ["kit"],
     "services": [400333340],
     "productIdentifiers": [896864987]

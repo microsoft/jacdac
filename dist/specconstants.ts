@@ -1,4 +1,4 @@
-// Service: Common registers and commands
+// Service Common registers and commands constants
 export const ANNOUNCE_INTERVAL = 0x1f4
 
 export enum SystemReadingThreshold { // uint8_t
@@ -37,18 +37,21 @@ export enum SystemCmd {
     SetRegister = 0x2000,
 
     /**
-     * Event from sensor or a broadcast service.
-     *
-     * ```
-     * const [eventId, eventArgument] = jdunpack<[number, number]>(buf, "u32 u32")
-     * ```
-     */
-    Event = 0x1,
-
-    /**
      * No args. Request to calibrate a sensor. The report indicates the calibration is done.
      */
     Calibrate = 0x2,
+
+    /**
+     * This report may be emitted by a server in response to a command (action or register operation)
+     * that it does not understand.
+     * The `service_command` and `packet_crc` fields are copied from the command packet that was unhandled.
+     * Note that it's possible to get an ACK, followed by such an error report.
+     *
+     * ```
+     * const [serviceCommand, packetCrc] = jdunpack<[number, number]>(buf, "u16 u16")
+     * ```
+     */
+    CommandNotImplemented = 0x3,
 }
 
 export enum SystemReg {
@@ -273,7 +276,21 @@ export enum SystemEvent {
     Neutral = 0x7,
 }
 
-// Service: Base service
+// Service Base service constants
+export enum BaseCmd {
+    /**
+     * This report may be emitted by a server in response to a command (action or register operation)
+     * that it does not understand.
+     * The `service_command` and `packet_crc` fields are copied from the command packet that was unhandled.
+     * Note that it's possible to get an ACK, followed by such an error report.
+     *
+     * ```
+     * const [serviceCommand, packetCrc] = jdunpack<[number, number]>(buf, "u16 u16")
+     * ```
+     */
+    CommandNotImplemented = 0x3,
+}
+
 export enum BaseReg {
     /**
      * Constant string (bytes). A friendly name that describes the role of this service instance in the device.
@@ -312,7 +329,7 @@ export enum BaseEvent {
     StatusCodeChanged = 0x4,
 }
 
-// Service: Sensor
+// Service Sensor constants
 export enum SensorReg {
     /**
      * Read-write # uint8_t. Asks device to stream a given number of samples
@@ -343,7 +360,7 @@ export enum SensorReg {
     StreamingPreferredInterval = 0x102,
 }
 
-// Service: Accelerometer
+// Service Accelerometer constants
 export const SRV_ACCELEROMETER = 0x1f140409
 export enum AccelerometerReg {
     /**
@@ -446,7 +463,7 @@ export enum AccelerometerEvent {
     Force8g = 0x8a,
 }
 
-// Service: Arcade Gamepad
+// Service Arcade Gamepad constants
 export const SRV_ARCADE_GAMEPAD = 0x1deaa06e
 
 export enum ArcadeGamepadButton { // uint8_t
@@ -504,7 +521,7 @@ export enum ArcadeGamepadEvent {
     Up = 0x2,
 }
 
-// Service: Arcade sound
+// Service Arcade Sound constants
 export const SRV_ARCADE_SOUND = 0x1fc63606
 export enum ArcadeSoundCmd {
     /**
@@ -550,7 +567,7 @@ export enum ArcadeSoundReg {
     BufferPending = 0x181,
 }
 
-// Service: Azure IoT Hub Health
+// Service Azure IoT Hub Health constants
 export const SRV_AZURE_IOT_HUB_HEALTH = 0x1462eefc
 
 export enum AzureIotHubHealthConnectionStatus { // uint16_t
@@ -562,7 +579,7 @@ export enum AzureIotHubHealthConnectionStatus { // uint16_t
 
 export enum AzureIotHubHealthReg {
     /**
-     * Read-only string (bytes). Something like `my-iot-hub.azure-devices.net`; empty string when not properly configured
+     * Read-only string (bytes). Something like `my-iot-hub.azure-devices.net` if available.
      *
      * ```
      * const [hubName] = jdunpack<[string]>(buf, "s")
@@ -571,7 +588,7 @@ export enum AzureIotHubHealthReg {
     HubName = 0x180,
 
     /**
-     * Read-only string (bytes). Device identifier in Azure Iot Hub
+     * Read-only string (bytes). Device identifier in Azure Iot Hub if available.
      *
      * ```
      * const [hubDeviceId] = jdunpack<[string]>(buf, "s")
@@ -626,7 +643,7 @@ export enum AzureIotHubHealthEvent {
     MessageSent = 0x80,
 }
 
-// Service: Barcode reader
+// Service Barcode reader constants
 export const SRV_BARCODE_READER = 0x1c739e6c
 
 export enum BarcodeReaderFormat { // uint8_t
@@ -677,7 +694,7 @@ export enum BarcodeReaderEvent {
     Detect = 0x1,
 }
 
-// Service: Barometer
+// Service Barometer constants
 export const SRV_BAROMETER = 0x1e117cea
 export enum BarometerReg {
     /**
@@ -699,7 +716,7 @@ export enum BarometerReg {
     PressureError = 0x106,
 }
 
-// Service: bit:radio
+// Service bit:radio constants
 export const SRV_BIT_RADIO = 0x1ac986cf
 export enum BitRadioReg {
     /**
@@ -804,7 +821,7 @@ export enum BitRadioCmd {
     BufferReceived = 0x92,
 }
 
-// Service: Bootloader
+// Service Bootloader constants
 export const SRV_BOOTLOADER = 0x1ffa9948
 
 export enum BootloaderError { // uint32_t
@@ -865,7 +882,7 @@ export enum BootloaderCmd {
      */
 }
 
-// Service: Braille display
+// Service Braille display constants
 export const SRV_BRAILLE_DISPLAY = 0x13bfb7cc
 export enum BrailleDisplayReg {
     /**
@@ -896,11 +913,24 @@ export enum BrailleDisplayReg {
     Length = 0x181,
 }
 
-// Service: Button
+// Service Bridge constants
+export const SRV_BRIDGE = 0x1fe5b46f
+export enum BridgeReg {
+    /**
+     * Read-write bool (uint8_t). Enables or disables the bridge.
+     *
+     * ```
+     * const [enabled] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Enabled = 0x1,
+}
+
+// Service Button constants
 export const SRV_BUTTON = 0x1473a263
 export enum ButtonReg {
     /**
-     * Read-only ratio u0.16 (uint16_t). Indicates the pressure state of the button, where ``0`` is open.
+     * Read-only ratio u0.16 (uint16_t). Indicates the pressure state of the button, where `0` is open.
      *
      * ```
      * const [pressure] = jdunpack<[number]>(buf, "u0.16")
@@ -909,7 +939,7 @@ export enum ButtonReg {
     Pressure = 0x101,
 
     /**
-     * Constant bool (uint8_t). Indicates if the button provides analog ``pressure`` readings.
+     * Constant bool (uint8_t). Indicates if the button provides analog `pressure` readings.
      *
      * ```
      * const [analog] = jdunpack<[number]>(buf, "u8")
@@ -951,7 +981,7 @@ export enum ButtonEvent {
     Hold = 0x81,
 }
 
-// Service: Buzzer
+// Service Buzzer constants
 export const SRV_BUZZER = 0x1b57b1d7
 export enum BuzzerReg {
     /**
@@ -983,7 +1013,7 @@ export enum BuzzerCmd {
     PlayNote = 0x81,
 }
 
-// Service: Capacitive Button
+// Service Capacitive Button constants
 export const SRV_CAPACITIVE_BUTTON = 0x2865adc9
 export enum CapacitiveButtonReg {
     /**
@@ -1004,7 +1034,7 @@ export enum CapacitiveButtonCmd {
     Calibrate = 0x2,
 }
 
-// Service: Character Screen
+// Service Character Screen constants
 export const SRV_CHARACTER_SCREEN = 0x1f37c56a
 
 export enum CharacterScreenVariant { // uint8_t
@@ -1030,10 +1060,10 @@ export enum CharacterScreenReg {
     Message = 0x2,
 
     /**
-     * Read-write ratio u0.8 (uint8_t). Brightness of the screen. `0` means off.
+     * Read-write ratio u0.16 (uint16_t). Brightness of the screen. `0` means off.
      *
      * ```
-     * const [brightness] = jdunpack<[number]>(buf, "u0.8")
+     * const [brightness] = jdunpack<[number]>(buf, "u0.16")
      * ```
      */
     Brightness = 0x1,
@@ -1075,23 +1105,7 @@ export enum CharacterScreenReg {
     Columns = 0x181,
 }
 
-export enum CharacterScreenCmd {
-    /**
-     * Overrides the content of a single line at a 0-based index.
-     *
-     * ```
-     * const [index, message] = jdunpack<[number, string]>(buf, "u16 s")
-     * ```
-     */
-    SetLine = 0x80,
-
-    /**
-     * No args. Clears all text from the display.
-     */
-    Clear = 0x81,
-}
-
-// Service: CODAL Message Bus
+// Service CODAL Message Bus constants
 export const SRV_CODAL_MESSAGE_BUS = 0x121ff81d
 export enum CodalMessageBusCmd {
     /**
@@ -1106,7 +1120,7 @@ export enum CodalMessageBusCmd {
 
 export enum CodalMessageBusEvent {
     /**
-     * Raised by the server is triggered by the server. The filtering logic of which event to send over JACDAC is up to the server implementation.
+     * Raised by the server is triggered by the server. The filtering logic of which event to send over Jacdac is up to the server implementation.
      *
      * ```
      * const [source, value] = jdunpack<[number, number]>(buf, "u16 u16")
@@ -1115,7 +1129,7 @@ export enum CodalMessageBusEvent {
     Message = 0x80,
 }
 
-// Service: Color
+// Service Color constants
 export const SRV_COLOR = 0x1630d567
 export enum ColorReg {
     /**
@@ -1128,7 +1142,7 @@ export enum ColorReg {
     Color = 0x101,
 }
 
-// Service: Compass
+// Service Compass constants
 export const SRV_COMPASS = 0x15b7b9bf
 export enum CompassReg {
     /**
@@ -1166,7 +1180,7 @@ export enum CompassCmd {
     Calibrate = 0x2,
 }
 
-// Service: Control
+// Service Control constants
 export const SRV_CONTROL = 0x0
 
 export enum ControlAnnounceFlags { // uint16_t
@@ -1183,6 +1197,7 @@ export enum ControlAnnounceFlags { // uint16_t
     SupportsBroadcast = 0x200,
     SupportsFrames = 0x400,
     IsClient = 0x800,
+    SupportsReliableCommands = 0x1000,
 }
 
 export enum ControlCmd {
@@ -1245,7 +1260,7 @@ export enum ControlCmd {
      * (each frame is currently 100ms, so speed of `51` is about 1 second and `26` 0.5 second).
      * As a special case, if speed is `0` the transition is immediate.
      * If MCU is not capable of executing transitions, it can consider `speed` to be always `0`.
-     * If a monochrome LEDs is fitted, the average value of ``red``, ``green``, ``blue`` is used.
+     * If a monochrome LEDs is fitted, the average value of `red`, `green`, `blue` is used.
      * If intensity of a monochrome LED cannot be controlled, any value larger than `0` should be considered
      * on, and `0` (for all three channels) should be considered off.
      *
@@ -1259,7 +1274,39 @@ export enum ControlCmd {
      * No args. Force client device into proxy mode.
      */
     Proxy = 0x85,
+
+    /**
+     * Argument: seed uint32_t. This opens a pipe to the device to provide an alternative, reliable transport of actions
+     * (and possibly other commands).
+     * The commands are wrapped as pipe data packets.
+     * Multiple invocations of this command with the same `seed` are dropped
+     * (and thus the command is not `unique`); otherwise `seed` carries no meaning
+     * and should be set to a random value by the client.
+     * Note that while the commands sends this way are delivered exactly once, the
+     * responses might get lost.
+     *
+     * ```
+     * const [seed] = jdunpack<[number]>(buf, "u32")
+     * ```
+     */
+    ReliableCommands = 0x86,
+
+    /**
+     * report ReliableCommands
+     * ```
+     * const [commands] = jdunpack<[Uint8Array]>(buf, "b[12]")
+     * ```
+     */
 }
+
+
+/**
+ * pipe_command WrappedCommand
+ * ```
+ * const [serviceSize, serviceIndex, serviceCommand, payload] = jdunpack<[number, number, number, Uint8Array]>(buf, "u8 u8 u16 b")
+ * ```
+ */
+
 
 export enum ControlReg {
     /**
@@ -1328,36 +1375,9 @@ export enum ControlReg {
     Uptime = 0x186,
 }
 
-// Service: Dimmer
-export const SRV_DIMMER = 0x1fb02645
-
-export enum DimmerVariant { // uint8_t
-    Light = 0x1,
-    Fan = 0x2,
-    Pump = 0x3,
-}
-
-export enum DimmerReg {
-    /**
-     * Read-write ratio u0.16 (uint16_t). The intensity of the current. Set to ``0`` to turn off completely the current.
-     *
-     * ```
-     * const [intensity] = jdunpack<[number]>(buf, "u0.16")
-     * ```
-     */
-    Intensity = 0x1,
-
-    /**
-     * Constant Variant (uint8_t). The type of physical device
-     *
-     * ```
-     * const [variant] = jdunpack<[DimmerVariant]>(buf, "u8")
-     * ```
-     */
-    Variant = 0x107,
-}
-
-// Service: Distance
+// Service Dashboard constants
+export const SRV_DASHBOARD = 0x1be59107
+// Service Distance constants
 export const SRV_DISTANCE = 0x141a6b8a
 
 export enum DistanceVariant { // uint8_t
@@ -1376,6 +1396,15 @@ export enum DistanceReg {
      * ```
      */
     Distance = 0x101,
+
+    /**
+     * Read-only m u16.16 (uint32_t). Absolute error on the reading value.
+     *
+     * ```
+     * const [distanceError] = jdunpack<[number]>(buf, "u16.16")
+     * ```
+     */
+    DistanceError = 0x106,
 
     /**
      * Constant m u16.16 (uint32_t). Minimum measurable distance
@@ -1405,11 +1434,11 @@ export enum DistanceReg {
     Variant = 0x107,
 }
 
-// Service: DMX
+// Service DMX constants
 export const SRV_DMX = 0x11cf8c05
 export enum DmxReg {
     /**
-     * Read-write bool (uint8_t). Determines if the DMX bridge is active
+     * Read-write bool (uint8_t). Determines if the DMX bridge is active.
      *
      * ```
      * const [enabled] = jdunpack<[number]>(buf, "u8")
@@ -1429,7 +1458,7 @@ export enum DmxCmd {
     Send = 0x80,
 }
 
-// Service: Dot Matrix
+// Service Dot Matrix constants
 export const SRV_DOT_MATRIX = 0x110d154b
 
 export enum DotMatrixVariant { // uint8_t
@@ -1485,7 +1514,7 @@ export enum DotMatrixReg {
     Variant = 0x107,
 }
 
-// Service: Equivalent CO₂
+// Service Equivalent CO₂ constants
 export const SRV_E_CO2 = 0x169c9dc6
 
 export enum ECO2Variant { // uint8_t
@@ -1531,15 +1560,6 @@ export enum ECO2Reg {
     MaxECO2 = 0x105,
 
     /**
-     * Constant s uint32_t. Time required to achieve good sensor stability before measuring after long idle period.
-     *
-     * ```
-     * const [conditioningPeriod] = jdunpack<[number]>(buf, "u32")
-     * ```
-     */
-    ConditioningPeriod = 0x180,
-
-    /**
      * Constant Variant (uint8_t). Type of physical sensor and capabilities.
      *
      * ```
@@ -1549,35 +1569,100 @@ export enum ECO2Reg {
     Variant = 0x107,
 }
 
-// Service: Flex
+// Service Flex constants
 export const SRV_FLEX = 0x1f47c6c6
-
-export enum FlexVariant { // uint8_t
-    Linear22Inch = 0x1,
-    Linear45Inch = 0x2,
-}
-
 export enum FlexReg {
     /**
-     * Read-only ratio u0.16 (uint16_t). The relative position of the slider.
+     * Read-only ratio i1.15 (int16_t). A measure of the bending.
      *
      * ```
-     * const [bending] = jdunpack<[number]>(buf, "u0.16")
+     * const [bending] = jdunpack<[number]>(buf, "i1.15")
      * ```
      */
     Bending = 0x101,
 
     /**
-     * Constant Variant (uint8_t). Specifies the physical layout of the flex sensor.
+     * Constant mm uint16_t. Length of the flex sensor
      *
      * ```
-     * const [variant] = jdunpack<[FlexVariant]>(buf, "u8")
+     * const [length] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    Length = 0x180,
+}
+
+// Service Gamepad constants
+export const SRV_GAMEPAD = 0x108f7456
+
+export enum GamepadButtons { // uint32_t
+    Left = 0x1,
+    Up = 0x2,
+    Right = 0x4,
+    Down = 0x8,
+    A = 0x10,
+    B = 0x20,
+    Menu = 0x40,
+    Select = 0x80,
+    Reset = 0x100,
+    Exit = 0x200,
+    X = 0x400,
+    Y = 0x800,
+}
+
+
+export enum GamepadVariant { // uint8_t
+    Thumb = 0x1,
+    ArcadeBall = 0x2,
+    ArcadeStick = 0x3,
+    Gamepad = 0x4,
+}
+
+export enum GamepadReg {
+    /**
+     * If the joystick is analog, the directional buttons should be "simulated", based on joystick position
+     * (`Left` is `{ x = -1, y = 0 }`, `Up` is `{ x = 0, y = -1}`).
+     * If the joystick is digital, then each direction will read as either `-1`, `0`, or `1` (in fixed representation).
+     * The primary button on the joystick is `A`.
+     *
+     * ```
+     * const [buttons, x, y] = jdunpack<[GamepadButtons, number, number]>(buf, "u32 i1.15 i1.15")
+     * ```
+     */
+    Direction = 0x101,
+
+    /**
+     * Constant Variant (uint8_t). The type of physical joystick.
+     *
+     * ```
+     * const [variant] = jdunpack<[GamepadVariant]>(buf, "u8")
      * ```
      */
     Variant = 0x107,
+
+    /**
+     * Constant Buttons (uint32_t). Indicates a bitmask of the buttons that are mounted on the joystick.
+     * If the `Left`/`Up`/`Right`/`Down` buttons are marked as available here, the joystick is digital.
+     * Even when marked as not available, they will still be simulated based on the analog joystick.
+     *
+     * ```
+     * const [buttonsAvailable] = jdunpack<[GamepadButtons]>(buf, "u32")
+     * ```
+     */
+    ButtonsAvailable = 0x180,
 }
 
-// Service: Gyroscope
+export enum GamepadEvent {
+    /**
+     * Argument: buttons Buttons (uint32_t). Emitted whenever the state of buttons changes.
+     *
+     * ```
+     * const [buttons] = jdunpack<[GamepadButtons]>(buf, "u32")
+     * ```
+     */
+    ButtonsChanged = 0x3,
+}
+
+// Service Gyroscope constants
 export const SRV_GYROSCOPE = 0x1e1b06f2
 export enum GyroscopeReg {
     /**
@@ -1618,7 +1703,7 @@ export enum GyroscopeReg {
     MaxRatesSupported = 0x10a,
 }
 
-// Service: Heart Rate
+// Service Heart Rate constants
 export const SRV_HEART_RATE = 0x166c6dc4
 
 export enum HeartRateVariant { // uint8_t
@@ -1658,88 +1743,7 @@ export enum HeartRateReg {
     Variant = 0x107,
 }
 
-// Service: HID Adapter
-export const SRV_HID_ADAPTER = 0x1e5758b5
-export enum HidAdapterReg {
-    /**
-     * Read-write uint8_t. The number of configurations stored on the server.
-     *
-     * ```
-     * const [numConfigurations] = jdunpack<[number]>(buf, "u8")
-     * ```
-     */
-    NumConfigurations = 0x80,
-
-    /**
-     * Read-write uint8_t. The current configuration the server is using.
-     *
-     * ```
-     * const [currentConfiguration] = jdunpack<[number]>(buf, "u8")
-     * ```
-     */
-    CurrentConfiguration = 0x81,
-}
-
-export enum HidAdapterCmd {
-    /**
-     * Retrieves a configuration stored on the server. If the configuration does not exist, an empty report will be returned
-     *
-     * ```
-     * const [results, configurationNumber] = jdunpack<[Uint8Array, number]>(buf, "b[12] u8")
-     * ```
-     */
-    GetConfiguration = 0x80,
-
-    /**
-     * Stores the given binding on the server. If a binding exists at this index, the new binding will replace it.
-     *
-     * ```
-     * const [configurationNumber, bindingIndex, deviceId, serviceClass, triggerValue, triggerContext, serviceIndex, selector, modifiers] = jdunpack<[number, number, number, number, number, number, number, number, number]>(buf, "u8 u8 x[2] u64 u32 u32 u8 u8 u16 u16")
-     * ```
-     */
-    SetBinding = 0x82,
-
-    /**
-     * Clears a specific binding stored on the device.
-     *
-     * ```
-     * const [configurationNumber, bindingIndex] = jdunpack<[number, number]>(buf, "u8 u8")
-     * ```
-     */
-    ClearBinding = 0x83,
-
-    /**
-     * Argument: configuration_number uint8_t. Clears a specific configuration stored on the device.
-     *
-     * ```
-     * const [configurationNumber] = jdunpack<[number]>(buf, "u8")
-     * ```
-     */
-    ClearConfiguration = 0x84,
-
-    /**
-     * No args. Clears all configurations and bindings stored on the device.
-     */
-    Clear = 0x85,
-}
-
-
-/**
- * pipe_report Configuration
- * ```
- * const [configurationNumber, bindingIndex, deviceId, serviceClass, triggerValue, triggerContext, serviceIndex, selector, modifiers] = jdunpack<[number, number, number, number, number, number, number, number, number]>(buf, "u8 u8 x[2] u64 u32 u32 u8 u8 u16 u16")
- * ```
- */
-
-
-export enum HidAdapterEvent {
-    /**
-     * Event that notifies clients that the server has swapped to a new configuration or changed key bindings.
-     */
-    Changed = 0x3,
-}
-
-// Service: HID Keyboard
+// Service HID Keyboard constants
 export const SRV_HID_KEYBOARD = 0x18b05b6a
 
 export enum HidKeyboardModifiers { // uint8_t
@@ -1778,7 +1782,7 @@ export enum HidKeyboardCmd {
     Clear = 0x81,
 }
 
-// Service: HID Mouse
+// Service HID Mouse constants
 export const SRV_HID_MOUSE = 0x1885dc1c
 
 export enum HidMouseButton { // uint16_t
@@ -1798,11 +1802,11 @@ export enum HidMouseButtonEvent { // uint8_t
 export enum HidMouseCmd {
     /**
      * Sets the up/down state of one or more buttons.
-     * A ``Click`` is the same as ``Down`` followed by ``Up`` after 100ms.
-     * A ``DoubleClick`` is two clicks with ``150ms`` gap between them (that is, ``100ms`` first click, ``150ms`` gap, ``100ms`` second click).
+     * A `Click` is the same as `Down` followed by `Up` after 100ms.
+     * A `DoubleClick` is two clicks with `150ms` gap between them (that is, `100ms` first click, `150ms` gap, `100ms` second click).
      *
      * ```
-     * const [buttons, event] = jdunpack<[HidMouseButton, HidMouseButtonEvent]>(buf, "u16 u8")
+     * const [buttons, ev] = jdunpack<[HidMouseButton, HidMouseButtonEvent]>(buf, "u16 u8")
      * ```
      */
     SetButton = 0x80,
@@ -1828,7 +1832,7 @@ export enum HidMouseCmd {
     Wheel = 0x82,
 }
 
-// Service: Humidity
+// Service Humidity constants
 export const SRV_HUMIDITY = 0x16c810b8
 export enum HumidityReg {
     /**
@@ -1868,29 +1872,29 @@ export enum HumidityReg {
     MaxHumidity = 0x105,
 }
 
-// Service: Illuminance
+// Service Illuminance constants
 export const SRV_ILLUMINANCE = 0x1e6ecaf2
 export enum IlluminanceReg {
     /**
      * Read-only lux u22.10 (uint32_t). The amount of illuminance, as lumens per square metre.
      *
      * ```
-     * const [light] = jdunpack<[number]>(buf, "u22.10")
+     * const [illuminance] = jdunpack<[number]>(buf, "u22.10")
      * ```
      */
-    Light = 0x101,
+    Illuminance = 0x101,
 
     /**
      * Read-only lux u22.10 (uint32_t). Error on the reported sensor value.
      *
      * ```
-     * const [lightError] = jdunpack<[number]>(buf, "u22.10")
+     * const [illuminanceError] = jdunpack<[number]>(buf, "u22.10")
      * ```
      */
-    LightError = 0x106,
+    IlluminanceError = 0x106,
 }
 
-// Service: Indexed screen
+// Service Indexed screen constants
 export const SRV_INDEXED_SCREEN = 0x16fa36e5
 export enum IndexedScreenCmd {
     /**
@@ -2001,80 +2005,100 @@ export enum IndexedScreenReg {
     Rotation = 0x83,
 }
 
-// Service: Infrastructure
+// Service Infrastructure constants
 export const SRV_INFRASTRUCTURE = 0x1e1589eb
-// Service: Joystick
-export const SRV_JOYSTICK = 0x108f7456
+// Service Jacscript Cloud constants
+export const SRV_JACSCRIPT_CLOUD = 0x14606e9c
 
-export enum JoystickButtons { // uint32_t
-    Left = 0x1,
-    Up = 0x2,
-    Right = 0x4,
-    Down = 0x8,
-    A = 0x10,
-    B = 0x20,
-    Menu = 0x40,
-    Select = 0x80,
-    Reset = 0x100,
-    Exit = 0x200,
-    X = 0x400,
-    Y = 0x800,
+export enum JacscriptCloudCommandStatus { // uint32_t
+    OK = 0xc8,
+    NotFound = 0x194,
+    Busy = 0x1ad,
 }
 
+export enum JacscriptCloudCmd {
+    /**
+     * Upload a labelled tuple of values to the cloud.
+     * The tuple will be automatically tagged with timestamp and originating device.
+     *
+     * ```
+     * const [label, value] = jdunpack<[string, number[]]>(buf, "z f64[]")
+     * ```
+     */
+    Upload = 0x80,
 
-export enum JoystickVariant { // uint8_t
-    Thumb = 0x1,
-    ArcadeBall = 0x2,
-    ArcadeStick = 0x3,
-    Gamepad = 0x4,
+    /**
+     * Argument: path string (bytes). Get a numeric field from the current device twin.
+     * Path is dot-separated.
+     *
+     * ```
+     * const [path] = jdunpack<[string]>(buf, "s")
+     * ```
+     */
+    GetTwin = 0x81,
+
+    /**
+     * report GetTwin
+     * ```
+     * const [path, value] = jdunpack<[string, number]>(buf, "z f64")
+     * ```
+     */
+
+    /**
+     * Should be called by jacscript when it finishes handling a `cloud_command`.
+     *
+     * ```
+     * const [seqNo, status, result] = jdunpack<[number, JacscriptCloudCommandStatus, number[]]>(buf, "u32 u32 f64[]")
+     * ```
+     */
+    AckCloudCommand = 0x83,
 }
 
-export enum JoystickReg {
+export enum JacscriptCloudReg {
     /**
-     * If the joystick is analog, the directional buttons should be "simulated", based on joystick position
-     * (`Left` is `{ x = -1, y = 0 }`, `Up` is `{ x = 0, y = -1}`).
-     * If the joystick is digital, then each direction will read as either `-1`, `0`, or `1` (in fixed representation).
-     * The primary button on the joystick is `A`.
+     * Read-only bool (uint8_t). Indicate whether we're currently connected to the cloud server.
+     * When offline, `upload` commands are queued, and `get_twin` respond with cached values.
      *
      * ```
-     * const [buttons, x, y] = jdunpack<[JoystickButtons, number, number]>(buf, "u32 i1.15 i1.15")
+     * const [connected] = jdunpack<[number]>(buf, "u8")
      * ```
      */
-    Direction = 0x101,
-
-    /**
-     * Constant Variant (uint8_t). The type of physical joystick.
-     *
-     * ```
-     * const [variant] = jdunpack<[JoystickVariant]>(buf, "u8")
-     * ```
-     */
-    Variant = 0x107,
-
-    /**
-     * Constant Buttons (uint32_t). Indicates a bitmask of the buttons that are mounted on the joystick.
-     * If the `Left`/`Up`/`Right`/`Down` buttons are marked as available here, the joystick is digital.
-     * Even when marked as not available, they will still be simulated based on the analog joystick.
-     *
-     * ```
-     * const [buttonsAvailable] = jdunpack<[JoystickButtons]>(buf, "u32")
-     * ```
-     */
-    ButtonsAvailable = 0x180,
+    Connected = 0x180,
 }
 
-export enum JoystickEvent {
+export enum JacscriptCloudEvent {
     /**
-     * Argument: buttons Buttons (uint32_t). Emitted whenever the state of buttons changes.
+     * Emitted when cloud requests jacscript to run some action.
      *
      * ```
-     * const [buttons] = jdunpack<[JoystickButtons]>(buf, "u32")
+     * const [seqNo, command, argument] = jdunpack<[number, string, number[]]>(buf, "u32 z f64[]")
      * ```
      */
-    ButtonsChanged = 0x3,
+    CloudCommand = 0x81,
+
+    /**
+     * Emitted whenever any of the twin properties change.
+     */
+    TwinChange = 0x3,
 }
 
-// Service: LED
+// Service Jacscript Condition constants
+export const SRV_JACSCRIPT_CONDITION = 0x1196796d
+export enum JacscriptConditionCmd {
+    /**
+     * No args. Triggers a `signalled` event.
+     */
+    Signal = 0x80,
+}
+
+export enum JacscriptConditionEvent {
+    /**
+     * Triggered by `signal` command.
+     */
+    Signalled = 0x3,
+}
+
+// Service LED constants
 export const SRV_LED = 0x1e3048f8
 
 export enum LedVariant { // uint8_t
@@ -2151,7 +2175,7 @@ export enum LedReg {
     Variant = 0x107,
 }
 
-// Service: LED Pixel
+// Service LED Pixel constants
 export const SRV_LED_PIXEL = 0x126f00e0
 
 export enum LedPixelLightType { // uint8_t
@@ -2274,12 +2298,12 @@ export enum LedPixelCmd {
     Run = 0x81,
 }
 
-// Service: Light bulb
+// Service Light bulb constants
 export const SRV_LIGHT_BULB = 0x1cab054c
 export enum LightBulbReg {
     /**
      * Read-write ratio u0.16 (uint16_t). Indicates the brightness of the light bulb. Zero means completely off and 0xffff means completely on.
-     * For non-dimmeable lights, the value should be clamp to 0xffff for any non-zero value.
+     * For non-dimmable lights, the value should be clamp to 0xffff for any non-zero value.
      *
      * ```
      * const [brightness] = jdunpack<[number]>(buf, "u0.16")
@@ -2291,31 +2315,18 @@ export enum LightBulbReg {
      * Constant bool (uint8_t). Indicates if the light supports dimming.
      *
      * ```
-     * const [dimmeable] = jdunpack<[number]>(buf, "u8")
+     * const [dimmable] = jdunpack<[number]>(buf, "u8")
      * ```
      */
-    Dimmeable = 0x180,
+    Dimmable = 0x180,
 }
 
-export enum LightBulbEvent {
-    /**
-     * Emitted when the light brightness is greater than 0.
-     */
-    On = 0x1,
-
-    /**
-     * Emitted when the light is completely off with brightness to 0.
-     */
-    Off = 0x2,
-}
-
-// Service: Light level
+// Service Light level constants
 export const SRV_LIGHT_LEVEL = 0x17dc9a1c
 
 export enum LightLevelVariant { // uint8_t
     PhotoResistor = 0x1,
-    LEDMatrix = 0x2,
-    Ambient = 0x3,
+    ReverseBiasedLED = 0x2,
 }
 
 export enum LightLevelReg {
@@ -2329,6 +2340,15 @@ export enum LightLevelReg {
     LightLevel = 0x101,
 
     /**
+     * Read-only ratio u0.16 (uint16_t). Absolute estimated error of the reading value
+     *
+     * ```
+     * const [lightLevelError] = jdunpack<[number]>(buf, "u0.16")
+     * ```
+     */
+    LightLevelError = 0x106,
+
+    /**
      * Constant Variant (uint8_t). The type of physical sensor.
      *
      * ```
@@ -2338,7 +2358,7 @@ export enum LightLevelReg {
     Variant = 0x107,
 }
 
-// Service: Logger
+// Service Logger constants
 export const SRV_LOGGER = 0x12dc1fca
 
 export enum LoggerPriority { // uint8_t
@@ -2402,7 +2422,7 @@ export enum LoggerCmd {
     Error = 0x83,
 }
 
-// Service: Magnetometer
+// Service Magnetometer constants
 export const SRV_MAGNETOMETER = 0x13029088
 export enum MagnetometerReg {
     /**
@@ -2416,7 +2436,7 @@ export enum MagnetometerReg {
     Forces = 0x101,
 
     /**
-     * Read-only nT int32_t. Error on the readings.
+     * Read-only nT int32_t. Absolute estimated error on the readings.
      *
      * ```
      * const [forcesError] = jdunpack<[number]>(buf, "i32")
@@ -2433,7 +2453,7 @@ export enum MagnetometerCmd {
     Calibrate = 0x2,
 }
 
-// Service: Matrix Keypad
+// Service Matrix Keypad constants
 export const SRV_MATRIX_KEYPAD = 0x13062dc8
 
 export enum MatrixKeypadVariant { // uint8_t
@@ -2531,7 +2551,7 @@ export enum MatrixKeypadEvent {
     LongClick = 0x81,
 }
 
-// Service: Microphone
+// Service Microphone constants
 export const SRV_MICROPHONE = 0x113dac86
 export enum MicrophoneCmd {
     /**
@@ -2559,7 +2579,7 @@ export enum MicrophoneReg {
     SamplingPeriod = 0x80,
 }
 
-// Service: MIDI output
+// Service MIDI output constants
 export const SRV_MIDI_OUTPUT = 0x1a848cd7
 export enum MidiOutputReg {
     /**
@@ -2588,7 +2608,7 @@ export enum MidiOutputCmd {
     Send = 0x81,
 }
 
-// Service: Model Runner
+// Service Model Runner constants
 export const SRV_MODEL_RUNNER = 0x140f9a78
 
 export enum ModelRunnerModelFormat { // uint32_t
@@ -2743,7 +2763,7 @@ export enum ModelRunnerReg {
     Parallel = 0x188,
 }
 
-// Service: Motion
+// Service Motion constants
 export const SRV_MOTION = 0x1179a749
 
 export enum MotionVariant { // uint8_t
@@ -2795,7 +2815,7 @@ export enum MotionEvent {
     Movement = 0x1,
 }
 
-// Service: Motor
+// Service Motor constants
 export const SRV_MOTOR = 0x17004cd8
 export enum MotorReg {
     /**
@@ -2835,72 +2855,18 @@ export enum MotorReg {
      * ```
      */
     LoadSpeed = 0x181,
+
+    /**
+     * Constant bool (uint8_t). Indicates if the motor can run backwards.
+     *
+     * ```
+     * const [reversible] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Reversible = 0x182,
 }
 
-// Service: Multitouch
-export const SRV_MULTITOUCH = 0x18d55e2b
-export enum MultitouchReg {
-    /**
-     * Read-only. Capacitance of channels. The capacitance is continuously calibrated, and a value of `0` indicates
-     * no touch, wheres a value of around `100` or more indicates touch.
-     * It's best to ignore this (unless debugging), and use events.
-     *
-     * ```
-     * const [capacitance] = jdunpack<[number[]]>(buf, "i32[]")
-     * ```
-     */
-    Capacity = 0x101,
-}
-
-export enum MultitouchEvent {
-    /**
-     * Argument: channel uint32_t. Emitted when an input is touched.
-     *
-     * ```
-     * const [channel] = jdunpack<[number]>(buf, "u32")
-     * ```
-     */
-    Touch = 0x1,
-
-    /**
-     * Argument: channel uint32_t. Emitted when an input is no longer touched.
-     *
-     * ```
-     * const [channel] = jdunpack<[number]>(buf, "u32")
-     * ```
-     */
-    Release = 0x2,
-
-    /**
-     * Argument: channel uint32_t. Emitted when an input is briefly touched. TODO Not implemented.
-     *
-     * ```
-     * const [channel] = jdunpack<[number]>(buf, "u32")
-     * ```
-     */
-    Tap = 0x80,
-
-    /**
-     * Argument: channel uint32_t. Emitted when an input is touched for longer than 500ms. TODO Not implemented.
-     *
-     * ```
-     * const [channel] = jdunpack<[number]>(buf, "u32")
-     * ```
-     */
-    LongPress = 0x81,
-
-    /**
-     * Emitted when input channels are successively touched in order of increasing channel numbers.
-     */
-    SwipePos = 0x90,
-
-    /**
-     * Emitted when input channels are successively touched in order of decreasing channel numbers.
-     */
-    SwipeNeg = 0x91,
-}
-
-// Service: Potentiometer
+// Service Potentiometer constants
 export const SRV_POTENTIOMETER = 0x1f274746
 
 export enum PotentiometerVariant { // uint8_t
@@ -2928,7 +2894,7 @@ export enum PotentiometerReg {
     Variant = 0x107,
 }
 
-// Service: Power
+// Service Power constants
 export const SRV_POWER = 0x1fa4c95a
 
 export enum PowerPowerStatus { // uint8_t
@@ -3048,7 +3014,7 @@ export enum PowerEvent {
     PowerStatusChanged = 0x3,
 }
 
-// Service: Pressure Button
+// Service Pressure Button constants
 export const SRV_PRESSURE_BUTTON = 0x281740c3
 export enum PressureButtonReg {
     /**
@@ -3061,7 +3027,7 @@ export enum PressureButtonReg {
     Threshold = 0x6,
 }
 
-// Service: Protocol Test
+// Service Protocol Test constants
 export const SRV_PROTO_TEST = 0x16c7466a
 export enum ProtoTestReg {
     /**
@@ -3176,7 +3142,7 @@ export enum ProtoTestReg {
      * A read write u8, string register.
      *
      * ```
-     * const [u8, string] = jdunpack<[number, string]>(buf, "u8 s")
+     * const [u8, str] = jdunpack<[number, string]>(buf, "u8 s")
      * ```
      */
     RwU8String = 0x87,
@@ -3185,7 +3151,7 @@ export enum ProtoTestReg {
      * A read only u8, string register.. Mirrors rw_u8_string.
      *
      * ```
-     * const [u8, string] = jdunpack<[number, string]>(buf, "u8 s")
+     * const [u8, str] = jdunpack<[number, string]>(buf, "u8 s")
      * ```
      */
     RoU8String = 0x187,
@@ -3193,10 +3159,10 @@ export enum ProtoTestReg {
 
 export enum ProtoTestEvent {
     /**
-     * Argument: bool bool (uint8_t). An event raised when rw_bool is modified
+     * Argument: bo bool (uint8_t). An event raised when rw_bool is modified
      *
      * ```
-     * const [bool] = jdunpack<[number]>(buf, "u8")
+     * const [bo] = jdunpack<[number]>(buf, "u8")
      * ```
      */
     EBool = 0x81,
@@ -3220,10 +3186,10 @@ export enum ProtoTestEvent {
     EI32 = 0x83,
 
     /**
-     * Argument: string string (bytes). An event raised when rw_string is modified
+     * Argument: str string (bytes). An event raised when rw_string is modified
      *
      * ```
-     * const [string] = jdunpack<[string]>(buf, "s")
+     * const [str] = jdunpack<[string]>(buf, "s")
      * ```
      */
     EString = 0x84,
@@ -3250,7 +3216,7 @@ export enum ProtoTestEvent {
      * An event raised when rw_u8_string is modified
      *
      * ```
-     * const [u8, string] = jdunpack<[number, string]>(buf, "u8 s")
+     * const [u8, str] = jdunpack<[number, string]>(buf, "u8 s")
      * ```
      */
     EU8String = 0x87,
@@ -3258,10 +3224,10 @@ export enum ProtoTestEvent {
 
 export enum ProtoTestCmd {
     /**
-     * Argument: bool bool (uint8_t). A command to set rw_bool.
+     * Argument: bo bool (uint8_t). A command to set rw_bool.
      *
      * ```
-     * const [bool] = jdunpack<[number]>(buf, "u8")
+     * const [bo] = jdunpack<[number]>(buf, "u8")
      * ```
      */
     CBool = 0x81,
@@ -3285,10 +3251,10 @@ export enum ProtoTestCmd {
     CI32 = 0x83,
 
     /**
-     * Argument: string string (bytes). A command to set rw_string.
+     * Argument: str string (bytes). A command to set rw_string.
      *
      * ```
-     * const [string] = jdunpack<[string]>(buf, "s")
+     * const [str] = jdunpack<[string]>(buf, "s")
      * ```
      */
     CString = 0x84,
@@ -3315,7 +3281,7 @@ export enum ProtoTestCmd {
      * A command to set rw_u8_string.
      *
      * ```
-     * const [u8, string] = jdunpack<[number, string]>(buf, "u8 s")
+     * const [u8, str] = jdunpack<[number, string]>(buf, "u8 s")
      * ```
      */
     CU8String = 0x87,
@@ -3339,9 +3305,9 @@ export enum ProtoTestCmd {
  */
 
 
-// Service: Proxy
+// Service Proxy constants
 export const SRV_PROXY = 0x16f19949
-// Service: Pulse Oximeter
+// Service Pulse Oximeter constants
 export const SRV_PULSE_OXIMETER = 0x10bb4eb6
 export enum PulseOximeterReg {
     /**
@@ -3363,7 +3329,7 @@ export enum PulseOximeterReg {
     OxygenError = 0x106,
 }
 
-// Service: Rain gauge
+// Service Rain gauge constants
 export const SRV_RAIN_GAUGE = 0x13734c95
 export enum RainGaugeReg {
     /**
@@ -3385,7 +3351,7 @@ export enum RainGaugeReg {
     PrecipitationPrecision = 0x108,
 }
 
-// Service: Real time clock
+// Service Real time clock constants
 export const SRV_REAL_TIME_CLOCK = 0x1a8b1a28
 
 export enum RealTimeClockVariant { // uint8_t
@@ -3397,9 +3363,6 @@ export enum RealTimeClockVariant { // uint8_t
 export enum RealTimeClockReg {
     /**
      * Current time in 24h representation.
-     * * ``day_of_month`` is day of the month, starting at ``1``
-     * * ``day_of_week`` is day of the week, starting at ``1`` as monday
-     * Default streaming period is 1 second.
      *
      * ```
      * const [year, month, dayOfMonth, dayOfWeek, hour, min, sec] = jdunpack<[number, number, number, number, number, number, number]>(buf, "u16 u8 u8 u8 u8 u8 u8")
@@ -3408,13 +3371,13 @@ export enum RealTimeClockReg {
     LocalTime = 0x101,
 
     /**
-     * Read-only s u16.16 (uint32_t). Time drift since the last call to the ``set_time`` command.
+     * Read-only s u16.16 (uint32_t). Time drift since the last call to the `set_time` command.
      *
      * ```
-     * const [error] = jdunpack<[number]>(buf, "u16.16")
+     * const [drift] = jdunpack<[number]>(buf, "u16.16")
      * ```
      */
-    Error = 0x180,
+    Drift = 0x180,
 
     /**
      * Constant ppm u16.16 (uint32_t). Error on the clock, in parts per million of seconds.
@@ -3446,7 +3409,7 @@ export enum RealTimeClockCmd {
     SetTime = 0x80,
 }
 
-// Service: Reflected light
+// Service Reflected light constants
 export const SRV_REFLECTED_LIGHT = 0x126c4cb2
 
 export enum ReflectedLightVariant { // uint8_t
@@ -3474,19 +3437,7 @@ export enum ReflectedLightReg {
     Variant = 0x107,
 }
 
-export enum ReflectedLightEvent {
-    /**
-     * The sensor detected a transition from light to dark
-     */
-    Dark = 0x2,
-
-    /**
-     * The sensor detected a transition from dark to light
-     */
-    Light = 0x1,
-}
-
-// Service: Relay
+// Service Relay constants
 export const SRV_RELAY = 0x183fe656
 
 export enum RelayVariant { // uint8_t
@@ -3497,13 +3448,13 @@ export enum RelayVariant { // uint8_t
 
 export enum RelayReg {
     /**
-     * Read-write bool (uint8_t). Indicates whether the relay circuit is currently energized (closed) or not.
+     * Read-write bool (uint8_t). Indicates whether the relay circuit is currently energized or not.
      *
      * ```
-     * const [closed] = jdunpack<[number]>(buf, "u8")
+     * const [active] = jdunpack<[number]>(buf, "u8")
      * ```
      */
-    Closed = 0x1,
+    Active = 0x1,
 
     /**
      * Constant Variant (uint8_t). Describes the type of relay used.
@@ -3524,21 +3475,7 @@ export enum RelayReg {
     MaxSwitchingCurrent = 0x180,
 }
 
-export enum RelayEvent {
-    /**
-     * Emitted when relay goes from `inactive` to `active` state.
-     * Normally open (NO) relays close the circuit when activated.
-     */
-    Active = 0x1,
-
-    /**
-     * Emitted when relay goes from `active` to `inactive` state.
-     * Normally closed (NC) relays open the circuit when activated.
-     */
-    Inactive = 0x2,
-}
-
-// Service: Random Number Generator
+// Service Random Number Generator constants
 export const SRV_RNG = 0x1789f0a2
 
 export enum RngVariant { // uint8_t
@@ -3571,7 +3508,7 @@ export enum RngReg {
     Variant = 0x107,
 }
 
-// Service: Role Manager
+// Service Role Manager constants
 export const SRV_ROLE_MANAGER = 0x1e4b7e66
 export enum RoleManagerReg {
     /**
@@ -3600,22 +3537,6 @@ export enum RoleManagerReg {
 
 export enum RoleManagerCmd {
     /**
-     * Get the role corresponding to given device identifer. Returns empty string if unset.
-     *
-     * ```
-     * const [deviceId, serviceIdx] = jdunpack<[Uint8Array, number]>(buf, "b[8] u8")
-     * ```
-     */
-    GetRole = 0x80,
-
-    /**
-     * report GetRole
-     * ```
-     * const [deviceId, serviceIdx, role] = jdunpack<[Uint8Array, number, string]>(buf, "b[8] u8 s")
-     * ```
-     */
-
-    /**
      * Set role. Can set to empty to remove role binding.
      *
      * ```
@@ -3630,34 +3551,18 @@ export enum RoleManagerCmd {
     ClearAllRoles = 0x84,
 
     /**
-     * Argument: stored_roles pipe (bytes). Return all roles stored internally.
+     * Argument: roles pipe (bytes). List all roles and bindings required by the current program. `device_id` and `service_idx` are `0` if role is unbound.
      *
      * ```
-     * const [storedRoles] = jdunpack<[Uint8Array]>(buf, "b[12]")
+     * const [roles] = jdunpack<[Uint8Array]>(buf, "b[12]")
      * ```
      */
-    ListStoredRoles = 0x82,
-
-    /**
-     * Argument: required_roles pipe (bytes). List all roles required by the current program. `device_id` and `service_idx` are `0` if role is unbound.
-     *
-     * ```
-     * const [requiredRoles] = jdunpack<[Uint8Array]>(buf, "b[12]")
-     * ```
-     */
-    ListRequiredRoles = 0x83,
+    ListRoles = 0x83,
 }
 
 
 /**
- * pipe_report StoredRoles
- * ```
- * const [deviceId, serviceIdx, role] = jdunpack<[Uint8Array, number, string]>(buf, "b[8] u8 s")
- * ```
- */
-
-/**
- * pipe_report RequiredRoles
+ * pipe_report Roles
  * ```
  * const [deviceId, serviceClass, serviceIdx, role] = jdunpack<[Uint8Array, number, number, string]>(buf, "b[8] u32 u8 s")
  * ```
@@ -3671,7 +3576,7 @@ export enum RoleManagerEvent {
     Change = 0x3,
 }
 
-// Service: Rotary encoder
+// Service Rotary encoder constants
 export const SRV_ROTARY_ENCODER = 0x10fa29c9
 export enum RotaryEncoderReg {
     /**
@@ -3692,9 +3597,19 @@ export enum RotaryEncoderReg {
      * ```
      */
     ClicksPerTurn = 0x180,
+
+    /**
+     * Constant bool (uint8_t). The encoder is combined with a clicker. If this is the case, the clicker button service
+     * should follow this service in the service list of the device.
+     *
+     * ```
+     * const [clicker] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Clicker = 0x181,
 }
 
-// Service: Rover
+// Service Rover constants
 export const SRV_ROVER = 0x19f4d06b
 export enum RoverReg {
     /**
@@ -3707,7 +3622,7 @@ export enum RoverReg {
     Kinematics = 0x101,
 }
 
-// Service: Sensor Aggregator
+// Service Sensor Aggregator constants
 export const SRV_SENSOR_AGGREGATOR = 0x1d90e1c5
 
 export enum SensorAggregatorSampleType { // uint8_t
@@ -3768,7 +3683,7 @@ export enum SensorAggregatorReg {
     CurrentSample = 0x101,
 }
 
-// Service: Servo
+// Service Servo constants
 export const SRV_SERVO = 0x12fc9103
 export enum ServoReg {
     /**
@@ -3862,7 +3777,7 @@ export enum ServoReg {
     CurrentAngle = 0x101,
 }
 
-// Service: Settings
+// Service Settings constants
 export const SRV_SETTINGS = 0x1107dc4a
 export enum SettingsCmd {
     /**
@@ -3946,14 +3861,14 @@ export enum SettingsEvent {
     Change = 0x3,
 }
 
-// Service: 7-segment display
+// Service 7-segment display constants
 export const SRV_SEVEN_SEGMENT_DISPLAY = 0x196158f7
 export enum SevenSegmentDisplayReg {
     /**
      * Read-write bytes. Each byte encodes the display status of a digit using,
      * where bit 0 encodes segment `A`, bit 1 encodes segments `B`, ..., bit 6 encodes segments `G`, and bit 7 encodes the decimal point (if present).
-     * If incoming ``digits`` data is smaller than `digit_count`, the remaining digits will be cleared.
-     * Thus, sending an empty ``digits`` payload clears the screen.
+     * If incoming `digits` data is smaller than `digit_count`, the remaining digits will be cleared.
+     * Thus, sending an empty `digits` payload clears the screen.
      *
      * ```
      * const [digits] = jdunpack<[Uint8Array]>(buf, "b")
@@ -3962,7 +3877,7 @@ export enum SevenSegmentDisplayReg {
     Digits = 0x2,
 
     /**
-     * Read-write ratio u0.16 (uint16_t). Controls the brightness of the LEDs. ``0`` means off.
+     * Read-write ratio u0.16 (uint16_t). Controls the brightness of the LEDs. `0` means off.
      *
      * ```
      * const [brightness] = jdunpack<[number]>(buf, "u0.16")
@@ -4011,7 +3926,7 @@ export enum SevenSegmentDisplayCmd {
     SetText = 0x81,
 }
 
-// Service: Soil moisture
+// Service Soil moisture constants
 export const SRV_SOIL_MOISTURE = 0x1d4aa3b3
 
 export enum SoilMoistureVariant { // uint8_t
@@ -4021,7 +3936,7 @@ export enum SoilMoistureVariant { // uint8_t
 
 export enum SoilMoistureReg {
     /**
-     * Read-only ratio u0.16 (uint16_t). Indicates the wetness of the soil, from ``dry`` to ``wet``.
+     * Read-only ratio u0.16 (uint16_t). Indicates the wetness of the soil, from `dry` to `wet`.
      *
      * ```
      * const [moisture] = jdunpack<[number]>(buf, "u0.16")
@@ -4048,7 +3963,7 @@ export enum SoilMoistureReg {
     Variant = 0x107,
 }
 
-// Service: Solenoid
+// Service Solenoid constants
 export const SRV_SOLENOID = 0x171723ca
 
 export enum SolenoidVariant { // uint8_t
@@ -4077,7 +3992,7 @@ export enum SolenoidReg {
     Variant = 0x107,
 }
 
-// Service: Sound level
+// Service Sound level constants
 export const SRV_SOUND_LEVEL = 0x14ad1a5d
 export enum SoundLevelReg {
     /**
@@ -4097,30 +4012,6 @@ export enum SoundLevelReg {
      * ```
      */
     Enabled = 0x1,
-
-    /**
-     * Read-write dB int16_t. The minimum power value considered by the sensor.
-     * If both ``min_decibels`` and ``max_decibels`` are supported,
-     * the volume in deciment can be linearly interpolated between
-     * ``[min_decibels, max_decibels]``.
-     *
-     * ```
-     * const [minDecibels] = jdunpack<[number]>(buf, "i16")
-     * ```
-     */
-    MinDecibels = 0x81,
-
-    /**
-     * Read-write dB int16_t. The maximum power value considered by the sensor.
-     * If both ``min_decibels`` and ``max_decibels`` are supported,
-     * the volume in deciment can be linearly interpolated between
-     * ``[min_decibels, max_decibels]``.
-     *
-     * ```
-     * const [maxDecibels] = jdunpack<[number]>(buf, "i16")
-     * ```
-     */
-    MaxDecibels = 0x82,
 
     /**
      * Read-write ratio u0.16 (uint16_t). The sound level to trigger a loud event.
@@ -4153,7 +4044,7 @@ export enum SoundLevelEvent {
     Quiet = 0x2,
 }
 
-// Service: Sound player
+// Service Sound player constants
 export const SRV_SOUND_PLAYER = 0x1403d338
 export enum SoundPlayerReg {
     /**
@@ -4177,13 +4068,18 @@ export enum SoundPlayerCmd {
     Play = 0x80,
 
     /**
+     * No args. Cancel any sound playing.
+     */
+    Cancel = 0x81,
+
+    /**
      * Argument: sounds_port pipe (bytes). Returns the list of sounds available to play.
      *
      * ```
      * const [soundsPort] = jdunpack<[Uint8Array]>(buf, "b[12]")
      * ```
      */
-    ListSounds = 0x81,
+    ListSounds = 0x82,
 }
 
 
@@ -4195,7 +4091,66 @@ export enum SoundPlayerCmd {
  */
 
 
-// Service: Sound Spectrum
+// Service Sound Recorder with Playback constants
+export const SRV_SOUND_RECORDER_WITH_PLAYBACK = 0x1b72bf50
+
+export enum SoundRecorderWithPlaybackStatus { // uint8_t
+    Idle = 0x0,
+    Recording = 0x1,
+    Playing = 0x2,
+}
+
+export enum SoundRecorderWithPlaybackCmd {
+    /**
+     * No args. Replay recorded audio.
+     */
+    Play = 0x80,
+
+    /**
+     * Argument: duration ms uint16_t. Record audio for N milliseconds.
+     *
+     * ```
+     * const [duration] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    Record = 0x81,
+
+    /**
+     * No args. Cancel record, the `time` register will be updated by already cached data.
+     */
+    Cancel = 0x82,
+}
+
+export enum SoundRecorderWithPlaybackReg {
+    /**
+     * Read-only Status (uint8_t). Indicate the current status
+     *
+     * ```
+     * const [status] = jdunpack<[SoundRecorderWithPlaybackStatus]>(buf, "u8")
+     * ```
+     */
+    Status = 0x180,
+
+    /**
+     * Read-only ms uint16_t. Milliseconds of audio recorded.
+     *
+     * ```
+     * const [time] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    Time = 0x181,
+
+    /**
+     * Read-write ratio u0.8 (uint8_t). Playback volume control
+     *
+     * ```
+     * const [volume] = jdunpack<[number]>(buf, "u0.8")
+     * ```
+     */
+    Volume = 0x1,
+}
+
+// Service Sound Spectrum constants
 export const SRV_SOUND_SPECTRUM = 0x157abc1e
 export enum SoundSpectrumReg {
     /**
@@ -4245,7 +4200,7 @@ export enum SoundSpectrumReg {
 
     /**
      * Read-write ratio u0.8 (uint8_t). The averaging constant with the last analysis frame.
-     * If ``0`` is set, there is no averaging done, whereas a value of ``1`` means "overlap the previous and current buffer quite a lot while computing the value".
+     * If `0` is set, there is no averaging done, whereas a value of `1` means "overlap the previous and current buffer quite a lot while computing the value".
      *
      * ```
      * const [smoothingTimeConstant] = jdunpack<[number]>(buf, "u0.8")
@@ -4254,7 +4209,7 @@ export enum SoundSpectrumReg {
     SmoothingTimeConstant = 0x83,
 }
 
-// Service: Speech synthesis
+// Service Speech synthesis constants
 export const SRV_SPEECH_SYNTHESIS = 0x1204d995
 export enum SpeechSynthesisReg {
     /**
@@ -4319,7 +4274,7 @@ export enum SpeechSynthesisCmd {
     Cancel = 0x81,
 }
 
-// Service: Switch
+// Service Switch constants
 export const SRV_SWITCH = 0x1ad29402
 
 export enum SwitchVariant { // uint8_t
@@ -4353,11 +4308,11 @@ export enum SwitchReg {
     Variant = 0x107,
 
     /**
-     * Constant s u16.16 (uint32_t). Specifies the delay without activity to automatically turn off after turning on.
+     * Constant s u22.10 (uint32_t). Specifies the delay without activity to automatically turn off after turning on.
      * For example, some light switches in staircases have such a capability.
      *
      * ```
-     * const [autoOffDelay] = jdunpack<[number]>(buf, "u16.16")
+     * const [autoOffDelay] = jdunpack<[number]>(buf, "u22.10")
      * ```
      */
     AutoOffDelay = 0x180,
@@ -4365,17 +4320,17 @@ export enum SwitchReg {
 
 export enum SwitchEvent {
     /**
-     * Emitted when switch goes from ``off`` to ``on``.
+     * Emitted when switch goes from `off` to `on`.
      */
     On = 0x1,
 
     /**
-     * Emitted when switch goes from ``on`` to ``off``.
+     * Emitted when switch goes from `on` to `off`.
      */
     Off = 0x2,
 }
 
-// Service: TCP
+// Service TCP constants
 export const SRV_TCP = 0x1b43b70b
 
 export enum TcpTcpError { // int32_t
@@ -4439,77 +4394,16 @@ export enum TcpPipeCmd {
  */
 
 
-// Service: Thermocouple
-export const SRV_THERMOCOUPLE = 0x143ac061
+// Service Temperature constants
+export const SRV_TEMPERATURE = 0x1421bac7
 
-export enum ThermocoupleVariant { // uint8_t
-    TypeK = 0x1,
-    TypeJ = 0x2,
-    TypeT = 0x3,
-    TypeE = 0x4,
-    TypeN = 0x5,
-    TypeS = 0x6,
-    TypeR = 0x7,
-    TypeB = 0x8,
-}
-
-export enum ThermocoupleReg {
-    /**
-     * Read-only °C i22.10 (int32_t). The temperature.
-     *
-     * ```
-     * const [temperature] = jdunpack<[number]>(buf, "i22.10")
-     * ```
-     */
-    Temperature = 0x101,
-
-    /**
-     * Constant °C i22.10 (int32_t). Lowest temperature that can be reported.
-     *
-     * ```
-     * const [minTemperature] = jdunpack<[number]>(buf, "i22.10")
-     * ```
-     */
-    MinTemperature = 0x104,
-
-    /**
-     * Constant °C i22.10 (int32_t). Highest temperature that can be reported.
-     *
-     * ```
-     * const [maxTemperature] = jdunpack<[number]>(buf, "i22.10")
-     * ```
-     */
-    MaxTemperature = 0x105,
-
-    /**
-     * Read-only °C u22.10 (uint32_t). The real temperature is between `temperature - temperature_error` and `temperature + temperature_error`.
-     *
-     * ```
-     * const [temperatureError] = jdunpack<[number]>(buf, "u22.10")
-     * ```
-     */
-    TemperatureError = 0x106,
-
-    /**
-     * Constant Variant (uint8_t). Specifies the type of thermometer.
-     *
-     * ```
-     * const [variant] = jdunpack<[ThermocoupleVariant]>(buf, "u8")
-     * ```
-     */
-    Variant = 0x107,
-}
-
-// Service: Thermometer
-export const SRV_THERMOMETER = 0x1421bac7
-
-export enum ThermometerVariant { // uint8_t
+export enum TemperatureVariant { // uint8_t
     Outdoor = 0x1,
     Indoor = 0x2,
     Body = 0x3,
 }
 
-export enum ThermometerReg {
+export enum TemperatureReg {
     /**
      * Read-only °C i22.10 (int32_t). The temperature.
      *
@@ -4550,13 +4444,13 @@ export enum ThermometerReg {
      * Constant Variant (uint8_t). Specifies the type of thermometer.
      *
      * ```
-     * const [variant] = jdunpack<[ThermometerVariant]>(buf, "u8")
+     * const [variant] = jdunpack<[TemperatureVariant]>(buf, "u8")
      * ```
      */
     Variant = 0x107,
 }
 
-// Service: Traffic Light
+// Service Traffic Light constants
 export const SRV_TRAFFIC_LIGHT = 0x15c38d9b
 export enum TrafficLightReg {
     /**
@@ -4587,7 +4481,7 @@ export enum TrafficLightReg {
     Green = 0x82,
 }
 
-// Service: Total Volatile organic compound
+// Service Total Volatile organic compound constants
 export const SRV_TVOC = 0x12a5b597
 export enum TvocReg {
     /**
@@ -4618,27 +4512,18 @@ export enum TvocReg {
     MinTVOC = 0x104,
 
     /**
-     * Constant ppb u22.10 (uint32_t). Minimum measurable value
+     * Constant ppb u22.10 (uint32_t). Minimum measurable value.
      *
      * ```
      * const [maxTVOC] = jdunpack<[number]>(buf, "u22.10")
      * ```
      */
     MaxTVOC = 0x105,
-
-    /**
-     * Constant s uint32_t. Time required to achieve good sensor stability before measuring after long idle period.
-     *
-     * ```
-     * const [conditioningPeriod] = jdunpack<[number]>(buf, "u32")
-     * ```
-     */
-    ConditioningPeriod = 0x180,
 }
 
-// Service: Unique Brain
+// Service Unique Brain constants
 export const SRV_UNIQUE_BRAIN = 0x103c4ee5
-// Service: UV index
+// Service UV index constants
 export const SRV_UV_INDEX = 0x1f6e0d90
 
 export enum UvIndexVariant { // uint8_t
@@ -4675,7 +4560,7 @@ export enum UvIndexReg {
     Variant = 0x107,
 }
 
-// Service: Verified Telemetry
+// Service Verified Telemetry constants
 export const SRV_VERIFIED_TELEMETRY = 0x2194841f
 
 export enum VerifiedTelemetryStatus { // uint8_t
@@ -4757,32 +4642,21 @@ export enum VerifiedTelemetryEvent {
     FingerprintTemplateChange = 0x80,
 }
 
-// Service: Vibration motor
+// Service Vibration motor constants
 export const SRV_VIBRATION_MOTOR = 0x183fc4a2
-export enum VibrationMotorReg {
-    /**
-     * Read-write bool (uint8_t). Determines if the vibration motor responds to vibrate commands.
-     *
-     * ```
-     * const [enabled] = jdunpack<[number]>(buf, "u8")
-     * ```
-     */
-    Enabled = 0x1,
-}
-
 export enum VibrationMotorCmd {
     /**
      * Starts a sequence of vibration and pauses. To stop any existing vibration, send an empty payload.
      *
      * ```
      * const [rest] = jdunpack<[([number, number])[]]>(buf, "r: u8 u0.8")
-     * const [duration, speed] = rest[0]
+     * const [duration, intensity] = rest[0]
      * ```
      */
     Vibrate = 0x80,
 }
 
-// Service: Water level
+// Service Water level constants
 export const SRV_WATER_LEVEL = 0x147b62ed
 
 export enum WaterLevelVariant { // uint8_t
@@ -4802,6 +4676,15 @@ export enum WaterLevelReg {
     Level = 0x101,
 
     /**
+     * Read-only ratio u0.16 (uint16_t). The error rage on the current reading
+     *
+     * ```
+     * const [levelError] = jdunpack<[number]>(buf, "u0.16")
+     * ```
+     */
+    LevelError = 0x106,
+
+    /**
      * Constant Variant (uint8_t). The type of physical sensor.
      *
      * ```
@@ -4811,7 +4694,7 @@ export enum WaterLevelReg {
     Variant = 0x107,
 }
 
-// Service: Weight Scale
+// Service Weight Scale constants
 export const SRV_WEIGHT_SCALE = 0x1f4d5040
 
 export enum WeightScaleVariant { // uint8_t
@@ -4911,7 +4794,7 @@ export enum WeightScaleCmd {
     CalibrateGain = 0x81,
 }
 
-// Service: WIFI
+// Service WIFI constants
 export const SRV_WIFI = 0x18aae1fa
 
 export enum WifiAPFlags { // uint32_t
@@ -5099,7 +4982,7 @@ export enum WifiEvent {
     ConnectionFailed = 0x82,
 }
 
-// Service: Wind direction
+// Service Wind direction constants
 export const SRV_WIND_DIRECTION = 0x186be92b
 export enum WindDirectionReg {
     /**
@@ -5121,7 +5004,7 @@ export enum WindDirectionReg {
     WindDirectionError = 0x106,
 }
 
-// Service: Wind speed
+// Service Wind speed constants
 export const SRV_WIND_SPEED = 0x1b591bbf
 export enum WindSpeedReg {
     /**

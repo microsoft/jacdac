@@ -85,6 +85,8 @@ The value is unsigned and 16 bit long, and is expressed in milliseconds.
 The register code is `0x80` (code ranges are specified in `_system.md`).
 The text after the register definition ends up in `description` field in JSON.
 Neither the register name (nor description) is ever sent over wire (the same applies to commands and events).
+This kind of register is used for configuration and should not be reflecting the state of a sensor.
+If this register is modified by a command or the environment, the service should send a `get` report to notify clients.
 
 The next line specifies a read-only volatile register (`core_temperature`), giving the current temperature in degrees Kelvin. A 32 bit value is used to avoid overflows.
 Volatile registers's values can change due to changes to the physical environment, even if the register was not programmatically modified.
@@ -266,9 +268,7 @@ However, the names of these packets can be used in place of addresses.
 In fact, this is the only way to refer to the addresses in the system range:
 if the example used `@ 0x101` instead of `@ reading`, the jdspectool would generate an error.
 
-## Other features
-
-### Constants (define)
+## Constants (define)
 
 Numerical constants, hexadecimal or integral, can be defined using the following syntax in code snippets:
 
@@ -277,14 +277,14 @@ Numerical constants, hexadecimal or integral, can be defined using the following
     define timeout 0x42
 ```
 
-### High codes
+## High codes
 
 The jdspectool validates ranges of commands and register addresses.
 If you want to use high commands or registers (above 0x100/0x200; note that for vast majority
 of services this should not be needed),
 include `high: 1` after `identifier: ...` (the error message will tell you that).
 
-### Repeats
+## Repeats
 
 Sometimes a packet contains an array of structs.
 Often, this is preceded by a header.
@@ -314,7 +314,7 @@ A simple `u32` array can be expressed as:
 Set brightness level on side lamps. Number of lamps depends on the rocket.
 ```
 
-### Units
+## Units
 
 Any data field should be annoted with its unit, to allow better interpretation of the data.
 
@@ -359,7 +359,7 @@ Certain command cannot be issued over the bus and are only allowed through a Web
     }
 ```
 
-### Pipes
+## Pipes
 
 Pipes are an application-level mechanism for establishing reliable one- and two-way point-to-point data links.
 
@@ -452,7 +452,7 @@ The final zero-length packet, before closing the pipe, is optional.
 Both `segmented:` and `multi-segmented:` are currently only supported in `pipe report` and `pipe command`,
 with a single field of type `bytes`.
 
-### Mixins
+## Mixins
 
 Service mixins, services with class identifier starting with `0x2...`, allow to enhance existing services with new registers,
 typically vendor specific registers to configure the hardware device.

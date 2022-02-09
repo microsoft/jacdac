@@ -82,27 +82,6 @@
       "fields": []
     },
     {
-      "kind": "report",
-      "name": "event",
-      "identifier": 1,
-      "description": "Event from sensor or a broadcast service.",
-      "fields": [
-        {
-          "name": "event_id",
-          "type": "u32",
-          "storage": 4,
-          "isSimpleType": true
-        },
-        {
-          "name": "event_argument",
-          "type": "u32",
-          "storage": 4,
-          "isSimpleType": true
-        }
-      ],
-      "packFormat": "u32 u32"
-    },
-    {
       "kind": "command",
       "name": "calibrate",
       "identifier": 2,
@@ -117,6 +96,27 @@
       "description": "Request to calibrate a sensor. The report indicates the calibration is done.",
       "fields": [],
       "secondary": true
+    },
+    {
+      "kind": "report",
+      "name": "command_not_implemented",
+      "identifier": 3,
+      "description": "This report may be emitted by a server in response to a command (action or register operation)\nthat it does not understand.\nThe `service_command` and `packet_crc` fields are copied from the command packet that was unhandled.\nNote that it's possible to get an ACK, followed by such an error report.",
+      "fields": [
+        {
+          "name": "service_command",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "packet_crc",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u16 u16"
     },
     {
       "kind": "rw",

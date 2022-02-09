@@ -1,6 +1,6 @@
 {
   "name": "HID Mouse",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "hidmouse",
   "camelName": "hidMouse",
   "shortName": "hidMouse",
@@ -35,6 +35,29 @@
   },
   "constants": {},
   "packets": [
+    {
+      "kind": "report",
+      "name": "command_not_implemented",
+      "identifier": 3,
+      "description": "This report may be emitted by a server in response to a command (action or register operation)\nthat it does not understand.\nThe `service_command` and `packet_crc` fields are copied from the command packet that was unhandled.\nNote that it's possible to get an ACK, followed by such an error report.",
+      "fields": [
+        {
+          "name": "service_command",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "packet_crc",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "identifierName": "command_not_implemented",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
     {
       "kind": "const",
       "name": "instance_name",
@@ -104,7 +127,7 @@
       "kind": "command",
       "name": "set_button",
       "identifier": 128,
-      "description": "Sets the up/down state of one or more buttons.\nA ``Click`` is the same as ``Down`` followed by ``Up`` after 100ms.\nA ``DoubleClick`` is two clicks with ``150ms`` gap between them (that is, ``100ms`` first click, ``150ms`` gap, ``100ms`` second click).",
+      "description": "Sets the up/down state of one or more buttons.\nA `Click` is the same as `Down` followed by `Up` after 100ms.\nA `DoubleClick` is two clicks with `150ms` gap between them (that is, `100ms` first click, `150ms` gap, `100ms` second click).",
       "fields": [
         {
           "name": "buttons",
@@ -112,11 +135,12 @@
           "storage": 2
         },
         {
-          "name": "event",
+          "name": "ev",
           "type": "ButtonEvent",
           "storage": 1
         }
       ],
+      "unique": true,
       "packFormat": "u16 u8"
     },
     {
@@ -147,6 +171,7 @@
           "isSimpleType": true
         }
       ],
+      "unique": true,
       "packFormat": "i16 i16 u16"
     },
     {
@@ -170,6 +195,7 @@
           "isSimpleType": true
         }
       ],
+      "unique": true,
       "packFormat": "i16 u16"
     }
   ],

@@ -18,6 +18,7 @@
 #define JD_CONTROL_ANNOUNCE_FLAGS_SUPPORTS_BROADCAST 0x200
 #define JD_CONTROL_ANNOUNCE_FLAGS_SUPPORTS_FRAMES 0x400
 #define JD_CONTROL_ANNOUNCE_FLAGS_IS_CLIENT 0x800
+#define JD_CONTROL_ANNOUNCE_FLAGS_SUPPORTS_RELIABLE_COMMANDS 0x1000
 
 /**
  * No args. The `restart_counter` is computed from the `flags & RestartCounterSteady`, starts at `0x1` and increments by one until it reaches `0xf`, then it stays at `0xf`.
@@ -47,7 +48,7 @@ typedef struct jd_control_services_report {
 #define JD_CONTROL_CMD_NOOP 0x80
 
 /**
- * No args. Blink the status LED (262ms on, 262ms off, four times, with the blue LED) or otherwise draw user's attention to device with no status light. 
+ * No args. Blink the status LED (262ms on, 262ms off, four times, with the blue LED) or otherwise draw user's attention to device with no status light.
  * For devices with status light (this can be discovered in the announce flags), the client should
  * send the sequence of status light command to generate the identify animation.
  */
@@ -86,7 +87,7 @@ typedef struct jd_control_flood_ping_report {
  * (each frame is currently 100ms, so speed of `51` is about 1 second and `26` 0.5 second).
  * As a special case, if speed is `0` the transition is immediate.
  * If MCU is not capable of executing transitions, it can consider `speed` to be always `0`.
- * If a monochrome LEDs is fitted, the average value of ``red``, ``green``, ``blue`` is used.
+ * If a monochrome LEDs is fitted, the average value of `red`, `green`, `blue` is used.
  * If intensity of a monochrome LED cannot be controlled, any value larger than `0` should be considered
  * on, and `0` (for all three channels) should be considered off.
  */
@@ -103,6 +104,40 @@ typedef struct jd_control_set_status_light {
  * No args. Force client device into proxy mode.
  */
 #define JD_CONTROL_CMD_PROXY 0x85
+
+/**
+ * Argument: seed uint32_t. This opens a pipe to the device to provide an alternative, reliable transport of actions
+ * (and possibly other commands).
+ * The commands are wrapped as pipe data packets.
+ * Multiple invocations of this command with the same `seed` are dropped
+ * (and thus the command is not `unique`); otherwise `seed` carries no meaning
+ * and should be set to a random value by the client.
+ * Note that while the commands sends this way are delivered exactly once, the
+ * responses might get lost.
+ */
+#define JD_CONTROL_CMD_RELIABLE_COMMANDS 0x86
+
+/**
+ * Report: Argument: commands pipe (bytes)
+ */
+
+/**
+ * This opens a pipe to the device to provide an alternative, reliable transport of actions
+ * (and possibly other commands).
+ * The commands are wrapped as pipe data packets.
+ * Multiple invocations of this command with the same `seed` are dropped
+ * (and thus the command is not `unique`); otherwise `seed` carries no meaning
+ * and should be set to a random value by the client.
+ * Note that while the commands sends this way are delivered exactly once, the
+ * responses might get lost.
+ */
+typedef struct jd_control_wrapped_command {
+    uint8_t service_size;
+    uint8_t service_index;
+    uint16_t service_command;
+    uint8_t payload[0];
+} jd_control_wrapped_command_t;
+
 
 /**
  * Read-write μs uint32_t. When set to value other than `0`, it asks the device to reset after specified number of microseconds.

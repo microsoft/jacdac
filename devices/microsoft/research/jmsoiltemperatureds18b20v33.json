@@ -1,0 +1,15 @@
+{
+  "id": "microsoft-research-jmsoiltemperatureds18b20v33",
+  "name": "JM Soil Temperature DS18B20",
+  "company": "Microsoft Research",
+  "description": "JM Soil Temperature DS18B20 v3.3",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v3.3one/profile/soiltemp.c",
+  "services": [
+    337754823
+  ],
+  "productIdentifiers": [
+    1039295899
+  ],
+  "version": "3.3"
+}

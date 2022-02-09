@@ -17,7 +17,7 @@ typedef struct jd_magnetometer_forces {
 
 
 /**
- * Read-only nT int32_t. Error on the readings.
+ * Read-only nT int32_t. Absolute estimated error on the readings.
  */
 #define JD_MAGNETOMETER_REG_FORCES_ERROR JD_REG_READING_ERROR
 

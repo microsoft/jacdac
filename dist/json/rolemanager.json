@@ -8,12 +8,36 @@
     "_base"
   ],
   "notes": {
-    "short": "Assign roles to services on the Jacdac bus.\n\nInternally, the role manager stores a mapping from `(device_id, service_idx)` to role name.\nUsers refer to services by using role names (eg., they instantiate an accelerometer client with a given role name).\nEach client has a role, and roles are unique to clients\n(ie., one should not have both a gyro and accelerometer service with role `left_leg`).\n\nRole names can be hierarchical, using slash character as a separator.\nExamples: `left_leg/acc`, `left_leg/gyro`, `right_leg/acc`.\nIf two roles share the prefix before first slash, it should be used as a hint that the services\nshould be co-located on a single device\n(eg., here the `left_leg` \"location\" is expected to have both an accelerometer and a gyro service on a single device)."
+    "short": "Assign roles to services on the Jacdac bus.",
+    "long": "## Role allocation\n\nInternally, the role manager stores a mapping from role name to `(device_id, service_idx)`.\nUsers refer to services by using role names (eg., they instantiate an accelerometer client with a given role name).\nEach client has a role, and roles are unique to clients\n(ie., one should not have both a gyro and accelerometer service with role `left_leg`).\n\nThe simplest recommended automatic role assignment algorithm is as follows:\n\n```text\nroles.sort(strcmp() on UTF-8 representation of role name)\ndevices.sort(by device identifier (lexicographic on 8 byte string))\nfor every role\n  if role is not assigned\n    for every device\n      for every service on device\n        if serviceClass matches role\n          if service is not assigned to any role\n            assign service to role\n```\n\nDue to sorting, role names sharing a prefix will tend to be co-located on the single device.\nFor example, one can have roles `left_leg_acc`, `left_leg_gyro`, `right_leg_acc`, `right_leg_gyro`,\nand assuming combined gyro+accelerometer sensors, the pairs will tend to be allocated to a single leg,\nhowever the legs may be reversed.\nIn such a case the user can swap the physical sensors (note that left leg will always be assigned to\nsensor with smaller device identifier).\nAlternatively, the user can manually modify assignment using `set_role` command."
   },
   "classIdentifier": 508264038,
   "enums": {},
   "constants": {},
   "packets": [
+    {
+      "kind": "report",
+      "name": "command_not_implemented",
+      "identifier": 3,
+      "description": "This report may be emitted by a server in response to a command (action or register operation)\nthat it does not understand.\nThe `service_command` and `packet_crc` fields are copied from the command packet that was unhandled.\nNote that it's possible to get an ACK, followed by such an error report.",
+      "fields": [
+        {
+          "name": "service_command",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "packet_crc",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "identifierName": "command_not_implemented",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
     {
       "kind": "const",
       "name": "instance_name",
@@ -83,7 +107,7 @@
       "kind": "rw",
       "name": "auto_bind",
       "identifier": 128,
-      "description": "Normally, if some roles are unfilled, and there are idle services that can fulfill them,\nthe brain device will assign roles (bind) automatically.\nSuch automatic assignment happens every second or so, and is trying to be smart about \nco-locating roles that share \"host\" (part before first slash),\nas well as reasonably stable assignments.\nOnce user start assigning roles manually using this service, auto-binding should be disabled to avoid confusion.",
+      "description": "Normally, if some roles are unfilled, and there are idle services that can fulfill them,\nthe brain device will assign roles (bind) automatically.\nSuch automatic assignment happens every second or so, and is trying to be smart about\nco-locating roles that share \"host\" (part before first slash),\nas well as reasonably stable assignments.\nOnce user start assigning roles manually using this service, auto-binding should be disabled to avoid confusion.",
       "fields": [
         {
           "name": "_",
@@ -107,53 +131,6 @@
         }
       ],
       "packFormat": "u8"
-    },
-    {
-      "kind": "command",
-      "name": "get_role",
-      "identifier": 128,
-      "description": "Get the role corresponding to given device identifer. Returns empty string if unset.",
-      "fields": [
-        {
-          "name": "device_id",
-          "type": "devid",
-          "storage": 8
-        },
-        {
-          "name": "service_idx",
-          "type": "u8",
-          "storage": 1,
-          "isSimpleType": true
-        }
-      ],
-      "hasReport": true,
-      "packFormat": "b[8] u8"
-    },
-    {
-      "kind": "report",
-      "name": "get_role",
-      "identifier": 128,
-      "description": "Get the role corresponding to given device identifer. Returns empty string if unset.",
-      "fields": [
-        {
-          "name": "device_id",
-          "type": "devid",
-          "storage": 8
-        },
-        {
-          "name": "service_idx",
-          "type": "u8",
-          "storage": 1,
-          "isSimpleType": true
-        },
-        {
-          "name": "role",
-          "type": "string",
-          "storage": 0
-        }
-      ],
-      "secondary": true,
-      "packFormat": "b[8] u8 s"
     },
     {
       "kind": "command",
@@ -189,65 +166,24 @@
     },
     {
       "kind": "command",
-      "name": "list_stored_roles",
-      "identifier": 130,
-      "description": "Return all roles stored internally.",
-      "fields": [
-        {
-          "name": "stored_roles",
-          "type": "pipe",
-          "storage": 12
-        }
-      ],
-      "pipeType": "list_stored_roles",
-      "packFormat": "b[12]"
-    },
-    {
-      "kind": "pipe_report",
-      "name": "stored_roles",
-      "identifier": 0,
-      "description": "Return all roles stored internally.",
-      "fields": [
-        {
-          "name": "device_id",
-          "type": "devid",
-          "storage": 8
-        },
-        {
-          "name": "service_idx",
-          "type": "u8",
-          "storage": 1,
-          "isSimpleType": true
-        },
-        {
-          "name": "role",
-          "type": "string",
-          "storage": 0
-        }
-      ],
-      "pipeType": "list_stored_roles",
-      "packFormat": "b[8] u8 s"
-    },
-    {
-      "kind": "command",
-      "name": "list_required_roles",
+      "name": "list_roles",
       "identifier": 131,
-      "description": "List all roles required by the current program. `device_id` and `service_idx` are `0` if role is unbound.",
+      "description": "List all roles and bindings required by the current program. `device_id` and `service_idx` are `0` if role is unbound.",
       "fields": [
         {
-          "name": "required_roles",
+          "name": "roles",
           "type": "pipe",
           "storage": 12
         }
       ],
-      "pipeType": "list_required_roles",
+      "pipeType": "list_roles",
       "packFormat": "b[12]"
     },
     {
       "kind": "pipe_report",
-      "name": "required_roles",
+      "name": "roles",
       "identifier": 0,
-      "description": "List all roles required by the current program. `device_id` and `service_idx` are `0` if role is unbound.",
+      "description": "List all roles and bindings required by the current program. `device_id` and `service_idx` are `0` if role is unbound.",
       "fields": [
         {
           "name": "device_id",
@@ -272,7 +208,7 @@
           "storage": 0
         }
       ],
-      "pipeType": "list_required_roles",
+      "pipeType": "list_roles",
       "packFormat": "b[8] u32 u8 s"
     },
     {
@@ -284,5 +220,7 @@
       "identifierName": "change"
     }
   ],
-  "tags": []
+  "tags": [
+    "infrastructure"
+  ]
 }

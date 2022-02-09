@@ -1,6 +1,6 @@
 {
   "name": "Equivalent CO₂",
-  "status": "experimental",
+  "status": "rc",
   "shortId": "eco2",
   "camelName": "eCO2",
   "shortName": "eCO2",
@@ -24,6 +24,29 @@
   },
   "constants": {},
   "packets": [
+    {
+      "kind": "report",
+      "name": "command_not_implemented",
+      "identifier": 3,
+      "description": "This report may be emitted by a server in response to a command (action or register operation)\nthat it does not understand.\nThe `service_command` and `packet_crc` fields are copied from the command packet that was unhandled.\nNote that it's possible to get an ACK, followed by such an error report.",
+      "fields": [
+        {
+          "name": "service_command",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "packet_crc",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "identifierName": "command_not_implemented",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
     {
       "kind": "const",
       "name": "instance_name",
@@ -185,6 +208,7 @@
         }
       ],
       "volatile": true,
+      "optional": true,
       "identifierName": "reading_error",
       "packFormat": "u22.10"
     },
@@ -202,7 +226,6 @@
           "storage": 4
         }
       ],
-      "optional": true,
       "identifierName": "min_reading",
       "packFormat": "u22.10"
     },
@@ -220,26 +243,8 @@
           "storage": 4
         }
       ],
-      "optional": true,
       "identifierName": "max_reading",
       "packFormat": "u22.10"
-    },
-    {
-      "kind": "const",
-      "name": "conditioning_period",
-      "identifier": 384,
-      "description": "Time required to achieve good sensor stability before measuring after long idle period.",
-      "fields": [
-        {
-          "name": "_",
-          "unit": "s",
-          "type": "u32",
-          "storage": 4,
-          "isSimpleType": true
-        }
-      ],
-      "optional": true,
-      "packFormat": "u32"
     },
     {
       "kind": "const",

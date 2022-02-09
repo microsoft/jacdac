@@ -5,7 +5,7 @@
 #define JD_SERVICE_CLASS_DMX  0x11cf8c05
 
 /**
- * Read-write bool (uint8_t). Determines if the DMX bridge is active
+ * Read-write bool (uint8_t). Determines if the DMX bridge is active.
  */
 #define JD_DMX_REG_ENABLED JD_REG_INTENSITY
 

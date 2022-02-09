@@ -2,6 +2,7 @@
 
     identifier: 0x00000000
     tags: C, 8bit
+    status: stable
 
 Control service is always service index `0`.
 It handles actions common to all services on a device.
@@ -12,19 +13,20 @@ are not implemented in `8bit` version.
 ## Commands
 
     flags AnnounceFlags : u16 {
-        RestartCounterSteady =  0x000F,
-        RestartCounter1 =       0x0001,
-        RestartCounter2 =       0x0002,
-        RestartCounter4 =       0x0004,
-        RestartCounter8 =       0x0008,
-        StatusLightNone =       0x0000,
-        StatusLightMono =       0x0010,
-        StatusLightRgbNoFade =  0x0020,
-        StatusLightRgbFade =    0x0030,
-        SupportsACK =           0x0100,
-        SupportsBroadcast =     0x0200,
-        SupportsFrames =        0x0400,
-        IsClient =              0x0800,
+        RestartCounterSteady =        0x000F,
+        RestartCounter1 =             0x0001,
+        RestartCounter2 =             0x0002,
+        RestartCounter4 =             0x0004,
+        RestartCounter8 =             0x0008,
+        StatusLightNone =             0x0000,
+        StatusLightMono =             0x0010,
+        StatusLightRgbNoFade =        0x0020,
+        StatusLightRgbFade =          0x0030,
+        SupportsACK =                 0x0100,
+        SupportsBroadcast =           0x0200,
+        SupportsFrames =              0x0400,
+        IsClient =                    0x0800,
+        SupportsReliableCommands =    0x1000,
     }
     command services @ announce { }
     report {
@@ -49,7 +51,7 @@ Do nothing. Always ignored. Can be used to test ACKs.
 
     command identify? @ 0x81 { }
 
-Blink the status LED (262ms on, 262ms off, four times, with the blue LED) or otherwise draw user's attention to device with no status light. 
+Blink the status LED (262ms on, 262ms off, four times, with the blue LED) or otherwise draw user's attention to device with no status light.
 For devices with status light (this can be discovered in the announce flags), the client should
 send the sequence of status light command to generate the identify animation.
 
@@ -57,7 +59,7 @@ send the sequence of status light command to generate the identify animation.
 
 Reset device. ACK may or may not be sent.
 
-    command flood_ping? @ 0x83 {
+    unique command flood_ping? @ 0x83 {
         num_responses: u32
         start_counter: u32
         size: u8 B
@@ -83,13 +85,35 @@ The transition will complete in about `512 / speed` frames
 (each frame is currently 100ms, so speed of `51` is about 1 second and `26` 0.5 second).
 As a special case, if speed is `0` the transition is immediate.
 If MCU is not capable of executing transitions, it can consider `speed` to be always `0`.
-If a monochrome LEDs is fitted, the average value of ``red``, ``green``, ``blue`` is used.
+If a monochrome LEDs is fitted, the average value of `red`, `green`, `blue` is used.
 If intensity of a monochrome LED cannot be controlled, any value larger than `0` should be considered
 on, and `0` (for all three channels) should be considered off.
 
     command proxy? @ 0x85 {}
 
 Force client device into proxy mode.
+
+    command reliable_commands? @ 0x86 {
+        seed: u32
+    }
+    report {
+        commands: pipe
+    }
+    pipe command wrapped_command {
+        service_size: u8
+        service_index: u8
+        service_command: u16
+        payload: bytes
+    }
+
+This opens a pipe to the device to provide an alternative, reliable transport of actions
+(and possibly other commands).
+The commands are wrapped as pipe data packets.
+Multiple invocations of this command with the same `seed` are dropped
+(and thus the command is not `unique`); otherwise `seed` carries no meaning
+and should be set to a random value by the client.
+Note that while the commands sends this way are delivered exactly once, the
+responses might get lost.
 
 ## Registers
 

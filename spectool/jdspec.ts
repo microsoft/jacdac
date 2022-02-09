@@ -273,7 +273,7 @@ export function parseServiceSpecificationMarkdownToJSON(
         tags: [],
     }
 
-    let backticksType = ""
+    let backticksType: string = null
     let enumInfo: jdspec.EnumInfo = null
     let packetInfo: jdspec.PacketInfo = null
     let pipePacket: jdspec.PacketInfo = null
@@ -329,19 +329,22 @@ export function parseServiceSpecificationMarkdownToJSON(
     function processLine(line: string) {
         if (backticksType) {
             if (line.trim() == "```") {
+                const prev = backticksType
                 backticksType = null
-                if (backticksType == "default") return
+                if (prev == "default") return
             }
         } else {
             const m = /^```(.*)/.exec(line)
             if (m) {
                 backticksType = m[1] || "default"
+                // if we just switched into code section, don't interpret this line and don't add to any description
                 if (backticksType == "default") return
             }
         }
 
         const interpret =
-            backticksType == "default" || line.slice(0, 4) == "    "
+            backticksType == "default" ||
+            (backticksType == null && line.slice(0, 4) == "    ")
 
         if (!interpret) {
             const m = /^(#+)\s*(.*)/.exec(line)
@@ -407,6 +410,7 @@ export function parseServiceSpecificationMarkdownToJSON(
                 case "client":
                 case "volatile":
                 case "lowlevel":
+                case "unique":
                 case "restricted":
                     startPacket(words)
                     break
@@ -544,16 +548,32 @@ export function parseServiceSpecificationMarkdownToJSON(
         let client: boolean = undefined
         let lowLevel: boolean = undefined
         let restricted: boolean = undefined
-        if (words[0] === "restricted") {
-            restricted = true
-            words.shift()
-        } else if (words[0] === "client") {
-            client = true
-            words.shift()
-        } else if (words[0] === "lowlevel") {
-            lowLevel = true
-            words.shift()
+        let unique: boolean = undefined
+        let internal: boolean = undefined
+        let volatile: boolean = undefined
+
+        function processAttributes() {
+            while (words.length) {
+                if (words[0] === "restricted") {
+                    restricted = true
+                } else if (words[0] === "client") {
+                    client = true
+                } else if (words[0] === "lowlevel") {
+                    lowLevel = true
+                } else if (words[0] === "unique") {
+                    unique = true
+                } else if (words[0] === "internal") {
+                    internal = true
+                } else if (words[0] === "volatile") {
+                    volatile = true
+                } else {
+                    break
+                }
+                words.shift()
+            }
         }
+
+        processAttributes()
 
         const kindSt = words.shift()
         let kind: jdspec.PacketKind = "command"
@@ -573,22 +593,16 @@ export function parseServiceSpecificationMarkdownToJSON(
             kind = kindSt as any
         }
 
+        processAttributes()
+
         if (restricted && kind !== "command")
             error("restricted only applies to commands")
 
-        let internal: boolean = undefined
-        if (words[0] === "internal") {
-            internal = true
-            words.shift()
-        }
+        if (unique && kind !== "command")
+            error("unique only applies to commands")
 
-        let volatile: boolean = undefined
-        if (words[0] === "volatile") {
-            if (kind != "ro" && kind != "rw")
-                error("volatile can only modify ro or rw")
-            volatile = true
-            words.shift()
-        }
+        if (volatile && kind != "ro" && kind != "rw")
+            error("volatile can only modify ro or rw")
 
         let name = words.shift()
         const isReport = kind == "report"
@@ -606,6 +620,7 @@ export function parseServiceSpecificationMarkdownToJSON(
             internal,
             client,
             lowLevel,
+            unique,
             volatile,
             restricted,
         }
@@ -1089,8 +1104,9 @@ export function parseServiceSpecificationMarkdownToJSON(
                 break
             case "status":
                 if (
-                    ["stable", "experimental", "deprecated"].indexOf(words[2]) >
-                    -1
+                    ["stable", "experimental", "deprecated", "rc"].indexOf(
+                        words[2]
+                    ) > -1
                 )
                     info.status = <any>words[2]
                 else error("unknown status")
@@ -1262,10 +1278,6 @@ function values<T>(o: jdspec.SMap<T>): T[] {
     return r
 }
 
-function fail(msg: string) {
-    throw new Error(msg)
-}
-
 function toUpper(name: string) {
     return name
         ?.replace(/([a-z])([A-Z])/g, (x, a, b) => a + "_" + b)
@@ -1342,11 +1354,14 @@ function prettyUnit(u: jdspec.Unit): string {
     }
 }
 
-function toPython(info: jdspec.ServiceSpec) {
-    const r = [
-        "# Autogenerated file for " + info.name,
-        `# Add missing from ... import const`,
-    ]
+function toPython(info: jdspec.ServiceSpec, language: "py" | "cpy" | "mpy") {
+    const r = [`# Autogenerated constants for ${info.name} service`]
+    if (Object.keys(info.enums).length) r.push("from enum import IntEnum")
+    const docsLength = r.length
+    const desktop = language === "py"
+    const packFormats: Record<string, string> = {}
+
+    if (desktop) r.push("from jacdac.constants import *")
 
     let pref = "JD_" + toUpper(info.shortName) + "_"
 
@@ -1354,23 +1369,35 @@ function toPython(info: jdspec.ServiceSpec) {
 
     if (info.shortId[0] != "_")
         r.push(
-            `_JD_SERVICE_CLASS_${toUpper(info.shortName)} = const(${toHex(
+            `JD_SERVICE_CLASS_${toUpper(info.shortName)} = const(${toHex(
                 info.classIdentifier
             )})`
         )
     for (const cst in info.constants) {
         const { value, hex } = info.constants[cst]
         r.push(
-            `_JD_${toUpper(cst)} = const(${
+            `JD_${toUpper(cst)} = const(${
                 hex ? value.toString() : toHex(value)
             })\n`
         )
     }
-    for (const en of values(info.enums).filter(en => !en.derived)) {
-        const enPref = pref + toUpper(en.name)
-        for (const k of Object.keys(en.members))
-            r.push(`_${enPref}_${toUpper(k)} = const(${toHex(en.members[k])})`)
+
+    if (Object.keys(info.enums).length) {
+        for (const en of values(info.enums).filter(en => !en.derived)) {
+            r.push("")
+            r.push("")
+            r.push(
+                `class ${upperCamel(info.shortName)}${upperCamel(
+                    en.name
+                )}(IntEnum):`
+            )
+            for (const k of Object.keys(en.members))
+                r.push(`    ${toUpper(k)} = const(${toHex(en.members[k])})`)
+        }
+        r.push("")
+        r.push("")
     }
+    let useIdentifiers = false
     for (const pkt of info.packets) {
         if (pkt.derived) continue
         if (
@@ -1390,11 +1417,28 @@ function toPython(info: jdspec.ServiceSpec) {
             if (pkt.identifierName) {
                 // TODO find identifier and inline it
                 val = "JD_" + inner + "_" + toUpper(pkt.identifierName)
+                useIdentifiers = true
             }
             const name = pref + inner + "_" + toUpper(pkt.name)
-            if (name != val) r.push(`_${name} = const(${val})`)
+            if (name != val) {
+                r.push(`${name} = const(${val})`)
+                if (pkt.packFormat) packFormats[name] = pkt.packFormat
+            }
         }
     }
+
+    if (desktop && useIdentifiers)
+        r.splice(docsLength + 1, 0, "from jacdac.system.constants import *")
+
+    r.push(`${pref}PACK_FORMATS = {`)
+    r.push(
+        Object.keys(packFormats)
+            .map(k => `    ${k}: "${packFormats[k]}"`)
+            .join(",\n")
+    )
+    r.push(`}`)
+
+    r.push("")
     return r.join("\n")
 }
 
@@ -1436,7 +1480,7 @@ function toH(info: jdspec.ServiceSpec) {
         if (pkt.derived) continue
 
         const cmt = addComment(pkt)
-        r += wrapComment(cmt.comment)
+        r += wrapComment("h", cmt.comment)
 
         if (
             !pkt.secondary &&
@@ -1499,7 +1543,10 @@ export function camelize(name: string) {
     if (!name) return name
     return (
         name[0].toLowerCase() +
-        name.slice(1).replace(/_([a-z0-9])/gi, (_, l) => l.toUpperCase())
+        name
+            .slice(1)
+            .replace(/\s+/g, "_")
+            .replace(/_([a-z0-9])/gi, (_, l) => l.toUpperCase())
     )
 }
 
@@ -1515,7 +1562,7 @@ function upperCamel(name: string) {
 }
 
 export function snakify(name: string) {
-    return name?.replace(/([a-z])([A-Z])/g, (_, a, b) => a + "_" + b)
+    return name?.replace(/([a-z])([A-Z])/g, (_, a, b) => a + "_" + b).replace(/\s+/g, "_")
 }
 
 export function dashify(name: string) {
@@ -1577,12 +1624,19 @@ function addComment(pkt: jdspec.PacketInfo) {
     }
 }
 
-function wrapComment(comment: string) {
-    return (
-        "\n/**\n * " +
-        comment.replace(/\n+$/, "").replace(/\n/g, "\n * ") +
-        "\n */\n"
-    )
+function wrapComment(lang: string, comment: string) {
+    if (lang === "cs")
+        return (
+            "\n/// <summary>\n/// " +
+            comment.replace(/\n+$/, "").replace(/\n/g, "\n/// ") +
+            "\n/// </summary>\n"
+        )
+    else
+        return (
+            "\n/**\n * " +
+            comment.replace(/\n+$/, "").replace(/\n/g, "\n * ") +
+            "\n */\n"
+        )
 }
 
 function wrapSnippet(code: string) {
@@ -1604,27 +1658,41 @@ function packFormatForField(
     const sz = memberSize(fld)
     const szSuff = sz ? `[${sz}]` : ``
     let tsType = "number"
+    let pyType = "float"
+    let csType = "float"
     let fmt = ""
     if (/^[fiu]\d+(\.\d+)?$/.test(fld.type) && 1 <= sz && sz <= 8) {
         fmt = fld.type
+        if (/^[iu]\d+$/.test(fld.type)) {
+            pyType = "int"
+            csType = "int"
+        }
+        if (/^[u]\d+$/.test(fld.type)) {
+            csType = "uint"
+        }
     } else if (/^u8\[\d*\]$/.exec(fld.type)) {
         fmt = "b" + szSuff
     } else if (info.enums[fld.type]) {
         fmt = canonicalType(info.enums[fld.type].storage)
-        tsType = upperCamel(info.camelName) + upperCamel(fld.type)
+        pyType =
+            tsType =
+            csType =
+                upperCamel(info.camelName) + upperCamel(fld.type)
         if (isStatic) tsType = TYPESCRIPT_STATIC_NAMESPACE + "." + tsType
     } else {
         switch (fld.type) {
             case "string":
                 fmt = "s" + szSuff
-                tsType = "string"
+                csType = tsType = "string"
+                pyType = "str"
                 break
             case "bytes":
                 fmt = "b" + szSuff
                 break
             case "string0":
                 fmt = "z"
-                tsType = "string"
+                csType = tsType = "string"
+                pyType = "str"
                 break
             case "devid":
                 fmt = "b[8]"
@@ -1638,15 +1706,22 @@ function packFormatForField(
             case "bool":
                 // TODO native bool support
                 fmt = "u8"
-                if (useBooleans) tsType = "boolean"
+                if (useBooleans) {
+                    tsType = "boolean"
+                    csType = pyType = "bool"
+                }
                 break
             default:
                 return null
         }
     }
 
-    if (tsType == "number" && fmt && fmt[0] == "b") tsType = "Buffer"
-    return { fmt, tsType }
+    if (tsType == "number" && fmt && fmt[0] == "b") {
+        tsType = "Buffer"
+        pyType = "bytes"
+        csType = "byte[]"
+    }
+    return { fmt, tsType, pyType, csType }
 }
 
 /**
@@ -1689,6 +1764,8 @@ export function packInfo(
     const { kind } = pkt
     const vars: string[] = []
     const vartp: string[] = []
+    const vartppy: string[] = []
+    const vartpcs: string[] = []
     let fmt = ""
     let repeats: string[]
     let reptp: string[]
@@ -1717,14 +1794,23 @@ export function packInfo(
         } else {
             fmt += f0.fmt + isArray + " "
             let tp = f0.tsType
-            if (tp == "Buffer" && !isStatic) tp = "Uint8Array"
+            let tpy = f0.pyType
+            let tcs = f0.csType
+            if (tp == "Buffer" && !isStatic) {
+                tp = "Uint8Array"
+                tpy = "bytes"
+                tcs = "byte[]"
+            }
             tp += isArray
+            if (isArray) tpy = "[" + tpy + "]"
             if (repeats) {
                 repeats.push(varname)
                 reptp.push(tp)
             } else {
                 vars.push(varname)
                 vartp.push(tp)
+                vartppy.push(tpy)
+                vartpcs.push(tcs)
             }
         }
     }
@@ -1757,6 +1843,14 @@ export function packInfo(
                     ", "
                 )}])\n`
             }
+        } else if (kind === "event") {
+            buffers += `const ${pktName}Event = service.event(${capitalize(
+                info.camelName
+            )}Event.${capitalize(pktName)})\n`
+            buffers += `${pktName}Event.on("change", () => {
+    // if you need to read the event values
+    // const values = ${pktName}Event.unpackedValue
+})\n`
         }
     } else {
         buffers += `const [${vars.join(", ")}] = jdunpack<[${vartp.join(
@@ -1771,6 +1865,8 @@ export function packInfo(
         buffers,
         names: vars,
         types: vartp,
+        pyTypes: vartppy,
+        csTypes: vartpcs,
     }
 }
 
@@ -1778,9 +1874,9 @@ function memberSize(fld: jdspec.PacketMember) {
     return Math.abs(fld.storage)
 }
 
-function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
+function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "cs") {
     const sts = language === "sts"
-    const csharp = language === "c#"
+    const csharp = language === "cs"
     const useNamespace = sts || csharp
 
     const indent = useNamespace ? "    " : ""
@@ -1802,15 +1898,12 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
           } {\n`
         : ""
 
-    r += indent + "// Service: " + info.name + "\n"
     if (csharp) {
-        r += `${indent}public static class ${capitalize(
-            info.camelName
-        )}Constants\n${indent}{\n`
-    }
+        r += `${indent}public static partial class ServiceClasses\n${indent}{\n`
+    } else r += indent + "// Service " + info.name + " constants\n"
     if (info.shortId[0] != "_") {
         const name = csharp
-            ? "ServiceClass"
+            ? capitalize(info.camelName)
             : `SRV_${snakify(info.camelName).toLocaleUpperCase()}`
         r +=
             indent +
@@ -1836,7 +1929,9 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
 
     for (const en of values(info.enums)) {
         const enPref = pref + upperCamel(en.name)
-        r += `\n${enumkw} ${enPref}${
+        r += `\n${
+            csharp && en.isFlags ? "    [System.Flags]\n" : ""
+        }${enumkw} ${enPref}${
             csharp ? `: ${cSharpStorage(en.storage)}` : ""
         } { // ${cStorage(en.storage)}\n`
         for (const k of Object.keys(en.members)) {
@@ -1874,6 +1969,7 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
         if (pkt.secondary || inner == "info") {
             if (pack)
                 text = wrapComment(
+                    language,
                     `${pkt.kind} ${upperCamel(pkt.name)}${
                         pkt.client ? "" : wrapSnippet(pack)
                     }`
@@ -1885,6 +1981,7 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
             }
             text = `${
                 wrapComment(
+                    language,
                     cmt.comment + (pkt.client ? "" : wrapSnippet(pack))
                 ) + meta
             }${upperCamel(pkt.name)} = ${val},\n`
@@ -1894,6 +1991,17 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
 
         // don't line const strings in makecode,
         // they don't get dropped efficiently
+        if (csharp && pkt.packFormat) {
+            const packName = inner + "Pack"
+            tsEnums[packName] =
+                (tsEnums[packName] || "") +
+                `${wrapComment(
+                    language,
+                    `Pack format for '${pkt.name}' register data.`
+                )}public const string ${upperCamel(pkt.name)}${
+                    pkt.secondary ? "Report" : ""
+                } = "${pkt.packFormat}";\n`
+        }
     }
 
     for (const k of Object.keys(tsEnums)) {
@@ -1903,11 +2011,86 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "c#") {
                 .replace(/^\n+/, "")
                 .replace(/\n$/, "")
                 .replace(/\n/g, "\n    " + indent)
-            r += `${enumkw} ${pref}${k} {\n    ${indent}${inner}\n${indent}}\n\n`
+            if (inner.indexOf("public const") > -1)
+                r += `    public static class ${pref}${k} {\n    ${indent}${inner}\n${indent}}\n\n`
+            else
+                r += `${enumkw} ${pref}${k} ${
+                    csharp ? `: ushort ` : ""
+                }{\n    ${indent}${inner}\n${indent}}\n\n`
         }
     }
 
     if (useNamespace) r += "}\n"
+
+    return r.replace(/ *$/gm, "")
+}
+
+const jsKeywords: Record<string, number> = {
+    switch: 1,
+}
+
+function jsQuote(n: string) {
+    if (jsKeywords[n]) n += "_"
+    return n
+}
+
+function toJacscript(info: jdspec.ServiceSpec) {
+    let r = `// Service: ${info.name}\n`
+    const clname = upperCamel(info.camelName) + "Role"
+    const baseclass =
+        info.extends.indexOf("_sensor") >= 0 ? "SensorRole" : "Role"
+    r += `declare class ${clname} extends ${baseclass} {\n`
+
+    for (const pkt of info.packets) {
+        if (pkt.derived) continue // ???
+        const cmt = addComment(pkt)
+
+        let tp = ""
+
+        // if there's a startRepeats before last field, we don't put ... before it
+        const earlyRepeats = pkt.fields
+            .slice(0, pkt.fields.length - 1)
+            .some(f => f.startRepeats)
+
+        const fields = pkt.fields
+            .map(f => {
+                const tp =
+                    f.type == "string" || f.type == "string0"
+                        ? "string"
+                        : "number"
+                if (f.startRepeats && !earlyRepeats)
+                    return `...${f.name}: ${tp}[]`
+                else return `${f.name}: ${tp}`
+            })
+            .join(", ")
+
+        if (isRegister(pkt.kind)) {
+            if (cmt.needsStruct) {
+                tp = `JDRegisterArray`
+                if (pkt.fields.length > 1) tp += ` & { ${fields} }`
+            } else {
+                if (pkt.fields.length == 1 && pkt.fields[0].type == "string")
+                    tp = "JDRegisterString"
+                else tp = "JDRegisterNum"
+            }
+        } else if (pkt.kind == "event") {
+            tp = "JDEvent"
+        } else if (pkt.kind == "command") {
+            r += `    ${camelize(pkt.name)}(${fields}): void\n`
+        }
+
+        if (tp) r += `    ${camelize(pkt.name)}: ${tp}\n`
+    }
+
+    r += "}\n"
+
+    if (info.shortId[0] != "_") {
+        r += "declare namespace roles {\n"
+        r += `    function ${jsQuote(info.camelName)}(): ${clname}\n`
+        r += "}\n\n"
+    } else {
+        r += "\n"
+    }
 
     return r.replace(/ *$/gm, "")
 }
@@ -1929,6 +2112,15 @@ export function generateDeviceSpecificationId(dev: jdspec.DeviceSpec) {
 }
 
 export function normalizeDeviceSpecification(dev: jdspec.DeviceSpec) {
+    const productIdentifiers = Array.from(
+        new Set<number>([
+            ...(dev.productIdentifiers || []),
+            ...(dev.firmwares
+                ?.map(fw => fw.productIdentifier)
+                .filter(pi => !!pi) || []),
+        ]).values()
+    )
+
     // reorder fields
     const clone: jdspec.DeviceSpec = {
         id: generateDeviceSpecificationId(dev),
@@ -1936,16 +2128,23 @@ export function normalizeDeviceSpecification(dev: jdspec.DeviceSpec) {
         company: dev.company,
         description: dev.description,
         repo: dev.repo,
+        firmwareSource: dev.firmwareSource,
+        hardwareDesign: dev.hardwareDesign,
         link: dev.link,
         services: dev.services,
-        productIdentifiers: dev.productIdentifiers,
+        productIdentifiers: productIdentifiers,
         transport: dev.transport,
         tags: dev.tags,
         firmwares: dev.firmwares,
         version: dev.version ? dev.version.replace(/^v/, "") : undefined,
         designIdentifier: dev.designIdentifier,
+        bootloader: dev.bootloader,
+        status: dev.status,
     }
-    if (dev.status !== undefined) clone.status = dev.status
+    // delete empty files
+    const anyClone: any = clone
+    for (const key of Object.keys(anyClone))
+        if (anyClone[key] === undefined) delete anyClone[key]
     return clone
 }
 
@@ -1972,8 +2171,9 @@ export function converters(): jdspec.SMap<(s: jdspec.ServiceSpec) => string> {
         c: toH,
         ts: j => toTypescript(j, "ts"),
         sts: j => toTypescript(j, "sts"),
-        cs: j => toTypescript(j, "c#"),
-        py: j => toPython(j),
+        cs: j => toTypescript(j, "cs"),
+        py: j => toPython(j, "py"),
+        jacs: toJacscript,
         /*
         "cpp": toHPP,
         */

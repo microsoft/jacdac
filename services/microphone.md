@@ -2,6 +2,7 @@
 
     identifier: 0x113dac86
     group: sound
+    status: experimental
 
 A single-channel microphone.
 

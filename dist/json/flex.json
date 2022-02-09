@@ -1,6 +1,6 @@
 {
   "name": "Flex",
-  "status": "experimental",
+  "status": "rc",
   "shortId": "flex",
   "camelName": "flex",
   "shortName": "flex",
@@ -12,18 +12,32 @@
     "short": "A bending or deflection sensor."
   },
   "classIdentifier": 524797638,
-  "enums": {
-    "Variant": {
-      "name": "Variant",
-      "storage": 1,
-      "members": {
-        "Linear22Inch": 1,
-        "Linear45Inch": 2
-      }
-    }
-  },
+  "enums": {},
   "constants": {},
   "packets": [
+    {
+      "kind": "report",
+      "name": "command_not_implemented",
+      "identifier": 3,
+      "description": "This report may be emitted by a server in response to a command (action or register operation)\nthat it does not understand.\nThe `service_command` and `packet_crc` fields are copied from the command packet that was unhandled.\nNote that it's possible to get an ACK, followed by such an error report.",
+      "fields": [
+        {
+          "name": "service_command",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "packet_crc",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "identifierName": "command_not_implemented",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
     {
       "kind": "const",
       "name": "instance_name",
@@ -153,40 +167,41 @@
       "kind": "ro",
       "name": "bending",
       "identifier": 257,
-      "description": "The relative position of the slider.",
+      "description": "A measure of the bending.",
       "fields": [
         {
           "name": "_",
           "unit": "/",
-          "shift": 16,
-          "type": "u0.16",
-          "storage": 2
+          "shift": 15,
+          "type": "i1.15",
+          "storage": -2
         }
       ],
       "volatile": true,
       "identifierName": "reading",
-      "packFormat": "u0.16"
+      "packFormat": "i1.15"
     },
     {
       "kind": "const",
-      "name": "variant",
-      "identifier": 263,
-      "description": "Specifies the physical layout of the flex sensor.",
+      "name": "length",
+      "identifier": 384,
+      "description": "Length of the flex sensor",
       "fields": [
         {
           "name": "_",
-          "type": "Variant",
-          "storage": 1
+          "unit": "mm",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
         }
       ],
       "optional": true,
-      "identifierName": "variant",
-      "packFormat": "u8"
+      "packFormat": "u16"
     }
   ],
   "tags": [
     "C",
     "8bit"
   ],
-  "group": "Slider"
+  "group": "Sensor"
 }

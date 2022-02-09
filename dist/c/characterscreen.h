@@ -19,7 +19,7 @@
 #define JD_CHARACTER_SCREEN_REG_MESSAGE JD_REG_VALUE
 
 /**
- * Read-write ratio u0.8 (uint8_t). Brightness of the screen. `0` means off.
+ * Read-write ratio u0.16 (uint16_t). Brightness of the screen. `0` means off.
  */
 #define JD_CHARACTER_SCREEN_REG_BRIGHTNESS JD_REG_INTENSITY
 
@@ -42,20 +42,5 @@
  * Constant # uint8_t. Gets the number of columns.
  */
 #define JD_CHARACTER_SCREEN_REG_COLUMNS 0x181
-
-/**
- * Overrides the content of a single line at a 0-based index.
- */
-#define JD_CHARACTER_SCREEN_CMD_SET_LINE 0x80
-typedef struct jd_character_screen_set_line {
-    uint16_t index;
-    char message[0];  // string
-} jd_character_screen_set_line_t;
-
-
-/**
- * No args. Clears all text from the display.
- */
-#define JD_CHARACTER_SCREEN_CMD_CLEAR 0x81
 
 #endif

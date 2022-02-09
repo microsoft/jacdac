@@ -2,6 +2,7 @@
 
     identifier: 0x12fc9103
     tags: C
+    status: rc
 
 Servo is a small motor with arm that can be pointing at a specific direction.
 

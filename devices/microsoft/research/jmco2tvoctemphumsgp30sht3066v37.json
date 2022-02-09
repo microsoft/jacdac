@@ -1,0 +1,19 @@
+{
+  "id": "microsoft-research-jmco2tvoctemphumsgp30sht3066v37",
+  "name": "JM CO2/TVOC/Temp/Hum SGP30+SHT30",
+  "company": "Microsoft Research",
+  "description": "JM CO2/TVOC/Temp/Hum SGP30+SHT30 66 v3.7",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v3.6/profile/co2.c",
+  "services": [
+    379362758,
+    312849815,
+    337754823,
+    382210232
+  ],
+  "productIdentifiers": [
+    912293656
+  ],
+  "version": "3.7",
+  "designIdentifier": "66"
+}

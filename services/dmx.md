@@ -2,6 +2,7 @@
 
     identifier: 0x11cf8c05
     camel: dmx
+    status: experimental
 
 A service that can send DMX512-A packets with limited size. This service is designed to allow tinkering with a few DMX devices, but only allows 235 channels. More about DMX at https://en.wikipedia.org/wiki/DMX512.
 
@@ -9,10 +10,11 @@ A service that can send DMX512-A packets with limited size. This service is desi
 
     rw enabled: bool @ intensity
 
-Determines if the DMX bridge is active
+Determines if the DMX bridge is active.
+
 ## Commands
 
-    command send @ 0x80 {
+    unique command send @ 0x80 {
         channels: bytes
     }
 

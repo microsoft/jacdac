@@ -24,7 +24,19 @@ declare var require: any
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let fs: any
 
-const makecodBuiltins = ["bootloader", "logger", "control"]
+const serviceBuiltins = [
+    "bootloader",
+    "logger",
+    "control",
+    "infrastructure",
+    "proxy",
+    "uniquebrain",
+    "rolemanager",
+    "bridge",
+    "dashboard",
+    "jacscriptcloud",
+    "jacscriptcondition"
+]
 
 function values<T>(o: jdspec.SMap<T>): T[] {
     const r: T[] = []
@@ -71,6 +83,15 @@ function tsify(name: string) {
 const Reading = 0x101
 const Intensity = 0x1
 const Value = 0x2
+function isEnabledReg(reg: jdspec.PacketInfo) {
+    return (
+        reg.identifier === Intensity &&
+        reg.name === "enabled" &&
+        reg.fields.length === 1 &&
+        reg.fields[0].type === "bool"
+    )
+}
+
 function toMakeCodeClient(spec: jdspec.ServiceSpec) {
     const { shortId, name, camelName, packets } = spec
 
@@ -79,8 +100,9 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
     let baseType = "Client"
     let isSimpleSensorClient = false
     const ctorArgs = [`${nsc}.SRV_${snakify(camelName).toUpperCase()}`, `role`]
-    const reading = registers.find(reg => reg.identifier === Reading)
     const regs = registers.filter(r => !!r).filter(r => !r.restricted)
+    const reading = regs.find(reg => reg.identifier === Reading)
+    const enabledReg = regs.find(isEnabledReg)
     const events = packets.filter(pkt => !pkt.derived && pkt.kind === "event")
     // TODO: pipes support
     const commands = packets.filter(
@@ -146,13 +168,10 @@ ${regs
             useBooleans: true,
         })
         const { fields, client } = reg
-        const isReading = reg.identifier === Reading
-        const fieldName = `this._${isReading ? "reading" : camelize(reg.name)}`
-        const enabled =
-            reg.identifier === Intensity &&
-            reg.name === "enabled" &&
-            reg.fields.length === 1 &&
-            reg.fields[0].type === "bool"
+        const reading = reg.identifier === Reading
+        const value = reg.identifier === Value
+        const enabled = isEnabledReg(reg)
+        const fieldName = `this._${reading ? "reading" : camelize(reg.name)}`
         const hasBlocks =
             reg.identifier == Reading ||
             reg.identifier == Intensity ||
@@ -178,12 +197,12 @@ ${toMetaComments(
                         ? `
             // TODO: implement client register
             throw "client register not implement";`
-                        : isReading && isSimpleSensorClient
+                        : reading && isSimpleSensorClient
                         ? `
             return ${valueScaler(`this.reading()`)};
         `
                         : `${
-                              isReading
+                              reading
                                   ? `
             this.setStreaming(true);`
                                   : `
@@ -214,7 +233,12 @@ ${toMetaComments(
     defl !== undefined && `value.defl=${defl}`
 )}
         set${capitalize(camelize(name))}(value: ${types[fieldi]}) {
-            this.start();
+            this.start();${
+                enabledReg && value
+                    ? `
+            this.enabled = true;`
+                    : ""
+            }
             const values = ${fieldName}.values as any[];
             values[${fieldi}] = ${valueUnscaler("value")};
             ${fieldName}.values = values as [${types}];
@@ -335,6 +359,412 @@ ${toMetaComments(
 }`
 }
 
+function toPythonClient(
+    spec: jdspec.ServiceSpec,
+    options: { baseClient?: boolean } = {}
+) {
+    const { camelName, packets } = spec
+    const { baseClient } = options
+
+    const registers = packetsToRegisters(packets)
+    const regs = registers
+        .filter(r => !!r)
+        .filter(r => !r.restricted && !r.client)
+        .filter(r => !r.fields.some(f => f.startRepeats))
+    const reading = regs.find(reg => reg.identifier === Reading)
+    const { pyTypes: readingTypes } = reading
+        ? packInfo(spec, reading, {
+              isStatic: true,
+              useBooleans: true,
+          })
+        : { pyTypes: undefined }
+    const readingType = readingTypes
+        ? readingTypes.length == 1
+            ? readingTypes[0]
+            : `Tuple[${readingTypes.join(", ")}]`
+        : undefined
+    const missingReadingField = reading
+        ? `missing_${snakify(reading.name)}_value`
+        : undefined
+    const baseType = reading ? "SensorClient" : "Client"
+    const ctorArgs = [
+        `bus`,
+        `JD_SERVICE_CLASS_${snakify(camelName).toUpperCase()}`,
+        `JD_${snakify(camelName).toUpperCase()}_PACK_FORMATS`,
+        `role`,
+        reading?.preferredInterval &&
+            `preferred_interval = ${reading.preferredInterval}`,
+    ].filter(a => !!a)
+    const enabledReg = regs.find(isEnabledReg)
+    const events = packets.filter(pkt => !pkt.derived && pkt.kind === "event")
+    // TODO: pipes support
+    const commands = packets.filter(
+        pkt =>
+            !pkt.derived &&
+            !pkt.restricted &&
+            pkt.kind === "command" &&
+            pkt.fields.every(f => f.type !== "pipe") &&
+            !pkt.fields.some(f => f.startRepeats)
+    )
+
+    const className = `${capitalize(camelName)}Client${
+        baseClient ? "Base" : ""
+    }`
+    const tuple = regs.some(
+        reg => reg.fields.length > 1 || reg.fields[0].startRepeats
+    )
+
+    return `# Autogenerated file. Do not edit.
+from jacdac.bus import Bus, ${reading ? "Sensor" : ""}Client${
+        events.length > 0 ? `, EventHandlerFn, UnsubscribeFn` : ``
+    }
+from .constants import *
+${regs.length > 0 ? `from typing import Optional${tuple ? ", Tuple" : ""}` : ``}
+
+
+class ${className}(${baseType}):
+    """
+    ${(spec.notes["short"] || "").split("\n").join("\n     * ")}
+    Implements a client for the \`${
+        spec.name
+    } <https://microsoft.github.io/jacdac-docs/services/${
+        spec.shortId
+    }>\`_ service.
+
+    """
+
+    def __init__(self, bus: Bus, role: str${
+        reading ? `, *, ${missingReadingField}: ${readingType} = None` : ""
+    }) -> None:
+        super().__init__(${ctorArgs.join(", ")})
+${
+    missingReadingField
+        ? `        self.${missingReadingField} = ${missingReadingField}`
+        : ""
+}
+${regs
+    .map(reg => {
+        const { kind, name: rname } = reg
+        const { pyTypes: types } = packInfo(spec, reg, {
+            isStatic: true,
+            useBooleans: true,
+        })
+        const { fields, client } = reg
+        const value = reg.identifier === Value
+        const creading = reg === reading
+        const regcst = `JD_${snakify(camelName).toUpperCase()}_REG_${snakify(
+            reg.name
+        ).toUpperCase()}`
+        const fetchReg = `self.register(${regcst})`
+
+        const single = fields.length === 1
+        const rtype = single ? types[0] : `Tuple[${types.join(", ")}]`
+        const { scale } = genFieldInfo(reg, fields[0])
+        return `
+    @property
+    def ${snakify(rname)}(self) -> Optional[${rtype}]:
+        """
+        ${`${reg.optional ? "(Optional) " : ""}${
+            reg.description || ""
+        }, ${fields.filter(f => f.unit).map(f => `${f.name}: ${f.unit}`)}`
+            .split("\n")
+            .join("\n        ")}
+        """${
+            client
+                ? `
+        # TODO: implement client register
+        raise  RuntimeError("client register not implemented")`
+                : `${reading === reg ? `\n        self.refresh_reading()` : ``}
+        return ${fetchReg}.${
+                      single && rtype === "bool"
+                          ? "bool_"
+                          : single && scale
+                          ? "float_"
+                          : ""
+                  }value(${[
+                      creading && `self.${missingReadingField}`,
+                      single && scale,
+                  ]
+                      .filter(v => !!v)
+                      .join(", ")})`
+        }
+${
+    kind === "rw"
+        ? `
+    @${snakify(rname)}.setter
+    def ${snakify(rname)}(self, value: ${rtype}) -> None:${
+              enabledReg && value
+                  ? `
+        self.enabled = True`
+                  : ""
+          }
+        ${fetchReg}.set_values(${single ? "" : "*"}value${
+              single && scale ? ` / ${scale}` : ""
+          })
+
+`
+        : ""
+}`
+    })
+    .join("")}${events
+        .map(event => {
+            return `
+    def on_${snakify(
+        event.name
+    )}(self, handler: EventHandlerFn) -> UnsubscribeFn:
+        """
+        ${(event.description || "").split("\n").join("\n        ")}
+        """
+        return self.on_event(JD_${snakify(
+            camelName
+        ).toUpperCase()}_EV_${snakify(event.name).toUpperCase()}, handler)
+`
+        })
+        .join("")}
+${commands
+    .map(command => {
+        const { name: cname, client } = command
+        const { pyTypes, types, names } = packInfo(spec, command, {
+            isStatic: true,
+            useBooleans: true,
+        })
+        const fnames = names.map(f => snakify(f).toLowerCase())
+        const cmd = `JD_${snakify(spec.camelName)}_CMD_${snakify(
+            cname
+        )}`.toUpperCase()
+        console.log("cmd", { cname, fnames, types, pyTypes, names })
+        return `
+    def ${snakify(cname)}(self, ${fnames
+            .map((fname, fieldi) => `${fname}: ${pyTypes[fieldi]}`)
+            .join(", ")}) -> None:
+        """
+        ${(command.description || "").split("\n").join("\n        ")}
+        """
+        ${
+            client
+                ? `# TODO: implement client command
+        raise RuntimeError("client command not implemented")`
+                : `self.send_cmd_packed(${cmd}, ${fnames.join(", ")})`
+        }
+`
+    })
+    .join("")}    
+`
+}
+
+function toCSharpClient(
+    spec: jdspec.ServiceSpec,
+    options: { baseClient?: boolean } = {}
+) {
+    const { camelName, packets } = spec
+    const { baseClient } = options
+
+    const registers = packetsToRegisters(packets)
+    const regs = registers
+        .filter(r => !!r)
+        .filter(r => !r.restricted && !r.client)
+        .filter(r => !r.fields.some(f => f.startRepeats))
+    const reading = regs.find(reg => reg.identifier === Reading)
+    const baseType = reading ? "SensorClient" : "Client"
+    const ctorTypes = ["JDBus bus", "string name"].filter(a => !!a)
+    const ctorArgs = [
+        `bus`,
+        `name`,
+        `ServiceClasses.${capitalize(camelName)}`,
+    ].filter(a => !!a)
+    const enabledReg = regs.find(isEnabledReg)
+    const events = packets.filter(pkt => !pkt.derived && pkt.kind === "event")
+    // TODO: pipes support
+    const commands = packets.filter(
+        pkt =>
+            !pkt.derived &&
+            !pkt.restricted &&
+            pkt.kind === "command" &&
+            pkt.fields.every(f => f.type !== "pipe") &&
+            !pkt.fields.some(f => f.startRepeats)
+    )
+
+    const className = `${capitalize(camelName)}Client${
+        baseClient ? "Base" : ""
+    }`
+    return `/** Autogenerated file. Do not edit. */
+using Jacdac;
+using System;
+
+namespace Jacdac.Clients 
+{
+    /// <summary>
+    /// ${(spec.notes["short"] || "").split("\n").join("\n     /// ")}
+    /// Implements a client for the ${spec.name} service.
+    /// </summary>
+    /// <seealso cref="https://microsoft.github.io/jacdac-docs/services/${
+        spec.shortId
+    }/" />
+    public partial class ${className} : ${baseType}
+    {
+        public ${className}(${ctorTypes.join(", ")})
+            : base(${ctorArgs.join(", ")})
+        {
+        }
+${regs
+    .map(reg => {
+        const { kind, name: rname } = reg
+        const { csTypes: types } = packInfo(spec, reg, {
+            isStatic: true,
+            useBooleans: true,
+        })
+        const { fields, client } = reg
+        const value = reg.identifier === Value
+        const regcst = `(ushort)${capitalize(camelName)}Reg.${capitalize(
+            camelize(reg.name)
+        )}`
+
+        const single = fields.length === 1
+        const rtype = single ? types[0] : `object[] /*(${types.join(", ")})*/`
+        const fetchArgs = `${regcst}, ${capitalize(
+            camelName
+        )}RegPack.${capitalize(camelize(reg.name))}`
+        const fetchReg = `(${rtype})this.GetRegisterValue${rtype == "bool" ? "AsBool" : ""}${
+            single ? "" : "s"
+        }(${fetchArgs})`
+        const setReg = `this.SetRegisterValue${
+            single ? "" : "s"
+        }(${regcst}, ${capitalize(camelName)}RegPack.${capitalize(
+            camelize(reg.name)
+        )}, value)`
+
+        return `
+        /// <summary>
+        /// ${
+            reg.optional
+                ? `Tries to read the <c>${rname}</c> register value.`
+                : `Reads the <c>${rname}</c> register value.`
+        }
+        /// ${`${reg.description || ""}, ${fields
+            .filter(f => f.unit)
+            .map(f => `${f.name}: ${f.unit}`)}`
+            .split("\n")
+            .join("\n        /// ")}
+        /// </summary>
+        ${
+            reg.optional
+                ? `bool TryGet${capitalize(camelize(rname))}(out ${rtype} value)
+        {
+            object[] values;
+            if (this.TryGetRegisterValues(${fetchArgs}, out values)) 
+            {
+                value = (${rtype})values[0];
+                return true;
+            }
+            else
+            {
+                value = default(${rtype});
+                return false;
+            }
+        }${
+            kind === "rw"
+                ? `
+        
+        /// <summary>
+        /// Sets the ${rname} value
+        /// </summary>
+        public void Set${capitalize(camelize(rname))}(${rtype} value)
+        {
+            ${setReg};
+        }
+`
+                : ""
+        }`
+                : `public ${rtype} ${capitalize(camelize(rname))}
+        {
+            get
+            {
+                ${
+                    client
+                        ? `// TODO: implement client register
+                   throw NotSupportedException("client register not implemented");`
+                        : `return ${fetchReg};`
+                }
+            }${
+                kind === "rw"
+                    ? `
+            set
+            {
+                ${
+                    enabledReg && value
+                        ? `
+                this.Enabled = true;`
+                        : ""
+                }
+                ${setReg};
+            }
+`
+                    : ""
+            }
+        }`
+        }
+`
+    })
+    .join("")}${events
+        .map(event => {
+            return `
+        /// <summary>
+        /// ${(event.description || "").split("\n").join("\n        /// ")}
+        /// </summary>
+        public event ClientEventHandler ${capitalize(camelize(event.name))}
+        {
+            add
+            {
+                this.AddEvent((ushort)${capitalize(
+                    camelName
+                )}Event.${capitalize(camelize(event.name))}, value);
+            }
+            remove
+            {
+                this.RemoveEvent((ushort)${capitalize(
+                    camelName
+                )}Event.${capitalize(camelize(event.name))}, value);
+            }
+        }
+`
+        })
+        .join("")}
+${commands
+    .map(command => {
+        const { name: cname, client } = command
+        const { csTypes: types, names } = packInfo(spec, command, {
+            isStatic: true,
+            useBooleans: true,
+        })
+        const fnames = names.map(f => snakify(f).toLowerCase())
+        const cmd = `(ushort)${capitalize(spec.camelName)}Cmd.${capitalize(
+            camelize(cname)
+        )}`
+        const pack = `${capitalize(spec.camelName)}CmdPack.${capitalize(
+            camelize(cname)
+        )}`
+        return `
+        ${client ? "/* client command" : ""}
+        /// <summary>
+        /// ${(command.description || "").split("\n").join("\n        /// ")}
+        /// </summary>
+        public void ${capitalize(camelize(cname))}(${fnames
+            .map((fname, fieldi) => `${types[fieldi]} ${fname}`)
+            .join(", ")})
+        {
+            this.SendCmd${!fnames.length ? "" : "Packed"}(${cmd}${
+            fnames.length > 0
+                ? `, ${pack}, new object[] { ${fnames.join(", ")} }`
+                : ""
+        });
+        }${client ? "*/" : ""}
+`
+    })
+    .join("")}
+    }
+}`
+}
+
 function genFieldInfo(reg: jdspec.PacketInfo, field: jdspec.PacketMember) {
     const isReading = reg.identifier === Reading
     const name =
@@ -368,7 +798,8 @@ function genFieldInfo(reg: jdspec.PacketInfo, field: jdspec.PacketMember) {
             : field.type === "bool"
             ? s => `${s} ? 1 : 0`
             : s => s
-    return { name, min, max, defl, valueScaler, valueUnscaler }
+    const scale = field.unit === "/" ? 100 : undefined
+    return { name, min, max, defl, scale, valueScaler, valueUnscaler }
 }
 
 function processSpec(dn: string) {
@@ -389,8 +820,23 @@ function processSpec(dn: string) {
     // generate makecode file structure
     const mkcdir = path.join(outp, "makecode")
     mkdir(mkcdir)
+    const pydir = path.join(outp, "python")
+    mkdir(pydir)
+    const csdir = path.join(outp, "cs")
+    mkdir(csdir)
     const mkcdServices: jdspec.MakeCodeServiceInfo[] = []
-    const pxtJacdacDir = path.join(dn, "..", "..", "pxt-jacdac")
+    const pxtJacdacDir = path.resolve(
+        path.join(dn, "..", "..", "..", "pxt-jacdac")
+    )
+    console.log(`pxt-jacdac: ${pxtJacdacDir}`)
+    const jacdacPythonDir = path.resolve(
+        path.join(dn, "..", "..", "..", "jacdac-python", "jacdac")
+    )
+    console.log(`jacdac-python: ${jacdacPythonDir}`)
+    const jacdacCsDir = path.resolve(
+        path.join(dn, "..", "..", "..", "jacdac-dotnet", "Jacdac", "Clients")
+    )
+    console.log(`jacdac-dotnet: ${jacdacCsDir}`)
 
     const fmtStats: { [index: string]: number } = {}
     const concats: jdspec.SMap<string> = {}
@@ -421,6 +867,7 @@ function processSpec(dn: string) {
         const mkcdpxtjson = path.join(pxtJacdacDir, mkcdsrvdirname, "pxt.json")
         const hasMakeCodeProject = fs.existsSync(mkcdpxtjson)
         console.log(`check exists ${mkcdpxtjson}: ${hasMakeCodeProject}`)
+        const pysrvdirname = snakify(json.camelName).toLowerCase()
 
         if (hasMakeCodeProject) {
             const pxtjson: { supportedTargets?: string[] } = JSON.parse(
@@ -441,25 +888,32 @@ function processSpec(dn: string) {
         const cnv = converters()
         for (const n of Object.keys(cnv)) {
             const convResult = cnv[n](json)
-            const ext = n == "sts" ? "ts" : n == "c" ? "h" : n
-
-            const cfn = path.join(outp, n, fn.slice(0, -3) + "." + ext)
+            const ext =
+                n == "sts" ? "ts" : n == "c" ? "h" : n == "cs" ? "g.cs" : n
+            let fnn = fn.slice(0, -3)
+            if (n == "cs") {
+                fnn = path.join(
+                    "Constants",
+                    capitalize(camelize(fnn)) + "Constants"
+                )
+                mkdir(path.join(path.join(outp, n, "Constants")))
+            }
+            const cfn = path.join(outp, n, fnn + "." + ext)
             fs.writeFileSync(cfn, convResult)
             console.log(`written ${cfn}`)
             if (!concats[n]) concats[n] = ""
             concats[n] += convResult
 
+            const generateClient =
+                !/^_/.test(json.shortId) &&
+                serviceBuiltins.indexOf(json.shortId) < 0
             if (n === "sts") {
-                const mkcdclient = toMakeCodeClient(json)
+                const mkcdclient = generateClient && toMakeCodeClient(json)
                 const srvdir = path.join(mkcdir, mkcdsrvdirname)
                 mkdir(srvdir)
                 fs.writeFileSync(path.join(srvdir, "constants.ts"), convResult)
                 // generate project file and client template
-                if (
-                    mkcdclient &&
-                    !/^_/.test(json.shortId) &&
-                    makecodBuiltins.indexOf(json.shortId) < 0
-                ) {
+                if (mkcdclient) {
                     if (!hasMakeCodeProject)
                         fs.writeFileSync(
                             path.join(srvdir, "pxt.g.json"),
@@ -471,6 +925,59 @@ function processSpec(dn: string) {
                             ? path.join(srvdir, "client.g.ts")
                             : path.join(srvdir, "client.gts"),
                         mkcdclient
+                    )
+                }
+            } else if (n === "cs") {
+                const baseClient = fs.existsSync(
+                    path.join(
+                        jacdacCsDir,
+                        `${capitalize(json.camelName)}Base.cs`
+                    )
+                )
+                const csclient =
+                    generateClient && toCSharpClient(json, { baseClient })
+                const srvdir = path.join(csdir, "Clients")
+                mkdir(srvdir)
+                //fs.writeFileSync(path.join(srvdir, "constants.cs"), convResult)
+                if (csclient)
+                    fs.writeFileSync(
+                        path.join(
+                            srvdir,
+                            baseClient
+                                ? `${capitalize(json.camelName)}Base.g.cs`
+                                : `${capitalize(json.camelName)}Client.g.cs`
+                        ),
+                        csclient
+                    )
+            } else if (n === "py") {
+                const baseClient = fs.existsSync(
+                    path.join(jacdacPythonDir, pysrvdirname, "client_base.py")
+                )
+                const pyclient =
+                    generateClient && toPythonClient(json, { baseClient })
+                const srvdir = path.join(pydir, pysrvdirname)
+                mkdir(srvdir)
+                fs.writeFileSync(path.join(srvdir, "constants.py"), convResult)
+                if (!pyclient)
+                    fs.writeFileSync(
+                        path.join(srvdir, "__init__.py"),
+                        `# Autogenerated file.
+from .constants import *
+`
+                    )
+                else {
+                    fs.writeFileSync(
+                        path.join(srvdir, "__init__.py"),
+                        `# Autogenerated file.
+from .client import ${capitalize(json.camelName)}Client # type: ignore
+`
+                    )
+                    fs.writeFileSync(
+                        path.join(
+                            srvdir,
+                            baseClient ? "client_base.py" : "client.py"
+                        ),
+                        pyclient
                     )
                 }
             }
@@ -490,6 +997,7 @@ function processSpec(dn: string) {
     fs.writeFileSync(path.join(outp, "specconstants.ts"), concats["ts"])
     fs.writeFileSync(path.join(outp, "specconstants.sts"), concats["sts"])
     fs.writeFileSync(path.join(outp, "specconstants.cs"), concats["cs"])
+    fs.writeFileSync(path.join(outp, "jacscript-spec.d.ts"), concats["jacs"])
     if (fs.existsSync(pxtJacdacDir))
         // only available locally
         fs.writeFileSync(
@@ -568,7 +1076,7 @@ function mkdir(n: string) {
     try {
         fs.mkdirSync(n, "777")
     } catch (e) {
-        console.warn(e)
+        if (e.code != "EEXIST") console.warn(e)
     }
 }
 

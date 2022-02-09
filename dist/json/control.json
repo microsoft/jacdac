@@ -1,6 +1,6 @@
 {
   "name": "Control",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "control",
   "camelName": "control",
   "shortName": "control",
@@ -29,12 +29,36 @@
         "SupportsACK": 256,
         "SupportsBroadcast": 512,
         "SupportsFrames": 1024,
-        "IsClient": 2048
+        "IsClient": 2048,
+        "SupportsReliableCommands": 4096
       }
     }
   },
   "constants": {},
   "packets": [
+    {
+      "kind": "report",
+      "name": "command_not_implemented",
+      "identifier": 3,
+      "description": "This report may be emitted by a server in response to a command (action or register operation)\nthat it does not understand.\nThe `service_command` and `packet_crc` fields are copied from the command packet that was unhandled.\nNote that it's possible to get an ACK, followed by such an error report.",
+      "fields": [
+        {
+          "name": "service_command",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "packet_crc",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "identifierName": "command_not_implemented",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
     {
       "kind": "const",
       "name": "instance_name",
@@ -154,7 +178,7 @@
       "kind": "command",
       "name": "identify",
       "identifier": 129,
-      "description": "Blink the status LED (262ms on, 262ms off, four times, with the blue LED) or otherwise draw user's attention to device with no status light. \nFor devices with status light (this can be discovered in the announce flags), the client should\nsend the sequence of status light command to generate the identify animation.",
+      "description": "Blink the status LED (262ms on, 262ms off, four times, with the blue LED) or otherwise draw user's attention to device with no status light.\nFor devices with status light (this can be discovered in the announce flags), the client should\nsend the sequence of status light command to generate the identify animation.",
       "fields": [],
       "optional": true
     },
@@ -192,6 +216,7 @@
           "isSimpleType": true
         }
       ],
+      "unique": true,
       "optional": true,
       "hasReport": true,
       "packFormat": "u32 u32 u8"
@@ -222,7 +247,7 @@
       "kind": "command",
       "name": "set_status_light",
       "identifier": 132,
-      "description": "Initiates a color transition of the status light from its current color to the one specified.\nThe transition will complete in about `512 / speed` frames\n(each frame is currently 100ms, so speed of `51` is about 1 second and `26` 0.5 second).\nAs a special case, if speed is `0` the transition is immediate.\nIf MCU is not capable of executing transitions, it can consider `speed` to be always `0`.\nIf a monochrome LEDs is fitted, the average value of ``red``, ``green``, ``blue`` is used.\nIf intensity of a monochrome LED cannot be controlled, any value larger than `0` should be considered\non, and `0` (for all three channels) should be considered off.",
+      "description": "Initiates a color transition of the status light from its current color to the one specified.\nThe transition will complete in about `512 / speed` frames\n(each frame is currently 100ms, so speed of `51` is about 1 second and `26` 0.5 second).\nAs a special case, if speed is `0` the transition is immediate.\nIf MCU is not capable of executing transitions, it can consider `speed` to be always `0`.\nIf a monochrome LEDs is fitted, the average value of `red`, `green`, `blue` is used.\nIf intensity of a monochrome LED cannot be controlled, any value larger than `0` should be considered\non, and `0` (for all three channels) should be considered off.",
       "fields": [
         {
           "name": "to_red",
@@ -258,6 +283,73 @@
       "description": "Force client device into proxy mode.",
       "fields": [],
       "optional": true
+    },
+    {
+      "kind": "command",
+      "name": "reliable_commands",
+      "identifier": 134,
+      "description": "This opens a pipe to the device to provide an alternative, reliable transport of actions\n(and possibly other commands).\nThe commands are wrapped as pipe data packets.\nMultiple invocations of this command with the same `seed` are dropped\n(and thus the command is not `unique`); otherwise `seed` carries no meaning\nand should be set to a random value by the client.\nNote that while the commands sends this way are delivered exactly once, the\nresponses might get lost.",
+      "fields": [
+        {
+          "name": "seed",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "hasReport": true,
+      "packFormat": "u32"
+    },
+    {
+      "kind": "report",
+      "name": "reliable_commands",
+      "identifier": 134,
+      "description": "This opens a pipe to the device to provide an alternative, reliable transport of actions\n(and possibly other commands).\nThe commands are wrapped as pipe data packets.\nMultiple invocations of this command with the same `seed` are dropped\n(and thus the command is not `unique`); otherwise `seed` carries no meaning\nand should be set to a random value by the client.\nNote that while the commands sends this way are delivered exactly once, the\nresponses might get lost.",
+      "fields": [
+        {
+          "name": "commands",
+          "type": "pipe",
+          "storage": 12
+        }
+      ],
+      "secondary": true,
+      "pipeType": "reliable_commands",
+      "packFormat": "b[12]"
+    },
+    {
+      "kind": "pipe_command",
+      "name": "wrapped_command",
+      "identifier": 0,
+      "description": "This opens a pipe to the device to provide an alternative, reliable transport of actions\n(and possibly other commands).\nThe commands are wrapped as pipe data packets.\nMultiple invocations of this command with the same `seed` are dropped\n(and thus the command is not `unique`); otherwise `seed` carries no meaning\nand should be set to a random value by the client.\nNote that while the commands sends this way are delivered exactly once, the\nresponses might get lost.",
+      "fields": [
+        {
+          "name": "service_size",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "service_index",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "service_command",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "payload",
+          "type": "bytes",
+          "storage": 0,
+          "isSimpleType": true
+        }
+      ],
+      "pipeType": "reliable_commands",
+      "packFormat": "u8 u8 u16 b"
     },
     {
       "kind": "rw",

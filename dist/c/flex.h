@@ -4,18 +4,14 @@
 
 #define JD_SERVICE_CLASS_FLEX  0x1f47c6c6
 
-// enum Variant (uint8_t)
-#define JD_FLEX_VARIANT_LINEAR22INCH 0x1
-#define JD_FLEX_VARIANT_LINEAR45INCH 0x2
-
 /**
- * Read-only ratio u0.16 (uint16_t). The relative position of the slider.
+ * Read-only ratio i1.15 (int16_t). A measure of the bending.
  */
 #define JD_FLEX_REG_BENDING JD_REG_READING
 
 /**
- * Constant Variant (uint8_t). Specifies the physical layout of the flex sensor.
+ * Constant mm uint16_t. Length of the flex sensor
  */
-#define JD_FLEX_REG_VARIANT JD_REG_VARIANT
+#define JD_FLEX_REG_LENGTH 0x180
 
 #endif

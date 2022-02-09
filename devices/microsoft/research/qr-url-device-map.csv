@@ -28,3 +28,13 @@ aaaaaw,60,0.1,JacdacRgbLedGeneric,aka.ms,0x39ae4b81
 aaaaax,44,0.3,JacdacJoystick,aka.ms,0x319baa63
 aaaaay,59,0.1,JacdacBrainRP2040,aka.ms,0x3308bb88
 aaaaaz,29,0.4,JacDacMicroBitShieldLP,aka.ms,0x3a0e8a03
+aaaaai,64,3.6,JM-TempHum,aka.ms,
+aaaaaj,65,3.6,JM-Light,aka.ms,
+aaaaak,66,3.6,JM-CO2,aka.ms,
+aaaaaq,67,3.7,JM-RgbRing,aka.ms,
+aaaaav,68,3.7,JM-Key,aka.ms,
+aaaaba,69,3.7,JM-2Key,aka.ms,
+aaaabb,72,3.7,JM-Pressure,aka.ms,
+aaaabc,73,3.8,JM-Thermocouple,aka.ms,
+aaaabd,74,3.8,JM-Motion,aka.ms,
+aaaabe,77,0.2,JacdacRgbLed1Ec30,aka.ms,

@@ -166,7 +166,7 @@ declare namespace jdspec {
     /**
      * Stability status of a feature
      */
-    type StabilityStatus = "stable" | "experimental" | "deprecated"
+    type StabilityStatus = "stable" | "experimental" | "deprecated" | "rc"
 
     interface ServiceMarkdownSpec {
         /**
@@ -442,6 +442,11 @@ declare namespace jdspec {
          * This member is designed to support small servers and typically is not exposed by high-level client.
          */
         lowLevel?: boolean
+
+        /**
+         * This action is not idempotent.
+         */
+        unique?: boolean
     }
 
     /**
@@ -583,10 +588,12 @@ declare namespace jdspec {
         services: number[]
     }
 
+    type TransportType = "usb" | "serial" | "bluetooth"
+
     interface TransportSpec {
         vendorId?: number
         productId?: number
-        type: "usb" | "serial" | "bluetooth"
+        type: TransportType
     }
 
     interface DeviceSpec extends DeviceClassSpec {
@@ -604,6 +611,16 @@ declare namespace jdspec {
          * A URL where the user can learn more about the device (and possibly buy it).
          */
         link?: string
+
+        /**
+         * A URL where the hardware design for the device resides
+         */
+        hardwareDesign?: string
+
+        /**
+         * A URL (e.g., a deep link into a GitHub repo) where the source code for the device's firmware resides
+         */
+        firmwareSource?: string
 
         /**
          * Product identifiers associated with different versions of this device.
@@ -672,7 +689,33 @@ declare namespace jdspec {
              * Location of the compiled firmware
              */
             url: string
+            /**
+             * Unique product identifier for this firmware
+             */
+            productIdentifier?: number
         }[]
+
+        /**
+         * Virtual drive that allows to upload new firmware
+         */
+        bootloader?: {
+            /**
+             * Known bootloader drive name for flashing
+             */
+            driveName: string
+            /**
+             * Button sequence to enter bootloader mode.
+             */
+            sequence?: "reset" | "reset-boot"
+            /**
+             * File format of firmware files
+             */
+            firmwareFormat?: "uf2" | "hex"
+            /**
+             * Led pattern when in bootloader mode
+             */
+            ledAnimation?: "blue-glow"
+        }
     }
 
     /**

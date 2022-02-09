@@ -4,6 +4,7 @@
     camel: ledPixel
     tags: C
     group: light
+    status: rc
 
 A controller for strips of individually controlled RGB LEDs.
 
@@ -22,45 +23,49 @@ Light commands are efficiently encoded as sequences of bytes and typically sent 
 of `run` command.
 
 Definitions:
-* `P` - position in the strip
-* `R` - number of repetitions of the command
-* `N` - number of pixels affected by the command
-* `C` - single color designation
-* `C+` - sequence of color designations
+
+-   `P` - position in the strip
+-   `R` - number of repetitions of the command
+-   `N` - number of pixels affected by the command
+-   `C` - single color designation
+-   `C+` - sequence of color designations
 
 Update modes:
-* `0` - replace
-* `1` - add RGB
-* `2` - subtract RGB
-* `3` - multiply RGB (by c/128); each pixel value will change by at least 1
+
+-   `0` - replace
+-   `1` - add RGB
+-   `2` - subtract RGB
+-   `3` - multiply RGB (by c/128); each pixel value will change by at least 1
 
 Program commands:
-* `0xD0: setall C+` - set all pixels in current range to given color pattern
-* `0xD1: fade C+` - set pixels in current range to colors between colors in sequence
-* `0xD2: fadehsv C+` - similar to `fade()`, but colors are specified and faded in HSV
-* `0xD3: rotfwd K` - rotate (shift) pixels by `K` positions away from the connector
-* `0xD4: rotback K` - same, but towards the connector
-* `0xD5: show M=50` - send buffer to strip and wait `M` milliseconds
-* `0xD6: range P=0 N=length W=1 S=0` - range from pixel `P`, `N` pixels long
-  (currently unsupported: every `W` pixels skip `S` pixels)
-* `0xD7: mode K=0` - set update mode
-* `0xD8: tmpmode K=0` - set update mode for next command only
-* `0xCF: setone P C` - set one pixel at `P` (in current range) to given color
-* `mult V` - macro to multiply current range by given value (float)
+
+-   `0xD0: setall C+` - set all pixels in current range to given color pattern
+-   `0xD1: fade C+` - set pixels in current range to colors between colors in sequence
+-   `0xD2: fadehsv C+` - similar to `fade()`, but colors are specified and faded in HSV
+-   `0xD3: rotfwd K` - rotate (shift) pixels by `K` positions away from the connector
+-   `0xD4: rotback K` - same, but towards the connector
+-   `0xD5: show M=50` - send buffer to strip and wait `M` milliseconds
+-   `0xD6: range P=0 N=length W=1 S=0` - range from pixel `P`, `N` pixels long (currently unsupported: every `W` pixels skip `S` pixels)
+-   `0xD7: mode K=0` - set update mode
+-   `0xD8: tmpmode K=0` - set update mode for next command only
+-   `0xCF: setone P C` - set one pixel at `P` (in current range) to given color
+-   `mult V` - macro to multiply current range by given value (float)
 
 A number `k` is encoded as follows:
-* `0 <= k < 128` -> `k`
-* `128 <= k < 16383` -> `0x80 | (k >> 8), k & 0xff`
-* bigger and negative numbers are not supported
+
+-   `0 <= k < 128` -> `k`
+-   `128 <= k < 16383` -> `0x80 | (k >> 8), k & 0xff`
+-   bigger and negative numbers are not supported
 
 Thus, bytes `0xC0-0xFF` are free to use for commands.
 
 Formats:
-* `0xC1, R, G, B` - single color parameter
-* `0xC2, R0, G0, B0, R1, G1, B1` - two color parameter
-* `0xC3, R0, G0, B0, R1, G1, B1, R2, G2, B2` - three color parameter
-* `0xC0, N, R0, G0, B0, ..., R(N-1), G(N-1), B(N-1)` - `N` color parameter
-* `0xCF, <number>, R, G, B` - `set1` special format
+
+-   `0xC1, R, G, B` - single color parameter
+-   `0xC2, R0, G0, B0, R1, G1, B1` - two color parameter
+-   `0xC3, R0, G0, B0, R1, G1, B1, R2, G2, B2` - three color parameter
+-   `0xC0, N, R0, G0, B0, ..., R(N-1), G(N-1), B(N-1)` - `N` color parameter
+-   `0xCF, <number>, R, G, B` - `set1` special format
 
 Commands are encoded as command byte, followed by parameters in the order
 from the command definition.
@@ -80,7 +85,7 @@ At `0` the power to the strip is completely shut down.
 This is the luminosity actually applied to the strip.
 May be lower than `brightness` if power-limited by the `max_power` register.
 It will rise slowly (few seconds) back to `brightness` is limits are no longer required.
- 
+
     enum LightType : u8 {
         WS2812B_GRB = 0x00
         APA102 = 0x10
@@ -131,7 +136,7 @@ Specifies the shape of the light strip.
 
 ## Commands
 
-    command run @ 0x81 {
+    unique command run @ 0x81 {
         program: bytes
     }
 

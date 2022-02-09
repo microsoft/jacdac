@@ -4,6 +4,19 @@
 
 Base class for all services.
 
+## Commands
+
+    report command_not_implemented @ command_not_implemented {
+        service_command: u16
+        packet_crc: u16
+    }
+
+This report may be emitted by a server in response to a command (action or register operation)
+that it does not understand.
+The `service_command` and `packet_crc` fields are copied from the command packet that was unhandled.
+Note that it's possible to get an ACK, followed by such an error report.
+
+
 ## Registers
 
     const instance_name?: string @ instance_name

@@ -4,6 +4,7 @@
     camel: led
     group: light
     tags: 8bit, padauk
+    status: rc
 
 A controller for 1 or more monochrome or RGB LEDs connected in parallel.
 

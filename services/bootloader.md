@@ -2,6 +2,7 @@
 
     identifier: 0x1ffa9948
     tags: C
+    status: stable
 
 Allows flashing (reprogramming) devices over Jacdac.
 
@@ -34,7 +35,7 @@ The flashing server should generate a random id, and use this command to set it.
         InvalidPageOffset = 3
         NotPageAligned = 4
     }
-    command page_data @ 0x80 {
+    unique command page_data @ 0x80 {
         page_address: u32
         page_offset: u16
         chunk_no: u8
@@ -58,3 +59,6 @@ and is included in response.
 Only the last chunk causes writing to flash and elicits response.
 
 Errors not listed are also possible. Errors larger than `0xffff` indicate de-synchronization on chunk numbers.
+
+While this command is technically `unique`, the bootloader client will retry failed pages.
+Bootloaders typically will not support reliable commands delivered over pipes.

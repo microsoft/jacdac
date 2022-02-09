@@ -53,6 +53,18 @@ namespace Jacdac {
          * No args. Request to calibrate a sensor. The report indicates the calibration is done.
          */
         Calibrate = 0x2,
+
+        /**
+         * This report may be emitted by a server in response to a command (action or register operation)
+         * that it does not understand.
+         * The `service_command` and `packet_crc` fields are copied from the command packet that was unhandled.
+         * Note that it's possible to get an ACK, followed by such an error report.
+         *
+         * ```
+         * const [serviceCommand, packetCrc] = jdunpack<[number, number]>(buf, "u16 u16")
+         * ```
+         */
+        CommandNotImplemented = 0x3,
     }
 
     public enum SystemReg {
@@ -283,6 +295,20 @@ namespace Jacdac {
     public static class BaseConstants
     {
     }
+    public enum BaseCmd {
+        /**
+         * This report may be emitted by a server in response to a command (action or register operation)
+         * that it does not understand.
+         * The `service_command` and `packet_crc` fields are copied from the command packet that was unhandled.
+         * Note that it's possible to get an ACK, followed by such an error report.
+         *
+         * ```
+         * const [serviceCommand, packetCrc] = jdunpack<[number, number]>(buf, "u16 u16")
+         * ```
+         */
+        CommandNotImplemented = 0x3,
+    }
+
     public enum BaseReg {
         /**
          * Constant string (bytes). A friendly name that describes the role of this service instance in the device.
@@ -530,7 +556,7 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
-    // Service: Arcade sound
+    // Service: Arcade Sound
     public static class ArcadeSoundConstants
     {
         public const uint ServiceClass = 0x1fc63606;
@@ -596,7 +622,7 @@ namespace Jacdac {
 
     public enum AzureIotHubHealthReg {
         /**
-         * Read-only string (bytes). Something like `my-iot-hub.azure-devices.net`; empty string when not properly configured
+         * Read-only string (bytes). Something like `my-iot-hub.azure-devices.net` if available.
          *
          * ```
          * const [hubName] = jdunpack<[string]>(buf, "s")
@@ -605,7 +631,7 @@ namespace Jacdac {
         HubName = 0x180,
 
         /**
-         * Read-only string (bytes). Device identifier in Azure Iot Hub
+         * Read-only string (bytes). Device identifier in Azure Iot Hub if available.
          *
          * ```
          * const [hubDeviceId] = jdunpack<[string]>(buf, "s")
@@ -957,6 +983,24 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
+    // Service: Bridge
+    public static class BridgeConstants
+    {
+        public const uint ServiceClass = 0x1fe5b46f;
+    }
+    public enum BridgeReg {
+        /**
+         * Read-write bool (uint8_t). Enables or disables the bridge.
+         *
+         * ```
+         * const [enabled] = jdunpack<[number]>(buf, "u8")
+         * ```
+         */
+        Enabled = 0x1,
+    }
+
+}
+namespace Jacdac {
     // Service: Button
     public static class ButtonConstants
     {
@@ -964,7 +1008,7 @@ namespace Jacdac {
     }
     public enum ButtonReg {
         /**
-         * Read-only ratio u0.16 (uint16_t). Indicates the pressure state of the button, where ``0`` is open.
+         * Read-only ratio u0.16 (uint16_t). Indicates the pressure state of the button, where `0` is open.
          *
          * ```
          * const [pressure] = jdunpack<[number]>(buf, "u0.16")
@@ -973,7 +1017,7 @@ namespace Jacdac {
         Pressure = 0x101,
 
         /**
-         * Constant bool (uint8_t). Indicates if the button provides analog ``pressure`` readings.
+         * Constant bool (uint8_t). Indicates if the button provides analog `pressure` readings.
          *
          * ```
          * const [analog] = jdunpack<[number]>(buf, "u8")
@@ -1109,10 +1153,10 @@ namespace Jacdac {
         Message = 0x2,
 
         /**
-         * Read-write ratio u0.8 (uint8_t). Brightness of the screen. `0` means off.
+         * Read-write ratio u0.16 (uint16_t). Brightness of the screen. `0` means off.
          *
          * ```
-         * const [brightness] = jdunpack<[number]>(buf, "u0.8")
+         * const [brightness] = jdunpack<[number]>(buf, "u0.16")
          * ```
          */
         Brightness = 0x1,
@@ -1152,22 +1196,6 @@ namespace Jacdac {
          * ```
          */
         Columns = 0x181,
-    }
-
-    public enum CharacterScreenCmd {
-        /**
-         * Overrides the content of a single line at a 0-based index.
-         *
-         * ```
-         * const [index, message] = jdunpack<[number, string]>(buf, "u16 s")
-         * ```
-         */
-        SetLine = 0x80,
-
-        /**
-         * No args. Clears all text from the display.
-         */
-        Clear = 0x81,
     }
 
 }
@@ -1282,6 +1310,7 @@ namespace Jacdac {
         SupportsBroadcast = 0x200,
         SupportsFrames = 0x400,
         IsClient = 0x800,
+        SupportsReliableCommands = 0x1000,
     }
 
     public enum ControlCmd {
@@ -1344,7 +1373,7 @@ namespace Jacdac {
          * (each frame is currently 100ms, so speed of `51` is about 1 second and `26` 0.5 second).
          * As a special case, if speed is `0` the transition is immediate.
          * If MCU is not capable of executing transitions, it can consider `speed` to be always `0`.
-         * If a monochrome LEDs is fitted, the average value of ``red``, ``green``, ``blue`` is used.
+         * If a monochrome LEDs is fitted, the average value of `red`, `green`, `blue` is used.
          * If intensity of a monochrome LED cannot be controlled, any value larger than `0` should be considered
          * on, and `0` (for all three channels) should be considered off.
          *
@@ -1358,7 +1387,39 @@ namespace Jacdac {
          * No args. Force client device into proxy mode.
          */
         Proxy = 0x85,
+
+        /**
+         * Argument: seed uint32_t. This opens a pipe to the device to provide an alternative, reliable transport of actions
+         * (and possibly other commands).
+         * The commands are wrapped as pipe data packets.
+         * Multiple invocations of this command with the same `seed` are dropped
+         * (and thus the command is not `unique`); otherwise `seed` carries no meaning
+         * and should be set to a random value by the client.
+         * Note that while the commands sends this way are delivered exactly once, the
+         * responses might get lost.
+         *
+         * ```
+         * const [seed] = jdunpack<[number]>(buf, "u32")
+         * ```
+         */
+        ReliableCommands = 0x86,
+
+        /**
+         * report ReliableCommands
+         * ```
+         * const [commands] = jdunpack<[Uint8Array]>(buf, "b[12]")
+         * ```
+         */
     }
+
+
+    /**
+     * pipe_command WrappedCommand
+     * ```
+     * const [serviceSize, serviceIndex, serviceCommand, payload] = jdunpack<[number, number, number, Uint8Array]>(buf, "u8 u8 u16 b")
+     * ```
+     */
+
 
     public enum ControlReg {
         /**
@@ -1429,38 +1490,11 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
-    // Service: Dimmer
-    public static class DimmerConstants
+    // Service: Dashboard
+    public static class DashboardConstants
     {
-        public const uint ServiceClass = 0x1fb02645;
+        public const uint ServiceClass = 0x1be59107;
     }
-
-    public enum DimmerVariant: byte { // uint8_t
-        Light = 0x1,
-        Fan = 0x2,
-        Pump = 0x3,
-    }
-
-    public enum DimmerReg {
-        /**
-         * Read-write ratio u0.16 (uint16_t). The intensity of the current. Set to ``0`` to turn off completely the current.
-         *
-         * ```
-         * const [intensity] = jdunpack<[number]>(buf, "u0.16")
-         * ```
-         */
-        Intensity = 0x1,
-
-        /**
-         * Constant Variant (uint8_t). The type of physical device
-         *
-         * ```
-         * const [variant] = jdunpack<[DimmerVariant]>(buf, "u8")
-         * ```
-         */
-        Variant = 0x107,
-    }
-
 }
 namespace Jacdac {
     // Service: Distance
@@ -1485,6 +1519,15 @@ namespace Jacdac {
          * ```
          */
         Distance = 0x101,
+
+        /**
+         * Read-only m u16.16 (uint32_t). Absolute error on the reading value.
+         *
+         * ```
+         * const [distanceError] = jdunpack<[number]>(buf, "u16.16")
+         * ```
+         */
+        DistanceError = 0x106,
 
         /**
          * Constant m u16.16 (uint32_t). Minimum measurable distance
@@ -1523,7 +1566,7 @@ namespace Jacdac {
     }
     public enum DmxReg {
         /**
-         * Read-write bool (uint8_t). Determines if the DMX bridge is active
+         * Read-write bool (uint8_t). Determines if the DMX bridge is active.
          *
          * ```
          * const [enabled] = jdunpack<[number]>(buf, "u8")
@@ -1680,12 +1723,6 @@ namespace Jacdac {
     {
         public const uint ServiceClass = 0x1f47c6c6;
     }
-
-    public enum FlexVariant: byte { // uint8_t
-        Linear22Inch = 0x1,
-        Linear45Inch = 0x2,
-    }
-
     public enum FlexReg {
         /**
          * Read-only ratio u0.16 (uint16_t). The relative position of the slider.
@@ -1697,13 +1734,22 @@ namespace Jacdac {
         Bending = 0x101,
 
         /**
-         * Constant Variant (uint8_t). Specifies the physical layout of the flex sensor.
+         * Read-only ratio u0.16 (uint16_t). Absolute error on the reading value.
          *
          * ```
-         * const [variant] = jdunpack<[FlexVariant]>(buf, "u8")
+         * const [bendingError] = jdunpack<[number]>(buf, "u0.16")
          * ```
          */
-        Variant = 0x107,
+        BendingError = 0x106,
+
+        /**
+         * Constant mm uint16_t. Length of the flex sensor
+         *
+         * ```
+         * const [length] = jdunpack<[number]>(buf, "u16")
+         * ```
+         */
+        Length = 0x180,
     }
 
 }
@@ -1799,92 +1845,6 @@ namespace Jacdac {
 
 }
 namespace Jacdac {
-    // Service: HID Adapter
-    public static class HidAdapterConstants
-    {
-        public const uint ServiceClass = 0x1e5758b5;
-    }
-    public enum HidAdapterReg {
-        /**
-         * Read-write uint8_t. The number of configurations stored on the server.
-         *
-         * ```
-         * const [numConfigurations] = jdunpack<[number]>(buf, "u8")
-         * ```
-         */
-        NumConfigurations = 0x80,
-
-        /**
-         * Read-write uint8_t. The current configuration the server is using.
-         *
-         * ```
-         * const [currentConfiguration] = jdunpack<[number]>(buf, "u8")
-         * ```
-         */
-        CurrentConfiguration = 0x81,
-    }
-
-    public enum HidAdapterCmd {
-        /**
-         * Retrieves a configuration stored on the server. If the configuration does not exist, an empty report will be returned
-         *
-         * ```
-         * const [results, configurationNumber] = jdunpack<[Uint8Array, number]>(buf, "b[12] u8")
-         * ```
-         */
-        GetConfiguration = 0x80,
-
-        /**
-         * Stores the given binding on the server. If a binding exists at this index, the new binding will replace it.
-         *
-         * ```
-         * const [configurationNumber, bindingIndex, deviceId, serviceClass, triggerValue, triggerContext, serviceIndex, selector, modifiers] = jdunpack<[number, number, number, number, number, number, number, number, number]>(buf, "u8 u8 x[2] u64 u32 u32 u8 u8 u16 u16")
-         * ```
-         */
-        SetBinding = 0x82,
-
-        /**
-         * Clears a specific binding stored on the device.
-         *
-         * ```
-         * const [configurationNumber, bindingIndex] = jdunpack<[number, number]>(buf, "u8 u8")
-         * ```
-         */
-        ClearBinding = 0x83,
-
-        /**
-         * Argument: configuration_number uint8_t. Clears a specific configuration stored on the device.
-         *
-         * ```
-         * const [configurationNumber] = jdunpack<[number]>(buf, "u8")
-         * ```
-         */
-        ClearConfiguration = 0x84,
-
-        /**
-         * No args. Clears all configurations and bindings stored on the device.
-         */
-        Clear = 0x85,
-    }
-
-
-    /**
-     * pipe_report Configuration
-     * ```
-     * const [configurationNumber, bindingIndex, deviceId, serviceClass, triggerValue, triggerContext, serviceIndex, selector, modifiers] = jdunpack<[number, number, number, number, number, number, number, number, number]>(buf, "u8 u8 x[2] u64 u32 u32 u8 u8 u16 u16")
-     * ```
-     */
-
-
-    public enum HidAdapterEvent {
-        /**
-         * Event that notifies clients that the server has swapped to a new configuration or changed key bindings.
-         */
-        Changed = 0x3,
-    }
-
-}
-namespace Jacdac {
     // Service: HID Keyboard
     public static class HidKeyboardConstants
     {
@@ -1952,8 +1912,8 @@ namespace Jacdac {
     public enum HidMouseCmd {
         /**
          * Sets the up/down state of one or more buttons.
-         * A ``Click`` is the same as ``Down`` followed by ``Up`` after 100ms.
-         * A ``DoubleClick`` is two clicks with ``150ms`` gap between them (that is, ``100ms`` first click, ``150ms`` gap, ``100ms`` second click).
+         * A `Click` is the same as `Down` followed by `Up` after 100ms.
+         * A `DoubleClick` is two clicks with `150ms` gap between them (that is, `100ms` first click, `150ms` gap, `100ms` second click).
          *
          * ```
          * const [buttons, event] = jdunpack<[HidMouseButton, HidMouseButtonEvent]>(buf, "u16 u8")
@@ -2039,19 +1999,19 @@ namespace Jacdac {
          * Read-only lux u22.10 (uint32_t). The amount of illuminance, as lumens per square metre.
          *
          * ```
-         * const [light] = jdunpack<[number]>(buf, "u22.10")
+         * const [illuminance] = jdunpack<[number]>(buf, "u22.10")
          * ```
          */
-        Light = 0x101,
+        Illuminance = 0x101,
 
         /**
          * Read-only lux u22.10 (uint32_t). Error on the reported sensor value.
          *
          * ```
-         * const [lightError] = jdunpack<[number]>(buf, "u22.10")
+         * const [illuminanceError] = jdunpack<[number]>(buf, "u22.10")
          * ```
          */
-        LightError = 0x106,
+        IlluminanceError = 0x106,
     }
 
 }
@@ -2473,7 +2433,7 @@ namespace Jacdac {
     public enum LightBulbReg {
         /**
          * Read-write ratio u0.16 (uint16_t). Indicates the brightness of the light bulb. Zero means completely off and 0xffff means completely on.
-         * For non-dimmeable lights, the value should be clamp to 0xffff for any non-zero value.
+         * For non-dimmable lights, the value should be clamp to 0xffff for any non-zero value.
          *
          * ```
          * const [brightness] = jdunpack<[number]>(buf, "u0.16")
@@ -2485,22 +2445,10 @@ namespace Jacdac {
          * Constant bool (uint8_t). Indicates if the light supports dimming.
          *
          * ```
-         * const [dimmeable] = jdunpack<[number]>(buf, "u8")
+         * const [dimmable] = jdunpack<[number]>(buf, "u8")
          * ```
          */
-        Dimmeable = 0x180,
-    }
-
-    public enum LightBulbEvent {
-        /**
-         * Emitted when the light brightness is greater than 0.
-         */
-        On = 0x1,
-
-        /**
-         * Emitted when the light is completely off with brightness to 0.
-         */
-        Off = 0x2,
+        Dimmable = 0x180,
     }
 
 }
@@ -2526,6 +2474,15 @@ namespace Jacdac {
          * ```
          */
         LightLevel = 0x101,
+
+        /**
+         * Read-only ratio u0.16 (uint16_t). Absolute estimated error of the reading value
+         *
+         * ```
+         * const [lightLevelError] = jdunpack<[number]>(buf, "u0.16")
+         * ```
+         */
+        LightLevelError = 0x106,
 
         /**
          * Constant Variant (uint8_t). The type of physical sensor.
@@ -2625,7 +2582,7 @@ namespace Jacdac {
         Forces = 0x101,
 
         /**
-         * Read-only nT int32_t. Error on the readings.
+         * Read-only nT int32_t. Absolute estimated error on the readings.
          *
          * ```
          * const [forcesError] = jdunpack<[number]>(buf, "i32")
@@ -3074,74 +3031,15 @@ namespace Jacdac {
          * ```
          */
         LoadSpeed = 0x181,
-    }
 
-}
-namespace Jacdac {
-    // Service: Multitouch
-    public static class MultitouchConstants
-    {
-        public const uint ServiceClass = 0x18d55e2b;
-    }
-    public enum MultitouchReg {
         /**
-         * Read-only. Capacitance of channels. The capacitance is continuously calibrated, and a value of `0` indicates
-         * no touch, wheres a value of around `100` or more indicates touch.
-         * It's best to ignore this (unless debugging), and use events.
+         * Constant bool (uint8_t). Indicates if the motor can run backwards.
          *
          * ```
-         * const [capacitance] = jdunpack<[number[]]>(buf, "i32[]")
+         * const [reversible] = jdunpack<[number]>(buf, "u8")
          * ```
          */
-        Capacity = 0x101,
-    }
-
-    public enum MultitouchEvent {
-        /**
-         * Argument: channel uint32_t. Emitted when an input is touched.
-         *
-         * ```
-         * const [channel] = jdunpack<[number]>(buf, "u32")
-         * ```
-         */
-        Touch = 0x1,
-
-        /**
-         * Argument: channel uint32_t. Emitted when an input is no longer touched.
-         *
-         * ```
-         * const [channel] = jdunpack<[number]>(buf, "u32")
-         * ```
-         */
-        Release = 0x2,
-
-        /**
-         * Argument: channel uint32_t. Emitted when an input is briefly touched. TODO Not implemented.
-         *
-         * ```
-         * const [channel] = jdunpack<[number]>(buf, "u32")
-         * ```
-         */
-        Tap = 0x80,
-
-        /**
-         * Argument: channel uint32_t. Emitted when an input is touched for longer than 500ms. TODO Not implemented.
-         *
-         * ```
-         * const [channel] = jdunpack<[number]>(buf, "u32")
-         * ```
-         */
-        LongPress = 0x81,
-
-        /**
-         * Emitted when input channels are successively touched in order of increasing channel numbers.
-         */
-        SwipePos = 0x90,
-
-        /**
-         * Emitted when input channels are successively touched in order of decreasing channel numbers.
-         */
-        SwipeNeg = 0x91,
+        Reversible = 0x182,
     }
 
 }
@@ -3681,9 +3579,6 @@ namespace Jacdac {
     public enum RealTimeClockReg {
         /**
          * Current time in 24h representation.
-         * * ``day_of_month`` is day of the month, starting at ``1``
-         * * ``day_of_week`` is day of the week, starting at ``1`` as monday
-         * Default streaming period is 1 second.
          *
          * ```
          * const [year, month, dayOfMonth, dayOfWeek, hour, min, sec] = jdunpack<[number, number, number, number, number, number, number]>(buf, "u16 u8 u8 u8 u8 u8 u8")
@@ -3692,13 +3587,13 @@ namespace Jacdac {
         LocalTime = 0x101,
 
         /**
-         * Read-only s u16.16 (uint32_t). Time drift since the last call to the ``set_time`` command.
+         * Read-only s u16.16 (uint32_t). Time drift since the last call to the `set_time` command.
          *
          * ```
-         * const [error] = jdunpack<[number]>(buf, "u16.16")
+         * const [drift] = jdunpack<[number]>(buf, "u16.16")
          * ```
          */
-        Error = 0x180,
+        Drift = 0x180,
 
         /**
          * Constant ppm u16.16 (uint32_t). Error on the clock, in parts per million of seconds.
@@ -3763,18 +3658,6 @@ namespace Jacdac {
         Variant = 0x107,
     }
 
-    public enum ReflectedLightEvent {
-        /**
-         * The sensor detected a transition from light to dark
-         */
-        Dark = 0x2,
-
-        /**
-         * The sensor detected a transition from dark to light
-         */
-        Light = 0x1,
-    }
-
 }
 namespace Jacdac {
     // Service: Relay
@@ -3816,20 +3699,6 @@ namespace Jacdac {
          * ```
          */
         MaxSwitchingCurrent = 0x180,
-    }
-
-    public enum RelayEvent {
-        /**
-         * Emitted when relay goes from `inactive` to `active` state.
-         * Normally open (NO) relays close the circuit when activated.
-         */
-        Active = 0x1,
-
-        /**
-         * Emitted when relay goes from `active` to `inactive` state.
-         * Normally closed (NC) relays open the circuit when activated.
-         */
-        Inactive = 0x2,
     }
 
 }
@@ -4286,8 +4155,8 @@ namespace Jacdac {
         /**
          * Read-write bytes. Each byte encodes the display status of a digit using,
          * where bit 0 encodes segment `A`, bit 1 encodes segments `B`, ..., bit 6 encodes segments `G`, and bit 7 encodes the decimal point (if present).
-         * If incoming ``digits`` data is smaller than `digit_count`, the remaining digits will be cleared.
-         * Thus, sending an empty ``digits`` payload clears the screen.
+         * If incoming `digits` data is smaller than `digit_count`, the remaining digits will be cleared.
+         * Thus, sending an empty `digits` payload clears the screen.
          *
          * ```
          * const [digits] = jdunpack<[Uint8Array]>(buf, "b")
@@ -4296,7 +4165,7 @@ namespace Jacdac {
         Digits = 0x2,
 
         /**
-         * Read-write ratio u0.16 (uint16_t). Controls the brightness of the LEDs. ``0`` means off.
+         * Read-write ratio u0.16 (uint16_t). Controls the brightness of the LEDs. `0` means off.
          *
          * ```
          * const [brightness] = jdunpack<[number]>(buf, "u0.16")
@@ -4360,7 +4229,7 @@ namespace Jacdac {
 
     public enum SoilMoistureReg {
         /**
-         * Read-only ratio u0.16 (uint16_t). Indicates the wetness of the soil, from ``dry`` to ``wet``.
+         * Read-only ratio u0.16 (uint16_t). Indicates the wetness of the soil, from `dry` to `wet`.
          *
          * ```
          * const [moisture] = jdunpack<[number]>(buf, "u0.16")
@@ -4448,30 +4317,6 @@ namespace Jacdac {
         Enabled = 0x1,
 
         /**
-         * Read-write dB int16_t. The minimum power value considered by the sensor.
-         * If both ``min_decibels`` and ``max_decibels`` are supported,
-         * the volume in deciment can be linearly interpolated between
-         * ``[min_decibels, max_decibels]``.
-         *
-         * ```
-         * const [minDecibels] = jdunpack<[number]>(buf, "i16")
-         * ```
-         */
-        MinDecibels = 0x81,
-
-        /**
-         * Read-write dB int16_t. The maximum power value considered by the sensor.
-         * If both ``min_decibels`` and ``max_decibels`` are supported,
-         * the volume in deciment can be linearly interpolated between
-         * ``[min_decibels, max_decibels]``.
-         *
-         * ```
-         * const [maxDecibels] = jdunpack<[number]>(buf, "i16")
-         * ```
-         */
-        MaxDecibels = 0x82,
-
-        /**
          * Read-write ratio u0.16 (uint16_t). The sound level to trigger a loud event.
          *
          * ```
@@ -4531,13 +4376,18 @@ namespace Jacdac {
         Play = 0x80,
 
         /**
+         * No args. Cancel any sound playing.
+         */
+        Cancel = 0x81,
+
+        /**
          * Argument: sounds_port pipe (bytes). Returns the list of sounds available to play.
          *
          * ```
          * const [soundsPort] = jdunpack<[Uint8Array]>(buf, "b[12]")
          * ```
          */
-        ListSounds = 0x81,
+        ListSounds = 0x82,
     }
 
 
@@ -4604,7 +4454,7 @@ namespace Jacdac {
 
         /**
          * Read-write ratio u0.8 (uint8_t). The averaging constant with the last analysis frame.
-         * If ``0`` is set, there is no averaging done, whereas a value of ``1`` means "overlap the previous and current buffer quite a lot while computing the value".
+         * If `0` is set, there is no averaging done, whereas a value of `1` means "overlap the previous and current buffer quite a lot while computing the value".
          *
          * ```
          * const [smoothingTimeConstant] = jdunpack<[number]>(buf, "u0.8")
@@ -4734,12 +4584,12 @@ namespace Jacdac {
 
     public enum SwitchEvent {
         /**
-         * Emitted when switch goes from ``off`` to ``on``.
+         * Emitted when switch goes from `off` to `on`.
          */
         On = 0x1,
 
         /**
-         * Emitted when switch goes from ``on`` to ``off``.
+         * Emitted when switch goes from `on` to `off`.
          */
         Off = 0x2,
     }
@@ -5173,24 +5023,13 @@ namespace Jacdac {
     {
         public const uint ServiceClass = 0x183fc4a2;
     }
-    public enum VibrationMotorReg {
-        /**
-         * Read-write bool (uint8_t). Determines if the vibration motor responds to vibrate commands.
-         *
-         * ```
-         * const [enabled] = jdunpack<[number]>(buf, "u8")
-         * ```
-         */
-        Enabled = 0x1,
-    }
-
     public enum VibrationMotorCmd {
         /**
          * Starts a sequence of vibration and pauses. To stop any existing vibration, send an empty payload.
          *
          * ```
          * const [rest] = jdunpack<[([number, number])[]]>(buf, "r: u8 u0.8")
-         * const [duration, speed] = rest[0]
+         * const [duration, intensity] = rest[0]
          * ```
          */
         Vibrate = 0x80,
@@ -5219,6 +5058,15 @@ namespace Jacdac {
          * ```
          */
         Level = 0x101,
+
+        /**
+         * Read-only ratio u0.16 (uint16_t). The error rage on the current reading
+         *
+         * ```
+         * const [levelError] = jdunpack<[number]>(buf, "u0.16")
+         * ```
+         */
+        LevelError = 0x106,
 
         /**
          * Constant Variant (uint8_t). The type of physical sensor.

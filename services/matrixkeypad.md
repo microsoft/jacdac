@@ -3,6 +3,7 @@
     identifier: 0x13062dc8
     extends: _sensor
     group: button
+    status: experimental
 
 A matrix of buttons connected as a keypad
 

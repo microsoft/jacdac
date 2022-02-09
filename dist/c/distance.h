@@ -16,6 +16,11 @@
 #define JD_DISTANCE_REG_DISTANCE JD_REG_READING
 
 /**
+ * Read-only m u16.16 (uint32_t). Absolute error on the reading value.
+ */
+#define JD_DISTANCE_REG_DISTANCE_ERROR JD_REG_READING_ERROR
+
+/**
  * Constant m u16.16 (uint32_t). Minimum measurable distance
  */
 #define JD_DISTANCE_REG_MIN_RANGE JD_REG_MIN_READING

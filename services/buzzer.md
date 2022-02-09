@@ -4,6 +4,7 @@
     camel: buzzer
     group: sound
     tags: C, 8bit
+    status: rc
 
 A simple buzzer.
 

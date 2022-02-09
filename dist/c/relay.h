@@ -10,9 +10,9 @@
 #define JD_RELAY_VARIANT_REED 0x3
 
 /**
- * Read-write bool (uint8_t). Indicates whether the relay circuit is currently energized (closed) or not.
+ * Read-write bool (uint8_t). Indicates whether the relay circuit is currently energized or not.
  */
-#define JD_RELAY_REG_CLOSED JD_REG_INTENSITY
+#define JD_RELAY_REG_ACTIVE JD_REG_INTENSITY
 
 /**
  * Constant Variant (uint8_t). Describes the type of relay used.
@@ -23,17 +23,5 @@
  * Constant mA uint32_t. Maximum switching current for a resistive load.
  */
 #define JD_RELAY_REG_MAX_SWITCHING_CURRENT 0x180
-
-/**
- * Emitted when relay goes from `inactive` to `active` state.
- * Normally open (NO) relays close the circuit when activated.
- */
-#define JD_RELAY_EV_ACTIVE JD_EV_ACTIVE
-
-/**
- * Emitted when relay goes from `active` to `inactive` state.
- * Normally closed (NC) relays open the circuit when activated.
- */
-#define JD_RELAY_EV_INACTIVE JD_EV_INACTIVE
 
 #endif

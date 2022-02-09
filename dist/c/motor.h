@@ -26,4 +26,9 @@
  */
 #define JD_MOTOR_REG_LOAD_SPEED 0x181
 
+/**
+ * Constant bool (uint8_t). Indicates if the motor can run backwards.
+ */
+#define JD_MOTOR_REG_REVERSIBLE 0x182
+
 #endif

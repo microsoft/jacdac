@@ -3,6 +3,7 @@
     identifier: 0x281740c3
     tags: 8bit
     group: button
+    status: rc
 
 A pressure sensitive push-button.
 

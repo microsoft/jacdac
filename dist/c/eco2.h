@@ -29,11 +29,6 @@
 #define JD_E_CO2_REG_MAX_E_CO2 JD_REG_MAX_READING
 
 /**
- * Constant s uint32_t. Time required to achieve good sensor stability before measuring after long idle period.
- */
-#define JD_E_CO2_REG_CONDITIONING_PERIOD 0x180
-
-/**
  * Constant Variant (uint8_t). Type of physical sensor and capabilities.
  */
 #define JD_E_CO2_REG_VARIANT JD_REG_VARIANT

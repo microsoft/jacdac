@@ -1,7 +1,8 @@
 # Logger
 
     identifier: 0x12dc1fca
-    tags: C
+    tags: infrastructure, C
+    status: stable
 
 A service which can report messages to the bus.
 

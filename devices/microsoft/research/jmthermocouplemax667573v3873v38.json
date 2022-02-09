@@ -1,0 +1,17 @@
+{
+  "id": "microsoft-research-jmthermocouplemax667573v3873v38",
+  "name": "JM Thermocouple MAX6675 73 v3.8",
+  "company": "Microsoft Research",
+  "description": "JM Thermocouple MAX6675 v3.8",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-c/blob/main/drivers/max6675.c",
+  "link": "https://aka.ms/aaaabc",
+  "services": [
+    337754823
+  ],
+  "productIdentifiers": [
+    1047456763
+  ],
+  "version": "3.8",
+  "designIdentifier": "73"
+}

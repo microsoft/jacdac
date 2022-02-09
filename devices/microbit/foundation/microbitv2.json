@@ -12,8 +12,13 @@
     "tags": ["kit"],
     "firmwares": [
         {
-            "name": "Kit Out-Of-the-Box Experience",
-            "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/microbit-oob.hex"
+            "name": "Out-Of-the-Box Experience",
+            "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/microbit-oob.hex",
+            "productIdentifier": 888455511
         }
-    ]
+    ],
+    "bootloader": {
+        "driveName": "MICROBIT",
+        "firmwareFormat": "hex"
+    }
 }

@@ -4,6 +4,7 @@
     extends: _sensor
     group: button
     tags: 8bit
+    status: rc
 
 A switch, which keeps its position.
 
@@ -27,7 +28,7 @@ Indicates whether the switch is currently active (on).
 
 Describes the type of switch used.
 
-    const auto_off_delay?: u16.16 s @ 0x180
+    const auto_off_delay?: u22.10 s @ 0x180
 
 Specifies the delay without activity to automatically turn off after turning on.
 For example, some light switches in staircases have such a capability.
@@ -36,8 +37,8 @@ For example, some light switches in staircases have such a capability.
 
     event on @ active
 
-Emitted when switch goes from ``off`` to ``on``.
+Emitted when switch goes from `off` to `on`.
 
     event off @ inactive
 
-Emitted when switch goes from ``on`` to ``off``.
+Emitted when switch goes from `on` to `off`.

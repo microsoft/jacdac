@@ -454,8 +454,23 @@ declare namespace roles {
     function led(): LedRole
 }
 
-// Service: LED Pixel
-declare class LedPixelRole extends Role {
+// Service: LED Display
+declare class LedDisplayRole extends Role {
+    pixels: JDRegisterNum
+    brightness: JDRegisterNum
+    actualBrightness: JDRegisterNum
+    lightType: JDRegisterNum
+    numPixels: JDRegisterNum
+    numColumns: JDRegisterNum
+    maxPower: JDRegisterNum
+    variant: JDRegisterNum
+}
+declare namespace roles {
+    function ledDisplay(): LedDisplayRole
+}
+
+// Service: LED Strip
+declare class LedStripRole extends Role {
     brightness: JDRegisterNum
     actualBrightness: JDRegisterNum
     lightType: JDRegisterNum
@@ -468,7 +483,7 @@ declare class LedPixelRole extends Role {
     run(program: number): void
 }
 declare namespace roles {
-    function ledPixel(): LedPixelRole
+    function ledStrip(): LedStripRole
 }
 
 // Service: Light bulb

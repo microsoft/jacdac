@@ -8,8 +8,7 @@
     "_base"
   ],
   "notes": {
-    "short": "A controller for small displays of individually controlled RGB LEDs.",
-    "long": "## Light programs\n\nRealistically, with 1 mbit Jacdac, we can transmit under 2k of data per animation frame (at 20fps).\nIf transmitting raw data that would be around 500 pixels, which is not enough for many\ninstallations and it would completely clog the network.\n\nThus, this service handles displays with 64 or less LEDs.\nUse the [LED strip service](/services/ledstrip) for longer light strips."
+    "short": "A controller for small displays of individually controlled RGB LEDs.\n\nThis service handles displays with 64 or less LEDs.\nUse the [LED strip service](/services/ledstrip) for longer light strips."
   },
   "classIdentifier": 369743088,
   "enums": {
@@ -133,7 +132,7 @@
       "kind": "rw",
       "name": "pixels",
       "identifier": 2,
-      "description": "For short LED strips, less than `max_pixels_length`, a buffer of 24bit RGB color entries for each LED.",
+      "description": "A buffer of 24bit RGB color entries for each LED, in R, G, B order.",
       "fields": [
         {
           "name": "_",
@@ -180,10 +179,10 @@
       "packFormat": "u0.8"
     },
     {
-      "kind": "ro",
+      "kind": "const",
       "name": "light_type",
       "identifier": 385,
-      "description": "Specifies the type of light strip connected to controller.\nControllers which are sold with lights should default to the correct type\nand could not allow change.",
+      "description": "Specifies the type of light strip connected to controller.",
       "fields": [
         {
           "name": "_",
@@ -194,10 +193,10 @@
       "packFormat": "u8"
     },
     {
-      "kind": "ro",
+      "kind": "const",
       "name": "num_pixels",
       "identifier": 386,
-      "description": "Specifies the number of pixels in the strip.\nControllers which are sold with lights should default to the correct length\nand could not allow change. Increasing length at runtime leads to ineffective use of memory and may lead to controller reboot.",
+      "description": "Specifies the number of pixels in the strip.",
       "fields": [
         {
           "name": "_",
@@ -210,10 +209,10 @@
       "packFormat": "u16"
     },
     {
-      "kind": "ro",
+      "kind": "const",
       "name": "num_columns",
       "identifier": 387,
-      "description": "If the LED pixel strip is a matrix, specifies the number of columns. Otherwise, a square shape is assumed. Controllers which are sold with lights should default to the correct length\nand could not allow change. Increasing length at runtime leads to ineffective use of memory and may lead to controller reboot.",
+      "description": "If the LED pixel strip is a matrix, specifies the number of columns.",
       "fields": [
         {
           "name": "_",

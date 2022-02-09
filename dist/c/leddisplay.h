@@ -18,7 +18,7 @@
 #define JD_LED_DISPLAY_VARIANT_MATRIX 0x5
 
 /**
- * Read-write bytes. For short LED strips, less than `max_pixels_length`, a buffer of 24bit RGB color entries for each LED.
+ * Read-write bytes. A buffer of 24bit RGB color entries for each LED, in R, G, B order.
  */
 #define JD_LED_DISPLAY_REG_PIXELS JD_REG_VALUE
 
@@ -36,22 +36,17 @@
 #define JD_LED_DISPLAY_REG_ACTUAL_BRIGHTNESS 0x180
 
 /**
- * Read-only LightType (uint8_t). Specifies the type of light strip connected to controller.
- * Controllers which are sold with lights should default to the correct type
- * and could not allow change.
+ * Constant LightType (uint8_t). Specifies the type of light strip connected to controller.
  */
 #define JD_LED_DISPLAY_REG_LIGHT_TYPE 0x181
 
 /**
- * Read-only # uint16_t. Specifies the number of pixels in the strip.
- * Controllers which are sold with lights should default to the correct length
- * and could not allow change. Increasing length at runtime leads to ineffective use of memory and may lead to controller reboot.
+ * Constant # uint16_t. Specifies the number of pixels in the strip.
  */
 #define JD_LED_DISPLAY_REG_NUM_PIXELS 0x182
 
 /**
- * Read-only # uint16_t. If the LED pixel strip is a matrix, specifies the number of columns. Otherwise, a square shape is assumed. Controllers which are sold with lights should default to the correct length
- * and could not allow change. Increasing length at runtime leads to ineffective use of memory and may lead to controller reboot.
+ * Constant # uint16_t. If the LED pixel strip is a matrix, specifies the number of columns.
  */
 #define JD_LED_DISPLAY_REG_NUM_COLUMNS 0x183
 

@@ -169,7 +169,7 @@ struct {
 
 The above structure omits the details about physical transmission of Jacdac packets 
 over the wire and the packing of multiple packets within frames. 
-For more information, see [the single wire serial protocol](../network-interface-layer/sws).
+For more information, see [the single wire serial protocol](/reference/protocol/single-wire-serial/).
 
 A device will generally maintain device-specific state for each of the services that it supports. This state should be kept in an array, where each array entry contains the service class and (a pointer to) the device-specific state for that service. When a device advertises its service classes they are presented in the same order as in the list.  This allows clients of the device to refer to one of its services by list index (`service_index`, an 8 bit quantity) instead of service class (a 32 bit quantity). The zero index (service number) is reserved for the control service. 
 
@@ -330,131 +330,10 @@ The responsibility of the physical layer is to send/receive a byte buffer
 (representing a Jacdac frame from the transport layer 
 over a particular media. Currently, we have implemented:
 
-- Single Wire Serial connects microcontrollers to each other using UART
+- [Single Wire Serial](/reference/protocol/single-wire-serial/) connects microcontrollers to each other using UART
 - Web USB: micro-controller to web browser
 
-### Single Wire Serial (SWS)
-
-Jacdac requires devices have a microcontroller with UART, Timer, and GPIO interrupt capabilities.
-
-![An image depicting a Jacdac transmission. A Jacdac transmission begins with a start pulse of 11-14 us, a inter lo data spacing of minimally 40 us before data commences. A Jacdac transmission ends with an end pulse of 11-14 us.](../images/jacdac-activity.png)
-
-For communication Jacdac SWS reuses a standard RS232 UART peripheral, 
-common to many microcontrollers. Devices operate the UART peripheral in half-duplex mode 
-and are connected together to form a single bus. 
-This bus requires a common data and ground line to be shared between devices.
-
-<!-- Like with standard UART, a logical one is represented as 3.3V and a logical 0 as 0V.  -->
-
-Data bytes are 10 bits long and are composed of 1 start bit, 8 data bits, and one stop bit. 
-Jacdac devices must only communicate at 1 Mbaud and when no data is being transmitted, 
-the bus must read as a logical one.
-
-In Jacdac SWS, any device can initiate a transmission at any time.
-Because of this, devices must assert control over the bus before sending any data. 
-This is where Jacdac differs from half-duplex UART–––devices must assert control over the bus 
-by pulsing the line low before transmitting any data. This low pulse is known as the start pulse 
-and must be between 11 and 15 microseconds in duration. This duration is recognized 
-as a break condition on most UART hardware.
-
-When the start pulse is over, devices have minimally 50 microseconds to configure IO registers 
-to receive UART data. If no data byte is received within 200 microseconds, 
-an error condition must be triggered and devices must wait for the bus to return to an idle state. 
-This means that the first data byte must commence at 189 microseconds 
-after the completion of the start pulse in order to be specification compliant.
-Devices should strive to start transmission as close as possible after the 50 microsecond mark.
-
-After the transmitter has sent the data portion of a frame, it must then pulse 
-the line low one final time to signal the end of a transmission. 
-The duration of this end pulse is also between 11 and 15 microseconds so to trigger 
-another UART break condition. The end pulse can come immediately after the last data byte, 
-but it must occur within 80 microseconds of the last data byte. If it does not, 
-an error condition is generated.
-
-A small amount of time must pass before another transmission can begin. 
-Devices must wait minimally 100 microseconds plus a randomly generated backoff value 
-so that multiple devices do not initiate transmission at precisely the same time. 
-It is therefore extremely important that all devices have some randomness in their transmission sequence
-to reduce the likelihood of data loss.
-
-A complete Jacdac transmission and the beginning of another are captured in the image below.
-
-TODO: the picture uses outdated delays.
-
-![An image depicting a Jacdac transmission. A Jacdac transmission begins with a start pulse of 11-14 us, a inter lo data spacing of minimally 50 us before data commences. A Jacdac transmission ends with an end pulse of 11-14 us.](../images/jacdac-activity.png)
-
-#### Hardware requirements
-
-As yet, there is no silicon implementation of Jacdac SWS. 
-However, the diversity of readily-available microcontrollers and the flexibility of
-typical UART hardware means there are many ways to reach a specification compliant 
-Jacdac SWS implementation. It is also possible to implement Jacdac SWS by bit-banging, 
-if UART hardware is not available.
-
-To recap, Jacdac SWS requires the following basic functionality:
-
-* Transmitting / receiving UART-style (10 bits: 1 byte, 1 stop bit, 1 start bit) bytes 
-at 1Mbaud in half-duplex mode, implemented in hardware or in software via bit-banging.
-* A GPIO with an internal or external 300k pull-up and support for interrupts, 
-implemented in hardware or in software by spin waiting.
-* The ability to keep time (whether through instruction counting or a hardware timer).
-* The ability to generate random numbers, or at least seed a software random number generator.
-
-<!--
-We enumerate a few of the options we have explored below.
-
-#### 32-bit ARM processors
-
-Many ARM processors come with DMA-able (Direct Memory Access) UART peripherals. This means that no CPU intervention is required to send or receive UART data. Many of these processors also support half-duplex mode and internally tie RX to TX together when this mode is selected. For microcontrollers that do not support internal ties, these pins can usually be connected to each other externally for the same effect. Internal pull ups and timers often also come built into this class of microcontroller.
-
-Jacdac has been implemented on the following 32-bit ARM processors:
-
-* Atmel SAMD21, SAMD51
-* Nordic NRF52832, NRF52833, NRF52840
-* STM 32F0, 32F1, 32F4
-
-#### 8-bit processors
-
-8-bit processors are typically not as capable as 32-bit ARM processors, but they are often cheaper. Throughout the design of Jacdac we have considered this class of processor and have implemented Jacdac on 8-bit processors with and without UART support. Through a software UART implementation via the PADAUK PMS150C, Jacdac can be added to any sensor at the cost of 2.5 US cents.-->
-
-#### Transmission sequence
-
-1. Place GPIO in high impedance input mode.
-2. Check to see if the line is low.
-   - If the line is already low, start the reception sequence instead.
-3. Place GPIO pin in output mode
-4. Pulse the line low for 11––15 microseconds.
-5. Configure the UART peripheral with the correct baud rate and begin transmitting data after (minimally) 40 microseconds.
-
-
-#### Reception sequence
-
-1. Place GPIO in high impedance input mode with a PullUp.
-2. Enable GPIO edge interrupts, UART break interrupts, or spin wait until the line goes low.
-3. When the start pulse has finished, configure UART registers appropriately. It is better to wait until the start pulse is complete as in some cases UART hardware may incorrectly detect a data byte or trigger an error condition.
-4. Receive data until the end pulse is detected.
-
-#### Error detection
-
-The image and table below captures key timings of Jacdac SWS.
-
-![An image depicting a Jacdac transmission with portions of the signal labelled, A-F.](../images/jacdac-proto-timings.png)
-
-| Identifier 	| Name 	| Duration min/max (us) 	|
-|------------	|-------------	|----------	|
-| A          	|Start pulse	|11/15	|
-| B          	|Start-data gap	|60/89	|
-| C          	|Data-byte gap	|0/80	|
-| D          	|Data-end gap	|0/80	|
-| E          	|End pulse	|11/15	|
-| F          	|Frame-to-frame gap	|200/	|
-
-The state machine below encapsulates how these timings should be used during frame reception:
-
-![An image depicting the state machine to be used when receiving a Jacdac packet. Whenever any timing is exceeded, the device should wait for the frame-to-frame gap to elapse before listening for another packet.](../images/jacdac-state-diagram.png)
-
-
-#### Frames
+### Frames
 
 Jacdac devices communicate over the Jacdac bus via frames. A frame
 contains a device identifier and one or more packets and has the following structure:
@@ -480,7 +359,7 @@ On the wire, the frame must be transmitted in little endian format (i.e. low byt
 | 4 | 8          	|`device_identifier`	| 64-bit device identifier.	|
 | 12 | 1 * `frame_size `  	|`data`	| The data payload of the frame.	|
 
-### Frame flags
+#### Frame flags
 
 The `frame_flags` field is used to indicate
 

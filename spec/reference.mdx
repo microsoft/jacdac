@@ -22,7 +22,7 @@ requirements that improve interoperability at the hardware level.
 
 ![OSI 7 layer stack vs Jacdac stack](./images/osi-and-jacdac-stack.png)
 
-A Jacdac device is any device that exposes the [Jacdac PCB edge connector](/reference/connector/)
+A Jacdac device is any device that exposes the [Jacdac PCB edge connector](/ddk/connector/)
 and implements the Jacdac protocol.
 As illustrated above, the protocol consists of three core software/firmware layers and several hardware layers.
 An overview of these is given below, followed by detailed descriptions of each layer.
@@ -112,7 +112,7 @@ and with two hundred thousand networks it's more than 60%.
 
 ### Network interface layer: low level data transfer between Jacdac devices
 
-Jacdac devices with a [Jacdac PCB edge connector](/reference/connector/)
+Jacdac devices with a [Jacdac PCB edge connector](/ddk/connector/)
 must run the Jacdac network interface protocol, which is a variant of
 single wire serial (SWS) communications. This protocol was designed to be resource
 efficient, enabling it to be implemented on low cost microcontrollers right down to

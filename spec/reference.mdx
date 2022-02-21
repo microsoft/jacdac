@@ -6,15 +6,16 @@ title: Reference
 # Reference - overview
 
 Jacdac is an integrated hardware and software stack
-that makes it easier to connect low cost microcontrollers
-and sensors together. It also provides a bridge from the embedded
-world to the web browser and beyond. Key features of Jacdac are:
+that makes it easier to connect programmable microcontrollers,
+sensors, actuators, and peripherals together. It also provides a 
+bridge from the embedded world to the web browser and beyond. 
+Key features of Jacdac are:
 
--   a dedicated 3-wire cable and connector,
--   a true bus topology,
--   service advertisement and dynamic device discovery,
--   a standardized service abstraction,
--   a full stack that supports platforms from 8 bit MCUs to web development.
+-   a dedicated 3-wire cable and connector
+-   a true bus topology
+-   service advertisement and dynamic device discovery
+-   a standardized service abstraction
+-   a full stack that supports platforms from 8-bit MCUs to web development.
 
 In addition to the functionality provided by common networking
 stacks, the Jacdac protocol specifies electrical and mechanical
@@ -22,16 +23,16 @@ requirements that improve interoperability at the hardware level.
 
 ![OSI 7 layer stack vs Jacdac stack](./images/osi-and-jacdac-stack.png)
 
-A Jacdac device is any device that exposes the [Jacdac PCB edge connector](/ddk/connector/)
-and implements the Jacdac protocol.
-As illustrated above, the protocol consists of three core software/firmware layers and several hardware layers.
+A Jacdac [device](/devices) is any device that exposes the [Jacdac PCB edge connector](/ddk/connector/)
+and implements the Jacdac protocol. As illustrated above, the protocol consists of three 
+core software/firmware layers and several hardware layers.
 An overview of these is given below, followed by detailed descriptions of each layer.
 
 ## Overview
 
 ### Service layer: how devices share hardware and software resources with one another
 
-The way Jacdac devices share resources with other devices on the bus are through **services**.
+The way Jacdac devices share resources with other devices on the bus are through [services](/services)
 Services provide abstract, standardized interfaces that can be used to interact with
 physical hardware resources (e.g. an accelerometer) or pure virtual resources
 (e.g. the state of a video game). This abstraction brings plug-and-play dynamism to
@@ -40,7 +41,7 @@ can be substituted without having to recompile the application that uses them. F
 two different models of accelerometer hardware can replace each other
 because they share the same software interface.
 
-Any device that hosts a service must also run the control service.
+Any device that hosts a service must also run the [control service](/services/control).
 The control service is responsible for advertising any services a device
 is running every 500 milliseconds. Like any other service,
 the packets emitted by the control service are standardized.
@@ -48,24 +49,20 @@ There also a set of common commands that must be implemented by Jacdac devices t
 including functionality like `reset` and `time since boot`.
 
 Most Jacdac users will never need to write a service: the major use case is for users
-to write applications that interact with Jacdac devices and services.
+to [program applications](/clients) that interact with Jacdac devices and services.
 Using Jacdac in microcontroller applications is incredibly easy and only
 requires a software stack that has a compatible Jacdac physical layer.
 
 Services are registered in the [service catalog](/services/)
-and described by [service specifications](/reference/service-specification/).
+and are described by [service specifications](/reference/service-specification/).
 
 [Read more about the service layer.](/reference/protocol#service-layer)
 
 ### Transport layer: responsible for routing packets between services and applications
 
-Fundamentally, the role of the Jacdac transport layer is to
+The role of the Jacdac transport layer is to
 divide frames received by the network interface layer into data packets
-and to forward them to the appropriate service
-or user application.
-
-<!-- At this point, services and applications can use packets to perform actions based on new data. -->
-
+and to forward them to the appropriate service or user application.
 The transport layer integrates functionality that is split across multiple layers
 in other networking stacks, in order to improve efficiency.
 It includes naming, addressing, packet description, dynamic service discovery,
@@ -118,10 +115,6 @@ single wire serial (SWS) communications. This protocol was designed to be resour
 efficient, enabling it to be implemented on low cost microcontrollers right down to
 8 bit one-time-programmable units with tens of bytes of RAM and hundreds of words
 of instruction memory.
-
-<!-- Frames contain one or more packets, and packets contain a service command or report.
-Frames also have addressing metadata embedded inside them that the transport
-layer uses to route packets correctly. -->
 
 To support interoperability with existing devices and protocols without
 native Jacdac support, it is possible to substitute the Jacdac network interface

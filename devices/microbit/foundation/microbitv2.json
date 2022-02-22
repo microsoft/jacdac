@@ -3,7 +3,7 @@
     "name": "micro:bit V2",
     "company": "microbit foundation",
     "description": "The new micro:bit V2 has a built-in microphone and speaker to allow sound-sensing and sound-making without the need to attach another device. It also introduces capacitive touch sensing, a power-saving mode and more computing power for the classroom.",
-    "link": "https://microsoft.github.io/jacdac-docs/hardware/kit/oob/",
+    "link": "https://microsoft.github.io/jacdac-docs/overview/kit/oob/",
     "services": [],
     "productIdentifiers": [854992189],
     "transport": {

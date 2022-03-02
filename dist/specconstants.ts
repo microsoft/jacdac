@@ -1619,10 +1619,10 @@ export enum GamepadVariant { // uint8_t
 
 export enum GamepadReg {
     /**
-     * If the joystick is analog, the directional buttons should be "simulated", based on joystick position
+     * If the gamepad is analog, the directional buttons should be "simulated", based on gamepad position
      * (`Left` is `{ x = -1, y = 0 }`, `Up` is `{ x = 0, y = -1}`).
-     * If the joystick is digital, then each direction will read as either `-1`, `0`, or `1` (in fixed representation).
-     * The primary button on the joystick is `A`.
+     * If the gamepad is digital, then each direction will read as either `-1`, `0`, or `1` (in fixed representation).
+     * The primary button on the gamepad is `A`.
      *
      * ```
      * const [buttons, x, y] = jdunpack<[GamepadButtons, number, number]>(buf, "u32 i1.15 i1.15")
@@ -1631,7 +1631,7 @@ export enum GamepadReg {
     Direction = 0x101,
 
     /**
-     * Constant Variant (uint8_t). The type of physical joystick.
+     * Constant Variant (uint8_t). The type of physical gamepad.
      *
      * ```
      * const [variant] = jdunpack<[GamepadVariant]>(buf, "u8")
@@ -1640,9 +1640,9 @@ export enum GamepadReg {
     Variant = 0x107,
 
     /**
-     * Constant Buttons (uint32_t). Indicates a bitmask of the buttons that are mounted on the joystick.
-     * If the `Left`/`Up`/`Right`/`Down` buttons are marked as available here, the joystick is digital.
-     * Even when marked as not available, they will still be simulated based on the analog joystick.
+     * Constant Buttons (uint32_t). Indicates a bitmask of the buttons that are mounted on the gamepad.
+     * If the `Left`/`Up`/`Right`/`Down` buttons are marked as available here, the gamepad is digital.
+     * Even when marked as not available, they will still be simulated based on the analog gamepad.
      *
      * ```
      * const [buttonsAvailable] = jdunpack<[GamepadButtons]>(buf, "u32")

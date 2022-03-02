@@ -6,7 +6,7 @@
     tags: 8bit, padauk
     status: rc
 
-A two axis directional joystick with optional buttons.
+A two axis directional gamepad with optional buttons.
 
 ## Registers
 
@@ -30,10 +30,10 @@ A two axis directional joystick with optional buttons.
         y: i1.15 /
     }
 
-If the joystick is analog, the directional buttons should be "simulated", based on joystick position
+If the gamepad is analog, the directional buttons should be "simulated", based on gamepad position
 (`Left` is `{ x = -1, y = 0 }`, `Up` is `{ x = 0, y = -1}`).
-If the joystick is digital, then each direction will read as either `-1`, `0`, or `1` (in fixed representation).
-The primary button on the joystick is `A`.
+If the gamepad is digital, then each direction will read as either `-1`, `0`, or `1` (in fixed representation).
+The primary button on the gamepad is `A`.
 
     enum Variant : u8 {
         Thumb = 1
@@ -43,13 +43,13 @@ The primary button on the joystick is `A`.
     }
     const variant?: Variant @ variant
 
-The type of physical joystick.
+The type of physical gamepad.
 
     const buttons_available: Buttons @ 0x180
 
-Indicates a bitmask of the buttons that are mounted on the joystick.
-If the `Left`/`Up`/`Right`/`Down` buttons are marked as available here, the joystick is digital.
-Even when marked as not available, they will still be simulated based on the analog joystick.
+Indicates a bitmask of the buttons that are mounted on the gamepad.
+If the `Left`/`Up`/`Right`/`Down` buttons are marked as available here, the gamepad is digital.
+Even when marked as not available, they will still be simulated based on the analog gamepad.
 
 ## Events
 

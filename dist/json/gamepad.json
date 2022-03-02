@@ -9,7 +9,7 @@
     "_sensor"
   ],
   "notes": {
-    "short": "A two axis directional joystick with optional buttons."
+    "short": "A two axis directional gamepad with optional buttons."
   },
   "classIdentifier": 277836886,
   "enums": {
@@ -197,7 +197,7 @@
       "kind": "ro",
       "name": "direction",
       "identifier": 257,
-      "description": "If the joystick is analog, the directional buttons should be \"simulated\", based on joystick position\n(`Left` is `{ x = -1, y = 0 }`, `Up` is `{ x = 0, y = -1}`).\nIf the joystick is digital, then each direction will read as either `-1`, `0`, or `1` (in fixed representation).\nThe primary button on the joystick is `A`.",
+      "description": "If the gamepad is analog, the directional buttons should be \"simulated\", based on gamepad position\n(`Left` is `{ x = -1, y = 0 }`, `Up` is `{ x = 0, y = -1}`).\nIf the gamepad is digital, then each direction will read as either `-1`, `0`, or `1` (in fixed representation).\nThe primary button on the gamepad is `A`.",
       "fields": [
         {
           "name": "buttons",
@@ -227,7 +227,7 @@
       "kind": "const",
       "name": "variant",
       "identifier": 263,
-      "description": "The type of physical joystick.",
+      "description": "The type of physical gamepad.",
       "fields": [
         {
           "name": "_",
@@ -243,7 +243,7 @@
       "kind": "const",
       "name": "buttons_available",
       "identifier": 384,
-      "description": "Indicates a bitmask of the buttons that are mounted on the joystick.\nIf the `Left`/`Up`/`Right`/`Down` buttons are marked as available here, the joystick is digital.\nEven when marked as not available, they will still be simulated based on the analog joystick.",
+      "description": "Indicates a bitmask of the buttons that are mounted on the gamepad.\nIf the `Left`/`Up`/`Right`/`Down` buttons are marked as available here, the gamepad is digital.\nEven when marked as not available, they will still be simulated based on the analog gamepad.",
       "fields": [
         {
           "name": "_",

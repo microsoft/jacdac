@@ -5,7 +5,7 @@
     group: button
     status: deprecated
 
-This service is deprecated in favor or `joystick`; it is currently used by the micro:bit Arcade smart shield though.
+This service is deprecated in favor or `gamepad`; it is currently used by the micro:bit Arcade smart shield though.
 A gamepad with direction and action buttons for one player.
 If a device has multiple controllers, it should have multiple gamepad services, using consecutive service identifiers.
 

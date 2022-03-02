@@ -25,10 +25,10 @@
 #define JD_GAMEPAD_VARIANT_GAMEPAD 0x4
 
 /**
- * If the joystick is analog, the directional buttons should be "simulated", based on joystick position
+ * If the gamepad is analog, the directional buttons should be "simulated", based on gamepad position
  * (`Left` is `{ x = -1, y = 0 }`, `Up` is `{ x = 0, y = -1}`).
- * If the joystick is digital, then each direction will read as either `-1`, `0`, or `1` (in fixed representation).
- * The primary button on the joystick is `A`.
+ * If the gamepad is digital, then each direction will read as either `-1`, `0`, or `1` (in fixed representation).
+ * The primary button on the gamepad is `A`.
  */
 #define JD_GAMEPAD_REG_DIRECTION JD_REG_READING
 typedef struct jd_gamepad_direction {
@@ -39,14 +39,14 @@ typedef struct jd_gamepad_direction {
 
 
 /**
- * Constant Variant (uint8_t). The type of physical joystick.
+ * Constant Variant (uint8_t). The type of physical gamepad.
  */
 #define JD_GAMEPAD_REG_VARIANT JD_REG_VARIANT
 
 /**
- * Constant Buttons (uint32_t). Indicates a bitmask of the buttons that are mounted on the joystick.
- * If the `Left`/`Up`/`Right`/`Down` buttons are marked as available here, the joystick is digital.
- * Even when marked as not available, they will still be simulated based on the analog joystick.
+ * Constant Buttons (uint32_t). Indicates a bitmask of the buttons that are mounted on the gamepad.
+ * If the `Left`/`Up`/`Right`/`Down` buttons are marked as available here, the gamepad is digital.
+ * Even when marked as not available, they will still be simulated based on the analog gamepad.
  */
 #define JD_GAMEPAD_REG_BUTTONS_AVAILABLE 0x180
 

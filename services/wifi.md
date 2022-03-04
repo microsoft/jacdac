@@ -105,6 +105,10 @@ Return list of known WiFi networks.
 
 ## Registers
 
+    ro rssi: i8 dB {typical_min = -128, typical_max = -20} @ reading
+
+Current signal strength. Returns -128 when not connected.
+
     rw enabled: bool @ intensity
 
 Determines whether the WiFi radio is enabled. It starts enabled upon reset.
@@ -121,10 +125,6 @@ The 6-byte MAC address of the device. If a device does MAC address randomization
 
 SSID of the access-point to which device is currently connected.
 Empty string if not connected.
-
-    ro volatile rssi: i8 dB {typical_min = -128, typical_max = -20} @ 0x184
-
-Current signal strength. Returns -128 when not connected.
 
 ## Events
 

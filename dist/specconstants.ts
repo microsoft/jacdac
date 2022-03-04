@@ -4993,6 +4993,15 @@ export enum WifiCmd {
 
 export enum WifiReg {
     /**
+     * Read-only dB int8_t. Current signal strength. Returns -128 when not connected.
+     *
+     * ```
+     * const [rssi] = jdunpack<[number]>(buf, "i8")
+     * ```
+     */
+    Rssi = 0x101,
+
+    /**
      * Read-write bool (uint8_t). Determines whether the WiFi radio is enabled. It starts enabled upon reset.
      *
      * ```
@@ -5028,15 +5037,6 @@ export enum WifiReg {
      * ```
      */
     Ssid = 0x183,
-
-    /**
-     * Read-only dB int8_t. Current signal strength. Returns -128 when not connected.
-     *
-     * ```
-     * const [rssi] = jdunpack<[number]>(buf, "i8")
-     * ```
-     */
-    Rssi = 0x184,
 }
 
 export enum WifiEvent {

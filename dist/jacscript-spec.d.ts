@@ -1039,11 +1039,11 @@ declare class WifiRole extends Role {
     setNetworkPriority(priority: number, ssid: string): void
     scan(): void
     listKnownNetworks(results: number): void
+    rssi: JDRegisterNum
     enabled: JDRegisterNum
     ipAddress: JDRegisterNum
     eui48: JDRegisterNum
     ssid: JDRegisterString
-    rssi: JDRegisterNum
     gotIp: JDEvent
     lostIp: JDEvent
     scanComplete: JDEvent

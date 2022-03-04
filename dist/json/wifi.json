@@ -304,6 +304,26 @@
       "packFormat": "i16 i16 s"
     },
     {
+      "kind": "ro",
+      "name": "rssi",
+      "identifier": 257,
+      "description": "Current signal strength. Returns -128 when not connected.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "dB",
+          "type": "i8",
+          "storage": -1,
+          "isSimpleType": true,
+          "typicalMin": -128,
+          "typicalMax": -20
+        }
+      ],
+      "volatile": true,
+      "identifierName": "reading",
+      "packFormat": "i8"
+    },
+    {
       "kind": "rw",
       "name": "enabled",
       "identifier": 1,
@@ -364,25 +384,6 @@
         }
       ],
       "packFormat": "s[32]"
-    },
-    {
-      "kind": "ro",
-      "name": "rssi",
-      "identifier": 388,
-      "description": "Current signal strength. Returns -128 when not connected.",
-      "fields": [
-        {
-          "name": "_",
-          "unit": "dB",
-          "type": "i8",
-          "storage": -1,
-          "isSimpleType": true,
-          "typicalMin": -128,
-          "typicalMax": -20
-        }
-      ],
-      "volatile": true,
-      "packFormat": "i8"
     },
     {
       "kind": "event",

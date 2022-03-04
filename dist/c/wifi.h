@@ -100,6 +100,11 @@ typedef struct jd_wifi_network_results {
 
 
 /**
+ * Read-only dB int8_t. Current signal strength. Returns -128 when not connected.
+ */
+#define JD_WIFI_REG_RSSI JD_REG_READING
+
+/**
  * Read-write bool (uint8_t). Determines whether the WiFi radio is enabled. It starts enabled upon reset.
  */
 #define JD_WIFI_REG_ENABLED JD_REG_INTENSITY
@@ -119,11 +124,6 @@ typedef struct jd_wifi_network_results {
  * Empty string if not connected.
  */
 #define JD_WIFI_REG_SSID 0x183
-
-/**
- * Read-only dB int8_t. Current signal strength. Returns -128 when not connected.
- */
-#define JD_WIFI_REG_RSSI 0x184
 
 /**
  * Emitted upon successful join and IP address assignment.

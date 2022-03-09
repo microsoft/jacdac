@@ -9,7 +9,7 @@
     "_sensor"
   ],
   "notes": {
-    "short": "This service is deprecated in favor or `gamepad`; it is currently used by the micro:bit Arcade smart shield though.\nA gamepad with direction and action buttons for one player.\nIf a device has multiple controllers, it should have multiple gamepad services, using consecutive service identifiers."
+    "short": "This service is deprecated in favor of `gamepad` (although it is currently used by the micro:bit Arcade smart shield).\nA gamepad with direction and action buttons for one player.\nIf a device has multiple controllers, it should have multiple gamepad services, using consecutive service identifiers."
   },
   "classIdentifier": 501915758,
   "enums": {

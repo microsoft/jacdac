@@ -4381,7 +4381,7 @@ export enum SwitchVariant { // uint8_t
     Toggle = 0x5,
     Proximity = 0x6,
     Magnetic = 0x7,
-    FootPedal = 0x8,
+    FootButton = 0x8,
 }
 
 export enum SwitchReg {
@@ -4402,16 +4402,6 @@ export enum SwitchReg {
      * ```
      */
     Variant = 0x107,
-
-    /**
-     * Constant s u22.10 (uint32_t). Specifies the delay without activity to automatically turn off after turning on.
-     * For example, some light switches in staircases have such a capability.
-     *
-     * ```
-     * const [autoOffDelay] = jdunpack<[number]>(buf, "u22.10")
-     * ```
-     */
-    AutoOffDelay = 0x180,
 }
 
 export enum SwitchEvent {

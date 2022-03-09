@@ -12,7 +12,7 @@
 #define JD_SWITCH_VARIANT_TOGGLE 0x5
 #define JD_SWITCH_VARIANT_PROXIMITY 0x6
 #define JD_SWITCH_VARIANT_MAGNETIC 0x7
-#define JD_SWITCH_VARIANT_FOOT_PEDAL 0x8
+#define JD_SWITCH_VARIANT_FOOT_BUTTON 0x8
 
 /**
  * Read-only bool (uint8_t). Indicates whether the switch is currently active (on).
@@ -23,12 +23,6 @@
  * Constant Variant (uint8_t). Describes the type of switch used.
  */
 #define JD_SWITCH_REG_VARIANT JD_REG_VARIANT
-
-/**
- * Constant s u22.10 (uint32_t). Specifies the delay without activity to automatically turn off after turning on.
- * For example, some light switches in staircases have such a capability.
- */
-#define JD_SWITCH_REG_AUTO_OFF_DELAY 0x180
 
 /**
  * Emitted when switch goes from `off` to `on`.

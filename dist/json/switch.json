@@ -24,7 +24,7 @@
         "Toggle": 5,
         "Proximity": 6,
         "Magnetic": 7,
-        "FootPedal": 8
+        "FootButton": 8
       }
     }
   },
@@ -209,23 +209,6 @@
       "optional": true,
       "identifierName": "variant",
       "packFormat": "u8"
-    },
-    {
-      "kind": "const",
-      "name": "auto_off_delay",
-      "identifier": 384,
-      "description": "Specifies the delay without activity to automatically turn off after turning on.\nFor example, some light switches in staircases have such a capability.",
-      "fields": [
-        {
-          "name": "_",
-          "unit": "s",
-          "shift": 10,
-          "type": "u22.10",
-          "storage": 4
-        }
-      ],
-      "optional": true,
-      "packFormat": "u22.10"
     },
     {
       "kind": "event",

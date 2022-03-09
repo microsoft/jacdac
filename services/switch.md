@@ -22,16 +22,11 @@ Indicates whether the switch is currently active (on).
         Toggle = 5
         Proximity = 6
         Magnetic = 7
-        FootPedal = 8
+        FootButton = 8
     }
     const variant?: Variant @ variant
 
 Describes the type of switch used.
-
-    const auto_off_delay?: u22.10 s @ 0x180
-
-Specifies the delay without activity to automatically turn off after turning on.
-For example, some light switches in staircases have such a capability.
 
 ## Events
 

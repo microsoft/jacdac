@@ -913,7 +913,6 @@ declare namespace roles {
 declare class SwitchRole extends SensorRole {
     active: JDRegisterNum
     variant: JDRegisterNum
-    autoOffDelay: JDRegisterNum
     on: JDEvent
     off: JDEvent
 }

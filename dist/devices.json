@@ -627,6 +627,23 @@
     "version": "2.0"
   },
   {
+    "id": "microsoft-research-jmhallmagneticswitch81v40",
+    "name": "JM-Hall (magnetic switch)",
+    "company": "Microsoft Research",
+    "description": "JM-Hall (magnetic switch) 81 v4.0",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v4.0/profile/hall-81.c",
+    "link": "",
+    "services": [
+      450008066
+    ],
+    "productIdentifiers": [
+      920333141
+    ],
+    "version": "4.0",
+    "designIdentifier": "81"
+  },
+  {
     "id": "microsoft-research-jmhapticmach101v10",
     "name": "JM Haptic MACH-1.0",
     "company": "Microsoft Research",
@@ -738,6 +755,23 @@
     ],
     "productIdentifiers": [],
     "status": "deprecated"
+  },
+  {
+    "id": "microsoft-research-jmmatrix87v40",
+    "name": "JM-Matrix",
+    "company": "Microsoft Research",
+    "description": "5x5 LED dot matrix",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v4.0matrix/profile/matrix-87.c",
+    "link": "",
+    "services": [
+      286070091
+    ],
+    "productIdentifiers": [
+      896568761
+    ],
+    "version": "4.0",
+    "designIdentifier": "87"
   },
   {
     "id": "microsoft-research-jmmicrobitshieldlp29v05",
@@ -944,6 +978,23 @@
     "version": "1.0"
   },
   {
+    "id": "microsoft-research-jmrgb883v40",
+    "name": "JM RGB-8",
+    "company": "Microsoft Research",
+    "description": "Circular 8 programmable LED display.",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v4.0/profile/rgb-83.c",
+    "link": "",
+    "services": [
+      369743088
+    ],
+    "productIdentifiers": [
+      1050545633
+    ],
+    "version": "4.0",
+    "designIdentifier": "83"
+  },
+  {
     "id": "microsoft-research-jmrgbledbar58v01",
     "name": "JM RGB LED Bar",
     "company": "Microsoft Research",
@@ -1040,6 +1091,24 @@
     ],
     "version": "3.7",
     "designIdentifier": "67"
+  },
+  {
+    "id": "microsoft-research-jmrotarybtn82v40",
+    "name": "JM Rotary + Btn",
+    "company": "Microsoft Research",
+    "description": "Rotary encoder with button in the standard shape.",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v4.0rot/profile/rotary-82.c",
+    "link": "",
+    "services": [
+      284830153,
+      343122531
+    ],
+    "productIdentifiers": [
+      1045398971
+    ],
+    "version": "4.0",
+    "designIdentifier": "82"
   },
   {
     "id": "microsoft-research-jmrotarycontrolbuttonv10",

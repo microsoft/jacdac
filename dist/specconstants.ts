@@ -834,7 +834,7 @@ export enum BootloaderError { // uint32_t
 
 export enum BootloaderCmd {
     /**
-     * No args. The `service_class` is always `0x1ffa9948`. The `product_identifer` identifies the kind of firmware
+     * No args. The `service_class` is always `0x1ffa9948`. The `product_identifier` identifies the kind of firmware
      * that "fits" this device.
      */
     Info = 0x0,
@@ -842,7 +842,7 @@ export enum BootloaderCmd {
     /**
      * report Info
      * ```
-     * const [serviceClass, pageSize, flashableSize, productIdentifer] = jdunpack<[number, number, number, number]>(buf, "u32 u32 u32 u32")
+     * const [serviceClass, pageSize, flashableSize, productIdentifier] = jdunpack<[number, number, number, number]>(buf, "u32 u32 u32 u32")
      * ```
      */
 

@@ -8,7 +8,7 @@
     "_base"
   ],
   "notes": {
-    "short": "Allows flashing (reprogramming) devices over Jacdac."
+    "short": "Allows flashing (reprogramming) devices over Jacdac.\n\nThis is typically implemented by having a separate _bootloader_ mode, as opposed to _application_ mode\non the module to be flashed.\nThe bootloader mode is entered on every device reset, for about 300ms.\nThe bootloader will generally not announce itself, until it gets some command.\nOnce it gets the command, it will stay in application mode.\n\nTypically, you ask the module (in application mode) to reset, while sending broadcast\n`info` commands to all bootloaders every 100ms or so.\nAlternatively, you ask the the user to disconnect and re-connect the module, while\nbroadcasting `info` commands.\nThe second method works even if the application is damaged (eg., due to an aborted flash).\n\nWhen device is in bootloader mode, the device ID may change compared to application mode,\nby flipping the first bit in the first byte of the device identifier."
   },
   "classIdentifier": 536516936,
   "enums": {
@@ -118,7 +118,7 @@
       "kind": "command",
       "name": "info",
       "identifier": 0,
-      "description": "The `service_class` is always `0x1ffa9948`. The `product_identifer` identifies the kind of firmware\nthat \"fits\" this device.",
+      "description": "The `service_class` is always `0x1ffa9948`. The `product_identifier` identifies the kind of firmware\nthat \"fits\" this device.",
       "fields": [],
       "identifierName": "announce",
       "hasReport": true
@@ -127,7 +127,7 @@
       "kind": "report",
       "name": "info",
       "identifier": 0,
-      "description": "The `service_class` is always `0x1ffa9948`. The `product_identifer` identifies the kind of firmware\nthat \"fits\" this device.",
+      "description": "The `service_class` is always `0x1ffa9948`. The `product_identifier` identifies the kind of firmware\nthat \"fits\" this device.",
       "fields": [
         {
           "name": "service_class",
@@ -150,7 +150,7 @@
           "isSimpleType": true
         },
         {
-          "name": "product_identifer",
+          "name": "product_identifier",
           "type": "u32",
           "storage": 4,
           "isSimpleType": true

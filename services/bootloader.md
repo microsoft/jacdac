@@ -6,6 +6,21 @@
 
 Allows flashing (reprogramming) devices over Jacdac.
 
+This is typically implemented by having a separate _bootloader_ mode, as opposed to _application_ mode
+on the module to be flashed.
+The bootloader mode is entered on every device reset, for about 300ms.
+The bootloader will generally not announce itself, until it gets some command.
+Once it gets the command, it will stay in application mode.
+
+Typically, you ask the module (in application mode) to reset, while sending broadcast
+`info` commands to all bootloaders every 100ms or so.
+Alternatively, you ask the the user to disconnect and re-connect the module, while
+broadcasting `info` commands.
+The second method works even if the application is damaged (eg., due to an aborted flash).
+
+When device is in bootloader mode, the device ID may change compared to application mode,
+by flipping the first bit in the first byte of the device identifier.
+
 ## Commands
 
     command info @ announce { }
@@ -13,10 +28,10 @@ Allows flashing (reprogramming) devices over Jacdac.
         service_class: u32
         page_size: u32 B
         flashable_size: u32 B
-        product_identifer: u32
+        product_identifier: u32
     }
 
-The `service_class` is always `0x1ffa9948`. The `product_identifer` identifies the kind of firmware
+The `service_class` is always `0x1ffa9948`. The `product_identifier` identifies the kind of firmware
 that "fits" this device.
 
     command set_session @ 0x81 {

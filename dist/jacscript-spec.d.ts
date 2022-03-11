@@ -440,6 +440,22 @@ declare namespace roles {
     function jacscriptCondition(): JacscriptConditionRole
 }
 
+// Service: Jacscript Manager
+declare class JacscriptManagerRole extends Role {
+    deployBytecode(bytecode_size: number): void
+    readBytecode(bytecode: number): void
+    running: JDRegisterNum
+    autostart: JDRegisterNum
+    logging: JDRegisterNum
+    programSize: JDRegisterNum
+    programHash: JDRegisterNum
+    programPanic: JDEvent
+    programChange: JDEvent
+}
+declare namespace roles {
+    function jacscriptManager(): JacscriptManagerRole
+}
+
 // Service: LED
 declare class LedRole extends Role {
     animate(to_red: number, to_green: number, to_blue: number, speed: number): void

@@ -1562,7 +1562,9 @@ function upperCamel(name: string) {
 }
 
 export function snakify(name: string) {
-    return name?.replace(/([a-z])([A-Z])/g, (_, a, b) => a + "_" + b).replace(/\s+/g, "_")
+    return name
+        ?.replace(/([a-z])([A-Z])/g, (_, a, b) => a + "_" + b)
+        .replace(/\s+/g, "_")
 }
 
 export function dashify(name: string) {
@@ -2137,7 +2139,7 @@ export function normalizeDeviceSpecification(dev: jdspec.DeviceSpec) {
         tags: dev.tags,
         firmwares: dev.firmwares,
         version: dev.version ? dev.version.replace(/^v/, "") : undefined,
-        designIdentifier: dev.designIdentifier,
+        designIdentifier: dev.designIdentifier || undefined,
         bootloader: dev.bootloader,
         status: dev.status,
     }

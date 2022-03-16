@@ -2133,6 +2133,7 @@ export function normalizeDeviceSpecification(dev: jdspec.DeviceSpec) {
         firmwareSource: dev.firmwareSource,
         hardwareDesign: dev.hardwareDesign,
         link: dev.link,
+        storeLink: dev.storeLink,
         services: dev.services,
         productIdentifiers: productIdentifiers,
         transport: dev.transport,

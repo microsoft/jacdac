@@ -608,9 +608,14 @@ declare namespace jdspec {
         company: string
 
         /**
-         * A URL where the user can learn more about the device (and possibly buy it).
+         * A URL where the user can learn more about the device.
          */
         link?: string
+
+        /**
+         * A URL where the device can be purchased
+         */
+        storeLink?: string
 
         /**
          * A URL where the hardware design for the device resides

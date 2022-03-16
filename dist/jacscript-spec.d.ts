@@ -645,6 +645,17 @@ declare namespace roles {
     function power(): PowerRole
 }
 
+// Service: Power supply
+declare class PowerSupplyRole extends Role {
+    enabled: JDRegisterNum
+    outputVoltage: JDRegisterNum
+    minimumVoltage: JDRegisterNum
+    maximumVoltage: JDRegisterNum
+}
+declare namespace roles {
+    function powerSupply(): PowerSupplyRole
+}
+
 // Service: Pressure Button
 declare class PressureButtonRole extends Role {
     threshold: JDRegisterNum

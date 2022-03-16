@@ -3,7 +3,7 @@
     identifier: 0x1f40375f
     status: experimental
     
-A power supply with a static or variable voltage range
+A power supply with a fixed or variable voltage range
 
 ## Registers
 
@@ -17,9 +17,9 @@ The current output voltage of the power supply. Values provided must be in the r
 
     const minimum_voltage: i22.10 mV @ min_value
     
-The minimum output voltage of the power supply. For static power supplies, `minimum_voltage` should be equal to `maximum_voltage`.
+The minimum output voltage of the power supply. For fixed power supplies, `minimum_voltage` should be equal to `maximum_voltage`.
 
     const maximum_voltage: i22.10 mV @ max_value
     
-The maximum output voltage of the power supply. For static power supplies, `minimum_voltage` should be equal to `maximum_voltage`.
+The maximum output voltage of the power supply. For fixed power supplies, `minimum_voltage` should be equal to `maximum_voltage`.
 

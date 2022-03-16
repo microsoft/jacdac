@@ -8,7 +8,7 @@
     "_base"
   ],
   "notes": {
-    "short": "A power supply with a static or variable voltage range"
+    "short": "A power supply with a fixed or variable voltage range"
   },
   "classIdentifier": 524302175,
   "enums": {},
@@ -138,7 +138,7 @@
       "kind": "const",
       "name": "minimum_voltage",
       "identifier": 272,
-      "description": "The minimum output voltage of the power supply. For static power supplies, `minimum_voltage` should be equal to `maximum_voltage`.",
+      "description": "The minimum output voltage of the power supply. For fixed power supplies, `minimum_voltage` should be equal to `maximum_voltage`.",
       "fields": [
         {
           "name": "_",
@@ -155,7 +155,7 @@
       "kind": "const",
       "name": "maximum_voltage",
       "identifier": 273,
-      "description": "The maximum output voltage of the power supply. For static power supplies, `minimum_voltage` should be equal to `maximum_voltage`.",
+      "description": "The maximum output voltage of the power supply. For fixed power supplies, `minimum_voltage` should be equal to `maximum_voltage`.",
       "fields": [
         {
           "name": "_",

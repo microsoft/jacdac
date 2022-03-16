@@ -15,12 +15,12 @@
 #define JD_POWER_SUPPLY_REG_OUTPUT_VOLTAGE JD_REG_VALUE
 
 /**
- * Constant mV i22.10 (int32_t). The minimum output voltage of the power supply. For static power supplies, `minimum_voltage` should be equal to `maximum_voltage`.
+ * Constant mV i22.10 (int32_t). The minimum output voltage of the power supply. For fixed power supplies, `minimum_voltage` should be equal to `maximum_voltage`.
  */
 #define JD_POWER_SUPPLY_REG_MINIMUM_VOLTAGE JD_REG_MIN_VALUE
 
 /**
- * Constant mV i22.10 (int32_t). The maximum output voltage of the power supply. For static power supplies, `minimum_voltage` should be equal to `maximum_voltage`.
+ * Constant mV i22.10 (int32_t). The maximum output voltage of the power supply. For fixed power supplies, `minimum_voltage` should be equal to `maximum_voltage`.
  */
 #define JD_POWER_SUPPLY_REG_MAXIMUM_VOLTAGE JD_REG_MAX_VALUE
 

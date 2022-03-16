@@ -3265,7 +3265,7 @@ export enum PowerSupplyReg {
     OutputVoltage = 0x2,
 
     /**
-     * Constant mV i22.10 (int32_t). The minimum output voltage of the power supply. For static power supplies, `minimum_voltage` should be equal to `maximum_voltage`.
+     * Constant mV i22.10 (int32_t). The minimum output voltage of the power supply. For fixed power supplies, `minimum_voltage` should be equal to `maximum_voltage`.
      *
      * ```
      * const [minimumVoltage] = jdunpack<[number]>(buf, "i22.10")
@@ -3274,7 +3274,7 @@ export enum PowerSupplyReg {
     MinimumVoltage = 0x110,
 
     /**
-     * Constant mV i22.10 (int32_t). The maximum output voltage of the power supply. For static power supplies, `minimum_voltage` should be equal to `maximum_voltage`.
+     * Constant mV i22.10 (int32_t). The maximum output voltage of the power supply. For fixed power supplies, `minimum_voltage` should be equal to `maximum_voltage`.
      *
      * ```
      * const [maximumVoltage] = jdunpack<[number]>(buf, "i22.10")

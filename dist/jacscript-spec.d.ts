@@ -262,6 +262,15 @@ declare namespace roles {
     function control(): ControlRole
 }
 
+// Service: Current Measurement
+declare class CurrentMeasurementRole extends SensorRole {
+    measurementName: JDRegisterString
+    measurement: JDRegisterNum
+}
+declare namespace roles {
+    function currentMeasurement(): CurrentMeasurementRole
+}
+
 // Service: Dashboard
 declare class DashboardRole extends Role {
 }

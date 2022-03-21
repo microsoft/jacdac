@@ -68,16 +68,6 @@ declare namespace roles {
     function accelerometer(): AccelerometerRole
 }
 
-// Service: Analog Measurement
-declare class AnalogMeasurementRole extends SensorRole {
-    measurementType: JDRegisterNum
-    measurementName: JDRegisterString
-    measurement: JDRegisterNum
-}
-declare namespace roles {
-    function analogMeasurement(): AnalogMeasurementRole
-}
-
 // Service: Arcade Gamepad
 declare class ArcadeGamepadRole extends SensorRole {
     buttons: JDRegisterArray & { button: number, pressure: number }
@@ -1036,6 +1026,16 @@ declare class VibrationMotorRole extends Role {
 }
 declare namespace roles {
     function vibrationMotor(): VibrationMotorRole
+}
+
+// Service: Voltage Measurement
+declare class VoltageMeasurementRole extends SensorRole {
+    measurementType: JDRegisterNum
+    measurementName: JDRegisterString
+    measurement: JDRegisterNum
+}
+declare namespace roles {
+    function voltageMeasurement(): VoltageMeasurementRole
 }
 
 // Service: Water level

@@ -1,20 +1,20 @@
 {
-  "name": "Analog Measurement",
+  "name": "Voltage Measurement",
   "status": "experimental",
-  "shortId": "analogmeasurement",
-  "camelName": "analogMeasurement",
-  "shortName": "analogMeasurement",
+  "shortId": "voltagemeasurement",
+  "camelName": "voltageMeasurement",
+  "shortName": "voltageMeasurement",
   "extends": [
     "_base",
     "_sensor"
   ],
   "notes": {
-    "short": "A service that reports the output of an analog to digital converter (ADC)."
+    "short": "A service that reports a voltage measurement."
   },
   "classIdentifier": 372485145,
   "enums": {
-    "ADCMeasurementType": {
-      "name": "ADCMeasurementType",
+    "VoltageMeasurementType": {
+      "name": "VoltageMeasurementType",
       "storage": 1,
       "members": {
         "Absolute": 0,
@@ -180,7 +180,7 @@
       "fields": [
         {
           "name": "_",
-          "type": "ADCMeasurementType",
+          "type": "VoltageMeasurementType",
           "storage": 1
         }
       ],
@@ -204,7 +204,7 @@
       "kind": "ro",
       "name": "measurement",
       "identifier": 257,
-      "description": "The result of the ADC measurement.",
+      "description": "The voltage measurement.",
       "fields": [
         {
           "name": "_",

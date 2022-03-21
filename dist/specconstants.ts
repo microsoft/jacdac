@@ -463,43 +463,6 @@ export enum AccelerometerEvent {
     Force8g = 0x8a,
 }
 
-// Service Analog Measurement constants
-export const SRV_ANALOG_MEASUREMENT = 0x1633ac19
-
-export enum AnalogMeasurementADCMeasurementType { // uint8_t
-    Absolute = 0x0,
-    Differential = 0x1,
-}
-
-export enum AnalogMeasurementReg {
-    /**
-     * Constant ADCMeasurementType (uint8_t). The type of measurement that is taking place. Absolute results are measured with respect to ground, whereas differential results are measured against another signal that is not ground.
-     *
-     * ```
-     * const [measurementType] = jdunpack<[AnalogMeasurementADCMeasurementType]>(buf, "u8")
-     * ```
-     */
-    MeasurementType = 0x181,
-
-    /**
-     * Constant string (bytes). A string containing the net name that is being measured e.g. `POWER_DUT` or a reference e.g. `DIFF_DEV1_DEV2`. These constants can be used to identify a measurement from client code.
-     *
-     * ```
-     * const [measurementName] = jdunpack<[string]>(buf, "s")
-     * ```
-     */
-    MeasurementName = 0x182,
-
-    /**
-     * Read-only V f64 (uint64_t). The result of the ADC measurement.
-     *
-     * ```
-     * const [measurement] = jdunpack<[number]>(buf, "f64")
-     * ```
-     */
-    Measurement = 0x101,
-}
-
 // Service Arcade Gamepad constants
 export const SRV_ARCADE_GAMEPAD = 0x1deaa06e
 
@@ -4950,6 +4913,43 @@ export enum VibrationMotorCmd {
      * ```
      */
     Vibrate = 0x80,
+}
+
+// Service Voltage Measurement constants
+export const SRV_VOLTAGE_MEASUREMENT = 0x1633ac19
+
+export enum VoltageMeasurementVoltageMeasurementType { // uint8_t
+    Absolute = 0x0,
+    Differential = 0x1,
+}
+
+export enum VoltageMeasurementReg {
+    /**
+     * Constant VoltageMeasurementType (uint8_t). The type of measurement that is taking place. Absolute results are measured with respect to ground, whereas differential results are measured against another signal that is not ground.
+     *
+     * ```
+     * const [measurementType] = jdunpack<[VoltageMeasurementVoltageMeasurementType]>(buf, "u8")
+     * ```
+     */
+    MeasurementType = 0x181,
+
+    /**
+     * Constant string (bytes). A string containing the net name that is being measured e.g. `POWER_DUT` or a reference e.g. `DIFF_DEV1_DEV2`. These constants can be used to identify a measurement from client code.
+     *
+     * ```
+     * const [measurementName] = jdunpack<[string]>(buf, "s")
+     * ```
+     */
+    MeasurementName = 0x182,
+
+    /**
+     * Read-only V f64 (uint64_t). The voltage measurement.
+     *
+     * ```
+     * const [measurement] = jdunpack<[number]>(buf, "f64")
+     * ```
+     */
+    Measurement = 0x101,
 }
 
 // Service Water level constants

@@ -1,4 +1,4 @@
-# Voltage Measurement
+# DC Voltage Measurement
 
     identifier: 0x1633ac19
     status: experimental

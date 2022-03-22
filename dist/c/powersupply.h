@@ -10,17 +10,17 @@
 #define JD_POWER_SUPPLY_REG_ENABLED JD_REG_INTENSITY
 
 /**
- * Read-write mV i22.10 (int32_t). The current output voltage of the power supply. Values provided must be in the range `minimum_voltage` to `maximum_voltage`
+ * Read-write V f64 (uint64_t). The current output voltage of the power supply. Values provided must be in the range `minimum_voltage` to `maximum_voltage`
  */
 #define JD_POWER_SUPPLY_REG_OUTPUT_VOLTAGE JD_REG_VALUE
 
 /**
- * Constant mV i22.10 (int32_t). The minimum output voltage of the power supply. For fixed power supplies, `minimum_voltage` should be equal to `maximum_voltage`.
+ * Constant V f64 (uint64_t). The minimum output voltage of the power supply. For fixed power supplies, `minimum_voltage` should be equal to `maximum_voltage`.
  */
 #define JD_POWER_SUPPLY_REG_MINIMUM_VOLTAGE JD_REG_MIN_VALUE
 
 /**
- * Constant mV i22.10 (int32_t). The maximum output voltage of the power supply. For fixed power supplies, `minimum_voltage` should be equal to `maximum_voltage`.
+ * Constant V f64 (uint64_t). The maximum output voltage of the power supply. For fixed power supplies, `minimum_voltage` should be equal to `maximum_voltage`.
  */
 #define JD_POWER_SUPPLY_REG_MAXIMUM_VOLTAGE JD_REG_MAX_VALUE
 

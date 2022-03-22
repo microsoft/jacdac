@@ -262,20 +262,30 @@ declare namespace roles {
     function control(): ControlRole
 }
 
-// Service: Current Measurement
-declare class CurrentMeasurementRole extends SensorRole {
-    measurementName: JDRegisterString
-    measurement: JDRegisterNum
-}
-declare namespace roles {
-    function currentMeasurement(): CurrentMeasurementRole
-}
-
 // Service: Dashboard
 declare class DashboardRole extends Role {
 }
 declare namespace roles {
     function dashboard(): DashboardRole
+}
+
+// Service: DC Current Measurement
+declare class DCCurrentMeasurementRole extends SensorRole {
+    measurementName: JDRegisterString
+    measurement: JDRegisterNum
+}
+declare namespace roles {
+    function dCCurrentMeasurement(): DCCurrentMeasurementRole
+}
+
+// Service: DC Voltage Measurement
+declare class DCVoltageMeasurementRole extends SensorRole {
+    measurementType: JDRegisterNum
+    measurementName: JDRegisterString
+    measurement: JDRegisterNum
+}
+declare namespace roles {
+    function dCVoltageMeasurement(): DCVoltageMeasurementRole
 }
 
 // Service: Distance
@@ -1035,16 +1045,6 @@ declare class VibrationMotorRole extends Role {
 }
 declare namespace roles {
     function vibrationMotor(): VibrationMotorRole
-}
-
-// Service: Voltage Measurement
-declare class VoltageMeasurementRole extends SensorRole {
-    measurementType: JDRegisterNum
-    measurementName: JDRegisterString
-    measurement: JDRegisterNum
-}
-declare namespace roles {
-    function voltageMeasurement(): VoltageMeasurementRole
 }
 
 // Service: Water level

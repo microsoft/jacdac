@@ -1,4 +1,4 @@
-# Current Measurement
+# DC Current Measurement
 
     identifier: 0x1912c8ae
     status: experimental

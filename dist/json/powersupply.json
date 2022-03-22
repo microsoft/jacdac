@@ -125,14 +125,14 @@
       "fields": [
         {
           "name": "_",
-          "unit": "mV",
-          "shift": 10,
-          "type": "i22.10",
-          "storage": -4
+          "unit": "V",
+          "isFloat": true,
+          "type": "f64",
+          "storage": 8
         }
       ],
       "identifierName": "value",
-      "packFormat": "i22.10"
+      "packFormat": "f64"
     },
     {
       "kind": "const",
@@ -142,14 +142,14 @@
       "fields": [
         {
           "name": "_",
-          "unit": "mV",
-          "shift": 10,
-          "type": "i22.10",
-          "storage": -4
+          "unit": "V",
+          "isFloat": true,
+          "type": "f64",
+          "storage": 8
         }
       ],
       "identifierName": "min_value",
-      "packFormat": "i22.10"
+      "packFormat": "f64"
     },
     {
       "kind": "const",
@@ -159,14 +159,14 @@
       "fields": [
         {
           "name": "_",
-          "unit": "mV",
-          "shift": 10,
-          "type": "i22.10",
-          "storage": -4
+          "unit": "V",
+          "isFloat": true,
+          "type": "f64",
+          "storage": 8
         }
       ],
       "identifierName": "max_value",
-      "packFormat": "i22.10"
+      "packFormat": "f64"
     }
   ],
   "tags": []

@@ -1375,9 +1375,11 @@ export enum ControlReg {
     Uptime = 0x186,
 }
 
-// Service Current Measurement constants
-export const SRV_CURRENT_MEASUREMENT = 0x1912c8ae
-export enum CurrentMeasurementReg {
+// Service Dashboard constants
+export const SRV_DASHBOARD = 0x1be59107
+// Service DC Current Measurement constants
+export const SRV_D_CCURRENT_MEASUREMENT = 0x1912c8ae
+export enum DCCurrentMeasurementReg {
     /**
      * Constant string (bytes). A string containing the net name that is being measured e.g. `POWER_DUT` or a reference e.g. `DIFF_DEV1_DEV2`. These constants can be used to identify a measurement from client code.
      *
@@ -1397,8 +1399,43 @@ export enum CurrentMeasurementReg {
     Measurement = 0x101,
 }
 
-// Service Dashboard constants
-export const SRV_DASHBOARD = 0x1be59107
+// Service DC Voltage Measurement constants
+export const SRV_D_CVOLTAGE_MEASUREMENT = 0x1633ac19
+
+export enum DCVoltageMeasurementVoltageMeasurementType { // uint8_t
+    Absolute = 0x0,
+    Differential = 0x1,
+}
+
+export enum DCVoltageMeasurementReg {
+    /**
+     * Constant VoltageMeasurementType (uint8_t). The type of measurement that is taking place. Absolute results are measured with respect to ground, whereas differential results are measured against another signal that is not ground.
+     *
+     * ```
+     * const [measurementType] = jdunpack<[DCVoltageMeasurementVoltageMeasurementType]>(buf, "u8")
+     * ```
+     */
+    MeasurementType = 0x181,
+
+    /**
+     * Constant string (bytes). A string containing the net name that is being measured e.g. `POWER_DUT` or a reference e.g. `DIFF_DEV1_DEV2`. These constants can be used to identify a measurement from client code.
+     *
+     * ```
+     * const [measurementName] = jdunpack<[string]>(buf, "s")
+     * ```
+     */
+    MeasurementName = 0x182,
+
+    /**
+     * Read-only V f64 (uint64_t). The voltage measurement.
+     *
+     * ```
+     * const [measurement] = jdunpack<[number]>(buf, "f64")
+     * ```
+     */
+    Measurement = 0x101,
+}
+
 // Service Distance constants
 export const SRV_DISTANCE = 0x141a6b8a
 
@@ -3278,28 +3315,28 @@ export enum PowerSupplyReg {
     Enabled = 0x1,
 
     /**
-     * Read-write mV i22.10 (int32_t). The current output voltage of the power supply. Values provided must be in the range `minimum_voltage` to `maximum_voltage`
+     * Read-write V f64 (uint64_t). The current output voltage of the power supply. Values provided must be in the range `minimum_voltage` to `maximum_voltage`
      *
      * ```
-     * const [outputVoltage] = jdunpack<[number]>(buf, "i22.10")
+     * const [outputVoltage] = jdunpack<[number]>(buf, "f64")
      * ```
      */
     OutputVoltage = 0x2,
 
     /**
-     * Constant mV i22.10 (int32_t). The minimum output voltage of the power supply. For fixed power supplies, `minimum_voltage` should be equal to `maximum_voltage`.
+     * Constant V f64 (uint64_t). The minimum output voltage of the power supply. For fixed power supplies, `minimum_voltage` should be equal to `maximum_voltage`.
      *
      * ```
-     * const [minimumVoltage] = jdunpack<[number]>(buf, "i22.10")
+     * const [minimumVoltage] = jdunpack<[number]>(buf, "f64")
      * ```
      */
     MinimumVoltage = 0x110,
 
     /**
-     * Constant mV i22.10 (int32_t). The maximum output voltage of the power supply. For fixed power supplies, `minimum_voltage` should be equal to `maximum_voltage`.
+     * Constant V f64 (uint64_t). The maximum output voltage of the power supply. For fixed power supplies, `minimum_voltage` should be equal to `maximum_voltage`.
      *
      * ```
-     * const [maximumVoltage] = jdunpack<[number]>(buf, "i22.10")
+     * const [maximumVoltage] = jdunpack<[number]>(buf, "f64")
      * ```
      */
     MaximumVoltage = 0x111,
@@ -4935,43 +4972,6 @@ export enum VibrationMotorCmd {
      * ```
      */
     Vibrate = 0x80,
-}
-
-// Service Voltage Measurement constants
-export const SRV_VOLTAGE_MEASUREMENT = 0x1633ac19
-
-export enum VoltageMeasurementVoltageMeasurementType { // uint8_t
-    Absolute = 0x0,
-    Differential = 0x1,
-}
-
-export enum VoltageMeasurementReg {
-    /**
-     * Constant VoltageMeasurementType (uint8_t). The type of measurement that is taking place. Absolute results are measured with respect to ground, whereas differential results are measured against another signal that is not ground.
-     *
-     * ```
-     * const [measurementType] = jdunpack<[VoltageMeasurementVoltageMeasurementType]>(buf, "u8")
-     * ```
-     */
-    MeasurementType = 0x181,
-
-    /**
-     * Constant string (bytes). A string containing the net name that is being measured e.g. `POWER_DUT` or a reference e.g. `DIFF_DEV1_DEV2`. These constants can be used to identify a measurement from client code.
-     *
-     * ```
-     * const [measurementName] = jdunpack<[string]>(buf, "s")
-     * ```
-     */
-    MeasurementName = 0x182,
-
-    /**
-     * Read-only V f64 (uint64_t). The voltage measurement.
-     *
-     * ```
-     * const [measurement] = jdunpack<[number]>(buf, "f64")
-     * ```
-     */
-    Measurement = 0x101,
 }
 
 // Service Water level constants

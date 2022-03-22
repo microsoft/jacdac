@@ -1,27 +1,18 @@
 {
-  "name": "Voltage Measurement",
+  "name": "DC Current Measurement",
   "status": "experimental",
-  "shortId": "voltagemeasurement",
-  "camelName": "voltageMeasurement",
-  "shortName": "voltageMeasurement",
+  "shortId": "dccurrentmeasurement",
+  "camelName": "dCCurrentMeasurement",
+  "shortName": "dCCurrentMeasurement",
   "extends": [
     "_base",
     "_sensor"
   ],
   "notes": {
-    "short": "A service that reports a voltage measurement."
+    "short": "A service that reports a current measurement."
   },
-  "classIdentifier": 372485145,
-  "enums": {
-    "VoltageMeasurementType": {
-      "name": "VoltageMeasurementType",
-      "storage": 1,
-      "members": {
-        "Absolute": 0,
-        "Differential": 1
-      }
-    }
-  },
+  "classIdentifier": 420661422,
+  "enums": {},
   "constants": {},
   "packets": [
     {
@@ -174,20 +165,6 @@
     },
     {
       "kind": "const",
-      "name": "measurement_type",
-      "identifier": 385,
-      "description": "The type of measurement that is taking place. Absolute results are measured with respect to ground, whereas differential results are measured against another signal that is not ground.",
-      "fields": [
-        {
-          "name": "_",
-          "type": "VoltageMeasurementType",
-          "storage": 1
-        }
-      ],
-      "packFormat": "u8"
-    },
-    {
-      "kind": "const",
       "name": "measurement_name",
       "identifier": 386,
       "description": "A string containing the net name that is being measured e.g. `POWER_DUT` or a reference e.g. `DIFF_DEV1_DEV2`. These constants can be used to identify a measurement from client code.",
@@ -204,11 +181,11 @@
       "kind": "ro",
       "name": "measurement",
       "identifier": 257,
-      "description": "The voltage measurement.",
+      "description": "The current measurement.",
       "fields": [
         {
           "name": "_",
-          "unit": "V",
+          "unit": "A",
           "isFloat": true,
           "type": "f64",
           "storage": 8

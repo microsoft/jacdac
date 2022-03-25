@@ -1,5 +1,5 @@
 // Service Common registers and commands constants
-export const ANNOUNCE_INTERVAL = 0x1f4
+export const SYSTEM_ANNOUNCE_INTERVAL = 0x1f4
 
 export enum SystemReadingThreshold { // uint8_t
     Neutral = 0x1,
@@ -2369,7 +2369,7 @@ export enum LedReg {
 
 // Service LED Display constants
 export const SRV_LED_DISPLAY = 0x1609d4f0
-export const MAX_PIXELS_LENGTH = 0x40
+export const LED_DISPLAY_MAX_PIXELS_LENGTH = 0x40
 
 export enum LedDisplayLightType { // uint8_t
     WS2812B_GRB = 0x0,

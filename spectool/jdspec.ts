@@ -1916,11 +1916,14 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "cs") {
     }
     const pref = upperCamel(info.camelName)
     for (const cst in info.constants) {
+        const name = csharp
+            ? capitalize(info.camelName)
+            : `${snakify(info.camelName).toLocaleUpperCase()}_`
         const { value, hex } = info.constants[cst]
         r +=
             indent +
             (csharp ? indent : "") +
-            `${exportkw} const ${hex ? hexkw : numberkw}${
+            `${exportkw} const ${hex ? hexkw : numberkw}${name}${
                 csharp ? capitalize(camelize(cst)) : toUpper(cst)
             } = ${hex ? value.toString() : toHex(value)}${cskw}\n`
     }

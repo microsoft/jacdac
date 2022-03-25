@@ -1918,7 +1918,7 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "cs") {
     for (const cst in info.constants) {
         const name = csharp
             ? capitalize(info.camelName)
-            : `${snakify(info.camelName).toLocaleUpperCase()}_`
+            : `CONST_${snakify(info.camelName).toLocaleUpperCase()}_`
         const { value, hex } = info.constants[cst]
         r +=
             indent +

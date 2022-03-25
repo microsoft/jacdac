@@ -1,6 +1,6 @@
 namespace jacdac {
     // Service Common registers and commands constants
-    export const SYSTEM_ANNOUNCE_INTERVAL = 0x1f4
+    export const CONST_SYSTEM_ANNOUNCE_INTERVAL = 0x1f4
 
     export const enum SystemReadingThreshold { // uint8_t
         //% block="neutral"
@@ -2605,7 +2605,7 @@ namespace jacdac {
 namespace jacdac {
     // Service LED Display constants
     export const SRV_LED_DISPLAY = 0x1609d4f0
-    export const LED_DISPLAY_MAX_PIXELS_LENGTH = 0x40
+    export const CONST_LED_DISPLAY_MAX_PIXELS_LENGTH = 0x40
 
     export const enum LedDisplayLightType { // uint8_t
         //% block="ws2812b grb"

@@ -1,9 +1,9 @@
 {
-  "name": "Barometer",
+  "name": "Air Pressure",
   "status": "rc",
-  "shortId": "barometer",
-  "camelName": "barometer",
-  "shortName": "barometer",
+  "shortId": "airpressure",
+  "camelName": "airPressure",
+  "shortName": "airPressure",
   "extends": [
     "_base",
     "_sensor"

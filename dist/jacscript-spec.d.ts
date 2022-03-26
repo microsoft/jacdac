@@ -68,6 +68,15 @@ declare namespace roles {
     function accelerometer(): AccelerometerRole
 }
 
+// Service: Air Pressure
+declare class AirPressureRole extends SensorRole {
+    pressure: JDRegisterNum
+    pressureError: JDRegisterNum
+}
+declare namespace roles {
+    function airPressure(): AirPressureRole
+}
+
 // Service: Arcade Gamepad
 declare class ArcadeGamepadRole extends SensorRole {
     buttons: JDRegisterArray & { button: number, pressure: number }
@@ -113,15 +122,6 @@ declare class BarcodeReaderRole extends Role {
 }
 declare namespace roles {
     function barcodeReader(): BarcodeReaderRole
-}
-
-// Service: Barometer
-declare class BarometerRole extends SensorRole {
-    pressure: JDRegisterNum
-    pressureError: JDRegisterNum
-}
-declare namespace roles {
-    function barometer(): BarometerRole
 }
 
 // Service: bit:radio

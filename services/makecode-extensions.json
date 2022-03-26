@@ -14,6 +14,20 @@
     }
   },
   {
+    "service": "airpressure",
+    "client": {
+      "name": "jacdac-air-pressure",
+      "targets": [
+        "microbit",
+        "arcade",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/air-pressure",
+      "qName": "modules.AirPressureClient",
+      "default": "modules.airPressure"
+    }
+  },
+  {
     "service": "arcadegamepad",
     "client": {
       "name": "jacdac-arcade-gamepad",
@@ -37,20 +51,6 @@
       "repo": "microsoft/pxt-jacdac/azure-iot-hub-health",
       "qName": "modules.AzureIotHubHealthClient",
       "default": "modules.azureIotHubHealth"
-    }
-  },
-  {
-    "service": "barometer",
-    "client": {
-      "name": "jacdac-barometer",
-      "targets": [
-        "arcade",
-        "microbit",
-        "maker"
-      ],
-      "repo": "microsoft/pxt-jacdac/barometer",
-      "qName": "modules.BarometerClient",
-      "default": "modules.barometer"
     }
   },
   {

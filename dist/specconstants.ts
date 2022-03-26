@@ -463,6 +463,28 @@ export enum AccelerometerEvent {
     Force8g = 0x8a,
 }
 
+// Service Air Pressure constants
+export const SRV_AIR_PRESSURE = 0x1e117cea
+export enum AirPressureReg {
+    /**
+     * Read-only hPa u22.10 (uint32_t). The air pressure.
+     *
+     * ```
+     * const [pressure] = jdunpack<[number]>(buf, "u22.10")
+     * ```
+     */
+    Pressure = 0x101,
+
+    /**
+     * Read-only hPa u22.10 (uint32_t). The real pressure is between `pressure - pressure_error` and `pressure + pressure_error`.
+     *
+     * ```
+     * const [pressureError] = jdunpack<[number]>(buf, "u22.10")
+     * ```
+     */
+    PressureError = 0x106,
+}
+
 // Service Arcade Gamepad constants
 export const SRV_ARCADE_GAMEPAD = 0x1deaa06e
 
@@ -692,28 +714,6 @@ export enum BarcodeReaderEvent {
      * ```
      */
     Detect = 0x1,
-}
-
-// Service Barometer constants
-export const SRV_BAROMETER = 0x1e117cea
-export enum BarometerReg {
-    /**
-     * Read-only hPa u22.10 (uint32_t). The air pressure.
-     *
-     * ```
-     * const [pressure] = jdunpack<[number]>(buf, "u22.10")
-     * ```
-     */
-    Pressure = 0x101,
-
-    /**
-     * Read-only hPa u22.10 (uint32_t). The real pressure is between `pressure - pressure_error` and `pressure + pressure_error`.
-     *
-     * ```
-     * const [pressureError] = jdunpack<[number]>(buf, "u22.10")
-     * ```
-     */
-    PressureError = 0x106,
 }
 
 // Service bit:radio constants

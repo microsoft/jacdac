@@ -2,8 +2,8 @@
   "name": "DC Current Measurement",
   "status": "experimental",
   "shortId": "dccurrentmeasurement",
-  "camelName": "dCCurrentMeasurement",
-  "shortName": "dCCurrentMeasurement",
+  "camelName": "dcCurrentMeasurement",
+  "shortName": "dcCurrentMeasurement",
   "extends": [
     "_base",
     "_sensor"

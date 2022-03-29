@@ -3,6 +3,7 @@
     identifier: 0x1912c8ae
     status: experimental
     extends: _sensor
+    camel: dcCurrentMeasurement
     
 A service that reports a current measurement.
 

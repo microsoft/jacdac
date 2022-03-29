@@ -2,8 +2,8 @@
   "name": "DC Voltage Measurement",
   "status": "experimental",
   "shortId": "dcvoltagemeasurement",
-  "camelName": "dCVoltageMeasurement",
-  "shortName": "dCVoltageMeasurement",
+  "camelName": "dcVoltageMeasurement",
+  "shortName": "dcVoltageMeasurement",
   "extends": [
     "_base",
     "_sensor"

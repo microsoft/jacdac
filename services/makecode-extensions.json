@@ -14,6 +14,20 @@
     }
   },
   {
+    "service": "acidity",
+    "client": {
+      "name": "jacdac-acidity",
+      "targets": [
+        "microbit",
+        "arcade",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/acidity",
+      "qName": "modules.AcidityClient",
+      "default": "modules.acidity"
+    }
+  },
+  {
     "service": "airpressure",
     "client": {
       "name": "jacdac-air-pressure",
@@ -73,7 +87,8 @@
       "name": "jacdac-buzzer",
       "targets": [
         "arcade",
-        "maker"
+        "maker",
+        "microbit"
       ],
       "repo": "microsoft/pxt-jacdac/buzzer",
       "qName": "modules.BuzzerClient",
@@ -134,6 +149,34 @@
       "repo": "microsoft/pxt-jacdac/compass",
       "qName": "modules.CompassClient",
       "default": "modules.compass"
+    }
+  },
+  {
+    "service": "dccurrentmeasurement",
+    "client": {
+      "name": "jacdac-dc-current-measurement",
+      "targets": [
+        "microbit",
+        "arcade",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/dc-current-measurement",
+      "qName": "modules.DcCurrentMeasurementClient",
+      "default": "modules.dcCurrentMeasurement"
+    }
+  },
+  {
+    "service": "dcvoltagemeasurement",
+    "client": {
+      "name": "jacdac-dc-voltage-measurement",
+      "targets": [
+        "microbit",
+        "arcade",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/dc-voltage-measurement",
+      "qName": "modules.DcVoltageMeasurementClient",
+      "default": "modules.dcVoltageMeasurement"
     }
   },
   {
@@ -525,6 +568,20 @@
     }
   },
   {
+    "service": "rng",
+    "client": {
+      "name": "jacdac-rng",
+      "targets": [
+        "microbit",
+        "arcade",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/rng",
+      "qName": "modules.RngClient",
+      "default": "modules.rng"
+    }
+  },
+  {
     "service": "rotaryencoder",
     "client": {
       "name": "jacdac-rotary-encoder",
@@ -661,6 +718,20 @@
       "repo": "microsoft/pxt-jacdac/temperature",
       "qName": "modules.TemperatureClient",
       "default": "modules.temperature"
+    }
+  },
+  {
+    "service": "trafficlight",
+    "client": {
+      "name": "jacdac-traffic-light",
+      "targets": [
+        "microbit",
+        "arcade",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/traffic-light",
+      "qName": "modules.TrafficLightClient",
+      "default": "modules.trafficLight"
     }
   },
   {

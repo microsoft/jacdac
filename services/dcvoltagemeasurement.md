@@ -3,6 +3,7 @@
     identifier: 0x1633ac19
     status: experimental
     extends: _sensor
+    camel: dcVoltageMeasurement
     
 A service that reports a voltage measurement.
 

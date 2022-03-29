@@ -281,22 +281,22 @@ declare namespace roles {
 }
 
 // Service: DC Current Measurement
-declare class DCCurrentMeasurementRole extends SensorRole {
+declare class DcCurrentMeasurementRole extends SensorRole {
     measurementName: JDRegisterString
     measurement: JDRegisterNum
 }
 declare namespace roles {
-    function dCCurrentMeasurement(): DCCurrentMeasurementRole
+    function dcCurrentMeasurement(): DcCurrentMeasurementRole
 }
 
 // Service: DC Voltage Measurement
-declare class DCVoltageMeasurementRole extends SensorRole {
+declare class DcVoltageMeasurementRole extends SensorRole {
     measurementType: JDRegisterNum
     measurementName: JDRegisterString
     measurement: JDRegisterNum
 }
 declare namespace roles {
-    function dCVoltageMeasurement(): DCVoltageMeasurementRole
+    function dcVoltageMeasurement(): DcVoltageMeasurementRole
 }
 
 // Service: Distance

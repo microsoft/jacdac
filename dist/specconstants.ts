@@ -1418,8 +1418,8 @@ export enum ControlReg {
 // Service Dashboard constants
 export const SRV_DASHBOARD = 0x1be59107
 // Service DC Current Measurement constants
-export const SRV_D_CCURRENT_MEASUREMENT = 0x1912c8ae
-export enum DCCurrentMeasurementReg {
+export const SRV_DC_CURRENT_MEASUREMENT = 0x1912c8ae
+export enum DcCurrentMeasurementReg {
     /**
      * Constant string (bytes). A string containing the net name that is being measured e.g. `POWER_DUT` or a reference e.g. `DIFF_DEV1_DEV2`. These constants can be used to identify a measurement from client code.
      *
@@ -1440,19 +1440,19 @@ export enum DCCurrentMeasurementReg {
 }
 
 // Service DC Voltage Measurement constants
-export const SRV_D_CVOLTAGE_MEASUREMENT = 0x1633ac19
+export const SRV_DC_VOLTAGE_MEASUREMENT = 0x1633ac19
 
-export enum DCVoltageMeasurementVoltageMeasurementType { // uint8_t
+export enum DcVoltageMeasurementVoltageMeasurementType { // uint8_t
     Absolute = 0x0,
     Differential = 0x1,
 }
 
-export enum DCVoltageMeasurementReg {
+export enum DcVoltageMeasurementReg {
     /**
      * Constant VoltageMeasurementType (uint8_t). The type of measurement that is taking place. Absolute results are measured with respect to ground, whereas differential results are measured against another signal that is not ground.
      *
      * ```
-     * const [measurementType] = jdunpack<[DCVoltageMeasurementVoltageMeasurementType]>(buf, "u8")
+     * const [measurementType] = jdunpack<[DcVoltageMeasurementVoltageMeasurementType]>(buf, "u8")
      * ```
      */
     MeasurementType = 0x181,

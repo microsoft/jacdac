@@ -15,21 +15,6 @@
     }
   },
   {
-    "service": "acidity",
-    "client": {
-      "name": "jacdac-acidity",
-      "targets": [
-        "microbit",
-        "arcade",
-        "maker"
-      ],
-      "repo": "microsoft/pxt-jacdac/acidity",
-      "qName": "modules.AcidityClient",
-      "default": "modules.acidity",
-      "generated": true
-    }
-  },
-  {
     "service": "airpressure",
     "client": {
       "name": "jacdac-air-pressure",
@@ -159,36 +144,6 @@
       "repo": "microsoft/pxt-jacdac/compass",
       "qName": "modules.CompassClient",
       "default": "modules.compass",
-      "generated": true
-    }
-  },
-  {
-    "service": "dccurrentmeasurement",
-    "client": {
-      "name": "jacdac-dc-current-measurement",
-      "targets": [
-        "microbit",
-        "arcade",
-        "maker"
-      ],
-      "repo": "microsoft/pxt-jacdac/dc-current-measurement",
-      "qName": "modules.DcCurrentMeasurementClient",
-      "default": "modules.dcCurrentMeasurement",
-      "generated": true
-    }
-  },
-  {
-    "service": "dcvoltagemeasurement",
-    "client": {
-      "name": "jacdac-dc-voltage-measurement",
-      "targets": [
-        "microbit",
-        "arcade",
-        "maker"
-      ],
-      "repo": "microsoft/pxt-jacdac/dc-voltage-measurement",
-      "qName": "modules.DcVoltageMeasurementClient",
-      "default": "modules.dcVoltageMeasurement",
       "generated": true
     }
   },
@@ -609,21 +564,6 @@
     }
   },
   {
-    "service": "rng",
-    "client": {
-      "name": "jacdac-rng",
-      "targets": [
-        "microbit",
-        "arcade",
-        "maker"
-      ],
-      "repo": "microsoft/pxt-jacdac/rng",
-      "qName": "modules.RngClient",
-      "default": "modules.rng",
-      "generated": true
-    }
-  },
-  {
     "service": "rotaryencoder",
     "client": {
       "name": "jacdac-rotary-encoder",
@@ -769,21 +709,6 @@
       "repo": "microsoft/pxt-jacdac/temperature",
       "qName": "modules.TemperatureClient",
       "default": "modules.temperature",
-      "generated": true
-    }
-  },
-  {
-    "service": "trafficlight",
-    "client": {
-      "name": "jacdac-traffic-light",
-      "targets": [
-        "microbit",
-        "arcade",
-        "maker"
-      ],
-      "repo": "microsoft/pxt-jacdac/traffic-light",
-      "qName": "modules.TrafficLightClient",
-      "default": "modules.trafficLight",
       "generated": true
     }
   },

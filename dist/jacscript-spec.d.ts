@@ -68,6 +68,17 @@ declare namespace roles {
     function accelerometer(): AccelerometerRole
 }
 
+// Service: Acidity
+declare class AcidityRole extends SensorRole {
+    acidity: JDRegisterNum
+    acidityError: JDRegisterNum
+    minAcidity: JDRegisterNum
+    maxHumidity: JDRegisterNum
+}
+declare namespace roles {
+    function acidity(): AcidityRole
+}
+
 // Service: Air Pressure
 declare class AirPressureRole extends SensorRole {
     pressure: JDRegisterNum

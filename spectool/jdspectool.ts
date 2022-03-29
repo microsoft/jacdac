@@ -35,7 +35,7 @@ const serviceBuiltins = [
     "bridge",
     "dashboard",
     "jacscriptcloud",
-    "jacscriptcondition"
+    "jacscriptcondition",
 ]
 
 function values<T>(o: jdspec.SMap<T>): T[] {
@@ -624,9 +624,9 @@ ${regs
         const fetchArgs = `${regcst}, ${capitalize(
             camelName
         )}RegPack.${capitalize(camelize(reg.name))}`
-        const fetchReg = `(${rtype})this.GetRegisterValue${rtype == "bool" ? "AsBool" : ""}${
-            single ? "" : "s"
-        }(${fetchArgs})`
+        const fetchReg = `(${rtype})this.GetRegisterValue${
+            rtype == "bool" ? "AsBool" : ""
+        }${single ? "" : "s"}(${fetchArgs})`
         const setReg = `this.SetRegisterValue${
             single ? "" : "s"
         }(${regcst}, ${capitalize(camelName)}RegPack.${capitalize(
@@ -870,9 +870,8 @@ function processSpec(dn: string) {
         const pysrvdirname = snakify(json.camelName).toLowerCase()
 
         if (hasMakeCodeProject) {
-            const pxtjson: { supportedTargets?: string[] } = JSON.parse(
-                fs.readFileSync(mkcdpxtjson, { encoding: "utf8" })
-            )
+            const pxtjson: { supportedTargets?: string[]; files: string[] } =
+                JSON.parse(fs.readFileSync(mkcdpxtjson, { encoding: "utf8" }))
             mkcdServices.push({
                 service: json.shortId,
                 client: {
@@ -881,6 +880,7 @@ function processSpec(dn: string) {
                     repo: `microsoft/pxt-jacdac/${mkcdsrvdirname}`,
                     qName: `modules.${capitalize(json.camelName)}Client`,
                     default: `modules.${json.camelName}`,
+                    generated: pxtjson.files.indexOf("client.g.ts") > -1,
                 },
             })
         }

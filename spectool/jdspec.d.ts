@@ -753,6 +753,10 @@ declare namespace jdspec {
              * Default fixed instance for this client
              */
             default?: string
+            /**
+             * uses auto-generated client
+             */
+             generated?: boolean
         }
     }
 }

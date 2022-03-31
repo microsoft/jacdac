@@ -104,6 +104,7 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
     const reading = regs.find(reg => reg.identifier === Reading)
     const enabledReg = regs.find(isEnabledReg)
     const events = packets.filter(pkt => !pkt.derived && pkt.kind === "event")
+    const anonEvents = events.filter(ev => !ev.fields.length)
     // TODO: pipes support
     const commands = packets.filter(
         pkt =>
@@ -130,7 +131,27 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
             .join("\n")
     let weight = 100
 
-    return `namespace modules {
+    const anonEventEnumName = anonEvents.length
+        ? `${className}Event`
+        : undefined
+    const anonEventEnum = anonEventEnumName
+        ? `
+    export const enum ${anonEventEnumName} {
+${anonEvents
+    .map(
+        ev => `        /**
+        * ${ev.description.split("\n").join("\n        * ")}
+        **/
+        //% block="${humanify(ev.name)}"
+        ${capitalize(camelize(ev.name))} = ${nsc}.${capitalize(
+            spec.camelName
+        )}Event.${capitalize(camelize(ev.name))},`
+    )
+    .join("\n")}
+    }
+`
+        : ""
+    return `namespace modules {${anonEventEnum}
     /**
      * ${(spec.notes["short"] || "").split("\n").join("\n     * ")}
      **/
@@ -291,8 +312,8 @@ ${toMetaComments(
          */
 ${toMetaComments(
     `group="${group}"`,
-    `blockId=jacdac_on_${spec.shortId}_${event.name}`,
-    `block="on %${shortId} ${humanify(event.name)}"`,
+    event.fields.length && `blockId=jacdac_on_${spec.shortId}_${event.name}`,
+    event.fields.length && `block="on %${shortId} ${humanify(event.name)}"`,
     `weight=${weight--}`
 )}
         on${capitalize(camelize(event.name))}(handler: () => void): void {
@@ -301,7 +322,23 @@ ${toMetaComments(
             )}Event.${capitalize(camelize(event.name))}, handler);
         }`
         })
-        .join("")}
+        .join("")}${
+        anonEventEnumName
+            ? `
+        /**
+         * Register code to run when an event is raised
+         */
+${toMetaComments(
+    `group="${group}"`,
+    `blockId=jacdac_on_${spec.shortId}_event`,
+    `block="on %${shortId} %event"`,
+    `weight=${weight--}`
+)}
+        onEvent(ev: ${anonEventEnumName}, handler: () => void): void {
+            this.registerEvent(ev, handler);
+        }`
+            : ""
+    }
 ${commands
     .map(command => {
         const { name, client } = command

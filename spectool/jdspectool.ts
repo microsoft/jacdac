@@ -130,6 +130,10 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
             .join("\n")
     let weight = 100
 
+    const eventEnumName = events.length
+        ? `${nsc}.${capitalize(spec.camelName)}Event`
+        : undefined
+
     return `namespace modules {
     /**
      * ${(spec.notes["short"] || "").split("\n").join("\n     * ")}
@@ -283,22 +287,34 @@ ${toMetaComments(
         }
 `
             : ""
+    }${
+        eventEnumName
+            ? `
+        /**
+         * Register code to run when an event is raised
+         */
+${toMetaComments(
+    `group="${group}"`,
+    `blockId=jacdac_on_${spec.shortId}_event`,
+    `block="on %${shortId} %event"`,
+    `weight=${weight--}`
+)}
+        onEvent(ev: ${eventEnumName}, handler: () => void): void {
+            this.onEvent(ev, handler);
+        }
+`
+            : ""
     }${events
         .map(event => {
             return `
         /**
          * ${(event.description || "").split("\n").join("\n        * ")}
          */
-${toMetaComments(
-    `group="${group}"`,
-    `blockId=jacdac_on_${spec.shortId}_${event.name}`,
-    `block="on %${shortId} ${humanify(event.name)}"`,
-    `weight=${weight--}`
-)}
+${toMetaComments(`group="${group}"`, `weight=${weight--}`)}
         on${capitalize(camelize(event.name))}(handler: () => void): void {
-            this.registerEvent(${nsc}.${capitalize(
-                spec.camelName
-            )}Event.${capitalize(camelize(event.name))}, handler);
+            this.registerEvent(${eventEnumName}.${capitalize(
+                camelize(event.name)
+            )}, handler);
         }`
         })
         .join("")}

@@ -301,7 +301,8 @@ ${toMetaComments(
 )}
         onEvent(ev: ${eventEnumName}, handler: () => void): void {
             this.onEvent(ev, handler);
-        }`
+        }
+`
             : ""
     }${events
         .map(event => {

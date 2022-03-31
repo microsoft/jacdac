@@ -104,7 +104,6 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
     const reading = regs.find(reg => reg.identifier === Reading)
     const enabledReg = regs.find(isEnabledReg)
     const events = packets.filter(pkt => !pkt.derived && pkt.kind === "event")
-    const anonEvents = events.filter(ev => !ev.fields.length)
     // TODO: pipes support
     const commands = packets.filter(
         pkt =>
@@ -131,27 +130,11 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
             .join("\n")
     let weight = 100
 
-    const anonEventEnumName = anonEvents.length
-        ? `${className}Event`
+    const eventEnumName = events.length
+        ? `${nsc}.${capitalize(spec.camelName)}Event`
         : undefined
-    const anonEventEnum = anonEventEnumName
-        ? `
-    export const enum ${anonEventEnumName} {
-${anonEvents
-    .map(
-        ev => `        /**
-        * ${ev.description.split("\n").join("\n        * ")}
-        **/
-        //% block="${humanify(ev.name)}"
-        ${capitalize(camelize(ev.name))} = ${nsc}.${capitalize(
-            spec.camelName
-        )}Event.${capitalize(camelize(ev.name))},`
-    )
-    .join("\n")}
-    }
-`
-        : ""
-    return `namespace modules {${anonEventEnum}
+
+    return `namespace modules {
     /**
      * ${(spec.notes["short"] || "").split("\n").join("\n     * ")}
      **/
@@ -304,26 +287,8 @@ ${toMetaComments(
         }
 `
             : ""
-    }${events
-        .map(event => {
-            return `
-        /**
-         * ${(event.description || "").split("\n").join("\n        * ")}
-         */
-${toMetaComments(
-    `group="${group}"`,
-    event.fields.length && `blockId=jacdac_on_${spec.shortId}_${event.name}`,
-    event.fields.length && `block="on %${shortId} ${humanify(event.name)}"`,
-    `weight=${weight--}`
-)}
-        on${capitalize(camelize(event.name))}(handler: () => void): void {
-            this.registerEvent(${nsc}.${capitalize(
-                spec.camelName
-            )}Event.${capitalize(camelize(event.name))}, handler);
-        }`
-        })
-        .join("")}${
-        anonEventEnumName
+    }${
+        eventEnumName
             ? `
         /**
          * Register code to run when an event is raised
@@ -334,11 +299,24 @@ ${toMetaComments(
     `block="on %${shortId} %event"`,
     `weight=${weight--}`
 )}
-        onEvent(ev: ${anonEventEnumName}, handler: () => void): void {
-            this.registerEvent(ev, handler);
+        onEvent(ev: ${eventEnumName}, handler: () => void): void {
+            this.onEvent(ev, handler);
         }`
             : ""
-    }
+    }${events
+        .map(event => {
+            return `
+        /**
+         * ${(event.description || "").split("\n").join("\n        * ")}
+         */
+${toMetaComments(`group="${group}"`, `weight=${weight--}`)}
+        on${capitalize(camelize(event.name))}(handler: () => void): void {
+            this.registerEvent(${eventEnumName}.${capitalize(
+                camelize(event.name)
+            )}, handler);
+        }`
+        })
+        .join("")}
 ${commands
     .map(command => {
         const { name, client } = command

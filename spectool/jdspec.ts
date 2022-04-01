@@ -1562,7 +1562,9 @@ function upperCamel(name: string) {
 }
 
 export function snakify(name: string) {
-    return name?.replace(/([a-z])([A-Z])/g, (_, a, b) => a + "_" + b).replace(/\s+/g, "_")
+    return name
+        ?.replace(/([a-z])([A-Z])/g, (_, a, b) => a + "_" + b)
+        .replace(/\s+/g, "_")
 }
 
 export function dashify(name: string) {
@@ -1914,11 +1916,14 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "cs") {
     }
     const pref = upperCamel(info.camelName)
     for (const cst in info.constants) {
+        const name = csharp
+            ? capitalize(info.camelName)
+            : `CONST_${snakify(info.camelName).toLocaleUpperCase()}_`
         const { value, hex } = info.constants[cst]
         r +=
             indent +
             (csharp ? indent : "") +
-            `${exportkw} const ${hex ? hexkw : numberkw}${
+            `${exportkw} const ${hex ? hexkw : numberkw}${name}${
                 csharp ? capitalize(camelize(cst)) : toUpper(cst)
             } = ${hex ? value.toString() : toHex(value)}${cskw}\n`
     }
@@ -2131,13 +2136,14 @@ export function normalizeDeviceSpecification(dev: jdspec.DeviceSpec) {
         firmwareSource: dev.firmwareSource,
         hardwareDesign: dev.hardwareDesign,
         link: dev.link,
+        storeLink: dev.storeLink,
         services: dev.services,
         productIdentifiers: productIdentifiers,
         transport: dev.transport,
         tags: dev.tags,
         firmwares: dev.firmwares,
         version: dev.version ? dev.version.replace(/^v/, "") : undefined,
-        designIdentifier: dev.designIdentifier,
+        designIdentifier: dev.designIdentifier || undefined,
         bootloader: dev.bootloader,
         status: dev.status,
     }

@@ -9,7 +9,7 @@ A Braille pattern display module. This module display [unicode braille patterns]
 
     rw enabled: bool @ intensity
     
-Determins if the braille display is active.
+Determines if the braille display is active.
 
     lowlevel rw patterns: string @ value
 

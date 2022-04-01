@@ -128,7 +128,7 @@
       "kind": "command",
       "name": "services",
       "identifier": 0,
-      "description": "The `restart_counter` is computed from the `flags & RestartCounterSteady`, starts at `0x1` and increments by one until it reaches `0xf`, then it stays at `0xf`.\nIf this number ever goes down, it indicates that the device restarted.\n`service_class` indicates class identifier for each service index (service index `0` is always control, so it's\nskipped in this enumeration).\n`packet_count` indicates the number of packets sent by the current device since last announce,\nincluding the current announce packet (it is always 0 if this feature is not supported).\nThe command form can be used to induce report, which is otherwise broadcast every 500ms.",
+      "description": "The `restart_counter` is computed from the `flags & RestartCounterSteady`, starts at `0x1` and increments by one until it reaches `0xf`, then it stays at `0xf`.\nIf this number ever goes down, it indicates that the device restarted.\n`service_class` indicates class identifier for each service index (service index `0` is always control, so it's\nskipped in this enumeration).\n`packet_count` indicates the number of reports sent by the current device since last announce,\nincluding the current announce packet (it is always 0 if this feature is not supported).\nThe command form can be used to induce report, which is otherwise broadcast every 500ms.",
       "fields": [],
       "identifierName": "announce",
       "hasReport": true
@@ -137,7 +137,7 @@
       "kind": "report",
       "name": "services",
       "identifier": 0,
-      "description": "The `restart_counter` is computed from the `flags & RestartCounterSteady`, starts at `0x1` and increments by one until it reaches `0xf`, then it stays at `0xf`.\nIf this number ever goes down, it indicates that the device restarted.\n`service_class` indicates class identifier for each service index (service index `0` is always control, so it's\nskipped in this enumeration).\n`packet_count` indicates the number of packets sent by the current device since last announce,\nincluding the current announce packet (it is always 0 if this feature is not supported).\nThe command form can be used to induce report, which is otherwise broadcast every 500ms.",
+      "description": "The `restart_counter` is computed from the `flags & RestartCounterSteady`, starts at `0x1` and increments by one until it reaches `0xf`, then it stays at `0xf`.\nIf this number ever goes down, it indicates that the device restarted.\n`service_class` indicates class identifier for each service index (service index `0` is always control, so it's\nskipped in this enumeration).\n`packet_count` indicates the number of reports sent by the current device since last announce,\nincluding the current announce packet (it is always 0 if this feature is not supported).\nThe command form can be used to induce report, which is otherwise broadcast every 500ms.",
       "fields": [
         {
           "name": "flags",

@@ -1,16 +1,16 @@
 {
-  "name": "Braille display",
+  "name": "Power supply",
   "status": "experimental",
-  "shortId": "brailledisplay",
-  "camelName": "brailleDisplay",
-  "shortName": "brailleDisplay",
+  "shortId": "powersupply",
+  "camelName": "powerSupply",
+  "shortName": "powerSupply",
   "extends": [
     "_base"
   ],
   "notes": {
-    "short": "A Braille pattern display module. This module display [unicode braille patterns](https://www.unicode.org/charts/PDF/U2800.pdf), country specific encoding have to be implemented by the clients."
+    "short": "A power supply with a fixed or variable voltage range"
   },
-  "classIdentifier": 331331532,
+  "classIdentifier": 524302175,
   "enums": {},
   "constants": {},
   "packets": [
@@ -106,7 +106,7 @@
       "kind": "rw",
       "name": "enabled",
       "identifier": 1,
-      "description": "Determines if the braille display is active.",
+      "description": "Turns the power supply on with `true`, off with `false`.",
       "fields": [
         {
           "name": "_",
@@ -119,37 +119,55 @@
     },
     {
       "kind": "rw",
-      "name": "patterns",
+      "name": "output_voltage",
       "identifier": 2,
-      "description": "Braille patterns to show. Must be unicode characters between `0x2800` and `0x28ff`.",
+      "description": "The current output voltage of the power supply. Values provided must be in the range `minimum_voltage` to `maximum_voltage`",
       "fields": [
         {
           "name": "_",
-          "type": "string",
-          "storage": 0
+          "unit": "V",
+          "isFloat": true,
+          "type": "f64",
+          "storage": 8
         }
       ],
-      "lowLevel": true,
       "identifierName": "value",
-      "packFormat": "s"
+      "packFormat": "f64"
     },
     {
       "kind": "const",
-      "name": "length",
-      "identifier": 385,
-      "description": "Gets the number of patterns that can be displayed.",
+      "name": "minimum_voltage",
+      "identifier": 272,
+      "description": "The minimum output voltage of the power supply. For fixed power supplies, `minimum_voltage` should be equal to `maximum_voltage`.",
       "fields": [
         {
           "name": "_",
-          "unit": "#",
-          "type": "u8",
-          "storage": 1,
-          "isSimpleType": true
+          "unit": "V",
+          "isFloat": true,
+          "type": "f64",
+          "storage": 8
         }
       ],
-      "packFormat": "u8"
+      "identifierName": "min_value",
+      "packFormat": "f64"
+    },
+    {
+      "kind": "const",
+      "name": "maximum_voltage",
+      "identifier": 273,
+      "description": "The maximum output voltage of the power supply. For fixed power supplies, `minimum_voltage` should be equal to `maximum_voltage`.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "V",
+          "isFloat": true,
+          "type": "f64",
+          "storage": 8
+        }
+      ],
+      "identifierName": "max_value",
+      "packFormat": "f64"
     }
   ],
-  "tags": [],
-  "group": "Display"
+  "tags": []
 }

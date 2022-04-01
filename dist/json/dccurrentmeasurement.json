@@ -1,16 +1,17 @@
 {
-  "name": "Braille display",
+  "name": "DC Current Measurement",
   "status": "experimental",
-  "shortId": "brailledisplay",
-  "camelName": "brailleDisplay",
-  "shortName": "brailleDisplay",
+  "shortId": "dccurrentmeasurement",
+  "camelName": "dcCurrentMeasurement",
+  "shortName": "dcCurrentMeasurement",
   "extends": [
-    "_base"
+    "_base",
+    "_sensor"
   ],
   "notes": {
-    "short": "A Braille pattern display module. This module display [unicode braille patterns](https://www.unicode.org/charts/PDF/U2800.pdf), country specific encoding have to be implemented by the clients."
+    "short": "A service that reports a current measurement."
   },
-  "classIdentifier": 331331532,
+  "classIdentifier": 420661422,
   "enums": {},
   "constants": {},
   "packets": [
@@ -104,40 +105,9 @@
     },
     {
       "kind": "rw",
-      "name": "enabled",
-      "identifier": 1,
-      "description": "Determines if the braille display is active.",
-      "fields": [
-        {
-          "name": "_",
-          "type": "bool",
-          "storage": 1
-        }
-      ],
-      "identifierName": "intensity",
-      "packFormat": "u8"
-    },
-    {
-      "kind": "rw",
-      "name": "patterns",
-      "identifier": 2,
-      "description": "Braille patterns to show. Must be unicode characters between `0x2800` and `0x28ff`.",
-      "fields": [
-        {
-          "name": "_",
-          "type": "string",
-          "storage": 0
-        }
-      ],
-      "lowLevel": true,
-      "identifierName": "value",
-      "packFormat": "s"
-    },
-    {
-      "kind": "const",
-      "name": "length",
-      "identifier": 385,
-      "description": "Gets the number of patterns that can be displayed.",
+      "name": "streaming_samples",
+      "identifier": 3,
+      "description": "Asks device to stream a given number of samples\n(clients will typically write `255` to this register every second or so, while streaming is required).",
       "fields": [
         {
           "name": "_",
@@ -147,9 +117,84 @@
           "isSimpleType": true
         }
       ],
-      "packFormat": "u8"
+      "internal": true,
+      "identifierName": "streaming_samples",
+      "packFormat": "u8",
+      "derived": "_sensor"
+    },
+    {
+      "kind": "rw",
+      "name": "streaming_interval",
+      "identifier": 4,
+      "description": "Period between packets of data when streaming in milliseconds.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "ms",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true,
+          "defaultValue": 100,
+          "typicalMin": 1,
+          "typicalMax": 60000
+        }
+      ],
+      "identifierName": "streaming_interval",
+      "packFormat": "u32",
+      "derived": "_sensor"
+    },
+    {
+      "kind": "const",
+      "name": "streaming_preferred_interval",
+      "identifier": 258,
+      "description": "Preferred default streaming interval for sensor in milliseconds.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "ms",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        }
+      ],
+      "internal": true,
+      "optional": true,
+      "identifierName": "streaming_preferred_interval",
+      "packFormat": "u32",
+      "derived": "_sensor"
+    },
+    {
+      "kind": "const",
+      "name": "measurement_name",
+      "identifier": 386,
+      "description": "A string containing the net name that is being measured e.g. `POWER_DUT` or a reference e.g. `DIFF_DEV1_DEV2`. These constants can be used to identify a measurement from client code.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "packFormat": "s"
+    },
+    {
+      "kind": "ro",
+      "name": "measurement",
+      "identifier": 257,
+      "description": "The current measurement.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "A",
+          "isFloat": true,
+          "type": "f64",
+          "storage": 8
+        }
+      ],
+      "volatile": true,
+      "identifierName": "reading",
+      "packFormat": "f64"
     }
   ],
-  "tags": [],
-  "group": "Display"
+  "tags": []
 }

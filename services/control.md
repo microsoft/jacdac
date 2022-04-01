@@ -41,7 +41,7 @@ The `restart_counter` is computed from the `flags & RestartCounterSteady`, start
 If this number ever goes down, it indicates that the device restarted.
 `service_class` indicates class identifier for each service index (service index `0` is always control, so it's
 skipped in this enumeration).
-`packet_count` indicates the number of packets sent by the current device since last announce,
+`packet_count` indicates the number of reports sent by the current device since last announce,
 including the current announce packet (it is always 0 if this feature is not supported).
 The command form can be used to induce report, which is otherwise broadcast every 500ms.
 

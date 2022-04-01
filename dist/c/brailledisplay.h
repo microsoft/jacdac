@@ -5,7 +5,7 @@
 #define JD_SERVICE_CLASS_BRAILLE_DISPLAY  0x13bfb7cc
 
 /**
- * Read-write bool (uint8_t). Determins if the braille display is active.
+ * Read-write bool (uint8_t). Determines if the braille display is active.
  */
 #define JD_BRAILLE_DISPLAY_REG_ENABLED JD_REG_INTENSITY
 

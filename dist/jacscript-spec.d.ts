@@ -68,6 +68,26 @@ declare namespace roles {
     function accelerometer(): AccelerometerRole
 }
 
+// Service: Acidity
+declare class AcidityRole extends SensorRole {
+    acidity: JDRegisterNum
+    acidityError: JDRegisterNum
+    minAcidity: JDRegisterNum
+    maxHumidity: JDRegisterNum
+}
+declare namespace roles {
+    function acidity(): AcidityRole
+}
+
+// Service: Air Pressure
+declare class AirPressureRole extends SensorRole {
+    pressure: JDRegisterNum
+    pressureError: JDRegisterNum
+}
+declare namespace roles {
+    function airPressure(): AirPressureRole
+}
+
 // Service: Arcade Gamepad
 declare class ArcadeGamepadRole extends SensorRole {
     buttons: JDRegisterArray & { button: number, pressure: number }
@@ -113,15 +133,6 @@ declare class BarcodeReaderRole extends Role {
 }
 declare namespace roles {
     function barcodeReader(): BarcodeReaderRole
-}
-
-// Service: Barometer
-declare class BarometerRole extends SensorRole {
-    pressure: JDRegisterNum
-    pressureError: JDRegisterNum
-}
-declare namespace roles {
-    function barometer(): BarometerRole
 }
 
 // Service: bit:radio
@@ -267,6 +278,25 @@ declare class DashboardRole extends Role {
 }
 declare namespace roles {
     function dashboard(): DashboardRole
+}
+
+// Service: DC Current Measurement
+declare class DcCurrentMeasurementRole extends SensorRole {
+    measurementName: JDRegisterString
+    measurement: JDRegisterNum
+}
+declare namespace roles {
+    function dcCurrentMeasurement(): DcCurrentMeasurementRole
+}
+
+// Service: DC Voltage Measurement
+declare class DcVoltageMeasurementRole extends SensorRole {
+    measurementType: JDRegisterNum
+    measurementName: JDRegisterString
+    measurement: JDRegisterNum
+}
+declare namespace roles {
+    function dcVoltageMeasurement(): DcVoltageMeasurementRole
 }
 
 // Service: Distance
@@ -643,6 +673,17 @@ declare class PowerRole extends Role {
 }
 declare namespace roles {
     function power(): PowerRole
+}
+
+// Service: Power supply
+declare class PowerSupplyRole extends Role {
+    enabled: JDRegisterNum
+    outputVoltage: JDRegisterNum
+    minimumVoltage: JDRegisterNum
+    maximumVoltage: JDRegisterNum
+}
+declare namespace roles {
+    function powerSupply(): PowerSupplyRole
 }
 
 // Service: Pressure Button

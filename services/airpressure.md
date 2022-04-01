@@ -1,4 +1,4 @@
-# Barometer
+# Air Pressure
 
     identifier: 0x1e117cea
     extends: _sensor

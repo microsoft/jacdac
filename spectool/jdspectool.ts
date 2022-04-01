@@ -35,7 +35,7 @@ const serviceBuiltins = [
     "bridge",
     "dashboard",
     "jacscriptcloud",
-    "jacscriptcondition"
+    "jacscriptcondition",
 ]
 
 function values<T>(o: jdspec.SMap<T>): T[] {
@@ -129,6 +129,10 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
             .map(l => "        //% " + l)
             .join("\n")
     let weight = 100
+
+    const eventEnumName = events.length
+        ? `${nsc}.${capitalize(spec.camelName)}Event`
+        : undefined
 
     return `namespace modules {
     /**
@@ -283,22 +287,34 @@ ${toMetaComments(
         }
 `
             : ""
+    }${
+        eventEnumName
+            ? `
+        /**
+         * Register code to run when an event is raised
+         */
+${toMetaComments(
+    `group="${group}"`,
+    `blockId=jacdac_on_${spec.shortId}_event`,
+    `block="on %${shortId} %event"`,
+    `weight=${weight--}`
+)}
+        onEvent(ev: ${eventEnumName}, handler: () => void): void {
+            this.onEvent(ev, handler);
+        }
+`
+            : ""
     }${events
         .map(event => {
             return `
         /**
          * ${(event.description || "").split("\n").join("\n        * ")}
          */
-${toMetaComments(
-    `group="${group}"`,
-    `blockId=jacdac_on_${spec.shortId}_${event.name}`,
-    `block="on %${shortId} ${humanify(event.name)}"`,
-    `weight=${weight--}`
-)}
+${toMetaComments(`group="${group}"`, `weight=${weight--}`)}
         on${capitalize(camelize(event.name))}(handler: () => void): void {
-            this.registerEvent(${nsc}.${capitalize(
-                spec.camelName
-            )}Event.${capitalize(camelize(event.name))}, handler);
+            this.registerEvent(${eventEnumName}.${capitalize(
+                camelize(event.name)
+            )}, handler);
         }`
         })
         .join("")}
@@ -624,9 +640,9 @@ ${regs
         const fetchArgs = `${regcst}, ${capitalize(
             camelName
         )}RegPack.${capitalize(camelize(reg.name))}`
-        const fetchReg = `(${rtype})this.GetRegisterValue${rtype == "bool" ? "AsBool" : ""}${
-            single ? "" : "s"
-        }(${fetchArgs})`
+        const fetchReg = `(${rtype})this.GetRegisterValue${
+            rtype == "bool" ? "AsBool" : ""
+        }${single ? "" : "s"}(${fetchArgs})`
         const setReg = `this.SetRegisterValue${
             single ? "" : "s"
         }(${regcst}, ${capitalize(camelName)}RegPack.${capitalize(
@@ -870,9 +886,8 @@ function processSpec(dn: string) {
         const pysrvdirname = snakify(json.camelName).toLowerCase()
 
         if (hasMakeCodeProject) {
-            const pxtjson: { supportedTargets?: string[] } = JSON.parse(
-                fs.readFileSync(mkcdpxtjson, { encoding: "utf8" })
-            )
+            const pxtjson: { supportedTargets?: string[]; files: string[] } =
+                JSON.parse(fs.readFileSync(mkcdpxtjson, { encoding: "utf8" }))
             mkcdServices.push({
                 service: json.shortId,
                 client: {
@@ -881,6 +896,7 @@ function processSpec(dn: string) {
                     repo: `microsoft/pxt-jacdac/${mkcdsrvdirname}`,
                     qName: `modules.${capitalize(json.camelName)}Client`,
                     default: `modules.${json.camelName}`,
+                    generated: pxtjson.files.indexOf("client.g.ts") > -1,
                 },
             })
         }

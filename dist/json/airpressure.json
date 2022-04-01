@@ -1,16 +1,18 @@
 {
-  "name": "Braille display",
-  "status": "experimental",
-  "shortId": "brailledisplay",
-  "camelName": "brailleDisplay",
-  "shortName": "brailleDisplay",
+  "name": "Air Pressure",
+  "status": "rc",
+  "shortId": "airpressure",
+  "camelName": "airPressure",
+  "shortName": "airPressure",
   "extends": [
-    "_base"
+    "_base",
+    "_sensor"
   ],
   "notes": {
-    "short": "A Braille pattern display module. This module display [unicode braille patterns](https://www.unicode.org/charts/PDF/U2800.pdf), country specific encoding have to be implemented by the clients."
+    "short": "A sensor measuring air pressure of outside environment.",
+    "registers": "Default streaming interval is 1s."
   },
-  "classIdentifier": 331331532,
+  "classIdentifier": 504462570,
   "enums": {},
   "constants": {},
   "packets": [
@@ -104,40 +106,9 @@
     },
     {
       "kind": "rw",
-      "name": "enabled",
-      "identifier": 1,
-      "description": "Determines if the braille display is active.",
-      "fields": [
-        {
-          "name": "_",
-          "type": "bool",
-          "storage": 1
-        }
-      ],
-      "identifierName": "intensity",
-      "packFormat": "u8"
-    },
-    {
-      "kind": "rw",
-      "name": "patterns",
-      "identifier": 2,
-      "description": "Braille patterns to show. Must be unicode characters between `0x2800` and `0x28ff`.",
-      "fields": [
-        {
-          "name": "_",
-          "type": "string",
-          "storage": 0
-        }
-      ],
-      "lowLevel": true,
-      "identifierName": "value",
-      "packFormat": "s"
-    },
-    {
-      "kind": "const",
-      "name": "length",
-      "identifier": 385,
-      "description": "Gets the number of patterns that can be displayed.",
+      "name": "streaming_samples",
+      "identifier": 3,
+      "description": "Asks device to stream a given number of samples\n(clients will typically write `255` to this register every second or so, while streaming is required).",
       "fields": [
         {
           "name": "_",
@@ -147,9 +118,97 @@
           "isSimpleType": true
         }
       ],
-      "packFormat": "u8"
+      "internal": true,
+      "identifierName": "streaming_samples",
+      "packFormat": "u8",
+      "derived": "_sensor"
+    },
+    {
+      "kind": "rw",
+      "name": "streaming_interval",
+      "identifier": 4,
+      "description": "Period between packets of data when streaming in milliseconds.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "ms",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true,
+          "defaultValue": 100,
+          "typicalMin": 1,
+          "typicalMax": 60000
+        }
+      ],
+      "identifierName": "streaming_interval",
+      "packFormat": "u32",
+      "derived": "_sensor"
+    },
+    {
+      "kind": "const",
+      "name": "streaming_preferred_interval",
+      "identifier": 258,
+      "description": "Preferred default streaming interval for sensor in milliseconds.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "ms",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        }
+      ],
+      "internal": true,
+      "optional": true,
+      "identifierName": "streaming_preferred_interval",
+      "packFormat": "u32",
+      "derived": "_sensor"
+    },
+    {
+      "kind": "ro",
+      "name": "pressure",
+      "identifier": 257,
+      "description": "The air pressure.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "hPa",
+          "shift": 10,
+          "type": "u22.10",
+          "storage": 4,
+          "absoluteMin": 300,
+          "absoluteMax": 1100,
+          "typicalMin": 940,
+          "typicalMax": 1040
+        }
+      ],
+      "volatile": true,
+      "identifierName": "reading",
+      "preferredInterval": 60000,
+      "packFormat": "u22.10"
+    },
+    {
+      "kind": "ro",
+      "name": "pressure_error",
+      "identifier": 262,
+      "description": "The real pressure is between `pressure - pressure_error` and `pressure + pressure_error`.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "hPa",
+          "shift": 10,
+          "type": "u22.10",
+          "storage": 4
+        }
+      ],
+      "volatile": true,
+      "optional": true,
+      "identifierName": "reading_error",
+      "packFormat": "u22.10"
     }
   ],
-  "tags": [],
-  "group": "Display"
+  "tags": [
+    "8bit"
+  ],
+  "group": "Environment"
 }

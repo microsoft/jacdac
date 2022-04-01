@@ -1,19 +1,27 @@
 {
-  "name": "Barometer",
-  "status": "rc",
-  "shortId": "barometer",
-  "camelName": "barometer",
-  "shortName": "barometer",
+  "name": "DC Voltage Measurement",
+  "status": "experimental",
+  "shortId": "dcvoltagemeasurement",
+  "camelName": "dcVoltageMeasurement",
+  "shortName": "dcVoltageMeasurement",
   "extends": [
     "_base",
     "_sensor"
   ],
   "notes": {
-    "short": "A sensor measuring air pressure of outside environment.",
-    "registers": "Default streaming interval is 1s."
+    "short": "A service that reports a voltage measurement."
   },
-  "classIdentifier": 504462570,
-  "enums": {},
+  "classIdentifier": 372485145,
+  "enums": {
+    "VoltageMeasurementType": {
+      "name": "VoltageMeasurementType",
+      "storage": 1,
+      "members": {
+        "Absolute": 0,
+        "Differential": 1
+      }
+    }
+  },
   "constants": {},
   "packets": [
     {
@@ -165,50 +173,51 @@
       "derived": "_sensor"
     },
     {
-      "kind": "ro",
-      "name": "pressure",
-      "identifier": 257,
-      "description": "The air pressure.",
+      "kind": "const",
+      "name": "measurement_type",
+      "identifier": 385,
+      "description": "The type of measurement that is taking place. Absolute results are measured with respect to ground, whereas differential results are measured against another signal that is not ground.",
       "fields": [
         {
           "name": "_",
-          "unit": "hPa",
-          "shift": 10,
-          "type": "u22.10",
-          "storage": 4,
-          "absoluteMin": 300,
-          "absoluteMax": 1100,
-          "typicalMin": 940,
-          "typicalMax": 1040
+          "type": "VoltageMeasurementType",
+          "storage": 1
+        }
+      ],
+      "packFormat": "u8"
+    },
+    {
+      "kind": "const",
+      "name": "measurement_name",
+      "identifier": 386,
+      "description": "A string containing the net name that is being measured e.g. `POWER_DUT` or a reference e.g. `DIFF_DEV1_DEV2`. These constants can be used to identify a measurement from client code.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "packFormat": "s"
+    },
+    {
+      "kind": "ro",
+      "name": "measurement",
+      "identifier": 257,
+      "description": "The voltage measurement.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "V",
+          "isFloat": true,
+          "type": "f64",
+          "storage": 8
         }
       ],
       "volatile": true,
       "identifierName": "reading",
-      "preferredInterval": 60000,
-      "packFormat": "u22.10"
-    },
-    {
-      "kind": "ro",
-      "name": "pressure_error",
-      "identifier": 262,
-      "description": "The real pressure is between `pressure - pressure_error` and `pressure + pressure_error`.",
-      "fields": [
-        {
-          "name": "_",
-          "unit": "hPa",
-          "shift": 10,
-          "type": "u22.10",
-          "storage": 4
-        }
-      ],
-      "volatile": true,
-      "optional": true,
-      "identifierName": "reading_error",
-      "packFormat": "u22.10"
+      "packFormat": "f64"
     }
   ],
-  "tags": [
-    "8bit"
-  ],
-  "group": "Environment"
+  "tags": []
 }

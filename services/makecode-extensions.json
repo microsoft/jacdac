@@ -10,7 +10,38 @@
       ],
       "repo": "microsoft/pxt-jacdac/accelerometer",
       "qName": "modules.AccelerometerClient",
-      "default": "modules.accelerometer"
+      "default": "modules.accelerometer",
+      "generated": true
+    }
+  },
+  {
+    "service": "acidity",
+    "client": {
+      "name": "jacdac-acidity",
+      "targets": [
+        "microbit",
+        "arcade",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/acidity",
+      "qName": "modules.AcidityClient",
+      "default": "modules.acidity",
+      "generated": true
+    }
+  },
+  {
+    "service": "airpressure",
+    "client": {
+      "name": "jacdac-air-pressure",
+      "targets": [
+        "microbit",
+        "arcade",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/air-pressure",
+      "qName": "modules.AirPressureClient",
+      "default": "modules.airPressure",
+      "generated": true
     }
   },
   {
@@ -22,7 +53,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/arcade-gamepad",
       "qName": "modules.ArcadeGamepadClient",
-      "default": "modules.arcadeGamepad"
+      "default": "modules.arcadeGamepad",
+      "generated": false
     }
   },
   {
@@ -36,21 +68,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/azure-iot-hub-health",
       "qName": "modules.AzureIotHubHealthClient",
-      "default": "modules.azureIotHubHealth"
-    }
-  },
-  {
-    "service": "barometer",
-    "client": {
-      "name": "jacdac-barometer",
-      "targets": [
-        "arcade",
-        "microbit",
-        "maker"
-      ],
-      "repo": "microsoft/pxt-jacdac/barometer",
-      "qName": "modules.BarometerClient",
-      "default": "modules.barometer"
+      "default": "modules.azureIotHubHealth",
+      "generated": false
     }
   },
   {
@@ -64,7 +83,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/button",
       "qName": "modules.ButtonClient",
-      "default": "modules.button"
+      "default": "modules.button",
+      "generated": false
     }
   },
   {
@@ -73,11 +93,13 @@
       "name": "jacdac-buzzer",
       "targets": [
         "arcade",
-        "maker"
+        "maker",
+        "microbit"
       ],
       "repo": "microsoft/pxt-jacdac/buzzer",
       "qName": "modules.BuzzerClient",
-      "default": "modules.buzzer"
+      "default": "modules.buzzer",
+      "generated": false
     }
   },
   {
@@ -91,7 +113,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/character-screen",
       "qName": "modules.CharacterScreenClient",
-      "default": "modules.characterScreen"
+      "default": "modules.characterScreen",
+      "generated": false
     }
   },
   {
@@ -105,7 +128,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/codal-message-bus",
       "qName": "modules.CodalMessageBusClient",
-      "default": "modules.codalMessageBus"
+      "default": "modules.codalMessageBus",
+      "generated": false
     }
   },
   {
@@ -119,7 +143,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/color",
       "qName": "modules.ColorClient",
-      "default": "modules.color"
+      "default": "modules.color",
+      "generated": true
     }
   },
   {
@@ -133,7 +158,38 @@
       ],
       "repo": "microsoft/pxt-jacdac/compass",
       "qName": "modules.CompassClient",
-      "default": "modules.compass"
+      "default": "modules.compass",
+      "generated": true
+    }
+  },
+  {
+    "service": "dccurrentmeasurement",
+    "client": {
+      "name": "jacdac-dc-current-measurement",
+      "targets": [
+        "microbit",
+        "arcade",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/dc-current-measurement",
+      "qName": "modules.DcCurrentMeasurementClient",
+      "default": "modules.dcCurrentMeasurement",
+      "generated": true
+    }
+  },
+  {
+    "service": "dcvoltagemeasurement",
+    "client": {
+      "name": "jacdac-dc-voltage-measurement",
+      "targets": [
+        "microbit",
+        "arcade",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/dc-voltage-measurement",
+      "qName": "modules.DcVoltageMeasurementClient",
+      "default": "modules.dcVoltageMeasurement",
+      "generated": true
     }
   },
   {
@@ -147,7 +203,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/distance",
       "qName": "modules.DistanceClient",
-      "default": "modules.distance"
+      "default": "modules.distance",
+      "generated": true
     }
   },
   {
@@ -161,7 +218,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/dmx",
       "qName": "modules.DmxClient",
-      "default": "modules.dmx"
+      "default": "modules.dmx",
+      "generated": true
     }
   },
   {
@@ -175,7 +233,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/dot-matrix",
       "qName": "modules.DotMatrixClient",
-      "default": "modules.dotMatrix"
+      "default": "modules.dotMatrix",
+      "generated": false
     }
   },
   {
@@ -189,7 +248,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/e-co2",
       "qName": "modules.ECO2Client",
-      "default": "modules.eCO2"
+      "default": "modules.eCO2",
+      "generated": true
     }
   },
   {
@@ -203,7 +263,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/flex",
       "qName": "modules.FlexClient",
-      "default": "modules.flex"
+      "default": "modules.flex",
+      "generated": true
     }
   },
   {
@@ -215,7 +276,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/gamepad",
       "qName": "modules.GamepadClient",
-      "default": "modules.gamepad"
+      "default": "modules.gamepad",
+      "generated": false
     }
   },
   {
@@ -229,7 +291,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/gyroscope",
       "qName": "modules.GyroscopeClient",
-      "default": "modules.gyroscope"
+      "default": "modules.gyroscope",
+      "generated": true
     }
   },
   {
@@ -243,7 +306,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/heart-rate",
       "qName": "modules.HeartRateClient",
-      "default": "modules.heartRate"
+      "default": "modules.heartRate",
+      "generated": true
     }
   },
   {
@@ -256,7 +320,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/hid-keyboard",
       "qName": "modules.HidKeyboardClient",
-      "default": "modules.hidKeyboard"
+      "default": "modules.hidKeyboard",
+      "generated": false
     }
   },
   {
@@ -269,7 +334,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/hid-mouse",
       "qName": "modules.HidMouseClient",
-      "default": "modules.hidMouse"
+      "default": "modules.hidMouse",
+      "generated": false
     }
   },
   {
@@ -283,7 +349,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/humidity",
       "qName": "modules.HumidityClient",
-      "default": "modules.humidity"
+      "default": "modules.humidity",
+      "generated": true
     }
   },
   {
@@ -297,7 +364,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/illuminance",
       "qName": "modules.IlluminanceClient",
-      "default": "modules.illuminance"
+      "default": "modules.illuminance",
+      "generated": true
     }
   },
   {
@@ -311,7 +379,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/led",
       "qName": "modules.LedClient",
-      "default": "modules.led"
+      "default": "modules.led",
+      "generated": false
     }
   },
   {
@@ -325,7 +394,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/led-display",
       "qName": "modules.LedDisplayClient",
-      "default": "modules.ledDisplay"
+      "default": "modules.ledDisplay",
+      "generated": false
     }
   },
   {
@@ -339,7 +409,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/led-strip",
       "qName": "modules.LedStripClient",
-      "default": "modules.ledStrip"
+      "default": "modules.ledStrip",
+      "generated": false
     }
   },
   {
@@ -353,7 +424,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/light-bulb",
       "qName": "modules.LightBulbClient",
-      "default": "modules.lightBulb"
+      "default": "modules.lightBulb",
+      "generated": true
     }
   },
   {
@@ -367,7 +439,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/light-level",
       "qName": "modules.LightLevelClient",
-      "default": "modules.lightLevel"
+      "default": "modules.lightLevel",
+      "generated": true
     }
   },
   {
@@ -381,7 +454,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/magnetometer",
       "qName": "modules.MagnetometerClient",
-      "default": "modules.magnetometer"
+      "default": "modules.magnetometer",
+      "generated": true
     }
   },
   {
@@ -395,7 +469,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/model-runner",
       "qName": "modules.ModelRunnerClient",
-      "default": "modules.modelRunner"
+      "default": "modules.modelRunner",
+      "generated": false
     }
   },
   {
@@ -409,7 +484,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/motion",
       "qName": "modules.MotionClient",
-      "default": "modules.motion"
+      "default": "modules.motion",
+      "generated": true
     }
   },
   {
@@ -423,7 +499,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/motor",
       "qName": "modules.MotorClient",
-      "default": "modules.motor"
+      "default": "modules.motor",
+      "generated": false
     }
   },
   {
@@ -437,7 +514,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/potentiometer",
       "qName": "modules.PotentiometerClient",
-      "default": "modules.potentiometer"
+      "default": "modules.potentiometer",
+      "generated": true
     }
   },
   {
@@ -451,7 +529,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/power",
       "qName": "modules.PowerClient",
-      "default": "modules.power"
+      "default": "modules.power",
+      "generated": true
     }
   },
   {
@@ -465,7 +544,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/pulse-oximeter",
       "qName": "modules.PulseOximeterClient",
-      "default": "modules.pulseOximeter"
+      "default": "modules.pulseOximeter",
+      "generated": true
     }
   },
   {
@@ -479,7 +559,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/rain-gauge",
       "qName": "modules.RainGaugeClient",
-      "default": "modules.rainGauge"
+      "default": "modules.rainGauge",
+      "generated": true
     }
   },
   {
@@ -493,7 +574,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/real-time-clock",
       "qName": "modules.RealTimeClockClient",
-      "default": "modules.realTimeClock"
+      "default": "modules.realTimeClock",
+      "generated": true
     }
   },
   {
@@ -507,7 +589,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/reflected-light",
       "qName": "modules.ReflectedLightClient",
-      "default": "modules.reflectedLight"
+      "default": "modules.reflectedLight",
+      "generated": true
     }
   },
   {
@@ -521,7 +604,23 @@
       ],
       "repo": "microsoft/pxt-jacdac/relay",
       "qName": "modules.RelayClient",
-      "default": "modules.relay"
+      "default": "modules.relay",
+      "generated": true
+    }
+  },
+  {
+    "service": "rng",
+    "client": {
+      "name": "jacdac-rng",
+      "targets": [
+        "microbit",
+        "arcade",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/rng",
+      "qName": "modules.RngClient",
+      "default": "modules.rng",
+      "generated": true
     }
   },
   {
@@ -535,7 +634,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/rotary-encoder",
       "qName": "modules.RotaryEncoderClient",
-      "default": "modules.rotaryEncoder"
+      "default": "modules.rotaryEncoder",
+      "generated": false
     }
   },
   {
@@ -549,7 +649,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/sensor-aggregator",
       "qName": "modules.SensorAggregatorClient",
-      "default": "modules.sensorAggregator"
+      "default": "modules.sensorAggregator",
+      "generated": false
     }
   },
   {
@@ -563,7 +664,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/servo",
       "qName": "modules.ServoClient",
-      "default": "modules.servo"
+      "default": "modules.servo",
+      "generated": false
     }
   },
   {
@@ -577,7 +679,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/soil-moisture",
       "qName": "modules.SoilMoistureClient",
-      "default": "modules.soilMoisture"
+      "default": "modules.soilMoisture",
+      "generated": true
     }
   },
   {
@@ -591,7 +694,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/solenoid",
       "qName": "modules.SolenoidClient",
-      "default": "modules.solenoid"
+      "default": "modules.solenoid",
+      "generated": true
     }
   },
   {
@@ -605,7 +709,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/sound-level",
       "qName": "modules.SoundLevelClient",
-      "default": "modules.soundLevel"
+      "default": "modules.soundLevel",
+      "generated": false
     }
   },
   {
@@ -619,7 +724,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/speech-synthesis",
       "qName": "modules.SpeechSynthesisClient",
-      "default": "modules.speechSynthesis"
+      "default": "modules.speechSynthesis",
+      "generated": true
     }
   },
   {
@@ -633,7 +739,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/switch",
       "qName": "modules.SwitchClient",
-      "default": "modules.switch"
+      "default": "modules.switch",
+      "generated": true
     }
   },
   {
@@ -646,7 +753,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/tcp",
       "qName": "modules.TcpClient",
-      "default": "modules.tcp"
+      "default": "modules.tcp",
+      "generated": false
     }
   },
   {
@@ -660,7 +768,23 @@
       ],
       "repo": "microsoft/pxt-jacdac/temperature",
       "qName": "modules.TemperatureClient",
-      "default": "modules.temperature"
+      "default": "modules.temperature",
+      "generated": true
+    }
+  },
+  {
+    "service": "trafficlight",
+    "client": {
+      "name": "jacdac-traffic-light",
+      "targets": [
+        "microbit",
+        "arcade",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/traffic-light",
+      "qName": "modules.TrafficLightClient",
+      "default": "modules.trafficLight",
+      "generated": true
     }
   },
   {
@@ -674,7 +798,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/tvoc",
       "qName": "modules.TvocClient",
-      "default": "modules.tvoc"
+      "default": "modules.tvoc",
+      "generated": true
     }
   },
   {
@@ -688,7 +813,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/uv-index",
       "qName": "modules.UvIndexClient",
-      "default": "modules.uvIndex"
+      "default": "modules.uvIndex",
+      "generated": true
     }
   },
   {
@@ -702,7 +828,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/vibration-motor",
       "qName": "modules.VibrationMotorClient",
-      "default": "modules.vibrationMotor"
+      "default": "modules.vibrationMotor",
+      "generated": false
     }
   },
   {
@@ -716,7 +843,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/water-level",
       "qName": "modules.WaterLevelClient",
-      "default": "modules.waterLevel"
+      "default": "modules.waterLevel",
+      "generated": true
     }
   },
   {
@@ -730,7 +858,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/weight-scale",
       "qName": "modules.WeightScaleClient",
-      "default": "modules.weightScale"
+      "default": "modules.weightScale",
+      "generated": true
     }
   },
   {
@@ -742,7 +871,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/wifi",
       "qName": "modules.WifiClient",
-      "default": "modules.wifi"
+      "default": "modules.wifi",
+      "generated": false
     }
   },
   {
@@ -756,7 +886,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/wind-direction",
       "qName": "modules.WindDirectionClient",
-      "default": "modules.windDirection"
+      "default": "modules.windDirection",
+      "generated": true
     }
   },
   {
@@ -770,7 +901,8 @@
       ],
       "repo": "microsoft/pxt-jacdac/wind-speed",
       "qName": "modules.WindSpeedClient",
-      "default": "modules.windSpeed"
+      "default": "modules.windSpeed",
+      "generated": true
     }
   }
 ]

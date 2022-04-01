@@ -1,5 +1,5 @@
 // Service Common registers and commands constants
-export const ANNOUNCE_INTERVAL = 0x1f4
+export const CONST_SYSTEM_ANNOUNCE_INTERVAL = 0x1f4
 
 export enum SystemReadingThreshold { // uint8_t
     Neutral = 0x1,
@@ -463,6 +463,68 @@ export enum AccelerometerEvent {
     Force8g = 0x8a,
 }
 
+// Service Acidity constants
+export const SRV_ACIDITY = 0x1e9778c5
+export enum AcidityReg {
+    /**
+     * Read-only pH u4.12 (uint16_t). The acidity, pH, of water.
+     *
+     * ```
+     * const [acidity] = jdunpack<[number]>(buf, "u4.12")
+     * ```
+     */
+    Acidity = 0x101,
+
+    /**
+     * Read-only pH u4.12 (uint16_t). Error on the acidity reading.
+     *
+     * ```
+     * const [acidityError] = jdunpack<[number]>(buf, "u4.12")
+     * ```
+     */
+    AcidityError = 0x106,
+
+    /**
+     * Constant pH u4.12 (uint16_t). Lowest acidity that can be reported.
+     *
+     * ```
+     * const [minAcidity] = jdunpack<[number]>(buf, "u4.12")
+     * ```
+     */
+    MinAcidity = 0x104,
+
+    /**
+     * Constant pH u4.12 (uint16_t). Highest acidity that can be reported.
+     *
+     * ```
+     * const [maxHumidity] = jdunpack<[number]>(buf, "u4.12")
+     * ```
+     */
+    MaxHumidity = 0x105,
+}
+
+// Service Air Pressure constants
+export const SRV_AIR_PRESSURE = 0x1e117cea
+export enum AirPressureReg {
+    /**
+     * Read-only hPa u22.10 (uint32_t). The air pressure.
+     *
+     * ```
+     * const [pressure] = jdunpack<[number]>(buf, "u22.10")
+     * ```
+     */
+    Pressure = 0x101,
+
+    /**
+     * Read-only hPa u22.10 (uint32_t). The real pressure is between `pressure - pressure_error` and `pressure + pressure_error`.
+     *
+     * ```
+     * const [pressureError] = jdunpack<[number]>(buf, "u22.10")
+     * ```
+     */
+    PressureError = 0x106,
+}
+
 // Service Arcade Gamepad constants
 export const SRV_ARCADE_GAMEPAD = 0x1deaa06e
 
@@ -694,28 +756,6 @@ export enum BarcodeReaderEvent {
     Detect = 0x1,
 }
 
-// Service Barometer constants
-export const SRV_BAROMETER = 0x1e117cea
-export enum BarometerReg {
-    /**
-     * Read-only hPa u22.10 (uint32_t). The air pressure.
-     *
-     * ```
-     * const [pressure] = jdunpack<[number]>(buf, "u22.10")
-     * ```
-     */
-    Pressure = 0x101,
-
-    /**
-     * Read-only hPa u22.10 (uint32_t). The real pressure is between `pressure - pressure_error` and `pressure + pressure_error`.
-     *
-     * ```
-     * const [pressureError] = jdunpack<[number]>(buf, "u22.10")
-     * ```
-     */
-    PressureError = 0x106,
-}
-
 // Service bit:radio constants
 export const SRV_BIT_RADIO = 0x1ac986cf
 export enum BitRadioReg {
@@ -886,7 +926,7 @@ export enum BootloaderCmd {
 export const SRV_BRAILLE_DISPLAY = 0x13bfb7cc
 export enum BrailleDisplayReg {
     /**
-     * Read-write bool (uint8_t). Determins if the braille display is active.
+     * Read-write bool (uint8_t). Determines if the braille display is active.
      *
      * ```
      * const [enabled] = jdunpack<[number]>(buf, "u8")
@@ -1206,7 +1246,7 @@ export enum ControlCmd {
      * If this number ever goes down, it indicates that the device restarted.
      * `service_class` indicates class identifier for each service index (service index `0` is always control, so it's
      * skipped in this enumeration).
-     * `packet_count` indicates the number of packets sent by the current device since last announce,
+     * `packet_count` indicates the number of reports sent by the current device since last announce,
      * including the current announce packet (it is always 0 if this feature is not supported).
      * The command form can be used to induce report, which is otherwise broadcast every 500ms.
      */
@@ -1377,6 +1417,65 @@ export enum ControlReg {
 
 // Service Dashboard constants
 export const SRV_DASHBOARD = 0x1be59107
+// Service DC Current Measurement constants
+export const SRV_DC_CURRENT_MEASUREMENT = 0x1912c8ae
+export enum DcCurrentMeasurementReg {
+    /**
+     * Constant string (bytes). A string containing the net name that is being measured e.g. `POWER_DUT` or a reference e.g. `DIFF_DEV1_DEV2`. These constants can be used to identify a measurement from client code.
+     *
+     * ```
+     * const [measurementName] = jdunpack<[string]>(buf, "s")
+     * ```
+     */
+    MeasurementName = 0x182,
+
+    /**
+     * Read-only A f64 (uint64_t). The current measurement.
+     *
+     * ```
+     * const [measurement] = jdunpack<[number]>(buf, "f64")
+     * ```
+     */
+    Measurement = 0x101,
+}
+
+// Service DC Voltage Measurement constants
+export const SRV_DC_VOLTAGE_MEASUREMENT = 0x1633ac19
+
+export enum DcVoltageMeasurementVoltageMeasurementType { // uint8_t
+    Absolute = 0x0,
+    Differential = 0x1,
+}
+
+export enum DcVoltageMeasurementReg {
+    /**
+     * Constant VoltageMeasurementType (uint8_t). The type of measurement that is taking place. Absolute results are measured with respect to ground, whereas differential results are measured against another signal that is not ground.
+     *
+     * ```
+     * const [measurementType] = jdunpack<[DcVoltageMeasurementVoltageMeasurementType]>(buf, "u8")
+     * ```
+     */
+    MeasurementType = 0x181,
+
+    /**
+     * Constant string (bytes). A string containing the net name that is being measured e.g. `POWER_DUT` or a reference e.g. `DIFF_DEV1_DEV2`. These constants can be used to identify a measurement from client code.
+     *
+     * ```
+     * const [measurementName] = jdunpack<[string]>(buf, "s")
+     * ```
+     */
+    MeasurementName = 0x182,
+
+    /**
+     * Read-only V f64 (uint64_t). The voltage measurement.
+     *
+     * ```
+     * const [measurement] = jdunpack<[number]>(buf, "f64")
+     * ```
+     */
+    Measurement = 0x101,
+}
+
 // Service Distance constants
 export const SRV_DISTANCE = 0x141a6b8a
 
@@ -2310,7 +2409,7 @@ export enum LedReg {
 
 // Service LED Display constants
 export const SRV_LED_DISPLAY = 0x1609d4f0
-export const MAX_PIXELS_LENGTH = 0x40
+export const CONST_LED_DISPLAY_MAX_PIXELS_LENGTH = 0x40
 
 export enum LedDisplayLightType { // uint8_t
     WS2812B_GRB = 0x0,
@@ -3241,6 +3340,46 @@ export enum PowerEvent {
      * ```
      */
     PowerStatusChanged = 0x3,
+}
+
+// Service Power supply constants
+export const SRV_POWER_SUPPLY = 0x1f40375f
+export enum PowerSupplyReg {
+    /**
+     * Read-write bool (uint8_t). Turns the power supply on with `true`, off with `false`.
+     *
+     * ```
+     * const [enabled] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Enabled = 0x1,
+
+    /**
+     * Read-write V f64 (uint64_t). The current output voltage of the power supply. Values provided must be in the range `minimum_voltage` to `maximum_voltage`
+     *
+     * ```
+     * const [outputVoltage] = jdunpack<[number]>(buf, "f64")
+     * ```
+     */
+    OutputVoltage = 0x2,
+
+    /**
+     * Constant V f64 (uint64_t). The minimum output voltage of the power supply. For fixed power supplies, `minimum_voltage` should be equal to `maximum_voltage`.
+     *
+     * ```
+     * const [minimumVoltage] = jdunpack<[number]>(buf, "f64")
+     * ```
+     */
+    MinimumVoltage = 0x110,
+
+    /**
+     * Constant V f64 (uint64_t). The maximum output voltage of the power supply. For fixed power supplies, `minimum_voltage` should be equal to `maximum_voltage`.
+     *
+     * ```
+     * const [maximumVoltage] = jdunpack<[number]>(buf, "f64")
+     * ```
+     */
+    MaximumVoltage = 0x111,
 }
 
 // Service Pressure Button constants

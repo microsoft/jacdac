@@ -300,7 +300,7 @@ ${toMetaComments(
     `weight=${weight--}`
 )}
         onEvent(ev: ${eventEnumName}, handler: () => void): void {
-            this.onEvent(ev, handler);
+            this.registerEvent(ev, handler);
         }
 `
             : ""

@@ -4,7 +4,7 @@
   "company": "Milador",
   "description": "JM Pressure Sensor v1.0",
   "repo": "https://github.com/milador/jacdac-milador-modules",
-  "firmwareSource": "https://github.com/milador/jacdac-milador-modules/blob/main/jacdac-c/drivers/lps33hwtr.c",
+  "firmwareSource": "https://github.com/milador/jacdac-milador-modules",
   "hardwareDesign": "https://github.com/milador/Jacdac-Pressure-Sensor/tree/develop/Hardware/PCB",
   "link": "https://github.com/milador/Jacdac-Pressure-Sensor/",
   "services": [

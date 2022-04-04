@@ -5,13 +5,23 @@
 #define JD_SERVICE_CLASS_AIR_QUALITY_INDEX  0x14ac6ed6
 
 /**
- * Read-only AQI uint16_t. Air quality index, typically refreshed every second.
+ * Read-only AQI u16.16 (uint32_t). Air quality index, typically refreshed every second.
  */
 #define JD_AIR_QUALITY_INDEX_REG_AQI_INDEX JD_REG_READING
 
 /**
- * Read-only AQI uint16_t. Error on the AQI measure.
+ * Read-only AQI u16.16 (uint32_t). Error on the AQI measure.
  */
 #define JD_AIR_QUALITY_INDEX_REG_AQI_INDEX_ERROR JD_REG_READING_ERROR
+
+/**
+ * Constant AQI u16.16 (uint32_t). Minimum AQI reading, representing a good air quality. Typically 0.
+ */
+#define JD_AIR_QUALITY_INDEX_REG_MIN_AQI_INDEX JD_REG_MIN_READING
+
+/**
+ * Constant AQI u16.16 (uint32_t). Maximum AQI reading, representing a very poor air quality.
+ */
+#define JD_AIR_QUALITY_INDEX_REG_MAX_AQI_INDEX JD_REG_MAX_READING
 
 #endif

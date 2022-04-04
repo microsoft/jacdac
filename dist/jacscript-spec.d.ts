@@ -92,6 +92,8 @@ declare namespace roles {
 declare class AirQualityIndexRole extends SensorRole {
     aqiIndex: JDRegisterNum
     aqiIndexError: JDRegisterNum
+    minAqiIndex: JDRegisterNum
+    maxAqiIndex: JDRegisterNum
 }
 declare namespace roles {
     function airQualityIndex(): AirQualityIndexRole

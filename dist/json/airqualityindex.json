@@ -9,7 +9,7 @@
     "_sensor"
   ],
   "notes": {
-    "short": "The Air Quality Index is a measure of how clean or polluted air is."
+    "short": "The Air Quality Index is a measure of how clean or polluted air is. From min, good quality, to high, low quality.\nThe range of AQI may vary between countries (https://en.wikipedia.org/wiki/Air_quality_index)."
   },
   "classIdentifier": 346844886,
   "enums": {},
@@ -172,17 +172,17 @@
         {
           "name": "_",
           "unit": "AQI",
-          "type": "u16",
-          "storage": 2,
-          "isSimpleType": true,
+          "shift": 16,
+          "type": "u16.16",
+          "storage": 4,
           "typicalMax": 500,
           "typicalMin": 0
         }
       ],
       "volatile": true,
       "identifierName": "reading",
-      "preferredInterval": 1000,
-      "packFormat": "u16"
+      "preferredInterval": 60000,
+      "packFormat": "u16.16"
     },
     {
       "kind": "ro",
@@ -193,15 +193,49 @@
         {
           "name": "_",
           "unit": "AQI",
-          "type": "u16",
-          "storage": 2,
-          "isSimpleType": true
+          "shift": 16,
+          "type": "u16.16",
+          "storage": 4
         }
       ],
       "volatile": true,
       "optional": true,
       "identifierName": "reading_error",
-      "packFormat": "u16"
+      "packFormat": "u16.16"
+    },
+    {
+      "kind": "const",
+      "name": "min_aqi_index",
+      "identifier": 260,
+      "description": "Minimum AQI reading, representing a good air quality. Typically 0.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "AQI",
+          "shift": 16,
+          "type": "u16.16",
+          "storage": 4
+        }
+      ],
+      "identifierName": "min_reading",
+      "packFormat": "u16.16"
+    },
+    {
+      "kind": "const",
+      "name": "max_aqi_index",
+      "identifier": 261,
+      "description": "Maximum AQI reading, representing a very poor air quality.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "AQI",
+          "shift": 16,
+          "type": "u16.16",
+          "storage": 4
+        }
+      ],
+      "identifierName": "max_reading",
+      "packFormat": "u16.16"
     }
   ],
   "tags": [

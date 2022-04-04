@@ -525,6 +525,28 @@ export enum AirPressureReg {
     PressureError = 0x106,
 }
 
+// Service Air Quality Index constants
+export const SRV_AIR_QUALITY_INDEX = 0x14ac6ed6
+export enum AirQualityIndexReg {
+    /**
+     * Read-only uint16_t. Air quality index, typically refreshed every second.
+     *
+     * ```
+     * const [aqiIndex] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    AqiIndex = 0x101,
+
+    /**
+     * Read-only uint16_t. Error on the AQI measure.
+     *
+     * ```
+     * const [aqiIndexError] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    AqiIndexError = 0x106,
+}
+
 // Service Arcade Gamepad constants
 export const SRV_ARCADE_GAMEPAD = 0x1deaa06e
 

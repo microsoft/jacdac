@@ -1,27 +1,18 @@
 {
-  "name": "UV index",
-  "status": "stable",
-  "shortId": "uvindex",
-  "camelName": "uvIndex",
-  "shortName": "uvIndex",
+  "name": "Air Quality Index",
+  "status": "experimental",
+  "shortId": "airqualityindex",
+  "camelName": "airQualityIndex",
+  "shortName": "airQualityIndex",
   "extends": [
     "_base",
     "_sensor"
   ],
   "notes": {
-    "short": "The UV Index is a measure of the intensity of ultraviolet (UV) rays from the Sun."
+    "short": "The Air Quality Index is a measure of how clean or polluted air is."
   },
-  "classIdentifier": 527306128,
-  "enums": {
-    "Variant": {
-      "name": "Variant",
-      "storage": 1,
-      "members": {
-        "UVA_UVB": 1,
-        "Visible_IR": 2
-      }
-    }
-  },
+  "classIdentifier": 346844886,
+  "enums": {},
   "constants": {},
   "packets": [
     {
@@ -174,59 +165,41 @@
     },
     {
       "kind": "ro",
-      "name": "uv_index",
+      "name": "aqi_index",
       "identifier": 257,
-      "description": "Ultraviolet index, typically refreshed every second.",
+      "description": "Air quality index, typically refreshed every second.",
       "fields": [
         {
           "name": "_",
-          "unit": "uv",
-          "shift": 16,
-          "type": "u16.16",
-          "storage": 4,
-          "typicalMax": 11,
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true,
+          "typicalMax": 500,
           "typicalMin": 0
         }
       ],
       "volatile": true,
       "identifierName": "reading",
       "preferredInterval": 1000,
-      "packFormat": "u16.16"
+      "packFormat": "u16"
     },
     {
       "kind": "ro",
-      "name": "uv_index_error",
+      "name": "aqi_index_error",
       "identifier": 262,
-      "description": "Error on the UV measure.",
+      "description": "Error on the AQI measure.",
       "fields": [
         {
           "name": "_",
-          "unit": "uv",
-          "shift": 16,
-          "type": "u16.16",
-          "storage": 4
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
         }
       ],
       "volatile": true,
       "optional": true,
       "identifierName": "reading_error",
-      "packFormat": "u16.16"
-    },
-    {
-      "kind": "const",
-      "name": "variant",
-      "identifier": 263,
-      "description": "The type of physical sensor and capabilities.",
-      "fields": [
-        {
-          "name": "_",
-          "type": "Variant",
-          "storage": 1
-        }
-      ],
-      "optional": true,
-      "identifierName": "variant",
-      "packFormat": "u8"
+      "packFormat": "u16"
     }
   ],
   "tags": [

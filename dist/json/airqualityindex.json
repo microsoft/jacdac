@@ -171,6 +171,7 @@
       "fields": [
         {
           "name": "_",
+          "unit": "AQI",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true,
@@ -191,6 +192,7 @@
       "fields": [
         {
           "name": "_",
+          "unit": "AQI",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true

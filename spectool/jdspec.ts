@@ -78,6 +78,7 @@ export const unitDescription: jdspec.SMap<string> = {
     bpm: "beats per minute",
     mcd: "micro candella",
     px: "pixel",
+    AQI: "air quality index"
 }
 
 export const secondaryUnitConverters: jdspec.SMap<{

@@ -529,7 +529,7 @@ export enum AirPressureReg {
 export const SRV_AIR_QUALITY_INDEX = 0x14ac6ed6
 export enum AirQualityIndexReg {
     /**
-     * Read-only uint16_t. Air quality index, typically refreshed every second.
+     * Read-only AQI uint16_t. Air quality index, typically refreshed every second.
      *
      * ```
      * const [aqiIndex] = jdunpack<[number]>(buf, "u16")
@@ -538,7 +538,7 @@ export enum AirQualityIndexReg {
     AqiIndex = 0x101,
 
     /**
-     * Read-only uint16_t. Error on the AQI measure.
+     * Read-only AQI uint16_t. Error on the AQI measure.
      *
      * ```
      * const [aqiIndexError] = jdunpack<[number]>(buf, "u16")

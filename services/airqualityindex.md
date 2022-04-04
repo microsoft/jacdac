@@ -10,10 +10,10 @@ The Air Quality Index is a measure of how clean or polluted air is.
 
 ## Registers
 
-    ro aqi_index: u16 { preferred_interval=1000, typical_max=500 } @ reading
+    ro aqi_index: u16 AQI { preferred_interval=1000, typical_max=500 } @ reading
 
 Air quality index, typically refreshed every second.
 
-    ro aqi_index_error?: u16 @ reading_error
+    ro aqi_index_error?: u16 AQI @ reading_error
 
 Error on the AQI measure.

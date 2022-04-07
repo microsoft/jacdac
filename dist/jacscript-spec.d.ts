@@ -659,6 +659,20 @@ declare namespace roles {
     function motor(): MotorRole
 }
 
+// Service: Multitouch
+declare class MultitouchRole extends SensorRole {
+    capacity: JDRegisterArray
+    touch: JDEvent
+    release: JDEvent
+    tap: JDEvent
+    longPress: JDEvent
+    swipePos: JDEvent
+    swipeNeg: JDEvent
+}
+declare namespace roles {
+    function multitouch(): MultitouchRole
+}
+
 // Service: Potentiometer
 declare class PotentiometerRole extends SensorRole {
     position: JDRegisterNum

@@ -4,6 +4,7 @@
     extends: _sensor
     camel: airQualityIndex
     group: environment
+    status: experimental
 
 The Air Quality Index is a measure of how clean or polluted air is. From min, good quality, to high, low quality.
 The range of AQI may vary between countries (https://en.wikipedia.org/wiki/Air_quality_index).

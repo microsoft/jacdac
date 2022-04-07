@@ -238,8 +238,6 @@
       "packFormat": "u16.16"
     }
   ],
-  "tags": [
-    "8bit"
-  ],
+  "tags": [],
   "group": "Environment"
 }

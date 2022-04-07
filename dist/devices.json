@@ -284,6 +284,17 @@
     "status": "deprecated"
   },
   {
+    "id": "microsoft-research-jmbase86v41",
+    "name": "JM Base",
+    "company": "Microsoft Research",
+    "description": "A breadboard like PCB to screw mount Jacdac modules.",
+    "repo": "",
+    "services": [],
+    "productIdentifiers": [],
+    "version": "4.1",
+    "designIdentifier": "86"
+  },
+  {
     "id": "microsoft-research-jmbrainesp3248v02",
     "name": "JM Brain ESP32",
     "company": "Microsoft Research",
@@ -468,6 +479,20 @@
     ],
     "version": "0.1",
     "designIdentifier": "62"
+  },
+  {
+    "id": "microsoft-research-jmbuzzer89",
+    "name": "JM-Buzzer",
+    "company": "Microsoft Research",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v4.0/profile/buzzer-89.c",
+    "services": [
+      458731991
+    ],
+    "productIdentifiers": [
+      1073013851
+    ],
+    "designIdentifier": "89"
   },
   {
     "id": "microsoft-research-jmbuzzerv20",
@@ -805,6 +830,26 @@
     "version": "0.5",
     "designIdentifier": "29",
     "status": "experimental"
+  },
+  {
+    "id": "microsoft-research-jmmoduletester91v01",
+    "name": "JM Module Tester",
+    "company": "Microsoft Research",
+    "description": "A module that allows to control the voltage on a Jacdac line and test the current consumption.",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-module-tester-91-0.1/board.h",
+    "services": [
+      524302175,
+      420661422,
+      372485145,
+      406840918,
+      506480888
+    ],
+    "productIdentifiers": [
+      1031963291
+    ],
+    "version": "0.1",
+    "designIdentifier": "91"
   },
   {
     "id": "microsoft-research-jmmotionpirv3874v38",
@@ -1349,6 +1394,22 @@
     ],
     "version": "1.1",
     "designIdentifier": "18"
+  },
+  {
+    "id": "microsoft-research-jmtemperaturehumidity202v41",
+    "name": "JM-Temperature/Humidity",
+    "company": "Microsoft Research",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v4.0/profile/temphum-202.c",
+    "services": [
+      337754823,
+      382210232
+    ],
+    "productIdentifiers": [
+      891386792
+    ],
+    "version": "4.1",
+    "designIdentifier": "202"
   },
   {
     "id": "microsoft-research-jmthermocouplemax667573v3873v38",

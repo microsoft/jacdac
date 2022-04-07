@@ -88,6 +88,17 @@ declare namespace roles {
     function airPressure(): AirPressureRole
 }
 
+// Service: Air Quality Index
+declare class AirQualityIndexRole extends SensorRole {
+    aqiIndex: JDRegisterNum
+    aqiIndexError: JDRegisterNum
+    minAqiIndex: JDRegisterNum
+    maxAqiIndex: JDRegisterNum
+}
+declare namespace roles {
+    function airQualityIndex(): AirQualityIndexRole
+}
+
 // Service: Arcade Gamepad
 declare class ArcadeGamepadRole extends SensorRole {
     buttons: JDRegisterArray & { button: number, pressure: number }

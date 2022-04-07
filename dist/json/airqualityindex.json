@@ -1,27 +1,18 @@
 {
-  "name": "UV index",
-  "status": "stable",
-  "shortId": "uvindex",
-  "camelName": "uvIndex",
-  "shortName": "uvIndex",
+  "name": "Air Quality Index",
+  "status": "experimental",
+  "shortId": "airqualityindex",
+  "camelName": "airQualityIndex",
+  "shortName": "airQualityIndex",
   "extends": [
     "_base",
     "_sensor"
   ],
   "notes": {
-    "short": "The UV Index is a measure of the intensity of ultraviolet (UV) rays from the Sun."
+    "short": "The Air Quality Index is a measure of how clean or polluted air is. From min, good quality, to high, low quality.\nThe range of AQI may vary between countries (https://en.wikipedia.org/wiki/Air_quality_index)."
   },
-  "classIdentifier": 527306128,
-  "enums": {
-    "Variant": {
-      "name": "Variant",
-      "storage": 1,
-      "members": {
-        "UVA_UVB": 1,
-        "Visible_IR": 2
-      }
-    }
-  },
+  "classIdentifier": 346844886,
+  "enums": {},
   "constants": {},
   "packets": [
     {
@@ -174,34 +165,34 @@
     },
     {
       "kind": "ro",
-      "name": "uv_index",
+      "name": "aqi_index",
       "identifier": 257,
-      "description": "Ultraviolet index, typically refreshed every second.",
+      "description": "Air quality index, typically refreshed every second.",
       "fields": [
         {
           "name": "_",
-          "unit": "uv",
+          "unit": "AQI",
           "shift": 16,
           "type": "u16.16",
           "storage": 4,
-          "typicalMax": 11,
+          "typicalMax": 500,
           "typicalMin": 0
         }
       ],
       "volatile": true,
       "identifierName": "reading",
-      "preferredInterval": 1000,
+      "preferredInterval": 60000,
       "packFormat": "u16.16"
     },
     {
       "kind": "ro",
-      "name": "uv_index_error",
+      "name": "aqi_index_error",
       "identifier": 262,
-      "description": "Error on the UV measure.",
+      "description": "Error on the AQI measure.",
       "fields": [
         {
           "name": "_",
-          "unit": "uv",
+          "unit": "AQI",
           "shift": 16,
           "type": "u16.16",
           "storage": 4
@@ -214,23 +205,39 @@
     },
     {
       "kind": "const",
-      "name": "variant",
-      "identifier": 263,
-      "description": "The type of physical sensor and capabilities.",
+      "name": "min_aqi_index",
+      "identifier": 260,
+      "description": "Minimum AQI reading, representing a good air quality. Typically 0.",
       "fields": [
         {
           "name": "_",
-          "type": "Variant",
-          "storage": 1
+          "unit": "AQI",
+          "shift": 16,
+          "type": "u16.16",
+          "storage": 4
         }
       ],
-      "optional": true,
-      "identifierName": "variant",
-      "packFormat": "u8"
+      "identifierName": "min_reading",
+      "packFormat": "u16.16"
+    },
+    {
+      "kind": "const",
+      "name": "max_aqi_index",
+      "identifier": 261,
+      "description": "Maximum AQI reading, representing a very poor air quality.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "AQI",
+          "shift": 16,
+          "type": "u16.16",
+          "storage": 4
+        }
+      ],
+      "identifierName": "max_reading",
+      "packFormat": "u16.16"
     }
   ],
-  "tags": [
-    "8bit"
-  ],
+  "tags": [],
   "group": "Environment"
 }

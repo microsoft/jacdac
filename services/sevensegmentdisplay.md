@@ -29,7 +29,7 @@ GFEDCBA DP
  - D -   -
 ```
 
-    rw brightness: u0.16 / @ intensity
+    rw brightness?: u0.16 / @ intensity
 
 Controls the brightness of the LEDs. `0` means off.
 
@@ -42,7 +42,7 @@ If the column LEDs is not supported, the value remains false.
 
 The number of digits available on the display.
 
-    const decimal_point: bool @ 0x181
+    const decimal_point?: bool @ 0x181
 
 True if decimal points are available (on all digits).
 

@@ -366,7 +366,7 @@ ${toMetaComments(
     })
     .join("")}    
     }
-    //% fixedInstance whenUsed block="${humanify(
+    //% fixedInstance whenUsed weight=1 block="${humanify(
         spec.camelName
     ).toLocaleLowerCase()}1"
     export const ${tsify(spec.camelName)}1 = new ${className}("${humanify(

@@ -115,7 +115,7 @@
       "kind": "rw",
       "name": "dots",
       "identifier": 2,
-      "description": "The state of the screen where dot on/off state is\nstored as a bit, column by column. The column should be byte aligned.",
+      "description": "The state of the screen where dot on/off state is\nstored as a bit, column by column. The column should be byte aligned.\n\nFor example, if the display has no more than 8 rows in each column, then each byte contains bits corresponding\nto a single column. Least-significant bit is on top.\nIf display has 10 rows, then each column is represented by two bytes.\nThe top-most 8 rows sit in the first byte (with the least significant bit being on top),\nand the remainign 2 row sit in the second byte.\n\nThe following C expression can be used to check if a given `column, row` coordinate is set:\n`dots[column * column_size + (row >> 3)] & (1 << (row & 7))`, where\n`column_size` is `(number_of_rows + 7) >> 3` (note that if number of rows is 8 or less then `column_size` is `1`),\nand `dots` is of `uint8_t*` type.\n\nThe size of this register is `number_of_columns * column_size` bytes.",
       "fields": [
         {
           "name": "_",

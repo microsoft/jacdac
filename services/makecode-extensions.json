@@ -45,21 +45,6 @@
     }
   },
   {
-    "service": "airqualityindex",
-    "client": {
-      "name": "jacdac-air-quality-index",
-      "targets": [
-        "microbit",
-        "arcade",
-        "maker"
-      ],
-      "repo": "microsoft/pxt-jacdac/air-quality-index",
-      "qName": "modules.AirQualityIndexClient",
-      "default": "modules.airQualityIndex",
-      "generated": true
-    }
-  },
-  {
     "service": "arcadegamepad",
     "client": {
       "name": "jacdac-arcade-gamepad",
@@ -515,6 +500,21 @@
       "repo": "microsoft/pxt-jacdac/motor",
       "qName": "modules.MotorClient",
       "default": "modules.motor",
+      "generated": false
+    }
+  },
+  {
+    "service": "multitouch",
+    "client": {
+      "name": "jacdac-multitouch",
+      "targets": [
+        "arcade",
+        "maker",
+        "microbit"
+      ],
+      "repo": "microsoft/pxt-jacdac/multitouch",
+      "qName": "modules.MultitouchClient",
+      "default": "modules.multitouch",
       "generated": false
     }
   },

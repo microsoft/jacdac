@@ -118,9 +118,9 @@
     },
     {
       "kind": "rw",
-      "name": "orange",
+      "name": "yellow",
       "identifier": 129,
-      "description": "The on/off state of the red light.",
+      "description": "The on/off state of the yellow light.",
       "fields": [
         {
           "name": "_",
@@ -134,7 +134,7 @@
       "kind": "rw",
       "name": "green",
       "identifier": 130,
-      "description": "The on/off state of the red light.",
+      "description": "The on/off state of the green light.",
       "fields": [
         {
           "name": "_",

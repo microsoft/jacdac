@@ -1024,7 +1024,7 @@ declare namespace roles {
 // Service: Traffic Light
 declare class TrafficLightRole extends Role {
     red: JDRegisterNum
-    orange: JDRegisterNum
+    yellow: JDRegisterNum
     green: JDRegisterNum
 }
 declare namespace roles {

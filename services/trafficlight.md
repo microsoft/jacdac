@@ -12,10 +12,10 @@ Controls a mini traffic with a red, orange and green LED.
 
 The on/off state of the red light.
 
-    rw orange: bool @ 0x81
+    rw yellow: bool @ 0x81
 
-The on/off state of the red light.
+The on/off state of the yellow light.
 
     rw green: bool @ 0x82
 
-The on/off state of the red light.
+The on/off state of the green light.

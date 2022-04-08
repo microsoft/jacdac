@@ -10,12 +10,12 @@
 #define JD_TRAFFIC_LIGHT_REG_RED 0x80
 
 /**
- * Read-write bool (uint8_t). The on/off state of the red light.
+ * Read-write bool (uint8_t). The on/off state of the yellow light.
  */
-#define JD_TRAFFIC_LIGHT_REG_ORANGE 0x81
+#define JD_TRAFFIC_LIGHT_REG_YELLOW 0x81
 
 /**
- * Read-write bool (uint8_t). The on/off state of the red light.
+ * Read-write bool (uint8_t). The on/off state of the green light.
  */
 #define JD_TRAFFIC_LIGHT_REG_GREEN 0x82
 

@@ -4927,16 +4927,16 @@ export enum TrafficLightReg {
     Red = 0x80,
 
     /**
-     * Read-write bool (uint8_t). The on/off state of the red light.
+     * Read-write bool (uint8_t). The on/off state of the yellow light.
      *
      * ```
-     * const [orange] = jdunpack<[number]>(buf, "u8")
+     * const [yellow] = jdunpack<[number]>(buf, "u8")
      * ```
      */
-    Orange = 0x81,
+    Yellow = 0x81,
 
     /**
-     * Read-write bool (uint8_t). The on/off state of the red light.
+     * Read-write bool (uint8_t). The on/off state of the green light.
      *
      * ```
      * const [green] = jdunpack<[number]>(buf, "u8")

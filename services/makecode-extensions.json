@@ -699,6 +699,21 @@
     }
   },
   {
+    "service": "sevensegmentdisplay",
+    "client": {
+      "name": "jacdac-seven-segment-display",
+      "targets": [
+        "microbit",
+        "arcade",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/seven-segment-display",
+      "qName": "modules.SevenSegmentDisplayClient",
+      "default": "modules.sevenSegmentDisplay",
+      "generated": false
+    }
+  },
+  {
     "service": "soilmoisture",
     "client": {
       "name": "jacdac-soil-moisture",

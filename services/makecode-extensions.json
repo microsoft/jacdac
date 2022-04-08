@@ -45,6 +45,21 @@
     }
   },
   {
+    "service": "airqualityindex",
+    "client": {
+      "name": "jacdac-air-quality-index",
+      "targets": [
+        "microbit",
+        "arcade",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/air-quality-index",
+      "qName": "modules.AirQualityIndexClient",
+      "default": "modules.airQualityIndex",
+      "generated": true
+    }
+  },
+  {
     "service": "arcadegamepad",
     "client": {
       "name": "jacdac-arcade-gamepad",

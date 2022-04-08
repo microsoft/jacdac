@@ -902,7 +902,6 @@ declare class SevenSegmentDisplayRole extends Role {
     digitCount: JDRegisterNum
     decimalPoint: JDRegisterNum
     setNumber(value: number): void
-    setText(text: string): void
 }
 declare namespace roles {
     function sevenSegmentDisplay(): SevenSegmentDisplayRole

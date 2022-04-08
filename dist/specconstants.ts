@@ -4398,11 +4398,6 @@ export enum SevenSegmentDisplayCmd {
      * Argument: value f64 (uint64_t). Shows the number on the screen using the decimal dot if available.
      */
     SetNumber = 0x80,
-
-    /**
-     * Argument: text string (bytes). Shows the text on the screen. The client may decide to scroll the text if too long.
-     */
-    SetText = 0x81,
 }
 
 // Service Soil moisture constants

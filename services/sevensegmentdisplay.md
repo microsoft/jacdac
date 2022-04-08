@@ -51,9 +51,3 @@ True if decimal points are available (on all digits).
     }
 
 Shows the number on the screen using the decimal dot if available.
-
-    client command set_text @ 0x81 {
-        text: string
-    }
-
-Shows the text on the screen. The client may decide to scroll the text if too long.

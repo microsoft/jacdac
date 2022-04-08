@@ -38,9 +38,4 @@
  */
 #define JD_SEVEN_SEGMENT_DISPLAY_CMD_SET_NUMBER 0x80
 
-/**
- * Argument: text string (bytes). Shows the text on the screen. The client may decide to scroll the text if too long.
- */
-#define JD_SEVEN_SEGMENT_DISPLAY_CMD_SET_TEXT 0x81
-
 #endif

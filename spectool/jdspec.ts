@@ -78,7 +78,7 @@ export const unitDescription: jdspec.SMap<string> = {
     bpm: "beats per minute",
     mcd: "micro candella",
     px: "pixel",
-    AQI: "air quality index"
+    AQI: "air quality index",
 }
 
 export const secondaryUnitConverters: jdspec.SMap<{
@@ -1892,7 +1892,7 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "cs") {
         ? indent + "export const enum"
         : "export enum"
     const exportkw = csharp ? "public" : "export"
-    const enumsf = csharp ? "public const string " : ""
+    const enumsf = csharp ? "public const string " : "export const "
     const cskw = csharp ? ";" : ""
     let r = useNamespace
         ? `namespace ${
@@ -2007,7 +2007,7 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "cs") {
                     `Pack format for '${pkt.name}' register data.`
                 )}${enumsf}${upperCamel(pkt.name)}${
                     pkt.secondary ? "Report" : ""
-                } = "${pkt.packFormat}"${csharp ? ";" : ","}\n`
+                } = "${pkt.packFormat}"${csharp ? ";" : ""}\n`
         }
     }
 
@@ -2018,9 +2018,11 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "cs") {
                 .replace(/^\n+/, "")
                 .replace(/\n$/, "")
                 .replace(/\n/g, "\n    " + indent)
-            if (inner.indexOf("public const") > -1)
-                r += `    public static class ${pref}${k} {\n    ${indent}${inner}\n${indent}}\n\n`
-            else
+            if (inner.indexOf("public const") > -1 || k.endsWith("Pack")) {
+                r += `    ${csharp ? exportkw : ""} ${
+                    csharp ? "static " : ""
+                }${csharp ? "class" : "namespace"} ${pref}${k} {\n    ${indent}${inner}\n${indent}}\n\n`
+            } else
                 r += `${enumkw} ${pref}${k} ${
                     csharp ? `: ushort ` : ""
                 }{\n    ${indent}${inner}\n${indent}}\n\n`

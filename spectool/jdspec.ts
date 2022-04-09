@@ -1892,6 +1892,7 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "cs") {
         ? indent + "export const enum"
         : "export enum"
     const exportkw = csharp ? "public" : "export"
+    const enumsf = csharp ? "public const string " : ""
     const cskw = csharp ? ";" : ""
     let r = useNamespace
         ? `namespace ${
@@ -1997,16 +1998,16 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "cs") {
 
         // don't line const strings in makecode,
         // they don't get dropped efficiently
-        if (csharp && pkt.packFormat) {
+        if ((csharp || sts) && pkt.packFormat) {
             const packName = inner + "Pack"
             tsEnums[packName] =
                 (tsEnums[packName] || "") +
                 `${wrapComment(
                     language,
                     `Pack format for '${pkt.name}' register data.`
-                )}public const string ${upperCamel(pkt.name)}${
+                )}${enumsf}${upperCamel(pkt.name)}${
                     pkt.secondary ? "Report" : ""
-                } = "${pkt.packFormat}";\n`
+                } = "${pkt.packFormat}"${csharp ? ";" : ","}\n`
         }
     }
 

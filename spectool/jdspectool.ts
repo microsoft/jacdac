@@ -121,7 +121,7 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
         ctorArgs.push(
             `jacdac.${capitalize(spec.camelName)}RegPack.${capitalize(
                 camelize(reading.name)
-            )})`
+            )}`
         )
     }
     const className = `${capitalize(camelName)}Client`
@@ -155,7 +155,7 @@ ${regs
     .join("")}            
 
         constructor(role: string) {
-            super(${ctorArgs.join(", ")});
+            super(${ctorArgs.join(", ")})
 ${regs
     .filter(reg => reg.identifier !== Reading && !reg.client)
     .map(
@@ -166,7 +166,7 @@ ${regs
             camelize(reg.name)
         )}, jacdac.${capitalize(spec.camelName)}RegPack.${capitalize(
             camelize(reg.name)
-        )});`
+        )})`
     )
     .join("")}            
         }

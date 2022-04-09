@@ -64,7 +64,7 @@ namespace jacdac {
         CommandNotImplemented = 0x3,
     }
 
-     namespace SystemCmdPack {
+    export namespace SystemCmdPack {
         /**
          * Pack format for 'command_not_implemented' register data.
          */
@@ -262,7 +262,7 @@ namespace jacdac {
         InstanceName = 0x109,
     }
 
-     namespace SystemRegPack {
+    export namespace SystemRegPack {
         /**
          * Pack format for 'intensity' register data.
          */
@@ -400,7 +400,7 @@ namespace jacdac {
         Neutral = 0x7,
     }
 
-     namespace SystemEventPack {
+    export namespace SystemEventPack {
         /**
          * Pack format for 'status_code_changed' register data.
          */
@@ -424,7 +424,7 @@ namespace jacdac {
         CommandNotImplemented = 0x3,
     }
 
-     namespace BaseCmdPack {
+    export namespace BaseCmdPack {
         /**
          * Pack format for 'command_not_implemented' register data.
          */
@@ -458,7 +458,7 @@ namespace jacdac {
         StatusCode = 0x103,
     }
 
-     namespace BaseRegPack {
+    export namespace BaseRegPack {
         /**
          * Pack format for 'instance_name' register data.
          */
@@ -482,7 +482,7 @@ namespace jacdac {
         StatusCodeChanged = 0x4,
     }
 
-     namespace BaseEventPack {
+    export namespace BaseEventPack {
         /**
          * Pack format for 'status_code_changed' register data.
          */
@@ -522,7 +522,7 @@ namespace jacdac {
         StreamingPreferredInterval = 0x102,
     }
 
-     namespace SensorRegPack {
+    export namespace SensorRegPack {
         /**
          * Pack format for 'streaming_samples' register data.
          */
@@ -582,7 +582,7 @@ namespace jacdac {
         MaxForcesSupported = 0x10a,
     }
 
-     namespace AccelerometerRegPack {
+    export namespace AccelerometerRegPack {
         /**
          * Pack format for 'forces' register data.
          */
@@ -720,7 +720,7 @@ namespace jacdac {
         MaxHumidity = 0x105,
     }
 
-     namespace AcidityRegPack {
+    export namespace AcidityRegPack {
         /**
          * Pack format for 'acidity' register data.
          */
@@ -766,7 +766,7 @@ namespace jacdac {
         PressureError = 0x106,
     }
 
-     namespace AirPressureRegPack {
+    export namespace AirPressureRegPack {
         /**
          * Pack format for 'pressure' register data.
          */
@@ -820,7 +820,7 @@ namespace jacdac {
         MaxAqiIndex = 0x105,
     }
 
-     namespace AirQualityIndexRegPack {
+    export namespace AirQualityIndexRegPack {
         /**
          * Pack format for 'aqi_index' register data.
          */
@@ -892,7 +892,7 @@ namespace jacdac {
         AvailableButtons = 0x180,
     }
 
-     namespace ArcadeGamepadRegPack {
+    export namespace ArcadeGamepadRegPack {
         /**
          * Pack format for 'buttons' register data.
          */
@@ -926,7 +926,7 @@ namespace jacdac {
         Up = 0x2,
     }
 
-     namespace ArcadeGamepadEventPack {
+    export namespace ArcadeGamepadEventPack {
         /**
          * Pack format for 'down' register data.
          */
@@ -953,7 +953,7 @@ namespace jacdac {
         Play = 0x80,
     }
 
-     namespace ArcadeSoundCmdPack {
+    export namespace ArcadeSoundCmdPack {
         /**
          * Pack format for 'play' register data.
          */
@@ -993,7 +993,7 @@ namespace jacdac {
         BufferPending = 0x181,
     }
 
-     namespace ArcadeSoundRegPack {
+    export namespace ArcadeSoundRegPack {
         /**
          * Pack format for 'sample_rate' register data.
          */
@@ -1055,7 +1055,7 @@ namespace jacdac {
         ConnectionStatus = 0x182,
     }
 
-     namespace AzureIotHubHealthRegPack {
+    export namespace AzureIotHubHealthRegPack {
         /**
          * Pack format for 'hub_name' register data.
          */
@@ -1093,7 +1093,7 @@ namespace jacdac {
         SetConnectionString = 0x86,
     }
 
-     namespace AzureIotHubHealthCmdPack {
+    export namespace AzureIotHubHealthCmdPack {
         /**
          * Pack format for 'set_connection_string' register data.
          */
@@ -1118,7 +1118,7 @@ namespace jacdac {
         MessageSent = 0x80,
     }
 
-     namespace AzureIotHubHealthEventPack {
+    export namespace AzureIotHubHealthEventPack {
         /**
          * Pack format for 'connection_status_change' register data.
          */
@@ -1179,7 +1179,7 @@ namespace jacdac {
         Formats = 0x180,
     }
 
-     namespace BarcodeReaderRegPack {
+    export namespace BarcodeReaderRegPack {
         /**
          * Pack format for 'enabled' register data.
          */
@@ -1204,7 +1204,7 @@ namespace jacdac {
         Detect = 0x1,
     }
 
-     namespace BarcodeReaderEventPack {
+    export namespace BarcodeReaderEventPack {
         /**
          * Pack format for 'detect' register data.
          */
@@ -1253,7 +1253,7 @@ namespace jacdac {
         FrequencyBand = 0x82,
     }
 
-     namespace BitRadioRegPack {
+    export namespace BitRadioRegPack {
         /**
          * Pack format for 'enabled' register data.
          */
@@ -1340,7 +1340,7 @@ namespace jacdac {
         BufferReceived = 0x92,
     }
 
-     namespace BitRadioCmdPack {
+    export namespace BitRadioCmdPack {
         /**
          * Pack format for 'send_string' register data.
          */
@@ -1445,7 +1445,7 @@ namespace jacdac {
          */
     }
 
-     namespace BootloaderCmdPack {
+    export namespace BootloaderCmdPack {
         /**
          * Pack format for 'info' register data.
          */
@@ -1505,7 +1505,7 @@ namespace jacdac {
         Length = 0x181,
     }
 
-     namespace BrailleDisplayRegPack {
+    export namespace BrailleDisplayRegPack {
         /**
          * Pack format for 'enabled' register data.
          */
@@ -1537,7 +1537,7 @@ namespace jacdac {
         Enabled = 0x1,
     }
 
-     namespace BridgeRegPack {
+    export namespace BridgeRegPack {
         /**
          * Pack format for 'enabled' register data.
          */
@@ -1573,7 +1573,7 @@ namespace jacdac {
         Pressed = 0x181,
     }
 
-     namespace ButtonRegPack {
+    export namespace ButtonRegPack {
         /**
          * Pack format for 'pressure' register data.
          */
@@ -1621,7 +1621,7 @@ namespace jacdac {
         Hold = 0x81,
     }
 
-     namespace ButtonEventPack {
+    export namespace ButtonEventPack {
         /**
          * Pack format for 'up' register data.
          */
@@ -1648,7 +1648,7 @@ namespace jacdac {
         Volume = 0x1,
     }
 
-     namespace BuzzerRegPack {
+    export namespace BuzzerRegPack {
         /**
          * Pack format for 'volume' register data.
          */
@@ -1674,7 +1674,7 @@ namespace jacdac {
         PlayNote = 0x81,
     }
 
-     namespace BuzzerCmdPack {
+    export namespace BuzzerCmdPack {
         /**
          * Pack format for 'play_tone' register data.
          */
@@ -1701,7 +1701,7 @@ namespace jacdac {
         Threshold = 0x6,
     }
 
-     namespace CapacitiveButtonRegPack {
+    export namespace CapacitiveButtonRegPack {
         /**
          * Pack format for 'threshold' register data.
          */
@@ -1794,7 +1794,7 @@ namespace jacdac {
         Columns = 0x181,
     }
 
-     namespace CharacterScreenRegPack {
+    export namespace CharacterScreenRegPack {
         /**
          * Pack format for 'message' register data.
          */
@@ -1841,7 +1841,7 @@ namespace jacdac {
         Send = 0x80,
     }
 
-     namespace CodalMessageBusCmdPack {
+    export namespace CodalMessageBusCmdPack {
         /**
          * Pack format for 'send' register data.
          */
@@ -1860,7 +1860,7 @@ namespace jacdac {
         Message = 0x80,
     }
 
-     namespace CodalMessageBusEventPack {
+    export namespace CodalMessageBusEventPack {
         /**
          * Pack format for 'message' register data.
          */
@@ -1882,7 +1882,7 @@ namespace jacdac {
         Color = 0x101,
     }
 
-     namespace ColorRegPack {
+    export namespace ColorRegPack {
         /**
          * Pack format for 'color' register data.
          */
@@ -1922,7 +1922,7 @@ namespace jacdac {
         HeadingError = 0x106,
     }
 
-     namespace CompassRegPack {
+    export namespace CompassRegPack {
         /**
          * Pack format for 'heading' register data.
          */
@@ -2081,7 +2081,7 @@ namespace jacdac {
          */
     }
 
-     namespace ControlCmdPack {
+    export namespace ControlCmdPack {
         /**
          * Pack format for 'services' register data.
          */
@@ -2122,7 +2122,7 @@ namespace jacdac {
      */
 
 
-     namespace ControlinfoPack {
+    export namespace ControlinfoPack {
         /**
          * Pack format for 'wrapped_command' register data.
          */
@@ -2196,7 +2196,7 @@ namespace jacdac {
         Uptime = 0x186,
     }
 
-     namespace ControlRegPack {
+    export namespace ControlRegPack {
         /**
          * Pack format for 'reset_in' register data.
          */
@@ -2261,7 +2261,7 @@ namespace jacdac {
         Measurement = 0x101,
     }
 
-     namespace DcCurrentMeasurementRegPack {
+    export namespace DcCurrentMeasurementRegPack {
         /**
          * Pack format for 'measurement_name' register data.
          */
@@ -2314,7 +2314,7 @@ namespace jacdac {
         Measurement = 0x101,
     }
 
-     namespace DcVoltageMeasurementRegPack {
+    export namespace DcVoltageMeasurementRegPack {
         /**
          * Pack format for 'measurement_type' register data.
          */
@@ -2394,7 +2394,7 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-     namespace DistanceRegPack {
+    export namespace DistanceRegPack {
         /**
          * Pack format for 'distance' register data.
          */
@@ -2436,7 +2436,7 @@ namespace jacdac {
         Enabled = 0x1,
     }
 
-     namespace DmxRegPack {
+    export namespace DmxRegPack {
         /**
          * Pack format for 'enabled' register data.
          */
@@ -2454,7 +2454,7 @@ namespace jacdac {
         Send = 0x80,
     }
 
-     namespace DmxCmdPack {
+    export namespace DmxCmdPack {
         /**
          * Pack format for 'send' register data.
          */
@@ -2521,7 +2521,7 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-     namespace DotMatrixRegPack {
+    export namespace DotMatrixRegPack {
         /**
          * Pack format for 'dots' register data.
          */
@@ -2607,7 +2607,7 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-     namespace ECO2RegPack {
+    export namespace ECO2RegPack {
         /**
          * Pack format for 'e_CO2' register data.
          */
@@ -2658,7 +2658,7 @@ namespace jacdac {
         Length = 0x180,
     }
 
-     namespace FlexRegPack {
+    export namespace FlexRegPack {
         /**
          * Pack format for 'bending' register data.
          */
@@ -2748,7 +2748,7 @@ namespace jacdac {
         ButtonsAvailable = 0x180,
     }
 
-     namespace GamepadRegPack {
+    export namespace GamepadRegPack {
         /**
          * Pack format for 'direction' register data.
          */
@@ -2777,7 +2777,7 @@ namespace jacdac {
         ButtonsChanged = 0x3,
     }
 
-     namespace GamepadEventPack {
+    export namespace GamepadEventPack {
         /**
          * Pack format for 'buttons_changed' register data.
          */
@@ -2827,7 +2827,7 @@ namespace jacdac {
         MaxRatesSupported = 0x10a,
     }
 
-     namespace GyroscopeRegPack {
+    export namespace GyroscopeRegPack {
         /**
          * Pack format for 'rotation_rates' register data.
          */
@@ -2896,7 +2896,7 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-     namespace HeartRateRegPack {
+    export namespace HeartRateRegPack {
         /**
          * Pack format for 'heart_rate' register data.
          */
@@ -2966,7 +2966,7 @@ namespace jacdac {
         Clear = 0x81,
     }
 
-     namespace HidKeyboardCmdPack {
+    export namespace HidKeyboardCmdPack {
         /**
          * Pack format for 'key' register data.
          */
@@ -3032,7 +3032,7 @@ namespace jacdac {
         Wheel = 0x82,
     }
 
-     namespace HidMouseCmdPack {
+    export namespace HidMouseCmdPack {
         /**
          * Pack format for 'set_button' register data.
          */
@@ -3091,7 +3091,7 @@ namespace jacdac {
         MaxHumidity = 0x105,
     }
 
-     namespace HumidityRegPack {
+    export namespace HumidityRegPack {
         /**
          * Pack format for 'humidity' register data.
          */
@@ -3137,7 +3137,7 @@ namespace jacdac {
         IlluminanceError = 0x106,
     }
 
-     namespace IlluminanceRegPack {
+    export namespace IlluminanceRegPack {
         /**
          * Pack format for 'illuminance' register data.
          */
@@ -3174,7 +3174,7 @@ namespace jacdac {
         SetPixels = 0x83,
     }
 
-     namespace IndexedScreenCmdPack {
+    export namespace IndexedScreenCmdPack {
         /**
          * Pack format for 'start_update' register data.
          */
@@ -3274,7 +3274,7 @@ namespace jacdac {
         Rotation = 0x83,
     }
 
-     namespace IndexedScreenRegPack {
+    export namespace IndexedScreenRegPack {
         /**
          * Pack format for 'brightness' register data.
          */
@@ -3372,7 +3372,7 @@ namespace jacdac {
         AckCloudCommand = 0x83,
     }
 
-     namespace JacscriptCloudCmdPack {
+    export namespace JacscriptCloudCmdPack {
         /**
          * Pack format for 'upload' register data.
          */
@@ -3406,7 +3406,7 @@ namespace jacdac {
         Connected = 0x180,
     }
 
-     namespace JacscriptCloudRegPack {
+    export namespace JacscriptCloudRegPack {
         /**
          * Pack format for 'connected' register data.
          */
@@ -3431,7 +3431,7 @@ namespace jacdac {
         TwinChange = 0x3,
     }
 
-     namespace JacscriptCloudEventPack {
+    export namespace JacscriptCloudEventPack {
         /**
          * Pack format for 'cloud_command' register data.
          */
@@ -3515,7 +3515,7 @@ namespace jacdac {
         LogMessage = 0x82,
     }
 
-     namespace JacscriptManagerCmdPack {
+    export namespace JacscriptManagerCmdPack {
         /**
          * Pack format for 'deploy_bytecode' register data.
          */
@@ -3546,7 +3546,7 @@ namespace jacdac {
      */
 
 
-     namespace JacscriptManagerinfoPack {
+    export namespace JacscriptManagerinfoPack {
         /**
          * Pack format for 'bytecode' register data.
          */
@@ -3604,7 +3604,7 @@ namespace jacdac {
         ProgramHash = 0x181,
     }
 
-     namespace JacscriptManagerRegPack {
+    export namespace JacscriptManagerRegPack {
         /**
          * Pack format for 'running' register data.
          */
@@ -3651,7 +3651,7 @@ namespace jacdac {
         ProgramChange = 0x3,
     }
 
-     namespace JacscriptManagerEventPack {
+    export namespace JacscriptManagerEventPack {
         /**
          * Pack format for 'program_panic' register data.
          */
@@ -3685,7 +3685,7 @@ namespace jacdac {
         Animate = 0x80,
     }
 
-     namespace LedCmdPack {
+    export namespace LedCmdPack {
         /**
          * Pack format for 'animate' register data.
          */
@@ -3748,7 +3748,7 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-     namespace LedRegPack {
+    export namespace LedRegPack {
         /**
          * Pack format for 'color' register data.
          */
@@ -3886,7 +3886,7 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-     namespace LedDisplayRegPack {
+    export namespace LedDisplayRegPack {
         /**
          * Pack format for 'pixels' register data.
          */
@@ -4050,7 +4050,7 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-     namespace LedStripRegPack {
+    export namespace LedStripRegPack {
         /**
          * Pack format for 'brightness' register data.
          */
@@ -4108,7 +4108,7 @@ namespace jacdac {
         Run = 0x81,
     }
 
-     namespace LedStripCmdPack {
+    export namespace LedStripCmdPack {
         /**
          * Pack format for 'run' register data.
          */
@@ -4140,7 +4140,7 @@ namespace jacdac {
         Dimmable = 0x180,
     }
 
-     namespace LightBulbRegPack {
+    export namespace LightBulbRegPack {
         /**
          * Pack format for 'brightness' register data.
          */
@@ -4193,7 +4193,7 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-     namespace LightLevelRegPack {
+    export namespace LightLevelRegPack {
         /**
          * Pack format for 'light_level' register data.
          */
@@ -4243,7 +4243,7 @@ namespace jacdac {
         MinPriority = 0x80,
     }
 
-     namespace LoggerRegPack {
+    export namespace LoggerRegPack {
         /**
          * Pack format for 'min_priority' register data.
          */
@@ -4288,7 +4288,7 @@ namespace jacdac {
         Error = 0x83,
     }
 
-     namespace LoggerCmdPack {
+    export namespace LoggerCmdPack {
         /**
          * Pack format for 'debug' register data.
          */
@@ -4335,7 +4335,7 @@ namespace jacdac {
         ForcesError = 0x106,
     }
 
-     namespace MagnetometerRegPack {
+    export namespace MagnetometerRegPack {
         /**
          * Pack format for 'forces' register data.
          */
@@ -4421,7 +4421,7 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-     namespace MatrixKeypadRegPack {
+    export namespace MatrixKeypadRegPack {
         /**
          * Pack format for 'pressed' register data.
          */
@@ -4490,7 +4490,7 @@ namespace jacdac {
         LongClick = 0x81,
     }
 
-     namespace MatrixKeypadEventPack {
+    export namespace MatrixKeypadEventPack {
         /**
          * Pack format for 'down' register data.
          */
@@ -4530,7 +4530,7 @@ namespace jacdac {
         Sample = 0x81,
     }
 
-     namespace MicrophoneCmdPack {
+    export namespace MicrophoneCmdPack {
         /**
          * Pack format for 'sample' register data.
          */
@@ -4549,7 +4549,7 @@ namespace jacdac {
         SamplingPeriod = 0x80,
     }
 
-     namespace MicrophoneRegPack {
+    export namespace MicrophoneRegPack {
         /**
          * Pack format for 'sampling_period' register data.
          */
@@ -4571,7 +4571,7 @@ namespace jacdac {
         Enabled = 0x1,
     }
 
-     namespace MidiOutputRegPack {
+    export namespace MidiOutputRegPack {
         /**
          * Pack format for 'enabled' register data.
          */
@@ -4594,7 +4594,7 @@ namespace jacdac {
         Send = 0x81,
     }
 
-     namespace MidiOutputCmdPack {
+    export namespace MidiOutputCmdPack {
         /**
          * Pack format for 'send' register data.
          */
@@ -4653,7 +4653,7 @@ namespace jacdac {
          */
     }
 
-     namespace ModelRunnerCmdPack {
+    export namespace ModelRunnerCmdPack {
         /**
          * Pack format for 'set_model' register data.
          */
@@ -4783,7 +4783,7 @@ namespace jacdac {
         Parallel = 0x188,
     }
 
-     namespace ModelRunnerRegPack {
+    export namespace ModelRunnerRegPack {
         /**
          * Pack format for 'auto_invoke_every' register data.
          */
@@ -4888,7 +4888,7 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-     namespace MotionRegPack {
+    export namespace MotionRegPack {
         /**
          * Pack format for 'moving' register data.
          */
@@ -4971,7 +4971,7 @@ namespace jacdac {
         Reversible = 0x182,
     }
 
-     namespace MotorRegPack {
+    export namespace MotorRegPack {
         /**
          * Pack format for 'duty' register data.
          */
@@ -5015,7 +5015,7 @@ namespace jacdac {
         Capacity = 0x101,
     }
 
-     namespace MultitouchRegPack {
+    export namespace MultitouchRegPack {
         /**
          * Pack format for 'capacity' register data.
          */
@@ -5084,7 +5084,7 @@ namespace jacdac {
         SwipeNeg = 0x91,
     }
 
-     namespace MultitouchEventPack {
+    export namespace MultitouchEventPack {
         /**
          * Pack format for 'touch' register data.
          */
@@ -5148,7 +5148,7 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-     namespace PotentiometerRegPack {
+    export namespace PotentiometerRegPack {
         /**
          * Pack format for 'position' register data.
          */
@@ -5268,7 +5268,7 @@ namespace jacdac {
         KeepOnPulsePeriod = 0x81,
     }
 
-     namespace PowerRegPack {
+    export namespace PowerRegPack {
         /**
          * Pack format for 'allowed' register data.
          */
@@ -5334,7 +5334,7 @@ namespace jacdac {
         PowerStatusChanged = 0x3,
     }
 
-     namespace PowerEventPack {
+    export namespace PowerEventPack {
         /**
          * Pack format for 'power_status_changed' register data.
          */
@@ -5383,7 +5383,7 @@ namespace jacdac {
         MaximumVoltage = 0x111,
     }
 
-     namespace PowerSupplyRegPack {
+    export namespace PowerSupplyRegPack {
         /**
          * Pack format for 'enabled' register data.
          */
@@ -5420,7 +5420,7 @@ namespace jacdac {
         Threshold = 0x6,
     }
 
-     namespace PressureButtonRegPack {
+    export namespace PressureButtonRegPack {
         /**
          * Pack format for 'threshold' register data.
          */
@@ -5559,7 +5559,7 @@ namespace jacdac {
         RoU8String = 0x187,
     }
 
-     namespace ProtoTestRegPack {
+    export namespace ProtoTestRegPack {
         /**
          * Pack format for 'rw_bool' register data.
          */
@@ -5703,7 +5703,7 @@ namespace jacdac {
         EU8String = 0x87,
     }
 
-     namespace ProtoTestEventPack {
+    export namespace ProtoTestEventPack {
         /**
          * Pack format for 'e_bool' register data.
          */
@@ -5814,7 +5814,7 @@ namespace jacdac {
         CReportPipe = 0x90,
     }
 
-     namespace ProtoTestCmdPack {
+    export namespace ProtoTestCmdPack {
         /**
          * Pack format for 'c_bool' register data.
          */
@@ -5865,7 +5865,7 @@ namespace jacdac {
      */
 
 
-     namespace ProtoTestinfoPack {
+    export namespace ProtoTestinfoPack {
         /**
          * Pack format for 'p_bytes' register data.
          */
@@ -5900,7 +5900,7 @@ namespace jacdac {
         OxygenError = 0x106,
     }
 
-     namespace PulseOximeterRegPack {
+    export namespace PulseOximeterRegPack {
         /**
          * Pack format for 'oxygen' register data.
          */
@@ -5936,7 +5936,7 @@ namespace jacdac {
         PrecipitationPrecision = 0x108,
     }
 
-     namespace RainGaugeRegPack {
+    export namespace RainGaugeRegPack {
         /**
          * Pack format for 'precipitation' register data.
          */
@@ -6000,7 +6000,7 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-     namespace RealTimeClockRegPack {
+    export namespace RealTimeClockRegPack {
         /**
          * Pack format for 'local_time' register data.
          */
@@ -6033,7 +6033,7 @@ namespace jacdac {
         SetTime = 0x80,
     }
 
-     namespace RealTimeClockCmdPack {
+    export namespace RealTimeClockCmdPack {
         /**
          * Pack format for 'set_time' register data.
          */
@@ -6072,7 +6072,7 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-     namespace ReflectedLightRegPack {
+    export namespace ReflectedLightRegPack {
         /**
          * Pack format for 'brightness' register data.
          */
@@ -6127,7 +6127,7 @@ namespace jacdac {
         MaxSwitchingCurrent = 0x180,
     }
 
-     namespace RelayRegPack {
+    export namespace RelayRegPack {
         /**
          * Pack format for 'active' register data.
          */
@@ -6182,7 +6182,7 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-     namespace RngRegPack {
+    export namespace RngRegPack {
         /**
          * Pack format for 'random' register data.
          */
@@ -6223,7 +6223,7 @@ namespace jacdac {
         AllRolesAllocated = 0x181,
     }
 
-     namespace RoleManagerRegPack {
+    export namespace RoleManagerRegPack {
         /**
          * Pack format for 'auto_bind' register data.
          */
@@ -6260,7 +6260,7 @@ namespace jacdac {
         ListRoles = 0x83,
     }
 
-     namespace RoleManagerCmdPack {
+    export namespace RoleManagerCmdPack {
         /**
          * Pack format for 'set_role' register data.
          */
@@ -6281,7 +6281,7 @@ namespace jacdac {
      */
 
 
-     namespace RoleManagerinfoPack {
+    export namespace RoleManagerinfoPack {
         /**
          * Pack format for 'roles' register data.
          */
@@ -6331,7 +6331,7 @@ namespace jacdac {
         Clicker = 0x181,
     }
 
-     namespace RotaryEncoderRegPack {
+    export namespace RotaryEncoderRegPack {
         /**
          * Pack format for 'position' register data.
          */
@@ -6363,7 +6363,7 @@ namespace jacdac {
         Kinematics = 0x101,
     }
 
-     namespace RoverRegPack {
+    export namespace RoverRegPack {
         /**
          * Pack format for 'kinematics' register data.
          */
@@ -6439,7 +6439,7 @@ namespace jacdac {
         CurrentSample = 0x101,
     }
 
-     namespace SensorAggregatorRegPack {
+    export namespace SensorAggregatorRegPack {
         /**
          * Pack format for 'inputs' register data.
          */
@@ -6562,7 +6562,7 @@ namespace jacdac {
         CurrentAngle = 0x101,
     }
 
-     namespace ServoRegPack {
+    export namespace ServoRegPack {
         /**
          * Pack format for 'angle' register data.
          */
@@ -6677,7 +6677,7 @@ namespace jacdac {
         Clear = 0x85,
     }
 
-     namespace SettingsCmdPack {
+    export namespace SettingsCmdPack {
         /**
          * Pack format for 'get' register data.
          */
@@ -6725,7 +6725,7 @@ namespace jacdac {
      */
 
 
-     namespace SettingsinfoPack {
+    export namespace SettingsinfoPack {
         /**
          * Pack format for 'listed_key' register data.
          */
@@ -6800,7 +6800,7 @@ namespace jacdac {
         DecimalPoint = 0x181,
     }
 
-     namespace SevenSegmentDisplayRegPack {
+    export namespace SevenSegmentDisplayRegPack {
         /**
          * Pack format for 'digits' register data.
          */
@@ -6834,7 +6834,7 @@ namespace jacdac {
         SetNumber = 0x80,
     }
 
-     namespace SevenSegmentDisplayCmdPack {
+    export namespace SevenSegmentDisplayCmdPack {
         /**
          * Pack format for 'set_number' register data.
          */
@@ -6882,7 +6882,7 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-     namespace SoilMoistureRegPack {
+    export namespace SoilMoistureRegPack {
         /**
          * Pack format for 'moisture' register data.
          */
@@ -6933,7 +6933,7 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-     namespace SolenoidRegPack {
+    export namespace SolenoidRegPack {
         /**
          * Pack format for 'pulled' register data.
          */
@@ -6987,7 +6987,7 @@ namespace jacdac {
         QuietThreshold = 0x5,
     }
 
-     namespace SoundLevelRegPack {
+    export namespace SoundLevelRegPack {
         /**
          * Pack format for 'sound_level' register data.
          */
@@ -7038,7 +7038,7 @@ namespace jacdac {
         Volume = 0x1,
     }
 
-     namespace SoundPlayerRegPack {
+    export namespace SoundPlayerRegPack {
         /**
          * Pack format for 'volume' register data.
          */
@@ -7070,7 +7070,7 @@ namespace jacdac {
         ListSounds = 0x82,
     }
 
-     namespace SoundPlayerCmdPack {
+    export namespace SoundPlayerCmdPack {
         /**
          * Pack format for 'play' register data.
          */
@@ -7091,7 +7091,7 @@ namespace jacdac {
      */
 
 
-     namespace SoundPlayerinfoPack {
+    export namespace SoundPlayerinfoPack {
         /**
          * Pack format for 'list_sounds_pipe' register data.
          */
@@ -7133,7 +7133,7 @@ namespace jacdac {
         Cancel = 0x82,
     }
 
-     namespace SoundRecorderWithPlaybackCmdPack {
+    export namespace SoundRecorderWithPlaybackCmdPack {
         /**
          * Pack format for 'record' register data.
          */
@@ -7169,7 +7169,7 @@ namespace jacdac {
         Volume = 0x1,
     }
 
-     namespace SoundRecorderWithPlaybackRegPack {
+    export namespace SoundRecorderWithPlaybackRegPack {
         /**
          * Pack format for 'status' register data.
          */
@@ -7247,7 +7247,7 @@ namespace jacdac {
         SmoothingTimeConstant = 0x83,
     }
 
-     namespace SoundSpectrumRegPack {
+    export namespace SoundSpectrumRegPack {
         /**
          * Pack format for 'frequency_bins' register data.
          */
@@ -7330,7 +7330,7 @@ namespace jacdac {
         Rate = 0x83,
     }
 
-     namespace SpeechSynthesisRegPack {
+    export namespace SpeechSynthesisRegPack {
         /**
          * Pack format for 'enabled' register data.
          */
@@ -7373,7 +7373,7 @@ namespace jacdac {
         Cancel = 0x81,
     }
 
-     namespace SpeechSynthesisCmdPack {
+    export namespace SpeechSynthesisCmdPack {
         /**
          * Pack format for 'speak' register data.
          */
@@ -7424,7 +7424,7 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-     namespace SwitchRegPack {
+    export namespace SwitchRegPack {
         /**
          * Pack format for 'active' register data.
          */
@@ -7480,7 +7480,7 @@ namespace jacdac {
          */
     }
 
-     namespace TcpCmdPack {
+    export namespace TcpCmdPack {
         /**
          * Pack format for 'open' register data.
          */
@@ -7514,7 +7514,7 @@ namespace jacdac {
         Error = 0x0,
     }
 
-     namespace TcpPipeCmdPack {
+    export namespace TcpPipeCmdPack {
         /**
          * Pack format for 'open_ssl' register data.
          */
@@ -7542,7 +7542,7 @@ namespace jacdac {
      */
 
 
-     namespace TcpinfoPack {
+    export namespace TcpinfoPack {
         /**
          * Pack format for 'outdata' register data.
          */
@@ -7615,7 +7615,7 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-     namespace TemperatureRegPack {
+    export namespace TemperatureRegPack {
         /**
          * Pack format for 'temperature' register data.
          */
@@ -7675,7 +7675,7 @@ namespace jacdac {
         Green = 0x82,
     }
 
-     namespace TrafficLightRegPack {
+    export namespace TrafficLightRegPack {
         /**
          * Pack format for 'red' register data.
          */
@@ -7734,7 +7734,7 @@ namespace jacdac {
         MaxTVOC = 0x105,
     }
 
-     namespace TvocRegPack {
+    export namespace TvocRegPack {
         /**
          * Pack format for 'TVOC' register data.
          */
@@ -7801,7 +7801,7 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-     namespace UvIndexRegPack {
+    export namespace UvIndexRegPack {
         /**
          * Pack format for 'uv_index' register data.
          */
@@ -7880,7 +7880,7 @@ namespace jacdac {
         FingerprintTemplate = 0x182,
     }
 
-     namespace VerifiedTelemetryRegPack {
+    export namespace VerifiedTelemetryRegPack {
         /**
          * Pack format for 'telemetry_status' register data.
          */
@@ -7932,7 +7932,7 @@ namespace jacdac {
         FingerprintTemplateChange = 0x80,
     }
 
-     namespace VerifiedTelemetryEventPack {
+    export namespace VerifiedTelemetryEventPack {
         /**
          * Pack format for 'telemetry_status_change' register data.
          */
@@ -7955,7 +7955,7 @@ namespace jacdac {
         Vibrate = 0x80,
     }
 
-     namespace VibrationMotorCmdPack {
+    export namespace VibrationMotorCmdPack {
         /**
          * Pack format for 'vibrate' register data.
          */
@@ -8005,7 +8005,7 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-     namespace WaterLevelRegPack {
+    export namespace WaterLevelRegPack {
         /**
          * Pack format for 'level' register data.
          */
@@ -8111,7 +8111,7 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-     namespace WeightScaleRegPack {
+    export namespace WeightScaleRegPack {
         /**
          * Pack format for 'weight' register data.
          */
@@ -8169,7 +8169,7 @@ namespace jacdac {
         CalibrateGain = 0x81,
     }
 
-     namespace WeightScaleCmdPack {
+    export namespace WeightScaleCmdPack {
         /**
          * Pack format for 'calibrate_gain' register data.
          */
@@ -8274,7 +8274,7 @@ namespace jacdac {
         ListKnownNetworks = 0x87,
     }
 
-     namespace WifiCmdPack {
+    export namespace WifiCmdPack {
         /**
          * Pack format for 'last_scan_results' register data.
          */
@@ -8317,7 +8317,7 @@ namespace jacdac {
      */
 
 
-     namespace WifiinfoPack {
+    export namespace WifiinfoPack {
         /**
          * Pack format for 'results' register data.
          */
@@ -8377,7 +8377,7 @@ namespace jacdac {
         Ssid = 0x183,
     }
 
-     namespace WifiRegPack {
+    export namespace WifiRegPack {
         /**
          * Pack format for 'rssi' register data.
          */
@@ -8448,7 +8448,7 @@ namespace jacdac {
         ConnectionFailed = 0x82,
     }
 
-     namespace WifiEventPack {
+    export namespace WifiEventPack {
         /**
          * Pack format for 'scan_complete' register data.
          */
@@ -8484,7 +8484,7 @@ namespace jacdac {
         WindDirectionError = 0x106,
     }
 
-     namespace WindDirectionRegPack {
+    export namespace WindDirectionRegPack {
         /**
          * Pack format for 'wind_direction' register data.
          */
@@ -8529,7 +8529,7 @@ namespace jacdac {
         MaxWindSpeed = 0x105,
     }
 
-     namespace WindSpeedRegPack {
+    export namespace WindSpeedRegPack {
         /**
          * Pack format for 'wind_speed' register data.
          */

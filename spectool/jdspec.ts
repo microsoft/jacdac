@@ -2019,7 +2019,7 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "cs") {
                 .replace(/\n$/, "")
                 .replace(/\n/g, "\n    " + indent)
             if (inner.indexOf("public const") > -1 || k.endsWith("Pack")) {
-                r += `    ${csharp ? exportkw : ""} ${
+                r += `    ${exportkw} ${
                     csharp ? "static " : ""
                 }${csharp ? "class" : "namespace"} ${pref}${k} {\n    ${indent}${inner}\n${indent}}\n\n`
             } else

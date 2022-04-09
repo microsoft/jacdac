@@ -118,7 +118,11 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
         isSimpleSensorClient =
             reading.fields.length === 1 && isNumericType(reading.fields[0])
         baseType = isSimpleSensorClient ? `SimpleSensorClient` : `SensorClient`
-        ctorArgs.push(`"${reading.packFormat}"`)
+        ctorArgs.push(
+            `jacdac.${capitalize(spec.camelName)}RegPack.${capitalize(
+                camelize(reading.name)
+            )})`
+        )
     }
     const className = `${capitalize(camelName)}Client`
     const group = capitalize(spec.group || name)
@@ -160,7 +164,9 @@ ${regs
             packInfo(spec, reg, { isStatic: true, useBooleans: true }).types
         }]>(${nsc}.${capitalize(spec.camelName)}Reg.${capitalize(
             camelize(reg.name)
-        )}, "${reg.packFormat}");`
+        )}, jacdac.${capitalize(spec.camelName)}RegPack.${capitalize(
+            camelize(reg.name)
+        )});`
     )
     .join("")}            
         }

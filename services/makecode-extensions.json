@@ -755,7 +755,7 @@
       "repo": "microsoft/pxt-jacdac/sound-level",
       "qName": "modules.SoundLevelClient",
       "default": "modules.soundLevel",
-      "generated": false
+      "generated": true
     }
   },
   {

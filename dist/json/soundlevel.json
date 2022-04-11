@@ -210,24 +210,8 @@
           "storage": 2
         }
       ],
+      "optional": true,
       "identifierName": "active_threshold",
-      "packFormat": "u0.16"
-    },
-    {
-      "kind": "rw",
-      "name": "quiet_threshold",
-      "identifier": 5,
-      "description": "The sound level to trigger a quiet event.",
-      "fields": [
-        {
-          "name": "_",
-          "unit": "/",
-          "shift": 16,
-          "type": "u0.16",
-          "storage": 2
-        }
-      ],
-      "identifierName": "inactive_threshold",
       "packFormat": "u0.16"
     },
     {
@@ -237,14 +221,6 @@
       "description": "Raised when a loud sound is detected",
       "fields": [],
       "identifierName": "active"
-    },
-    {
-      "kind": "event",
-      "name": "quiet",
-      "identifier": 2,
-      "description": "Raised when a period of quietness is detected",
-      "fields": [],
-      "identifierName": "inactive"
     }
   ],
   "tags": [

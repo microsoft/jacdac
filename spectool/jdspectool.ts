@@ -364,7 +364,11 @@ ${toMetaComments(
             this.sendCommand(jacdac.JDPacket.${
                 types.length === 0
                     ? `onlyHeader(${cmd})`
-                    : `jdpacked(${cmd}, "${fmt}", [${fnames.join(", ")}])`
+                    : `jdpacked(${cmd}, jacdac.${capitalize(
+                          spec.camelName
+                      )}CmdPack.${capitalize(camelize(name))}, [${fnames.join(
+                          ", "
+                      )}])`
             })`
             }
         }

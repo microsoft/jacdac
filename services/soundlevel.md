@@ -18,20 +18,12 @@ The sound level detected by the microphone
 
 Turn on or off the microphone.
 
-    rw loud_threshold: u0.16 / @ active_threshold
+    rw loud_threshold?: u0.16 / @ active_threshold
 
 The sound level to trigger a loud event.
-
-    rw quiet_threshold: u0.16 / @ inactive_threshold
-
-The sound level to trigger a quiet event.
 
 ## Events
 
     event loud @ active {}
 
 Raised when a loud sound is detected
-
-    event quiet @ inactive {}
-
-Raised when a period of quietness is detected

@@ -36,12 +36,12 @@ Note that this is unusual - services typically only send reports.
 The `shutdown` commands can be reliably identified based on their first half (more details below).
 When a power provider starts receiving a `shutdown` command, it needs to take
 steps to identify which of its channels the command is coming from.
-This is typically realized with analog switches between data lines of channels.
-The channel which received the `shutdown` command is then shut down.
-Note that in the case a single-channel provider any received `shutdown` command will cause a shut down.
+This is typically realized with analog switches between the data lines of channels.
+The delivery of power over the channel which received the `shutdown` command is then shut down.
+Note that in the case of a single-channel provider, any received `shutdown` command will cause a shut down.
 
 A multi-channel provider needs to also identify when a `shutdown` command it sent from one channel
-is received on any of its other channels and shut down one of the involved channels.
+is received on any of its other channels and shut down one of the channels involved.
 
 It is also possible to build a _data bridge_ device, with two or more ports.
 It passes through all data except for `shutdown` commands,

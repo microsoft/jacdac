@@ -398,7 +398,11 @@ declare namespace roles {
 
 // Service: HID Joystick
 declare class HidJoystickRole extends Role {
-    setState(buttons: number, x: number, y: number): void
+    buttonsCount: JDRegisterNum
+    buttonsAnalog: JDRegisterNum
+    axisAvailable: JDRegisterNum
+    setButtons(...pressure: number[]): void
+    setAxis(...position: number[]): void
 }
 declare namespace roles {
     function hidJoystick(): HidJoystickRole

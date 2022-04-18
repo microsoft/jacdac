@@ -103,35 +103,88 @@
       "derived": "_base"
     },
     {
-      "kind": "command",
-      "name": "set_state",
-      "identifier": 128,
-      "description": "Sets the up/down button state (up to 32 buttons), and the stick positions.",
+      "kind": "const",
+      "name": "buttons_count",
+      "identifier": 384,
+      "description": "Number of button report supported",
       "fields": [
         {
-          "name": "buttons",
+          "name": "_",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "packFormat": "u8"
+    },
+    {
+      "kind": "const",
+      "name": "buttons_analog",
+      "identifier": 385,
+      "description": "A bitset that indicates which button is analog.",
+      "fields": [
+        {
+          "name": "_",
           "type": "u32",
           "storage": 4,
           "isSimpleType": true
-        },
+        }
+      ],
+      "optional": true,
+      "packFormat": "u32"
+    },
+    {
+      "kind": "const",
+      "name": "axis_available",
+      "identifier": 386,
+      "description": "Number of analog input supported",
+      "fields": [
         {
-          "name": "x",
+          "name": "_",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "packFormat": "u8"
+    },
+    {
+      "kind": "command",
+      "name": "set_buttons",
+      "identifier": 128,
+      "description": "Sets the up/down button state, one byte per button, supports analog buttons. For digital buttons, use `0` for released, `1` for pressed.",
+      "fields": [
+        {
+          "name": "pressure",
+          "unit": "/",
+          "shift": 8,
+          "type": "u0.8",
+          "storage": 1,
+          "startRepeats": true
+        }
+      ],
+      "unique": true,
+      "packFormat": "r: u0.8"
+    },
+    {
+      "kind": "command",
+      "name": "set_axis",
+      "identifier": 129,
+      "description": "Sets the state of analog inputs.",
+      "fields": [
+        {
+          "name": "position",
           "unit": "/",
           "shift": 15,
           "type": "i1.15",
           "storage": -2,
           "startRepeats": true
-        },
-        {
-          "name": "y",
-          "unit": "/",
-          "shift": 15,
-          "type": "i1.15",
-          "storage": -2
         }
       ],
       "unique": true,
-      "packFormat": "u32 r: i1.15 i1.15"
+      "packFormat": "r: i1.15"
     }
   ],
   "tags": []

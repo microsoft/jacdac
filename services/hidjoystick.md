@@ -8,7 +8,7 @@ Controls a HID joystick.
 
 ## Commands
 
-    unique command set_buttons @ 0x80 {
+    unique command set_state @ 0x80 {
         buttons: u32
     r:
         x: i0.16 /

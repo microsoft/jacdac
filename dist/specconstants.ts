@@ -1882,6 +1882,20 @@ export enum HeartRateReg {
     Variant = 0x107,
 }
 
+// Service HID Joystick constants
+export const SRV_HID_JOYSTICK = 0x1a112155
+export enum HidJoystickCmd {
+    /**
+     * Sets the up/down button state (up to 32 buttons), and the stick positions.
+     *
+     * ```
+     * const [buttons, rest] = jdunpack<[number, ([number, number])[]]>(buf, "u32 r: i1.15 i1.15")
+     * const [x, y] = rest[0]
+     * ```
+     */
+    SetState = 0x80,
+}
+
 // Service HID Keyboard constants
 export const SRV_HID_KEYBOARD = 0x18b05b6a
 

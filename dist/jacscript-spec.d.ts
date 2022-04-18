@@ -396,6 +396,14 @@ declare namespace roles {
     function heartRate(): HeartRateRole
 }
 
+// Service: HID Joystick
+declare class HidJoystickRole extends Role {
+    setState(buttons: number, x: number, y: number): void
+}
+declare namespace roles {
+    function hidJoystick(): HidJoystickRole
+}
+
 // Service: HID Keyboard
 declare class HidKeyboardRole extends Role {
     key(selector: number, modifiers: number, action: number): void

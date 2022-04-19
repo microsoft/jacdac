@@ -330,7 +330,9 @@
     "client": {
       "name": "jacdac-hid-joystick",
       "targets": [
-        "maker"
+        "maker",
+        "arcade",
+        "microbit"
       ],
       "repo": "microsoft/pxt-jacdac/hid-joystick",
       "qName": "modules.HidJoystickClient",

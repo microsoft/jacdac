@@ -6,6 +6,7 @@ A sensor that measures wind direction.
     extends: _sensor
     tags: 8bit
     status: rc
+    group: environment
 
 ## Registers
 

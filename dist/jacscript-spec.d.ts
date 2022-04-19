@@ -396,6 +396,18 @@ declare namespace roles {
     function heartRate(): HeartRateRole
 }
 
+// Service: HID Joystick
+declare class HidJoystickRole extends Role {
+    buttonCount: JDRegisterNum
+    buttonsAnalog: JDRegisterNum
+    axisCount: JDRegisterNum
+    setButtons(...pressure: number[]): void
+    setAxis(...position: number[]): void
+}
+declare namespace roles {
+    function hidJoystick(): HidJoystickRole
+}
+
 // Service: HID Keyboard
 declare class HidKeyboardRole extends Role {
     key(selector: number, modifiers: number, action: number): void

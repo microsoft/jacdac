@@ -8,15 +8,15 @@ Controls a HID joystick.
 
 ## Registers
 
-    const button_count?: u8 @ 0x180
+    const button_count: u8 @ 0x180
 
 Number of button report supported
 
-    const buttons_analog?: u32 @ 0x181
+    const buttons_analog: u32 @ 0x181
 
 A bitset that indicates which button is analog.
 
-    const axis_count?: u8 @ 0x182
+    const axis_count: u8 @ 0x182
 
 Number of analog input supported
 

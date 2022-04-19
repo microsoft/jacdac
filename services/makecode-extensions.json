@@ -335,7 +335,7 @@
       "repo": "microsoft/pxt-jacdac/hid-joystick",
       "qName": "modules.HidJoystickClient",
       "default": "modules.hidJoystick",
-      "generated": true
+      "generated": false
     }
   },
   {

@@ -115,7 +115,6 @@
           "isSimpleType": true
         }
       ],
-      "optional": true,
       "packFormat": "u8"
     },
     {
@@ -131,7 +130,6 @@
           "isSimpleType": true
         }
       ],
-      "optional": true,
       "packFormat": "u32"
     },
     {
@@ -147,7 +145,6 @@
           "isSimpleType": true
         }
       ],
-      "optional": true,
       "packFormat": "u8"
     },
     {

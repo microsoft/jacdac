@@ -127,6 +127,15 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
     const className = `${capitalize(camelName)}Client`
     const group = capitalize(spec.group || name)
 
+    const registerFlags = (pkt: jdspec.PacketInfo) => {
+        const flags: string[] = []
+        if (pkt.optional)
+            flags.push("Optional")
+        if(pkt.kind === "const")
+            flags.push("Const")
+        return flags.length == 0 ? "" : `, ${flags.map(n => `jacdac.RegisterClientFlags.${n}`).join(" | ")}`
+    }
+
     const toMetaComments = (...lines: string[]) =>
         lines
             .filter(l => !!l)
@@ -166,7 +175,7 @@ ${regs
             camelize(reg.name)
         )}, jacdac.${capitalize(spec.camelName)}RegPack.${capitalize(
             camelize(reg.name)
-        )})`
+        )}${registerFlags(reg)})`
     )
     .join("")}            
         }

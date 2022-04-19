@@ -326,6 +326,19 @@
     }
   },
   {
+    "service": "hidjoystick",
+    "client": {
+      "name": "jacdac-hid-joystick",
+      "targets": [
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/hid-joystick",
+      "qName": "modules.HidJoystickClient",
+      "default": "modules.hidJoystick",
+      "generated": true
+    }
+  },
+  {
     "service": "hidkeyboard",
     "client": {
       "name": "jacdac-hid-keyboard",

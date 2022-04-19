@@ -7,7 +7,7 @@
 /**
  * Constant uint8_t. Number of button report supported
  */
-#define JD_HID_JOYSTICK_REG_BUTTONS_COUNT 0x180
+#define JD_HID_JOYSTICK_REG_BUTTON_COUNT 0x180
 
 /**
  * Constant uint32_t. A bitset that indicates which button is analog.
@@ -17,7 +17,7 @@
 /**
  * Constant uint8_t. Number of analog input supported
  */
-#define JD_HID_JOYSTICK_REG_AXIS_AVAILABLE 0x182
+#define JD_HID_JOYSTICK_REG_AXIS_COUNT 0x182
 
 /**
  * Sets the up/down button state, one byte per button, supports analog buttons. For digital buttons, use `0` for released, `1` for pressed.

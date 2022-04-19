@@ -1889,10 +1889,10 @@ export enum HidJoystickReg {
      * Constant uint8_t. Number of button report supported
      *
      * ```
-     * const [buttonsCount] = jdunpack<[number]>(buf, "u8")
+     * const [buttonCount] = jdunpack<[number]>(buf, "u8")
      * ```
      */
-    ButtonsCount = 0x180,
+    ButtonCount = 0x180,
 
     /**
      * Constant uint32_t. A bitset that indicates which button is analog.
@@ -1907,10 +1907,10 @@ export enum HidJoystickReg {
      * Constant uint8_t. Number of analog input supported
      *
      * ```
-     * const [axisAvailable] = jdunpack<[number]>(buf, "u8")
+     * const [axisCount] = jdunpack<[number]>(buf, "u8")
      * ```
      */
-    AxisAvailable = 0x182,
+    AxisCount = 0x182,
 }
 
 export enum HidJoystickCmd {

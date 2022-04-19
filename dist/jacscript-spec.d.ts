@@ -398,9 +398,9 @@ declare namespace roles {
 
 // Service: HID Joystick
 declare class HidJoystickRole extends Role {
-    buttonsCount: JDRegisterNum
+    buttonCount: JDRegisterNum
     buttonsAnalog: JDRegisterNum
-    axisAvailable: JDRegisterNum
+    axisCount: JDRegisterNum
     setButtons(...pressure: number[]): void
     setAxis(...position: number[]): void
 }

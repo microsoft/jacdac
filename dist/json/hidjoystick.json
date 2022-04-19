@@ -104,7 +104,7 @@
     },
     {
       "kind": "const",
-      "name": "buttons_count",
+      "name": "button_count",
       "identifier": 384,
       "description": "Number of button report supported",
       "fields": [
@@ -136,7 +136,7 @@
     },
     {
       "kind": "const",
-      "name": "axis_available",
+      "name": "axis_count",
       "identifier": 386,
       "description": "Number of analog input supported",
       "fields": [

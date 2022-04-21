@@ -190,6 +190,7 @@
           "storage": 1
         }
       ],
+      "optional": true,
       "packFormat": "u8"
     },
     {

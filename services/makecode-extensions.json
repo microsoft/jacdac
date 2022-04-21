@@ -257,8 +257,8 @@
     "client": {
       "name": "jacdac-e-co2",
       "targets": [
-        "arcade",
         "microbit",
+        "arcade",
         "maker"
       ],
       "repo": "microsoft/pxt-jacdac/e-co2",

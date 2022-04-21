@@ -33,7 +33,7 @@ It will rise slowly (few seconds) back to `brightness` is limits are no longer r
         APA102 = 0x10
         SK9822 = 0x11
     }
-    const light_type: LightType @ 0x181
+    const light_type?: LightType @ 0x181
 
 Specifies the type of light strip connected to controller.
 

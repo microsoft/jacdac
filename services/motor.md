@@ -10,7 +10,7 @@ A DC motor.
 
     rw speed: i1.15 / @ value
 
-Speed of the motor. Use positive/negative values to run the motor forwards and backwards.
+Relative speed of the motor. Use positive/negative values to run the motor forwards and backwards.
 Positive is recommended to be clockwise rotation and negative counterclockwise. A speed of ``0`` 
 while ``enabled`` acts as brake.
 
@@ -22,7 +22,7 @@ Turn the power to the motor on/off.
 
 Torque required to produce the rated power of an electrical motor at load speed.
 
-    const load_speed?: u16.16 rpm @ 0x181
+    const load_rotation_speed?: u16.16 rpm @ 0x181
 
 Revolutions per minute of the motor under full load.
 

@@ -106,7 +106,7 @@
       "kind": "rw",
       "name": "speed",
       "identifier": 2,
-      "description": "Speed of the motor. Use positive/negative values to run the motor forwards and backwards.\nPositive is recommended to be clockwise rotation and negative counterclockwise. A speed of ``0`` \nwhile ``enabled`` acts as brake.",
+      "description": "Relative speed of the motor. Use positive/negative values to run the motor forwards and backwards.\nPositive is recommended to be clockwise rotation and negative counterclockwise. A speed of ``0`` \nwhile ``enabled`` acts as brake.",
       "fields": [
         {
           "name": "_",
@@ -153,7 +153,7 @@
     },
     {
       "kind": "const",
-      "name": "load_speed",
+      "name": "load_rotation_speed",
       "identifier": 385,
       "description": "Revolutions per minute of the motor under full load.",
       "fields": [

@@ -5,7 +5,7 @@
 #define JD_SERVICE_CLASS_MOTOR  0x17004cd8
 
 /**
- * Read-write ratio i1.15 (int16_t). Speed of the motor. Use positive/negative values to run the motor forwards and backwards.
+ * Read-write ratio i1.15 (int16_t). Relative speed of the motor. Use positive/negative values to run the motor forwards and backwards.
  * Positive is recommended to be clockwise rotation and negative counterclockwise. A speed of ``0`` 
  * while ``enabled`` acts as brake.
  */
@@ -24,7 +24,7 @@
 /**
  * Constant rpm u16.16 (uint32_t). Revolutions per minute of the motor under full load.
  */
-#define JD_MOTOR_REG_LOAD_SPEED 0x181
+#define JD_MOTOR_REG_LOAD_ROTATION_SPEED 0x181
 
 /**
  * Constant bool (uint8_t). Indicates if the motor can run backwards.

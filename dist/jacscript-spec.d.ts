@@ -664,7 +664,7 @@ declare class MotorRole extends Role {
     speed: JDRegisterNum
     enabled: JDRegisterNum
     loadTorque: JDRegisterNum
-    loadSpeed: JDRegisterNum
+    loadRotationSpeed: JDRegisterNum
     reversible: JDRegisterNum
 }
 declare namespace roles {

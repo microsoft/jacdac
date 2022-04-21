@@ -8,10 +8,10 @@ A DC motor.
 
 ## Registers
 
-    rw duty: i1.15 / @ value
+    rw speed: i1.15 / @ value
 
-PWM duty cycle of the motor. Use negative/positive values to run the motor forwards and backwards.
-Positive is recommended to be clockwise rotation and negative counterclockwise. A duty of ``0`` 
+Speed of the motor. Use positive/negative values to run the motor forwards and backwards.
+Positive is recommended to be clockwise rotation and negative counterclockwise. A speed of ``0`` 
 while ``enabled`` acts as brake.
 
     rw enabled: bool @ intensity

@@ -661,7 +661,7 @@ declare namespace roles {
 
 // Service: Motor
 declare class MotorRole extends Role {
-    duty: JDRegisterNum
+    speed: JDRegisterNum
     enabled: JDRegisterNum
     loadTorque: JDRegisterNum
     loadSpeed: JDRegisterNum

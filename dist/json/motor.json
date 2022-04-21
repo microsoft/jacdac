@@ -104,9 +104,9 @@
     },
     {
       "kind": "rw",
-      "name": "duty",
+      "name": "speed",
       "identifier": 2,
-      "description": "PWM duty cycle of the motor. Use negative/positive values to run the motor forwards and backwards.\nPositive is recommended to be clockwise rotation and negative counterclockwise. A duty of ``0`` \nwhile ``enabled`` acts as brake.",
+      "description": "Speed of the motor. Use positive/negative values to run the motor forwards and backwards.\nPositive is recommended to be clockwise rotation and negative counterclockwise. A speed of ``0`` \nwhile ``enabled`` acts as brake.",
       "fields": [
         {
           "name": "_",

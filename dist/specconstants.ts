@@ -3238,15 +3238,15 @@ export enum MotionEvent {
 export const SRV_MOTOR = 0x17004cd8
 export enum MotorReg {
     /**
-     * Read-write ratio i1.15 (int16_t). PWM duty cycle of the motor. Use negative/positive values to run the motor forwards and backwards.
-     * Positive is recommended to be clockwise rotation and negative counterclockwise. A duty of ``0``
+     * Read-write ratio i1.15 (int16_t). Speed of the motor. Use positive/negative values to run the motor forwards and backwards.
+     * Positive is recommended to be clockwise rotation and negative counterclockwise. A speed of ``0``
      * while ``enabled`` acts as brake.
      *
      * ```
-     * const [duty] = jdunpack<[number]>(buf, "i1.15")
+     * const [speed] = jdunpack<[number]>(buf, "i1.15")
      * ```
      */
-    Duty = 0x2,
+    Speed = 0x2,
 
     /**
      * Read-write bool (uint8_t). Turn the power to the motor on/off.

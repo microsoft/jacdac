@@ -255,7 +255,7 @@ ${toMetaComments(
             this.start();${
                 enabledReg && value
                     ? `
-            this.enabled = true;`
+            this.setEnable(true);`
                     : ""
             }
             const values = ${fieldName}.values as any[];

@@ -1,44 +1,29 @@
 {
-  "name": "LED Display",
-  "status": "rc",
-  "shortId": "leddisplay",
-  "camelName": "ledDisplay",
-  "shortName": "ledDisplay",
+  "name": "LED Single",
+  "status": "deprecated",
+  "shortId": "ledsingle",
+  "camelName": "ledSingle",
+  "shortName": "ledSingle",
   "extends": [
     "_base"
   ],
   "notes": {
-    "short": "A controller for small displays of individually controlled RGB LEDs.\n\nThis service handles displays with 64 or less LEDs.\nUse the [LED strip service](/services/ledstrip) for longer light strips."
+    "short": "A controller for 1 or more monochrome or RGB LEDs connected in parallel."
   },
-  "classIdentifier": 369743088,
+  "classIdentifier": 506480888,
   "enums": {
-    "LightType": {
-      "name": "LightType",
-      "storage": 1,
-      "members": {
-        "WS2812B_GRB": 0,
-        "APA102": 16,
-        "SK9822": 17
-      }
-    },
     "Variant": {
       "name": "Variant",
       "storage": 1,
       "members": {
-        "Strip": 1,
-        "Ring": 2,
-        "Stick": 3,
-        "Jewel": 4,
-        "Matrix": 5
+        "ThroughHole": 1,
+        "SMD": 2,
+        "Power": 3,
+        "Bead": 4
       }
     }
   },
-  "constants": {
-    "max_pixels_length": {
-      "value": 64,
-      "hex": false
-    }
-  },
+  "constants": {},
   "packets": [
     {
       "kind": "report",
@@ -129,102 +114,64 @@
       "derived": "_base"
     },
     {
-      "kind": "rw",
-      "name": "pixels",
-      "identifier": 2,
-      "description": "A buffer of 24bit RGB color entries for each LED, in R, G, B order.",
+      "kind": "command",
+      "name": "animate",
+      "identifier": 128,
+      "description": "This has the same semantics as `set_status_light` in the control service.",
       "fields": [
         {
-          "name": "_",
-          "type": "bytes",
-          "storage": 0,
+          "name": "to_red",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "to_green",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "to_blue",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "speed",
+          "type": "u8",
+          "storage": 1,
           "isSimpleType": true
         }
       ],
-      "identifierName": "value",
-      "packFormat": "b"
-    },
-    {
-      "kind": "rw",
-      "name": "brightness",
-      "identifier": 1,
-      "description": "Set the luminosity of the strip.\nAt `0` the power to the strip is completely shut down.",
-      "fields": [
-        {
-          "name": "_",
-          "unit": "/",
-          "shift": 8,
-          "type": "u0.8",
-          "storage": 1,
-          "defaultValue": 0.05
-        }
-      ],
-      "identifierName": "intensity",
-      "packFormat": "u0.8"
+      "packFormat": "u8 u8 u8 u8"
     },
     {
       "kind": "ro",
-      "name": "actual_brightness",
+      "name": "color",
       "identifier": 384,
-      "description": "This is the luminosity actually applied to the strip.\nMay be lower than `brightness` if power-limited by the `max_power` register.\nIt will rise slowly (few seconds) back to `brightness` is limits are no longer required.",
+      "description": "The current color of the LED.",
       "fields": [
         {
-          "name": "_",
-          "unit": "/",
-          "shift": 8,
-          "type": "u0.8",
-          "storage": 1
-        }
-      ],
-      "packFormat": "u0.8"
-    },
-    {
-      "kind": "const",
-      "name": "light_type",
-      "identifier": 385,
-      "description": "Specifies the type of light strip connected to controller.",
-      "fields": [
+          "name": "red",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
         {
-          "name": "_",
-          "type": "LightType",
-          "storage": 1
-        }
-      ],
-      "optional": true,
-      "packFormat": "u8"
-    },
-    {
-      "kind": "const",
-      "name": "num_pixels",
-      "identifier": 386,
-      "description": "Specifies the number of pixels in the strip.",
-      "fields": [
+          "name": "green",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
         {
-          "name": "_",
-          "unit": "#",
-          "type": "u16",
-          "storage": 2,
+          "name": "blue",
+          "type": "u8",
+          "storage": 1,
           "isSimpleType": true
         }
       ],
-      "packFormat": "u16"
-    },
-    {
-      "kind": "const",
-      "name": "num_columns",
-      "identifier": 387,
-      "description": "If the LED pixel strip is a matrix, specifies the number of columns.",
-      "fields": [
-        {
-          "name": "_",
-          "unit": "#",
-          "type": "u16",
-          "storage": 2,
-          "isSimpleType": true
-        }
-      ],
-      "optional": true,
-      "packFormat": "u16"
+      "packFormat": "u8 u8 u8"
     },
     {
       "kind": "rw",
@@ -238,17 +185,72 @@
           "type": "u16",
           "storage": 2,
           "isSimpleType": true,
-          "defaultValue": 200
+          "defaultValue": 100
         }
       ],
+      "optional": true,
       "identifierName": "max_power",
+      "packFormat": "u16"
+    },
+    {
+      "kind": "const",
+      "name": "led_count",
+      "identifier": 387,
+      "description": "If known, specifies the number of LEDs in parallel on this device.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "packFormat": "u16"
+    },
+    {
+      "kind": "const",
+      "name": "wave_length",
+      "identifier": 385,
+      "description": "If monochrome LED, specifies the wave length of the LED.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "nm",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true,
+          "typicalMin": 365,
+          "typicalMax": 885
+        }
+      ],
+      "optional": true,
+      "packFormat": "u16"
+    },
+    {
+      "kind": "const",
+      "name": "luminous_intensity",
+      "identifier": 386,
+      "description": "The luminous intensity of the LED, at full value, in micro candella.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "mcd",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true,
+          "typicalMin": 10,
+          "typicalMax": 5000
+        }
+      ],
+      "optional": true,
       "packFormat": "u16"
     },
     {
       "kind": "const",
       "name": "variant",
       "identifier": 263,
-      "description": "Specifies the shape of the light strip.",
+      "description": "The physical type of LED.",
       "fields": [
         {
           "name": "_",
@@ -261,6 +263,9 @@
       "packFormat": "u8"
     }
   ],
-  "tags": [],
+  "tags": [
+    "8bit",
+    "padauk"
+  ],
   "group": "Light"
 }

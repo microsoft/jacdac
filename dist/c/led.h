@@ -2,36 +2,45 @@
 #ifndef _JACDAC_SPEC_LED_H
 #define _JACDAC_SPEC_LED_H 1
 
-#define JD_SERVICE_CLASS_LED  0x1e3048f8
+#define JD_SERVICE_CLASS_LED  0x1609d4f0
+#define JD_LED_MAX_PIXELS_LENGTH 64
 
 // enum Variant (uint8_t)
-#define JD_LED_VARIANT_THROUGH_HOLE 0x1
-#define JD_LED_VARIANT_SMD 0x2
-#define JD_LED_VARIANT_POWER 0x3
-#define JD_LED_VARIANT_BEAD 0x4
+#define JD_LED_VARIANT_STRIP 0x1
+#define JD_LED_VARIANT_RING 0x2
+#define JD_LED_VARIANT_STICK 0x3
+#define JD_LED_VARIANT_JEWEL 0x4
+#define JD_LED_VARIANT_MATRIX 0x5
 
 /**
- * This has the same semantics as `set_status_light` in the control service.
+ * Read-write bytes. A buffer of 24bit RGB color entries for each LED, in R, G, B order.
+ * When writing, if the buffer is too short, the remaining pixels are set to `#000000`;
+ * if the buffer is too long, the write may be ignored, or the additional pixels may be ignored.
  */
-#define JD_LED_CMD_ANIMATE 0x80
-typedef struct jd_led_animate {
-    uint8_t to_red;
-    uint8_t to_green;
-    uint8_t to_blue;
-    uint8_t speed;
-} jd_led_animate_t;
-
+#define JD_LED_REG_PIXELS JD_REG_VALUE
 
 /**
- * The current color of the LED.
+ * Read-write ratio u0.8 (uint8_t). Set the luminosity of the strip.
+ * At `0` the power to the strip is completely shut down.
  */
-#define JD_LED_REG_COLOR 0x180
-typedef struct jd_led_color {
-    uint8_t red;
-    uint8_t green;
-    uint8_t blue;
-} jd_led_color_t;
+#define JD_LED_REG_BRIGHTNESS JD_REG_INTENSITY
 
+/**
+ * Read-only ratio u0.8 (uint8_t). This is the luminosity actually applied to the strip.
+ * May be lower than `brightness` if power-limited by the `max_power` register.
+ * It will rise slowly (few seconds) back to `brightness` is limits are no longer required.
+ */
+#define JD_LED_REG_ACTUAL_BRIGHTNESS 0x180
+
+/**
+ * Constant # uint16_t. Specifies the number of pixels in the strip.
+ */
+#define JD_LED_REG_NUM_PIXELS 0x182
+
+/**
+ * Constant # uint16_t. If the LED pixel strip is a matrix, specifies the number of columns.
+ */
+#define JD_LED_REG_NUM_COLUMNS 0x183
 
 /**
  * Read-write mA uint16_t. Limit the power drawn by the light-strip (and controller).
@@ -39,22 +48,24 @@ typedef struct jd_led_color {
 #define JD_LED_REG_MAX_POWER JD_REG_MAX_POWER
 
 /**
- * Constant uint16_t. If known, specifies the number of LEDs in parallel on this device.
+ * Constant # uint16_t. If known, specifies the number of LEDs in parallel on this device.
+ * The actual number of LEDs is `num_pixels * leds_per_pixel`.
  */
-#define JD_LED_REG_LED_COUNT 0x183
+#define JD_LED_REG_LEDS_PER_PIXEL 0x184
 
 /**
  * Constant nm uint16_t. If monochrome LED, specifies the wave length of the LED.
+ * Register is missing for RGB LEDs.
  */
-#define JD_LED_REG_WAVE_LENGTH 0x181
+#define JD_LED_REG_WAVE_LENGTH 0x185
 
 /**
- * Constant mcd uint16_t. The luminous intensity of the LED, at full value, in micro candella.
+ * Constant mcd uint16_t. The luminous intensity of all the LEDs, at full brightness, in micro candella.
  */
-#define JD_LED_REG_LUMINOUS_INTENSITY 0x182
+#define JD_LED_REG_LUMINOUS_INTENSITY 0x186
 
 /**
- * Constant Variant (uint8_t). The physical type of LED.
+ * Constant Variant (uint8_t). Specifies the shape of the light strip.
  */
 #define JD_LED_REG_VARIANT JD_REG_VARIANT
 

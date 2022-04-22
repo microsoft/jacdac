@@ -2422,16 +2422,127 @@ export enum JacscriptManagerEvent {
 }
 
 // Service LED constants
-export const SRV_LED = 0x1e3048f8
+export const SRV_LED = 0x1609d4f0
+export const CONST_LED_MAX_PIXELS_LENGTH = 0x40
 
 export enum LedVariant { // uint8_t
+    Strip = 0x1,
+    Ring = 0x2,
+    Stick = 0x3,
+    Jewel = 0x4,
+    Matrix = 0x5,
+}
+
+export enum LedReg {
+    /**
+     * Read-write bytes. A buffer of 24bit RGB color entries for each LED, in R, G, B order.
+     * When writing, if the buffer is too short, the remaining pixels are set to `#000000`;
+     * if the buffer is too long, the write may be ignored, or the additional pixels may be ignored.
+     *
+     * ```
+     * const [pixels] = jdunpack<[Uint8Array]>(buf, "b")
+     * ```
+     */
+    Pixels = 0x2,
+
+    /**
+     * Read-write ratio u0.8 (uint8_t). Set the luminosity of the strip.
+     * At `0` the power to the strip is completely shut down.
+     *
+     * ```
+     * const [brightness] = jdunpack<[number]>(buf, "u0.8")
+     * ```
+     */
+    Brightness = 0x1,
+
+    /**
+     * Read-only ratio u0.8 (uint8_t). This is the luminosity actually applied to the strip.
+     * May be lower than `brightness` if power-limited by the `max_power` register.
+     * It will rise slowly (few seconds) back to `brightness` is limits are no longer required.
+     *
+     * ```
+     * const [actualBrightness] = jdunpack<[number]>(buf, "u0.8")
+     * ```
+     */
+    ActualBrightness = 0x180,
+
+    /**
+     * Constant # uint16_t. Specifies the number of pixels in the strip.
+     *
+     * ```
+     * const [numPixels] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    NumPixels = 0x182,
+
+    /**
+     * Constant # uint16_t. If the LED pixel strip is a matrix, specifies the number of columns.
+     *
+     * ```
+     * const [numColumns] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    NumColumns = 0x183,
+
+    /**
+     * Read-write mA uint16_t. Limit the power drawn by the light-strip (and controller).
+     *
+     * ```
+     * const [maxPower] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    MaxPower = 0x7,
+
+    /**
+     * Constant # uint16_t. If known, specifies the number of LEDs in parallel on this device.
+     * The actual number of LEDs is `num_pixels * leds_per_pixel`.
+     *
+     * ```
+     * const [ledsPerPixel] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    LedsPerPixel = 0x184,
+
+    /**
+     * Constant nm uint16_t. If monochrome LED, specifies the wave length of the LED.
+     * Register is missing for RGB LEDs.
+     *
+     * ```
+     * const [waveLength] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    WaveLength = 0x185,
+
+    /**
+     * Constant mcd uint16_t. The luminous intensity of all the LEDs, at full brightness, in micro candella.
+     *
+     * ```
+     * const [luminousIntensity] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    LuminousIntensity = 0x186,
+
+    /**
+     * Constant Variant (uint8_t). Specifies the shape of the light strip.
+     *
+     * ```
+     * const [variant] = jdunpack<[LedVariant]>(buf, "u8")
+     * ```
+     */
+    Variant = 0x107,
+}
+
+// Service LED Single constants
+export const SRV_LED_SINGLE = 0x1e3048f8
+
+export enum LedSingleVariant { // uint8_t
     ThroughHole = 0x1,
     SMD = 0x2,
     Power = 0x3,
     Bead = 0x4,
 }
 
-export enum LedCmd {
+export enum LedSingleCmd {
     /**
      * This has the same semantics as `set_status_light` in the control service.
      *
@@ -2442,7 +2553,7 @@ export enum LedCmd {
     Animate = 0x80,
 }
 
-export enum LedReg {
+export enum LedSingleReg {
     /**
      * The current color of the LED.
      *
@@ -2492,103 +2603,7 @@ export enum LedReg {
      * Constant Variant (uint8_t). The physical type of LED.
      *
      * ```
-     * const [variant] = jdunpack<[LedVariant]>(buf, "u8")
-     * ```
-     */
-    Variant = 0x107,
-}
-
-// Service LED Display constants
-export const SRV_LED_DISPLAY = 0x1609d4f0
-export const CONST_LED_DISPLAY_MAX_PIXELS_LENGTH = 0x40
-
-export enum LedDisplayLightType { // uint8_t
-    WS2812B_GRB = 0x0,
-    APA102 = 0x10,
-    SK9822 = 0x11,
-}
-
-
-export enum LedDisplayVariant { // uint8_t
-    Strip = 0x1,
-    Ring = 0x2,
-    Stick = 0x3,
-    Jewel = 0x4,
-    Matrix = 0x5,
-}
-
-export enum LedDisplayReg {
-    /**
-     * Read-write bytes. A buffer of 24bit RGB color entries for each LED, in R, G, B order.
-     *
-     * ```
-     * const [pixels] = jdunpack<[Uint8Array]>(buf, "b")
-     * ```
-     */
-    Pixels = 0x2,
-
-    /**
-     * Read-write ratio u0.8 (uint8_t). Set the luminosity of the strip.
-     * At `0` the power to the strip is completely shut down.
-     *
-     * ```
-     * const [brightness] = jdunpack<[number]>(buf, "u0.8")
-     * ```
-     */
-    Brightness = 0x1,
-
-    /**
-     * Read-only ratio u0.8 (uint8_t). This is the luminosity actually applied to the strip.
-     * May be lower than `brightness` if power-limited by the `max_power` register.
-     * It will rise slowly (few seconds) back to `brightness` is limits are no longer required.
-     *
-     * ```
-     * const [actualBrightness] = jdunpack<[number]>(buf, "u0.8")
-     * ```
-     */
-    ActualBrightness = 0x180,
-
-    /**
-     * Constant LightType (uint8_t). Specifies the type of light strip connected to controller.
-     *
-     * ```
-     * const [lightType] = jdunpack<[LedDisplayLightType]>(buf, "u8")
-     * ```
-     */
-    LightType = 0x181,
-
-    /**
-     * Constant # uint16_t. Specifies the number of pixels in the strip.
-     *
-     * ```
-     * const [numPixels] = jdunpack<[number]>(buf, "u16")
-     * ```
-     */
-    NumPixels = 0x182,
-
-    /**
-     * Constant # uint16_t. If the LED pixel strip is a matrix, specifies the number of columns.
-     *
-     * ```
-     * const [numColumns] = jdunpack<[number]>(buf, "u16")
-     * ```
-     */
-    NumColumns = 0x183,
-
-    /**
-     * Read-write mA uint16_t. Limit the power drawn by the light-strip (and controller).
-     *
-     * ```
-     * const [maxPower] = jdunpack<[number]>(buf, "u16")
-     * ```
-     */
-    MaxPower = 0x7,
-
-    /**
-     * Constant Variant (uint8_t). Specifies the shape of the light strip.
-     *
-     * ```
-     * const [variant] = jdunpack<[LedDisplayVariant]>(buf, "u8")
+     * const [variant] = jdunpack<[LedSingleVariant]>(buf, "u8")
      * ```
      */
     Variant = 0x107,

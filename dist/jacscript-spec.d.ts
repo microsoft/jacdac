@@ -511,6 +511,23 @@ declare namespace roles {
 
 // Service: LED
 declare class LedRole extends Role {
+    pixels: JDRegisterNum
+    brightness: JDRegisterNum
+    actualBrightness: JDRegisterNum
+    numPixels: JDRegisterNum
+    numColumns: JDRegisterNum
+    maxPower: JDRegisterNum
+    ledsPerPixel: JDRegisterNum
+    waveLength: JDRegisterNum
+    luminousIntensity: JDRegisterNum
+    variant: JDRegisterNum
+}
+declare namespace roles {
+    function led(): LedRole
+}
+
+// Service: LED Single
+declare class LedSingleRole extends Role {
     animate(to_red: number, to_green: number, to_blue: number, speed: number): void
     color: JDRegisterArray & { red: number, green: number, blue: number }
     maxPower: JDRegisterNum
@@ -520,22 +537,7 @@ declare class LedRole extends Role {
     variant: JDRegisterNum
 }
 declare namespace roles {
-    function led(): LedRole
-}
-
-// Service: LED Display
-declare class LedDisplayRole extends Role {
-    pixels: JDRegisterNum
-    brightness: JDRegisterNum
-    actualBrightness: JDRegisterNum
-    lightType: JDRegisterNum
-    numPixels: JDRegisterNum
-    numColumns: JDRegisterNum
-    maxPower: JDRegisterNum
-    variant: JDRegisterNum
-}
-declare namespace roles {
-    function ledDisplay(): LedDisplayRole
+    function ledSingle(): LedSingleRole
 }
 
 // Service: LED Strip

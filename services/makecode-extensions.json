@@ -414,21 +414,6 @@
     }
   },
   {
-    "service": "leddisplay",
-    "client": {
-      "name": "jacdac-led-display",
-      "targets": [
-        "microbit",
-        "arcade",
-        "maker"
-      ],
-      "repo": "microsoft/pxt-jacdac/led-display",
-      "qName": "modules.LedDisplayClient",
-      "default": "modules.ledDisplay",
-      "generated": false
-    }
-  },
-  {
     "service": "ledstrip",
     "client": {
       "name": "jacdac-led-strip",

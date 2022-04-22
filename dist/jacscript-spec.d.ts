@@ -582,6 +582,18 @@ declare namespace roles {
     function logger(): LoggerRole
 }
 
+// Service: Magnetic field level
+declare class MagneticFieldLevelRole extends SensorRole {
+    strength: JDRegisterNum
+    detected: JDRegisterNum
+    variant: JDRegisterNum
+    active: JDEvent
+    inactive: JDEvent
+}
+declare namespace roles {
+    function magneticFieldLevel(): MagneticFieldLevelRole
+}
+
 // Service: Magnetometer
 declare class MagnetometerRole extends SensorRole {
     forces: JDRegisterArray & { x: number, y: number, z: number }

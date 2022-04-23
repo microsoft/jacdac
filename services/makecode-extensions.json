@@ -414,6 +414,21 @@
     }
   },
   {
+    "service": "ledsingle",
+    "client": {
+      "name": "jacdac-led-single",
+      "targets": [
+        "microbit",
+        "arcade",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/led-single",
+      "qName": "modules.LedSingleClient",
+      "default": "modules.ledSingle",
+      "generated": false
+    }
+  },
+  {
     "service": "ledstrip",
     "client": {
       "name": "jacdac-led-strip",
@@ -455,6 +470,21 @@
       "repo": "microsoft/pxt-jacdac/light-level",
       "qName": "modules.LightLevelClient",
       "default": "modules.lightLevel",
+      "generated": true
+    }
+  },
+  {
+    "service": "magneticfieldlevel",
+    "client": {
+      "name": "jacdac-magnetic-field-level",
+      "targets": [
+        "microbit",
+        "arcade",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/magnetic-field-level",
+      "qName": "modules.MagneticFieldLevelClient",
+      "default": "modules.magneticFieldLevel",
       "generated": true
     }
   },

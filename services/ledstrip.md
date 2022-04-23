@@ -16,7 +16,7 @@ installations and it would completely clog the network.
 
 Thus, light service defines a domain-specific language for describing light animations
 and efficiently transmitting them over wire. For short LED displays, less than 64 LEDs, 
-you can also use the [LED display service](/services/leddisplay).
+you can also use the [LED service](/services/led).
 
 Light commands are not Jacdac commands.
 Light commands are efficiently encoded as sequences of bytes and typically sent as payload

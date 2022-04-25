@@ -1,0 +1,13 @@
+{
+  "id": "microsoft-research-jmjacscriptstarbrainv33",
+  "name": "JM-Jacscript Star-Brain",
+  "company": "Microsoft Research",
+  "description": "A Jacscript brain",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/star-brain/profile/jacscript.c",
+  "services": [],
+  "productIdentifiers": [
+    1025500463
+  ],
+  "version": "3.3"
+}

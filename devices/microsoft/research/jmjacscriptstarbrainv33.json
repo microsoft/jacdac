@@ -6,7 +6,7 @@
   "repo": "https://github.com/microsoft/jacdac-msr-modules",
   "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/star-brain/profile/jacscript.c",
   "services": [
-    0x1134ea2b
+    288680491
   ],
   "productIdentifiers": [
     1025500463

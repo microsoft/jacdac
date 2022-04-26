@@ -3,7 +3,7 @@
   "name": "Air Quality Board",
   "company": "Kitronik",
   "description": "The Kitronik Air Quality Board provides a complete air monitoring and reporting solution for the BBC micro:bit . The wealth of onboard sensors and connection points allow you to collect extensive air quality data that can be stored in onboard memory and displayed on the OLED screen or transferred to a computer for analysis.",
-  "makeCodeRepo": "https://github.com/pelikhan/pxt-kitronik-air-quality/",
+  "makeCodeRepo": "https://github.com/pelikhan/pxt-kitronik-air-quality/jacdac/",
   "link": "https://kitronik.co.uk/products/5674-kitronik-air-quality-board-for-bbc-micro-bit",
   "storeLink": "https://kitronik.co.uk/products/5674-kitronik-air-quality-board-for-bbc-micro-bit",
   "services": [

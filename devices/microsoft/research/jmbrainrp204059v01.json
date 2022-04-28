@@ -12,6 +12,7 @@
     "transport": {
         "type": "usb"
     },
+    "connector": "edgeHighPower",
     "firmwares": [
         {
             "name": "HID Keyboard + Mouse",

@@ -10,6 +10,7 @@
         "type": "serial",
         "vendorId": 12346
     },
+    "connector": "edgeHighPower",
     "firmwares": [
         {
             "name": "IoT Uploader",

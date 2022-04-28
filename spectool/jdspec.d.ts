@@ -726,6 +726,11 @@ declare namespace jdspec {
              */
             ledAnimation?: "blue-glow"
         }
+
+        /**
+         * Type of PCB edge connector the device, default is "edge"
+         */
+        connector?: "none" | "edge" | "edgeLowPower" | "edgeHighPower"
     }
 
     /**

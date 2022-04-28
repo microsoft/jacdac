@@ -14,5 +14,6 @@
   "productIdentifiers": [
     1058995861
   ],
-  "version": "1.0"
+  "version": "1.0",
+  "connector": "none"
 }

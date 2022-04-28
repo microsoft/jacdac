@@ -7,5 +7,6 @@
     "productIdentifiers": [1009620586],
     "version": "0.3",
     "designIdentifier": "29",
-    "status": "experimental"
+    "status": "experimental",
+    "connector": "edgeLowPower"
 }

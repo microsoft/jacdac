@@ -15,5 +15,6 @@
   "productIdentifiers": [
     888103518
   ],
-  "version": "1.2"
+  "version": "1.2",
+  "connector": "none"
 }

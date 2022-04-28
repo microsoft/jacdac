@@ -7,6 +7,7 @@
     "repo": "",
     "makeCodeRepo": "https://github.com/pelikhan/yahboom-microbit-led-jacdac",
     "firmwareSource": "https://github.com/pelikhan/yahboom-microbit-led-jacdac",
+    "connector": "none",
     "link": "https://category.yahboom.net/products/rgbledb",
     "storeLink": "https://category.yahboom.net/products/rgbledb",
     "services": [
@@ -70,6 +71,7 @@
     "name": "JacDacMicroBitShieldLP",
     "company": "Microsoft Research",
     "repo": "",
+    "connector": "edgeLowPower",
     "services": [],
     "productIdentifiers": [
       1009620586
@@ -334,6 +336,7 @@
     "id": "microsoft-research-jmbrainesp3248v02",
     "name": "JM Brain ESP32",
     "company": "Microsoft Research",
+    "connector": "edgeHighPower",
     "services": [
       342028028
     ],
@@ -359,6 +362,7 @@
     "id": "microsoft-research-jmbrainesp3248v03",
     "name": "JM Brain ESP32",
     "company": "Microsoft Research",
+    "connector": "edgeHighPower",
     "services": [
       342028028
     ],
@@ -392,6 +396,7 @@
     "name": "JM Brain F4",
     "company": "Microsoft Research",
     "description": "",
+    "connector": "edgeHighPower",
     "link": "https://github.com/microsoft/pxt-jacdac",
     "services": [
       414210922,
@@ -429,6 +434,7 @@
     "name": "JM Brain RP2040",
     "company": "Microsoft Research",
     "description": "",
+    "connector": "edgeHighPower",
     "link": "https://github.com/microsoft/pxt-jacdac",
     "services": [
       414210922,
@@ -874,6 +880,7 @@
     "company": "Microsoft Research",
     "repo": "",
     "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/altium/reference-designs/JacdacMicroBitShieldLP%2029-0.6",
+    "connector": "edgeLowPower",
     "services": [],
     "productIdentifiers": [
       974031363
@@ -1561,6 +1568,7 @@
     "company": "Kitronik",
     "description": "The ACCESS:bit is a bolt-on/clip-on board for the BBC microbit that simulates an access barrier.",
     "repo": "",
+    "connector": "none",
     "link": "https://kitronik.co.uk/products/5646-accessbit-for-bbc-microbit",
     "storeLink": "https://kitronik.co.uk/products/5646-accessbit-for-bbc-microbit",
     "services": [
@@ -1599,6 +1607,7 @@
     "repo": "",
     "makeCodeRepo": "https://github.com/pelikhan/pxt-kitronik-zip-64/tree/master/jacdac",
     "firmwareSource": "https://github.com/pelikhan/pxt-kitronik-zip-64/tree/master/jacdac",
+    "connector": "none",
     "link": "https://kitronik.co.uk/products/5626-game-zip-64-for-the-bbc-microbit",
     "storeLink": "https://kitronik.co.uk/products/5626-game-zip-64-for-the-bbc-microbit",
     "services": [
@@ -1619,6 +1628,7 @@
     "repo": "",
     "makeCodeRepo": "https://github.com/pelikhan/pxt-kitronik-stopbit/tree/master/jacdac",
     "firmwareSource": "https://github.com/pelikhan/pxt-kitronik-stopbit/tree/master/jacdac",
+    "connector": "none",
     "link": "https://kitronik.co.uk/products/5642-stopbit-traffic-light-for-bbc-microbit",
     "storeLink": "https://kitronik.co.uk/products/5642-stopbit-traffic-light-for-bbc-microbit",
     "services": [

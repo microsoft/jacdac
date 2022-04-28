@@ -1,5 +1,24 @@
 [
   {
+    "id": "yahboom-microbitledv10",
+    "name": "Microbit-LED",
+    "company": "Yahboom",
+    "description": "The expansion board integrates 24 programmable RGB lights and microphones, and you can control the on-board RGB lights by the microphone.",
+    "repo": "",
+    "makeCodeRepo": "https://github.com/pelikhan/yahboom-microbit-led-jacdac",
+    "firmwareSource": "https://github.com/pelikhan/yahboom-microbit-led-jacdac",
+    "link": "https://category.yahboom.net/products/rgbledb",
+    "storeLink": "https://category.yahboom.net/products/rgbledb",
+    "services": [
+      369743088,
+      346888797
+    ],
+    "productIdentifiers": [
+      978358865
+    ],
+    "version": "1.0"
+  },
+  {
     "id": "milador-jmpressuresensorv10",
     "name": "JM Pressure Sensor v1.0",
     "company": "Milador",
@@ -1537,6 +1556,22 @@
     }
   },
   {
+    "id": "kitronik-accessbitv11",
+    "name": "ACCESS:bit",
+    "company": "Kitronik",
+    "description": "The ACCESS:bit is a bolt-on/clip-on board for the BBC microbit that simulates an access barrier.",
+    "repo": "",
+    "link": "https://kitronik.co.uk/products/5646-accessbit-for-bbc-microbit",
+    "storeLink": "https://kitronik.co.uk/products/5646-accessbit-for-bbc-microbit",
+    "services": [
+      318542083
+    ],
+    "productIdentifiers": [
+      1053651806
+    ],
+    "version": "1.1"
+  },
+  {
     "id": "kitronik-airqualityboardv10",
     "name": "Air Quality Board",
     "company": "Kitronik",
@@ -1554,6 +1589,43 @@
     ],
     "productIdentifiers": [
       854008423
+    ],
+    "version": "1.0"
+  },
+  {
+    "id": "kitronik-gamezip64v12",
+    "name": "Game Zip 64",
+    "company": "Kitronik",
+    "repo": "",
+    "makeCodeRepo": "https://github.com/pelikhan/pxt-kitronik-zip-64/tree/master/jacdac",
+    "firmwareSource": "https://github.com/pelikhan/pxt-kitronik-zip-64/tree/master/jacdac",
+    "link": "https://kitronik.co.uk/products/5626-game-zip-64-for-the-bbc-microbit",
+    "storeLink": "https://kitronik.co.uk/products/5626-game-zip-64-for-the-bbc-microbit",
+    "services": [
+      277836886,
+      369743088,
+      406832290
+    ],
+    "productIdentifiers": [
+      888103518
+    ],
+    "version": "1.2"
+  },
+  {
+    "id": "kitronik-kitronikstopbitv10",
+    "name": "Kitronik STOP:bit",
+    "company": "Kitronik",
+    "description": "The STOP:bit for the BBC micro:bit is the ultimate upgrade for traffic light/pedestrian crossing projects.",
+    "repo": "",
+    "makeCodeRepo": "https://github.com/pelikhan/pxt-kitronik-stopbit/tree/master/jacdac",
+    "firmwareSource": "https://github.com/pelikhan/pxt-kitronik-stopbit/tree/master/jacdac",
+    "link": "https://kitronik.co.uk/products/5642-stopbit-traffic-light-for-bbc-microbit",
+    "storeLink": "https://kitronik.co.uk/products/5642-stopbit-traffic-light-for-bbc-microbit",
+    "services": [
+      365137307
+    ],
+    "productIdentifiers": [
+      1058995861
     ],
     "version": "1.0"
   }

@@ -8,7 +8,7 @@
     "_base"
   ],
   "notes": {
-    "short": "Servo is a small motor with arm that can be pointing at a specific direction.\n\nThe `min/max_angle/pulse` may be read-only if the servo is permanently affixed to its Jacdac controller."
+    "short": "Servo is a small motor with arm that can be pointing at a specific direction.\n\nThe `min_pulse/max_pulse` may be read-only if the servo is permanently affixed to its Jacdac controller."
   },
   "classIdentifier": 318542083,
   "enums": {},
@@ -114,8 +114,8 @@
           "shift": 16,
           "type": "i16.16",
           "storage": -4,
-          "typicalMin": -90,
-          "typicalMax": 90
+          "typicalMin": 0,
+          "typicalMax": 180
         }
       ],
       "identifierName": "value",
@@ -156,7 +156,7 @@
       "kind": "const",
       "name": "min_angle",
       "identifier": 272,
-      "description": "Lowest angle that can be set.",
+      "description": "Lowest angle that can be set, typiclly 0 °.",
       "fields": [
         {
           "name": "_",
@@ -164,7 +164,7 @@
           "shift": 16,
           "type": "i16.16",
           "storage": -4,
-          "defaultValue": -90
+          "defaultValue": 0
         }
       ],
       "identifierName": "min_value",
@@ -185,13 +185,14 @@
           "defaultValue": 500
         }
       ],
+      "optional": true,
       "packFormat": "u16"
     },
     {
       "kind": "const",
       "name": "max_angle",
       "identifier": 273,
-      "description": "Highest angle that can be set.",
+      "description": "Highest angle that can be set, typically 180°.",
       "fields": [
         {
           "name": "_",
@@ -199,7 +200,7 @@
           "shift": 16,
           "type": "i16.16",
           "storage": -4,
-          "defaultValue": 90
+          "defaultValue": 180
         }
       ],
       "identifierName": "max_value",
@@ -220,6 +221,7 @@
           "defaultValue": 2500
         }
       ],
+      "optional": true,
       "packFormat": "u16"
     },
     {
@@ -258,9 +260,9 @@
     },
     {
       "kind": "ro",
-      "name": "current_angle",
+      "name": "actual_angle",
       "identifier": 257,
-      "description": "The current physical position of the arm.",
+      "description": "The current physical position of the arm, if the device has a way to sense the position.",
       "fields": [
         {
           "name": "_",

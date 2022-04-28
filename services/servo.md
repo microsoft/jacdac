@@ -5,12 +5,13 @@
     status: rc
 
 Servo is a small motor with arm that can be pointing at a specific direction.
+Typically a servo angle is between 0° and 180° where 90° is the middle resting position.
 
-The `min/max_angle/pulse` may be read-only if the servo is permanently affixed to its Jacdac controller.
+The `min_pulse/max_pulse` may be read-only if the servo is permanently affixed to its Jacdac controller.
 
 ## Registers
 
-    rw angle: i16.16 ° { typical_min=-90, typical_max=90 } @ value
+    rw angle: i16.16 ° { typical_min=0, typical_max=180 } @ value
 
 Specifies the angle of the arm (request).
 
@@ -22,19 +23,19 @@ Turn the power to the servo on/off.
 
 Correction applied to the angle to account for the servo arm drift.
 
-    const min_angle = -90: i16.16 ° @ min_value
+    const min_angle = 0: i16.16 ° @ min_value
 
-Lowest angle that can be set.
+Lowest angle that can be set, typiclly 0 °.
 
-    rw min_pulse = 500: u16 us @ 0x83
+    rw min_pulse? = 500: u16 us @ 0x83
 
 The length of pulse corresponding to lowest angle.
 
-    const max_angle = 90: i16.16 ° @ max_value
+    const max_angle = 180: i16.16 ° @ max_value
 
-Highest angle that can be set.
+Highest angle that can be set, typically 180°.
 
-    rw max_pulse = 2500: u16 us @ 0x85
+    rw max_pulse? = 2500: u16 us @ 0x85
 
 The length of pulse corresponding to highest angle.
 
@@ -46,7 +47,7 @@ The servo motor will stop rotating when it is trying to move a ``stall_torque`` 
 
 Time to move 60°.
 
-    ro current_angle?: i16.16 ° @ reading
+    ro actual_angle?: i16.16 ° @ reading
 
-The current physical position of the arm.
+The current physical position of the arm, if the device has a way to sense the position.
 

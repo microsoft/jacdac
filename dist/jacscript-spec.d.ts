@@ -900,7 +900,7 @@ declare class ServoRole extends Role {
     maxPulse: JDRegisterNum
     stallTorque: JDRegisterNum
     responseSpeed: JDRegisterNum
-    currentAngle: JDRegisterNum
+    actualAngle: JDRegisterNum
 }
 declare namespace roles {
     function servo(): ServoRole

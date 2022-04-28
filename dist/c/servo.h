@@ -20,7 +20,7 @@
 #define JD_SERVO_REG_OFFSET 0x81
 
 /**
- * Constant ° i16.16 (int32_t). Lowest angle that can be set.
+ * Constant ° i16.16 (int32_t). Lowest angle that can be set, typiclly 0 °.
  */
 #define JD_SERVO_REG_MIN_ANGLE JD_REG_MIN_VALUE
 
@@ -30,7 +30,7 @@
 #define JD_SERVO_REG_MIN_PULSE 0x83
 
 /**
- * Constant ° i16.16 (int32_t). Highest angle that can be set.
+ * Constant ° i16.16 (int32_t). Highest angle that can be set, typically 180°.
  */
 #define JD_SERVO_REG_MAX_ANGLE JD_REG_MAX_VALUE
 
@@ -50,8 +50,8 @@
 #define JD_SERVO_REG_RESPONSE_SPEED 0x181
 
 /**
- * Read-only ° i16.16 (int32_t). The current physical position of the arm.
+ * Read-only ° i16.16 (int32_t). The current physical position of the arm, if the device has a way to sense the position.
  */
-#define JD_SERVO_REG_CURRENT_ANGLE JD_REG_READING
+#define JD_SERVO_REG_ACTUAL_ANGLE JD_REG_READING
 
 #endif

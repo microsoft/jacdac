@@ -4316,7 +4316,7 @@ export enum ServoReg {
     Offset = 0x81,
 
     /**
-     * Constant ° i16.16 (int32_t). Lowest angle that can be set.
+     * Constant ° i16.16 (int32_t). Lowest angle that can be set, typiclly 0 °.
      *
      * ```
      * const [minAngle] = jdunpack<[number]>(buf, "i16.16")
@@ -4334,7 +4334,7 @@ export enum ServoReg {
     MinPulse = 0x83,
 
     /**
-     * Constant ° i16.16 (int32_t). Highest angle that can be set.
+     * Constant ° i16.16 (int32_t). Highest angle that can be set, typically 180°.
      *
      * ```
      * const [maxAngle] = jdunpack<[number]>(buf, "i16.16")
@@ -4370,13 +4370,13 @@ export enum ServoReg {
     ResponseSpeed = 0x181,
 
     /**
-     * Read-only ° i16.16 (int32_t). The current physical position of the arm.
+     * Read-only ° i16.16 (int32_t). The current physical position of the arm, if the device has a way to sense the position.
      *
      * ```
-     * const [currentAngle] = jdunpack<[number]>(buf, "i16.16")
+     * const [actualAngle] = jdunpack<[number]>(buf, "i16.16")
      * ```
      */
-    CurrentAngle = 0x101,
+    ActualAngle = 0x101,
 }
 
 // Service Settings constants

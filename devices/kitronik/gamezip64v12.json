@@ -1,0 +1,19 @@
+{
+  "id": "kitronik-gamezip64v12",
+  "name": "Game Zip 64",
+  "company": "Kitronik",
+  "repo": "",
+  "makeCodeRepo": "https://github.com/pelikhan/pxt-kitronik-zip-64/tree/master/jacdac",
+  "firmwareSource": "https://github.com/pelikhan/pxt-kitronik-zip-64/tree/master/jacdac",
+  "link": "https://kitronik.co.uk/products/5626-game-zip-64-for-the-bbc-microbit",
+  "storeLink": "https://kitronik.co.uk/products/5626-game-zip-64-for-the-bbc-microbit",
+  "services": [
+    277836886,
+    369743088,
+    406832290
+  ],
+  "productIdentifiers": [
+    888103518
+  ],
+  "version": "1.2"
+}

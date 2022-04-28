@@ -8,7 +8,7 @@
     "_base"
   ],
   "notes": {
-    "short": "Servo is a small motor with arm that can be pointing at a specific direction.\n\nThe `min_pulse/max_pulse` may be read-only if the servo is permanently affixed to its Jacdac controller."
+    "short": "Servo is a small motor with arm that can be pointing at a specific direction.\nTypically a servo angle is between 0° and 180° where 90° is the middle resting position.\n\nThe `min_pulse/max_pulse` may be read-only if the servo is permanently affixed to its Jacdac controller."
   },
   "classIdentifier": 318542083,
   "enums": {},

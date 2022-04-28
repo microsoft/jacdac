@@ -1,6 +1,6 @@
 {
-  "id": "kitronik-kitronikstopbitv10",
-  "name": "Kitronik STOP:bit",
+  "id": "kitronik-stopbitv10",
+  "name": "STOP:bit",
   "company": "Kitronik",
   "description": "The STOP:bit for the BBC micro:bit is the ultimate upgrade for traffic light/pedestrian crossing projects.",
   "repo": "",

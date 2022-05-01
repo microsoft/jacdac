@@ -14,14 +14,4 @@
  */
 #define JD_SOUND_LEVEL_REG_ENABLED JD_REG_INTENSITY
 
-/**
- * Read-write ratio u0.16 (uint16_t). The sound level to trigger a loud event.
- */
-#define JD_SOUND_LEVEL_REG_LOUD_THRESHOLD JD_REG_ACTIVE_THRESHOLD
-
-/**
- * Raised when a loud sound is detected
- */
-#define JD_SOUND_LEVEL_EV_LOUD JD_EV_ACTIVE
-
 #endif

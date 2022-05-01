@@ -4609,22 +4609,6 @@ export enum SoundLevelReg {
      * ```
      */
     Enabled = 0x1,
-
-    /**
-     * Read-write ratio u0.16 (uint16_t). The sound level to trigger a loud event.
-     *
-     * ```
-     * const [loudThreshold] = jdunpack<[number]>(buf, "u0.16")
-     * ```
-     */
-    LoudThreshold = 0x6,
-}
-
-export enum SoundLevelEvent {
-    /**
-     * Raised when a loud sound is detected
-     */
-    Loud = 0x1,
 }
 
 // Service Sound player constants

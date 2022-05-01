@@ -956,8 +956,6 @@ declare namespace roles {
 declare class SoundLevelRole extends SensorRole {
     soundLevel: JDRegisterNum
     enabled: JDRegisterNum
-    loudThreshold: JDRegisterNum
-    loud: JDEvent
 }
 declare namespace roles {
     function soundLevel(): SoundLevelRole

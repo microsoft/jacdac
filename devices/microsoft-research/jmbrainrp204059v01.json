@@ -18,6 +18,11 @@
             "name": "HID Keyboard + Mouse",
             "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/hid-servers-rp2040.uf2",
             "productIdentifier": 883764657
+        },
+        {
+            "name": "HID Joystick",
+            "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/hid-joystick-rp2040.uf2",
+            "productIdentifier": 983850333
         }
     ],
     "bootloader": {

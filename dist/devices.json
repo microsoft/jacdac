@@ -405,7 +405,8 @@
     "productIdentifiers": [
       1003209864,
       970267564,
-      819577746
+      819577746,
+      1009312972
     ],
     "transport": {
       "type": "usb"
@@ -418,6 +419,11 @@
         "name": "HID Keyboard + Mouse",
         "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/hid-servers-f4.uf2",
         "productIdentifier": 819577746
+      },
+      {
+        "name": "HID Joystick",
+        "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/hid-joystick-f4.uf2",
+        "productIdentifier": 1009312972
       }
     ],
     "version": "0.2",
@@ -443,7 +449,8 @@
     "productIdentifiers": [
       884301483,
       999933064,
-      883764657
+      883764657,
+      983850333
     ],
     "transport": {
       "type": "usb"
@@ -456,6 +463,11 @@
         "name": "HID Keyboard + Mouse",
         "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/hid-servers-rp2040.uf2",
         "productIdentifier": 883764657
+      },
+      {
+        "name": "HID Joystick",
+        "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/hid-joystick-rp2040.uf2",
+        "productIdentifier": 983850333
       }
     ],
     "version": "0.1",

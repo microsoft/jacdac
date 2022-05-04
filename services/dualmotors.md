@@ -22,7 +22,7 @@ Turn the power to the motors on/off.
 
     const load_torque?: u16.16 kg/cm @ 0x180
 
-Torque required to produce the rated power of an electrical motor at load speed.
+Torque required to produce the rated power of an each electrical motor at load speed.
 
     const load_rotation_speed?: u16.16 rpm @ 0x181
 

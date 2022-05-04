@@ -13,8 +13,7 @@ A synchronized pair of motors.
     }
 
 Relative speed of the motors. Use positive/negative values to run the motor forwards and backwards.
-Positive is recommended to be clockwise rotation and negative counterclockwise. A speed of ``0`` 
-while ``enabled`` acts as brake.
+A speed of ``0`` while ``enabled`` acts as brake.
 
     rw enabled: bool @ intensity
 

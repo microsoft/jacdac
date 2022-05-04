@@ -253,6 +253,21 @@
     }
   },
   {
+    "service": "dualmotors",
+    "client": {
+      "name": "jacdac-dual-motors",
+      "targets": [
+        "microbit",
+        "arcade",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/dual-motors",
+      "qName": "modules.DualMotorsClient",
+      "default": "modules.dualMotors",
+      "generated": true
+    }
+  },
+  {
     "service": "eco2",
     "client": {
       "name": "jacdac-e-co2",

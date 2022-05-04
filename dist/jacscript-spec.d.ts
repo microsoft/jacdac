@@ -343,6 +343,18 @@ declare namespace roles {
     function dotMatrix(): DotMatrixRole
 }
 
+// Service: Dual Motors
+declare class DualMotorsRole extends Role {
+    speed: JDRegisterArray & { left: number, right: number }
+    enabled: JDRegisterNum
+    loadTorque: JDRegisterNum
+    loadRotationSpeed: JDRegisterNum
+    reversible: JDRegisterNum
+}
+declare namespace roles {
+    function dualMotors(): DualMotorsRole
+}
+
 // Service: Equivalent CO₂
 declare class ECO2Role extends SensorRole {
     eCO2: JDRegisterNum

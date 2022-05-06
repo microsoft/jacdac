@@ -869,14 +869,21 @@ function processSpec(dn: string) {
         path.join(dn, "..", "..", "..", "pxt-jacdac")
     )
     console.log(`pxt-jacdac: ${pxtJacdacDir}`)
-    const pxtJacdacjson: {
-        version: string
-    } = JSON.parse(
-        fs.readFileSync(path.join(pxtJacdacDir, "pxt.json"), {
-            encoding: "utf8",
-        })
-    )
-    mkcdUpgrades.upgrades["microsoft/pxt-jacdac"] = `min:v${pxtJacdacjson.version}`
+    const pxtJacdacPxtJson = path.join(pxtJacdacDir, "pxt.json")
+    let pxtJacdacVersion: string = undefined
+    if (fs.existsSync(pxtJacdacPxtJson)) {
+        const pxtJacdacjson: {
+            version: string
+        } = JSON.parse(
+            fs.readFileSync(path.join(pxtJacdacDir, "pxt.json"), {
+                encoding: "utf8",
+            })
+        )
+        pxtJacdacVersion = pxtJacdacjson.version
+        mkcdUpgrades.upgrades[
+            "microsoft/pxt-jacdac"
+        ] = `min:v${pxtJacdacVersion}`
+    }
 
     const jacdacPythonDir = path.resolve(
         path.join(dn, "..", "..", "..", "jacdac-python", "jacdac")
@@ -936,7 +943,7 @@ function processSpec(dn: string) {
                     generated: pxtjson.files.indexOf("client.g.ts") > -1,
                 },
             })
-            mkcdUpgrades.upgrades[repo] = `min:v${pxtJacdacjson.version}`
+            mkcdUpgrades.upgrades[repo] = `min:v${pxtJacdacVersion}`
         }
 
         const cnv = converters()

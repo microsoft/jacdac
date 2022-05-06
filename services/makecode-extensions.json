@@ -264,7 +264,7 @@
       "repo": "microsoft/pxt-jacdac/dual-motors",
       "qName": "modules.DualMotorsClient",
       "default": "modules.dualMotors",
-      "generated": true
+      "generated": false
     }
   },
   {

@@ -129,11 +129,13 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
 
     const registerFlags = (pkt: jdspec.PacketInfo) => {
         const flags: string[] = []
-        if (pkt.optional)
-            flags.push("Optional")
-        if(pkt.kind === "const")
-            flags.push("Const")
-        return flags.length == 0 ? "" : `, ${flags.map(n => `jacdac.RegisterClientFlags.${n}`).join(" | ")}`
+        if (pkt.optional) flags.push("Optional")
+        if (pkt.kind === "const") flags.push("Const")
+        return flags.length == 0
+            ? ""
+            : `, ${flags
+                  .map(n => `jacdac.RegisterClientFlags.${n}`)
+                  .join(" | ")}`
     }
 
     const toMetaComments = (...lines: string[]) =>
@@ -860,10 +862,22 @@ function processSpec(dn: string) {
     const csdir = path.join(outp, "cs")
     mkdir(csdir)
     const mkcdServices: jdspec.MakeCodeServiceInfo[] = []
+    const mkcdUpgrades: { upgrades: Record<string, string> } = {
+        upgrades: {},
+    }
     const pxtJacdacDir = path.resolve(
         path.join(dn, "..", "..", "..", "pxt-jacdac")
     )
     console.log(`pxt-jacdac: ${pxtJacdacDir}`)
+    const pxtJacdacjson: {
+        version: string
+    } = JSON.parse(
+        fs.readFileSync(path.join(pxtJacdacDir, "pxt.json"), {
+            encoding: "utf8",
+        })
+    )
+    mkcdUpgrades.upgrades["microsoft/pxt-jacdac"] = `min:v${pxtJacdacjson.version}`
+
     const jacdacPythonDir = path.resolve(
         path.join(dn, "..", "..", "..", "jacdac-python", "jacdac")
     )
@@ -905,19 +919,24 @@ function processSpec(dn: string) {
         const pysrvdirname = snakify(json.camelName).toLowerCase()
 
         if (hasMakeCodeProject) {
-            const pxtjson: { supportedTargets?: string[]; files: string[] } =
-                JSON.parse(fs.readFileSync(mkcdpxtjson, { encoding: "utf8" }))
+            const pxtjson: {
+                version: string
+                supportedTargets?: string[]
+                files: string[]
+            } = JSON.parse(fs.readFileSync(mkcdpxtjson, { encoding: "utf8" }))
+            const repo = `microsoft/pxt-jacdac/${mkcdsrvdirname}`
             mkcdServices.push({
                 service: json.shortId,
                 client: {
                     name: `jacdac-${mkcdsrvdirname}`,
                     targets: pxtjson.supportedTargets,
-                    repo: `microsoft/pxt-jacdac/${mkcdsrvdirname}`,
+                    repo,
                     qName: `modules.${capitalize(json.camelName)}Client`,
                     default: `modules.${json.camelName}`,
                     generated: pxtjson.files.indexOf("client.g.ts") > -1,
                 },
             })
+            mkcdUpgrades.upgrades[repo] = `min:v${pxtJacdacjson.version}`
         }
 
         const cnv = converters()
@@ -1033,12 +1052,17 @@ from .client import ${capitalize(json.camelName)}Client # type: ignore
     fs.writeFileSync(path.join(outp, "specconstants.sts"), concats["sts"])
     fs.writeFileSync(path.join(outp, "specconstants.cs"), concats["cs"])
     fs.writeFileSync(path.join(outp, "jacscript-spec.d.ts"), concats["jacs"])
-    if (fs.existsSync(pxtJacdacDir))
+    if (fs.existsSync(pxtJacdacDir)) {
         // only available locally
         fs.writeFileSync(
             path.join(outp, "../makecode-extensions.json"),
             JSON.stringify(mkcdServices, null, 2)
         )
+        fs.writeFileSync(
+            path.join(outp, "../makecode-upgrades.json"),
+            JSON.stringify(mkcdUpgrades, null, 2)
+        )
+    }
 
     const fms = Object.keys(fmtStats).sort((l, r) => -fmtStats[l] + fmtStats[r])
     console.log(fms.map(fmt => `${fmt}: ${fmtStats[fmt]}`))

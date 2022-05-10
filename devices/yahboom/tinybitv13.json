@@ -19,5 +19,6 @@
   "productIdentifiers": [
     878674793
   ],
-  "version": "1.3"
+  "version": "1.3",
+  "connector": "none"
 }

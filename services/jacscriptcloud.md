@@ -18,17 +18,6 @@ Note that `f64` values following a label are not necessarily aligned.
 Upload a labelled tuple of values to the cloud.
 The tuple will be automatically tagged with timestamp and originating device.
 
-    command get_twin @ 0x81 {
-        path: string
-    }
-    report {
-        path: string0
-        value: f64
-    }
-
-Get a numeric field from the current device twin.
-Path is dot-separated.
-
     enum CommandStatus : u32 {
         OK = 200
         NotFound = 404
@@ -60,7 +49,3 @@ When offline, `upload` commands are queued, and `get_twin` respond with cached v
     }
 
 Emitted when cloud requests jacscript to run some action.
-
-    event twin_change @ change
-
-Emitted whenever any of the twin properties change.

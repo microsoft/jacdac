@@ -21,21 +21,6 @@ typedef struct jd_jacscript_cloud_upload {
 
 
 /**
- * Argument: path string (bytes). Get a numeric field from the current device twin.
- * Path is dot-separated.
- */
-#define JD_JACSCRIPT_CLOUD_CMD_GET_TWIN 0x81
-
-/**
- * Report: 
- */
-typedef struct jd_jacscript_cloud_get_twin_report {
-    char path[0];  // string0
-    // uint64_t value;  // f64
-} jd_jacscript_cloud_get_twin_report_t;
-
-
-/**
  * Should be called by jacscript when it finishes handling a `cloud_command`.
  */
 #define JD_JACSCRIPT_CLOUD_CMD_ACK_CLOUD_COMMAND 0x83
@@ -62,10 +47,5 @@ typedef struct jd_jacscript_cloud_cloud_command {
     // uint64_t argument[0];  // f64
 } jd_jacscript_cloud_cloud_command_t;
 
-
-/**
- * Emitted whenever any of the twin properties change.
- */
-#define JD_JACSCRIPT_CLOUD_EV_TWIN_CHANGE JD_EV_CHANGE
 
 #endif

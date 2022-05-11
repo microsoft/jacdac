@@ -3507,23 +3507,6 @@ namespace jacdac {
         Upload = 0x80,
 
         /**
-         * Argument: path string (bytes). Get a numeric field from the current device twin.
-         * Path is dot-separated.
-         *
-         * ```
-         * const [path] = jdunpack<[string]>(buf, "s")
-         * ```
-         */
-        GetTwin = 0x81,
-
-        /**
-         * report GetTwin
-         * ```
-         * const [path, value] = jdunpack<[string, number]>(buf, "z f64")
-         * ```
-         */
-
-        /**
          * Should be called by jacscript when it finishes handling a `cloud_command`.
          *
          * ```
@@ -3538,16 +3521,6 @@ namespace jacdac {
          * Pack format for 'upload' register data.
          */
         export const Upload = "z r: f64"
-
-        /**
-         * Pack format for 'get_twin' register data.
-         */
-        export const GetTwin = "s"
-
-        /**
-         * Pack format for 'get_twin' register data.
-         */
-        export const GetTwinReport = "z f64"
 
         /**
          * Pack format for 'ack_cloud_command' register data.
@@ -3584,12 +3557,6 @@ namespace jacdac {
          */
         //% block="cloud command"
         CloudCommand = 0x81,
-
-        /**
-         * Emitted whenever any of the twin properties change.
-         */
-        //% block="twin change"
-        TwinChange = 0x3,
     }
 
     export namespace JacscriptCloudEventPack {

@@ -486,11 +486,9 @@ declare namespace roles {
 // Service: Jacscript Cloud
 declare class JacscriptCloudRole extends Role {
     upload(label: string, ...value: number[]): void
-    getTwin(path: string): void
     ackCloudCommand(seq_no: number, status: number, ...result: number[]): void
     connected: JDRegisterNum
     cloudCommand: JDEvent
-    twinChange: JDEvent
 }
 declare namespace roles {
     function jacscriptCloud(): JacscriptCloudRole

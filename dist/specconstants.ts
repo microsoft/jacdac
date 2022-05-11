@@ -2268,23 +2268,6 @@ export enum JacscriptCloudCmd {
     Upload = 0x80,
 
     /**
-     * Argument: path string (bytes). Get a numeric field from the current device twin.
-     * Path is dot-separated.
-     *
-     * ```
-     * const [path] = jdunpack<[string]>(buf, "s")
-     * ```
-     */
-    GetTwin = 0x81,
-
-    /**
-     * report GetTwin
-     * ```
-     * const [path, value] = jdunpack<[string, number]>(buf, "z f64")
-     * ```
-     */
-
-    /**
      * Should be called by jacscript when it finishes handling a `cloud_command`.
      *
      * ```
@@ -2315,11 +2298,6 @@ export enum JacscriptCloudEvent {
      * ```
      */
     CloudCommand = 0x81,
-
-    /**
-     * Emitted whenever any of the twin properties change.
-     */
-    TwinChange = 0x3,
 }
 
 // Service Jacscript Condition constants

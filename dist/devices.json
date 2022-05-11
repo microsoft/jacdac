@@ -41,6 +41,24 @@
     "version": "1.3"
   },
   {
+    "id": "sparkfun-gamerbitv00",
+    "name": "gamer:bit",
+    "company": "Sparkfun",
+    "description": "The SparkFun gamer:bit is a fun-filled \"carrier\" board for the micro:bit that, when combined with the micro:bit, provides you with a fully functional game system. Designed in a similar form factor to the classic Nintendo NES controller, the gamer:bit is equipped with a four-direction \"D-pad\" on the left side of the board and two action buttons on the right side of the board. The two push buttons on the micro:bit in the center function as start and select.",
+    "repo": "",
+    "makeCodeRepo": "https://github.com/pelikhan/pxt-gamer-bit/tree/master/jacdac",
+    "connector": "none",
+    "link": "https://www.sparkfun.com/products/retired/14215",
+    "storeLink": "https://www.sparkfun.com/products/retired/14215",
+    "services": [
+      277836886
+    ],
+    "productIdentifiers": [
+      929407584
+    ],
+    "version": "0.0"
+  },
+  {
     "id": "milador-jmpressuresensorv10",
     "name": "JM Pressure Sensor v1.0",
     "company": "Milador",
@@ -1693,6 +1711,27 @@
     ],
     "productIdentifiers": [
       1058995861
+    ],
+    "version": "1.0"
+  },
+  {
+    "id": "keystudio-relaybreakoutboardv10",
+    "name": "Relay Breakout Board",
+    "company": "Keystudio",
+    "description": "Keyestudio relay breakout board for micro:bit has integrated a 4-way 5V relay module, fully compatible with micro:bit development board.\nIt can work only need to insert micro:bit into keyestudio relay shield, then input DC5V voltage on the relay VIN/GND port, pretty simple and convenient.",
+    "repo": "",
+    "makeCodeRepo": "https://github.com/pelikhan/keystudio-relay-breakout-jacdac",
+    "connector": "none",
+    "link": "https://www.keyestudio.com/products/keyestudio-relay-breakout-board-for-bbc-microbit",
+    "storeLink": "https://www.keyestudio.com/products/keyestudio-relay-breakout-board-for-bbc-microbit",
+    "services": [
+      406840918,
+      406840918,
+      406840918,
+      406840918
+    ],
+    "productIdentifiers": [
+      901245225
     ],
     "version": "1.0"
   }

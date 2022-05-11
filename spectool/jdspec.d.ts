@@ -590,6 +590,8 @@ declare namespace jdspec {
 
     type TransportType = "usb" | "serial" | "bluetooth"
 
+    type ConnectorType = "none" | "edge" | "edgeLowPower" | "edgeHighPower"
+
     interface TransportSpec {
         vendorId?: number
         productId?: number
@@ -730,7 +732,7 @@ declare namespace jdspec {
         /**
          * Type of PCB edge connector the device, default is "edge"
          */
-        connector?: "none" | "edge" | "edgeLowPower" | "edgeHighPower"
+        connector?: ConnectorType
     }
 
     /**

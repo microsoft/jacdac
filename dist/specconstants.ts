@@ -2287,6 +2287,16 @@ export enum JacscriptCloudReg {
      * ```
      */
     Connected = 0x180,
+
+    /**
+     * Read-only string (bytes). User-friendly name of the connection, typically includes name of the server
+     * and/or type of cloud service (`"something.cloud.net (Provider IoT)"`).
+     *
+     * ```
+     * const [connectionName] = jdunpack<[string]>(buf, "s")
+     * ```
+     */
+    ConnectionName = 0x181,
 }
 
 export enum JacscriptCloudEvent {
@@ -2298,6 +2308,16 @@ export enum JacscriptCloudEvent {
      * ```
      */
     CloudCommand = 0x81,
+
+    /**
+     * High-level version of `cloud_command` plus `ack_cloud_command`.
+     */
+    Method = 0x82,
+
+    /**
+     * Emitted when we connect or disconnect from the cloud.
+     */
+    Change = 0x3,
 }
 
 // Service Jacscript Condition constants

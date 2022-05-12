@@ -38,6 +38,12 @@ typedef struct jd_jacscript_cloud_ack_cloud_command {
 #define JD_JACSCRIPT_CLOUD_REG_CONNECTED 0x180
 
 /**
+ * Read-only string (bytes). User-friendly name of the connection, typically includes name of the server
+ * and/or type of cloud service (`"something.cloud.net (Provider IoT)"`).
+ */
+#define JD_JACSCRIPT_CLOUD_REG_CONNECTION_NAME 0x181
+
+/**
  * Emitted when cloud requests jacscript to run some action.
  */
 #define JD_JACSCRIPT_CLOUD_EV_CLOUD_COMMAND 0x81
@@ -47,5 +53,20 @@ typedef struct jd_jacscript_cloud_cloud_command {
     // uint64_t argument[0];  // f64
 } jd_jacscript_cloud_cloud_command_t;
 
+
+/**
+ * High-level version of `cloud_command` plus `ack_cloud_command`.
+ */
+#define JD_JACSCRIPT_CLOUD_EV_METHOD 0x82
+typedef struct jd_jacscript_cloud_method {
+    char command[0];  // string0
+    // uint64_t argument[0];  // f64
+} jd_jacscript_cloud_method_t;
+
+
+/**
+ * Emitted when we connect or disconnect from the cloud.
+ */
+#define JD_JACSCRIPT_CLOUD_EV_CHANGE JD_EV_CHANGE
 
 #endif

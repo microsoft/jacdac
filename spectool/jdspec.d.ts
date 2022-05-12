@@ -103,6 +103,7 @@ declare namespace senml {
         | "cm"
         | "km"
         | "km/h"
+        | "AudHz"
 
     interface SenMLRecord {
         // Base Name

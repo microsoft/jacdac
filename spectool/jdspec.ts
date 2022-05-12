@@ -173,6 +173,7 @@ export const secondaryUnitConverters: jdspec.SMap<{
     mWh: { name: "micro watt-hour", unit: "J", scale: 3.6e-3, offset: 0 },
     g: { name: "earth gravity", unit: "m/s2", scale: 9.80665, offset: 0 },
     "#": { name: "count", unit: "#", scale: 1, offset: 0 },
+    AudHz: { name: "Audible Frequency", unit: "Hz", scale: 1, offset: 0 },
 }
 
 export const encodings: jdspec.SMap<jdspec.Encoding> = {

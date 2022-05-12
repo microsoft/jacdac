@@ -28,7 +28,7 @@ typedef struct jd_buzzer_play_tone {
  */
 #define JD_BUZZER_CMD_PLAY_NOTE 0x81
 typedef struct jd_buzzer_play_note {
-    uint16_t frequency; // Hz
+    uint16_t frequency; // AudHz
     uint16_t volume;  // ratio u0.16
     uint16_t duration; // ms
 } jd_buzzer_play_note_t;

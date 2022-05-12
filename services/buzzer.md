@@ -28,7 +28,7 @@ To play tone at frequency `F` Hz and volume `V` (in `0..1`) you will want
 to send `P = 1000000 / F` and `D = P * V / 2`.
 
     client command play_note @ 0x81 {
-        frequency: u16 Hz
+        frequency: u16 AudHz
         volume: u0.16 /
         duration: u16 ms
     }

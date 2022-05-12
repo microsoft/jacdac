@@ -159,7 +159,7 @@
       "fields": [
         {
           "name": "frequency",
-          "unit": "Hz",
+          "unit": "AudHz",
           "type": "u16",
           "storage": 2,
           "isSimpleType": true

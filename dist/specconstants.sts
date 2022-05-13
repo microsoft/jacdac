@@ -3574,12 +3574,6 @@ namespace jacdac {
         CloudCommand = 0x81,
 
         /**
-         * High-level version of `cloud_command` plus `ack_cloud_command`.
-         */
-        //% block="method"
-        Method = 0x82,
-
-        /**
          * Emitted when we connect or disconnect from the cloud.
          */
         //% block="change"
@@ -3591,11 +3585,6 @@ namespace jacdac {
          * Pack format for 'cloud_command' register data.
          */
         export const CloudCommand = "u32 z r: f64"
-
-        /**
-         * Pack format for 'method' register data.
-         */
-        export const Method = "z r: f64"
     }
 
 }

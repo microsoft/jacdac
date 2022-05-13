@@ -55,14 +55,6 @@ and/or type of cloud service (`"something.cloud.net (Provider IoT)"`).
 
 Emitted when cloud requests jacscript to run some action.
 
-    client event method @ 0x82 {
-        command: string0
-    repeats:
-        argument: f64
-    }
-
-High-level version of `cloud_command` plus `ack_cloud_command`.
-
     event change @ change
 
 Emitted when we connect or disconnect from the cloud.

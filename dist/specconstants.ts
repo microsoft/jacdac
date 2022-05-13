@@ -2310,11 +2310,6 @@ export enum JacscriptCloudEvent {
     CloudCommand = 0x81,
 
     /**
-     * High-level version of `cloud_command` plus `ack_cloud_command`.
-     */
-    Method = 0x82,
-
-    /**
      * Emitted when we connect or disconnect from the cloud.
      */
     Change = 0x3,

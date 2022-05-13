@@ -55,16 +55,6 @@ typedef struct jd_jacscript_cloud_cloud_command {
 
 
 /**
- * High-level version of `cloud_command` plus `ack_cloud_command`.
- */
-#define JD_JACSCRIPT_CLOUD_EV_METHOD 0x82
-typedef struct jd_jacscript_cloud_method {
-    char command[0];  // string0
-    // uint64_t argument[0];  // f64
-} jd_jacscript_cloud_method_t;
-
-
-/**
  * Emitted when we connect or disconnect from the cloud.
  */
 #define JD_JACSCRIPT_CLOUD_EV_CHANGE JD_EV_CHANGE

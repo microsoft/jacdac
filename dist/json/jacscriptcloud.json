@@ -221,28 +221,6 @@
     },
     {
       "kind": "event",
-      "name": "method",
-      "identifier": 130,
-      "description": "High-level version of `cloud_command` plus `ack_cloud_command`.",
-      "fields": [
-        {
-          "name": "command",
-          "type": "string0",
-          "storage": 0
-        },
-        {
-          "name": "argument",
-          "isFloat": true,
-          "type": "f64",
-          "storage": 8,
-          "startRepeats": true
-        }
-      ],
-      "client": true,
-      "packFormat": "z r: f64"
-    },
-    {
-      "kind": "event",
       "name": "change",
       "identifier": 3,
       "description": "Emitted when we connect or disconnect from the cloud.",

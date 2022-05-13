@@ -490,7 +490,6 @@ declare class JacscriptCloudRole extends Role {
     connected: JDRegisterNum
     connectionName: JDRegisterString
     cloudCommand: JDEvent
-    method: JDEvent
     change: JDEvent
 }
 declare namespace roles {

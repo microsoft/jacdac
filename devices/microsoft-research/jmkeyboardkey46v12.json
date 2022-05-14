@@ -1,11 +1,15 @@
 {
-    "id": "microsoft-research-jmkeyboardkey-46-v1.2",
-    "name": "JM Keyboard Key",
-    "company": "Microsoft Research",
-    "designIdentifier": "46",
-    "version": "1.2",
-    "link": "https://github.com/microsoft/jacdac-padauk",
-    "services": [343122531],
-    "productIdentifiers": [876567534],
-    "tags": []
+  "id": "microsoft-research-jmkeyboardkey46v12",
+  "name": "JM Keyboard Key",
+  "company": "Microsoft Research",
+  "link": "https://github.com/microsoft/jacdac-padauk",
+  "services": [
+    343122531
+  ],
+  "productIdentifiers": [
+    876567534
+  ],
+  "tags": [],
+  "version": "1.2",
+  "designIdentifier": "46"
 }

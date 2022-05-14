@@ -1,15 +1,18 @@
 {
-    "id": "microsoft-research-jm-ambient-light-55-v0.1",
-    "name": "JM Ambient Light",
-    "company": "Microsoft Research",
-    "description": "",
-    "designIdentifier": "55",
-    "version": "0.1",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
-    "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/altium/reference-designs/JacdacLightLevel%2055-0.2",
-    "firmwareSource": "https://github.com/microsoft/jacdac-padauk/tree/main/jm-ambient-lightsensor-55-0.1",
-    "tags": ["kit"],
-    "services": [400333340],
-    "productIdentifiers": [896864987]
+  "id": "microsoft-research-jmambientlight55v01",
+  "name": "JM Ambient Light",
+  "company": "Microsoft Research",
+  "description": "",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-padauk/tree/main/jm-ambient-lightsensor-55-0.1",
+  "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/altium/reference-designs/JacdacLightLevel%2055-0.2",
+  "link": "https://github.com/microsoft/jacdac-msr-modules",
+  "services": [
+    400333340
+  ],
+  "productIdentifiers": [
+    896864987
+  ],
+  "version": "0.1",
+  "designIdentifier": "55"
 }

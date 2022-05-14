@@ -4,6 +4,7 @@
   "company": "Kitronik",
   "repo": "",
   "makeCodeRepo": "https://github.com/pelikhan/pxt-kitronik-zip-64/tree/master/jacdac",
+  "connector": "none",
   "link": "https://kitronik.co.uk/products/5626-game-zip-64-for-the-bbc-microbit",
   "storeLink": "https://kitronik.co.uk/products/5626-game-zip-64-for-the-bbc-microbit",
   "services": [
@@ -14,6 +15,5 @@
   "productIdentifiers": [
     888103518
   ],
-  "version": "1.2",
-  "connector": "none"
+  "version": "1.2"
 }

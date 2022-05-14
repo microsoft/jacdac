@@ -734,6 +734,11 @@ declare namespace jdspec {
          * Type of PCB edge connector the device, default is "edge"
          */
         connector?: ConnectorType
+
+        /**
+         * For kits, a list of device identifiers contained in the kit
+         */
+        devices?: string[]
     }
 
     /**
@@ -769,7 +774,7 @@ declare namespace jdspec {
             /**
              * uses auto-generated client
              */
-             generated?: boolean
+            generated?: boolean
         }
     }
 }

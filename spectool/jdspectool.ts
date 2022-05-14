@@ -1097,11 +1097,26 @@ function processDevices(upperName: string) {
             if (stat.isDirectory()) todo.push(f)
             else if (/\.json/.test(f)) {
                 console.log(`  ${f}`)
-                const dev = JSON.parse(readString(dir, fn)) as jdspec.DeviceSpec
-                allDevices.push(normalizeDeviceSpecification(dev))
+                const dev = normalizeDeviceSpecification(
+                    JSON.parse(readString(dir, fn)) as jdspec.DeviceSpec
+                )
+                fs.writeFileSync(
+                    path.join(dir, fn),
+                    JSON.stringify(dev, null, 2)
+                )
+                allDevices.push(dev)
             }
         }
     }
+    allDevices
+        .filter(d => d.devices)
+        .forEach(d =>
+            d.devices
+                .filter(did => !allDevices.find(({ id }) => id === did))
+                .forEach(did =>
+                    console.error(`${d.id}: device not found ${did}`)
+                )
+        )
     const ofn = path.join("../dist", "devices.json")
     console.log(`writing ${ofn}`)
     fs.writeFileSync(ofn, JSON.stringify(allDevices, null, 2))

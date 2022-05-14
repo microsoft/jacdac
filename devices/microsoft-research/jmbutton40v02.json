@@ -1,13 +1,16 @@
 {
-    "id": "microsoft-research-jmbutton40-v0.2",
-    "name": "JM Button",
-    "company": "Microsoft Research",
-    "designIdentifier": "40",
-    "version": "0.2",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/altium/reference-designs/JacdacG0Button%2040-0.3",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-button-40-0.2/profile/button.c",
-    "services": [343122531],
-    "productIdentifiers": [946173966],
-    "tags": ["kit"]
+  "id": "microsoft-research-jmbutton40v02",
+  "name": "JM Button",
+  "company": "Microsoft Research",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-button-40-0.2/profile/button.c",
+  "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/altium/reference-designs/JacdacG0Button%2040-0.3",
+  "services": [
+    343122531
+  ],
+  "productIdentifiers": [
+    946173966
+  ],
+  "version": "0.2",
+  "designIdentifier": "40"
 }

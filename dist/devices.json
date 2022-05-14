@@ -226,9 +226,6 @@
     "productIdentifiers": [
       952491663
     ],
-    "tags": [
-      "kit"
-    ],
     "version": "1.0",
     "designIdentifier": "30"
   },
@@ -262,9 +259,6 @@
     "productIdentifiers": [
       964964313
     ],
-    "tags": [
-      "kit"
-    ],
     "version": "1.3",
     "designIdentifier": "34"
   },
@@ -281,9 +275,6 @@
     ],
     "productIdentifiers": [
       942325999
-    ],
-    "tags": [
-      "kit"
     ],
     "version": "1.1"
   },
@@ -302,9 +293,6 @@
     "productIdentifiers": [
       896864987
     ],
-    "tags": [
-      "kit"
-    ],
     "version": "0.1",
     "designIdentifier": "55"
   },
@@ -321,9 +309,6 @@
     ],
     "productIdentifiers": [
       976429228
-    ],
-    "tags": [
-      "kit"
     ],
     "version": "0.2",
     "designIdentifier": "44"
@@ -456,9 +441,6 @@
     "transport": {
       "type": "usb"
     },
-    "tags": [
-      "kit"
-    ],
     "firmwares": [
       {
         "name": "HID Keyboard + Mouse",
@@ -500,9 +482,6 @@
     "transport": {
       "type": "usb"
     },
-    "tags": [
-      "kit"
-    ],
     "firmwares": [
       {
         "name": "HID Keyboard + Mouse",
@@ -535,9 +514,6 @@
     "productIdentifiers": [
       896566497
     ],
-    "tags": [
-      "kit"
-    ],
     "version": "1.3",
     "designIdentifier": "10"
   },
@@ -554,9 +530,6 @@
     "productIdentifiers": [
       946173966
     ],
-    "tags": [
-      "kit"
-    ],
     "version": "0.2",
     "designIdentifier": "40"
   },
@@ -572,9 +545,6 @@
     ],
     "productIdentifiers": [
       1047530059
-    ],
-    "tags": [
-      "kit"
     ],
     "version": "0.1",
     "designIdentifier": "62"
@@ -639,9 +609,6 @@
     "productIdentifiers": [
       878106432
     ],
-    "tags": [
-      "kit"
-    ],
     "version": "3.2"
   },
   {
@@ -657,9 +624,6 @@
     ],
     "productIdentifiers": [
       1020991645
-    ],
-    "tags": [
-      "kit"
     ],
     "version": "3.2"
   },
@@ -747,9 +711,6 @@
     ],
     "productIdentifiers": [
       840841542
-    ],
-    "tags": [
-      "kit"
     ],
     "version": "1.0"
   },
@@ -842,9 +803,6 @@
     "productIdentifiers": [
       1067229774
     ],
-    "tags": [
-      "kit"
-    ],
     "version": "1.0",
     "designIdentifier": "46",
     "status": "deprecated"
@@ -861,9 +819,6 @@
     ],
     "productIdentifiers": [
       911541523
-    ],
-    "tags": [
-      "kit"
     ],
     "version": "1.1",
     "designIdentifier": "46",
@@ -1187,9 +1142,6 @@
     "productIdentifiers": [
       1046525691
     ],
-    "tags": [
-      "kit"
-    ],
     "version": "0.1",
     "designIdentifier": "58"
   },
@@ -1208,9 +1160,6 @@
     "productIdentifiers": [
       967723905
     ],
-    "tags": [
-      "kit"
-    ],
     "version": "0.1",
     "designIdentifier": "60"
   },
@@ -1227,9 +1176,6 @@
     ],
     "productIdentifiers": [
       892295887
-    ],
-    "tags": [
-      "kit"
     ],
     "version": "2.0",
     "designIdentifier": "37",
@@ -1249,9 +1195,6 @@
     ],
     "productIdentifiers": [
       807926135
-    ],
-    "tags": [
-      "kit"
     ],
     "version": "2.1",
     "designIdentifier": "37"
@@ -1304,9 +1247,6 @@
     "productIdentifiers": [
       1060754715
     ],
-    "tags": [
-      "kit"
-    ],
     "version": "1.0",
     "status": "deprecated"
   },
@@ -1325,9 +1265,6 @@
     ],
     "productIdentifiers": [
       829647613
-    ],
-    "tags": [
-      "kit"
     ],
     "version": "1.1"
   },
@@ -1360,9 +1297,6 @@
     ],
     "productIdentifiers": [
       917828732
-    ],
-    "tags": [
-      "kit"
     ],
     "version": "0.1",
     "designIdentifier": "42"
@@ -1399,9 +1333,6 @@
     ],
     "productIdentifiers": [
       966423091
-    ],
-    "tags": [
-      "kit"
     ],
     "version": "1.1",
     "designIdentifier": "49"
@@ -1504,9 +1435,6 @@
     "productIdentifiers": [
       827772887
     ],
-    "tags": [
-      "kit"
-    ],
     "version": "1.1",
     "designIdentifier": "18"
   },
@@ -1578,6 +1506,46 @@
     "designIdentifier": "65"
   },
   {
+    "id": "microsoft-research-makeaccessible2021kitv10",
+    "name": "MakeAccessible 2021 Kit",
+    "company": "Microsoft Research",
+    "description": "A kit for the Microsoft MakeAccessible hackathon.",
+    "link": "https://www.microsoft.com/en-us/research/project/project-makeaccessible/",
+    "services": [],
+    "productIdentifiers": [],
+    "tags": [
+      "kit"
+    ],
+    "version": "1.0",
+    "devices": [
+      "microbit-educational-foundation-microbitv2",
+      "microsoft-research-jmaccelerometer30v10",
+      "microsoft-research-jmaccessswitchinput34v13",
+      "microsoft-research-jmaccessswitchoutputv11",
+      "microsoft-research-jmambientlight55v01",
+      "microsoft-research-jmanalogjoystick44v02",
+      "microsoft-research-jmbrainf441v02",
+      "microsoft-research-jmbrainrp204059v01",
+      "microsoft-research-jmbutton10v13",
+      "microsoft-research-jmbutton40v02",
+      "microsoft-research-jmbuttonterminal62v01",
+      "microsoft-research-jmclickairquality4v32",
+      "microsoft-research-jmclickcolorv32",
+      "microsoft-research-jmflexv10",
+      "microsoft-research-jmkeyboardkey46v10",
+      "microsoft-research-jmkeyboardkey46v11",
+      "microsoft-research-jmrgbledbar10v01",
+      "microsoft-research-jmrgbledgeneric60v01",
+      "microsoft-research-jmrgbledring37v20",
+      "microsoft-research-jmrgbledring37v21",
+      "microsoft-research-jmrotarycontrolbuttonv10",
+      "microsoft-research-jmrotarycontrolbuttonv11",
+      "microsoft-research-jmsinglergb-led42v01",
+      "microsoft-research-jmslider49v11",
+      "microsoft-research-jmtemphumidity18v11"
+    ]
+  },
+  {
     "id": "microsoft-research-mikrobuscarrierboard53v01",
     "name": "MikrobusCarrierBoard",
     "company": "Microsoft Research",
@@ -1604,9 +1572,6 @@
     "transport": {
       "type": "usb"
     },
-    "tags": [
-      "kit"
-    ],
     "firmwares": [
       {
         "name": "Out-Of-the-Box Experience",

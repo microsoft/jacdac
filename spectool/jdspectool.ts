@@ -200,8 +200,15 @@ ${regs
 
         return fields
             .map((field, fieldi) => {
-                const { name, min, max, defl, valueScaler, valueUnscaler } =
-                    genFieldInfo(reg, field)
+                const {
+                    name,
+                    min,
+                    max,
+                    defl,
+                    valueScaler,
+                    valueUnscaler,
+                    unit,
+                } = genFieldInfo(reg, field)
                 return `
         /**
         * ${(reg.description || "").split("\n").join("\n        * ")}
@@ -209,7 +216,8 @@ ${regs
 ${toMetaComments(
     "callInDebugger",
     `group="${group}"`,
-    hasBlocks && `block="%${shortId} ${humanify(name)}"`,
+    hasBlocks &&
+        `block="%${shortId} ${humanify(name)}${unit ? ` (${unit})` : ""}"`,
     hasBlocks && `blockId=jacdac_${shortId}_${reg.name}_${field.name}_get`,
     `weight=${weight--}`
 )}
@@ -836,7 +844,8 @@ function genFieldInfo(reg: jdspec.PacketInfo, field: jdspec.PacketMember) {
             ? s => `${s} ? 1 : 0`
             : s => s
     const scale = field.unit === "/" ? 100 : undefined
-    return { name, min, max, defl, scale, valueScaler, valueUnscaler }
+    const unit = field.unit === "/" ? "\\\\%" : field.unit
+    return { name, min, max, defl, scale, valueScaler, valueUnscaler, unit }
 }
 
 function processSpec(dn: string) {

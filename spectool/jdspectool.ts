@@ -194,9 +194,10 @@ ${regs
         const enabled = isEnabledReg(reg)
         const fieldName = `this._${reading ? "reading" : camelize(reg.name)}`
         const hasBlocks =
-            reg.identifier == Reading ||
-            reg.identifier == Intensity ||
-            reg.identifier == Value
+            !reg.lowLevel &&
+            (reg.identifier == Reading ||
+                reg.identifier == Intensity ||
+                reg.identifier == Value)
 
         return fields
             .map((field, fieldi) => {

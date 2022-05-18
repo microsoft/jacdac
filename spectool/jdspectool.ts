@@ -124,6 +124,11 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
             )}`
         )
     }
+    const { unit: readingUnit } = reading
+        ? genFieldInfo(reading, reading.fields[0])
+        : { unit: undefined }
+    const readingUnitString = readingUnit ? ` (${readingUnit})` : ""
+
     const className = `${capitalize(camelName)}Client`
     const group = capitalize(spec.group || name)
 
@@ -210,6 +215,7 @@ ${regs
                     valueUnscaler,
                     unit,
                 } = genFieldInfo(reg, field)
+                const unitString = unit ? ` (${unit})` : ""
                 return `
         /**
         * ${(reg.description || "").split("\n").join("\n        * ")}
@@ -217,8 +223,7 @@ ${regs
 ${toMetaComments(
     "callInDebugger",
     `group="${group}"`,
-    hasBlocks &&
-        `block="%${shortId} ${humanify(name)}${unit ? ` (${unit})` : ""}"`,
+    hasBlocks && `block="%${shortId} ${humanify(name)}${unitString}"`,
     hasBlocks && `blockId=jacdac_${shortId}_${reg.name}_${field.name}_get`,
     `weight=${weight--}`
 )}
@@ -255,7 +260,7 @@ ${toMetaComments(
         `block="${
             enabled
                 ? `set %${shortId} %value=toggleOnOff`
-                : `set %${shortId} ${humanify(name)} to %value`
+                : `set %${shortId} ${humanify(name)} to %value${unitString}`
         }"`,
     `weight=${weight--}`,
     min !== undefined && `value.min=${min}`,
@@ -290,7 +295,9 @@ ${toMetaComments(
 ${toMetaComments(
     `group="${group}"`,
     `blockId=jacdac_${shortId}_on_${reading.name}_change`,
-    `block="on %${shortId} ${humanify(reading.name)} changed by %threshold"`,
+    `block="on %${shortId} ${humanify(
+        reading.name
+    )} changed by %threshold${readingUnitString}"`,
     `weight=${weight--}`,
     `threshold.min=0`,
     genFieldInfo(reading, reading.fields[0]).max !== undefined &&

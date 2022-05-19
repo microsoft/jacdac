@@ -879,7 +879,15 @@ function processSpec(dn: string) {
     const csdir = path.join(outp, "cs")
     mkdir(csdir)
     const mkcdServices: jdspec.MakeCodeServiceInfo[] = []
-    const mkcdUpgrades: { upgrades: Record<string, string> } = {
+    const mkcTargetConfig: {
+        packages: {
+            approvedRepos: string[]
+        }
+        upgrades: Record<string, string>
+    } = {
+        packages: {
+            approvedRepos: ["microsoft/pxt-jacdac"],
+        },
         upgrades: {},
     }
     const pxtJacdacDir = path.resolve(
@@ -897,7 +905,7 @@ function processSpec(dn: string) {
             })
         )
         pxtJacdacVersion = pxtJacdacjson.version
-        mkcdUpgrades.upgrades[
+        mkcTargetConfig.upgrades[
             "microsoft/pxt-jacdac"
         ] = `min:v${pxtJacdacVersion}`
     }
@@ -960,7 +968,8 @@ function processSpec(dn: string) {
                     generated: pxtjson.files.indexOf("client.g.ts") > -1,
                 },
             })
-            mkcdUpgrades.upgrades[repo] = `min:v${pxtJacdacVersion}`
+            mkcTargetConfig.packages.approvedRepos.push(repo)
+            mkcTargetConfig.upgrades[repo] = `min:v${pxtJacdacVersion}`
         }
 
         const cnv = converters()
@@ -1083,8 +1092,8 @@ from .client import ${capitalize(json.camelName)}Client # type: ignore
             JSON.stringify(mkcdServices, null, 2)
         )
         fs.writeFileSync(
-            path.join(outp, "../makecode-upgrades.json"),
-            JSON.stringify(mkcdUpgrades, null, 2)
+            path.join(outp, "../makecode-targetconfig.json"),
+            JSON.stringify(mkcTargetConfig, null, 2)
         )
     }
 

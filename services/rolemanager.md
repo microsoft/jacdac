@@ -17,6 +17,7 @@ The simplest recommended automatic role assignment algorithm is as follows:
 ```text
 roles.sort(strcmp() on UTF-8 representation of role name)
 devices.sort(by device identifier (lexicographic on 8 byte string))
+move self device to beginning of devices list
 for every role
   if role is not assigned
     for every device

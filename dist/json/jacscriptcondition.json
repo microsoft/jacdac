@@ -119,6 +119,8 @@
     }
   ],
   "tags": [
-    "infrastructure"
-  ]
+    "infrastructure",
+    "jacscript"
+  ],
+  "restricted": true
 }

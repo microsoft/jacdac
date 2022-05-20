@@ -162,14 +162,16 @@
       "name": "connect",
       "identifier": 129,
       "description": "Starts a connection to the IoT hub service",
-      "fields": []
+      "fields": [],
+      "restricted": true
     },
     {
       "kind": "command",
       "name": "disconnect",
       "identifier": 130,
       "description": "Starts disconnecting from the IoT hub service",
-      "fields": []
+      "fields": [],
+      "restricted": true
     },
     {
       "kind": "command",

@@ -229,7 +229,8 @@
     }
   ],
   "tags": [
-    "infrastructure"
+    "infrastructure",
+    "jacscript"
   ],
   "group": "Iot"
 }

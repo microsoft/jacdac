@@ -2,7 +2,7 @@
 
     identifier: 0x14606e9c
     group: iot
-    tags: infrastructure
+    tags: infrastructure, jacscript
 
 Supports cloud connections for Jacscript programs.
 Note that `f64` values following a label are not necessarily aligned.

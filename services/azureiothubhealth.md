@@ -29,11 +29,11 @@ Indicates the status of connection. A message beyond the [0..3] range represents
 
 ## Commands
 
-    command connect @ 0x81 { }
+    restricted command connect @ 0x81 { }
 
 Starts a connection to the IoT hub service
 
-    command disconnect @ 0x82 { }
+    restricted command disconnect @ 0x82 { }
 
 Starts disconnecting from the IoT hub service
 

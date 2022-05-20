@@ -597,9 +597,6 @@ export function parseServiceSpecificationMarkdownToJSON(
 
         processAttributes()
 
-        if (restricted && kind !== "command")
-            error("restricted only applies to commands")
-
         if (unique && kind !== "command")
             error("unique only applies to commands")
 
@@ -1115,6 +1112,11 @@ export function parseServiceSpecificationMarkdownToJSON(
                 break
             case "group":
                 info.group = capitalize(words.slice(2).join(" "))
+                break
+            case "restricted":
+                if (words[2] == "true") info.restricted = true
+                else if (words[2] == "false") delete info.restricted
+                else error("restricted: should be true or false")
                 break
             case "tags": {
                 const tags = words.slice(2).filter(w => w != "," && w != ";")

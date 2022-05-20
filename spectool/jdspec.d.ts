@@ -281,6 +281,11 @@ declare namespace jdspec {
          * Recommended grouping for APIs
          */
         group?: string
+
+        /**
+         * Set if all packets are restricted.
+         */
+        restricted?: boolean
     }
 
     /**
@@ -430,7 +435,7 @@ declare namespace jdspec {
         volatile?: boolean
 
         /**
-         * For commands, this command is not allowed from the bus
+         * This packet is not to be allowed from the bus, nor should it be forwarded to the bus.
          */
         restricted?: boolean
 

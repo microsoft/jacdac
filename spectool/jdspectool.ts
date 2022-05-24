@@ -877,7 +877,7 @@ function packedSensorSpec(info: jdspec.ServiceSpec) {
         fld.type == "bool" || info.enums[fld.type] ? "DISCRETE" : "CONTINUOUS"
     const clsId = toHex(info.classIdentifier)
 
-    return `SERVICE("${info.camelName}", ${clsId}, ${fmt}, ${shift}, ${mode}),`
+    return `JD_SPEC_PACK_SERVICE("${info.camelName}", ${clsId}, ${fmt}, ${shift}, ${mode})`
 }
 
 function processSpec(dn: string) {

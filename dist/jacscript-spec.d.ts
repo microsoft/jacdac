@@ -1055,6 +1055,18 @@ declare namespace roles {
     function temperature(): TemperatureRole
 }
 
+// Service: Timeseries Aggregator
+declare class TimeseriesAggregatorRole extends Role {
+    clear(): void
+    startTimeseries(id: number, service_class: number, sensor_id: number, service_number: number, mode: number, label: string): void
+    update(value: number, id: number): void
+    setWindow(id: number, duration: number): void
+    now: JDRegisterNum
+}
+declare namespace roles {
+    function timeseriesAggregator(): TimeseriesAggregatorRole
+}
+
 // Service: Traffic Light
 declare class TrafficLightRole extends Role {
     red: JDRegisterNum

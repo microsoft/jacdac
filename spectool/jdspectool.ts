@@ -856,6 +856,30 @@ function genFieldInfo(reg: jdspec.PacketInfo, field: jdspec.PacketMember) {
     return { name, min, max, defl, scale, valueScaler, valueUnscaler, unit }
 }
 
+function toHex(n: number): string {
+    if (n === undefined) return ""
+    if (n < 0) return "-" + toHex(n)
+    return "0x" + n.toString(16)
+}
+
+function packedSensorSpec(info: jdspec.ServiceSpec) {
+    if (!info.extends || info.extends.indexOf("_sensor") < 0) return ""
+    const reading = info.packets.find(
+        pkt => pkt.kind === "ro" && pkt.identifierName === "reading"
+    )
+    if (reading.fields.length != 1) return ""
+    const fld = reading.fields[0]
+    const tp = fld.storage
+    if ([1, 2, 4, 8].indexOf(Math.abs(tp)) < 0) return ""
+    const fmt = tp < 0 ? `I${-tp * 8}` : `U${tp * 8}`
+    const shift = fld.shift ?? 0
+    const mode =
+        fld.type == "bool" || info.enums[fld.type] ? "DISCRETE" : "CONTINUOUS"
+    const clsId = toHex(info.classIdentifier)
+
+    return `SERVICE("${info.camelName}", ${clsId}, ${fmt}, ${shift}, ${mode}),`
+}
+
 function processSpec(dn: string) {
     const path = require("path")
 
@@ -1096,6 +1120,18 @@ from .client import ${capitalize(json.camelName)}Client # type: ignore
             JSON.stringify(mkcTargetConfig, null, 2)
         )
     }
+
+    const specs = values(includes)
+    specs.sort((a, b) => a.classIdentifier - b.classIdentifier)
+    const packed = specs.map(packedSensorSpec).filter(s => !!s)
+    const packedC =
+        `#include "jd_spec_pack.h"\n\n` +
+        `// Sorted by service class!\n` +
+        `JD_SPEC_PACK_BEGIN\n` +
+        packed.join("\n") +
+        `\nJD_SPEC_PACK_END\n\n` +
+        `JD_SPEC_PACK_NUM(${packed.length})\n`
+    fs.writeFileSync(path.join(outp, "c/jd_spec_pack.c"), packedC)
 
     const fms = Object.keys(fmtStats).sort((l, r) => -fmtStats[l] + fmtStats[r])
     console.log(fms.map(fmt => `${fmt}: ${fmtStats[fmt]}`))

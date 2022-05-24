@@ -468,7 +468,7 @@ declare namespace jdspec {
          * Type specifying how to interpret data. All values are little endian.
          *
          * This can be one of:
-         *   - u8, u16, u32, u64, i8, i16, i32, i64, bytes
+         *   - u8, u16, u32, u64, i8, i16, i32, i64, bytes, bool
          *   - name of an enum defined in the current service
          *   - string - UTF-8 encoded string
          *   - string0 - NUL-terminated UTF-8 encoded string

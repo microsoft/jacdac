@@ -44,7 +44,7 @@
  */
 #define JD_MODEL_RUNNER_REG_OUTPUTS JD_REG_READING
 typedef struct jd_model_runner_outputs {
-    uint32_t output[0];  // f32
+    float output[0];  // f32
 } jd_model_runner_outputs_t;
 
 

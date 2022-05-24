@@ -1131,7 +1131,9 @@ from .client import ${capitalize(json.camelName)}Client # type: ignore
         packed.join("\n") +
         `\nJD_SPEC_PACK_END\n\n` +
         `JD_SPEC_PACK_NUM(${packed.length})\n`
-    fs.writeFileSync(path.join(outp, "c/jd_spec_pack.c"), packedC)
+    const packpath = path.join(outp, "c/jd_spec_pack.c")
+    console.log(`wrote ${packpath}`)
+    fs.writeFileSync(packpath, packedC)
 
     const fms = Object.keys(fmtStats).sort((l, r) => -fmtStats[l] + fmtStats[r])
     console.log(fms.map(fmt => `${fmt}: ${fmtStats[fmt]}`))

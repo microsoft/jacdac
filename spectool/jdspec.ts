@@ -477,15 +477,10 @@ export function parseServiceSpecificationMarkdownToJSON(
             !ranges.some(range => range[0] <= pid && pid <= range[1])
         )
             error(
-                `${packetInfo.name} identifier 0x${pid.toString(
-                    16
+                `${packetInfo.name} identifier ${toHex(
+                    pid
                 )} out of range, expected in ${ranges
-                    .map(
-                        range =>
-                            `[${range
-                                .map(r => `0x${r.toString(16)}`)
-                                .join(", ")}]`
-                    )
+                    .map(range => `[${range.map(toHex).join(", ")}]`)
                     .join(", ")}`
             )
 
@@ -1527,8 +1522,7 @@ function toH(info: jdspec.ServiceSpec) {
                     def = `char ${f.name}[${sz}]`
                 else if (cst == "bytes") def = `uint8_t ${f.name}[${sz}]`
                 else {
-                    if (f.isFloat)
-                        cst = f.storage==4 ? "float" : "double"
+                    if (f.isFloat) cst = f.storage == 4 ? "float" : "double"
                     def = `${cst} ${f.name}`
                 }
                 // if it's the last field and it start repeats, treat it as an array

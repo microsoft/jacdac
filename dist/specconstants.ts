@@ -5050,6 +5050,80 @@ export enum TemperatureReg {
     Variant = 0x107,
 }
 
+// Service Timeseries Aggregator constants
+export const SRV_TIMESERIES_AGGREGATOR = 0x1192bdcc
+
+export enum TimeseriesAggregatorDataMode { // uint8_t
+    Continuous = 0x1,
+    Discrete = 0x2,
+}
+
+export enum TimeseriesAggregatorCmd {
+    /**
+     * No args. Remove all pending timeseries.
+     */
+    Clear = 0x80,
+
+    /**
+     * Starts a new timeseries.
+     * `service_number` is the number of services with the same `service_class`
+     * and lower service index on `sensor_id`.
+     * If `sensor_id` or `service_class` are unknown they can be `0`.
+     * If label is missing, it can be empty string.
+     * As for `mode`,
+     * `Continuous` has default aggregation window of 60s,
+     * and `Discrete` only stores the data if it has changed since last store,
+     * and has default window of 1s.
+     *
+     * ```
+     * const [id, serviceClass, sensorId, serviceNumber, mode, label] = jdunpack<[number, number, Uint8Array, number, TimeseriesAggregatorDataMode, string]>(buf, "u32 u32 b[8] u8 u8 s")
+     * ```
+     */
+    StartTimeseries = 0x81,
+
+    /**
+     * Add a data point to a timeseries.
+     *
+     * ```
+     * const [value, id] = jdunpack<[number, number]>(buf, "f64 u32")
+     * ```
+     */
+    Update = 0x83,
+
+    /**
+     * Set aggregation window.
+     *
+     * ```
+     * const [id, duration] = jdunpack<[number, number]>(buf, "u32 u32")
+     * ```
+     */
+    SetWindow = 0x84,
+
+    /**
+     * Indicates that the average, minimum and maximum value of a given
+     * timeseries are as indicated.
+     * It also says how many samples were collected, and the collection period.
+     * Timestamps are given using device's internal clock, which will wrap around.
+     * Typically, `end_time` can be assumed to be "now".
+     *
+     * ```
+     * const [id, numSamples, avg, min, max, startTime, endTime] = jdunpack<[number, number, number, number, number, number, number]>(buf, "u32 u32 f64 f64 f64 u32 u32")
+     * ```
+     */
+    Stored = 0x85,
+}
+
+export enum TimeseriesAggregatorReg {
+    /**
+     * Read-only ms uint32_t. This register is automatically broadcast and can be also queried to establish local time on the device.
+     *
+     * ```
+     * const [now] = jdunpack<[number]>(buf, "u32")
+     * ```
+     */
+    Now = 0x180,
+}
+
 // Service Traffic Light constants
 export const SRV_TRAFFIC_LIGHT = 0x15c38d9b
 export enum TrafficLightReg {

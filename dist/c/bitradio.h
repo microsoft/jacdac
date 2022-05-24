@@ -39,7 +39,7 @@
  */
 #define JD_BIT_RADIO_CMD_SEND_VALUE 0x82
 typedef struct jd_bit_radio_send_value {
-    uint64_t value;  // f64
+    double value;  // f64
     char name[0];  // string
 } jd_bit_radio_send_value_t;
 
@@ -71,7 +71,7 @@ typedef struct jd_bit_radio_number_received_report {
     uint32_t device_serial_number;
     int8_t rssi; // dB
     uint8_t padding[3];  // u8[3]
-    uint64_t value;  // f64
+    double value;  // f64
     char name[0];  // string
 } jd_bit_radio_number_received_report_t;
 

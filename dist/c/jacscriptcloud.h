@@ -16,7 +16,7 @@
 #define JD_JACSCRIPT_CLOUD_CMD_UPLOAD 0x80
 typedef struct jd_jacscript_cloud_upload {
     char label[0];  // string0
-    // uint64_t value[0];  // f64
+    // double value[0];  // f64
 } jd_jacscript_cloud_upload_t;
 
 
@@ -27,7 +27,7 @@ typedef struct jd_jacscript_cloud_upload {
 typedef struct jd_jacscript_cloud_ack_cloud_command {
     uint32_t seq_no;
     uint32_t status;  // CommandStatus
-    uint64_t result[0];  // f64
+    double result[0];  // f64
 } jd_jacscript_cloud_ack_cloud_command_t;
 
 
@@ -50,7 +50,7 @@ typedef struct jd_jacscript_cloud_ack_cloud_command {
 typedef struct jd_jacscript_cloud_cloud_command {
     uint32_t seq_no;
     char command[0];  // string0
-    // uint64_t argument[0];  // f64
+    // double argument[0];  // f64
 } jd_jacscript_cloud_cloud_command_t;
 
 

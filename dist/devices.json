@@ -5,7 +5,7 @@
     "company": "Yahboom",
     "description": "The expansion board integrates 24 programmable RGB lights and microphones, and you can control the on-board RGB lights by the microphone.",
     "makeCodeRepo": "https://github.com/pelikhan/yahboom-microbit-led-jacdac",
-    "connector": "none",
+    "connector": "noConnector",
     "link": "https://category.yahboom.net/products/rgbledb",
     "storeLink": "https://category.yahboom.net/products/rgbledb",
     "services": [
@@ -23,7 +23,7 @@
     "company": "Yahboom",
     "description": "Tiny:bit is a robotic car for the micro:bit education market. It is compact, easy to assemble, and easy to move in tight spaces. The Tiny:bit smart car is based on the micro:bit development board design and uses the online code programming of MakeCode Editor. Rich sensor applications allow Tiny:bit for easy interaction. The Tiny:bit smart car has a set of alligator clips on the rear that can be creative and expand.",
     "makeCodeRepo": "https://github.com/pelikhan/Tiny-bitLib/tree/master/jacdac",
-    "connector": "none",
+    "connector": "noConnector",
     "link": "https://category.yahboom.net/products/tinybit",
     "storeLink": "https://category.yahboom.net/products/tinybit",
     "services": [
@@ -47,7 +47,7 @@
     "description": "The SparkFun gamer:bit is a fun-filled \"carrier\" board for the micro:bit that, when combined with the micro:bit, provides you with a fully functional game system. Designed in a similar form factor to the classic Nintendo NES controller, the gamer:bit is equipped with a four-direction \"D-pad\" on the left side of the board and two action buttons on the right side of the board. The two push buttons on the micro:bit in the center function as start and select.",
     "repo": "",
     "makeCodeRepo": "https://github.com/pelikhan/pxt-gamer-bit/tree/master/jacdac",
-    "connector": "none",
+    "connector": "noConnector",
     "link": "https://www.sparkfun.com/products/retired/14215",
     "storeLink": "https://www.sparkfun.com/products/retired/14215",
     "services": [
@@ -110,7 +110,7 @@
     "name": "JacDacMicroBitShieldLP",
     "company": "Microsoft Research",
     "repo": "",
-    "connector": "edgeLowPower",
+    "connector": "edgeLowCurrentProvider",
     "services": [],
     "productIdentifiers": [
       1009620586
@@ -360,7 +360,7 @@
     "id": "microsoft-research-jmbrainesp3248v02",
     "name": "JM Brain ESP32",
     "company": "Microsoft Research",
-    "connector": "edgeHighPower",
+    "connector": "edgeHighCurrentProvider",
     "services": [
       342028028
     ],
@@ -386,7 +386,7 @@
     "id": "microsoft-research-jmbrainesp3248v03",
     "name": "JM Brain ESP32",
     "company": "Microsoft Research",
-    "connector": "edgeHighPower",
+    "connector": "edgeHighCurrentProvider",
     "services": [
       342028028
     ],
@@ -426,7 +426,7 @@
     "name": "JM Brain F4",
     "company": "Microsoft Research",
     "description": "",
-    "connector": "edgeHighPower",
+    "connector": "edgeHighCurrentProvider",
     "link": "https://github.com/microsoft/pxt-jacdac",
     "services": [
       414210922,
@@ -467,7 +467,7 @@
     "name": "JM Brain RP2040",
     "company": "Microsoft Research",
     "description": "",
-    "connector": "edgeHighPower",
+    "connector": "edgeHighCurrentProvider",
     "link": "https://github.com/microsoft/pxt-jacdac",
     "services": [
       414210922,
@@ -892,7 +892,7 @@
     "company": "Microsoft Research",
     "repo": "",
     "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/altium/reference-designs/JacdacMicroBitShieldLP%2029-0.6",
-    "connector": "edgeLowPower",
+    "connector": "edgeLowCurrentProvider",
     "services": [],
     "productIdentifiers": [
       974031363
@@ -1590,7 +1590,7 @@
     "company": "Kitronik",
     "description": "The ACCESS:bit is a bolt-on/clip-on board for the BBC microbit that simulates an access barrier.",
     "makeCodeRepo": "https://github.com/pelikhan/pxt-kitronik-accessbit/jacdac",
-    "connector": "none",
+    "connector": "noConnector",
     "link": "https://kitronik.co.uk/products/5646-accessbit-for-bbc-microbit",
     "storeLink": "https://kitronik.co.uk/products/5646-accessbit-for-bbc-microbit",
     "services": [
@@ -1628,7 +1628,7 @@
     "company": "Kitronik",
     "repo": "",
     "makeCodeRepo": "https://github.com/pelikhan/pxt-kitronik-zip-64/tree/master/jacdac",
-    "connector": "none",
+    "connector": "noConnector",
     "link": "https://kitronik.co.uk/products/5626-game-zip-64-for-the-bbc-microbit",
     "storeLink": "https://kitronik.co.uk/products/5626-game-zip-64-for-the-bbc-microbit",
     "services": [
@@ -1648,7 +1648,7 @@
     "description": "The Servo:Lite board for the BBC micro:bit is a simple board that allows you to easily connect and control low power servo motors (servo's must be capable of operating at 3.3V) using the BBC micro:bit. It is connected to the micro:bit using five bolts. Connect two servos in standard configuration and it can drive up to 3 servos if the addressable 'ZIP' LEDs aren’t needed.",
     "repo": "",
     "makeCodeRepo": "https://github.com/pelikhan/pxt-kitronik-servo-lite/jacdac",
-    "connector": "none",
+    "connector": "noConnector",
     "link": "https://kitronik.co.uk/products/5623-servolite-board-for-move-mini",
     "storeLink": "https://kitronik.co.uk/products/5623-servolite-board-for-move-mini",
     "services": [
@@ -1668,7 +1668,7 @@
     "description": "The STOP:bit for the BBC micro:bit is the ultimate upgrade for traffic light/pedestrian crossing projects.",
     "repo": "",
     "makeCodeRepo": "https://github.com/pelikhan/pxt-kitronik-stopbit/tree/master/jacdac",
-    "connector": "none",
+    "connector": "noConnector",
     "link": "https://kitronik.co.uk/products/5642-stopbit-traffic-light-for-bbc-microbit",
     "storeLink": "https://kitronik.co.uk/products/5642-stopbit-traffic-light-for-bbc-microbit",
     "services": [
@@ -1686,7 +1686,7 @@
     "description": "Keyestudio relay breakout board for micro:bit has integrated a 4-way 5V relay module, fully compatible with micro:bit development board.\nIt can work only need to insert micro:bit into keyestudio relay shield, then input DC5V voltage on the relay VIN/GND port, pretty simple and convenient.",
     "repo": "",
     "makeCodeRepo": "https://github.com/pelikhan/keystudio-relay-breakout-jacdac",
-    "connector": "none",
+    "connector": "noConnector",
     "link": "https://www.keyestudio.com/products/keyestudio-relay-breakout-board-for-bbc-microbit",
     "storeLink": "https://www.keyestudio.com/products/keyestudio-relay-breakout-board-for-bbc-microbit",
     "services": [

@@ -5066,17 +5066,13 @@ export enum TimeseriesAggregatorCmd {
 
     /**
      * Starts a new timeseries.
-     * `service_number` is the number of services with the same `service_class`
-     * and lower service index on `sensor_id`.
-     * If `sensor_id` or `service_class` are unknown they can be `0`.
-     * If label is missing, it can be empty string.
      * As for `mode`,
      * `Continuous` has default aggregation window of 60s,
      * and `Discrete` only stores the data if it has changed since last store,
      * and has default window of 1s.
      *
      * ```
-     * const [id, serviceClass, sensorId, serviceNumber, mode, label] = jdunpack<[number, number, Uint8Array, number, TimeseriesAggregatorDataMode, string]>(buf, "u32 u32 b[8] u8 u8 s")
+     * const [id, mode, label] = jdunpack<[number, TimeseriesAggregatorDataMode, string]>(buf, "u32 u8 s")
      * ```
      */
     StartTimeseries = 0x81,
@@ -5115,13 +5111,42 @@ export enum TimeseriesAggregatorCmd {
 
 export enum TimeseriesAggregatorReg {
     /**
-     * Read-only ms uint32_t. This register is automatically broadcast and can be also queried to establish local time on the device.
+     * Read-only μs uint32_t. This register is automatically broadcast and can be also queried to establish local time on the device.
      *
      * ```
      * const [now] = jdunpack<[number]>(buf, "u32")
      * ```
      */
     Now = 0x180,
+
+    /**
+     * Read-write bool (uint8_t). When `true`, the windows will be shorter after service reset and gradually extend to requested length.
+     * This makes the sensor look more responsive.
+     *
+     * ```
+     * const [fastStart] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    FastStart = 0x80,
+
+    /**
+     * Read-write ms uint32_t. Window applied to automatically created continuous timeseries.
+     * Note that windows returned initially may be shorter.
+     *
+     * ```
+     * const [continuousWindow] = jdunpack<[number]>(buf, "u32")
+     * ```
+     */
+    ContinuousWindow = 0x81,
+
+    /**
+     * Read-write ms uint32_t. Window applied to automatically created discrete timeseries.
+     *
+     * ```
+     * const [discreteWindow] = jdunpack<[number]>(buf, "u32")
+     * ```
+     */
+    DiscreteWindow = 0x82,
 }
 
 // Service Traffic Light constants

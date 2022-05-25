@@ -1058,10 +1058,13 @@ declare namespace roles {
 // Service: Timeseries Aggregator
 declare class TimeseriesAggregatorRole extends Role {
     clear(): void
-    startTimeseries(id: number, service_class: number, sensor_id: number, service_number: number, mode: number, label: string): void
+    startTimeseries(id: number, mode: number, label: string): void
     update(value: number, id: number): void
     setWindow(id: number, duration: number): void
     now: JDRegisterNum
+    fastStart: JDRegisterNum
+    continuousWindow: JDRegisterNum
+    discreteWindow: JDRegisterNum
 }
 declare namespace roles {
     function timeseriesAggregator(): TimeseriesAggregatorRole

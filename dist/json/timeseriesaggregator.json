@@ -122,29 +122,12 @@
       "kind": "command",
       "name": "start_timeseries",
       "identifier": 129,
-      "description": "Starts a new timeseries.\n`service_number` is the number of services with the same `service_class`\nand lower service index on `sensor_id`.\nIf `sensor_id` or `service_class` are unknown they can be `0`.\nIf label is missing, it can be empty string.\nAs for `mode`,\n`Continuous` has default aggregation window of 60s,\nand `Discrete` only stores the data if it has changed since last store,\nand has default window of 1s.",
+      "description": "Starts a new timeseries.\nAs for `mode`,\n`Continuous` has default aggregation window of 60s,\nand `Discrete` only stores the data if it has changed since last store,\nand has default window of 1s.",
       "fields": [
         {
           "name": "id",
           "type": "u32",
           "storage": 4,
-          "isSimpleType": true
-        },
-        {
-          "name": "service_class",
-          "type": "u32",
-          "storage": 4,
-          "isSimpleType": true
-        },
-        {
-          "name": "sensor_id",
-          "type": "devid",
-          "storage": 8
-        },
-        {
-          "name": "service_number",
-          "type": "u8",
-          "storage": 1,
           "isSimpleType": true
         },
         {
@@ -158,7 +141,7 @@
           "storage": 0
         }
       ],
-      "packFormat": "u32 u32 b[8] u8 u8 s"
+      "packFormat": "u32 u8 s"
     },
     {
       "kind": "command",
@@ -207,7 +190,7 @@
       "kind": "report",
       "name": "stored",
       "identifier": 133,
-      "description": "Indicates that the average, minimum and maximum value of a given\ntimeseries are as indicated.\nIt also says how many samples were collected, and the collection period.\nTimestamps are given using device's internal clock, which will wrap around.\nTypically, `end_time` can be assumed to be \"now\".\n\n`end_time - start_time == window * 1000`",
+      "description": "Indicates that the average, minimum and maximum value of a given\ntimeseries are as indicated.\nIt also says how many samples were collected, and the collection period.\nTimestamps are given using device's internal clock, which will wrap around.\nTypically, `end_time` can be assumed to be \"now\".\n\n`end_time - start_time == window`",
       "fields": [
         {
           "name": "id",
@@ -242,14 +225,14 @@
         },
         {
           "name": "start_time",
-          "unit": "us",
+          "unit": "ms",
           "type": "u32",
           "storage": 4,
           "isSimpleType": true
         },
         {
           "name": "end_time",
-          "unit": "us",
+          "unit": "ms",
           "type": "u32",
           "storage": 4,
           "isSimpleType": true
@@ -265,13 +248,62 @@
       "fields": [
         {
           "name": "_",
-          "unit": "ms",
+          "unit": "us",
           "type": "u32",
           "storage": 4,
           "isSimpleType": true
         }
       ],
       "volatile": true,
+      "packFormat": "u32"
+    },
+    {
+      "kind": "rw",
+      "name": "fast_start",
+      "identifier": 128,
+      "description": "When `true`, the windows will be shorter after service reset and gradually extend to requested length.\nThis makes the sensor look more responsive.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "bool",
+          "storage": 1,
+          "defaultValue": 1
+        }
+      ],
+      "packFormat": "u8"
+    },
+    {
+      "kind": "rw",
+      "name": "continuous_window",
+      "identifier": 129,
+      "description": "Window applied to automatically created continuous timeseries.\nNote that windows returned initially may be shorter.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "ms",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true,
+          "defaultValue": 60000
+        }
+      ],
+      "packFormat": "u32"
+    },
+    {
+      "kind": "rw",
+      "name": "discrete_window",
+      "identifier": 130,
+      "description": "Window applied to automatically created discrete timeseries.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "ms",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true,
+          "defaultValue": 1000
+        }
+      ],
       "packFormat": "u32"
     }
   ],

@@ -15,10 +15,6 @@
 
 /**
  * Starts a new timeseries.
- * `service_number` is the number of services with the same `service_class`
- * and lower service index on `sensor_id`.
- * If `sensor_id` or `service_class` are unknown they can be `0`.
- * If label is missing, it can be empty string.
  * As for `mode`,
  * `Continuous` has default aggregation window of 60s,
  * and `Discrete` only stores the data if it has changed since last store,
@@ -27,9 +23,6 @@
 #define JD_TIMESERIES_AGGREGATOR_CMD_START_TIMESERIES 0x81
 typedef struct jd_timeseries_aggregator_start_timeseries {
     uint32_t id;
-    uint32_t service_class;
-    uint64_t sensor_id;
-    uint8_t service_number;
     uint8_t mode;  // DataMode
     char label[0];  // string
 } jd_timeseries_aggregator_start_timeseries_t;
@@ -69,14 +62,31 @@ typedef struct jd_timeseries_aggregator_stored_report {
     double avg;  // f64
     double min;  // f64
     double max;  // f64
-    uint32_t start_time; // μs
-    uint32_t end_time; // μs
+    uint32_t start_time; // ms
+    uint32_t end_time; // ms
 } jd_timeseries_aggregator_stored_report_t;
 
 
 /**
- * Read-only ms uint32_t. This register is automatically broadcast and can be also queried to establish local time on the device.
+ * Read-only μs uint32_t. This register is automatically broadcast and can be also queried to establish local time on the device.
  */
 #define JD_TIMESERIES_AGGREGATOR_REG_NOW 0x180
+
+/**
+ * Read-write bool (uint8_t). When `true`, the windows will be shorter after service reset and gradually extend to requested length.
+ * This makes the sensor look more responsive.
+ */
+#define JD_TIMESERIES_AGGREGATOR_REG_FAST_START 0x80
+
+/**
+ * Read-write ms uint32_t. Window applied to automatically created continuous timeseries.
+ * Note that windows returned initially may be shorter.
+ */
+#define JD_TIMESERIES_AGGREGATOR_REG_CONTINUOUS_WINDOW 0x81
+
+/**
+ * Read-write ms uint32_t. Window applied to automatically created discrete timeseries.
+ */
+#define JD_TIMESERIES_AGGREGATOR_REG_DISCRETE_WINDOW 0x82
 
 #endif

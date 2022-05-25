@@ -2,7 +2,7 @@
   "id": "microsoft-research-jmbrainesp3248v02",
   "name": "JM Brain ESP32",
   "company": "Microsoft Research",
-  "connector": "edgeHighPower",
+  "connector": "edgeHighCurrentProvider",
   "services": [
     342028028
   ],

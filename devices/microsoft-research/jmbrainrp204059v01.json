@@ -3,7 +3,7 @@
   "name": "JM Brain RP2040",
   "company": "Microsoft Research",
   "description": "",
-  "connector": "edgeHighPower",
+  "connector": "edgeHighCurrentProvider",
   "link": "https://github.com/microsoft/pxt-jacdac",
   "services": [
     414210922,

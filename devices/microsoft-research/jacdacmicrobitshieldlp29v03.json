@@ -3,7 +3,7 @@
   "name": "JacDacMicroBitShieldLP",
   "company": "Microsoft Research",
   "repo": "",
-  "connector": "edgeLowPower",
+  "connector": "edgeLowCurrentProvider",
   "services": [],
   "productIdentifiers": [
     1009620586

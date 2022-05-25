@@ -596,7 +596,14 @@ declare namespace jdspec {
 
     type TransportType = "usb" | "serial" | "bluetooth"
 
-    type ConnectorType = "none" | "edge" | "edgeLowPower" | "edgeHighPower"
+    type ConnectorType =
+        | "noConnector"
+        | "edgeIndependent"
+        | "edgeConsumer"
+        | "edgeLowCurrentProvider"
+        | "edgeHighCurrentProvider"
+        | "edgeLowCurrentProviderConsumer"
+        | "edgeHighCurrentProviderConsumer"
 
     interface TransportSpec {
         vendorId?: number

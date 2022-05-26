@@ -177,7 +177,6 @@
           "storage": 2
         }
       ],
-      "lowLevel": true,
       "volatile": true,
       "identifierName": "reading",
       "packFormat": "u0.16"
@@ -210,6 +209,7 @@
         }
       ],
       "client": true,
+      "volatile": true,
       "packFormat": "u8"
     },
     {

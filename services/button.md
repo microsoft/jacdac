@@ -10,7 +10,7 @@ A push-button, which returns to inactive position when not operated anymore.
 
 ## Registers
 
-    lowlevel ro pressure: u0.16 / @ reading
+    ro pressure: u0.16 / @ reading
 
 Indicates the pressure state of the button, where `0` is open.
 
@@ -18,7 +18,7 @@ Indicates the pressure state of the button, where `0` is open.
 
 Indicates if the button provides analog `pressure` readings.
 
-    client ro pressed: bool @ 0x181
+    client volatile ro pressed: bool @ 0x181
 
 Determines if the button is pressed currently.
 

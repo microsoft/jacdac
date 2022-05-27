@@ -604,6 +604,7 @@ declare namespace jdspec {
         | "edgeHighCurrentProvider"
         | "edgeLowCurrentProviderConsumer"
         | "edgeHighCurrentProviderConsumer"
+        | "edgePassive"
 
     interface TransportSpec {
         vendorId?: number
@@ -665,7 +666,7 @@ declare namespace jdspec {
         /**
          * Github repository containing the MakeCode extension, for software-only devices
          */
-        makeCodeRepo?: string
+        makeCodeRepo?: string | string[]
 
         /**
          * Links image urls

@@ -158,6 +158,39 @@
       "packFormat": "u16"
     },
     {
+      "kind": "rw",
+      "name": "push_period",
+      "identifier": 128,
+      "description": "How often to push data to the cloud.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "ms",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true,
+          "defaultValue": 5000
+        }
+      ],
+      "packFormat": "u32"
+    },
+    {
+      "kind": "rw",
+      "name": "push_watchdog_period",
+      "identifier": 129,
+      "description": "If no message is published within given period, the device resets.\nThis can be due to connectivity problems or due to the device having nothing to publish.\nForced to be at least `2 * flush_period`.\nSet to `0` to disable (default).",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "ms",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u32"
+    },
+    {
       "kind": "command",
       "name": "connect",
       "identifier": 129,

@@ -26,6 +26,19 @@
 #define JD_AZURE_IOT_HUB_HEALTH_REG_CONNECTION_STATUS 0x182
 
 /**
+ * Read-write ms uint32_t. How often to push data to the cloud.
+ */
+#define JD_AZURE_IOT_HUB_HEALTH_REG_PUSH_PERIOD 0x80
+
+/**
+ * Read-write ms uint32_t. If no message is published within given period, the device resets.
+ * This can be due to connectivity problems or due to the device having nothing to publish.
+ * Forced to be at least `2 * flush_period`.
+ * Set to `0` to disable (default).
+ */
+#define JD_AZURE_IOT_HUB_HEALTH_REG_PUSH_WATCHDOG_PERIOD 0x81
+
+/**
  * No args. Starts a connection to the IoT hub service
  */
 #define JD_AZURE_IOT_HUB_HEALTH_CMD_CONNECT 0x81

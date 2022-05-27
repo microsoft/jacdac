@@ -126,6 +126,8 @@ declare class AzureIotHubHealthRole extends Role {
     hubName: JDRegisterString
     hubDeviceId: JDRegisterString
     connectionStatus: JDRegisterNum
+    pushPeriod: JDRegisterNum
+    pushWatchdogPeriod: JDRegisterNum
     connect(): void
     disconnect(): void
     setConnectionString(connection_string: string): void
@@ -1058,13 +1060,15 @@ declare namespace roles {
 // Service: Timeseries Aggregator
 declare class TimeseriesAggregatorRole extends Role {
     clear(): void
-    startTimeseries(id: number, mode: number, label: string): void
-    update(value: number, id: number): void
-    setWindow(id: number, duration: number): void
+    update(value: number, label: string): void
+    setWindow(duration: number, label: string): void
+    setUpload(upload: number, label: string): void
     now: JDRegisterNum
     fastStart: JDRegisterNum
-    continuousWindow: JDRegisterNum
-    discreteWindow: JDRegisterNum
+    defaultWindow: JDRegisterNum
+    defaultUpload: JDRegisterNum
+    uploadUnlabelled: JDRegisterNum
+    sensorWatchdogPeriod: JDRegisterNum
 }
 declare namespace roles {
     function timeseriesAggregator(): TimeseriesAggregatorRole

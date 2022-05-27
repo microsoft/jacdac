@@ -706,6 +706,27 @@ export enum AzureIotHubHealthReg {
      * ```
      */
     ConnectionStatus = 0x182,
+
+    /**
+     * Read-write ms uint32_t. How often to push data to the cloud.
+     *
+     * ```
+     * const [pushPeriod] = jdunpack<[number]>(buf, "u32")
+     * ```
+     */
+    PushPeriod = 0x80,
+
+    /**
+     * Read-write ms uint32_t. If no message is published within given period, the device resets.
+     * This can be due to connectivity problems or due to the device having nothing to publish.
+     * Forced to be at least `2 * flush_period`.
+     * Set to `0` to disable (default).
+     *
+     * ```
+     * const [pushWatchdogPeriod] = jdunpack<[number]>(buf, "u32")
+     * ```
+     */
+    PushWatchdogPeriod = 0x81,
 }
 
 export enum AzureIotHubHealthCmd {
@@ -5052,12 +5073,6 @@ export enum TemperatureReg {
 
 // Service Timeseries Aggregator constants
 export const SRV_TIMESERIES_AGGREGATOR = 0x1192bdcc
-
-export enum TimeseriesAggregatorDataMode { // uint8_t
-    Continuous = 0x1,
-    Discrete = 0x2,
-}
-
 export enum TimeseriesAggregatorCmd {
     /**
      * No args. Remove all pending timeseries.
@@ -5065,35 +5080,33 @@ export enum TimeseriesAggregatorCmd {
     Clear = 0x80,
 
     /**
-     * Starts a new timeseries.
-     * As for `mode`,
-     * `Continuous` has default aggregation window of 60s,
-     * and `Discrete` only stores the data if it has changed since last store,
-     * and has default window of 1s.
-     *
-     * ```
-     * const [id, mode, label] = jdunpack<[number, TimeseriesAggregatorDataMode, string]>(buf, "u32 u8 s")
-     * ```
-     */
-    StartTimeseries = 0x81,
-
-    /**
      * Add a data point to a timeseries.
      *
      * ```
-     * const [value, id] = jdunpack<[number, number]>(buf, "f64 u32")
+     * const [value, label] = jdunpack<[number, string]>(buf, "f64 s")
      * ```
      */
     Update = 0x83,
 
     /**
      * Set aggregation window.
+     * Setting to `0` will restore default.
      *
      * ```
-     * const [id, duration] = jdunpack<[number, number]>(buf, "u32 u32")
+     * const [duration, label] = jdunpack<[number, string]>(buf, "u32 s")
      * ```
      */
     SetWindow = 0x84,
+
+    /**
+     * Set whether or not the timeseries will be uploaded to the cloud.
+     * The `stored` reports are generated regardless.
+     *
+     * ```
+     * const [upload, label] = jdunpack<[number, string]>(buf, "u8 s")
+     * ```
+     */
+    SetUpload = 0x85,
 
     /**
      * Indicates that the average, minimum and maximum value of a given
@@ -5101,17 +5114,18 @@ export enum TimeseriesAggregatorCmd {
      * It also says how many samples were collected, and the collection period.
      * Timestamps are given using device's internal clock, which will wrap around.
      * Typically, `end_time` can be assumed to be "now".
+     * `end_time - start_time == window`
      *
      * ```
-     * const [id, numSamples, avg, min, max, startTime, endTime] = jdunpack<[number, number, number, number, number, number, number]>(buf, "u32 u32 f64 f64 f64 u32 u32")
+     * const [numSamples, avg, min, max, startTime, endTime, label] = jdunpack<[number, number, number, number, number, number, string]>(buf, "u32 f64 f64 f64 u32 u32 s")
      * ```
      */
-    Stored = 0x85,
+    Stored = 0x90,
 }
 
 export enum TimeseriesAggregatorReg {
     /**
-     * Read-only μs uint32_t. This register is automatically broadcast and can be also queried to establish local time on the device.
+     * Read-only μs uint32_t. This can queried to establish local time on the device.
      *
      * ```
      * const [now] = jdunpack<[number]>(buf, "u32")
@@ -5121,7 +5135,7 @@ export enum TimeseriesAggregatorReg {
 
     /**
      * Read-write bool (uint8_t). When `true`, the windows will be shorter after service reset and gradually extend to requested length.
-     * This makes the sensor look more responsive.
+     * This is ensure valid data is being streamed in program development.
      *
      * ```
      * const [fastStart] = jdunpack<[number]>(buf, "u8")
@@ -5130,23 +5144,43 @@ export enum TimeseriesAggregatorReg {
     FastStart = 0x80,
 
     /**
-     * Read-write ms uint32_t. Window applied to automatically created continuous timeseries.
-     * Note that windows returned initially may be shorter.
+     * Read-write ms uint32_t. Window for timeseries for which `set_window` was never called.
+     * Note that windows returned initially may be shorter if `fast_start` is enabled.
      *
      * ```
-     * const [continuousWindow] = jdunpack<[number]>(buf, "u32")
+     * const [defaultWindow] = jdunpack<[number]>(buf, "u32")
      * ```
      */
-    ContinuousWindow = 0x81,
+    DefaultWindow = 0x81,
 
     /**
-     * Read-write ms uint32_t. Window applied to automatically created discrete timeseries.
+     * Read-write bool (uint8_t). Whether labelled timeseries for which `set_upload` was never called should be automatically uploaded.
      *
      * ```
-     * const [discreteWindow] = jdunpack<[number]>(buf, "u32")
+     * const [defaultUpload] = jdunpack<[number]>(buf, "u8")
      * ```
      */
-    DiscreteWindow = 0x82,
+    DefaultUpload = 0x82,
+
+    /**
+     * Read-write bool (uint8_t). Whether automatically created timeseries not bound in role manager should be uploaded.
+     *
+     * ```
+     * const [uploadUnlabelled] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    UploadUnlabelled = 0x83,
+
+    /**
+     * Read-write ms uint32_t. If no data is received from any sensor within given period, the device is rebooted.
+     * Set to `0` to disable (default).
+     * Updating user-provided timeseries does not reset the watchdog.
+     *
+     * ```
+     * const [sensorWatchdogPeriod] = jdunpack<[number]>(buf, "u32")
+     * ```
+     */
+    SensorWatchdogPeriod = 0x84,
 }
 
 // Service Traffic Light constants

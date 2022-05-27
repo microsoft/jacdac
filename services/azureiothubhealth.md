@@ -27,6 +27,17 @@ Device identifier in Azure Iot Hub if available.
 
 Indicates the status of connection. A message beyond the [0..3] range represents an HTTP error code.
 
+    rw push_period = 5000: u32 ms @ 0x80
+
+How often to push data to the cloud.
+
+    rw push_watchdog_period: u32 ms @ 0x81
+
+If no message is published within given period, the device resets.
+This can be due to connectivity problems or due to the device having nothing to publish.
+Forced to be at least `2 * flush_period`.
+Set to `0` to disable (default).
+
 ## Commands
 
     restricted command connect @ 0x81 { }

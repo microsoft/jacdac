@@ -196,7 +196,7 @@
     ],
     "version": "4.0",
     "designIdentifier": "85",
-    "shape": "ec30_6x2_lr"
+    "shape": "ec30_6x3_lr"
   },
   {
     "id": "microsoft-research-jmaccelerometer30v02",

@@ -7,5 +7,6 @@
   "services": [],
   "productIdentifiers": [],
   "version": "4.1",
-  "designIdentifier": "86"
+  "designIdentifier": "86",
+  "connector": "edgePassive"
 }

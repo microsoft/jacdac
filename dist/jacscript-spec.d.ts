@@ -488,6 +488,7 @@ declare namespace roles {
 // Service: Jacscript Cloud
 declare class JacscriptCloudRole extends Role {
     upload(label: string, ...value: number[]): void
+    uploadBin(payload: number): void
     ackCloudCommand(seq_no: number, status: number, ...result: number[]): void
     connected: JDRegisterNum
     connectionName: JDRegisterString

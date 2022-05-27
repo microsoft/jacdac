@@ -136,6 +136,22 @@
     },
     {
       "kind": "command",
+      "name": "upload_bin",
+      "identifier": 129,
+      "description": "Upload a binary message to the cloud.",
+      "fields": [
+        {
+          "name": "payload",
+          "type": "bytes",
+          "storage": 0,
+          "isSimpleType": true
+        }
+      ],
+      "restricted": true,
+      "packFormat": "b"
+    },
+    {
+      "kind": "command",
       "name": "ack_cloud_command",
       "identifier": 131,
       "description": "Should be called by jacscript when it finishes handling a `cloud_command`.",

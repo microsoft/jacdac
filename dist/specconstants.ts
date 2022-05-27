@@ -2289,6 +2289,15 @@ export enum JacscriptCloudCmd {
     Upload = 0x80,
 
     /**
+     * Argument: payload bytes. Upload a binary message to the cloud.
+     *
+     * ```
+     * const [payload] = jdunpack<[Uint8Array]>(buf, "b")
+     * ```
+     */
+    UploadBin = 0x81,
+
+    /**
      * Should be called by jacscript when it finishes handling a `cloud_command`.
      *
      * ```

@@ -21,6 +21,11 @@ typedef struct jd_jacscript_cloud_upload {
 
 
 /**
+ * Argument: payload bytes. Upload a binary message to the cloud.
+ */
+#define JD_JACSCRIPT_CLOUD_CMD_UPLOAD_BIN 0x81
+
+/**
  * Should be called by jacscript when it finishes handling a `cloud_command`.
  */
 #define JD_JACSCRIPT_CLOUD_CMD_ACK_CLOUD_COMMAND 0x83

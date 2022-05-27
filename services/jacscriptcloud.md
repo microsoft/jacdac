@@ -18,6 +18,12 @@ Note that `f64` values following a label are not necessarily aligned.
 Upload a labelled tuple of values to the cloud.
 The tuple will be automatically tagged with timestamp and originating device.
 
+    restricted command upload_bin @ 0x81 {
+        payload: bytes
+    }
+
+Upload a binary message to the cloud.
+
     enum CommandStatus : u32 {
         OK = 200
         NotFound = 404

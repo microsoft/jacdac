@@ -596,7 +596,7 @@ declare namespace jdspec {
 
     type TransportType = "usb" | "serial" | "bluetooth"
 
-    type ConnectorType =
+    type JacdacConnectorType =
         | "noConnector"
         | "edgeIndependent"
         | "edgeConsumer"
@@ -611,6 +611,22 @@ declare namespace jdspec {
         productId?: number
         type: TransportType
     }
+
+    interface ShapeGeneric {
+        grid: "ec30",
+        width: number,
+        height: number,
+    }
+
+    type Shape = ShapeGeneric 
+        | "ec30_2x2_l"
+        | "ec30_2x2_lr"
+        | "ec30_3x2_l"
+        | "ec30_3x2_lr"
+        | "ec30_3x3_l"
+        | "ec30_3x3_lr"
+        | "ec30_5x2_l"
+        | "ec30_5x2_lr"
 
     interface DeviceSpec extends DeviceClassSpec {
         /**
@@ -746,12 +762,17 @@ declare namespace jdspec {
         /**
          * Type of PCB edge connector the device, default is "edge"
          */
-        connector?: ConnectorType
+        connector?: JacdacConnectorType
 
         /**
          * For kits, a list of device identifiers contained in the kit
          */
         devices?: string[]
+
+        /**
+         * Information about the shape of the footprint and the holes
+         */
+        shape?: Shape
     }
 
     /**

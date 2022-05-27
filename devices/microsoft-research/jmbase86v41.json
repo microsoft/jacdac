@@ -3,10 +3,12 @@
   "name": "JM Base",
   "company": "Microsoft Research",
   "description": "A breadboard like PCB to screw mount Jacdac modules.",
-  "repo": "",
   "connector": "edgePassive",
   "services": [],
   "productIdentifiers": [],
+  "tags": [
+    "ec30"
+  ],
   "version": "4.1",
   "designIdentifier": "86"
 }

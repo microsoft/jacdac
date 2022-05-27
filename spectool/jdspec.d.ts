@@ -613,12 +613,12 @@ declare namespace jdspec {
     }
 
     interface ShapeGeneric {
-        grid: "ec30",
-        width: number,
-        height: number,
+        grid: "ec30"
+        width: number
+        height: number
     }
 
-    type Shape = ShapeGeneric 
+    type ShapeWellKnown =
         | "ec30_2x2_l"
         | "ec30_2x2_lr"
         | "ec30_3x2_l"
@@ -627,6 +627,8 @@ declare namespace jdspec {
         | "ec30_3x3_lr"
         | "ec30_5x2_l"
         | "ec30_5x2_lr"
+
+    type Shape = ShapeGeneric | ShapeWellKnown
 
     interface DeviceSpec extends DeviceClassSpec {
         /**

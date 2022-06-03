@@ -634,6 +634,7 @@ declare namespace jdspec {
         | "ec30_6x2_l"
         | "ec30_6x2_lr"
         | "ec30_6x3_lr"
+        | "ec30_1x7_r7"
 
     type Shape = ShapeGeneric | ShapeWellKnown
 

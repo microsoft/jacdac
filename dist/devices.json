@@ -1608,7 +1608,8 @@
     "storeLink": "https://www.kittenbot.cc/jacdac/",
     "services": [],
     "productIdentifiers": [],
-    "version": "1.0"
+    "version": "1.0",
+    "shape": "ec30_6x3_lr"
   },
   {
     "id": "kittenbot-keycapbuttonv10",
@@ -1616,6 +1617,8 @@
     "company": "KittenBot",
     "description": "A keycap keyboard button.",
     "repo": "",
+    "link": "https://www.kittenbot.cc/jacdac/",
+    "storeLink": "https://www.kittenbot.cc/jacdac/",
     "services": [
       343122531
     ],
@@ -1623,7 +1626,7 @@
       926152985
     ],
     "version": "1.0",
-    "shape": "ec30_3x2_lr"
+    "shape": "ec30_1x7_r7"
   },
   {
     "id": "kittenbot-magnetsensorv10",
@@ -1631,6 +1634,8 @@
     "company": "KittenBot",
     "description": "A magnetic field sensor.",
     "repo": "",
+    "link": "https://www.kittenbot.cc/jacdac/",
+    "storeLink": "https://www.kittenbot.cc/jacdac/",
     "services": [
       318642191
     ],
@@ -1645,7 +1650,6 @@
     "name": "RGB Ring",
     "company": "KittenBot",
     "description": "A ring of 8 colored programmable LEDs.",
-    "repo": "",
     "link": "https://www.kittenbot.cc/jacdac/",
     "storeLink": "https://www.kittenbot.cc/jacdac/",
     "services": [
@@ -1662,7 +1666,8 @@
     "name": "Rotary Button",
     "company": "KittenBot",
     "description": "A rotary encoder and button.",
-    "repo": "",
+    "link": "https://www.kittenbot.cc/jacdac/",
+    "storeLink": "https://www.kittenbot.cc/jacdac/",
     "services": [
       284830153,
       343122531
@@ -1678,7 +1683,6 @@
     "name": "Slider",
     "company": "KittenBot",
     "description": "A slider.",
-    "repo": "",
     "link": "https://www.kittenbot.cc/jacdac/",
     "storeLink": "https://www.kittenbot.cc/jacdac/",
     "services": [

@@ -3,7 +3,8 @@
   "name": "Rotary Button",
   "company": "KittenBot",
   "description": "A rotary encoder and button.",
-  "repo": "",
+  "link": "https://www.kittenbot.cc/jacdac/",
+  "storeLink": "https://www.kittenbot.cc/jacdac/",
   "services": [
     284830153,
     343122531

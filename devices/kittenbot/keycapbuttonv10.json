@@ -4,6 +4,8 @@
   "company": "KittenBot",
   "description": "A keycap keyboard button.",
   "repo": "",
+  "link": "https://www.kittenbot.cc/jacdac/",
+  "storeLink": "https://www.kittenbot.cc/jacdac/",
   "services": [
     343122531
   ],
@@ -11,5 +13,5 @@
     926152985
   ],
   "version": "1.0",
-  "shape": "ec30_3x2_lr"
+  "shape": "ec30_1x7_r7"
 }

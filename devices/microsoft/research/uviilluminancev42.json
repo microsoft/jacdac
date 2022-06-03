@@ -1,5 +1,5 @@
 {
-  "id": "microsoft-research-uviilluminancev42",
+  "id": "microsoft-research-uviilluminance205v42",
   "name": "UVI/Illuminance",
   "company": "Microsoft Research",
   "description": "",
@@ -8,10 +8,10 @@
     510577394,
     527306128
   ],
-  "designIdentifier": "205",
   "productIdentifiers": [
     928306999
   ],
   "version": "4.2",
+  "designIdentifier": "205",
   "shape": "ec30_2x2_lr"
 }

@@ -1,5 +1,5 @@
 {
-  "id": "microsoft-research-jmenvironmentv42",
+  "id": "microsoft-research-jmenvironment204v42",
   "name": "JM-Environment",
   "company": "Microsoft Research",
   "description": "",
@@ -10,10 +10,10 @@
     379362758,
     312849815
   ],
-  "designIdentifier": "204",
   "productIdentifiers": [
     842012177
   ],
   "version": "4.2",
+  "designIdentifier": "204",
   "shape": "ec30_2x2_l"
 }

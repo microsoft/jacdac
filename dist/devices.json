@@ -1600,6 +1600,17 @@
     }
   },
   {
+    "id": "kittenbot-hubv10",
+    "name": "Hub",
+    "company": "KittenBot",
+    "description": "A passthrough cable hub.",
+    "repo": "",
+    "connector": "edgePassive",
+    "services": [],
+    "productIdentifiers": [],
+    "version": "1.0"
+  },
+  {
     "id": "kittenbot-jacdaptorformicrobitv2v10",
     "name": "Jacdaptor for micro:bit V2",
     "company": "KittenBot",

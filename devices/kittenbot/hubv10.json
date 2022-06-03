@@ -5,6 +5,8 @@
   "description": "A passthrough cable hub.",
   "repo": "",
   "connector": "edgePassive",
+  "link": "https://www.kittenbot.cc/jacdac/",
+  "storeLink": "https://www.kittenbot.cc/jacdac/",
   "services": [],
   "productIdentifiers": [],
   "version": "1.0"

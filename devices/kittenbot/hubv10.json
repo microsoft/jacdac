@@ -1,0 +1,11 @@
+{
+  "id": "kittenbot-hubv10",
+  "name": "Hub",
+  "company": "KittenBot",
+  "description": "A passthrough cable hub.",
+  "repo": "",
+  "connector": "edgePassive",
+  "services": [],
+  "productIdentifiers": [],
+  "version": "1.0"
+}

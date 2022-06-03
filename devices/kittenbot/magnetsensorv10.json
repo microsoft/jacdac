@@ -1,0 +1,15 @@
+{
+  "id": "kittenbot-magnetsensorv10",
+  "name": "Magnet Sensor",
+  "company": "KittenBot",
+  "description": "A magnetic field sensor.",
+  "repo": "",
+  "services": [
+    318642191
+  ],
+  "productIdentifiers": [
+    881631743
+  ],
+  "version": "1.0",
+  "shape": "ec30_2x2_lr"
+}

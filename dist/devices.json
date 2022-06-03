@@ -1657,7 +1657,7 @@
     "services": [],
     "productIdentifiers": [],
     "version": "1.0",
-    "shape": "ec30_6x3_lr"
+    "shape": "ec30_1x7_lr"
   },
   {
     "id": "kittenbot-keycapbuttonv10",
@@ -1674,7 +1674,7 @@
       926152985
     ],
     "version": "1.0",
-    "shape": "ec30_1x7_r7"
+    "shape": "ec30_3x2_r7"
   },
   {
     "id": "kittenbot-magnetsensorv10",
@@ -1707,7 +1707,7 @@
       924243657
     ],
     "version": "1.0",
-    "shape": "ec30_3x2_l"
+    "shape": "ec30_3x3_l"
   },
   {
     "id": "kittenbot-rotarybuttonv10",

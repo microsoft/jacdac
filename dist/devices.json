@@ -705,6 +705,25 @@
     "designIdentifier": "69"
   },
   {
+    "id": "microsoft-research-jmenvironment204v42",
+    "name": "JM-Environment",
+    "company": "Microsoft Research",
+    "description": "",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      337754823,
+      382210232,
+      379362758,
+      312849815
+    ],
+    "productIdentifiers": [
+      842012177
+    ],
+    "version": "4.2",
+    "designIdentifier": "204",
+    "shape": "ec30_2x2_l"
+  },
+  {
     "id": "microsoft-research-jmflexv10",
     "name": "JM Flex",
     "company": "Microsoft Research",
@@ -1570,25 +1589,6 @@
     "version": "0.1",
     "designIdentifier": "53",
     "status": "experimental"
-  },
-  {
-    "id": "microsoft-research-jmenvironment204v42",
-    "name": "JM-Environment",
-    "company": "Microsoft Research",
-    "description": "",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "services": [
-      337754823,
-      382210232,
-      379362758,
-      312849815
-    ],
-    "productIdentifiers": [
-      842012177
-    ],
-    "version": "4.2",
-    "designIdentifier": "204",
-    "shape": "ec30_2x2_l"
   },
   {
     "id": "microsoft-research-uviilluminance205v42",

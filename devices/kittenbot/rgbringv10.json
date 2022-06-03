@@ -1,0 +1,17 @@
+{
+  "id": "kittenbot-rgbringv10",
+  "name": "RGB Ring",
+  "company": "KittenBot",
+  "description": "A ring of 8 colored programmable LEDs.",
+  "repo": "",
+  "link": "https://www.kittenbot.cc/jacdac/",
+  "storeLink": "https://www.kittenbot.cc/jacdac/",
+  "services": [
+    369743088
+  ],
+  "productIdentifiers": [
+    924243657
+  ],
+  "version": "1.0",
+  "shape": "ec30_3x2_l"
+}

@@ -5,7 +5,7 @@
   "description": "",
   "repo": "https://github.com/microsoft/jacdac-msr-modules",
   "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-temp-humidity-18-1.1/profile/env3.c",
-  "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/altium/reference-designs/JacdacRHTemp%2018-1.2",
+  "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/deprecated_form_factor/altium_deprecated/reference-designs/JacdacRHTemp%2018-1.2",
   "link": "https://github.com/microsoft/jacdac-msr-modules",
   "services": [
     337754823,

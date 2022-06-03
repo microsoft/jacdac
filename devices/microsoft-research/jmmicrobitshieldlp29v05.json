@@ -3,13 +3,12 @@
   "name": "JM MicroBit Shield LP",
   "company": "Microsoft Research",
   "repo": "",
-  "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/altium/reference-designs/JacdacMicroBitShieldLP%2029-0.6",
+  "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/deprecated_form_factor/altium_deprecated/reference-designs/JacdacMicroBitShieldLP%2029-0.6",
   "connector": "edgeLowCurrentProvider",
   "services": [],
   "productIdentifiers": [
     974031363
   ],
   "version": "0.5",
-  "designIdentifier": "29",
-  "status": "experimental"
+  "designIdentifier": "29"
 }

@@ -1,0 +1,16 @@
+{
+  "id": "kittenbot-lightsensorv10",
+  "name": "Light Sensor",
+  "company": "KittenBot",
+  "description": "A light level sensor.",
+  "repo": "",
+  "firmwareSource": "",
+  "link": "https://www.kittenbot.cc/jacdac/",
+  "storeLink": "https://www.kittenbot.cc/jacdac/",
+  "services": [
+    400333340
+  ],
+  "productIdentifiers": [973683863],
+  "version": "1.0",
+  "shape": "ec30_2x2_lr"
+}

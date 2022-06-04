@@ -1,6 +1,6 @@
 {
   "name": "Light level",
-  "status": "rc",
+  "status": "stable",
   "shortId": "lightlevel",
   "camelName": "lightLevel",
   "shortName": "lightLevel",

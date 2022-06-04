@@ -6,7 +6,7 @@ A sensor that measures luminosity level.
     extends: _sensor
     group: environment
     tags: 8bit, padauk
-    status: rc
+    status: stable
 
 ## Registers
 

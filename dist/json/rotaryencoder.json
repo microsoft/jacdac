@@ -1,6 +1,6 @@
 {
   "name": "Rotary encoder",
-  "status": "rc",
+  "status": "stable",
   "shortId": "rotaryencoder",
   "camelName": "rotaryEncoder",
   "shortName": "rotaryEncoder",

@@ -4,7 +4,7 @@
     extends: _sensor
     group: environment
     tags: 8bit
-    status: rc
+    status: stable
 
 A sensor that measures strength and polarity of magnetic field.
 

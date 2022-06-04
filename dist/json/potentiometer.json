@@ -1,6 +1,6 @@
 {
   "name": "Potentiometer",
-  "status": "rc",
+  "status": "stable",
   "shortId": "potentiometer",
   "camelName": "potentiometer",
   "shortName": "potentiometer",

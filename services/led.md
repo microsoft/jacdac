@@ -3,7 +3,7 @@
     identifier: 0x1609d4f0
     camel: led
     group: light
-    status: rc
+    status: stable
 
 A controller for small displays of individually controlled RGB LEDs.
 
@@ -55,7 +55,6 @@ Register is missing for RGB LEDs.
     const luminous_intensity?: u16 mcd { typical_min=10, typical_max=5000 } @ 0x186
 
 The luminous intensity of all the LEDs, at full brightness, in micro candella.
-
 
     enum Variant: u8 {
         Strip = 1,

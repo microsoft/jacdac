@@ -1,6 +1,6 @@
 {
   "name": "Magnetic field level",
-  "status": "rc",
+  "status": "stable",
   "shortId": "magneticfieldlevel",
   "camelName": "magneticFieldLevel",
   "shortName": "magneticFieldLevel",

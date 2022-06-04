@@ -4,7 +4,7 @@
     extends: _sensor
     group: slider
     tags: C, 8bit
-    status: rc
+    status: stable
 
 An incremental rotary encoder - converts angular motion of a shaft to digital signal.
 

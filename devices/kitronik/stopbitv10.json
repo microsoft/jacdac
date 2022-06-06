@@ -4,7 +4,9 @@
   "company": "Kitronik",
   "description": "The STOP:bit for the BBC micro:bit is the ultimate upgrade for traffic light/pedestrian crossing projects.",
   "repo": "",
-  "makeCodeRepo": "https://github.com/pelikhan/pxt-kitronik-stopbit/tree/master/jacdac",
+  "makeCodeRepo": [
+    "https://github.com/pelikhan/pxt-kitronik-stopbit/tree/master/jacdac"
+  ],
   "connector": "noConnector",
   "link": "https://kitronik.co.uk/products/5642-stopbit-traffic-light-for-bbc-microbit",
   "storeLink": "https://kitronik.co.uk/products/5642-stopbit-traffic-light-for-bbc-microbit",

@@ -4,7 +4,9 @@
     "name": "Microbit-LED",
     "company": "Yahboom",
     "description": "The expansion board integrates 24 programmable RGB lights and microphones, and you can control the on-board RGB lights by the microphone.",
-    "makeCodeRepo": "https://github.com/pelikhan/yahboom-microbit-led-jacdac",
+    "makeCodeRepo": [
+      "https://github.com/pelikhan/yahboom-microbit-led-jacdac"
+    ],
     "connector": "noConnector",
     "link": "https://category.yahboom.net/products/rgbledb",
     "storeLink": "https://category.yahboom.net/products/rgbledb",
@@ -22,7 +24,9 @@
     "name": "Tiny-Bit",
     "company": "Yahboom",
     "description": "Tiny:bit is a robotic car for the micro:bit education market. It is compact, easy to assemble, and easy to move in tight spaces. The Tiny:bit smart car is based on the micro:bit development board design and uses the online code programming of MakeCode Editor. Rich sensor applications allow Tiny:bit for easy interaction. The Tiny:bit smart car has a set of alligator clips on the rear that can be creative and expand.",
-    "makeCodeRepo": "https://github.com/pelikhan/Tiny-bitLib/tree/master/jacdac",
+    "makeCodeRepo": [
+      "https://github.com/pelikhan/Tiny-bitLib/tree/master/jacdac"
+    ],
     "connector": "noConnector",
     "link": "https://category.yahboom.net/products/tinybit",
     "storeLink": "https://category.yahboom.net/products/tinybit",
@@ -46,7 +50,9 @@
     "company": "Sparkfun",
     "description": "The SparkFun gamer:bit is a fun-filled \"carrier\" board for the micro:bit that, when combined with the micro:bit, provides you with a fully functional game system. Designed in a similar form factor to the classic Nintendo NES controller, the gamer:bit is equipped with a four-direction \"D-pad\" on the left side of the board and two action buttons on the right side of the board. The two push buttons on the micro:bit in the center function as start and select.",
     "repo": "",
-    "makeCodeRepo": "https://github.com/pelikhan/pxt-gamer-bit/tree/master/jacdac",
+    "makeCodeRepo": [
+      "https://github.com/pelikhan/pxt-gamer-bit/tree/master/jacdac"
+    ],
     "connector": "noConnector",
     "link": "https://www.sparkfun.com/products/retired/14215",
     "storeLink": "https://www.sparkfun.com/products/retired/14215",
@@ -1816,7 +1822,9 @@
     "name": "ACCESS:bit",
     "company": "Kitronik",
     "description": "The ACCESS:bit is a bolt-on/clip-on board for the BBC microbit that simulates an access barrier.",
-    "makeCodeRepo": "https://github.com/pelikhan/pxt-kitronik-accessbit/jacdac",
+    "makeCodeRepo": [
+      "https://github.com/pelikhan/pxt-kitronik-accessbit/jacdac"
+    ],
     "connector": "noConnector",
     "link": "https://kitronik.co.uk/products/5646-accessbit-for-bbc-microbit",
     "storeLink": "https://kitronik.co.uk/products/5646-accessbit-for-bbc-microbit",
@@ -1833,7 +1841,9 @@
     "name": "Air Quality Board",
     "company": "Kitronik",
     "description": "The Kitronik Air Quality Board provides a complete air monitoring and reporting solution for the BBC micro:bit . The wealth of onboard sensors and connection points allow you to collect extensive air quality data that can be stored in onboard memory and displayed on the OLED screen or transferred to a computer for analysis.",
-    "makeCodeRepo": "https://github.com/pelikhan/pxt-kitronik-air-quality/jacdac/",
+    "makeCodeRepo": [
+      "https://github.com/pelikhan/pxt-kitronik-air-quality/jacdac/"
+    ],
     "connector": "edgeIndependent",
     "link": "https://kitronik.co.uk/products/5674-kitronik-air-quality-board-for-bbc-micro-bit",
     "storeLink": "https://kitronik.co.uk/products/5674-kitronik-air-quality-board-for-bbc-micro-bit",
@@ -1855,7 +1865,9 @@
     "name": "Game Zip 64",
     "company": "Kitronik",
     "repo": "",
-    "makeCodeRepo": "https://github.com/pelikhan/pxt-kitronik-zip-64/tree/master/jacdac",
+    "makeCodeRepo": [
+      "https://github.com/pelikhan/pxt-kitronik-zip-64/tree/master/jacdac"
+    ],
     "connector": "noConnector",
     "link": "https://kitronik.co.uk/products/5626-game-zip-64-for-the-bbc-microbit",
     "storeLink": "https://kitronik.co.uk/products/5626-game-zip-64-for-the-bbc-microbit",
@@ -1875,7 +1887,9 @@
     "company": "Kitronik",
     "description": "The Servo:Lite board for the BBC micro:bit is a simple board that allows you to easily connect and control low power servo motors (servo's must be capable of operating at 3.3V) using the BBC micro:bit. It is connected to the micro:bit using five bolts. Connect two servos in standard configuration and it can drive up to 3 servos if the addressable 'ZIP' LEDs aren’t needed.",
     "repo": "",
-    "makeCodeRepo": "https://github.com/pelikhan/pxt-kitronik-servo-lite/jacdac",
+    "makeCodeRepo": [
+      "https://github.com/pelikhan/pxt-kitronik-servo-lite/jacdac"
+    ],
     "connector": "noConnector",
     "link": "https://kitronik.co.uk/products/5623-servolite-board-for-move-mini",
     "storeLink": "https://kitronik.co.uk/products/5623-servolite-board-for-move-mini",
@@ -1895,7 +1909,9 @@
     "company": "Kitronik",
     "description": "The STOP:bit for the BBC micro:bit is the ultimate upgrade for traffic light/pedestrian crossing projects.",
     "repo": "",
-    "makeCodeRepo": "https://github.com/pelikhan/pxt-kitronik-stopbit/tree/master/jacdac",
+    "makeCodeRepo": [
+      "https://github.com/pelikhan/pxt-kitronik-stopbit/tree/master/jacdac"
+    ],
     "connector": "noConnector",
     "link": "https://kitronik.co.uk/products/5642-stopbit-traffic-light-for-bbc-microbit",
     "storeLink": "https://kitronik.co.uk/products/5642-stopbit-traffic-light-for-bbc-microbit",
@@ -1913,7 +1929,9 @@
     "company": "Keystudio",
     "description": "Keyestudio relay breakout board for micro:bit has integrated a 4-way 5V relay module, fully compatible with micro:bit development board.\nIt can work only need to insert micro:bit into keyestudio relay shield, then input DC5V voltage on the relay VIN/GND port, pretty simple and convenient.",
     "repo": "",
-    "makeCodeRepo": "https://github.com/pelikhan/keystudio-relay-breakout-jacdac",
+    "makeCodeRepo": [
+      "https://github.com/pelikhan/keystudio-relay-breakout-jacdac"
+    ],
     "connector": "noConnector",
     "link": "https://www.keyestudio.com/products/keyestudio-relay-breakout-board-for-bbc-microbit",
     "storeLink": "https://www.keyestudio.com/products/keyestudio-relay-breakout-board-for-bbc-microbit",

@@ -3,7 +3,9 @@
   "name": "Microbit-LED",
   "company": "Yahboom",
   "description": "The expansion board integrates 24 programmable RGB lights and microphones, and you can control the on-board RGB lights by the microphone.",
-  "makeCodeRepo": "https://github.com/pelikhan/yahboom-microbit-led-jacdac",
+  "makeCodeRepo": [
+    "https://github.com/pelikhan/yahboom-microbit-led-jacdac"
+  ],
   "connector": "noConnector",
   "link": "https://category.yahboom.net/products/rgbledb",
   "storeLink": "https://category.yahboom.net/products/rgbledb",

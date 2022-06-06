@@ -1,0 +1,13 @@
+{
+  "id": "kittenbot-jacdackitawithadapterformicrobitv2previewv10",
+  "name": "Jacdac Kit A with Adapter for micro:bit V2 (Preview) ",
+  "company": "KittenBot",
+  "description": "A kit of Jacdac modules.",
+  "repo": "",
+  "connector": "noConnector",
+  "link": "https://www.kittenbot.cc/jacdac",
+  "storeLink": "https://www.kittenbot.cc/jacdac",
+  "services": [],
+  "productIdentifiers": [],
+  "version": "1.0"
+}

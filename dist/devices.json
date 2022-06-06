@@ -1927,5 +1927,23 @@
       901245225
     ],
     "version": "1.0"
+  },
+  {
+    "id": "1010-technologies-makerbitv10",
+    "name": "MakerBit",
+    "company": "1010 Technologies",
+    "description": "The MakerBit board provides simple and efficient connections to the features of the BBC micro:bit. Easily and quickly add lights and touch sensors to school projects, models and art installations. There are enough connecting wires and LEDs for one project. The MakerBit can control a maximum of 12 LEDs and 12 touch sensors in any one project.",
+    "repo": "",
+    "connector": "noConnector",
+    "link": "https://1010technologies.com/product/makerbit/",
+    "storeLink": "https://1010technologies.com/product/makerbit/",
+    "services": [
+      385895640,
+      385895640
+    ],
+    "productIdentifiers": [
+      1018020097
+    ],
+    "version": "1.0"
   }
 ]

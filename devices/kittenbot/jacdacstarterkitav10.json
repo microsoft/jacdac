@@ -1,6 +1,6 @@
 {
-  "id": "kittenbot-jacdackitawithadapterformicrobitv2previewv10",
-  "name": "Jacdac Kit A with Adapter for micro:bit V2 (Preview)",
+  "id": "kittenbot-jacdacstarterkitav10",
+  "name": "Jacdac Starter Kit A",
   "company": "KittenBot",
   "description": "A kit of Jacdac modules.",
   "repo": "",
@@ -19,7 +19,6 @@
     "kittenbot-rotarybuttonv10",
     "kittenbot-sliderv10",
     "kittenbot-rgbringv10",
-    "kittenbot-hubv10",
-    "kittenbot-jacdaptorformicrobitv2v10"
+    "kittenbot-hubv10"
   ]
 }

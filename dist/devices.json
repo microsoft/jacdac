@@ -1649,8 +1649,8 @@
     "version": "1.0"
   },
   {
-    "id": "kittenbot-jacdackitapreviewv10",
-    "name": "Jacdac Kit A (Preview)",
+    "id": "kittenbot-jacdacstarterkitav10",
+    "name": "Jacdac Starter Kit A",
     "company": "KittenBot",
     "description": "A kit of Jacdac modules.",
     "repo": "",
@@ -1673,8 +1673,8 @@
     ]
   },
   {
-    "id": "kittenbot-jacdackitawithadapterformicrobitv2previewv10",
-    "name": "Jacdac Kit A with Adapter for micro:bit V2 (Preview)",
+    "id": "kittenbot-jacdacstarterkitawithjacdaptorformicrobitv2v10",
+    "name": "Jacdac Starter Kit A with Jacdaptor for micro:bit V2",
     "company": "KittenBot",
     "description": "A kit of Jacdac modules.",
     "repo": "",

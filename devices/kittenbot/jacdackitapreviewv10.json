@@ -1,0 +1,13 @@
+{
+  "id": "kittenbot-jacdackitapreviewv10",
+  "name": "Jacdac Kit A (Preview)",
+  "company": "KittenBot",
+  "description": "A kit of Jacdac modules.",
+  "repo": "",
+  "connector": "noConnector",
+  "link": "https://www.kittenbot.cc/jacdac",
+  "storeLink": "https://www.kittenbot.cc/jacdac",
+  "services": [],
+  "productIdentifiers": [],
+  "version": "1.0"
+}

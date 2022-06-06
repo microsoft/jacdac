@@ -1,13 +1,25 @@
 {
   "id": "kittenbot-jacdackitawithadapterformicrobitv2previewv10",
-  "name": "Jacdac Kit A with Adapter for micro:bit V2 (Preview) ",
+  "name": "Jacdac Kit A with Adapter for micro:bit V2 (Preview)",
   "company": "KittenBot",
   "description": "A kit of Jacdac modules.",
   "repo": "",
-  "connector": "noConnector",
   "link": "https://www.kittenbot.cc/jacdac",
   "storeLink": "https://www.kittenbot.cc/jacdac",
   "services": [],
   "productIdentifiers": [],
-  "version": "1.0"
+  "tags": [
+    "kit"
+  ],
+  "version": "1.0",
+  "devices": [
+    "kittenbot-keycapbuttonv10",
+    "kittenbot-lightsensorv10",
+    "kittenbot-magnetsensorv10",
+    "kittenbot-rotarybuttonv10",
+    "kittenbot-sliderv10",
+    "kittenbot-rgbringv10",
+    "kittenbot-hubv10",
+    "kittenbot-jacdaptorformicrobitv2v10"
+  ]
 }

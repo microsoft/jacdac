@@ -4,8 +4,6 @@
   "company": "Microsoft Research",
   "description": "A kit for the Microsoft MakeAccessible hackathon.",
   "link": "https://www.microsoft.com/en-us/research/project/project-makeaccessible/",
-  "services": [],
-  "productIdentifiers": [],
   "tags": [
     "kit"
   ],

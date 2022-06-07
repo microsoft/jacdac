@@ -2,7 +2,6 @@
   "id": "microsoft-research-jmclickairquality4v32",
   "name": "JM-Click Airquality4",
   "company": "Microsoft Research",
-  "description": "",
   "repo": "https://github.com/microsoft/jacdac-msr-modules",
   "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v3.2/profile/airquality4click.c",
   "link": "https://github.com/microsoft/jacdac-msr-modules",

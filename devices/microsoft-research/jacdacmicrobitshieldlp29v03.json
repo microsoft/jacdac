@@ -2,9 +2,7 @@
   "id": "microsoft-research-jacdacmicrobitshieldlp29v03",
   "name": "JacDacMicroBitShieldLP",
   "company": "Microsoft Research",
-  "repo": "",
   "connector": "edgeLowCurrentProvider",
-  "services": [],
   "productIdentifiers": [
     1009620586
   ],

@@ -3,8 +3,6 @@
   "name": "Light Sensor",
   "company": "KittenBot",
   "description": "A light level sensor.",
-  "repo": "",
-  "firmwareSource": "",
   "link": "https://www.kittenbot.cc/jacdac/",
   "storeLink": "https://www.kittenbot.cc/jacdac/",
   "services": [

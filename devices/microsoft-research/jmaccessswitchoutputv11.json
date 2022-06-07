@@ -2,7 +2,6 @@
   "id": "microsoft-research-jmaccessswitchoutputv11",
   "name": "JM Access Switch Output",
   "company": "Microsoft Research",
-  "description": "",
   "repo": "https://github.com/microsoft/jacdac-msr-modules",
   "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-access-switch-output-1.1/profile/relay.c",
   "link": "https://github.com/microsoft/jacdac-msr-modules",

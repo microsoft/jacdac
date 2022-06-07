@@ -6,7 +6,6 @@
   "connector": "noConnector",
   "link": "https://microsoft.github.io/jacdac-docs/clients/makecode/microbit-jukebox/",
   "storeLink": "https://www.microbit.org/buy/",
-  "services": [],
   "productIdentifiers": [
     854992189,
     888455511
@@ -24,5 +23,8 @@
   "bootloader": {
     "driveName": "MICROBIT",
     "firmwareFormat": "hex"
-  }
+  },
+  "relatedDevices": [
+    "kittenbot-jacdaptorformicrobitv2v10"
+  ]
 }

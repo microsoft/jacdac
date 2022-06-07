@@ -2,7 +2,6 @@
   "id": "kitronik-gamezip64v12",
   "name": "Game Zip 64",
   "company": "Kitronik",
-  "repo": "",
   "makeCodeRepo": [
     "https://github.com/pelikhan/pxt-kitronik-zip-64/tree/master/jacdac"
   ],

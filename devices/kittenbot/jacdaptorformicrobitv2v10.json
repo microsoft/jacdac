@@ -2,12 +2,12 @@
   "id": "kittenbot-jacdaptorformicrobitv2v10",
   "name": "Jacdaptor for micro:bit V2",
   "company": "KittenBot",
-  "repo": "",
   "connector": "edgeLowCurrentProviderConsumer",
   "link": "https://www.kittenbot.cc/jacdac/",
   "storeLink": "https://www.kittenbot.cc/jacdac/",
-  "services": [],
-  "productIdentifiers": [],
   "version": "1.0",
+  "relatedDevices": [
+    "microbit-educational-foundation-microbitv2"
+  ],
   "shape": "ec30_1x7_r7"
 }

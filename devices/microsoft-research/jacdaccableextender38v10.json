@@ -2,9 +2,7 @@
   "id": "microsoft-research-jacdaccableextender38v10",
   "name": "JacdacCableExtender ",
   "company": "Microsoft Research",
-  "repo": "",
   "connector": "edgePassive",
-  "services": [],
   "productIdentifiers": [
     928595161
   ],

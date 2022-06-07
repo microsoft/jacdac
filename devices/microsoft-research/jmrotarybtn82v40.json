@@ -5,7 +5,6 @@
   "description": "Rotary encoder with button in the standard shape.",
   "repo": "https://github.com/microsoft/jacdac-msr-modules",
   "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v4.0rot/profile/rotary-82.c",
-  "link": "",
   "services": [
     284830153,
     343122531

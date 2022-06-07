@@ -2,7 +2,6 @@
   "id": "microsoft-research-jmtemperaturehumidity18v10a",
   "name": "JM Temperature + Humidity",
   "company": "Microsoft Research",
-  "description": "",
   "repo": "https://github.com/microsoft/jacdac-msr-modules",
   "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-temp-humidity-18-1.0A/profile/env3.c",
   "link": "https://github.com/microsoft/jacdac-msr-modules",

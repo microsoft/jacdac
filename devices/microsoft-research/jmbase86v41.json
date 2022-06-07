@@ -4,8 +4,6 @@
   "company": "Microsoft Research",
   "description": "A breadboard like PCB to screw mount Jacdac modules.",
   "connector": "edgePassive",
-  "services": [],
-  "productIdentifiers": [],
   "tags": [
     "ec30"
   ],

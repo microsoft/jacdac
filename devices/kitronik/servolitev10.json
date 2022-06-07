@@ -3,7 +3,6 @@
   "name": "SERVO:LITE",
   "company": "Kitronik",
   "description": "The Servo:Lite board for the BBC micro:bit is a simple board that allows you to easily connect and control low power servo motors (servo's must be capable of operating at 3.3V) using the BBC micro:bit. It is connected to the micro:bit using five bolts. Connect two servos in standard configuration and it can drive up to 3 servos if the addressable 'ZIP' LEDs aren’t needed.",
-  "repo": "",
   "makeCodeRepo": [
     "https://github.com/pelikhan/pxt-kitronik-servo-lite/jacdac"
   ],

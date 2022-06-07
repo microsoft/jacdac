@@ -3,7 +3,6 @@
   "name": "MakerBit",
   "company": "Roger Wagner",
   "description": "The MakerBit board provides simple and efficient connections to the features of the BBC micro:bit. Easily and quickly add lights and touch sensors to school projects, models and art installations. There are enough connecting wires and LEDs for one project. The MakerBit can control a maximum of 12 LEDs and 12 touch sensors in any one project.",
-  "repo": "",
   "makeCodeRepo": [
     "1010Technologies/pxt-makerbit-motor/jacdac",
     "1010Technologies/pxt-makerbit-touch/jacdac",

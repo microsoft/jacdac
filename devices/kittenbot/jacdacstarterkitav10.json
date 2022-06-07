@@ -3,11 +3,8 @@
   "name": "Jacdac Starter Kit A",
   "company": "KittenBot",
   "description": "A kit of Jacdac modules.",
-  "repo": "",
   "link": "https://www.kittenbot.cc/jacdac",
   "storeLink": "https://www.kittenbot.cc/jacdac",
-  "services": [],
-  "productIdentifiers": [],
   "tags": [
     "kit"
   ],
@@ -20,5 +17,9 @@
     "kittenbot-sliderv10",
     "kittenbot-rgbringv10",
     "kittenbot-hubv10"
+  ],
+  "relatedDevices": [
+    "kittenbot-jacdacstarterkitawithjacdaptorformicrobitv2v10",
+    "microbit-educational-foundation-microbitv2"
   ]
 }

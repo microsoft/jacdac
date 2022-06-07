@@ -2157,12 +2157,16 @@ export function normalizeDeviceSpecification(dev: jdspec.DeviceSpec) {
         bootloader: dev.bootloader,
         status: dev.status,
         devices: dev.devices,
+        relatedDevices: dev.relatedDevices,
         shape: dev.shape,
     }
     // delete empty files
     const anyClone: any = clone
-    for (const key of Object.keys(anyClone))
-        if (anyClone[key] === undefined) delete anyClone[key]
+    for (const key of Object.keys(anyClone)) {
+        const v = anyClone[key]
+        if (v === undefined || v === "" || (Array.isArray(v) && !v.length))
+            delete anyClone[key]
+    }
     return clone
 }
 

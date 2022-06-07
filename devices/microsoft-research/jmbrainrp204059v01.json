@@ -2,7 +2,6 @@
   "id": "microsoft-research-jmbrainrp204059v01",
   "name": "JM Brain RP2040",
   "company": "Microsoft Research",
-  "description": "",
   "connector": "edgeHighCurrentProvider",
   "link": "https://github.com/microsoft/pxt-jacdac",
   "services": [

@@ -5,7 +5,6 @@
   "description": "5x5 LED dot matrix",
   "repo": "https://github.com/microsoft/jacdac-msr-modules",
   "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v4.0matrix/profile/matrix-87.c",
-  "link": "",
   "services": [
     286070091
   ],

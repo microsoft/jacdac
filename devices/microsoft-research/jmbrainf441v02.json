@@ -2,7 +2,6 @@
   "id": "microsoft-research-jmbrainf441v02",
   "name": "JM Brain F4",
   "company": "Microsoft Research",
-  "description": "",
   "connector": "edgeHighCurrentProvider",
   "link": "https://github.com/microsoft/pxt-jacdac",
   "services": [

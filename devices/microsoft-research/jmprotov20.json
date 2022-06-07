@@ -6,7 +6,6 @@
   "repo": "https://github.com/microsoft/jacdac-msr-modules",
   "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v2.0p/profile/proto.c",
   "link": "https://github.com/microsoft/jacdac-msr-modules",
-  "services": [],
   "productIdentifiers": [
     1052138004
   ],

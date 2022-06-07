@@ -780,6 +780,11 @@ declare namespace jdspec {
         devices?: string[]
 
         /**
+         * Other devices related to this device
+         */
+        relatedDevices?: string[]
+
+        /**
          * Information about the shape of the footprint and the holes
          */
         shape?: Shape

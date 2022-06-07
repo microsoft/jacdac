@@ -4,7 +4,6 @@
   "company": "Microsoft Research",
   "description": "A regulated passive adapter from Jacdac to pin headers.",
   "link": "https://github.com/microsoft/jacdac-msr-modules",
-  "services": [],
   "productIdentifiers": [
     994328823
   ],

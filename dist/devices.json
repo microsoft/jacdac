@@ -1645,6 +1645,9 @@
     "relatedDevices": [
       "kittenbot-jacdacstarterkitawithjacdaptorformicrobitv2v10",
       "microbit-educational-foundation-microbitv2"
+    ],
+    "requiredDevices": [
+      "kittenbot-jacdaptorformicrobitv2v10"
     ]
   },
   {
@@ -1682,6 +1685,9 @@
     "storeLink": "https://www.kittenbot.cc/jacdac/",
     "version": "1.0",
     "relatedDevices": [
+      "microbit-educational-foundation-microbitv2"
+    ],
+    "requiredDevices": [
       "microbit-educational-foundation-microbitv2"
     ],
     "shape": "ec30_1x7_r7"

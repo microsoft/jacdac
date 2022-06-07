@@ -775,6 +775,11 @@ declare namespace jdspec {
         connector?: JacdacConnectorType
 
         /**
+         * Other devices needed to operate this device
+         */
+        requiredDevices?: string[]
+
+        /**
          * For kits, a list of device identifiers contained in the kit
          */
         devices?: string[]

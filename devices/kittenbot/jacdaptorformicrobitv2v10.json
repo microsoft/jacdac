@@ -9,5 +9,8 @@
   "relatedDevices": [
     "microbit-educational-foundation-microbitv2"
   ],
+  "requiredDevices": [
+    "microbit-educational-foundation-microbitv2"
+  ],
   "shape": "ec30_1x7_r7"
 }

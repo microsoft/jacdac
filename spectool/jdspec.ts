@@ -2158,6 +2158,7 @@ export function normalizeDeviceSpecification(dev: jdspec.DeviceSpec) {
         status: dev.status,
         devices: dev.devices,
         relatedDevices: dev.relatedDevices,
+        requiredDevices: dev.requiredDevices,
         shape: dev.shape,
     }
     // delete empty files

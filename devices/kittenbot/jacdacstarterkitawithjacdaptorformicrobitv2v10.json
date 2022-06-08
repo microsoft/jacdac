@@ -22,5 +22,8 @@
   "relatedDevices": [
     "kittenbot-jacdacstarterkitav10",
     "microbit-educational-foundation-microbitv2"
+  ],
+  "requiredDevices": [
+    "microbit-educational-foundation-microbitv2"
   ]
 }

@@ -3,8 +3,10 @@
   "name": "Jacdaptor for micro:bit V2",
   "company": "KittenBot",
   "connector": "edgeLowCurrentProviderConsumer",
-  "link": "https://www.kittenbot.cc/jacdac/",
-  "storeLink": "https://www.kittenbot.cc/jacdac/",
+  "storeLink": "https://j.kittenbot.cn/kit-a",
+  "tags": [
+    "adapter"
+  ],
   "version": "1.0",
   "relatedDevices": [
     "microbit-educational-foundation-microbitv2"

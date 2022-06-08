@@ -6,5 +6,8 @@
   "connector": "edgePassive",
   "link": "https://www.kittenbot.cc/jacdac/",
   "storeLink": "https://www.kittenbot.cc/jacdac/",
+  "tags": [
+    "hub"
+  ],
   "version": "1.0"
 }

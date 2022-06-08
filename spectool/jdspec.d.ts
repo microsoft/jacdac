@@ -793,6 +793,11 @@ declare namespace jdspec {
          * Information about the shape of the footprint and the holes
          */
         shape?: Shape
+
+        /**
+         * Allows to specify a priority in the catalog
+         */
+        order?: number
     }
 
     /**

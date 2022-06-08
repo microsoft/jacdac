@@ -2160,6 +2160,7 @@ export function normalizeDeviceSpecification(dev: jdspec.DeviceSpec) {
         relatedDevices: dev.relatedDevices,
         requiredDevices: dev.requiredDevices,
         shape: dev.shape,
+        order: dev.order,
     }
     // delete empty files
     const anyClone: any = clone

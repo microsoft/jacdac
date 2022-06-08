@@ -1652,7 +1652,8 @@
     "requiredDevices": [
       "microbit-educational-foundation-microbitv2",
       "kittenbot-jacdaptorformicrobitv2v10"
-    ]
+    ],
+    "order": 2
   },
   {
     "id": "kittenbot-jacdacstarterkitawithjacdaptorformicrobitv2v10",
@@ -1681,7 +1682,8 @@
     ],
     "requiredDevices": [
       "microbit-educational-foundation-microbitv2"
-    ]
+    ],
+    "order": 1
   },
   {
     "id": "kittenbot-jacdaptorformicrobitv2v10",

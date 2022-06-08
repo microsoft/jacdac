@@ -1,28 +1,30 @@
 {
-    "id": "kittenbot-jacdacstarterkitav10",
-    "name": "Jacdac Starter Kit A",
-    "company": "KittenBot",
-    "description": "A kit of Jacdac modules.",
-    "link": "https://www.kittenbot.cc/jacdac",
-    "storeLink": "https://www.kittenbot.cc/jacdac",
-    "tags": ["kit"],
-    "version": "1.0",
-    "devices": [
-        "kittenbot-keycapbuttonv10",
-        "kittenbot-lightsensorv10",
-        "kittenbot-magnetsensorv10",
-        "kittenbot-rotarybuttonv10",
-        "kittenbot-sliderv10",
-        "kittenbot-rgbringv10",
-        "kittenbot-hubv10"
-    ],
-    "relatedDevices": [
-        "kittenbot-jacdacstarterkitawithjacdaptorformicrobitv2v10",
-        "microbit-educational-foundation-microbitv2"
-    ],
-    "requiredDevices": [
-        "microbit-educational-foundation-microbitv2",
-        "kittenbot-jacdaptorformicrobitv2v10"
-    ],
-    "order": 2
+  "id": "kittenbot-jacdacstarterkitav10",
+  "name": "Jacdac Starter Kit A",
+  "company": "KittenBot",
+  "description": "A kit of Jacdac modules.",
+  "link": "https://www.kittenbot.cc/jacdac",
+  "storeLink": "https://www.kittenbot.cc/jacdac",
+  "tags": [
+    "kit"
+  ],
+  "version": "1.0",
+  "devices": [
+    "kittenbot-keycapbuttonv10",
+    "kittenbot-lightsensorv10",
+    "kittenbot-magnetsensorv10",
+    "kittenbot-rotarybuttonv10",
+    "kittenbot-sliderv10",
+    "kittenbot-rgbringv10",
+    "kittenbot-hubv10"
+  ],
+  "relatedDevices": [
+    "kittenbot-jacdacstarterkitawithjacdaptorformicrobitv2v10",
+    "microbit-educational-foundation-microbitv2"
+  ],
+  "requiredDevices": [
+    "microbit-educational-foundation-microbitv2",
+    "kittenbot-jacdaptorformicrobitv2v10"
+  ],
+  "order": 2
 }

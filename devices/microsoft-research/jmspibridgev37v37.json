@@ -12,5 +12,8 @@
   "productIdentifiers": [
     882232420
   ],
+  "tags": [
+    "adapter"
+  ],
   "version": "3.7"
 }

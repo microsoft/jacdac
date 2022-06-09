@@ -370,7 +370,8 @@
     "description": "A breadboard like PCB to screw mount Jacdac modules.",
     "connector": "edgePassive",
     "tags": [
-      "ec30"
+      "ec30",
+      "hub"
     ],
     "version": "4.1",
     "designIdentifier": "86"
@@ -1410,6 +1411,9 @@
     ],
     "productIdentifiers": [
       882232420
+    ],
+    "tags": [
+      "adapter"
     ],
     "version": "3.7"
   },

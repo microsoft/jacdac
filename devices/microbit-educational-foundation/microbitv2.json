@@ -8,7 +8,8 @@
   "storeLink": "https://www.microbit.org/buy/",
   "productIdentifiers": [
     854992189,
-    888455511
+    888455511,
+    1035770297
   ],
   "transport": {
     "type": "usb"

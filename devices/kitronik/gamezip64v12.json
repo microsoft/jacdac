@@ -3,7 +3,7 @@
   "name": "Game Zip 64",
   "company": "Kitronik",
   "makeCodeRepo": [
-    "https://github.com/pelikhan/pxt-kitronik-zip-64/tree/master/jacdac"
+    "https://github.com/pelikhan/pxt-kitronik-zip-64/jacdac"
   ],
   "connector": "noConnector",
   "link": "https://kitronik.co.uk/products/5626-game-zip-64-for-the-bbc-microbit",

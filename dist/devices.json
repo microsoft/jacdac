@@ -1815,7 +1815,7 @@
     "name": "Game Zip 64",
     "company": "Kitronik",
     "makeCodeRepo": [
-      "https://github.com/pelikhan/pxt-kitronik-zip-64/tree/master/jacdac"
+      "https://github.com/pelikhan/pxt-kitronik-zip-64/jacdac"
     ],
     "connector": "noConnector",
     "link": "https://kitronik.co.uk/products/5626-game-zip-64-for-the-bbc-microbit",
@@ -1857,7 +1857,7 @@
     "company": "Kitronik",
     "description": "The STOP:bit for the BBC micro:bit is the ultimate upgrade for traffic light/pedestrian crossing projects.",
     "makeCodeRepo": [
-      "https://github.com/pelikhan/pxt-kitronik-stopbit/tree/master/jacdac"
+      "https://github.com/pelikhan/pxt-kitronik-stopbit/jacdac"
     ],
     "connector": "noConnector",
     "link": "https://kitronik.co.uk/products/5642-stopbit-traffic-light-for-bbc-microbit",

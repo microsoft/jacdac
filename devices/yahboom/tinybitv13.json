@@ -4,7 +4,11 @@
   "company": "Yahboom",
   "description": "Tiny:bit is a robotic car for the micro:bit education market. It is compact, easy to assemble, and easy to move in tight spaces. The Tiny:bit smart car is based on the micro:bit development board design and uses the online code programming of MakeCode Editor. Rich sensor applications allow Tiny:bit for easy interaction. The Tiny:bit smart car has a set of alligator clips on the rear that can be creative and expand.",
   "makeCodeRepo": [
-    "https://github.com/pelikhan/Tiny-bitLib/tree/master/jacdac"
+    {
+      "target": "microbit",
+      "name": "yahboom-tinybitv13",
+      "slug": "pelikhan/Tiny-bitLib/tree/master/jacdac"
+    }
   ],
   "connector": "noConnector",
   "link": "https://category.yahboom.net/products/tinybit",

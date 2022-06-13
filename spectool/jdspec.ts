@@ -2138,10 +2138,7 @@ export function normalizeDeviceSpecification(dev: jdspec.DeviceSpec) {
         company: dev.company,
         description: dev.description,
         repo: dev.repo,
-        makeCodeRepo:
-            typeof (dev.makeCodeRepo as any) === "string"
-                ? [dev.makeCodeRepo as any as string]
-                : dev.makeCodeRepo,
+        makeCodeRepo: dev.makeCodeRepo,
         firmwareSource: dev.firmwareSource,
         hardwareDesign: dev.hardwareDesign,
         connector: dev.connector,

@@ -4,7 +4,11 @@
   "company": "Keystudio",
   "description": "Keyestudio relay breakout board for micro:bit has integrated a 4-way 5V relay module, fully compatible with micro:bit development board.\nIt can work only need to insert micro:bit into keyestudio relay shield, then input DC5V voltage on the relay VIN/GND port, pretty simple and convenient.",
   "makeCodeRepo": [
-    "https://github.com/pelikhan/keystudio-relay-breakout-jacdac"
+    {
+      "target": "microbit",
+      "name": "keystudio-relaybreakoutboardv10",
+      "slug": "pelikhan/keystudio-relay-breakout-jacdac"
+    }
   ],
   "connector": "noConnector",
   "link": "https://www.keyestudio.com/products/keyestudio-relay-breakout-board-for-bbc-microbit",

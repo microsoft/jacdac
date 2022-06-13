@@ -692,7 +692,11 @@ declare namespace jdspec {
         /**
          * Github repository containing the MakeCode extension, for software-only devices
          */
-        makeCodeRepo?: string[]
+        makeCodeRepo?: {
+            target: string
+            name: string
+            slug: string
+        }[]
 
         /**
          * Links image urls

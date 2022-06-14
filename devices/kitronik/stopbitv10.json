@@ -6,7 +6,7 @@
   "makeCodeRepo": [
     {
       "target": "microbit",
-      "name": "kitronik-stopbitv10",
+      "name": "kitronik-stopbit-jacdac",
       "slug": "pelikhan/pxt-kitronik-stopbit/jacdac"
     }
   ],

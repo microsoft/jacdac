@@ -215,7 +215,8 @@
   ],
   "tags": [
     "C",
-    "8bit"
+    "8bit",
+    "input"
   ],
   "group": "Slider"
 }

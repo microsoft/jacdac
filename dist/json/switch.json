@@ -228,7 +228,8 @@
     }
   ],
   "tags": [
-    "8bit"
+    "8bit",
+    "input"
   ],
   "group": "Button"
 }

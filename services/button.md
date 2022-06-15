@@ -3,7 +3,7 @@
     identifier: 0x1473a263
     extends: _sensor
     group: button
-    tags: C, 8bit, padauk
+    tags: C, 8bit, padauk, input
     status: stable
 
 A push-button, which returns to inactive position when not operated anymore.

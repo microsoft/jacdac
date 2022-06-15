@@ -257,7 +257,8 @@
   "tags": [
     "C",
     "8bit",
-    "padauk"
+    "padauk",
+    "input"
   ],
   "group": "Button"
 }

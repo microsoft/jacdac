@@ -243,7 +243,9 @@
     }
   ],
   "tags": [
-    "8bit"
+    "8bit",
+    "padauk",
+    "input"
   ],
   "group": "Environment"
 }

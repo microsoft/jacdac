@@ -93,7 +93,7 @@ function isEnabledReg(reg: jdspec.PacketInfo) {
 }
 
 function toMakeCodeClient(spec: jdspec.ServiceSpec) {
-    const { shortId, name, camelName, packets } = spec
+    const { shortId, name, camelName, packets, tags } = spec
 
     const nsc = TYPESCRIPT_STATIC_NAMESPACE
     const registers = packetsToRegisters(packets)
@@ -104,6 +104,7 @@ function toMakeCodeClient(spec: jdspec.ServiceSpec) {
     const reading = regs.find(reg => reg.identifier === Reading)
     const enabledReg = regs.find(isEnabledReg)
     const events = packets.filter(pkt => !pkt.derived && pkt.kind === "event")
+    const ninstances = tags?.indexOf("input") > -1 ? 2 : 1
     // TODO: pipes support
     const commands = packets.filter(
         pkt =>
@@ -403,12 +404,17 @@ ${toMetaComments(
     })
     .join("")}    
     }
-    //% fixedInstance whenUsed weight=1 block="${humanify(
-        spec.camelName
-    ).toLocaleLowerCase()}1"
-    export const ${tsify(spec.camelName)}1 = new ${className}("${humanify(
-        spec.camelName
-    )}1");
+    ${Array(ninstances)
+        .fill(0)
+        .map(
+            (_, i) => `
+    //% fixedInstance whenUsed weight=${
+                1 + i
+            } block="${humanify(spec.camelName).toLocaleLowerCase()}${i + 1}"
+    export const ${tsify(spec.camelName)}${
+                i + 1
+            } = new ${className}("${humanify(spec.camelName)}${i + 1}");`
+        ).join("\n")}
 }`
 }
 

@@ -3,7 +3,7 @@
     identifier: 0x12fe180f
     extends: _sensor
     group: environment
-    tags: 8bit
+    tags: 8bit, padauk, input
     status: stable
 
 A sensor that measures strength and polarity of magnetic field.

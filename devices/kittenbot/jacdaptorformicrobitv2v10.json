@@ -5,7 +5,8 @@
   "connector": "edgeLowCurrentProviderConsumer",
   "storeLink": "https://j.kittenbot.cn/kit-a",
   "tags": [
-    "adapter"
+    "adapter",
+    "microbit"
   ],
   "version": "1.0",
   "relatedDevices": [

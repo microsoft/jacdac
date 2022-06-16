@@ -3,7 +3,6 @@
   "name": "JM Analog Joystick",
   "company": "Microsoft Research",
   "firmwareSource": "https://github.com/microsoft/jacdac-padauk/tree/main/jm-joystick-44-0.2",
-  "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/deprecated_form_factor/altium_deprecated/reference-designs/JacdacJoystick%2044-0.4",
   "link": "https://github.com/microsoft/jacdac-padauk",
   "services": [
     277836886

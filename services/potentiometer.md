@@ -3,7 +3,7 @@
     identifier: 0x1f274746
     extends: _sensor
     group: slider
-    tags: C, 8bit
+    tags: C, 8bit, input
     status: stable
 
 A slider or rotary potentiometer.

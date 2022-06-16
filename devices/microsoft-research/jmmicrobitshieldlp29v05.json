@@ -7,6 +7,10 @@
   "productIdentifiers": [
     974031363
   ],
+  "tags": [
+    "adapter",
+    "microbit"
+  ],
   "version": "0.5",
   "designIdentifier": "29"
 }

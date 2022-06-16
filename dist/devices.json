@@ -945,6 +945,10 @@
     "productIdentifiers": [
       974031363
     ],
+    "tags": [
+      "adapter",
+      "microbit"
+    ],
     "version": "0.5",
     "designIdentifier": "29"
   },
@@ -1437,7 +1441,8 @@
       882232420
     ],
     "tags": [
-      "adapter"
+      "adapter",
+      "pi"
     ],
     "version": "3.7"
   },
@@ -1689,7 +1694,8 @@
     "connector": "edgeLowCurrentProviderConsumer",
     "storeLink": "https://j.kittenbot.cn/kit-a",
     "tags": [
-      "adapter"
+      "adapter",
+      "microbit"
     ],
     "version": "1.0",
     "relatedDevices": [

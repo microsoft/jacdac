@@ -5,7 +5,8 @@
   "connector": "edgeLowCurrentProviderConsumer",
   "storeLink": "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-for-micro-bit",
   "tags": [
-    "adapter"
+    "adapter",
+    "microbit"
   ],
   "version": "1.0",
   "relatedDevices": [

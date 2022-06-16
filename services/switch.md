@@ -3,7 +3,7 @@
     identifier: 0x1ad29402
     extends: _sensor
     group: button
-    tags: 8bit
+    tags: 8bit, input
     status: rc
 
 A switch, which keeps its position.

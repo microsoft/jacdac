@@ -3,7 +3,7 @@
     identifier: 0x10fa29c9
     extends: _sensor
     group: slider
-    tags: C, 8bit
+    tags: C, 8bit, input
     status: stable
 
 An incremental rotary encoder - converts angular motion of a shaft to digital signal.

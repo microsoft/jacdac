@@ -619,6 +619,7 @@ declare namespace jdspec {
     }
 
     type ShapeWellKnown =
+        | "ec30_1x2_l"
         | "ec30_2x2_l"
         | "ec30_2x2_lr"
         | "ec30_3x2_l"

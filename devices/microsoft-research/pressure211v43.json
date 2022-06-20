@@ -1,6 +1,6 @@
 {
   "id": "microsoft-research-pressure211v43",
-  "name": "Pressure 211",
+  "name": "Pressure",
   "company": "Microsoft Research",
   "description": "Measures atmospheric pressure",
   "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -12,5 +12,6 @@
     816579443
   ],
   "version": "4.3",
+  "designIdentifier": "211",
   "shape": "ec30_2x2_lr"
 }

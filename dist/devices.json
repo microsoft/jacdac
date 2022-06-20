@@ -128,6 +128,23 @@
     ]
   },
   {
+    "id": "microsoft-research-co2209v43",
+    "name": "CO2 209",
+    "company": "Microsoft Research",
+    "description": "Measures real CO2 concentration using SCD40 sensor (plus temperature and humidity)",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      337754823,
+      382210232,
+      379362758
+    ],
+    "productIdentifiers": [
+      1008301288
+    ],
+    "version": "4.3",
+    "shape": "ec30_2x2_lr"
+  },
+  {
     "id": "microsoft-research-jacdaccableextender38v10",
     "name": "JacdacCableExtender ",
     "company": "Microsoft Research",
@@ -1588,6 +1605,64 @@
     "version": "0.1",
     "designIdentifier": "53",
     "status": "experimental"
+  },
+  {
+    "id": "microsoft-research-motionpir210v43",
+    "name": "Motion (PIR) 210",
+    "company": "Microsoft Research",
+    "description": "Detects motion using infra-red",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      293185353
+    ],
+    "productIdentifiers": [
+      927235767
+    ],
+    "version": "4.3",
+    "shape": "ec30_2x2_lr"
+  },
+  {
+    "id": "microsoft-research-pressure211v43",
+    "name": "Pressure 211",
+    "company": "Microsoft Research",
+    "description": "Measures atmospheric pressure",
+    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "services": [
+      337754823,
+      504462570
+    ],
+    "productIdentifiers": [
+      816579443
+    ],
+    "version": "4.3",
+    "shape": "ec30_2x2_lr"
+  },
+  {
+    "id": "microsoft-research-tactv11",
+    "name": "Tact",
+    "company": "Microsoft Research",
+    "description": "Tact style push switch, MSR design ID 115",
+    "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/altium/module-designs/JacdacTactEc30%20115-1.1",
+    "services": [
+      343122531
+    ],
+    "productIdentifiers": [
+      1059364193
+    ],
+    "version": "1.1"
+  },
+  {
+    "id": "microsoft-research-temprhv11",
+    "name": "Temp & RH",
+    "company": "Microsoft Research",
+    "description": "Temperature and relative humidity sensor module.",
+    "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/altium/module-designs/JacdacTempRhEc30%20116-1.1",
+    "services": [
+      337754823,
+      382210232
+    ],
+    "version": "1.1",
+    "shape": "ec30_2x2_l"
   },
   {
     "id": "microsoft-research-uviilluminance205v42",

@@ -1,6 +1,6 @@
 {
-  "id": "microsoft-research-jmspibridgev37v37",
-  "name": "JM SPI bridge v3.7",
+  "id": "microsoft-research-jmspibridgev37",
+  "name": "JM SPI bridge",
   "company": "Microsoft Research",
   "description": "JM SPI bridge v3.7",
   "repo": "https://github.com/microsoft/jacdac-msr-modules",

@@ -2,7 +2,7 @@
   "id": "microsoft-research-tactv11",
   "name": "Tact",
   "company": "Microsoft Research",
-  "description": "Tact style push switch, MSR design ID 115",
+  "description": "Tact style push switch",
   "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/altium/module-designs/JacdacTactEc30%20115-1.1",
   "services": [
     343122531
@@ -10,5 +10,6 @@
   "productIdentifiers": [
     1059364193
   ],
+  "designIdentifier": "115",
   "version": "1.1"
 }

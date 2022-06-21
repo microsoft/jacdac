@@ -1653,7 +1653,8 @@
       1059364193
     ],
     "version": "1.1",
-    "designIdentifier": "115"
+    "designIdentifier": "115",
+    "shape": "ec30_1x2_l"
   },
   {
     "id": "microsoft-research-temprh116v11",

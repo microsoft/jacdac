@@ -1656,6 +1656,38 @@
     "designIdentifier": "115"
   },
   {
+    "id": "microsoft-research-tact115v11",
+    "name": "Tact",
+    "company": "Microsoft Research",
+    "description": "Tact style push switch",
+    "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/altium/module-designs/JacdacTactEc30%20115-1.1",
+    "services": [
+      343122531
+    ],
+    "productIdentifiers": [
+      1059364193
+    ],
+    "version": "1.1",
+    "designIdentifier": "115"
+  },
+  {
+    "id": "microsoft-research-temprh116v11",
+    "name": "Temp & RH",
+    "company": "Microsoft Research",
+    "description": "Temperature and relative humidity sensor module.",
+    "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/altium/module-designs/JacdacTempRhEc30%20116-1.1",
+    "services": [
+      337754823,
+      382210232
+    ],
+    "productIdentifiers": [
+      1066966718
+    ],
+    "version": "1.1",
+    "designIdentifier": "116",
+    "shape": "ec30_2x2_l"
+  },
+  {
     "id": "microsoft-research-temprh116v11",
     "name": "Temp & RH",
     "company": "Microsoft Research",

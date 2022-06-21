@@ -129,7 +129,7 @@
   },
   {
     "id": "microsoft-research-co2209v43",
-    "name": "CO2 209",
+    "name": "CO2",
     "company": "Microsoft Research",
     "description": "Measures real CO2 concentration using SCD40 sensor (plus temperature and humidity)",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -142,6 +142,7 @@
       1008301288
     ],
     "version": "4.3",
+    "designIdentifier": "209",
     "shape": "ec30_2x2_lr"
   },
   {
@@ -1608,7 +1609,7 @@
   },
   {
     "id": "microsoft-research-motionpir210v43",
-    "name": "Motion (PIR) 210",
+    "name": "Motion (PIR)",
     "company": "Microsoft Research",
     "description": "Detects motion using infra-red",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -1619,11 +1620,12 @@
       927235767
     ],
     "version": "4.3",
+    "designIdentifier": "210",
     "shape": "ec30_2x2_lr"
   },
   {
     "id": "microsoft-research-pressure211v43",
-    "name": "Pressure 211",
+    "name": "Pressure",
     "company": "Microsoft Research",
     "description": "Measures atmospheric pressure",
     "repo": "https://github.com/microsoft/jacdac-msr-modules",
@@ -1635,13 +1637,14 @@
       816579443
     ],
     "version": "4.3",
+    "designIdentifier": "211",
     "shape": "ec30_2x2_lr"
   },
   {
-    "id": "microsoft-research-tactv11",
+    "id": "microsoft-research-tact115v11",
     "name": "Tact",
     "company": "Microsoft Research",
-    "description": "Tact style push switch, MSR design ID 115",
+    "description": "Tact style push switch",
     "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/altium/module-designs/JacdacTactEc30%20115-1.1",
     "services": [
       343122531
@@ -1649,10 +1652,11 @@
     "productIdentifiers": [
       1059364193
     ],
-    "version": "1.1"
+    "version": "1.1",
+    "designIdentifier": "115"
   },
   {
-    "id": "microsoft-research-temprhv11",
+    "id": "microsoft-research-temprh116v11",
     "name": "Temp & RH",
     "company": "Microsoft Research",
     "description": "Temperature and relative humidity sensor module.",
@@ -1665,6 +1669,7 @@
       1066966718
     ],
     "version": "1.1",
+    "designIdentifier": "116",
     "shape": "ec30_2x2_l"
   },
   {

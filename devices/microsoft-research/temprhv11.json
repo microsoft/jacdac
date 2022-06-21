@@ -1,5 +1,5 @@
 {
-  "id": "microsoft-research-temprhv11",
+  "id": "microsoft-research-temprh116v11",
   "name": "Temp & RH",
   "company": "Microsoft Research",
   "description": "Temperature and relative humidity sensor module.",
@@ -8,10 +8,10 @@
     337754823,
     382210232
   ],
-  "designIdentifier": "116",
   "productIdentifiers": [
     1066966718
   ],
   "version": "1.1",
+  "designIdentifier": "116",
   "shape": "ec30_2x2_l"
 }

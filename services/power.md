@@ -7,23 +7,22 @@ A power-provider service.
 
 ## Power negotiation protocol
 
-The purpose of the power negotiation is to ensure that there is no more than ~900mA
-delivered to the power rail.
+The purpose of the power negotiation is to ensure that there is no more than [I<sub>out_hc(max)</sub>](https://microsoft.github.io/jacdac-docs/reference/electrical-spec/#power-providers) delivered to the power rail.
 This is realized by limiting the number of enabled power provider services to one.
 
 Note, that it's also possible to have low-current power providers,
-which are limited to 100mA and do not run a power provider service.
+which are limited to [I<sub>out_lc(max)</sub>](https://microsoft.github.io/jacdac-docs/reference/electrical-spec/#power-providers) and do not run a power provider service.
 These are **not** accounted for in the power negotiation protocol.
 
 Power providers can have multiple _channels_, typically multiple Jacdac ports on the provider.
-Each channel can be limited to 900mA separately.
+Each channel can be limited to [I<sub>out_hc(max)</sub>](https://microsoft.github.io/jacdac-docs/reference/electrical-spec/#power-providers) separately.
 In normal operation, the data lines of each channels are connected together.
 The ground lines are always connected together.
 Multi-channel power providers are also called _powered hubs_.
 
 While channels have separate current limits, there's nothing to prevent the user
 from joining two or more channels outside of the provider using a passive hub.
-This would allow more than 900mA of current to be drawn, resulting in cables or components
+This would allow more than [I<sub>out_hc(max)</sub>](https://microsoft.github.io/jacdac-docs/reference/electrical-spec/#power-providers) of current to be drawn, resulting in cables or components
 getting hot and/or malfunctioning.
 Thus, the power negotiation protocol seeks to detect situations where
 multiple channels of power provider(s) are bridged together
@@ -97,30 +96,34 @@ The `Overprovision` status is generally considered normal (eg. when two multi-ch
 
 ### Server implementation notes
 
-#### An MCU per channel
+#### A dedicated MCU per channel
 
 Every channel has:
-* a cheap 8-bit MCU (eg., PMS150C)
-* a current limiter with latching circuit
-* an analog switch
+* a cheap 8-bit MCU (e.g. PMS150C, PFS122),
+* a current limiter with FAULT output and ENABLE input, and
+* an analog switch.
 
-The MCU is connected to data line of the channel.
-The switch joins the data line of the channel with internal data bus, common to all channels.
+The MCU here needs at least 4 pins per channel.
+It is connected to data line of the channel, the control input of the switch, and to the current limiter's FAULT and ENABLE pins.
+
+The switch connects the data line of the channel (JD_DATA_CHx) with the internal shared data bus, common to all channels (JD_DATA_COM).
 Both the switch and the limiter are controlled by the MCU.
-The latching circuit on the limiter shuts it down immediately on current overdraw.
+A latching circuit is not needed for the limiter because the MCU will detect an overcurrent fault and shut it down immediately. 
 
 During reception, after the beginning of `shutdown` frame is detected,
 the switch is opened for a brief period.
 If the `shutdown` frame is received correctly, it means it was on MCU's channel.
 
-#### A dedicated MCU for multiple channels
+In the case of only one power delivery channel that's controlled by a dedicated MCU, the analog switch is not necessary. 
+
+#### A shared MCU for multiple channels
 
 Every channel has:
-* a current limiter with latching circuit
-* an analog switch
+* a current limiter with FAULT output and ENABLE input, 
+* an analog switch, and
 * a wiggle-detection line connecting the MCU to data line of the channel
 
-The MCU here needs at least 4 pins per channel.
+The MCU again needs at least 4 pins per channel.
 Switches and limiters are set up like in the configuration above.
 The Jacdac data line of the MCU is connected to internal data bus.
 
@@ -140,13 +143,12 @@ a loop, and the respective channels needs to be disabled.
 Here, there's only one channel of power and we don't have hard real time requirements,
 so user-programmable brain can control it.
 There is no need for analog switch or wiggle-detection line,
-but the current limiter with latching circuit is still needed.
+but a current limiter with a latching circuit is needed.
 
 There is nothing special to do during reception of `shutdown` packet.
 When it is received, the current limiter should just be disabled.
 
-Ideally, exception/hard-fault handlers on the MCU should also disable the
-current limiter.
+Ideally, exception/hard-fault handlers on the MCU should also disable the current limiter.
 Similarly, the limiter should be disabled while the MCU is in bootloader mode,
 or otherwise unaware of the power negotiation protocol. 
 

@@ -493,7 +493,7 @@ class ${className}(${baseType}):
     """
 
     def __init__(self, bus: Bus, role: str${
-        reading ? `, *, ${missingReadingField}: ${readingType} = None` : ""
+        reading ? `, *, ${missingReadingField}: Optional[${readingType}] = None` : ""
     }) -> None:
         super().__init__(${ctorArgs.join(", ")})
 ${

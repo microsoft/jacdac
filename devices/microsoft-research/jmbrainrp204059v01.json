@@ -17,6 +17,9 @@
   "transport": {
     "type": "usb"
   },
+  "tags": [
+    "adapter"
+  ],
   "firmwares": [
     {
       "name": "HID Keyboard + Mouse",

@@ -21,5 +21,6 @@
   "productIdentifiers": [
     995306847
   ],
-  "version": "1.0"
+  "version": "1.0",
+  "status": "stable"
 }

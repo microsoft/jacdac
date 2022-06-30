@@ -24,5 +24,6 @@
   "productIdentifiers": [
     854008423
   ],
-  "version": "1.0"
+  "version": "1.0",
+  "status": "stable"
 }

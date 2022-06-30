@@ -25,6 +25,7 @@
     "driveName": "MICROBIT",
     "firmwareFormat": "hex"
   },
+  "status": "stable",
   "relatedDevices": [
     "kittenbot-jacdaptorformicrobitv2v10"
   ]

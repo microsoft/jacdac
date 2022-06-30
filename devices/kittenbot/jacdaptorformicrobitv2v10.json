@@ -9,6 +9,7 @@
     "microbit"
   ],
   "version": "1.0",
+  "status": "stable",
   "relatedDevices": [
     "microbit-educational-foundation-microbitv2"
   ],

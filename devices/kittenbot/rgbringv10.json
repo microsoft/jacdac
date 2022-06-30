@@ -11,5 +11,6 @@
     924243657
   ],
   "version": "1.0",
+  "status": "stable",
   "shape": "ec30_3x3_l"
 }

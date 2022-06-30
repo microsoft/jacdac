@@ -1187,6 +1187,15 @@ function processDevices(upperName: string) {
                     console.error(`${d.id}: device not found ${did}`)
                 )
         )
+    
+    const statusScores : Record<jdspec.StabilityStatus, number> = {
+        "deprecated": 100,
+        "experimental": 50,
+        "rc": 10,
+        "stable": 0,
+    }
+    // push experimentals at the back
+    allDevices.sort((a,b) => statusScores[a.status || "experimental"] - statusScores[b.status || "experimental"])
     const ofn = path.join("../dist", "devices.json")
     console.log(`writing ${ofn}`)
     fs.writeFileSync(ofn, JSON.stringify(allDevices, null, 2))

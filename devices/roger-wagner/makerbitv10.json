@@ -31,5 +31,6 @@
   "productIdentifiers": [
     1018020097
   ],
-  "version": "1.0"
+  "version": "1.0",
+  "status": "stable"
 }

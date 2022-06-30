@@ -8,6 +8,7 @@
     "kit"
   ],
   "version": "1.0",
+  "status": "stable",
   "devices": [
     "kittenbot-keycapbuttonv10",
     "kittenbot-lightsensorv10",

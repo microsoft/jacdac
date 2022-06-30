@@ -2152,7 +2152,7 @@ export function normalizeDeviceSpecification(dev: jdspec.DeviceSpec) {
         version: dev.version ? dev.version.replace(/^v/, "") : undefined,
         designIdentifier: dev.designIdentifier || undefined,
         bootloader: dev.bootloader,
-        status: dev.status,
+        status: dev.status || (dev.storeLink ? "stable" : undefined),
         devices: dev.devices,
         relatedDevices: dev.relatedDevices,
         requiredDevices: dev.requiredDevices,

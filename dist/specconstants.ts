@@ -5265,6 +5265,41 @@ export enum TvocReg {
 
 // Service Unique Brain constants
 export const SRV_UNIQUE_BRAIN = 0x103c4ee5
+// Service USB Bridge constants
+export const SRV_USB_BRIDGE = 0x18f61a4a
+
+export enum UsbBridgeQByte { // uint8_t
+    Magic = 0xfe,
+    LiteralMagic = 0xf8,
+    Reserved = 0xf9,
+    SerialGap = 0xfa,
+    FrameGap = 0xfb,
+    FrameStart = 0xfc,
+    FrameEnd = 0xfd,
+}
+
+export enum UsbBridgeCmd {
+    /**
+     * No args. Disables forwarding of Jacdac packets.
+     */
+    DisablePackets = 0x80,
+
+    /**
+     * No args. Enables forwarding of Jacdac packets.
+     */
+    EnablePackets = 0x81,
+
+    /**
+     * No args. Disables forwarding of serial log messages.
+     */
+    DisableLog = 0x82,
+
+    /**
+     * No args. Enables forwarding of serial log messages.
+     */
+    EnableLog = 0x83,
+}
+
 // Service UV index constants
 export const SRV_UV_INDEX = 0x1f6e0d90
 

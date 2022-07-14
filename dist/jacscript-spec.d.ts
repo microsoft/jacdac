@@ -1103,6 +1103,17 @@ declare namespace roles {
     function uniqueBrain(): UniqueBrainRole
 }
 
+// Service: USB Bridge
+declare class UsbBridgeRole extends Role {
+    disablePackets(): void
+    enablePackets(): void
+    disableLog(): void
+    enableLog(): void
+}
+declare namespace roles {
+    function usbBridge(): UsbBridgeRole
+}
+
 // Service: UV index
 declare class UvIndexRole extends SensorRole {
     uvIndex: JDRegisterNum

@@ -6,6 +6,10 @@
   "firmwareSource": "https://github.com/microsoft/jacdac-pico",
   "connector": "edgeHighCurrentProvider",
   "link": "https://github.com/microsoft/jacdac-pico",
+  "transport": {
+    "type": "serial",
+    "vendorId": 11914
+  },
   "services": [
     530893146,
     414210922,

@@ -1582,6 +1582,26 @@
     "shape": "ec30_2x2_lr"
   },
   {
+    "id": "microsoft-research-rp2040jacscript59v01",
+    "name": "RP2040 Jacscript",
+    "company": "Microsoft Research",
+    "description": "RP2040 brain running Jacscript and related services",
+    "firmwareSource": "https://github.com/microsoft/jacdac-pico",
+    "connector": "edgeHighCurrentProvider",
+    "link": "https://github.com/microsoft/jacdac-pico",
+    "services": [
+      530893146,
+      414210922,
+      411425820,
+      437330261
+    ],
+    "productIdentifiers": [
+      900102307
+    ],
+    "version": "0.1",
+    "designIdentifier": "59"
+  },
+  {
     "id": "microsoft-research-tact115v11",
     "name": "Tact",
     "company": "Microsoft Research",

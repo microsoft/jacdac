@@ -1598,6 +1598,10 @@
     "productIdentifiers": [
       900102307
     ],
+    "transport": {
+      "type": "serial",
+      "vendorId": 11914
+    },
     "version": "0.1",
     "designIdentifier": "59"
   },

@@ -1,0 +1,18 @@
+{
+  "id": "microsoft-research-developerrgb117v10",
+  "name": "Developer RGB",
+  "company": "Microsoft Research",
+  "description": "Developer module with 10-pin header and RGB LED",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/developer-rgb-117/profile/developer-rgb-117-v1.0.c",
+  "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/altium/module-designs/JacdacDevRgbEc30%20117-1.0",
+  "services": [
+    506480888
+  ],
+  "productIdentifiers": [
+    851267569
+  ],
+  "version": "1.0",
+  "designIdentifier": "117",
+  "shape": "ec30_2x2_lr"
+}

@@ -479,6 +479,26 @@
     ]
   },
   {
+    "id": "microsoft-research-cableextender38v10",
+    "name": "CableExtender",
+    "company": "Microsoft Research",
+    "description": "Cable extender",
+    "connector": "edgePassive",
+    "version": "1.0",
+    "designIdentifier": "38",
+    "status": "experimental"
+  },
+  {
+    "id": "microsoft-research-hub38v11",
+    "name": "Hub",
+    "company": "Microsoft Research",
+    "description": "Cable extender",
+    "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/altium/hub-designs/JacdacCableExtender%2038-1.1",
+    "connector": "edgePassive",
+    "version": "1.1",
+    "designIdentifier": "38"
+  },
+  {
     "id": "microsoft-research-co2209v43",
     "name": "CO2",
     "company": "Microsoft Research",
@@ -524,18 +544,6 @@
     "version": "1.0",
     "designIdentifier": "114",
     "shape": "ec30_2x4_lr"
-  },
-  {
-    "id": "microsoft-research-jacdaccableextender38v10",
-    "name": "JacdacCableExtender ",
-    "company": "Microsoft Research",
-    "connector": "edgePassive",
-    "productIdentifiers": [
-      928595161
-    ],
-    "version": "1.0",
-    "designIdentifier": "38",
-    "status": "experimental"
   },
   {
     "id": "microsoft-research-jacdacjoystick440344v03",

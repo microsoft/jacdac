@@ -4,10 +4,10 @@
   "company": "Microsoft Research",
   "description": "Cable extender",
   "connector": "edgePassive",
-  "version": "1.0",
-  "designIdentifier": "38",
   "productIdentifiers": [
     928595161
   ],
+  "version": "1.0",
+  "designIdentifier": "38",
   "status": "experimental"
 }

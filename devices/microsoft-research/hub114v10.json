@@ -1,0 +1,11 @@
+{
+  "id": "microsoft-research-hub114v10",
+  "name": "Hub",
+  "company": "Microsoft Research",
+  "description": "Passive hub with 6 ports",
+  "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/altium/hub-designs/JacdacEc30Hub10x40%20114-1.0",
+  "connector": "edgePassive",
+  "version": "1.0",
+  "designIdentifier": "114",
+  "shape": "ec30_2x4_lr"
+}

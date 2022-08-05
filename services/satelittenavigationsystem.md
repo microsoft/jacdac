@@ -18,14 +18,6 @@ A satellite-based navigation system like GPS, Gallileo, ...
 
 Reported coordinates, geometric altitude and time of position.
 
-    ro position_error @ reading_error {
-        latitude: u9.23 °
-        longitude: u9.23 °
-        altitude: i26.6 m
-    }
-
-Estimated absolute error on coordinates
-
     rw enabled: bool @ intensity
 
 Turns on or off the GPS antenna.

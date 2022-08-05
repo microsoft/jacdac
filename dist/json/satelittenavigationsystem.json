@@ -2,8 +2,8 @@
   "name": "Satellite Navigation System",
   "status": "experimental",
   "shortId": "satelittenavigationsystem",
-  "camelName": "satnav",
-  "shortName": "satnav",
+  "camelName": "satNav",
+  "shortName": "satNav",
   "extends": [
     "_base",
     "_sensor"

@@ -4298,9 +4298,9 @@ export enum RoverReg {
 }
 
 // Service Satellite Navigation System constants
-export const SRV_SATNAV = 0x19dd6136
+export const SRV_SAT_NAV = 0x19dd6136
 
-export enum SatnavFixQuality { // uint8_t
+export enum SatNavFixQuality { // uint8_t
     NotAvailable = 0x0,
     SinglePoint = 0x1,
     Differential = 0x2,
@@ -4312,7 +4312,7 @@ export enum SatnavFixQuality { // uint8_t
     WAAS = 0x9,
 }
 
-export enum SatnavReg {
+export enum SatNavReg {
     /**
      * Reported coordinates, geometric altitude and time of position.
      *
@@ -4335,13 +4335,13 @@ export enum SatnavReg {
      * Fix information extracted from a GGA message.
      *
      * ```
-     * const [hdop, antennaHeight, geoidalSeparation, ageOfDifferentialCorretion, differentialReferenceStation, quality, satellites] = jdunpack<[number, number, number, number, number, SatnavFixQuality, number]>(buf, "u12.20 i10.22 i10.22 u16 u16 u8 u8")
+     * const [hdop, antennaHeight, geoidalSeparation, ageOfDifferentialCorretion, differentialReferenceStation, quality, satellites] = jdunpack<[number, number, number, number, number, SatNavFixQuality, number]>(buf, "u12.20 i10.22 i10.22 u16 u16 u8 u8")
      * ```
      */
     Fix = 0x181,
 }
 
-export enum SatnavEvent {
+export enum SatNavEvent {
     /**
      * The module is enabled and ready to receive position data.
      */

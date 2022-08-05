@@ -2,7 +2,7 @@
 
     identifier: 0x19dd6136
     extends: _sensor
-    camel: satnav
+    camel: satNav
     status: experimental
 
 A satellite-based navigation system like GPS, Gallileo, ...

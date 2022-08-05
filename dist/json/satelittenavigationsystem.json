@@ -183,7 +183,7 @@
       "kind": "ro",
       "name": "position",
       "identifier": 257,
-      "description": "Reported coordinates, geometric altitude and time of position.",
+      "description": "Reported coordinates, geometric altitude and time of position. Altitude accuracy is 0 if not available.",
       "fields": [
         {
           "name": "timestamp",
@@ -211,16 +211,30 @@
           "absoluteMax": 180
         },
         {
+          "name": "accuracy",
+          "unit": "m",
+          "shift": 16,
+          "type": "u16.16",
+          "storage": 4
+        },
+        {
           "name": "altitude",
           "unit": "m",
           "shift": 6,
           "type": "i26.6",
           "storage": -4
+        },
+        {
+          "name": "altitudeAccuracy",
+          "unit": "m",
+          "shift": 16,
+          "type": "u16.16",
+          "storage": 4
         }
       ],
       "volatile": true,
       "identifierName": "reading",
-      "packFormat": "u64 i9.23 i9.23 i26.6"
+      "packFormat": "u64 i9.23 i9.23 u16.16 i26.6 u16.16"
     },
     {
       "kind": "rw",

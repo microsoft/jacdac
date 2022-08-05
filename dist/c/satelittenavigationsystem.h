@@ -16,14 +16,16 @@
 #define JD_SAT_NAV_FIX_QUALITY_WAAS 0x9
 
 /**
- * Reported coordinates, geometric altitude and time of position.
+ * Reported coordinates, geometric altitude and time of position. Altitude accuracy is 0 if not available.
  */
 #define JD_SAT_NAV_REG_POSITION JD_REG_READING
 typedef struct jd_sat_nav_position {
     uint64_t timestamp; // ms
     int32_t latitude;  // lat i9.23
     int32_t longitude;  // lon i9.23
+    uint32_t accuracy;  // m u16.16
     int32_t altitude;  // m i26.6
+    uint32_t altitudeAccuracy;  // m u16.16
 } jd_sat_nav_position_t;
 
 

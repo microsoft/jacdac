@@ -4314,10 +4314,10 @@ export enum SatNavFixQuality { // uint8_t
 
 export enum SatNavReg {
     /**
-     * Reported coordinates, geometric altitude and time of position.
+     * Reported coordinates, geometric altitude and time of position. Altitude accuracy is 0 if not available.
      *
      * ```
-     * const [timestamp, latitude, longitude, altitude] = jdunpack<[number, number, number, number]>(buf, "u64 i9.23 i9.23 i26.6")
+     * const [timestamp, latitude, longitude, accuracy, altitude, altitudeAccuracy] = jdunpack<[number, number, number, number, number, number]>(buf, "u64 i9.23 i9.23 u16.16 i26.6 u16.16")
      * ```
      */
     Position = 0x101,

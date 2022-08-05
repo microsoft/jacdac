@@ -894,7 +894,7 @@ declare namespace roles {
 
 // Service: Satellite Navigation System
 declare class SatNavRole extends SensorRole {
-    position: JDRegisterArray & { timestamp: number, latitude: number, longitude: number, altitude: number }
+    position: JDRegisterArray & { timestamp: number, latitude: number, longitude: number, accuracy: number, altitude: number, altitudeAccuracy: number }
     enabled: JDRegisterNum
     fix: JDRegisterArray & { hdop: number, antenna_height: number, geoidal_separation: number, age_of_differential_corretion: number, differential_reference_station: number, quality: number, satellites: number }
     fixAvailable: JDEvent

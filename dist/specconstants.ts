@@ -4338,7 +4338,7 @@ export enum SatnavReg {
      * const [hdop, antennaHeight, geoidalSeparation, ageOfDifferentialCorretion, differentialReferenceStation, quality, satellites] = jdunpack<[number, number, number, number, number, SatnavFixQuality, number]>(buf, "u12.20 i10.22 i10.22 u16 u16 u8 u8")
      * ```
      */
-    GGA = 0x181,
+    Fix = 0x181,
 }
 
 export enum SatnavEvent {

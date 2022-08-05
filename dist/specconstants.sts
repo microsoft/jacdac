@@ -6722,7 +6722,7 @@ namespace jacdac {
          * const [hdop, antennaHeight, geoidalSeparation, ageOfDifferentialCorretion, differentialReferenceStation, quality, satellites] = jdunpack<[number, number, number, number, number, jacdac.SatnavFixQuality, number]>(buf, "u12.20 i10.22 i10.22 u16 u16 u8 u8")
          * ```
          */
-        GGA = 0x181,
+        Fix = 0x181,
     }
 
     export namespace SatnavRegPack {
@@ -6737,9 +6737,9 @@ namespace jacdac {
         export const Enabled = "u8"
 
         /**
-         * Pack format for 'GGA' register data.
+         * Pack format for 'fix' register data.
          */
-        export const GGA = "u12.20 i10.22 i10.22 u16 u16 u8 u8"
+        export const Fix = "u12.20 i10.22 i10.22 u16 u16 u8 u8"
     }
 
     export const enum SatnavEvent {

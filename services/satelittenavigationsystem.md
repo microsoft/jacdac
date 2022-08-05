@@ -33,7 +33,7 @@ Turns on or off the GPS antenna.
         Simulator = 8
         WAAS  = 9
      }
-     ro GGA @ 0x181 {
+     ro fix? @ 0x181 {
          hdop: u12.20
          antenna_height: i10.22 m
          geoidal_separation: i10.22 m

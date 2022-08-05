@@ -35,8 +35,8 @@ typedef struct jd_satnav_position {
 /**
  * Fix information extracted from a GGA message.
  */
-#define JD_SATNAV_REG_GGA 0x181
-typedef struct jd_satnav_gga {
+#define JD_SATNAV_REG_FIX 0x181
+typedef struct jd_satnav_fix {
     uint32_t hdop;  // u12.20
     int32_t antenna_height;  // m i10.22
     int32_t geoidal_separation;  // m i10.22
@@ -44,7 +44,7 @@ typedef struct jd_satnav_gga {
     uint16_t differential_reference_station;
     uint8_t quality;  // FixQuality
     uint8_t satellites;
-} jd_satnav_gga_t;
+} jd_satnav_fix_t;
 
 
 /**

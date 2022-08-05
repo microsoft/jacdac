@@ -239,7 +239,7 @@
     },
     {
       "kind": "ro",
-      "name": "GGA",
+      "name": "fix",
       "identifier": 385,
       "description": "Fix information extracted from a GGA message.",
       "fields": [
@@ -288,6 +288,7 @@
           "isSimpleType": true
         }
       ],
+      "optional": true,
       "packFormat": "u12.20 i10.22 i10.22 u16 u16 u8 u8"
     },
     {

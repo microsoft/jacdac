@@ -896,7 +896,7 @@ declare namespace roles {
 declare class SatnavRole extends SensorRole {
     position: JDRegisterArray & { timestamp: number, latitude: number, longitude: number, altitude: number }
     enabled: JDRegisterNum
-    gGA: JDRegisterArray & { hdop: number, antenna_height: number, geoidal_separation: number, age_of_differential_corretion: number, differential_reference_station: number, quality: number, satellites: number }
+    fix: JDRegisterArray & { hdop: number, antenna_height: number, geoidal_separation: number, age_of_differential_corretion: number, differential_reference_station: number, quality: number, satellites: number }
     fixAvailable: JDEvent
     inactive: JDEvent
 }

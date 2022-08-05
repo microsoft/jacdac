@@ -4297,6 +4297,62 @@ export enum RoverReg {
     Kinematics = 0x101,
 }
 
+// Service Satellite Navigation System constants
+export const SRV_SATNAV = 0x19dd6136
+
+export enum SatnavFixQuality { // uint8_t
+    NotAvailable = 0x0,
+    SinglePoint = 0x1,
+    Differential = 0x2,
+    RTKFixedAmbiguitySolution = 0x4,
+    RTKFloatingAmbiguitySolution = 0x5,
+    DeadReckoning = 0x6,
+    ManualInput = 0x7,
+    Simulator = 0x8,
+    WAAS = 0x9,
+}
+
+export enum SatnavReg {
+    /**
+     * Reported coordinates, geometric altitude and time of position.
+     *
+     * ```
+     * const [timestamp, latitude, longitude, altitude] = jdunpack<[number, number, number, number]>(buf, "u64 i9.23 i9.23 i26.6")
+     * ```
+     */
+    Position = 0x101,
+
+    /**
+     * Read-write bool (uint8_t). Turns on or off the GPS antenna.
+     *
+     * ```
+     * const [enabled] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Enabled = 0x1,
+
+    /**
+     * Fix information extracted from a GGA message.
+     *
+     * ```
+     * const [hdop, antennaHeight, geoidalSeparation, ageOfDifferentialCorretion, differentialReferenceStation, quality, satellites] = jdunpack<[number, number, number, number, number, SatnavFixQuality, number]>(buf, "u12.20 i10.22 i10.22 u16 u16 u8 u8")
+     * ```
+     */
+    GGA = 0x181,
+}
+
+export enum SatnavEvent {
+    /**
+     * The module is enabled and ready to receive position data.
+     */
+    FixAvailable = 0x1,
+
+    /**
+     * The module is disabled or lost connection with satellites.
+     */
+    Inactive = 0x2,
+}
+
 // Service Sensor Aggregator constants
 export const SRV_SENSOR_AGGREGATOR = 0x1d90e1c5
 

@@ -6672,6 +6672,92 @@ namespace jacdac {
 
 }
 namespace jacdac {
+    // Service Satellite Navigation System constants
+    export const SRV_SATNAV = 0x19dd6136
+
+    export const enum SatnavFixQuality { // uint8_t
+        //% block="not available"
+        NotAvailable = 0x0,
+        //% block="single point"
+        SinglePoint = 0x1,
+        //% block="differential"
+        Differential = 0x2,
+        //% block="rtkfixed ambiguity solution"
+        RTKFixedAmbiguitySolution = 0x4,
+        //% block="rtkfloating ambiguity solution"
+        RTKFloatingAmbiguitySolution = 0x5,
+        //% block="dead reckoning"
+        DeadReckoning = 0x6,
+        //% block="manual input"
+        ManualInput = 0x7,
+        //% block="simulator"
+        Simulator = 0x8,
+        //% block="waas"
+        WAAS = 0x9,
+    }
+
+    export const enum SatnavReg {
+        /**
+         * Reported coordinates, geometric altitude and time of position.
+         *
+         * ```
+         * const [timestamp, latitude, longitude, altitude] = jdunpack<[number, number, number, number]>(buf, "u64 i9.23 i9.23 i26.6")
+         * ```
+         */
+        Position = 0x101,
+
+        /**
+         * Read-write bool (uint8_t). Turns on or off the GPS antenna.
+         *
+         * ```
+         * const [enabled] = jdunpack<[number]>(buf, "u8")
+         * ```
+         */
+        Enabled = 0x1,
+
+        /**
+         * Fix information extracted from a GGA message.
+         *
+         * ```
+         * const [hdop, antennaHeight, geoidalSeparation, ageOfDifferentialCorretion, differentialReferenceStation, quality, satellites] = jdunpack<[number, number, number, number, number, jacdac.SatnavFixQuality, number]>(buf, "u12.20 i10.22 i10.22 u16 u16 u8 u8")
+         * ```
+         */
+        GGA = 0x181,
+    }
+
+    export namespace SatnavRegPack {
+        /**
+         * Pack format for 'position' register data.
+         */
+        export const Position = "u64 i9.23 i9.23 i26.6"
+
+        /**
+         * Pack format for 'enabled' register data.
+         */
+        export const Enabled = "u8"
+
+        /**
+         * Pack format for 'GGA' register data.
+         */
+        export const GGA = "u12.20 i10.22 i10.22 u16 u16 u8 u8"
+    }
+
+    export const enum SatnavEvent {
+        /**
+         * The module is enabled and ready to receive position data.
+         */
+        //% block="fix available"
+        FixAvailable = 0x1,
+
+        /**
+         * The module is disabled or lost connection with satellites.
+         */
+        //% block="inactive"
+        Inactive = 0x2,
+    }
+
+}
+namespace jacdac {
     // Service Sensor Aggregator constants
     export const SRV_SENSOR_AGGREGATOR = 0x1d90e1c5
 

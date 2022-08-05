@@ -892,6 +892,18 @@ declare namespace roles {
     function rover(): RoverRole
 }
 
+// Service: Satellite Navigation System
+declare class SatnavRole extends SensorRole {
+    position: JDRegisterArray & { timestamp: number, latitude: number, longitude: number, altitude: number }
+    enabled: JDRegisterNum
+    gGA: JDRegisterArray & { hdop: number, antenna_height: number, geoidal_separation: number, age_of_differential_corretion: number, differential_reference_station: number, quality: number, satellites: number }
+    fixAvailable: JDEvent
+    inactive: JDEvent
+}
+declare namespace roles {
+    function satnav(): SatnavRole
+}
+
 // Service: Sensor Aggregator
 declare class SensorAggregatorRole extends Role {
     inputs: JDRegisterArray & { sampling_interval: number, samples_in_window: number, reserved: number, device_id: number, service_class: number, service_num: number, sample_size: number, sample_type: number, sample_shift: number }

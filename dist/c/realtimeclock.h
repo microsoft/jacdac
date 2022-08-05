@@ -10,10 +10,7 @@
 #define JD_REAL_TIME_CLOCK_VARIANT_CUCKOO 0x3
 
 /**
- * Current time in 24h representation. 
- * * ``day_of_month`` is day of the month, starting at ``1``
- * * ``day_of_week`` is day of the week, starting at ``1`` as monday
- * Default streaming period is 1 second.
+ * Current time in 24h representation.
  */
 #define JD_REAL_TIME_CLOCK_REG_LOCAL_TIME JD_REG_READING
 typedef struct jd_real_time_clock_local_time {
@@ -28,14 +25,14 @@ typedef struct jd_real_time_clock_local_time {
 
 
 /**
- * Read-only s u16.16 (uint32_t). Time drift since the last call to the ``set_time`` command.
+ * Read-only s u16.16 (uint32_t). Time drift since the last call to the `set_time` command.
  */
-#define JD_REAL_TIME_CLOCK_REG_ERROR 0x180
+#define JD_REAL_TIME_CLOCK_REG_DRIFT 0x180
 
 /**
  * Constant ppm u16.16 (uint32_t). Error on the clock, in parts per million of seconds.
  */
-#define JD_REAL_TIME_CLOCK_REG_PRECISION 0x180
+#define JD_REAL_TIME_CLOCK_REG_PRECISION 0x181
 
 /**
  * Constant Variant (uint8_t). The type of physical clock used by the sensor.

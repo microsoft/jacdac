@@ -1,0 +1,16 @@
+{
+  "id": "microsoft-research-jmambientlight55v01",
+  "name": "JM Ambient Light",
+  "company": "Microsoft Research",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-padauk/tree/main/jm-ambient-lightsensor-55-0.1",
+  "link": "https://github.com/microsoft/jacdac-msr-modules",
+  "services": [
+    400333340
+  ],
+  "productIdentifiers": [
+    896864987
+  ],
+  "version": "0.1",
+  "designIdentifier": "55"
+}

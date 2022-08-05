@@ -1,0 +1,345 @@
+{
+  "name": "Accelerometer",
+  "status": "experimental",
+  "shortId": "accelerometer",
+  "camelName": "accelerometer",
+  "shortName": "accelerometer",
+  "extends": [
+    "_base",
+    "_sensor"
+  ],
+  "notes": {
+    "short": "A 3-axis accelerometer.",
+    "long": "## Orientation\n\nAn accelerometer module should translate acceleration values as follows:\n\n| Orientation           \t| X value (g) \t| Y value (g) \t| Z value (g) \t|\n|-----------------------\t|-------------\t|-------------\t|-------------\t|\n| Module lying flat     \t| 0           \t| 0           \t| -1          \t|\n| Module on left edge   \t| -1          \t| 0           \t| 0           \t|\n| Module on bottom edge \t| 0           \t| 1           \t| 0           \t|\n\nWe recommend an orientation marking on the PCB so that users can mount modules without having to experiment with the device. Left/bottom can be determined by assuming text on silk runs left-to-right.",
+    "events": "All events are debounced."
+  },
+  "classIdentifier": 521405449,
+  "enums": {},
+  "constants": {},
+  "packets": [
+    {
+      "kind": "report",
+      "name": "command_not_implemented",
+      "identifier": 3,
+      "description": "This report may be emitted by a server in response to a command (action or register operation)\nthat it does not understand.\nThe `service_command` and `packet_crc` fields are copied from the command packet that was unhandled.\nNote that it's possible to get an ACK, followed by such an error report.",
+      "fields": [
+        {
+          "name": "service_command",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "packet_crc",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "identifierName": "command_not_implemented",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
+    {
+      "kind": "const",
+      "name": "instance_name",
+      "identifier": 265,
+      "description": "A friendly name that describes the role of this service instance in the device.\nIt often corresponds to what's printed on the device:\nfor example, `A` for button A, or `S0` for servo channel 0.\nWords like `left` should be avoided because of localization issues (unless they are printed on the device).",
+      "fields": [
+        {
+          "name": "_",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "optional": true,
+      "identifierName": "instance_name",
+      "packFormat": "s",
+      "derived": "_base"
+    },
+    {
+      "kind": "ro",
+      "name": "status_code",
+      "identifier": 259,
+      "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe Jacdac status/error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the announce packet. If a service implements this register,\nit should also support the ``status_code_changed`` event defined below.",
+      "fields": [
+        {
+          "name": "code",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "vendor_code",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "identifierName": "status_code",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
+    {
+      "kind": "event",
+      "name": "status_code_changed",
+      "identifier": 4,
+      "description": "Notifies that the status code of the service changed.",
+      "fields": [
+        {
+          "name": "code",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "vendor_code",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "identifierName": "status_code_changed",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
+    {
+      "kind": "rw",
+      "name": "streaming_samples",
+      "identifier": 3,
+      "description": "Asks device to stream a given number of samples\n(clients will typically write `255` to this register every second or so, while streaming is required).",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "#",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        }
+      ],
+      "internal": true,
+      "identifierName": "streaming_samples",
+      "packFormat": "u8",
+      "derived": "_sensor"
+    },
+    {
+      "kind": "rw",
+      "name": "streaming_interval",
+      "identifier": 4,
+      "description": "Period between packets of data when streaming in milliseconds.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "ms",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true,
+          "defaultValue": 100,
+          "typicalMin": 1,
+          "typicalMax": 60000
+        }
+      ],
+      "identifierName": "streaming_interval",
+      "packFormat": "u32",
+      "derived": "_sensor"
+    },
+    {
+      "kind": "const",
+      "name": "streaming_preferred_interval",
+      "identifier": 258,
+      "description": "Preferred default streaming interval for sensor in milliseconds.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "ms",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        }
+      ],
+      "internal": true,
+      "optional": true,
+      "identifierName": "streaming_preferred_interval",
+      "packFormat": "u32",
+      "derived": "_sensor"
+    },
+    {
+      "kind": "ro",
+      "name": "forces",
+      "identifier": 257,
+      "description": "Indicates the current forces acting on accelerometer.",
+      "fields": [
+        {
+          "name": "x",
+          "unit": "g",
+          "shift": 20,
+          "type": "i12.20",
+          "storage": -4
+        },
+        {
+          "name": "y",
+          "unit": "g",
+          "shift": 20,
+          "type": "i12.20",
+          "storage": -4
+        },
+        {
+          "name": "z",
+          "unit": "g",
+          "shift": 20,
+          "type": "i12.20",
+          "storage": -4
+        }
+      ],
+      "volatile": true,
+      "identifierName": "reading",
+      "packFormat": "i12.20 i12.20 i12.20"
+    },
+    {
+      "kind": "ro",
+      "name": "forces_error",
+      "identifier": 262,
+      "description": "Error on the reading value.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "g",
+          "shift": 20,
+          "type": "u12.20",
+          "storage": 4
+        }
+      ],
+      "volatile": true,
+      "optional": true,
+      "identifierName": "reading_error",
+      "packFormat": "u12.20"
+    },
+    {
+      "kind": "rw",
+      "name": "max_force",
+      "identifier": 8,
+      "description": "Configures the range forces detected.\nThe value will be \"rounded up\" to one of `max_forces_supported`.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "g",
+          "shift": 20,
+          "type": "u12.20",
+          "storage": 4
+        }
+      ],
+      "optional": true,
+      "identifierName": "reading_range",
+      "packFormat": "u12.20"
+    },
+    {
+      "kind": "const",
+      "name": "max_forces_supported",
+      "identifier": 266,
+      "description": "Lists values supported for writing `max_force`.",
+      "fields": [
+        {
+          "name": "max_force",
+          "unit": "g",
+          "shift": 20,
+          "type": "u12.20",
+          "storage": 4,
+          "startRepeats": true
+        }
+      ],
+      "optional": true,
+      "identifierName": "supported_ranges",
+      "packFormat": "r: u12.20"
+    },
+    {
+      "kind": "event",
+      "name": "tilt_up",
+      "identifier": 129,
+      "description": "Emitted when accelerometer is tilted in the given direction.",
+      "fields": []
+    },
+    {
+      "kind": "event",
+      "name": "tilt_down",
+      "identifier": 130,
+      "description": "Emitted when accelerometer is tilted in the given direction.",
+      "fields": []
+    },
+    {
+      "kind": "event",
+      "name": "tilt_left",
+      "identifier": 131,
+      "description": "Emitted when accelerometer is tilted in the given direction.",
+      "fields": []
+    },
+    {
+      "kind": "event",
+      "name": "tilt_right",
+      "identifier": 132,
+      "description": "Emitted when accelerometer is tilted in the given direction.",
+      "fields": []
+    },
+    {
+      "kind": "event",
+      "name": "face_up",
+      "identifier": 133,
+      "description": "Emitted when accelerometer is laying flat in the given direction.",
+      "fields": []
+    },
+    {
+      "kind": "event",
+      "name": "face_down",
+      "identifier": 134,
+      "description": "Emitted when accelerometer is laying flat in the given direction.",
+      "fields": []
+    },
+    {
+      "kind": "event",
+      "name": "freefall",
+      "identifier": 135,
+      "description": "Emitted when total force acting on accelerometer is much less than 1g.",
+      "fields": []
+    },
+    {
+      "kind": "event",
+      "name": "shake",
+      "identifier": 139,
+      "description": "Emitted when forces change violently a few times.",
+      "fields": []
+    },
+    {
+      "kind": "event",
+      "name": "force_2g",
+      "identifier": 140,
+      "description": "Emitted when force in any direction exceeds given threshold.",
+      "fields": []
+    },
+    {
+      "kind": "event",
+      "name": "force_3g",
+      "identifier": 136,
+      "description": "Emitted when force in any direction exceeds given threshold.",
+      "fields": []
+    },
+    {
+      "kind": "event",
+      "name": "force_6g",
+      "identifier": 137,
+      "description": "Emitted when force in any direction exceeds given threshold.",
+      "fields": []
+    },
+    {
+      "kind": "event",
+      "name": "force_8g",
+      "identifier": 138,
+      "description": "Emitted when force in any direction exceeds given threshold.",
+      "fields": []
+    }
+  ],
+  "tags": [
+    "C"
+  ],
+  "group": "Movement"
+}

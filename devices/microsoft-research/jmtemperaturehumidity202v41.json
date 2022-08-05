@@ -1,0 +1,17 @@
+{
+  "id": "microsoft-research-jmtemperaturehumidity202v41",
+  "name": "JM-Temperature/Humidity",
+  "company": "Microsoft Research",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v4.0/profile/temphum-202.c",
+  "services": [
+    337754823,
+    382210232
+  ],
+  "productIdentifiers": [
+    891386792
+  ],
+  "version": "4.1",
+  "designIdentifier": "202",
+  "shape": "ec30_2x2_lr"
+}

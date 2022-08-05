@@ -1,0 +1,17 @@
+{
+  "id": "kittenbot-lightsensorv10",
+  "name": "Light Sensor",
+  "company": "KittenBot",
+  "description": "A light level sensor.",
+  "storeLink": "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-for-micro-bit",
+  "services": [
+    400333340
+  ],
+  "productIdentifiers": [
+    973683863,
+    1017391393
+  ],
+  "version": "1.0",
+  "status": "stable",
+  "shape": "ec30_2x2_lr"
+}

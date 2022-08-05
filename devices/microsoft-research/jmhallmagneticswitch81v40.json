@@ -1,0 +1,17 @@
+{
+  "id": "microsoft-research-jmhallmagneticswitch81v40",
+  "name": "JM-Hall (magnetic switch)",
+  "company": "Microsoft Research",
+  "description": "JM-Hall (magnetic switch) 81 v4.0",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v4.0/profile/hall-81.c",
+  "services": [
+    450008066
+  ],
+  "productIdentifiers": [
+    920333141
+  ],
+  "version": "4.0",
+  "designIdentifier": "81",
+  "shape": "ec30_2x2_lr"
+}

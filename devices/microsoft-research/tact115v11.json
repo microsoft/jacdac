@@ -1,0 +1,16 @@
+{
+  "id": "microsoft-research-tact115v11",
+  "name": "Tact",
+  "company": "Microsoft Research",
+  "description": "Tact style push switch.",
+  "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/altium/module-designs/JacdacTactEc30%20115-1.1",
+  "services": [
+    343122531
+  ],
+  "productIdentifiers": [
+    1059364193
+  ],
+  "version": "1.1",
+  "designIdentifier": "115",
+  "shape": "ec30_1x2_l"
+}

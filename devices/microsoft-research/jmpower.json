@@ -1,0 +1,15 @@
+{
+  "id": "microsoft-research-jmpower",
+  "name": "JM Power",
+  "company": "Microsoft Research",
+  "description": "Lets you supply power to Jacdac network from a MicroUSB connection (eg. a USB battery pack).",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "link": "https://github.com/microsoft/jacdac-msr-modules",
+  "services": [
+    530893146
+  ],
+  "productIdentifiers": [
+    815885628
+  ],
+  "status": "deprecated"
+}

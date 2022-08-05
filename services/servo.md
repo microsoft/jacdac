@@ -1,41 +1,43 @@
 # Servo
 
     identifier: 0x12fc9103
+    tags: C
+    status: rc
 
 Servo is a small motor with arm that can be pointing at a specific direction.
+Typically a servo angle is between 0° and 180° where 90° is the middle resting position.
+
+The `min_pulse/max_pulse` may be read-only if the servo is permanently affixed to its Jacdac controller.
 
 ## Registers
 
-    rw angle: i16.16 ° { typical_min=-90, typical_max=90 } @ value
+    rw angle: i16.16 ° { typical_min=0, typical_max=180 } @ value
 
-Specifies the angle of the arm.
+Specifies the angle of the arm (request).
 
     rw enabled: bool @ intensity
 
 Turn the power to the servo on/off.
 
-    rw offset?: i16.16 ° @ 0x81
+    rw offset: i16.16 ° @ 0x81
 
 Correction applied to the angle to account for the servo arm drift.
 
-    const min_angle?: i16.16 ° @ min_reading
+    const min_angle = 0: i16.16 ° @ min_value
 
-Lowest angle that can be set.
+Lowest angle that can be set, typiclly 0 °.
 
-    const max_angle?: i16.16 ° @ max_reading
+    rw min_pulse? = 500: u16 us @ 0x83
 
-Highest angle that can be set.
+The length of pulse corresponding to lowest angle.
 
-    enum Variant: u32 {
-        PositionalRotation = 1,
-        Linear = 2,
-    }
-    const variant: Variant @ variant
+    const max_angle = 180: i16.16 ° @ max_value
 
-Specifies the type of servo motor.
-* Positional Rotation Servos: Positional servos can rotate the shaft in about half of the circle,
-with features to avoid over-rotating. Most servo have a range of 180° but some allow 270° or 360°.
-* Linear Servos: linear servos are also like a positional servo, but with additional gears to the adjust the output from circular to back-and-forth.
+Highest angle that can be set, typically 180°.
+
+    rw max_pulse? = 2500: u16 us @ 0x85
+
+The length of pulse corresponding to highest angle.
 
     const stall_torque?: u16.16 kg/cm @ 0x180
 
@@ -44,3 +46,8 @@ The servo motor will stop rotating when it is trying to move a ``stall_torque`` 
     const response_speed?: u16.16 s/60° @ 0x181
 
 Time to move 60°.
+
+    ro actual_angle?: i16.16 ° @ reading
+
+The current physical position of the arm, if the device has a way to sense the position.
+

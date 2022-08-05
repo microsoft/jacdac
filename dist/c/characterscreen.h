@@ -7,6 +7,7 @@
 // enum Variant (uint8_t)
 #define JD_CHARACTER_SCREEN_VARIANT_LCD 0x1
 #define JD_CHARACTER_SCREEN_VARIANT_OLED 0x2
+#define JD_CHARACTER_SCREEN_VARIANT_BRAILLE 0x3
 
 // enum TextDirection (uint8_t)
 #define JD_CHARACTER_SCREEN_TEXT_DIRECTION_LEFT_TO_RIGHT 0x1
@@ -16,6 +17,11 @@
  * Read-write string (bytes). Text to show. Use `\n` to break lines.
  */
 #define JD_CHARACTER_SCREEN_REG_MESSAGE JD_REG_VALUE
+
+/**
+ * Read-write ratio u0.16 (uint16_t). Brightness of the screen. `0` means off.
+ */
+#define JD_CHARACTER_SCREEN_REG_BRIGHTNESS JD_REG_INTENSITY
 
 /**
  * Constant Variant (uint8_t). Describes the type of character LED screen.
@@ -28,12 +34,12 @@
 #define JD_CHARACTER_SCREEN_REG_TEXT_DIRECTION 0x82
 
 /**
- * Constant uint8_t. Gets the number of rows.
+ * Constant # uint8_t. Gets the number of rows.
  */
 #define JD_CHARACTER_SCREEN_REG_ROWS 0x180
 
 /**
- * Constant uint8_t. Gets the number of columns.
+ * Constant # uint8_t. Gets the number of columns.
  */
 #define JD_CHARACTER_SCREEN_REG_COLUMNS 0x181
 

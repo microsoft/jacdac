@@ -1,0 +1,15 @@
+{
+  "id": "microsoft-research-jacdacmotiondetection54v01",
+  "name": "JacdacMotionDetection ",
+  "company": "Microsoft Research",
+  "link": "https://github.com/microsoft/jacdac-padauk",
+  "services": [
+    293185353
+  ],
+  "productIdentifiers": [
+    1030407429
+  ],
+  "version": "0.1",
+  "designIdentifier": "54",
+  "status": "experimental"
+}

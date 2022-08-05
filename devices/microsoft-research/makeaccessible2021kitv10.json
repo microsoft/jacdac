@@ -1,0 +1,38 @@
+{
+  "id": "microsoft-research-makeaccessible2021kitv10",
+  "name": "MakeAccessible 2021 Kit",
+  "company": "Microsoft Research",
+  "description": "A kit for the Microsoft MakeAccessible hackathon.",
+  "link": "https://www.microsoft.com/en-us/research/project/project-makeaccessible/",
+  "tags": [
+    "kit"
+  ],
+  "version": "1.0",
+  "devices": [
+    "microbit-educational-foundation-microbitv2",
+    "microsoft-research-jmaccelerometer30v10",
+    "microsoft-research-jmaccessswitchinput34v13",
+    "microsoft-research-jmaccessswitchoutputv11",
+    "microsoft-research-jmambientlight55v01",
+    "microsoft-research-jmanalogjoystick44v02",
+    "microsoft-research-jmbrainf441v02",
+    "microsoft-research-jmbrainrp204059v01",
+    "microsoft-research-jmbutton10v13",
+    "microsoft-research-jmbutton40v02",
+    "microsoft-research-jmbuttonterminal62v01",
+    "microsoft-research-jmclickairquality4v32",
+    "microsoft-research-jmclickcolorv32",
+    "microsoft-research-jmflexv10",
+    "microsoft-research-jmkeyboardkey46v10",
+    "microsoft-research-jmkeyboardkey46v11",
+    "microsoft-research-jmrgbledbar10v01",
+    "microsoft-research-jmrgbledgeneric60v01",
+    "microsoft-research-jmrgbledring37v20",
+    "microsoft-research-jmrgbledring37v21",
+    "microsoft-research-jmrotarycontrolbuttonv10",
+    "microsoft-research-jmrotarycontrolbuttonv11",
+    "microsoft-research-jmsinglergb-led42v01",
+    "microsoft-research-jmslider49v11",
+    "microsoft-research-jmtemphumidity18v11"
+  ]
+}

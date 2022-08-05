@@ -1,0 +1,16 @@
+{
+  "id": "kittenbot-sliderv10",
+  "name": "Slider",
+  "company": "KittenBot",
+  "description": "A slider.",
+  "storeLink": "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-for-micro-bit",
+  "services": [
+    522667846
+  ],
+  "productIdentifiers": [
+    1054684252
+  ],
+  "version": "1.0",
+  "status": "stable",
+  "shape": "ec30_5x2_lr"
+}

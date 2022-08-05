@@ -1,0 +1,18 @@
+{
+  "id": "microsoft-research-jmenvironment204v42",
+  "name": "JM-Environment",
+  "company": "Microsoft Research",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "services": [
+    337754823,
+    382210232,
+    379362758,
+    312849815
+  ],
+  "productIdentifiers": [
+    842012177
+  ],
+  "version": "4.2",
+  "designIdentifier": "204",
+  "shape": "ec30_2x2_l"
+}

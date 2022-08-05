@@ -1,0 +1,17 @@
+{
+  "id": "microsoft-research-jmuviilluminance65v3665v36",
+  "name": "JM UVI/Illuminance 65 v3.6",
+  "company": "Microsoft Research",
+  "description": "JM UVI/Illuminance 65 v3.6",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v3.6/profile/uv.c",
+  "services": [
+    510577394,
+    527306128
+  ],
+  "productIdentifiers": [
+    1021617002
+  ],
+  "version": "3.6",
+  "designIdentifier": "65"
+}

@@ -1,0 +1,13 @@
+{
+  "id": "microsoft-research-jmpinheader45v01",
+  "name": "JM Pin Header",
+  "company": "Microsoft Research",
+  "description": "A unregulated passive adapter from Jacdac to pin headers.",
+  "link": "https://github.com/microsoft/jacdac-msr-modules",
+  "productIdentifiers": [
+    939230090
+  ],
+  "version": "0.1",
+  "designIdentifier": "45",
+  "status": "deprecated"
+}

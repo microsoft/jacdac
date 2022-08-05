@@ -4,7 +4,7 @@
 
 #define JD_SERVICE_CLASS_WATER_LEVEL  0x147b62ed
 
-// enum Variant (uint32_t)
+// enum Variant (uint8_t)
 #define JD_WATER_LEVEL_VARIANT_RESISTIVE 0x1
 #define JD_WATER_LEVEL_VARIANT_CONTACT_PHOTO_ELECTRIC 0x2
 #define JD_WATER_LEVEL_VARIANT_NON_CONTACT_PHOTO_ELECTRIC 0x3
@@ -15,28 +15,13 @@
 #define JD_WATER_LEVEL_REG_LEVEL JD_REG_READING
 
 /**
- * Constant Variant (uint32_t). The type of physical sensor.
+ * Read-only ratio u0.16 (uint16_t). The error rage on the current reading
+ */
+#define JD_WATER_LEVEL_REG_LEVEL_ERROR JD_REG_READING_ERROR
+
+/**
+ * Constant Variant (uint8_t). The type of physical sensor.
  */
 #define JD_WATER_LEVEL_REG_VARIANT JD_REG_VARIANT
-
-/**
- * Read-write ratio u0.16 (uint16_t). Threshold when reading data gets low and triggers a ``low``.
- */
-#define JD_WATER_LEVEL_REG_LOW_THRESHOLD JD_REG_LOW_THRESHOLD
-
-/**
- * Read-write ratio u0.16 (uint16_t). Thresholds when reading data gets high and triggers a ``high`` event.
- */
-#define JD_WATER_LEVEL_REG_HIGH_THRESHOLD JD_REG_HIGH_THRESHOLD
-
-/**
- * Notifies that the low threshold has been crossed
- */
-#define JD_WATER_LEVEL_EV_LOW JD_EV_LOW
-
-/**
- * Notifies that the high threshold has been crossed
- */
-#define JD_WATER_LEVEL_EV_HIGH JD_EV_HIGH
 
 #endif

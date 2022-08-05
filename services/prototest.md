@@ -2,9 +2,10 @@
 
     identifier: 0x16c7466a
     camel: protoTest
+    tags: infrastructure
 
 This is test service to validate the protocol packet transmissions between the browser and a MCU.
-Use this page if you developing JACDAC HDK for a new platform.
+Use this page if you are porting Jacdac to a new platform.
 
 ### Test procedure
 
@@ -84,10 +85,24 @@ A read write i8, u8, u16, i32 register.
 
 A read only i8, u8, u16, i32 register.. Mirrors rw_i8_u8_u16_i32.
 
+    rw rw_u8_string @ 0x87 {
+        u8: u8
+        str: string
+    }
+
+A read write u8, string register.
+
+    ro ro_u8_string @ 0x187 {
+        u8: u8
+        str: string
+    }
+
+A read only u8, string register.. Mirrors rw_u8_string.
+
 ## Events
 
     event e_bool @ 0x81 { 
-        bool: bool 
+        bo: bool 
     }
 
 An event raised when rw_bool is modified
@@ -105,7 +120,7 @@ An event raised when rw_u32 is modified
 An event raised when rw_i32 is modified
 
     event e_string @ 0x84 { 
-        string: string 
+        str: string 
     }
 
 An event raised when rw_string is modified
@@ -125,37 +140,44 @@ An event raised when rw_bytes is modified
 
 An event raised when rw_i8_u8_u16_i32 is modified
 
+    event e_u8_string @ 0x87 { 
+        u8: u8
+        str: string
+    }
+
+An event raised when rw_u8_string is modified
+
 ## Commands
 
     command c_bool @ 0x81 {
-        bool: bool
+        bo: bool
     }
 
-A command to set rw_bool. Returns the value.
+A command to set rw_bool.
 
     command c_u32 @ 0x82 {
         u32: u32
     }
 
-A command to set rw_u32. Returns the value.
+A command to set rw_u32.
 
     command c_i32 @ 0x83 {
         i32: i32
     }
 
-A command to set rw_i32. Returns the value.
+A command to set rw_i32.
 
     command c_string @ 0x84 {
-        string: string
+        str: string
     }
 
-A command to set rw_string. Returns the value.
+A command to set rw_string.
 
     command c_bytes @ 0x85 {
         bytes: bytes
     }
 
-A command to set rw_string. Returns the value.
+A command to set rw_string.
 
     command c_i8_u8_u16_i32 @ 0x86 {
         i8: i8
@@ -164,9 +186,16 @@ A command to set rw_string. Returns the value.
         i32: i32
     }
 
-A command to set rw_bytes. Returns the value.
+A command to set rw_bytes.
 
-    command c_report_pipe @ 0x87 {
+    command c_u8_string @ 0x87 {
+        u8: u8
+        str: string
+    }
+
+A command to set rw_u8_string.
+
+    command c_report_pipe @ 0x90 {
         p_bytes: pipe
     }
     pipe report p_bytes {

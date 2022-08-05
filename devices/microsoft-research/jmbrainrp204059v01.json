@@ -1,0 +1,42 @@
+{
+  "id": "microsoft-research-jmbrainrp204059v01",
+  "name": "JM Brain RP2040",
+  "company": "Microsoft Research",
+  "connector": "edgeHighCurrentProvider",
+  "link": "https://github.com/microsoft/pxt-jacdac",
+  "services": [
+    414210922,
+    411425820
+  ],
+  "productIdentifiers": [
+    884301483,
+    999933064,
+    883764657,
+    983850333
+  ],
+  "transport": {
+    "type": "usb"
+  },
+  "tags": [
+    "adapter"
+  ],
+  "firmwares": [
+    {
+      "name": "HID Keyboard + Mouse",
+      "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/hid-servers-rp2040.uf2",
+      "productIdentifier": 883764657
+    },
+    {
+      "name": "HID Joystick",
+      "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/hid-joystick-rp2040.uf2",
+      "productIdentifier": 983850333
+    }
+  ],
+  "version": "0.1",
+  "designIdentifier": "59",
+  "bootloader": {
+    "sequence": "reset-boot",
+    "driveName": "RPI-RP2",
+    "firmwareFormat": "uf2"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "id": "microsoft-research-jmflexv10",
+  "name": "JM Flex",
+  "company": "Microsoft Research",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-flex-sensor-1.0/profile/flex.c",
+  "link": "https://github.com/microsoft/jacdac-msr-modules",
+  "services": [
+    524797638
+  ],
+  "productIdentifiers": [
+    840841542
+  ],
+  "version": "1.0"
+}

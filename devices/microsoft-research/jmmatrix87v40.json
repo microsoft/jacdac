@@ -1,0 +1,17 @@
+{
+  "id": "microsoft-research-jmmatrix87v40",
+  "name": "JM-Matrix",
+  "company": "Microsoft Research",
+  "description": "5x5 LED dot matrix",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v4.0matrix/profile/matrix-87.c",
+  "services": [
+    286070091
+  ],
+  "productIdentifiers": [
+    896568761
+  ],
+  "version": "4.0",
+  "designIdentifier": "87",
+  "shape": "ec30_2x2_lr"
+}

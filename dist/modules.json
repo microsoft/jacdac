@@ -9,7 +9,7 @@
     "services": [
       521405449
     ],
-    "firmwares": [
+    "productIdentifiers": [
       1020174761
     ]
   },
@@ -23,7 +23,7 @@
     "services": [
       343122531
     ],
-    "firmwares": [
+    "productIdentifiers": [
       886919574
     ]
   },
@@ -31,13 +31,13 @@
     "id": "microsoft-research-jmarcadecontrolsv2",
     "name": "JM Arcade Controls v2",
     "company": "Microsoft Research",
-    "description": "Lets you connect arcade buttons and joystick to a JACDAC network.",
+    "description": "Lets you connect arcade buttons and joystick to a Jacdac network.",
     "repo": "https://github.com/microsoft/jacdac-stm32x0",
     "link": "https://github.com/microsoft/jacdac-stm32x0",
     "services": [
       501915758
     ],
-    "firmwares": [
+    "productIdentifiers": [
       954450524
     ]
   },
@@ -52,7 +52,7 @@
       284830153,
       343122531
     ],
-    "firmwares": [
+    "productIdentifiers": [
       813927310
     ]
   },
@@ -66,7 +66,7 @@
     "services": [
       284830153
     ],
-    "firmwares": [
+    "productIdentifiers": [
       866678795
     ]
   },
@@ -74,13 +74,13 @@
     "id": "microsoft-research-jmgamepadv2",
     "name": "JM GamePad v2",
     "company": "Microsoft Research",
-    "description": "Lets you convert a plastic d-pad controller, so that it can be connected to a JACDAC network.",
+    "description": "Lets you convert a plastic d-pad controller, so that it can be connected to a Jacdac network.",
     "repo": "https://github.com/microsoft/jacdac-stm32x0",
     "link": "https://github.com/microsoft/jacdac-stm32x0",
     "services": [
       501915758
     ],
-    "firmwares": [
+    "productIdentifiers": [
       919754666
     ]
   },
@@ -88,14 +88,14 @@
     "id": "microsoft-research-jmmachinelearning",
     "name": "JM Machine Learning",
     "company": "Microsoft Research",
-    "description": "Lets you run machine learning models on data coming from JACDAC network.",
+    "description": "Lets you run machine learning models on data coming from Jacdac network.",
     "repo": "https://github.com/microsoft/pxt-tensorflow",
     "link": "https://github.com/microsoft/jacdac-stm32x0",
     "services": [
       336566904,
       496034245
     ],
-    "firmwares": []
+    "productIdentifiers": []
   },
   {
     "id": "microsoft-research-jmmotorv21",
@@ -107,7 +107,7 @@
     "services": [
       385895640
     ],
-    "firmwares": [
+    "productIdentifiers": [
       809626198
     ]
   },
@@ -115,13 +115,13 @@
     "id": "microsoft-research-jmpower",
     "name": "JM Power",
     "company": "Microsoft Research",
-    "description": "Lets you supply power to JACDAC network from a MicroUSB connection (eg. a USB battery pack).",
+    "description": "Lets you supply power to Jacdac network from a MicroUSB connection (eg. a USB battery pack).",
     "repo": "https://github.com/microsoft/jacdac-stm32x0",
     "link": "https://github.com/microsoft/jacdac-stm32x0",
     "services": [
       530893146
     ],
-    "firmwares": [
+    "productIdentifiers": [
       815885628
     ]
   },
@@ -133,7 +133,7 @@
     "repo": "https://github.com/microsoft/jacdac-stm32x0",
     "link": "https://github.com/microsoft/jacdac-stm32x0",
     "services": [],
-    "firmwares": [
+    "productIdentifiers": [
       1052138004
     ]
   },
@@ -147,7 +147,7 @@
     "services": [
       309264608
     ],
-    "firmwares": [
+    "productIdentifiers": [
       895762065
     ]
   },
@@ -161,7 +161,7 @@
     "services": [
       309264608
     ],
-    "firmwares": [
+    "productIdentifiers": [
       1013705700
     ]
   },
@@ -175,7 +175,7 @@
     "services": [
       318542083
     ],
-    "firmwares": [
+    "productIdentifiers": [
       816890446
     ]
   },
@@ -189,7 +189,7 @@
     "services": [
       318542083
     ],
-    "firmwares": [
+    "productIdentifiers": [
       986140247
     ]
   },
@@ -203,7 +203,7 @@
     "services": [
       522667846
     ],
-    "firmwares": [
+    "productIdentifiers": [
       1043615261
     ]
   },
@@ -217,7 +217,7 @@
     "services": [
       458731991
     ],
-    "firmwares": [
+    "productIdentifiers": [
       854957595
     ]
   },
@@ -231,7 +231,7 @@
     "services": [
       416636459
     ],
-    "firmwares": [
+    "productIdentifiers": [
       1067172458
     ]
   }

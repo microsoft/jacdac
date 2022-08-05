@@ -1,15 +1,17 @@
 # Motor
 
     identifier: 0x17004cd8
+    tags: C, 8bit
+    status: rc
 
-A bi-directional DC motor.
+A DC motor.
 
 ## Registers
 
-    rw duty: i1.15 / @ value
+    rw speed: i1.15 / @ value
 
-PWM duty cycle of the motor. Use negative/positive values to run the motor forwards and backwards.
-Positive is recommended to be clockwise rotation and negative counterclockwise. A duty of ``0`` 
+Relative speed of the motor. Use positive/negative values to run the motor forwards and backwards.
+Positive is recommended to be clockwise rotation and negative counterclockwise. A speed of ``0`` 
 while ``enabled`` acts as brake.
 
     rw enabled: bool @ intensity
@@ -20,6 +22,10 @@ Turn the power to the motor on/off.
 
 Torque required to produce the rated power of an electrical motor at load speed.
 
-    const load_speed?: u16.16 rpm @ 0x181
+    const load_rotation_speed?: u16.16 rpm @ 0x181
 
 Revolutions per minute of the motor under full load.
+
+    const reversible?: bool @ 0x182
+
+Indicates if the motor can run backwards.

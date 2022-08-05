@@ -1,0 +1,39 @@
+{
+  "id": "microsoft-research-jmbrainesp3248v03",
+  "name": "JM Brain ESP32",
+  "company": "Microsoft Research",
+  "connector": "edgeHighCurrentProvider",
+  "services": [
+    342028028
+  ],
+  "productIdentifiers": [
+    917230668,
+    983264687,
+    1067560617,
+    1038170507
+  ],
+  "transport": {
+    "type": "serial",
+    "vendorId": 12346
+  },
+  "firmwares": [
+    {
+      "name": "IoT Uploader",
+      "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/uploader-esp32s2.uf2",
+      "productIdentifier": 1067560617
+    },
+    {
+      "name": "Jacscript Brain",
+      "url": "https://github.com/microsoft/jacdac-esp32/releases/latest/download/jacscript-esp32s2.uf2",
+      "productIdentifier": 1038170507
+    }
+  ],
+  "version": "0.3",
+  "designIdentifier": "48",
+  "bootloader": {
+    "sequence": "reset-boot",
+    "driveName": "IOT-BOOT",
+    "firmwareFormat": "uf2",
+    "ledAnimation": "blue-glow"
+  }
+}

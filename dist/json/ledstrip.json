@@ -1,0 +1,297 @@
+{
+  "name": "LED Strip",
+  "status": "rc",
+  "shortId": "ledstrip",
+  "camelName": "ledStrip",
+  "shortName": "ledStrip",
+  "extends": [
+    "_base"
+  ],
+  "notes": {
+    "short": "A controller for strips of individually controlled RGB LEDs.",
+    "long": "## Light programs\n\nWith 1 mbit Jacdac, we can transmit under 2k of data per animation frame (at 20fps).\nIf transmitting raw data that would be around 500 pixels, which is not enough for many\ninstallations and it would completely clog the network.\n\nThus, light service defines a domain-specific language for describing light animations\nand efficiently transmitting them over wire. For short LED displays, less than 64 LEDs, \nyou can also use the [LED service](/services/led).\n\nLight commands are not Jacdac commands.\nLight commands are efficiently encoded as sequences of bytes and typically sent as payload\nof `run` command.\n\nDefinitions:\n\n-   `P` - position in the strip\n-   `R` - number of repetitions of the command\n-   `N` - number of pixels affected by the command\n-   `C` - single color designation\n-   `C+` - sequence of color designations\n\nUpdate modes:\n\n-   `0` - replace\n-   `1` - add RGB\n-   `2` - subtract RGB\n-   `3` - multiply RGB (by c/128); each pixel value will change by at least 1\n\nProgram commands:\n\n-   `0xD0: setall C+` - set all pixels in current range to given color pattern\n-   `0xD1: fade C+` - set pixels in current range to colors between colors in sequence\n-   `0xD2: fadehsv C+` - similar to `fade()`, but colors are specified and faded in HSV\n-   `0xD3: rotfwd K` - rotate (shift) pixels by `K` positions away from the connector\n-   `0xD4: rotback K` - same, but towards the connector\n-   `0xD5: show M=50` - send buffer to strip and wait `M` milliseconds\n-   `0xD6: range P=0 N=length W=1 S=0` - range from pixel `P`, `N` pixels long (currently unsupported: every `W` pixels skip `S` pixels)\n-   `0xD7: mode K=0` - set update mode\n-   `0xD8: tmpmode K=0` - set update mode for next command only\n-   `0xCF: setone P C` - set one pixel at `P` (in current range) to given color\n-   `mult V` - macro to multiply current range by given value (float)\n\nA number `k` is encoded as follows:\n\n-   `0 <= k < 128` -> `k`\n-   `128 <= k < 16383` -> `0x80 | (k >> 8), k & 0xff`\n-   bigger and negative numbers are not supported\n\nThus, bytes `0xC0-0xFF` are free to use for commands.\n\nFormats:\n\n-   `0xC1, R, G, B` - single color parameter\n-   `0xC2, R0, G0, B0, R1, G1, B1` - two color parameter\n-   `0xC3, R0, G0, B0, R1, G1, B1, R2, G2, B2` - three color parameter\n-   `0xC0, N, R0, G0, B0, ..., R(N-1), G(N-1), B(N-1)` - `N` color parameter\n-   `0xCF, <number>, R, G, B` - `set1` special format\n\nCommands are encoded as command byte, followed by parameters in the order\nfrom the command definition.\n\nThe `setone()` command has irregular encoding to save space - it is byte `0xCF` followed by encoded\nnumber, and followed by 3 bytes of color."
+  },
+  "classIdentifier": 309264608,
+  "enums": {
+    "LightType": {
+      "name": "LightType",
+      "storage": 1,
+      "members": {
+        "WS2812B_GRB": 0,
+        "APA102": 16,
+        "SK9822": 17
+      }
+    },
+    "Variant": {
+      "name": "Variant",
+      "storage": 1,
+      "members": {
+        "Strip": 1,
+        "Ring": 2,
+        "Stick": 3,
+        "Jewel": 4,
+        "Matrix": 5
+      }
+    }
+  },
+  "constants": {},
+  "packets": [
+    {
+      "kind": "report",
+      "name": "command_not_implemented",
+      "identifier": 3,
+      "description": "This report may be emitted by a server in response to a command (action or register operation)\nthat it does not understand.\nThe `service_command` and `packet_crc` fields are copied from the command packet that was unhandled.\nNote that it's possible to get an ACK, followed by such an error report.",
+      "fields": [
+        {
+          "name": "service_command",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "packet_crc",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "identifierName": "command_not_implemented",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
+    {
+      "kind": "const",
+      "name": "instance_name",
+      "identifier": 265,
+      "description": "A friendly name that describes the role of this service instance in the device.\nIt often corresponds to what's printed on the device:\nfor example, `A` for button A, or `S0` for servo channel 0.\nWords like `left` should be avoided because of localization issues (unless they are printed on the device).",
+      "fields": [
+        {
+          "name": "_",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "optional": true,
+      "identifierName": "instance_name",
+      "packFormat": "s",
+      "derived": "_base"
+    },
+    {
+      "kind": "ro",
+      "name": "status_code",
+      "identifier": 259,
+      "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe Jacdac status/error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the announce packet. If a service implements this register,\nit should also support the ``status_code_changed`` event defined below.",
+      "fields": [
+        {
+          "name": "code",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "vendor_code",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "identifierName": "status_code",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
+    {
+      "kind": "event",
+      "name": "status_code_changed",
+      "identifier": 4,
+      "description": "Notifies that the status code of the service changed.",
+      "fields": [
+        {
+          "name": "code",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "vendor_code",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "identifierName": "status_code_changed",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
+    {
+      "kind": "rw",
+      "name": "brightness",
+      "identifier": 1,
+      "description": "Set the luminosity of the strip.\nAt `0` the power to the strip is completely shut down.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "/",
+          "shift": 8,
+          "type": "u0.8",
+          "storage": 1,
+          "defaultValue": 0.05
+        }
+      ],
+      "identifierName": "intensity",
+      "packFormat": "u0.8"
+    },
+    {
+      "kind": "ro",
+      "name": "actual_brightness",
+      "identifier": 384,
+      "description": "This is the luminosity actually applied to the strip.\nMay be lower than `brightness` if power-limited by the `max_power` register.\nIt will rise slowly (few seconds) back to `brightness` is limits are no longer required.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "/",
+          "shift": 8,
+          "type": "u0.8",
+          "storage": 1
+        }
+      ],
+      "packFormat": "u0.8"
+    },
+    {
+      "kind": "rw",
+      "name": "light_type",
+      "identifier": 128,
+      "description": "Specifies the type of light strip connected to controller.\nControllers which are sold with lights should default to the correct type\nand could not allow change.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "LightType",
+          "storage": 1
+        }
+      ],
+      "packFormat": "u8"
+    },
+    {
+      "kind": "rw",
+      "name": "num_pixels",
+      "identifier": 129,
+      "description": "Specifies the number of pixels in the strip.\nControllers which are sold with lights should default to the correct length\nand could not allow change. Increasing length at runtime leads to ineffective use of memory and may lead to controller reboot.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "#",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true,
+          "defaultValue": 15
+        }
+      ],
+      "packFormat": "u16"
+    },
+    {
+      "kind": "rw",
+      "name": "num_columns",
+      "identifier": 131,
+      "description": "If the LED pixel strip is a matrix, specifies the number of columns. Otherwise, a square shape is assumed. Controllers which are sold with lights should default to the correct length\nand could not allow change. Increasing length at runtime leads to ineffective use of memory and may lead to controller reboot.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "#",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "packFormat": "u16"
+    },
+    {
+      "kind": "rw",
+      "name": "max_power",
+      "identifier": 7,
+      "description": "Limit the power drawn by the light-strip (and controller).",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "mA",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true,
+          "defaultValue": 200
+        }
+      ],
+      "identifierName": "max_power",
+      "packFormat": "u16"
+    },
+    {
+      "kind": "const",
+      "name": "max_pixels",
+      "identifier": 385,
+      "description": "The maximum supported number of pixels.\nAll writes to `num_pixels` are clamped to `max_pixels`.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "#",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u16"
+    },
+    {
+      "kind": "rw",
+      "name": "num_repeats",
+      "identifier": 130,
+      "description": "How many times to repeat the program passed in `run` command.\nShould be set before the `run` command.\nSetting to `0` means to repeat forever.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "#",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true,
+          "defaultValue": 1
+        }
+      ],
+      "packFormat": "u16"
+    },
+    {
+      "kind": "const",
+      "name": "variant",
+      "identifier": 263,
+      "description": "Specifies the shape of the light strip.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "Variant",
+          "storage": 1
+        }
+      ],
+      "optional": true,
+      "identifierName": "variant",
+      "packFormat": "u8"
+    },
+    {
+      "kind": "command",
+      "name": "run",
+      "identifier": 129,
+      "description": "Run the given light \"program\". See service description for details.",
+      "fields": [
+        {
+          "name": "program",
+          "type": "bytes",
+          "storage": 0,
+          "isSimpleType": true
+        }
+      ],
+      "unique": true,
+      "packFormat": "b"
+    }
+  ],
+  "tags": [
+    "C"
+  ],
+  "group": "Light"
+}

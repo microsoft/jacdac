@@ -1,0 +1,16 @@
+{
+  "id": "microsoft-research-jmarcadebtnv20",
+  "name": "JM ArcadeBtn v2.0",
+  "company": "Microsoft Research",
+  "description": "Lets you connect a single arcade button with an LED.",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v2.0/profile/btnled.c",
+  "link": "https://github.com/microsoft/jacdac-msr-modules",
+  "services": [
+    343122531
+  ],
+  "productIdentifiers": [
+    886919574
+  ],
+  "status": "deprecated"
+}

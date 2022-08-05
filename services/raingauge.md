@@ -2,6 +2,9 @@
 
     identifier: 0x13734c95
     extends: _sensor
+    group: environment
+    tags: 8bit
+    status: rc
 
 Measures the amount of liquid precipitation over an area in a predefined period of time.
 

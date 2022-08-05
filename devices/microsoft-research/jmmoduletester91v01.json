@@ -1,0 +1,21 @@
+{
+  "id": "microsoft-research-jmmoduletester91v01",
+  "name": "JM Module Tester",
+  "company": "Microsoft Research",
+  "description": "A module that controls the Jacdac bus voltage and measures the bus current consumption.",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-module-tester-91-0.1/board.h",
+  "services": [
+    524302175,
+    420661422,
+    372485145,
+    406840918,
+    506480888
+  ],
+  "productIdentifiers": [
+    1031963291
+  ],
+  "version": "0.1",
+  "designIdentifier": "91",
+  "shape": "ec30_5x2_lr"
+}

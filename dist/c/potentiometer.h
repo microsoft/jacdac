@@ -4,17 +4,17 @@
 
 #define JD_SERVICE_CLASS_POTENTIOMETER  0x1f274746
 
-// enum Variant (uint32_t)
+// enum Variant (uint8_t)
 #define JD_POTENTIOMETER_VARIANT_SLIDER 0x1
 #define JD_POTENTIOMETER_VARIANT_ROTARY 0x2
 
 /**
- * Read-only ratio u0.16 (uint16_t). The relative position of the slider between `0` and `1`.
+ * Read-only ratio u0.16 (uint16_t). The relative position of the slider.
  */
 #define JD_POTENTIOMETER_REG_POSITION JD_REG_READING
 
 /**
- * Constant Variant (uint32_t). Specifies the physical layout of the potentiometer.
+ * Constant Variant (uint8_t). Specifies the physical layout of the potentiometer.
  */
 #define JD_POTENTIOMETER_REG_VARIANT JD_REG_VARIANT
 

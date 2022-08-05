@@ -4,12 +4,8 @@
 
 #define JD_SERVICE_CLASS_SERVO  0x12fc9103
 
-// enum Variant (uint32_t)
-#define JD_SERVO_VARIANT_POSITIONAL_ROTATION 0x1
-#define JD_SERVO_VARIANT_LINEAR 0x2
-
 /**
- * Read-write ° i16.16 (int32_t). Specifies the angle of the arm.
+ * Read-write ° i16.16 (int32_t). Specifies the angle of the arm (request).
  */
 #define JD_SERVO_REG_ANGLE JD_REG_VALUE
 
@@ -24,22 +20,24 @@
 #define JD_SERVO_REG_OFFSET 0x81
 
 /**
- * Constant ° i16.16 (int32_t). Lowest angle that can be set.
+ * Constant ° i16.16 (int32_t). Lowest angle that can be set, typiclly 0 °.
  */
-#define JD_SERVO_REG_MIN_ANGLE JD_REG_MIN_READING
+#define JD_SERVO_REG_MIN_ANGLE JD_REG_MIN_VALUE
 
 /**
- * Constant ° i16.16 (int32_t). Highest angle that can be set.
+ * Read-write μs uint16_t. The length of pulse corresponding to lowest angle.
  */
-#define JD_SERVO_REG_MAX_ANGLE JD_REG_MAX_READING
+#define JD_SERVO_REG_MIN_PULSE 0x83
 
 /**
- * Constant Variant (uint32_t). Specifies the type of servo motor.
- * * Positional Rotation Servos: Positional servos can rotate the shaft in about half of the circle,
- * with features to avoid over-rotating. Most servo have a range of 180° but some allow 270° or 360°.
- * * Linear Servos: linear servos are also like a positional servo, but with additional gears to the adjust the output from circular to back-and-forth.
+ * Constant ° i16.16 (int32_t). Highest angle that can be set, typically 180°.
  */
-#define JD_SERVO_REG_VARIANT JD_REG_VARIANT
+#define JD_SERVO_REG_MAX_ANGLE JD_REG_MAX_VALUE
+
+/**
+ * Read-write μs uint16_t. The length of pulse corresponding to highest angle.
+ */
+#define JD_SERVO_REG_MAX_PULSE 0x85
 
 /**
  * Constant kg/cm u16.16 (uint32_t). The servo motor will stop rotating when it is trying to move a ``stall_torque`` weight at a radial distance of ``1.0`` cm.
@@ -50,5 +48,10 @@
  * Constant s/60° u16.16 (uint32_t). Time to move 60°.
  */
 #define JD_SERVO_REG_RESPONSE_SPEED 0x181
+
+/**
+ * Read-only ° i16.16 (int32_t). The current physical position of the arm, if the device has a way to sense the position.
+ */
+#define JD_SERVO_REG_ACTUAL_ANGLE JD_REG_READING
 
 #endif

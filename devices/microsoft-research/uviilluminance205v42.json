@@ -1,0 +1,16 @@
+{
+  "id": "microsoft-research-uviilluminance205v42",
+  "name": "UVI/Illuminance",
+  "company": "Microsoft Research",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "services": [
+    510577394,
+    527306128
+  ],
+  "productIdentifiers": [
+    928306999
+  ],
+  "version": "4.2",
+  "designIdentifier": "205",
+  "shape": "ec30_2x2_lr"
+}

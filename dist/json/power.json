@@ -1,0 +1,303 @@
+{
+  "name": "Power",
+  "status": "experimental",
+  "shortId": "power",
+  "camelName": "power",
+  "shortName": "power",
+  "extends": [
+    "_base"
+  ],
+  "notes": {
+    "short": "A power-provider service.",
+    "long": "## Power negotiation protocol\n\nThe purpose of the power negotiation is to ensure that there is no more than [I<sub>out_hc(max)</sub>](https://microsoft.github.io/jacdac-docs/reference/electrical-spec/#power-providers) delivered to the power rail.\nThis is realized by limiting the number of enabled power provider services to one.\n\nNote, that it's also possible to have low-current power providers,\nwhich are limited to [I<sub>out_lc(max)</sub>](https://microsoft.github.io/jacdac-docs/reference/electrical-spec/#power-providers) and do not run a power provider service.\nThese are **not** accounted for in the power negotiation protocol.\n\nPower providers can have multiple _channels_, typically multiple Jacdac ports on the provider.\nEach channel can be limited to [I<sub>out_hc(max)</sub>](https://microsoft.github.io/jacdac-docs/reference/electrical-spec/#power-providers) separately.\nIn normal operation, the data lines of each channels are connected together.\nThe ground lines are always connected together.\nMulti-channel power providers are also called _powered hubs_.\n\nWhile channels have separate current limits, there's nothing to prevent the user\nfrom joining two or more channels outside of the provider using a passive hub.\nThis would allow more than [I<sub>out_hc(max)</sub>](https://microsoft.github.io/jacdac-docs/reference/electrical-spec/#power-providers) of current to be drawn, resulting in cables or components\ngetting hot and/or malfunctioning.\nThus, the power negotiation protocol seeks to detect situations where\nmultiple channels of power provider(s) are bridged together\nand shut down all but one of the channels involved.\n\nThe protocol is built around the power providers periodically sending specially crafted\n`shutdown` commands in broadcast mode.\nNote that this is unusual - services typically only send reports.\n\nThe `shutdown` commands can be reliably identified based on their first half (more details below).\nWhen a power provider starts receiving a `shutdown` command, it needs to take\nsteps to identify which of its channels the command is coming from.\nThis is typically realized with analog switches between the data lines of channels.\nThe delivery of power over the channel which received the `shutdown` command is then shut down.\nNote that in the case of a single-channel provider, any received `shutdown` command will cause a shut down.\n\nA multi-channel provider needs to also identify when a `shutdown` command it sent from one channel\nis received on any of its other channels and shut down one of the channels involved.\n\nIt is also possible to build a _data bridge_ device, with two or more ports.\nIt passes through all data except for `shutdown` commands,\nbut **does not** connect the power lines.\n\n### Protocol details\n\nThe `shutdown` commands follow a very narrow format:\n* they need to be the only packet in the frame (and thus we can also call them `shutdown` frames)\n* the second word of `device_id` needs to be set to `0xAA_AA_AA_AA` (alternating 0 and 1)\n* the service index is set to `0x3d`\n* the CRC is therefore fixed\n* therefore, the packet can be recognized by reading the first 8 bytes (total length is 16 bytes)\n\nThe exact byte structure of `shutdown` command is:\n`15 59 04 05 5A C9 A4 1F AA AA AA AA 00 3D 80 00`\n\nThere is one power service per channel.\nA multi-channel power provider can be implemented as one device with multiple services (typically with one MCU),\nor many devices with one service each (typically multiple MCUs).\nThe first option is preferred as it fixes the order of channels,\nbut the second option may be cheaper to implement.\n\nAfter queuing a `shutdown` command, the service enters a grace period\nuntil the report has been sent on the wire.\nDuring the grace period incoming `shutdown` commands are ignored.\n\n* Upon reset, a power service enables itself, and then only after 0-300ms (random)\n  sends the first `shutdown` command\n* Every enabled power service emits `shutdown` commands every 400-600ms (random; first few packets can be even sent more often)\n* If an enabled power service sees a `shutdown` command from somebody else,\n  it disables itself (unless in grace period)\n* If a disabled power service sees no `shutdown` command for more than ~1200ms, it enables itself\n  (this is when the previous power source is unplugged or otherwise malfunctions)\n* If a power service has been disabled for around 10s, it enables itself.\n\nAdditionally:\n* While the `allowed` register is set to `0`, the service will not enable itself (nor send `shutdown` commands)\n* When a current overdraw is detected, the service stop providing power and enters `Overload` state for around 2 seconds,\n  while still sending `shutdown` commands.\n\n### Client notes\n\nIf a client hears a `shutdown` command it just means it's on a branch of the\nnetwork with a (high) power provider.\nAs clients (brains) typically do not consume much current (as opposed to, say, servos),\nthe `shutdown` commands are typically irrelevant to them.\n\nFor power monitoring, the `power_status_changed` event (and possibly `power_status` register)\ncan be used.\nIn particular, user interfaces may alert the user to `Overload` status.\nThe `Overprovision` status is generally considered normal (eg. when two multi-channel power providers are linked together).\n\n### Server implementation notes\n\n#### A dedicated MCU per channel\n\nEvery channel has:\n* a cheap 8-bit MCU (e.g. PMS150C, PFS122),\n* a current limiter with FAULT output and ENABLE input, and\n* an analog switch.\n\nThe MCU here needs at least 4 pins per channel.\nIt is connected to data line of the channel, the control input of the switch, and to the current limiter's FAULT and ENABLE pins.\n\nThe switch connects the data line of the channel (JD_DATA_CHx) with the internal shared data bus, common to all channels (JD_DATA_COM).\nBoth the switch and the limiter are controlled by the MCU.\nA latching circuit is not needed for the limiter because the MCU will detect an overcurrent fault and shut it down immediately. \n\nDuring reception, after the beginning of `shutdown` frame is detected,\nthe switch is opened for a brief period.\nIf the `shutdown` frame is received correctly, it means it was on MCU's channel.\n\nIn the case of only one power delivery channel that's controlled by a dedicated MCU, the analog switch is not necessary. \n\n#### A shared MCU for multiple channels\n\nEvery channel has:\n* a current limiter with FAULT output and ENABLE input, \n* an analog switch, and\n* a wiggle-detection line connecting the MCU to data line of the channel\n\nThe MCU again needs at least 4 pins per channel.\nSwitches and limiters are set up like in the configuration above.\nThe Jacdac data line of the MCU is connected to internal data bus.\n\nWhile a Jacdac packet is being received, the MCU keeps checking if it is a \nbeginning of the `shutdown` frame.\nIf that is the case, it opens all switches and checks which one(s) of the channel\ndata lines wiggle (via the wiggle lines; this can be done with EXTI latches).\nThe one(s) that wiggle received the `shutdown` frame and need to be disabled.\n\nAlso, while sending the `shutdown` frames itself, it needs to be done separately\nfor each channel, with all the other switches open.\nIf during that operation we detect wiggle on other channels, then we have detected\na loop, and the respective channels needs to be disabled.\n\n#### A brain-integrated power supply\n\nHere, there's only one channel of power and we don't have hard real time requirements,\nso user-programmable brain can control it.\nThere is no need for analog switch or wiggle-detection line,\nbut a current limiter with a latching circuit is needed.\n\nThere is nothing special to do during reception of `shutdown` packet.\nWhen it is received, the current limiter should just be disabled.\n\nIdeally, exception/hard-fault handlers on the MCU should also disable the current limiter.\nSimilarly, the limiter should be disabled while the MCU is in bootloader mode,\nor otherwise unaware of the power negotiation protocol. \n\n### Rationale for the grace period\n\nConsider the following scenario:\n\n* device A queues `shutdown` command for sending\n* A receives external `shutdown` packet from B (thus disabling A)\n* the A `shutdown` command is sent from the queue (thus eventually disabling B)\n\nTo avoid that, we make sure that at the precise instant when `shutdown` command is sent,\nthe power is enabled (and thus will stay enabled until another `shutdown` command arrives).\nThis could be achieved by inspecting the enable bit, aftering acquiring the line\nand before starting UART transmission, however that would require breaking abstraction layers.\nSo instead, we never disable the service, while the `shutdown` packet is queued.\nThis may lead to delays in disabling power services, but these should be limited due to the\nrandom nature of the `shutdown` packet spacing.\n\n### Rationale for timings\n\nThe initial 0-300ms delay is set to spread out the `shutdown` periods of power services,\nto minimize collisions.\nThe `shutdown` periods are randomized 400-600ms, instead of a fixed 500ms used for regular\nservices, for the same reason.\n\nThe 1200ms period is set so that droping two `shutdown` packets in a row\nfrom the current provider will not cause power switch, while missing 3 will.\n\nThe 50-60s power switch period is arbitrary, but chosen to limit amount of switching between supplies,\nwhile keeping it short enough for user to notice any problems such switching may cause."
+  },
+  "classIdentifier": 530893146,
+  "enums": {
+    "PowerStatus": {
+      "name": "PowerStatus",
+      "storage": 1,
+      "members": {
+        "Disallowed": 0,
+        "Powering": 1,
+        "Overload": 2,
+        "Overprovision": 3
+      }
+    }
+  },
+  "constants": {},
+  "packets": [
+    {
+      "kind": "report",
+      "name": "command_not_implemented",
+      "identifier": 3,
+      "description": "This report may be emitted by a server in response to a command (action or register operation)\nthat it does not understand.\nThe `service_command` and `packet_crc` fields are copied from the command packet that was unhandled.\nNote that it's possible to get an ACK, followed by such an error report.",
+      "fields": [
+        {
+          "name": "service_command",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "packet_crc",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "identifierName": "command_not_implemented",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
+    {
+      "kind": "const",
+      "name": "instance_name",
+      "identifier": 265,
+      "description": "A friendly name that describes the role of this service instance in the device.\nIt often corresponds to what's printed on the device:\nfor example, `A` for button A, or `S0` for servo channel 0.\nWords like `left` should be avoided because of localization issues (unless they are printed on the device).",
+      "fields": [
+        {
+          "name": "_",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "optional": true,
+      "identifierName": "instance_name",
+      "packFormat": "s",
+      "derived": "_base"
+    },
+    {
+      "kind": "ro",
+      "name": "status_code",
+      "identifier": 259,
+      "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe Jacdac status/error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the announce packet. If a service implements this register,\nit should also support the ``status_code_changed`` event defined below.",
+      "fields": [
+        {
+          "name": "code",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "vendor_code",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "identifierName": "status_code",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
+    {
+      "kind": "event",
+      "name": "status_code_changed",
+      "identifier": 4,
+      "description": "Notifies that the status code of the service changed.",
+      "fields": [
+        {
+          "name": "code",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "vendor_code",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "identifierName": "status_code_changed",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
+    {
+      "kind": "rw",
+      "name": "allowed",
+      "identifier": 1,
+      "description": "Can be used to completely disable the service.\nWhen allowed, the service may still not be providing power, see \n`power_status` for the actual current state.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "bool",
+          "storage": 1,
+          "defaultValue": 1
+        }
+      ],
+      "identifierName": "intensity",
+      "packFormat": "u8"
+    },
+    {
+      "kind": "rw",
+      "name": "max_power",
+      "identifier": 7,
+      "description": "Limit the power provided by the service. The actual maximum limit will depend on hardware.\nThis field may be read-only in some implementations - you should read it back after setting.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "mA",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true,
+          "defaultValue": 900,
+          "typicalMax": 900,
+          "typicalMin": 0
+        }
+      ],
+      "optional": true,
+      "identifierName": "max_power",
+      "packFormat": "u16"
+    },
+    {
+      "kind": "ro",
+      "name": "power_status",
+      "identifier": 385,
+      "description": "Indicates whether the power provider is currently providing power (`Powering` state), and if not, why not.\n`Overprovision` means there was another power provider, and we stopped not to overprovision the bus.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "PowerStatus",
+          "storage": 1
+        }
+      ],
+      "volatile": true,
+      "packFormat": "u8"
+    },
+    {
+      "kind": "ro",
+      "name": "current_draw",
+      "identifier": 257,
+      "description": "Present current draw from the bus.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "mA",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "volatile": true,
+      "optional": true,
+      "identifierName": "reading",
+      "packFormat": "u16"
+    },
+    {
+      "kind": "ro",
+      "name": "battery_voltage",
+      "identifier": 384,
+      "description": "Voltage on input.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "mV",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true,
+          "typicalMin": 4500,
+          "typicalMax": 5500
+        }
+      ],
+      "volatile": true,
+      "optional": true,
+      "packFormat": "u16"
+    },
+    {
+      "kind": "ro",
+      "name": "battery_charge",
+      "identifier": 386,
+      "description": "Fraction of charge in the battery.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "/",
+          "shift": 16,
+          "type": "u0.16",
+          "storage": 2
+        }
+      ],
+      "volatile": true,
+      "optional": true,
+      "packFormat": "u0.16"
+    },
+    {
+      "kind": "const",
+      "name": "battery_capacity",
+      "identifier": 387,
+      "description": "Energy that can be delivered to the bus when battery is fully charged.\nThis excludes conversion overheads if any.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "mWh",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "packFormat": "u32"
+    },
+    {
+      "kind": "rw",
+      "name": "keep_on_pulse_duration",
+      "identifier": 128,
+      "description": "Many USB power packs need current to be drawn from time to time to prevent shutdown.\nThis regulates how often and for how long such current is drawn.\nTypically a 1/8W 22 ohm resistor is used as load. This limits the duty cycle to 10%.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "ms",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true,
+          "defaultValue": 600
+        }
+      ],
+      "optional": true,
+      "packFormat": "u16"
+    },
+    {
+      "kind": "rw",
+      "name": "keep_on_pulse_period",
+      "identifier": 129,
+      "description": "Many USB power packs need current to be drawn from time to time to prevent shutdown.\nThis regulates how often and for how long such current is drawn.\nTypically a 1/8W 22 ohm resistor is used as load. This limits the duty cycle to 10%.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "ms",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true,
+          "defaultValue": 20000
+        }
+      ],
+      "optional": true,
+      "packFormat": "u16"
+    },
+    {
+      "kind": "command",
+      "name": "shutdown",
+      "identifier": 128,
+      "description": "Sent by the power service periodically, as broadcast.",
+      "fields": []
+    },
+    {
+      "kind": "event",
+      "name": "power_status_changed",
+      "identifier": 3,
+      "description": "Emitted whenever `power_status` changes.",
+      "fields": [
+        {
+          "name": "power_status",
+          "type": "PowerStatus",
+          "storage": 1
+        }
+      ],
+      "identifierName": "change",
+      "packFormat": "u8"
+    }
+  ],
+  "tags": []
+}

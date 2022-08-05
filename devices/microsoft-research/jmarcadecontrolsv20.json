@@ -1,0 +1,16 @@
+{
+  "id": "microsoft-research-jmarcadecontrolsv20",
+  "name": "JM Arcade Controls v2.0",
+  "company": "Microsoft Research",
+  "description": "Lets you connect arcade buttons and joystick to a Jacdac network.",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v2.0/profile/arcade.c",
+  "link": "https://github.com/microsoft/jacdac-msr-modules",
+  "services": [
+    501915758
+  ],
+  "productIdentifiers": [
+    954450524
+  ],
+  "status": "deprecated"
+}

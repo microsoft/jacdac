@@ -1,0 +1,19 @@
+{
+  "id": "microsoft-research-jmpressurev3872v38",
+  "name": "JM Pressure v3.8",
+  "company": "Microsoft Research",
+  "description": "JM Pressure MPL3115A2 72 v3.8",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v3.6/profile/barometer2.c",
+  "link": "https://aka.ms/aaaabb",
+  "services": [
+    504462570,
+    337754823
+  ],
+  "productIdentifiers": [
+    869351851
+  ],
+  "version": "3.8",
+  "designIdentifier": "72",
+  "shape": "ec30_2x2_lr"
+}

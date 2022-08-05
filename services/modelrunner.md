@@ -1,15 +1,17 @@
 # Model Runner
 
     identifier: 0x140f9a78
+    status: experimental
 
-Run machine learning models.
+Runs machine learning models.
+
 Only models with a single input tensor and a single output tensor are supported at the moment.
 Input is provided by Sensor Aggregator service on the same device.
 Multiple instances of this service may be present, if more than one model format is supported by a device.
 
 ## Commands
 
-    command set_model @ 0x80 {
+    unique command set_model @ 0x80 {
         model_size: u32 B
     }
     report {

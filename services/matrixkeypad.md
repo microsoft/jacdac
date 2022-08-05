@@ -2,6 +2,8 @@
 
     identifier: 0x13062dc8
     extends: _sensor
+    group: button
+    status: experimental
 
 A matrix of buttons connected as a keypad
 
@@ -15,11 +17,11 @@ A matrix of buttons connected as a keypad
 The coordinate of the button currently pressed. Keys are zero-indexed from left to right, top to bottom:
 ``row = index / columns``, ``column = index % columns``.
 
-    const rows: u8 @ 0x180
+    const rows: u8 # @ 0x180
 
 Number of rows in the matrix
 
-    const columns: u8 @ 0x181
+    const columns: u8 # @ 0x181
 
 Number of columns in the matrix
 
@@ -30,6 +32,17 @@ Number of columns in the matrix
 
 The characters printed on the keys if any, in indexing sequence.
 
+    enum Variant: u8 {
+        Membrane = 1
+        Keyboard = 2
+        Elastomer = 3
+        ElastomerLEDPixel = 4
+    }
+    const variant?: Variant @ variant
+
+The type of physical keypad. If the variant is ``ElastomerLEDPixel``
+and the next service on the device is a ``LEDPixel`` service, it is considered
+as the service controlling the LED pixel on the keypad.
 ## Events
 
     event down: u8 @ active

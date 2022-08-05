@@ -1,0 +1,16 @@
+{
+  "id": "microsoft-research-jmrgbledbar58v01",
+  "name": "JM RGB LED Bar",
+  "company": "Microsoft Research",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-rgb-led-bar-58-0.1/profile/npx.c",
+  "link": "https://github.com/microsoft/jacdac-msr-modules",
+  "services": [
+    309264608
+  ],
+  "productIdentifiers": [
+    1046525691
+  ],
+  "version": "0.1",
+  "designIdentifier": "58"
+}

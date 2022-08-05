@@ -1,6 +1,14 @@
-# JACDAC Device and Service Catalogs
+# Jacdac Specification, Device and Service Catalogs
 
-Experience JACDAC at https://aka.ms/jacdac, where you will find tools for contributing to the catalogs of JACDAC modules and services.
+**Jacdac** is a bus-based plug-and-play hardware/software stack 
+for **microcontrollers** and their peripherals (sensors/actuators), 
+with applications to rapid prototyping, making, and physical computing. 
+
+This repository contains the service specifications and device definitions.
+
+* Read online documentation at https://aka.ms/jacdac
+* Join the dicussions as https://github.com/microsoft/jacdac/discussions
+* File an issue at https://github.com/microsoft/jacdac/issues
 
 ## Contributing
 
@@ -10,7 +18,8 @@ the rights to use your contribution. For details, visit https://cla.opensource.m
 
 When you submit a pull request, a CLA bot will automatically determine whether you need to provide
 a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
+provided by the bot. 
+You will only need to do this once across all repos using our CLA.
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or

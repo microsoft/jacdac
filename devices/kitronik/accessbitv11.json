@@ -1,0 +1,24 @@
+{
+  "id": "kitronik-accessbitv11",
+  "name": "ACCESS:bit",
+  "company": "Kitronik",
+  "description": "The ACCESS:bit is a bolt-on/clip-on board for the BBC microbit that simulates an access barrier.",
+  "makeCodeRepo": [
+    {
+      "target": "microbit",
+      "name": "kitronik-accessbitv11",
+      "slug": "pelikhan/pxt-kitronik-accessbit/jacdac"
+    }
+  ],
+  "connector": "noConnector",
+  "link": "https://kitronik.co.uk/products/5646-accessbit-for-bbc-microbit",
+  "storeLink": "https://kitronik.co.uk/products/5646-accessbit-for-bbc-microbit",
+  "services": [
+    318542083
+  ],
+  "productIdentifiers": [
+    1053651806
+  ],
+  "version": "1.1",
+  "status": "stable"
+}

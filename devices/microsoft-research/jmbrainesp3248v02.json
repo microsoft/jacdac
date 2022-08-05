@@ -1,0 +1,26 @@
+{
+  "id": "microsoft-research-jmbrainesp3248v02",
+  "name": "JM Brain ESP32",
+  "company": "Microsoft Research",
+  "connector": "edgeHighCurrentProvider",
+  "services": [
+    342028028
+  ],
+  "productIdentifiers": [
+    1067560617
+  ],
+  "transport": {
+    "type": "serial",
+    "vendorId": 12346
+  },
+  "firmwares": [
+    {
+      "name": "IoT Uploader",
+      "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/uploader-esp32s2.uf2",
+      "productIdentifier": 1067560617
+    }
+  ],
+  "version": "0.2",
+  "designIdentifier": "48",
+  "status": "deprecated"
+}

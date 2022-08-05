@@ -1,0 +1,17 @@
+{
+  "id": "microsoft-research-jmsliderv20",
+  "name": "JM Slider",
+  "company": "Microsoft Research",
+  "description": "A linear potentiometer (slider).",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v2.0/profile/slider.c",
+  "link": "https://github.com/microsoft/jacdac-msr-modules",
+  "services": [
+    522667846
+  ],
+  "productIdentifiers": [
+    1043615261
+  ],
+  "version": "2.0",
+  "status": "deprecated"
+}

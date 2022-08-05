@@ -1,0 +1,16 @@
+{
+  "id": "microsoft-research-motionpir210v43",
+  "name": "Motion (PIR)",
+  "company": "Microsoft Research",
+  "description": "Detects motion using infra-red",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "services": [
+    293185353
+  ],
+  "productIdentifiers": [
+    927235767
+  ],
+  "version": "4.3",
+  "designIdentifier": "210",
+  "shape": "ec30_2x2_lr"
+}

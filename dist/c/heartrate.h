@@ -4,7 +4,7 @@
 
 #define JD_SERVICE_CLASS_HEART_RATE  0x166c6dc4
 
-// enum Variant (uint32_t)
+// enum Variant (uint8_t)
 #define JD_HEART_RATE_VARIANT_FINGER 0x1
 #define JD_HEART_RATE_VARIANT_CHEST 0x2
 #define JD_HEART_RATE_VARIANT_WRIST 0x3
@@ -22,7 +22,7 @@
 #define JD_HEART_RATE_REG_HEART_RATE_ERROR JD_REG_READING_ERROR
 
 /**
- * Constant Variant (uint32_t). The type of physical sensor
+ * Constant Variant (uint8_t). The type of physical sensor
  */
 #define JD_HEART_RATE_REG_VARIANT JD_REG_VARIANT
 

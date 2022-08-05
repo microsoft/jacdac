@@ -5,7 +5,7 @@
 #define JD_SERVICE_CLASS_WIND_DIRECTION  0x186be92b
 
 /**
- * Read-only uint16_t. The direction of the wind.
+ * Read-only ° uint16_t. The direction of the wind.
  */
 #define JD_WIND_DIRECTION_REG_WIND_DIRECTION JD_REG_READING
 
@@ -13,10 +13,5 @@
  * Read-only ° uint16_t. Error on the wind direction reading
  */
 #define JD_WIND_DIRECTION_REG_WIND_DIRECTION_ERROR JD_REG_READING_ERROR
-
-/**
- * Read-only ° int16_t. Offset added to direction to account for sensor calibration.
- */
-#define JD_WIND_DIRECTION_REG_WIND_DIRECTION_OFFSET 0x180
 
 #endif

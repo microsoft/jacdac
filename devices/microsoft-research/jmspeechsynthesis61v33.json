@@ -1,0 +1,15 @@
+{
+  "id": "microsoft-research-jmspeechsynthesis61v33",
+  "name": "JM Speech Synthesis",
+  "company": "Microsoft Research",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v3.3/profile/ttsclick.c",
+  "services": [
+    302307733
+  ],
+  "productIdentifiers": [
+    934541191
+  ],
+  "version": "3.3",
+  "designIdentifier": "61"
+}

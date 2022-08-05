@@ -1,0 +1,17 @@
+{
+  "id": "milador-jmpressuresensorv10",
+  "name": "JM Pressure Sensor v1.0",
+  "company": "Milador",
+  "description": "JM Pressure Sensor v1.0",
+  "repo": "https://github.com/milador/jacdac-milador-modules",
+  "firmwareSource": "https://github.com/milador/jacdac-milador-modules",
+  "hardwareDesign": "https://github.com/milador/Jacdac-Pressure-Sensor/tree/develop/Hardware/PCB",
+  "link": "https://github.com/milador/Jacdac-Pressure-Sensor/",
+  "services": [
+    504462570,
+    337754823
+  ],
+  "productIdentifiers": [
+    962878031
+  ]
+}

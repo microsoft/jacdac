@@ -1,0 +1,15 @@
+{
+  "id": "microsoft-research-jmbuttonterminal62v01",
+  "name": "JM Button Terminal",
+  "company": "Microsoft Research",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "link": "https://github.com/microsoft/jacdac-msr-modules",
+  "services": [
+    343122531
+  ],
+  "productIdentifiers": [
+    1047530059
+  ],
+  "version": "0.1",
+  "designIdentifier": "62"
+}

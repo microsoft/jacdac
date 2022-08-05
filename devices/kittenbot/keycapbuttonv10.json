@@ -1,0 +1,16 @@
+{
+  "id": "kittenbot-keycapbuttonv10",
+  "name": "Keycap Button",
+  "company": "KittenBot",
+  "description": "A keycap keyboard button.",
+  "storeLink": "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-for-micro-bit",
+  "services": [
+    343122531
+  ],
+  "productIdentifiers": [
+    926152985
+  ],
+  "version": "1.0",
+  "status": "stable",
+  "shape": "ec30_3x2_lr"
+}

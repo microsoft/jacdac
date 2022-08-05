@@ -2,18 +2,48 @@
 
     identifier: 0x1f140409
     extends: _sensor
+    tags: C
+    group: movement
 
 A 3-axis accelerometer.
+
+## Orientation
+
+An accelerometer module should translate acceleration values as follows:
+
+| Orientation           	| X value (g) 	| Y value (g) 	| Z value (g) 	|
+|-----------------------	|-------------	|-------------	|-------------	|
+| Module lying flat     	| 0           	| 0           	| -1          	|
+| Module on left edge   	| -1          	| 0           	| 0           	|
+| Module on bottom edge 	| 0           	| 1           	| 0           	|
+
+We recommend an orientation marking on the PCB so that users can mount modules without having to experiment with the device. Left/bottom can be determined by assuming text on silk runs left-to-right.
 
 ## Registers
 
     ro forces @ reading {
-        x: i6.10 g
-        y: i6.10 g
-        z: i6.10 g
+        x: i12.20 g
+        y: i12.20 g
+        z: i12.20 g
     }
 
 Indicates the current forces acting on accelerometer.
+
+    ro forces_error?: u12.20 g @ reading_error
+
+Error on the reading value.
+
+    rw max_force?: u12.20 g @ reading_range
+
+Configures the range forces detected.
+The value will be "rounded up" to one of `max_forces_supported`.
+
+    const max_forces_supported? @ supported_ranges {
+    repeats:
+        max_force: u12.20 g
+    }
+
+Lists values supported for writing `max_force`.
 
 ## Events
 

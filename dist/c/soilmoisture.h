@@ -9,33 +9,18 @@
 #define JD_SOIL_MOISTURE_VARIANT_CAPACITIVE 0x2
 
 /**
- * Read-only ratio u0.16 (uint16_t). Indicates the wetness of the soil, from ``dry`` to ``wet``.
+ * Read-only ratio u0.16 (uint16_t). Indicates the wetness of the soil, from `dry` to `wet`.
  */
 #define JD_SOIL_MOISTURE_REG_MOISTURE JD_REG_READING
+
+/**
+ * Read-only ratio u0.16 (uint16_t). The error on the moisture reading.
+ */
+#define JD_SOIL_MOISTURE_REG_MOISTURE_ERROR JD_REG_READING_ERROR
 
 /**
  * Constant Variant (uint8_t). Describe the type of physical sensor.
  */
 #define JD_SOIL_MOISTURE_REG_VARIANT JD_REG_VARIANT
-
-/**
- * Read-write ratio u0.16 (uint16_t). Threshold when reading data gets low and triggers a ``dry`` event.
- */
-#define JD_SOIL_MOISTURE_REG_DRY_THRESHOLD JD_REG_LOW_THRESHOLD
-
-/**
- * Read-write ratio u0.16 (uint16_t). Thresholds when reading data gets high and triggers a ``wet`` event.
- */
-#define JD_SOIL_MOISTURE_REG_WET_THRESHOLD JD_REG_HIGH_THRESHOLD
-
-/**
- * Notifies that the dry threshold has been crossed
- */
-#define JD_SOIL_MOISTURE_EV_DRY JD_EV_LOW
-
-/**
- * Notifies that the wet threshold has been crossed
- */
-#define JD_SOIL_MOISTURE_EV_WET JD_EV_HIGH
 
 #endif

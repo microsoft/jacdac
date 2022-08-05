@@ -1,0 +1,62 @@
+vanityname,designid,revision,modulename,redirectsource,productid
+,18,1.0,Temperature and humidity,aka.ms,0x359c67b8
+,38,1.0,JacdacCableExtender,aka.ms,0x37593cd9
+,45,0.2,JacdacPinHeader,aka.ms,0x39df5bf6
+,46,1.2,JacdacKeyboardKey,aka.ms,0x343f5bee
+,42,0.1,JacdacSingleRgbLed,aka.ms,0x36b4f47c
+,62,0.1,JacdacTBlockButton,aka.ms,0x3e700a4b
+,,1.0,JacdacRelay,aka.ms,0x35a6ed1c
+,,1.0,JacdacFlexSensor,aka.ms,0x321e3946
+aaaaaa,30,1.0,accelerometer,aka.ms,0x38c5de8f
+aaaaab,39,1.1,hub,aka.ms,0x36abd44c 
+aaaaac,37,2.1,RGB LED 8 ring,aka.ms,0x3027f977
+aaaaad,29,0.3,Low power micro:bit jacdapter,aka.ms,0x3c2d966a
+aaaaae,10,1.3,PADAUK Button,aka.ms,0x357084e1
+aaaaaf,49,1.0,Slider,aka.ms,0x3a78f364
+aaaaag,18,1.1,Temperature and humidity,aka.ms,0x3156cfd7
+aaaaah,26,1.1,JacdacRotary,aka.ms,0x31736afd
+aaaaal,34,1.3,JacdacAccessSwitchInput,aka.ms,0x39842fd9
+aaaaam,44,0.2,JacdacJoystick,aka.ms,0x3a3320ac
+aaaaan,40,0.2,JacdacG0Button,aka.ms,0x3865780e
+aaaaao,49,1.1,Slider,aka.ms,0x399a7233
+aaaaap,41,0.2,JacdacBrainF4 ,aka.ms,0x3bcbc488
+aaaaar,54,0.1,JacdacMotionDetection,aka.ms,0x3d6ac505
+aaaaas,55,0.1,JacdacAmbientLight,aka.ms,0x357512db
+aaaaat,58,0.1,JacdacRgbLedBar10,aka.ms,0x3e60b6fb
+aaaaau,48,0.3,JacdacBrainESP32,aka.ms,0x36abd44c
+aaaaaw,60,0.1,JacdacRgbLedGeneric,aka.ms,0x39ae4b81
+aaaaax,44,0.3,JacdacJoystick,aka.ms,0x319baa63
+aaaaay,59,0.1,JacdacBrainRP2040,aka.ms,0x3308bb88
+aaaaaz,29,0.4,JacDacMicroBitShieldLP,aka.ms,0x3a0e8a03
+aaaaai,64,3.6,JM-TempHum,aka.ms,
+aaaaaj,65,3.6,JM-Light,aka.ms,
+aaaaak,66,3.6,JM-CO2,aka.ms,
+aaaaaq,67,3.7,JM-RgbRing,aka.ms,
+aaaaav,68,3.7,JM-Key,aka.ms,
+aaaaba,69,3.7,JM-2Key,aka.ms,
+aaaabb,72,3.7,JM-Pressure,aka.ms,
+aaaabc,73,3.8,JM-Thermocouple,aka.ms,
+aaaabd,74,3.8,JM-Motion,aka.ms,
+aaaabe,77,0.2,JacdacRgbLed1Ec30,aka.ms,
+aaaabf,77,0.3,JacdacRgbLed1Ec30,aka.ms,
+aaaabg,91,0.1,JacdacModuleTesterEc30,aka.ms,
+aaaabh,80,0.7,JacdacEc30Template20x20,aka.ms,
+aaaabi,105,0.2,JacdacEc30RgBLedRing8,aka.ms,
+aaaabj,80,1.0,JacdacEc30Template20x20,aka.ms,
+aaaabk,115,1.0,JacdacTactEc30,aka.ms,
+aaaabl,116,1.0,JacdacTempRhEc30,aka.ms,
+aaaabm,114,1.0,JacdacEc30Hub10x40,aka.ms,
+aaaabn,113,1.0,JacdacMicroBitShieldLPEc,aka.ms,
+aaaabo,116,1.1,JacdacTempRhEc30,aka.ms,
+aaaabp,115,1.1,JacdacTactEc30,aka.ms,
+aaaabq,114,1.0,JacdacEc30Hub10x40,aka.ms,
+aaaabr,117,1.0,JacdacDevRgbEc30,aka.ms,
+aaaabs,,,,,
+aaaabt,,,,,
+aaaabu,,,,,
+aaaabv,,,,,
+aaaabw,,,,,
+aaaabx,,,,,
+aaaaby,,,,,
+aaaabz,,,,,
+

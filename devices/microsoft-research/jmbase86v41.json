@@ -1,0 +1,13 @@
+{
+  "id": "microsoft-research-jmbase86v41",
+  "name": "JM Base",
+  "company": "Microsoft Research",
+  "description": "A breadboard like PCB to screw mount Jacdac modules.",
+  "connector": "edgePassive",
+  "tags": [
+    "ec30",
+    "hub"
+  ],
+  "version": "4.1",
+  "designIdentifier": "86"
+}

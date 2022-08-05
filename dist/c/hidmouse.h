@@ -5,9 +5,9 @@
 #define JD_SERVICE_CLASS_HID_MOUSE  0x1885dc1c
 
 // enum Button (uint16_t)
-#define JD_HID_MOUSE_BUTTON_RIGHT 0x1
+#define JD_HID_MOUSE_BUTTON_LEFT 0x1
+#define JD_HID_MOUSE_BUTTON_RIGHT 0x2
 #define JD_HID_MOUSE_BUTTON_MIDDLE 0x4
-#define JD_HID_MOUSE_BUTTON_LEFT 0x2
 
 // enum ButtonEvent (uint8_t)
 #define JD_HID_MOUSE_BUTTON_EVENT_UP 0x1
@@ -17,13 +17,13 @@
 
 /**
  * Sets the up/down state of one or more buttons.
- * A ``Click`` is the same as ``Down`` followed by ``Up`` after 100ms.
- * A ``DoubleClick`` is two clicks with ``150ms`` gap between them (that is, ``100ms`` first click, ``150ms`` gap, ``100ms`` second click).
+ * A `Click` is the same as `Down` followed by `Up` after 100ms.
+ * A `DoubleClick` is two clicks with `150ms` gap between them (that is, `100ms` first click, `150ms` gap, `100ms` second click).
  */
 #define JD_HID_MOUSE_CMD_SET_BUTTON 0x80
 typedef struct jd_hid_mouse_set_button {
     uint16_t buttons;  // Button
-    uint8_t event;  // ButtonEvent
+    uint8_t ev;  // ButtonEvent
 } jd_hid_mouse_set_button_t;
 
 

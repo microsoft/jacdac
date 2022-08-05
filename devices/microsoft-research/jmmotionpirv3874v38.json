@@ -1,0 +1,18 @@
+{
+  "id": "microsoft-research-jmmotionpirv3874v38",
+  "name": "JM Motion PIR v3.8",
+  "company": "Microsoft Research",
+  "description": "JM Motion PIR 74 v3.8",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v3.3/profile/pir.c",
+  "link": "https://aka.ms/aaaaad",
+  "services": [
+    293185353
+  ],
+  "productIdentifiers": [
+    1060186023
+  ],
+  "version": "3.8",
+  "designIdentifier": "74",
+  "shape": "ec30_2x2_lr"
+}

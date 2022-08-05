@@ -9,7 +9,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [16.x]
 
     steps:
       - uses: actions/checkout@v2
@@ -20,6 +20,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install -g typescript
+      - run: npm install
       - run: make
       - uses: stefanzweifel/git-auto-commit-action@v4
         if: ${{ github.ref == 'refs/heads/main' }}

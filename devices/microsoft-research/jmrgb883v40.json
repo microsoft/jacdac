@@ -1,0 +1,17 @@
+{
+  "id": "microsoft-research-jmrgb883v40",
+  "name": "JM RGB-8",
+  "company": "Microsoft Research",
+  "description": "Circular 8 programmable LED display.",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v4.0/profile/rgb-83.c",
+  "services": [
+    369743088
+  ],
+  "productIdentifiers": [
+    1050545633
+  ],
+  "version": "4.0",
+  "designIdentifier": "83",
+  "shape": "ec30_3x3_lr"
+}

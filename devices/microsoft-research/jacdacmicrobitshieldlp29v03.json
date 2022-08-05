@@ -1,0 +1,12 @@
+{
+  "id": "microsoft-research-jacdacmicrobitshieldlp29v03",
+  "name": "JacDacMicroBitShieldLP",
+  "company": "Microsoft Research",
+  "connector": "edgeLowCurrentProvider",
+  "productIdentifiers": [
+    1009620586
+  ],
+  "version": "0.3",
+  "designIdentifier": "29",
+  "status": "experimental"
+}

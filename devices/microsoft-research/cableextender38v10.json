@@ -1,0 +1,13 @@
+{
+  "id": "microsoft-research-cableextender38v10",
+  "name": "CableExtender",
+  "company": "Microsoft Research",
+  "description": "Cable extender",
+  "connector": "edgePassive",
+  "productIdentifiers": [
+    928595161
+  ],
+  "version": "1.0",
+  "designIdentifier": "38",
+  "status": "experimental"
+}

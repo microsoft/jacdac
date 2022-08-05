@@ -1,0 +1,19 @@
+{
+  "id": "microsoft-research-jm3slider85v40",
+  "name": "JM-3-Slider",
+  "company": "Microsoft Research",
+  "description": "Triple slider",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v4.0/profile/slider-85.c",
+  "services": [
+    522667846,
+    522667846,
+    522667846
+  ],
+  "productIdentifiers": [
+    905702802
+  ],
+  "version": "4.0",
+  "designIdentifier": "85",
+  "shape": "ec30_6x3_lr"
+}

@@ -1,0 +1,15 @@
+{
+  "id": "microsoft-research-jacdactouchtest35v10",
+  "name": "JacdacTouchTest",
+  "company": "Microsoft Research",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "services": [
+    677752265
+  ],
+  "productIdentifiers": [
+    933677864
+  ],
+  "version": "1.0",
+  "designIdentifier": "35",
+  "status": "experimental"
+}

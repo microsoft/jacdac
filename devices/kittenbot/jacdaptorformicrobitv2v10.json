@@ -1,0 +1,20 @@
+{
+  "id": "kittenbot-jacdaptorformicrobitv2v10",
+  "name": "Jacdaptor for micro:bit V2",
+  "company": "KittenBot",
+  "connector": "edgeLowCurrentProviderConsumer",
+  "storeLink": "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-for-micro-bit",
+  "tags": [
+    "adapter",
+    "microbit"
+  ],
+  "version": "1.0",
+  "status": "stable",
+  "relatedDevices": [
+    "microbit-educational-foundation-microbitv2"
+  ],
+  "requiredDevices": [
+    "microbit-educational-foundation-microbitv2"
+  ],
+  "shape": "ec30_1x7_r7"
+}

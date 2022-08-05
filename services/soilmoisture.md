@@ -2,6 +2,9 @@
 
     identifier: 0x1d4aa3b3
     extends: _sensor
+    tags: 8bit
+    group: environment
+    status: stable
 
 A soil moisture sensor.
 
@@ -9,7 +12,11 @@ A soil moisture sensor.
 
     ro moisture: u0.16 / { preferred_interval=1000 } @ reading
 
-Indicates the wetness of the soil, from ``dry`` to ``wet``.
+Indicates the wetness of the soil, from `dry` to `wet`.
+
+    ro moisture_error?: u0.16 /  @ reading_error
+
+The error on the moisture reading.
 
     enum Variant: u8 {
          Resistive = 1
@@ -18,23 +25,3 @@ Indicates the wetness of the soil, from ``dry`` to ``wet``.
     const variant?: Variant @ variant
 
 Describe the type of physical sensor.
-
-## Events
-
-    rw dry_threshold: u0.16 / @ low_threshold
-
-Threshold when reading data gets low and triggers a ``dry`` event.
-
-    rw wet_threshold: u0.16 / @ high_threshold
-
-Thresholds when reading data gets high and triggers a ``wet`` event.
-
-## Events
-
-    event dry @ low {}
-
-Notifies that the dry threshold has been crossed
-
-    event wet @ high {}
-
-Notifies that the wet threshold has been crossed

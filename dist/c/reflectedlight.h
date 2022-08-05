@@ -18,14 +18,4 @@
  */
 #define JD_REFLECTED_LIGHT_REG_VARIANT JD_REG_VARIANT
 
-/**
- * The sensor detected a transition from light to dark
- */
-#define JD_REFLECTED_LIGHT_EV_DARK JD_EV_INACTIVE
-
-/**
- * The sensor detected a transition from dark to light
- */
-#define JD_REFLECTED_LIGHT_EV_LIGHT JD_EV_ACTIVE
-
 #endif

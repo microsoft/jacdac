@@ -4,33 +4,23 @@
 
 #define JD_SERVICE_CLASS_RELAY  0x183fe656
 
-// enum Variant (uint32_t)
+// enum Variant (uint8_t)
 #define JD_RELAY_VARIANT_ELECTROMECHANICAL 0x1
 #define JD_RELAY_VARIANT_SOLID_STATE 0x2
 #define JD_RELAY_VARIANT_REED 0x3
 
 /**
- * Read-write bool (uint8_t). Indicates whether the relay circuit is currently on (closed) or off (closed).
+ * Read-write bool (uint8_t). Indicates whether the relay circuit is currently energized or not.
  */
-#define JD_RELAY_REG_CLOSED JD_REG_INTENSITY
+#define JD_RELAY_REG_ACTIVE JD_REG_INTENSITY
 
 /**
- * Constant Variant (uint32_t). Describes the type of relay used.
+ * Constant Variant (uint8_t). Describes the type of relay used.
  */
 #define JD_RELAY_REG_VARIANT JD_REG_VARIANT
 
 /**
- * Emitted when relay goes from ``off`` to ``on`` state.
- */
-#define JD_RELAY_EV_ON JD_EV_ACTIVE
-
-/**
- * Emitted when relay goes from ``on`` to ``off`` state.
- */
-#define JD_RELAY_EV_OFF JD_EV_INACTIVE
-
-/**
- * Constant A uint16_t. Maximum switching current for a resistive load.
+ * Constant mA uint32_t. Maximum switching current for a resistive load.
  */
 #define JD_RELAY_REG_MAX_SWITCHING_CURRENT 0x180
 

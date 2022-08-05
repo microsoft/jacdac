@@ -1,0 +1,17 @@
+{
+  "id": "microsoft-research-jmpwmservov20",
+  "name": "JM PWM (Servo)",
+  "company": "Microsoft Research",
+  "description": "A controller for a 5V servo.",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v2.0/profile/servo.c",
+  "link": "https://github.com/microsoft/jacdac-msr-modules",
+  "services": [
+    318542083
+  ],
+  "productIdentifiers": [
+    816890446
+  ],
+  "version": "2.0",
+  "status": "deprecated"
+}

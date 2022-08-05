@@ -1,0 +1,16 @@
+{
+  "id": "microsoft-research-jmrgbledring37v21",
+  "name": "JM RGB LED Ring",
+  "company": "Microsoft Research",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-rgb-led-ring-37-2.1/profile/npx.c",
+  "link": "https://github.com/microsoft/jacdac-msr-modules",
+  "services": [
+    309264608
+  ],
+  "productIdentifiers": [
+    807926135
+  ],
+  "version": "2.1",
+  "designIdentifier": "37"
+}

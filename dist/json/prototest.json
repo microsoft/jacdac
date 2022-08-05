@@ -1,0 +1,646 @@
+{
+  "name": "Protocol Test",
+  "status": "experimental",
+  "shortId": "prototest",
+  "camelName": "protoTest",
+  "shortName": "protoTest",
+  "extends": [
+    "_base"
+  ],
+  "notes": {
+    "short": "This is test service to validate the protocol packet transmissions between the browser and a MCU.\nUse this page if you are porting Jacdac to a new platform.",
+    "long": "### Test procedure\n\nFor each ``rw`` registers, set a random value ``x``\n  * read ``rw`` and check value is equal to ``x``\n  * read ``ro`` and check value is equal to ``x``\n  * listen to ``e`` event and check that data is equal to ``x``\n  * call ``c`` command with new random value ``y``\n  * read ``rw`` and check value is equal to ``y``\n  * do all the above steps with acks\n\nFor each ``rw`` registers, there shall also\nbe an ``event`` and a ``command``. The event\nshould get raised when the value changes;\nand the command should set the value.",
+    "registers": "Every ``rw`` register has a corresponding ``ro`` regisrer\nand a corresponding ``set_...`` command to also set the value."
+  },
+  "classIdentifier": 382158442,
+  "enums": {},
+  "constants": {},
+  "packets": [
+    {
+      "kind": "report",
+      "name": "command_not_implemented",
+      "identifier": 3,
+      "description": "This report may be emitted by a server in response to a command (action or register operation)\nthat it does not understand.\nThe `service_command` and `packet_crc` fields are copied from the command packet that was unhandled.\nNote that it's possible to get an ACK, followed by such an error report.",
+      "fields": [
+        {
+          "name": "service_command",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "packet_crc",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "identifierName": "command_not_implemented",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
+    {
+      "kind": "const",
+      "name": "instance_name",
+      "identifier": 265,
+      "description": "A friendly name that describes the role of this service instance in the device.\nIt often corresponds to what's printed on the device:\nfor example, `A` for button A, or `S0` for servo channel 0.\nWords like `left` should be avoided because of localization issues (unless they are printed on the device).",
+      "fields": [
+        {
+          "name": "_",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "optional": true,
+      "identifierName": "instance_name",
+      "packFormat": "s",
+      "derived": "_base"
+    },
+    {
+      "kind": "ro",
+      "name": "status_code",
+      "identifier": 259,
+      "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe Jacdac status/error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the announce packet. If a service implements this register,\nit should also support the ``status_code_changed`` event defined below.",
+      "fields": [
+        {
+          "name": "code",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "vendor_code",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "identifierName": "status_code",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
+    {
+      "kind": "event",
+      "name": "status_code_changed",
+      "identifier": 4,
+      "description": "Notifies that the status code of the service changed.",
+      "fields": [
+        {
+          "name": "code",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "vendor_code",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "identifierName": "status_code_changed",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
+    {
+      "kind": "rw",
+      "name": "rw_bool",
+      "identifier": 129,
+      "description": "A read write bool register.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "bool",
+          "storage": 1
+        }
+      ],
+      "packFormat": "u8"
+    },
+    {
+      "kind": "ro",
+      "name": "ro_bool",
+      "identifier": 385,
+      "description": "A read only bool register. Mirrors rw_bool.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "bool",
+          "storage": 1
+        }
+      ],
+      "packFormat": "u8"
+    },
+    {
+      "kind": "rw",
+      "name": "rw_u32",
+      "identifier": 130,
+      "description": "A read write u32 register.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u32"
+    },
+    {
+      "kind": "ro",
+      "name": "ro_u32",
+      "identifier": 386,
+      "description": "A read only u32 register.. Mirrors rw_u32.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u32"
+    },
+    {
+      "kind": "rw",
+      "name": "rw_i32",
+      "identifier": 131,
+      "description": "A read write i32 register.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "i32",
+          "storage": -4,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "i32"
+    },
+    {
+      "kind": "ro",
+      "name": "ro_i32",
+      "identifier": 387,
+      "description": "A read only i32 register.. Mirrors rw_i32.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "i32",
+          "storage": -4,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "i32"
+    },
+    {
+      "kind": "rw",
+      "name": "rw_string",
+      "identifier": 132,
+      "description": "A read write string register.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "packFormat": "s"
+    },
+    {
+      "kind": "ro",
+      "name": "ro_string",
+      "identifier": 388,
+      "description": "A read only string register. Mirrors rw_string.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "packFormat": "s"
+    },
+    {
+      "kind": "rw",
+      "name": "rw_bytes",
+      "identifier": 133,
+      "description": "A read write string register.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "bytes",
+          "storage": 0,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "b"
+    },
+    {
+      "kind": "ro",
+      "name": "ro_bytes",
+      "identifier": 389,
+      "description": "A read only string register. Mirrors ro_bytes.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "bytes",
+          "storage": 0,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "b"
+    },
+    {
+      "kind": "rw",
+      "name": "rw_i8_u8_u16_i32",
+      "identifier": 134,
+      "description": "A read write i8, u8, u16, i32 register.",
+      "fields": [
+        {
+          "name": "i8",
+          "type": "i8",
+          "storage": -1,
+          "isSimpleType": true
+        },
+        {
+          "name": "u8",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "u16",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "i32",
+          "type": "i32",
+          "storage": -4,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "i8 u8 u16 i32"
+    },
+    {
+      "kind": "ro",
+      "name": "ro_i8_u8_u16_i32",
+      "identifier": 390,
+      "description": "A read only i8, u8, u16, i32 register.. Mirrors rw_i8_u8_u16_i32.",
+      "fields": [
+        {
+          "name": "i8",
+          "type": "i8",
+          "storage": -1,
+          "isSimpleType": true
+        },
+        {
+          "name": "u8",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "u16",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "i32",
+          "type": "i32",
+          "storage": -4,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "i8 u8 u16 i32"
+    },
+    {
+      "kind": "rw",
+      "name": "rw_u8_string",
+      "identifier": 135,
+      "description": "A read write u8, string register.",
+      "fields": [
+        {
+          "name": "u8",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "str",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "packFormat": "u8 s"
+    },
+    {
+      "kind": "ro",
+      "name": "ro_u8_string",
+      "identifier": 391,
+      "description": "A read only u8, string register.. Mirrors rw_u8_string.",
+      "fields": [
+        {
+          "name": "u8",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "str",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "packFormat": "u8 s"
+    },
+    {
+      "kind": "event",
+      "name": "e_bool",
+      "identifier": 129,
+      "description": "An event raised when rw_bool is modified",
+      "fields": [
+        {
+          "name": "bo",
+          "type": "bool",
+          "storage": 1
+        }
+      ],
+      "packFormat": "u8"
+    },
+    {
+      "kind": "event",
+      "name": "e_u32",
+      "identifier": 130,
+      "description": "An event raised when rw_u32 is modified",
+      "fields": [
+        {
+          "name": "u32",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u32"
+    },
+    {
+      "kind": "event",
+      "name": "e_i32",
+      "identifier": 131,
+      "description": "An event raised when rw_i32 is modified",
+      "fields": [
+        {
+          "name": "i32",
+          "type": "i32",
+          "storage": -4,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "i32"
+    },
+    {
+      "kind": "event",
+      "name": "e_string",
+      "identifier": 132,
+      "description": "An event raised when rw_string is modified",
+      "fields": [
+        {
+          "name": "str",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "packFormat": "s"
+    },
+    {
+      "kind": "event",
+      "name": "e_bytes",
+      "identifier": 133,
+      "description": "An event raised when rw_bytes is modified",
+      "fields": [
+        {
+          "name": "bytes",
+          "type": "bytes",
+          "storage": 0,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "b"
+    },
+    {
+      "kind": "event",
+      "name": "e_i8_u8_u16_i32",
+      "identifier": 134,
+      "description": "An event raised when rw_i8_u8_u16_i32 is modified",
+      "fields": [
+        {
+          "name": "i8",
+          "type": "i8",
+          "storage": -1,
+          "isSimpleType": true
+        },
+        {
+          "name": "u8",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "u16",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "i32",
+          "type": "i32",
+          "storage": -4,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "i8 u8 u16 i32"
+    },
+    {
+      "kind": "event",
+      "name": "e_u8_string",
+      "identifier": 135,
+      "description": "An event raised when rw_u8_string is modified",
+      "fields": [
+        {
+          "name": "u8",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "str",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "packFormat": "u8 s"
+    },
+    {
+      "kind": "command",
+      "name": "c_bool",
+      "identifier": 129,
+      "description": "A command to set rw_bool.",
+      "fields": [
+        {
+          "name": "bo",
+          "type": "bool",
+          "storage": 1
+        }
+      ],
+      "packFormat": "u8"
+    },
+    {
+      "kind": "command",
+      "name": "c_u32",
+      "identifier": 130,
+      "description": "A command to set rw_u32.",
+      "fields": [
+        {
+          "name": "u32",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u32"
+    },
+    {
+      "kind": "command",
+      "name": "c_i32",
+      "identifier": 131,
+      "description": "A command to set rw_i32.",
+      "fields": [
+        {
+          "name": "i32",
+          "type": "i32",
+          "storage": -4,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "i32"
+    },
+    {
+      "kind": "command",
+      "name": "c_string",
+      "identifier": 132,
+      "description": "A command to set rw_string.",
+      "fields": [
+        {
+          "name": "str",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "packFormat": "s"
+    },
+    {
+      "kind": "command",
+      "name": "c_bytes",
+      "identifier": 133,
+      "description": "A command to set rw_string.",
+      "fields": [
+        {
+          "name": "bytes",
+          "type": "bytes",
+          "storage": 0,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "b"
+    },
+    {
+      "kind": "command",
+      "name": "c_i8_u8_u16_i32",
+      "identifier": 134,
+      "description": "A command to set rw_bytes.",
+      "fields": [
+        {
+          "name": "i8",
+          "type": "i8",
+          "storage": -1,
+          "isSimpleType": true
+        },
+        {
+          "name": "u8",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "u16",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "i32",
+          "type": "i32",
+          "storage": -4,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "i8 u8 u16 i32"
+    },
+    {
+      "kind": "command",
+      "name": "c_u8_string",
+      "identifier": 135,
+      "description": "A command to set rw_u8_string.",
+      "fields": [
+        {
+          "name": "u8",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "str",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "packFormat": "u8 s"
+    },
+    {
+      "kind": "command",
+      "name": "c_report_pipe",
+      "identifier": 144,
+      "description": "A command to read the content of rw_bytes, byte per byte, as a pipe.",
+      "fields": [
+        {
+          "name": "p_bytes",
+          "type": "pipe",
+          "storage": 12
+        }
+      ],
+      "pipeType": "c_report_pipe",
+      "packFormat": "b[12]"
+    },
+    {
+      "kind": "pipe_report",
+      "name": "p_bytes",
+      "identifier": 0,
+      "description": "A command to read the content of rw_bytes, byte per byte, as a pipe.",
+      "fields": [
+        {
+          "name": "byte",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        }
+      ],
+      "pipeType": "c_report_pipe",
+      "packFormat": "u8"
+    }
+  ],
+  "tags": [
+    "infrastructure"
+  ]
+}

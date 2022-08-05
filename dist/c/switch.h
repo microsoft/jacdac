@@ -4,7 +4,7 @@
 
 #define JD_SERVICE_CLASS_SWITCH  0x1ad29402
 
-// enum Variant (uint32_t)
+// enum Variant (uint8_t)
 #define JD_SWITCH_VARIANT_SLIDE 0x1
 #define JD_SWITCH_VARIANT_TILT 0x2
 #define JD_SWITCH_VARIANT_PUSH_BUTTON 0x3
@@ -12,7 +12,7 @@
 #define JD_SWITCH_VARIANT_TOGGLE 0x5
 #define JD_SWITCH_VARIANT_PROXIMITY 0x6
 #define JD_SWITCH_VARIANT_MAGNETIC 0x7
-#define JD_SWITCH_VARIANT_FOOT_PEDAL 0x8
+#define JD_SWITCH_VARIANT_FOOT_BUTTON 0x8
 
 /**
  * Read-only bool (uint8_t). Indicates whether the switch is currently active (on).
@@ -20,23 +20,17 @@
 #define JD_SWITCH_REG_ACTIVE JD_REG_READING
 
 /**
- * Constant Variant (uint32_t). Describes the type of switch used.
+ * Constant Variant (uint8_t). Describes the type of switch used.
  */
 #define JD_SWITCH_REG_VARIANT JD_REG_VARIANT
 
 /**
- * Constant s u16.16 (uint32_t). Specifies the delay without activity to automatically turn off after turning on.
- * For example, some light switches in staircases have such a capability.
- */
-#define JD_SWITCH_REG_AUTO_OFF_DELAY 0x180
-
-/**
- * Emitted when switch goes from ``off`` to ``on``.
+ * Emitted when switch goes from `off` to `on`.
  */
 #define JD_SWITCH_EV_ON JD_EV_ACTIVE
 
 /**
- * Emitted when switch goes from ``on`` to ``off``.
+ * Emitted when switch goes from `on` to `off`.
  */
 #define JD_SWITCH_EV_OFF JD_EV_INACTIVE
 

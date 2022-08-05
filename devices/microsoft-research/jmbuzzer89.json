@@ -1,0 +1,15 @@
+{
+  "id": "microsoft-research-jmbuzzer89",
+  "name": "JM-Buzzer",
+  "company": "Microsoft Research",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v4.0/profile/buzzer-89.c",
+  "services": [
+    458731991
+  ],
+  "productIdentifiers": [
+    1073013851
+  ],
+  "designIdentifier": "89",
+  "shape": "ec30_2x2_lr"
+}

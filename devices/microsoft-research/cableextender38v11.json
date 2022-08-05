@@ -1,0 +1,13 @@
+{
+  "id": "microsoft-research-cableextender38v11",
+  "name": "CableExtender",
+  "company": "Microsoft Research",
+  "description": "Cable extender",
+  "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/altium/hub-designs/JacdacCableExtender%2038-1.1",
+  "connector": "edgePassive",
+  "productIdentifiers": [
+    943041789
+  ],
+  "version": "1.1",
+  "designIdentifier": "38"
+}

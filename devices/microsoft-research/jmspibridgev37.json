@@ -1,0 +1,20 @@
+{
+  "id": "microsoft-research-jmspibridgev37",
+  "name": "JM SPI bridge",
+  "company": "Microsoft Research",
+  "description": "JM SPI bridge v3.7",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-spi-bridge-v3.7/profile/bridge.c",
+  "services": [
+    535147631,
+    530893146
+  ],
+  "productIdentifiers": [
+    882232420
+  ],
+  "tags": [
+    "adapter",
+    "pi"
+  ],
+  "version": "3.7"
+}

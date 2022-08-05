@@ -1,0 +1,17 @@
+{
+  "id": "kittenbot-magnetsensorv10",
+  "name": "Magnet Sensor",
+  "company": "KittenBot",
+  "description": "A magnetic field sensor.",
+  "storeLink": "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-for-micro-bit",
+  "services": [
+    318642191
+  ],
+  "productIdentifiers": [
+    881631743,
+    1018441315
+  ],
+  "version": "1.0",
+  "status": "stable",
+  "shape": "ec30_2x2_lr"
+}

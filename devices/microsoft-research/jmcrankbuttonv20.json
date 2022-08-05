@@ -1,0 +1,18 @@
+{
+  "id": "microsoft-research-jmcrankbuttonv20",
+  "name": "JM Crank + Button",
+  "company": "Microsoft Research",
+  "description": "A rotary encoder with a push button.",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v2.0/profile/crank-btn.c",
+  "link": "https://github.com/microsoft/jacdac-msr-modules",
+  "services": [
+    284830153,
+    343122531
+  ],
+  "productIdentifiers": [
+    813927310
+  ],
+  "version": "2.0",
+  "status": "deprecated"
+}

@@ -1,0 +1,16 @@
+{
+  "id": "microsoft-research-jmbuzzerv20",
+  "name": "JM Buzzer v2.0",
+  "company": "Microsoft Research",
+  "description": "A simple buzzer.",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v2.0/profile/snd.c",
+  "link": "https://github.com/microsoft/jacdac-msr-modules",
+  "services": [
+    458731991
+  ],
+  "productIdentifiers": [
+    854957595
+  ],
+  "status": "deprecated"
+}

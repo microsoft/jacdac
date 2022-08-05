@@ -1,0 +1,16 @@
+{
+  "id": "microsoft-research-jmaccelerometerv20",
+  "name": "JM Accelerometer v2.0",
+  "company": "Microsoft Research",
+  "description": "A 3-axis accelerometer. 16G range.",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v2.0i/profile/acc.c",
+  "link": "https://github.com/microsoft/jacdac-msr-modules",
+  "services": [
+    521405449
+  ],
+  "productIdentifiers": [
+    1020174761
+  ],
+  "status": "deprecated"
+}

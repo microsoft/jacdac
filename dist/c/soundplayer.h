@@ -10,19 +10,19 @@
 #define JD_SOUND_PLAYER_REG_VOLUME JD_REG_INTENSITY
 
 /**
- * Starts playing a sounds with a specific volume.
+ * Argument: name string (bytes). Starts playing a sound.
  */
 #define JD_SOUND_PLAYER_CMD_PLAY 0x80
-typedef struct jd_sound_player_play {
-    uint16_t volume;  // ratio u0.16
-    char name[0];  // string
-} jd_sound_player_play_t;
 
+/**
+ * No args. Cancel any sound playing.
+ */
+#define JD_SOUND_PLAYER_CMD_CANCEL 0x81
 
 /**
  * Argument: sounds_port pipe (bytes). Returns the list of sounds available to play.
  */
-#define JD_SOUND_PLAYER_CMD_LIST_SOUNDS 0x81
+#define JD_SOUND_PLAYER_CMD_LIST_SOUNDS 0x82
 
 /**
  * Returns the list of sounds available to play.

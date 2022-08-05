@@ -1,0 +1,20 @@
+{
+  "id": "microsoft-research-temprh116v11",
+  "name": "Temp & RH",
+  "company": "Microsoft Research",
+  "description": "Temperature and relative humidity sensor module.",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/temp-rh-116/profile/temp-rh-116-v1.1.c",
+  "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/altium/module-designs/JacdacTempRhEc30%20116-1.1",
+  "link": "https://github.com/microsoft/jacdac-msr-modules",
+  "services": [
+    337754823,
+    382210232
+  ],
+  "productIdentifiers": [
+    1066966718
+  ],
+  "version": "1.1",
+  "designIdentifier": "116",
+  "shape": "ec30_2x2_l"
+}

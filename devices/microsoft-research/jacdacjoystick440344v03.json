@@ -1,0 +1,16 @@
+{
+  "id": "microsoft-research-jacdacjoystick440344v03",
+  "name": "JacdacJoystick 44-0.3",
+  "company": "Microsoft Research",
+  "firmwareSource": "https://github.com/microsoft/jacdac-padauk/tree/main/jm-joystick-44-0.2",
+  "link": "https://github.com/microsoft/jacdac-padauk",
+  "services": [
+    277836886
+  ],
+  "productIdentifiers": [
+    832285283
+  ],
+  "version": "0.3",
+  "designIdentifier": "44",
+  "status": "experimental"
+}

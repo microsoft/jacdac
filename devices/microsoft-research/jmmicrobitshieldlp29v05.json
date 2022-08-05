@@ -1,0 +1,16 @@
+{
+  "id": "microsoft-research-jmmicrobitshieldlp29v05",
+  "name": "JM MicroBit Shield LP",
+  "company": "Microsoft Research",
+  "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/deprecated_form_factor/altium_deprecated/reference-designs/JacdacMicroBitShieldLP%2029-0.6",
+  "connector": "edgeLowCurrentProvider",
+  "productIdentifiers": [
+    974031363
+  ],
+  "tags": [
+    "adapter",
+    "microbit"
+  ],
+  "version": "0.5",
+  "designIdentifier": "29"
+}

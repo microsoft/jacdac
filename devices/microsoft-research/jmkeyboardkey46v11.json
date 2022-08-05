@@ -1,0 +1,16 @@
+{
+  "id": "microsoft-research-jmkeyboardkey46v11",
+  "name": "JM Keyboard Key",
+  "company": "Microsoft Research",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "link": "https://github.com/microsoft/jacdac-msr-modules",
+  "services": [
+    343122531
+  ],
+  "productIdentifiers": [
+    911541523
+  ],
+  "version": "1.1",
+  "designIdentifier": "46",
+  "status": "deprecated"
+}

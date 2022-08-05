@@ -1,0 +1,40 @@
+{
+  "id": "microsoft-research-jmbrainf441v02",
+  "name": "JM Brain F4",
+  "company": "Microsoft Research",
+  "connector": "edgeHighCurrentProvider",
+  "link": "https://github.com/microsoft/pxt-jacdac",
+  "services": [
+    414210922,
+    411425820
+  ],
+  "productIdentifiers": [
+    1003209864,
+    970267564,
+    819577746,
+    1009312972
+  ],
+  "transport": {
+    "type": "usb"
+  },
+  "firmwares": [
+    {
+      "name": "HID Keyboard + Mouse",
+      "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/hid-servers-f4.uf2",
+      "productIdentifier": 819577746
+    },
+    {
+      "name": "HID Joystick",
+      "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/hid-joystick-f4.uf2",
+      "productIdentifier": 1009312972
+    }
+  ],
+  "version": "0.2",
+  "designIdentifier": "41",
+  "bootloader": {
+    "sequence": "reset",
+    "driveName": "JACDACF4",
+    "firmwareFormat": "uf2",
+    "ledAnimation": "blue-glow"
+  }
+}

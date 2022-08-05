@@ -1,0 +1,11 @@
+{
+  "id": "microsoft-research-jmhub39v03",
+  "name": "JM Hub",
+  "company": "Microsoft Research",
+  "productIdentifiers": [
+    917230668
+  ],
+  "version": "0.3",
+  "designIdentifier": "39",
+  "status": "experimental"
+}

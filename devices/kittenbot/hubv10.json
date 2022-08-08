@@ -4,7 +4,11 @@
   "company": "KittenBot",
   "description": "A passthrough cable hub.",
   "connector": "edgePassive",
-  "storeLink": "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-for-micro-bit",
+  "storeLink": [
+    "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-for-micro-bit",
+    "https://www.aliexpress.com/item/3256804237465484.html",
+    "https://www.pakronics.com.au/products/kittenbot-jacdac-kit-a-with-adaptor-for-micro-bit-v2-pakr-a0410"
+  ],
   "tags": [
     "hub"
   ],

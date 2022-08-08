@@ -4297,6 +4297,35 @@ export enum RoverReg {
     Kinematics = 0x101,
 }
 
+// Service Satellite Navigation System constants
+export const SRV_SAT_NAV = 0x19dd6136
+export enum SatNavReg {
+    /**
+     * Reported coordinates, geometric altitude and time of position. Altitude accuracy is 0 if not available.
+     *
+     * ```
+     * const [timestamp, latitude, longitude, accuracy, altitude, altitudeAccuracy] = jdunpack<[number, number, number, number, number, number]>(buf, "u64 i9.23 i9.23 u16.16 i26.6 u16.16")
+     * ```
+     */
+    Position = 0x101,
+
+    /**
+     * Read-write bool (uint8_t). Enables or disables the GPS module
+     *
+     * ```
+     * const [enabled] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Enabled = 0x1,
+}
+
+export enum SatNavEvent {
+    /**
+     * The module is disabled or lost connection with satellites.
+     */
+    Inactive = 0x2,
+}
+
 // Service Sensor Aggregator constants
 export const SRV_SENSOR_AGGREGATOR = 0x1d90e1c5
 

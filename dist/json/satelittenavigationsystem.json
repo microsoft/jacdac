@@ -12,23 +12,7 @@
     "short": "A satellite-based navigation system like GPS, Gallileo, ..."
   },
   "classIdentifier": 433938742,
-  "enums": {
-    "FixQuality": {
-      "name": "FixQuality",
-      "storage": 1,
-      "members": {
-        "NotAvailable": 0,
-        "SinglePoint": 1,
-        "Differential": 2,
-        "RTKFixedAmbiguitySolution": 4,
-        "RTKFloatingAmbiguitySolution": 5,
-        "DeadReckoning": 6,
-        "ManualInput": 7,
-        "Simulator": 8,
-        "WAAS": 9
-      }
-    }
-  },
+  "enums": {},
   "constants": {},
   "packets": [
     {
@@ -240,7 +224,7 @@
       "kind": "rw",
       "name": "enabled",
       "identifier": 1,
-      "description": "Turns on or off the GPS antenna.",
+      "description": "",
       "fields": [
         {
           "name": "_",
@@ -250,68 +234,6 @@
       ],
       "identifierName": "intensity",
       "packFormat": "u8"
-    },
-    {
-      "kind": "ro",
-      "name": "fix",
-      "identifier": 385,
-      "description": "Fix information extracted from a GGA message.",
-      "fields": [
-        {
-          "name": "hdop",
-          "shift": 20,
-          "type": "u12.20",
-          "storage": 4
-        },
-        {
-          "name": "antenna_height",
-          "unit": "m",
-          "shift": 22,
-          "type": "i10.22",
-          "storage": -4
-        },
-        {
-          "name": "geoidal_separation",
-          "unit": "m",
-          "shift": 22,
-          "type": "i10.22",
-          "storage": -4
-        },
-        {
-          "name": "age_of_differential_corretion",
-          "unit": "s",
-          "type": "u16",
-          "storage": 2,
-          "isSimpleType": true
-        },
-        {
-          "name": "differential_reference_station",
-          "type": "u16",
-          "storage": 2,
-          "isSimpleType": true
-        },
-        {
-          "name": "quality",
-          "type": "FixQuality",
-          "storage": 1
-        },
-        {
-          "name": "satellites",
-          "type": "u8",
-          "storage": 1,
-          "isSimpleType": true
-        }
-      ],
-      "optional": true,
-      "packFormat": "u12.20 i10.22 i10.22 u16 u16 u8 u8"
-    },
-    {
-      "kind": "event",
-      "name": "fix_available",
-      "identifier": 1,
-      "description": "The module is enabled and ready to receive position data.",
-      "fields": [],
-      "identifierName": "active"
     },
     {
       "kind": "event",

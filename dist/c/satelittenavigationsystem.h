@@ -4,17 +4,6 @@
 
 #define JD_SERVICE_CLASS_SAT_NAV  0x19dd6136
 
-// enum FixQuality (uint8_t)
-#define JD_SAT_NAV_FIX_QUALITY_NOT_AVAILABLE 0x0
-#define JD_SAT_NAV_FIX_QUALITY_SINGLE_POINT 0x1
-#define JD_SAT_NAV_FIX_QUALITY_DIFFERENTIAL 0x2
-#define JD_SAT_NAV_FIX_QUALITY_RTKFIXED_AMBIGUITY_SOLUTION 0x4
-#define JD_SAT_NAV_FIX_QUALITY_RTKFLOATING_AMBIGUITY_SOLUTION 0x5
-#define JD_SAT_NAV_FIX_QUALITY_DEAD_RECKONING 0x6
-#define JD_SAT_NAV_FIX_QUALITY_MANUAL_INPUT 0x7
-#define JD_SAT_NAV_FIX_QUALITY_SIMULATOR 0x8
-#define JD_SAT_NAV_FIX_QUALITY_WAAS 0x9
-
 /**
  * Reported coordinates, geometric altitude and time of position. Altitude accuracy is 0 if not available.
  */
@@ -30,29 +19,9 @@ typedef struct jd_sat_nav_position {
 
 
 /**
- * Read-write bool (uint8_t). Turns on or off the GPS antenna.
+ * 
  */
 #define JD_SAT_NAV_REG_ENABLED JD_REG_INTENSITY
-
-/**
- * Fix information extracted from a GGA message.
- */
-#define JD_SAT_NAV_REG_FIX 0x181
-typedef struct jd_sat_nav_fix {
-    uint32_t hdop;  // u12.20
-    int32_t antenna_height;  // m i10.22
-    int32_t geoidal_separation;  // m i10.22
-    uint16_t age_of_differential_corretion; // s
-    uint16_t differential_reference_station;
-    uint8_t quality;  // FixQuality
-    uint8_t satellites;
-} jd_sat_nav_fix_t;
-
-
-/**
- * The module is enabled and ready to receive position data.
- */
-#define JD_SAT_NAV_EV_FIX_AVAILABLE JD_EV_ACTIVE
 
 /**
  * The module is disabled or lost connection with satellites.

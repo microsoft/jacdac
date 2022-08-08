@@ -22,6 +22,8 @@ Reported coordinates, geometric altitude and time of position. Altitude accuracy
 
     rw enabled: bool @ intensity
 
+Enables or disables the GPS module
+
 ## Events
 
     event inactive @ inactive

@@ -19,7 +19,7 @@ typedef struct jd_sat_nav_position {
 
 
 /**
- * 
+ * Read-write bool (uint8_t). Enables or disables the GPS module
  */
 #define JD_SAT_NAV_REG_ENABLED JD_REG_INTENSITY
 

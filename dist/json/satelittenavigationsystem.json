@@ -224,7 +224,7 @@
       "kind": "rw",
       "name": "enabled",
       "identifier": 1,
-      "description": "",
+      "description": "Enables or disables the GPS module",
       "fields": [
         {
           "name": "_",

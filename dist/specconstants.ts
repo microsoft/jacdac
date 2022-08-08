@@ -4310,6 +4310,7 @@ export enum SatNavReg {
     Position = 0x101,
 
     /**
+     * Read-write bool (uint8_t). Enables or disables the GPS module
      *
      * ```
      * const [enabled] = jdunpack<[number]>(buf, "u8")

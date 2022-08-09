@@ -714,6 +714,21 @@
     }
   },
   {
+    "service": "satelittenavigationsystem",
+    "client": {
+      "name": "jacdac-sat-nav",
+      "targets": [
+        "microbit",
+        "arcade",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/sat-nav",
+      "qName": "modules.SatNavClient",
+      "default": "modules.satNav",
+      "generated": true
+    }
+  },
+  {
     "service": "sensoraggregator",
     "client": {
       "name": "jacdac-sensor-aggregator",

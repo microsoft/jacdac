@@ -12,7 +12,7 @@ The device responds with broadcast reports (no-one else does that).
 These packets are not forwarded to the UART Jacdac line.
 
 Packets are sent over USB Serial (CDC).
-The host shall set the CDC to 2Mbaud 8N1
+The host shall set the CDC to 1Mbaud 8N1
 (even though in some cases the USB interface is connected directly to the MCU and line settings are
 ignored).
 

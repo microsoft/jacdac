@@ -8,6 +8,10 @@
   "services": [
     288680491
   ],
+  "transport": {
+    "type": "serial",
+    "vendorId": 6790
+  },
   "productIdentifiers": [
     1025500463
   ],

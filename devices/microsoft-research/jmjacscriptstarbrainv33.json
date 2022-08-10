@@ -8,12 +8,12 @@
   "services": [
     288680491
   ],
+  "productIdentifiers": [
+    1025500463
+  ],
   "transport": {
     "type": "serial",
     "vendorId": 6790
   },
-  "productIdentifiers": [
-    1025500463
-  ],
   "version": "3.3"
 }

@@ -1150,6 +1150,10 @@
     "productIdentifiers": [
       1025500463
     ],
+    "transport": {
+      "type": "serial",
+      "vendorId": 6790
+    },
     "version": "3.3"
   },
   {

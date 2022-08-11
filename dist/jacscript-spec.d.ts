@@ -1,4 +1,19 @@
 // Service: Common registers and commands
+declare enum SystemReadingThreshold { // uint8_t
+    Neutral = 0x1,
+    Inactive = 0x2,
+    Active = 0x3,
+}
+
+declare enum SystemStatusCodes { // uint16_t
+    Ready = 0x0,
+    Initializing = 0x1,
+    Calibrating = 0x2,
+    Sleeping = 0x3,
+    WaitingForInput = 0x4,
+    CalibrationNeeded = 0x64,
+}
+
 declare class SystemRole extends Role {
     announce(): void
     getRegister(): void
@@ -22,7 +37,7 @@ declare class SystemRole extends Role {
     activeThreshold: JDRegisterNum
     streamingPreferredInterval: JDRegisterNum
     variant: JDRegisterNum
-    statusCode: JDRegisterArray & { code: number, vendor_code: number }
+    statusCode: JDRegisterArray & { code: SystemStatusCodes, vendor_code: number }
     instanceName: JDRegisterString
     active: JDEvent
     inactive: JDEvent
@@ -100,8 +115,21 @@ declare namespace roles {
 }
 
 // Service: Arcade Gamepad
+declare enum ArcadeGamepadButton { // uint8_t
+    Left = 0x1,
+    Up = 0x2,
+    Right = 0x3,
+    Down = 0x4,
+    A = 0x5,
+    B = 0x6,
+    Menu = 0x7,
+    Select = 0x8,
+    Reset = 0x9,
+    Exit = 0xa,
+}
+
 declare class ArcadeGamepadRole extends SensorRole {
-    buttons: JDRegisterArray & { button: number, pressure: number }
+    buttons: JDRegisterArray & { button: ArcadeGamepadButton, pressure: number }
     availableButtons: JDRegisterArray
     down: JDEvent
     up: JDEvent
@@ -122,6 +150,13 @@ declare namespace roles {
 }
 
 // Service: Azure IoT Hub Health
+declare enum AzureIotHubHealthConnectionStatus { // uint16_t
+    Connected = 0x1,
+    Disconnected = 0x2,
+    Connecting = 0x3,
+    Disconnecting = 0x4,
+}
+
 declare class AzureIotHubHealthRole extends Role {
     hubName: JDRegisterString
     hubDeviceId: JDRegisterString
@@ -139,6 +174,22 @@ declare namespace roles {
 }
 
 // Service: Barcode reader
+declare enum BarcodeReaderFormat { // uint8_t
+    Aztec = 0x1,
+    Code128 = 0x2,
+    Code39 = 0x3,
+    Code93 = 0x4,
+    Codabar = 0x5,
+    DataMatrix = 0x6,
+    Ean13 = 0x8,
+    Ean8 = 0x9,
+    ITF = 0xa,
+    Pdf417 = 0xb,
+    QrCode = 0xc,
+    UpcA = 0xd,
+    UpcE = 0xe,
+}
+
 declare class BarcodeReaderRole extends Role {
     enabled: JDRegisterNum
     formats: JDRegisterArray
@@ -164,6 +215,14 @@ declare namespace roles {
 }
 
 // Service: Bootloader
+declare enum BootloaderError { // uint32_t
+    NoError = 0x0,
+    PacketTooSmall = 0x1,
+    OutOfFlashableRange = 0x2,
+    InvalidPageOffset = 0x3,
+    NotPageAligned = 0x4,
+}
+
 declare class BootloaderRole extends Role {
     info(): void
     setSession(session_id: number): void
@@ -224,6 +283,17 @@ declare namespace roles {
 }
 
 // Service: Character Screen
+declare enum CharacterScreenVariant { // uint8_t
+    LCD = 0x1,
+    OLED = 0x2,
+    Braille = 0x3,
+}
+
+declare enum CharacterScreenTextDirection { // uint8_t
+    LeftToRight = 0x1,
+    RightToLeft = 0x2,
+}
+
 declare class CharacterScreenRole extends Role {
     message: JDRegisterString
     brightness: JDRegisterNum
@@ -265,6 +335,23 @@ declare namespace roles {
 }
 
 // Service: Control
+declare enum ControlAnnounceFlags { // uint16_t
+    RestartCounterSteady = 0xf,
+    RestartCounter1 = 0x1,
+    RestartCounter2 = 0x2,
+    RestartCounter4 = 0x4,
+    RestartCounter8 = 0x8,
+    StatusLightNone = 0x0,
+    StatusLightMono = 0x10,
+    StatusLightRgbNoFade = 0x20,
+    StatusLightRgbFade = 0x30,
+    SupportsACK = 0x100,
+    SupportsBroadcast = 0x200,
+    SupportsFrames = 0x400,
+    IsClient = 0x800,
+    SupportsReliableCommands = 0x1000,
+}
+
 declare class ControlRole extends Role {
     services(): void
     noop(): void
@@ -303,6 +390,11 @@ declare namespace roles {
 }
 
 // Service: DC Voltage Measurement
+declare enum DcVoltageMeasurementVoltageMeasurementType { // uint8_t
+    Absolute = 0x0,
+    Differential = 0x1,
+}
+
 declare class DcVoltageMeasurementRole extends SensorRole {
     measurementType: JDRegisterNum
     measurementName: JDRegisterString
@@ -313,6 +405,13 @@ declare namespace roles {
 }
 
 // Service: Distance
+declare enum DistanceVariant { // uint8_t
+    Ultrasonic = 0x1,
+    Infrared = 0x2,
+    LiDAR = 0x3,
+    Laser = 0x4,
+}
+
 declare class DistanceRole extends SensorRole {
     distance: JDRegisterNum
     distanceError: JDRegisterNum
@@ -334,6 +433,11 @@ declare namespace roles {
 }
 
 // Service: Dot Matrix
+declare enum DotMatrixVariant { // uint8_t
+    LED = 0x1,
+    Braille = 0x2,
+}
+
 declare class DotMatrixRole extends Role {
     dots: JDRegisterNum
     brightness: JDRegisterNum
@@ -358,6 +462,11 @@ declare namespace roles {
 }
 
 // Service: Equivalent CO₂
+declare enum ECO2Variant { // uint8_t
+    VOC = 0x1,
+    NDIR = 0x2,
+}
+
 declare class ECO2Role extends SensorRole {
     eCO2: JDRegisterNum
     eCO2Error: JDRegisterNum
@@ -379,8 +488,30 @@ declare namespace roles {
 }
 
 // Service: Gamepad
+declare enum GamepadButtons { // uint32_t
+    Left = 0x1,
+    Up = 0x2,
+    Right = 0x4,
+    Down = 0x8,
+    A = 0x10,
+    B = 0x20,
+    Menu = 0x40,
+    Select = 0x80,
+    Reset = 0x100,
+    Exit = 0x200,
+    X = 0x400,
+    Y = 0x800,
+}
+
+declare enum GamepadVariant { // uint8_t
+    Thumb = 0x1,
+    ArcadeBall = 0x2,
+    ArcadeStick = 0x3,
+    Gamepad = 0x4,
+}
+
 declare class GamepadRole extends SensorRole {
-    direction: JDRegisterArray & { buttons: number, x: number, y: number }
+    direction: JDRegisterArray & { buttons: GamepadButtons, x: number, y: number }
     variant: JDRegisterNum
     buttonsAvailable: JDRegisterNum
     buttonsChanged: JDEvent
@@ -401,6 +532,14 @@ declare namespace roles {
 }
 
 // Service: Heart Rate
+declare enum HeartRateVariant { // uint8_t
+    Finger = 0x1,
+    Chest = 0x2,
+    Wrist = 0x3,
+    Pump = 0x4,
+    WebCam = 0x5,
+}
+
 declare class HeartRateRole extends SensorRole {
     heartRate: JDRegisterNum
     heartRateError: JDRegisterNum
@@ -423,8 +562,159 @@ declare namespace roles {
 }
 
 // Service: HID Keyboard
+declare enum HidKeyboardSelector { // uint16_t
+    None = 0x0,
+    ErrorRollOver = 0x1,
+    PostFail = 0x2,
+    ErrorUndefined = 0x3,
+    A = 0x4,
+    B = 0x5,
+    C = 0x6,
+    D = 0x7,
+    E = 0x8,
+    F = 0x9,
+    G = 0xa,
+    H = 0xb,
+    I = 0xc,
+    J = 0xd,
+    K = 0xe,
+    L = 0xf,
+    M = 0x10,
+    N = 0x11,
+    O = 0x12,
+    P = 0x13,
+    Q = 0x14,
+    R = 0x15,
+    S = 0x16,
+    T = 0x17,
+    U = 0x18,
+    V = 0x19,
+    W = 0x1a,
+    X = 0x1b,
+    Y = 0x1c,
+    Z = 0x1d,
+    _1 = 0x1e,
+    _2 = 0x1f,
+    _3 = 0x20,
+    _4 = 0x21,
+    _5 = 0x22,
+    _6 = 0x23,
+    _7 = 0x24,
+    _8 = 0x25,
+    _9 = 0x26,
+    _0 = 0x27,
+    Return = 0x28,
+    Escape = 0x29,
+    Backspace = 0x2a,
+    Tab = 0x2b,
+    Spacebar = 0x2c,
+    Minus = 0x2d,
+    Equals = 0x2e,
+    LeftSquareBracket = 0x2f,
+    RightSquareBracket = 0x30,
+    Backslash = 0x31,
+    NonUsHash = 0x32,
+    Semicolon = 0x33,
+    Quote = 0x34,
+    GraveAccent = 0x35,
+    Comma = 0x36,
+    Period = 0x37,
+    Slash = 0x38,
+    CapsLock = 0x39,
+    F1 = 0x3a,
+    F2 = 0x3b,
+    F3 = 0x3c,
+    F4 = 0x3d,
+    F5 = 0x3e,
+    F6 = 0x3f,
+    F7 = 0x40,
+    F8 = 0x41,
+    F9 = 0x42,
+    F10 = 0x43,
+    F11 = 0x44,
+    F12 = 0x45,
+    PrintScreen = 0x46,
+    ScrollLock = 0x47,
+    Pause = 0x48,
+    Insert = 0x49,
+    Home = 0x4a,
+    PageUp = 0x4b,
+    Delete = 0x4c,
+    End = 0x4d,
+    PageDown = 0x4e,
+    RightArrow = 0x4f,
+    LeftArrow = 0x50,
+    DownArrow = 0x51,
+    UpArrow = 0x52,
+    KeypadNumLock = 0x53,
+    KeypadDivide = 0x54,
+    KeypadMultiply = 0x55,
+    KeypadAdd = 0x56,
+    KeypadSubtrace = 0x57,
+    KeypadReturn = 0x58,
+    Keypad1 = 0x59,
+    Keypad2 = 0x5a,
+    Keypad3 = 0x5b,
+    Keypad4 = 0x5c,
+    Keypad5 = 0x5d,
+    Keypad6 = 0x5e,
+    Keypad7 = 0x5f,
+    Keypad8 = 0x60,
+    Keypad9 = 0x61,
+    Keypad0 = 0x62,
+    KeypadDecimalPoint = 0x63,
+    NonUsBackslash = 0x64,
+    Application = 0x65,
+    Power = 0x66,
+    KeypadEquals = 0x67,
+    F13 = 0x68,
+    F14 = 0x69,
+    F15 = 0x6a,
+    F16 = 0x6b,
+    F17 = 0x6c,
+    F18 = 0x6d,
+    F19 = 0x6e,
+    F20 = 0x6f,
+    F21 = 0x70,
+    F22 = 0x71,
+    F23 = 0x72,
+    F24 = 0x73,
+    Execute = 0x74,
+    Help = 0x75,
+    Menu = 0x76,
+    Select = 0x77,
+    Stop = 0x78,
+    Again = 0x79,
+    Undo = 0x7a,
+    Cut = 0x7b,
+    Copy = 0x7c,
+    Paste = 0x7d,
+    Find = 0x7e,
+    Mute = 0x7f,
+    VolumeUp = 0x80,
+    VolumeDown = 0x81,
+}
+
+declare enum HidKeyboardModifiers { // uint8_t
+    None = 0x0,
+    LeftControl = 0x1,
+    LeftShift = 0x2,
+    LeftAlt = 0x4,
+    LeftGUI = 0x8,
+    RightControl = 0x10,
+    RightShift = 0x20,
+    RightAlt = 0x40,
+    RightGUI = 0x80,
+}
+
+declare enum HidKeyboardAction { // uint8_t
+    Press = 0x0,
+    Up = 0x1,
+    Down = 0x2,
+}
+
 declare class HidKeyboardRole extends Role {
-    key(selector: number, modifiers: number, action: number): void
+    key(selector: HidKeyboardSelector, modifiers: HidKeyboardModifiers, action: HidKeyboardAction): void
     clear(): void
 }
 declare namespace roles {
@@ -432,8 +722,21 @@ declare namespace roles {
 }
 
 // Service: HID Mouse
+declare enum HidMouseButton { // uint16_t
+    Left = 0x1,
+    Right = 0x2,
+    Middle = 0x4,
+}
+
+declare enum HidMouseButtonEvent { // uint8_t
+    Up = 0x1,
+    Down = 0x2,
+    Click = 0x3,
+    DoubleClick = 0x4,
+}
+
 declare class HidMouseRole extends Role {
-    setButton(buttons: number, ev: number): void
+    setButton(buttons: HidMouseButton, ev: HidMouseButtonEvent): void
     move(dx: number, dy: number, time: number): void
     wheel(dy: number, time: number): void
 }
@@ -486,10 +789,16 @@ declare namespace roles {
 }
 
 // Service: Jacscript Cloud
+declare enum JacscriptCloudCommandStatus { // uint32_t
+    OK = 0xc8,
+    NotFound = 0x194,
+    Busy = 0x1ad,
+}
+
 declare class JacscriptCloudRole extends Role {
     upload(label: string, ...value: number[]): void
     uploadBin(payload: number): void
-    ackCloudCommand(seq_no: number, status: number, ...result: number[]): void
+    ackCloudCommand(seq_no: number, status: JacscriptCloudCommandStatus, ...result: number[]): void
     connected: JDRegisterNum
     connectionName: JDRegisterString
     cloudCommand: JDEvent
@@ -509,6 +818,10 @@ declare namespace roles {
 }
 
 // Service: Jacscript Manager
+declare enum JacscriptManagerMessageFlags { // uint8_t
+    ToBeContinued = 0x1,
+}
+
 declare class JacscriptManagerRole extends Role {
     deployBytecode(bytecode_size: number): void
     readBytecode(bytecode: number): void
@@ -525,6 +838,14 @@ declare namespace roles {
 }
 
 // Service: LED
+declare enum LedVariant { // uint8_t
+    Strip = 0x1,
+    Ring = 0x2,
+    Stick = 0x3,
+    Jewel = 0x4,
+    Matrix = 0x5,
+}
+
 declare class LedRole extends Role {
     pixels: JDRegisterNum
     brightness: JDRegisterNum
@@ -542,6 +863,13 @@ declare namespace roles {
 }
 
 // Service: LED Single
+declare enum LedSingleVariant { // uint8_t
+    ThroughHole = 0x1,
+    SMD = 0x2,
+    Power = 0x3,
+    Bead = 0x4,
+}
+
 declare class LedSingleRole extends Role {
     animate(to_red: number, to_green: number, to_blue: number, speed: number): void
     color: JDRegisterArray & { red: number, green: number, blue: number }
@@ -556,6 +884,20 @@ declare namespace roles {
 }
 
 // Service: LED Strip
+declare enum LedStripLightType { // uint8_t
+    WS2812B_GRB = 0x0,
+    APA102 = 0x10,
+    SK9822 = 0x11,
+}
+
+declare enum LedStripVariant { // uint8_t
+    Strip = 0x1,
+    Ring = 0x2,
+    Stick = 0x3,
+    Jewel = 0x4,
+    Matrix = 0x5,
+}
+
 declare class LedStripRole extends Role {
     brightness: JDRegisterNum
     actualBrightness: JDRegisterNum
@@ -582,6 +924,11 @@ declare namespace roles {
 }
 
 // Service: Light level
+declare enum LightLevelVariant { // uint8_t
+    PhotoResistor = 0x1,
+    ReverseBiasedLED = 0x2,
+}
+
 declare class LightLevelRole extends SensorRole {
     lightLevel: JDRegisterNum
     lightLevelError: JDRegisterNum
@@ -592,6 +939,14 @@ declare namespace roles {
 }
 
 // Service: Logger
+declare enum LoggerPriority { // uint8_t
+    Debug = 0x0,
+    Log = 0x1,
+    Warning = 0x2,
+    Error = 0x3,
+    Silent = 0x4,
+}
+
 declare class LoggerRole extends Role {
     minPriority: JDRegisterNum
 }
@@ -600,6 +955,15 @@ declare namespace roles {
 }
 
 // Service: Magnetic field level
+declare enum MagneticFieldLevelVariant { // uint8_t
+    AnalogNS = 0x1,
+    AnalogN = 0x2,
+    AnalogS = 0x3,
+    DigitalNS = 0x4,
+    DigitalN = 0x5,
+    DigitalS = 0x6,
+}
+
 declare class MagneticFieldLevelRole extends SensorRole {
     strength: JDRegisterNum
     detected: JDRegisterNum
@@ -622,6 +986,13 @@ declare namespace roles {
 }
 
 // Service: Matrix Keypad
+declare enum MatrixKeypadVariant { // uint8_t
+    Membrane = 0x1,
+    Keyboard = 0x2,
+    Elastomer = 0x3,
+    ElastomerLEDPixel = 0x4,
+}
+
 declare class MatrixKeypadRole extends SensorRole {
     pressed: JDRegisterArray
     rows: JDRegisterNum
@@ -657,6 +1028,12 @@ declare namespace roles {
 }
 
 // Service: Model Runner
+declare enum ModelRunnerModelFormat { // uint32_t
+    TFLite = 0x334c4654,
+    ML4F = 0x30470f62,
+    EdgeImpulseCompiled = 0x30564945,
+}
+
 declare class ModelRunnerRole extends Role {
     setModel(model_size: number): void
     predict(outputs: number): void
@@ -677,6 +1054,10 @@ declare namespace roles {
 }
 
 // Service: Motion
+declare enum MotionVariant { // uint8_t
+    PIR = 0x1,
+}
+
 declare class MotionRole extends SensorRole {
     moving: JDRegisterNum
     maxDistance: JDRegisterNum
@@ -715,6 +1096,11 @@ declare namespace roles {
 }
 
 // Service: Potentiometer
+declare enum PotentiometerVariant { // uint8_t
+    Slider = 0x1,
+    Rotary = 0x2,
+}
+
 declare class PotentiometerRole extends SensorRole {
     position: JDRegisterNum
     variant: JDRegisterNum
@@ -724,6 +1110,13 @@ declare namespace roles {
 }
 
 // Service: Power
+declare enum PowerPowerStatus { // uint8_t
+    Disallowed = 0x0,
+    Powering = 0x1,
+    Overload = 0x2,
+    Overprovision = 0x3,
+}
+
 declare class PowerRole extends Role {
     allowed: JDRegisterNum
     maxPower: JDRegisterNum
@@ -822,6 +1215,12 @@ declare namespace roles {
 }
 
 // Service: Real time clock
+declare enum RealTimeClockVariant { // uint8_t
+    Computer = 0x1,
+    Crystal = 0x2,
+    Cuckoo = 0x3,
+}
+
 declare class RealTimeClockRole extends SensorRole {
     localTime: JDRegisterArray & { year: number, month: number, day_of_month: number, day_of_week: number, hour: number, min: number, sec: number }
     drift: JDRegisterNum
@@ -834,6 +1233,11 @@ declare namespace roles {
 }
 
 // Service: Reflected light
+declare enum ReflectedLightVariant { // uint8_t
+    InfraredDigital = 0x1,
+    InfraredAnalog = 0x2,
+}
+
 declare class ReflectedLightRole extends SensorRole {
     brightness: JDRegisterNum
     variant: JDRegisterNum
@@ -843,6 +1247,12 @@ declare namespace roles {
 }
 
 // Service: Relay
+declare enum RelayVariant { // uint8_t
+    Electromechanical = 0x1,
+    SolidState = 0x2,
+    Reed = 0x3,
+}
+
 declare class RelayRole extends Role {
     active: JDRegisterNum
     variant: JDRegisterNum
@@ -853,6 +1263,12 @@ declare namespace roles {
 }
 
 // Service: Random Number Generator
+declare enum RngVariant { // uint8_t
+    Quantum = 0x1,
+    ADCNoise = 0x2,
+    WebCrypto = 0x3,
+}
+
 declare class RngRole extends Role {
     random: JDRegisterNum
     variant: JDRegisterNum
@@ -903,8 +1319,17 @@ declare namespace roles {
 }
 
 // Service: Sensor Aggregator
+declare enum SensorAggregatorSampleType { // uint8_t
+    U8 = 0x8,
+    I8 = 0x88,
+    U16 = 0x10,
+    I16 = 0x90,
+    U32 = 0x20,
+    I32 = 0xa0,
+}
+
 declare class SensorAggregatorRole extends Role {
-    inputs: JDRegisterArray & { sampling_interval: number, samples_in_window: number, reserved: number, device_id: number, service_class: number, service_num: number, sample_size: number, sample_type: number, sample_shift: number }
+    inputs: JDRegisterArray & { sampling_interval: number, samples_in_window: number, reserved: number, device_id: number, service_class: number, service_num: number, sample_size: number, sample_type: SensorAggregatorSampleType, sample_shift: number }
     numSamples: JDRegisterNum
     sampleSize: JDRegisterNum
     streamingSamples: JDRegisterNum
@@ -959,6 +1384,11 @@ declare namespace roles {
 }
 
 // Service: Soil moisture
+declare enum SoilMoistureVariant { // uint8_t
+    Resistive = 0x1,
+    Capacitive = 0x2,
+}
+
 declare class SoilMoistureRole extends SensorRole {
     moisture: JDRegisterNum
     moistureError: JDRegisterNum
@@ -969,6 +1399,12 @@ declare namespace roles {
 }
 
 // Service: Solenoid
+declare enum SolenoidVariant { // uint8_t
+    PushPull = 0x1,
+    Valve = 0x2,
+    Latch = 0x3,
+}
+
 declare class SolenoidRole extends Role {
     pulled: JDRegisterNum
     variant: JDRegisterNum
@@ -998,6 +1434,12 @@ declare namespace roles {
 }
 
 // Service: Sound Recorder with Playback
+declare enum SoundRecorderWithPlaybackStatus { // uint8_t
+    Idle = 0x0,
+    Recording = 0x1,
+    Playing = 0x2,
+}
+
 declare class SoundRecorderWithPlaybackRole extends Role {
     play(): void
     record(duration: number): void
@@ -1038,6 +1480,17 @@ declare namespace roles {
 }
 
 // Service: Switch
+declare enum SwitchVariant { // uint8_t
+    Slide = 0x1,
+    Tilt = 0x2,
+    PushButton = 0x3,
+    Tactile = 0x4,
+    Toggle = 0x5,
+    Proximity = 0x6,
+    Magnetic = 0x7,
+    FootButton = 0x8,
+}
+
 declare class SwitchRole extends SensorRole {
     active: JDRegisterNum
     variant: JDRegisterNum
@@ -1049,6 +1502,11 @@ declare namespace roles {
 }
 
 // Service: TCP
+declare enum TcpTcpError { // int32_t
+    InvalidCommand = 0x1,
+    InvalidCommandPayload = 0x2,
+}
+
 declare class TcpRole extends Role {
     open(inbound: number): void
 }
@@ -1057,6 +1515,12 @@ declare namespace roles {
 }
 
 // Service: Temperature
+declare enum TemperatureVariant { // uint8_t
+    Outdoor = 0x1,
+    Indoor = 0x2,
+    Body = 0x3,
+}
+
 declare class TemperatureRole extends SensorRole {
     temperature: JDRegisterNum
     minTemperature: JDRegisterNum
@@ -1114,6 +1578,16 @@ declare namespace roles {
 }
 
 // Service: USB Bridge
+declare enum UsbBridgeQByte { // uint8_t
+    Magic = 0xfe,
+    LiteralMagic = 0xf8,
+    Reserved = 0xf9,
+    SerialGap = 0xfa,
+    FrameGap = 0xfb,
+    FrameStart = 0xfc,
+    FrameEnd = 0xfd,
+}
+
 declare class UsbBridgeRole extends Role {
     disablePackets(): void
     enablePackets(): void
@@ -1125,6 +1599,11 @@ declare namespace roles {
 }
 
 // Service: UV index
+declare enum UvIndexVariant { // uint8_t
+    UVA_UVB = 0x1,
+    Visible_IR = 0x2,
+}
+
 declare class UvIndexRole extends SensorRole {
     uvIndex: JDRegisterNum
     uvIndexError: JDRegisterNum
@@ -1135,6 +1614,18 @@ declare namespace roles {
 }
 
 // Service: Verified Telemetry
+declare enum VerifiedTelemetryStatus { // uint8_t
+    Unknown = 0x0,
+    Working = 0x1,
+    Faulty = 0x2,
+}
+
+declare enum VerifiedTelemetryFingerprintType { // uint8_t
+    FallCurve = 0x1,
+    CurrentSense = 0x2,
+    Custom = 0x3,
+}
+
 declare class VerifiedTelemetryRole extends Role {
     telemetryStatus: JDRegisterNum
     telemetryStatusInterval: JDRegisterNum
@@ -1158,6 +1649,12 @@ declare namespace roles {
 }
 
 // Service: Water level
+declare enum WaterLevelVariant { // uint8_t
+    Resistive = 0x1,
+    ContactPhotoElectric = 0x2,
+    NonContactPhotoElectric = 0x3,
+}
+
 declare class WaterLevelRole extends SensorRole {
     level: JDRegisterNum
     levelError: JDRegisterNum
@@ -1168,6 +1665,12 @@ declare namespace roles {
 }
 
 // Service: Weight Scale
+declare enum WeightScaleVariant { // uint8_t
+    Body = 0x1,
+    Food = 0x2,
+    Jewelry = 0x3,
+}
+
 declare class WeightScaleRole extends SensorRole {
     weight: JDRegisterNum
     weightError: JDRegisterNum
@@ -1185,6 +1688,20 @@ declare namespace roles {
 }
 
 // Service: WIFI
+declare enum WifiAPFlags { // uint32_t
+    HasPassword = 0x1,
+    WPS = 0x2,
+    HasSecondaryChannelAbove = 0x4,
+    HasSecondaryChannelBelow = 0x8,
+    IEEE_802_11B = 0x100,
+    IEEE_802_11A = 0x200,
+    IEEE_802_11G = 0x400,
+    IEEE_802_11N = 0x800,
+    IEEE_802_11AC = 0x1000,
+    IEEE_802_11AX = 0x2000,
+    IEEE_802_LongRange = 0x8000,
+}
+
 declare class WifiRole extends Role {
     lastScanResults(results: number): void
     addNetwork(ssid: string, password: string): void

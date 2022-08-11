@@ -2046,6 +2046,16 @@ function jsQuote(n: string) {
 
 function toJacscript(info: jdspec.ServiceSpec) {
     let r = `// Service: ${info.name}\n`
+
+    for (const en of values(info.enums)) {
+        const enPref = enumName(en.name)
+        r += `declare enum ${enPref} { // ${cStorage(en.storage)}\n`
+        for (const k of Object.keys(en.members)) {
+            r += "    " + k + " = " + toHex(en.members[k]) + ",\n"
+        }
+        r += "}\n\n"
+    }
+
     const clname = upperCamel(info.camelName) + "Role"
     const baseclass =
         info.extends.indexOf("_sensor") >= 0 ? "SensorRole" : "Role"
@@ -2067,6 +2077,8 @@ function toJacscript(info: jdspec.ServiceSpec) {
                 const tp =
                     f.type == "string" || f.type == "string0"
                         ? "string"
+                        : info.enums[f.type]
+                        ? enumName(f.type)
                         : "number"
                 if (f.startRepeats && !earlyRepeats)
                     return `...${f.name}: ${tp}[]`
@@ -2103,6 +2115,10 @@ function toJacscript(info: jdspec.ServiceSpec) {
     }
 
     return r.replace(/ *$/gm, "")
+
+    function enumName(n: string) {
+        return upperCamel(info.camelName) + upperCamel(n)
+    }
 }
 
 export function generateDeviceSpecificationId(dev: jdspec.DeviceSpec) {

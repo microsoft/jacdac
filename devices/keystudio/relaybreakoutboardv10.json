@@ -12,7 +12,9 @@
   ],
   "connector": "noConnector",
   "link": "https://www.keyestudio.com/products/keyestudio-relay-breakout-board-for-bbc-microbit",
-  "storeLink": "https://www.keyestudio.com/products/keyestudio-relay-breakout-board-for-bbc-microbit",
+  "storeLink": [
+    "https://www.keyestudio.com/products/keyestudio-relay-breakout-board-for-bbc-microbit"
+  ],
   "services": [
     406840918,
     406840918,

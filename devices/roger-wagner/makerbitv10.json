@@ -22,7 +22,9 @@
   ],
   "connector": "noConnector",
   "link": "https://makerbit.com/",
-  "storeLink": "https://makerbit.com/",
+  "storeLink": [
+    "https://makerbit.com/"
+  ],
   "services": [
     385895640,
     343122531,

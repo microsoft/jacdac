@@ -12,7 +12,9 @@
   ],
   "connector": "noConnector",
   "link": "https://www.sparkfun.com/products/retired/14215",
-  "storeLink": "https://www.sparkfun.com/products/retired/14215",
+  "storeLink": [
+    "https://www.sparkfun.com/products/retired/14215"
+  ],
   "services": [
     277836886
   ],

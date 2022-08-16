@@ -13,7 +13,9 @@
     ],
     "connector": "noConnector",
     "link": "https://category.yahboom.net/products/rgbledb",
-    "storeLink": "https://category.yahboom.net/products/rgbledb",
+    "storeLink": [
+      "https://category.yahboom.net/products/rgbledb"
+    ],
     "services": [
       369743088,
       346888797
@@ -38,7 +40,9 @@
     ],
     "connector": "noConnector",
     "link": "https://category.yahboom.net/products/tinybit",
-    "storeLink": "https://category.yahboom.net/products/tinybit",
+    "storeLink": [
+      "https://category.yahboom.net/products/tinybit"
+    ],
     "services": [
       355063095,
       369743088,
@@ -68,7 +72,9 @@
     ],
     "connector": "noConnector",
     "link": "https://www.sparkfun.com/products/retired/14215",
-    "storeLink": "https://www.sparkfun.com/products/retired/14215",
+    "storeLink": [
+      "https://www.sparkfun.com/products/retired/14215"
+    ],
     "services": [
       277836886
     ],
@@ -102,7 +108,9 @@
     ],
     "connector": "noConnector",
     "link": "https://makerbit.com/",
-    "storeLink": "https://makerbit.com/",
+    "storeLink": [
+      "https://makerbit.com/"
+    ],
     "services": [
       385895640,
       343122531,
@@ -121,7 +129,9 @@
     "description": "The new micro:bit V2 has a built-in microphone and speaker to allow sound-sensing and sound-making without the need to attach another device. It also introduces capacitive touch sensing, a power-saving mode and more computing power for the classroom.",
     "connector": "noConnector",
     "link": "https://microsoft.github.io/jacdac-docs/clients/makecode/microbit-jukebox/",
-    "storeLink": "https://www.microbit.org/buy/",
+    "storeLink": [
+      "https://www.microbit.org/buy/"
+    ],
     "productIdentifiers": [
       854992189,
       888455511,
@@ -358,7 +368,9 @@
     ],
     "connector": "noConnector",
     "link": "https://kitronik.co.uk/products/5646-accessbit-for-bbc-microbit",
-    "storeLink": "https://kitronik.co.uk/products/5646-accessbit-for-bbc-microbit",
+    "storeLink": [
+      "https://kitronik.co.uk/products/5646-accessbit-for-bbc-microbit"
+    ],
     "services": [
       318542083
     ],
@@ -382,7 +394,9 @@
     ],
     "connector": "edgeIndependent",
     "link": "https://kitronik.co.uk/products/5674-kitronik-air-quality-board-for-bbc-micro-bit",
-    "storeLink": "https://kitronik.co.uk/products/5674-kitronik-air-quality-board-for-bbc-micro-bit",
+    "storeLink": [
+      "https://kitronik.co.uk/products/5674-kitronik-air-quality-board-for-bbc-micro-bit"
+    ],
     "services": [
       337754823,
       504462570,
@@ -410,7 +424,9 @@
     ],
     "connector": "noConnector",
     "link": "https://kitronik.co.uk/products/5626-game-zip-64-for-the-bbc-microbit",
-    "storeLink": "https://kitronik.co.uk/products/5626-game-zip-64-for-the-bbc-microbit",
+    "storeLink": [
+      "https://kitronik.co.uk/products/5626-game-zip-64-for-the-bbc-microbit"
+    ],
     "services": [
       277836886,
       369743088,
@@ -436,7 +452,9 @@
     ],
     "connector": "noConnector",
     "link": "https://kitronik.co.uk/products/5623-servolite-board-for-move-mini",
-    "storeLink": "https://kitronik.co.uk/products/5623-servolite-board-for-move-mini",
+    "storeLink": [
+      "https://kitronik.co.uk/products/5623-servolite-board-for-move-mini"
+    ],
     "services": [
       369743088,
       318542083,
@@ -462,7 +480,9 @@
     ],
     "connector": "noConnector",
     "link": "https://kitronik.co.uk/products/5642-stopbit-traffic-light-for-bbc-microbit",
-    "storeLink": "https://kitronik.co.uk/products/5642-stopbit-traffic-light-for-bbc-microbit",
+    "storeLink": [
+      "https://kitronik.co.uk/products/5642-stopbit-traffic-light-for-bbc-microbit"
+    ],
     "services": [
       365137307
     ],
@@ -486,7 +506,9 @@
     ],
     "connector": "noConnector",
     "link": "https://www.keyestudio.com/products/keyestudio-relay-breakout-board-for-bbc-microbit",
-    "storeLink": "https://www.keyestudio.com/products/keyestudio-relay-breakout-board-for-bbc-microbit",
+    "storeLink": [
+      "https://www.keyestudio.com/products/keyestudio-relay-breakout-board-for-bbc-microbit"
+    ],
     "services": [
       406840918,
       406840918,

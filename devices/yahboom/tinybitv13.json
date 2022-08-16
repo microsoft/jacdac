@@ -12,7 +12,9 @@
   ],
   "connector": "noConnector",
   "link": "https://category.yahboom.net/products/tinybit",
-  "storeLink": "https://category.yahboom.net/products/tinybit",
+  "storeLink": [
+    "https://category.yahboom.net/products/tinybit"
+  ],
   "services": [
     355063095,
     369743088,

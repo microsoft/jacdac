@@ -12,7 +12,9 @@
   ],
   "connector": "noConnector",
   "link": "https://category.yahboom.net/products/rgbledb",
-  "storeLink": "https://category.yahboom.net/products/rgbledb",
+  "storeLink": [
+    "https://category.yahboom.net/products/rgbledb"
+  ],
   "services": [
     369743088,
     346888797

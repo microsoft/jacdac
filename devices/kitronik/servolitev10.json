@@ -12,7 +12,9 @@
   ],
   "connector": "noConnector",
   "link": "https://kitronik.co.uk/products/5623-servolite-board-for-move-mini",
-  "storeLink": "https://kitronik.co.uk/products/5623-servolite-board-for-move-mini",
+  "storeLink": [
+    "https://kitronik.co.uk/products/5623-servolite-board-for-move-mini"
+  ],
   "services": [
     369743088,
     318542083,

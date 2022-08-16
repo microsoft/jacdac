@@ -658,7 +658,7 @@ declare namespace jdspec {
         /**
          * A URL where the device can be purchased
          */
-        storeLink?: string | string[]
+        storeLink?: string[]
 
         /**
          * A URL where the hardware design for the device resides

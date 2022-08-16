@@ -12,7 +12,9 @@
   ],
   "connector": "edgeIndependent",
   "link": "https://kitronik.co.uk/products/5674-kitronik-air-quality-board-for-bbc-micro-bit",
-  "storeLink": "https://kitronik.co.uk/products/5674-kitronik-air-quality-board-for-bbc-micro-bit",
+  "storeLink": [
+    "https://kitronik.co.uk/products/5674-kitronik-air-quality-board-for-bbc-micro-bit"
+  ],
   "services": [
     337754823,
     504462570,

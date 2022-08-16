@@ -12,7 +12,9 @@
   ],
   "connector": "noConnector",
   "link": "https://kitronik.co.uk/products/5646-accessbit-for-bbc-microbit",
-  "storeLink": "https://kitronik.co.uk/products/5646-accessbit-for-bbc-microbit",
+  "storeLink": [
+    "https://kitronik.co.uk/products/5646-accessbit-for-bbc-microbit"
+  ],
   "services": [
     318542083
   ],

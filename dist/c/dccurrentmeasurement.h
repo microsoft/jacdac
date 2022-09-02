@@ -14,4 +14,19 @@
  */
 #define JD_DC_CURRENT_MEASUREMENT_REG_MEASUREMENT JD_REG_READING
 
+/**
+ * Read-only A f64 (uint64_t). Absolute error on the reading value.
+ */
+#define JD_DC_CURRENT_MEASUREMENT_REG_MEASUREMENT_ERROR JD_REG_READING_ERROR
+
+/**
+ * Constant A f64 (uint64_t). Minimum measurable current
+ */
+#define JD_DC_CURRENT_MEASUREMENT_REG_MIN_MEASUREMENT JD_REG_MIN_READING
+
+/**
+ * Constant A f64 (uint64_t). Maximum measurable current
+ */
+#define JD_DC_CURRENT_MEASUREMENT_REG_MAX_MEASUREMENT JD_REG_MAX_READING
+
 #endif

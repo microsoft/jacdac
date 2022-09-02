@@ -1498,6 +1498,33 @@ export enum DcCurrentMeasurementReg {
      * ```
      */
     Measurement = 0x101,
+
+    /**
+     * Read-only A f64 (uint64_t). Absolute error on the reading value.
+     *
+     * ```
+     * const [measurementError] = jdunpack<[number]>(buf, "f64")
+     * ```
+     */
+    MeasurementError = 0x106,
+
+    /**
+     * Constant A f64 (uint64_t). Minimum measurable current
+     *
+     * ```
+     * const [minMeasurement] = jdunpack<[number]>(buf, "f64")
+     * ```
+     */
+    MinMeasurement = 0x104,
+
+    /**
+     * Constant A f64 (uint64_t). Maximum measurable current
+     *
+     * ```
+     * const [maxMeasurement] = jdunpack<[number]>(buf, "f64")
+     * ```
+     */
+    MaxMeasurement = 0x105,
 }
 
 // Service DC Voltage Measurement constants
@@ -1535,6 +1562,33 @@ export enum DcVoltageMeasurementReg {
      * ```
      */
     Measurement = 0x101,
+
+    /**
+     * Read-only V f64 (uint64_t). Absolute error on the reading value.
+     *
+     * ```
+     * const [measurementError] = jdunpack<[number]>(buf, "f64")
+     * ```
+     */
+    MeasurementError = 0x106,
+
+    /**
+     * Constant V f64 (uint64_t). Minimum measurable current
+     *
+     * ```
+     * const [minMeasurement] = jdunpack<[number]>(buf, "f64")
+     * ```
+     */
+    MinMeasurement = 0x104,
+
+    /**
+     * Constant V f64 (uint64_t). Maximum measurable current
+     *
+     * ```
+     * const [maxMeasurement] = jdunpack<[number]>(buf, "f64")
+     * ```
+     */
+    MaxMeasurement = 0x105,
 }
 
 // Service Distance constants

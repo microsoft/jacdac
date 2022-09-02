@@ -384,6 +384,9 @@ declare namespace roles {
 declare class DcCurrentMeasurementRole extends SensorRole {
     measurementName: JDRegisterString
     measurement: JDRegisterNum
+    measurementError: JDRegisterNum
+    minMeasurement: JDRegisterNum
+    maxMeasurement: JDRegisterNum
 }
 declare namespace roles {
     function dcCurrentMeasurement(): DcCurrentMeasurementRole
@@ -399,6 +402,9 @@ declare class DcVoltageMeasurementRole extends SensorRole {
     measurementType: JDRegisterNum
     measurementName: JDRegisterString
     measurement: JDRegisterNum
+    measurementError: JDRegisterNum
+    minMeasurement: JDRegisterNum
+    maxMeasurement: JDRegisterNum
 }
 declare namespace roles {
     function dcVoltageMeasurement(): DcVoltageMeasurementRole

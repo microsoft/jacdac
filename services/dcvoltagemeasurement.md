@@ -23,3 +23,15 @@ A string containing the net name that is being measured e.g. `POWER_DUT` or a re
     ro measurement: f64 V @ reading
     
 The voltage measurement.
+
+    ro measurement_error?: f64 V @ reading_error
+
+Absolute error on the reading value.
+
+    const min_measurement?: f64 V @ min_reading
+
+Minimum measurable current
+
+    const max_measurement?: f64 V @ max_reading
+
+Maximum measurable current

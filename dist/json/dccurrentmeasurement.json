@@ -194,6 +194,61 @@
       "volatile": true,
       "identifierName": "reading",
       "packFormat": "f64"
+    },
+    {
+      "kind": "ro",
+      "name": "measurement_error",
+      "identifier": 262,
+      "description": "Absolute error on the reading value.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "A",
+          "isFloat": true,
+          "type": "f64",
+          "storage": 8
+        }
+      ],
+      "volatile": true,
+      "optional": true,
+      "identifierName": "reading_error",
+      "packFormat": "f64"
+    },
+    {
+      "kind": "const",
+      "name": "min_measurement",
+      "identifier": 260,
+      "description": "Minimum measurable current",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "A",
+          "isFloat": true,
+          "type": "f64",
+          "storage": 8
+        }
+      ],
+      "optional": true,
+      "identifierName": "min_reading",
+      "packFormat": "f64"
+    },
+    {
+      "kind": "const",
+      "name": "max_measurement",
+      "identifier": 261,
+      "description": "Maximum measurable current",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "A",
+          "isFloat": true,
+          "type": "f64",
+          "storage": 8
+        }
+      ],
+      "optional": true,
+      "identifierName": "max_reading",
+      "packFormat": "f64"
     }
   ],
   "tags": []

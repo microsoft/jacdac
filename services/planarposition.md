@@ -2,7 +2,8 @@
 
     identifier: 0x1dc37f55
     status: experimental
-    tags: input
+    extends: _sensor
+    group: movement
 
 A sensor that repors 2D position, typically an optical mouse tracking sensor.
 

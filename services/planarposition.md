@@ -8,6 +8,8 @@ A sensor that repors 2D position, typically an optical mouse tracking sensor.
 
 The sensor starts at an arbitrary origin (0,0) and reports the distance from that origin.
 
+The `streaming_interval` is respected when the position is changing. When the position is not changing, the streaming interval may be throttled to `500ms`.
+
 # Registers
 
     ro position @ reading {

@@ -1101,6 +1101,19 @@ declare namespace roles {
     function multitouch(): MultitouchRole
 }
 
+// Service: Planar position
+declare enum PlanarPositionVariant { // uint8_t
+    OpticalMousePosition = 0x1,
+}
+
+declare class PlanarPositionRole extends SensorRole {
+    position: JDRegisterArray & { x: number, y: number }
+    variant: JDRegisterNum
+}
+declare namespace roles {
+    function planarPosition(): PlanarPositionRole
+}
+
 // Service: Potentiometer
 declare enum PotentiometerVariant { // uint8_t
     Slider = 0x1,

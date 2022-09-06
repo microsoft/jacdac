@@ -3689,6 +3689,33 @@ export enum MultitouchEvent {
     SwipeNeg = 0x91,
 }
 
+// Service Planar position constants
+export const SRV_PLANAR_POSITION = 0x1dc37f55
+
+export enum PlanarPositionVariant { // uint8_t
+    OpticalMousePosition = 0x1,
+}
+
+export enum PlanarPositionReg {
+    /**
+     * The current position of the sensor.
+     *
+     * ```
+     * const [x, y] = jdunpack<[number, number]>(buf, "i22.10 i22.10")
+     * ```
+     */
+    Position = 0x101,
+
+    /**
+     * Constant Variant (uint8_t). Specifies the type of physical sensor.
+     *
+     * ```
+     * const [variant] = jdunpack<[PlanarPositionVariant]>(buf, "u8")
+     * ```
+     */
+    Variant = 0x107,
+}
+
 // Service Potentiometer constants
 export const SRV_POTENTIOMETER = 0x1f274746
 

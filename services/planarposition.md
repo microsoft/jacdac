@@ -20,3 +20,9 @@ The `streaming_interval` is respected when the position is changing. When the po
 
 The current position of the sensor.
 
+    enum Variant : u8 {
+        OpticalMousePosition = 1,
+    }
+    const variant? : Variant @ variant
+    
+Specifies the type of physical sensor.

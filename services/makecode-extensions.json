@@ -88,6 +88,21 @@
     }
   },
   {
+    "service": "brailledisplay",
+    "client": {
+      "name": "jacdac-braille-display",
+      "targets": [
+        "microbit",
+        "arcade",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/braille-display",
+      "qName": "modules.BrailleDisplayClient",
+      "default": "modules.brailleDisplay",
+      "generated": false
+    }
+  },
+  {
     "service": "button",
     "client": {
       "name": "jacdac-button",

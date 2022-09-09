@@ -4926,6 +4926,36 @@ export enum SoundLevelReg {
      * ```
      */
     Enabled = 0x1,
+
+    /**
+     * Read-write ratio u0.16 (uint16_t). Set level at which the `loud` event is generated.
+     *
+     * ```
+     * const [loudThreshold] = jdunpack<[number]>(buf, "u0.16")
+     * ```
+     */
+    LoudThreshold = 0x6,
+
+    /**
+     * Read-write ratio u0.16 (uint16_t). Set level at which the `quiet` event is generated.
+     *
+     * ```
+     * const [quietThreshold] = jdunpack<[number]>(buf, "u0.16")
+     * ```
+     */
+    QuietThreshold = 0x5,
+}
+
+export enum SoundLevelEvent {
+    /**
+     * Generated when a loud sound is detected.
+     */
+    Loud = 0x1,
+
+    /**
+     * Generated low level of sound is detected.
+     */
+    Quiet = 0x2,
 }
 
 // Service Sound player constants

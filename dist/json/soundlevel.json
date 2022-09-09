@@ -195,6 +195,56 @@
       ],
       "identifierName": "intensity",
       "packFormat": "u8"
+    },
+    {
+      "kind": "rw",
+      "name": "loud_threshold",
+      "identifier": 6,
+      "description": "Set level at which the `loud` event is generated.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "/",
+          "shift": 16,
+          "type": "u0.16",
+          "storage": 2
+        }
+      ],
+      "identifierName": "active_threshold",
+      "packFormat": "u0.16"
+    },
+    {
+      "kind": "rw",
+      "name": "quiet_threshold",
+      "identifier": 5,
+      "description": "Set level at which the `quiet` event is generated.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "/",
+          "shift": 16,
+          "type": "u0.16",
+          "storage": 2
+        }
+      ],
+      "identifierName": "inactive_threshold",
+      "packFormat": "u0.16"
+    },
+    {
+      "kind": "event",
+      "name": "loud",
+      "identifier": 1,
+      "description": "Generated when a loud sound is detected.",
+      "fields": [],
+      "identifierName": "active"
+    },
+    {
+      "kind": "event",
+      "name": "quiet",
+      "identifier": 2,
+      "description": "Generated low level of sound is detected.",
+      "fields": [],
+      "identifierName": "inactive"
     }
   ],
   "tags": [

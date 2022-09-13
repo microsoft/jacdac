@@ -429,6 +429,21 @@
     }
   },
   {
+    "service": "jacscriptcloud",
+    "client": {
+      "name": "jacdac-jacscript-cloud",
+      "targets": [
+        "microbit",
+        "arcade",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/jacscript-cloud",
+      "qName": "modules.JacscriptCloudClient",
+      "default": "modules.jacscriptCloud",
+      "generated": false
+    }
+  },
+  {
     "service": "led",
     "client": {
       "name": "jacdac-led",

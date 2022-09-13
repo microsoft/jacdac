@@ -1,14 +1,14 @@
 {
-  "name": "Jacscript Cloud",
+  "name": "Cloud Adapter",
   "status": "experimental",
-  "shortId": "jacscriptcloud",
-  "camelName": "jacscriptCloud",
-  "shortName": "jacscriptCloud",
+  "shortId": "cloudadapter",
+  "camelName": "cloudAdapter",
+  "shortName": "cloudAdapter",
   "extends": [
     "_base"
   ],
   "notes": {
-    "short": "Supports cloud connections for Jacscript programs.\nNote that `f64` values following a label are not necessarily aligned."
+    "short": "Supports cloud connections to upload and download data.\nNote that `f64` values following a label are not necessarily aligned."
   },
   "classIdentifier": 341864092,
   "enums": {
@@ -154,7 +154,7 @@
       "kind": "command",
       "name": "ack_cloud_command",
       "identifier": 131,
-      "description": "Should be called by jacscript when it finishes handling a `cloud_command`.",
+      "description": "Should be called when it finishes handling a `cloud_command`.",
       "fields": [
         {
           "name": "seq_no",
@@ -211,7 +211,7 @@
       "kind": "event",
       "name": "cloud_command",
       "identifier": 129,
-      "description": "Emitted when cloud requests jacscript to run some action.",
+      "description": "Emitted when cloud requests to run some action.",
       "fields": [
         {
           "name": "seq_no",

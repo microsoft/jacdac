@@ -148,6 +148,21 @@
     }
   },
   {
+    "service": "cloudadapter",
+    "client": {
+      "name": "jacdac-cloud-adapter",
+      "targets": [
+        "microbit",
+        "arcade",
+        "maker"
+      ],
+      "repo": "microsoft/pxt-jacdac/cloud-adapter",
+      "qName": "modules.CloudAdapterClient",
+      "default": "modules.cloudAdapter",
+      "generated": false
+    }
+  },
+  {
     "service": "codalmessagebus",
     "client": {
       "name": "jacdac-codal-message-bus",
@@ -426,21 +441,6 @@
       "qName": "modules.IlluminanceClient",
       "default": "modules.illuminance",
       "generated": true
-    }
-  },
-  {
-    "service": "jacscriptcloud",
-    "client": {
-      "name": "jacdac-jacscript-cloud",
-      "targets": [
-        "microbit",
-        "arcade",
-        "maker"
-      ],
-      "repo": "microsoft/pxt-jacdac/jacscript-cloud",
-      "qName": "modules.JacscriptCloudClient",
-      "default": "modules.jacscriptCloud",
-      "generated": false
     }
   },
   {

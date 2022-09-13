@@ -306,6 +306,26 @@ declare namespace roles {
     function characterScreen(): CharacterScreenRole
 }
 
+// Service: Cloud Adapter
+declare enum CloudAdapterCommandStatus { // uint32_t
+    OK = 0xc8,
+    NotFound = 0x194,
+    Busy = 0x1ad,
+}
+
+declare class CloudAdapterRole extends Role {
+    upload(label: string, ...value: number[]): void
+    uploadBin(payload: number): void
+    ackCloudCommand(seq_no: number, status: CloudAdapterCommandStatus, ...result: number[]): void
+    connected: JDRegisterNum
+    connectionName: JDRegisterString
+    cloudCommand: JDEvent
+    change: JDEvent
+}
+declare namespace roles {
+    function cloudAdapter(): CloudAdapterRole
+}
+
 // Service: CODAL Message Bus
 declare class CodalMessageBusRole extends Role {
     send(source: number, value: number): void
@@ -792,26 +812,6 @@ declare class InfrastructureRole extends Role {
 }
 declare namespace roles {
     function infrastructure(): InfrastructureRole
-}
-
-// Service: Jacscript Cloud
-declare enum JacscriptCloudCommandStatus { // uint32_t
-    OK = 0xc8,
-    NotFound = 0x194,
-    Busy = 0x1ad,
-}
-
-declare class JacscriptCloudRole extends Role {
-    upload(label: string, ...value: number[]): void
-    uploadBin(payload: number): void
-    ackCloudCommand(seq_no: number, status: JacscriptCloudCommandStatus, ...result: number[]): void
-    connected: JDRegisterNum
-    connectionName: JDRegisterString
-    cloudCommand: JDEvent
-    change: JDEvent
-}
-declare namespace roles {
-    function jacscriptCloud(): JacscriptCloudRole
 }
 
 // Service: Jacscript Condition

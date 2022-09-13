@@ -1,10 +1,10 @@
-# Jacscript Cloud
+# Cloud Adapter
 
     identifier: 0x14606e9c
     group: iot
     tags: infrastructure, jacscript
 
-Supports cloud connections for Jacscript programs.
+Supports cloud connections to upload and download data.
 Note that `f64` values following a label are not necessarily aligned.
 
 ## Commands
@@ -36,7 +36,7 @@ Upload a binary message to the cloud.
         result: f64
     }
 
-Should be called by jacscript when it finishes handling a `cloud_command`.
+Should be called when it finishes handling a `cloud_command`.
 
 ## Registers
 
@@ -59,7 +59,7 @@ and/or type of cloud service (`"something.cloud.net (Provider IoT)"`).
         argument: f64
     }
 
-Emitted when cloud requests jacscript to run some action.
+Emitted when cloud requests to run some action.
 
     event change @ change
 

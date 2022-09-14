@@ -825,12 +825,12 @@
     },
     "firmwares": [
       {
-        "name": "IoT Uploader",
+        "name": "Azure IoT Hub Uploader",
         "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/uploader-esp32s2.uf2",
         "productIdentifier": 1067560617
       },
       {
-        "name": "Jacscript Brain",
+        "name": "Jacscript Brain + Azure IoT Hub Cloud Adapter",
         "url": "https://github.com/microsoft/jacdac-esp32/releases/latest/download/jacscript-esp32s2.uf2",
         "productIdentifier": 1038170507
       },

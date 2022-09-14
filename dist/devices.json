@@ -810,7 +810,8 @@
     "company": "Microsoft Research",
     "connector": "edgeHighCurrentProvider",
     "services": [
-      342028028
+      342028028,
+      341864092
     ],
     "productIdentifiers": [
       917230668,
@@ -831,6 +832,11 @@
       {
         "name": "Jacscript Brain",
         "url": "https://github.com/microsoft/jacdac-esp32/releases/latest/download/jacscript-esp32s2.uf2",
+        "productIdentifier": 1038170507
+      },
+      {
+        "name": "Azure IoT Hub Cloud Adapter",
+        "url": "https://github.com/microsoft/jacdac-esp32/releases/latest/download/jacscript-esp32s2-nojacs.uf2",
         "productIdentifier": 1038170507
       }
     ],

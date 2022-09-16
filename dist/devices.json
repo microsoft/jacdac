@@ -817,7 +817,8 @@
       917230668,
       983264687,
       1067560617,
-      1038170507
+      1038170507,
+      816040071
     ],
     "transport": {
       "type": "serial",
@@ -837,7 +838,7 @@
       {
         "name": "Azure IoT Hub Cloud Adapter",
         "url": "https://github.com/microsoft/jacdac-esp32/releases/latest/download/jacscript-esp32s2-nojacs.uf2",
-        "productIdentifier": 1038170507
+        "productIdentifier": 816040071
       }
     ],
     "version": "0.3",

@@ -52,6 +52,7 @@ typedef struct jd_timeseries_aggregator_set_upload {
 #define JD_TIMESERIES_AGGREGATOR_CMD_STORED 0x90
 typedef struct jd_timeseries_aggregator_stored_report {
     uint32_t num_samples; // #
+    uint32_t padding;  // u8[4]
     double avg;  // f64
     double min;  // f64
     double max;  // f64

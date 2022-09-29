@@ -390,7 +390,7 @@ declare namespace jdspec {
         /**
          * If present and true, the binary layout of fields does not follow natural alignment
          * and need to have PACKED C attribute or similar applied.
-         * The spec tool warns of such packets (and currently doesn't allow them).
+         * These packets need to be specially marked in the specs.
          */
         packed?: boolean
 

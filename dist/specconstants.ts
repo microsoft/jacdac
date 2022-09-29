@@ -5400,7 +5400,7 @@ export enum TimeseriesAggregatorCmd {
      * `end_time - start_time == window`
      *
      * ```
-     * const [numSamples, avg, min, max, startTime, endTime, label] = jdunpack<[number, number, number, number, number, number, string]>(buf, "u32 f64 f64 f64 u32 u32 s")
+     * const [numSamples, avg, min, max, startTime, endTime, label] = jdunpack<[number, number, number, number, number, number, string]>(buf, "u32 x[4] f64 f64 f64 u32 u32 s")
      * ```
      */
     Stored = 0x90,

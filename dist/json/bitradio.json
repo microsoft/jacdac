@@ -318,6 +318,7 @@
           "storage": 0
         }
       ],
+      "packed": true,
       "packFormat": "u32 u32 i8 b[3] f64 s"
     },
     {

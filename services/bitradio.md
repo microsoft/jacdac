@@ -61,7 +61,7 @@ Sends a payload of bytes as a radio message
 
 Raised when a string packet is received
 
-    report number_received @ 0x91 {
+    packed report number_received @ 0x91 {
         time: u32 ms
         device_serial_number: u32
         rssi: i8 dB

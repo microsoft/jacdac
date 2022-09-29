@@ -183,6 +183,11 @@
           "isSimpleType": true
         },
         {
+          "name": "padding",
+          "type": "u8[4]",
+          "storage": 4
+        },
+        {
           "name": "avg",
           "isFloat": true,
           "type": "f64",
@@ -220,7 +225,7 @@
           "storage": 0
         }
       ],
-      "packFormat": "u32 f64 f64 f64 u32 u32 s"
+      "packFormat": "u32 b[4] f64 f64 f64 u32 u32 s"
     },
     {
       "kind": "ro",

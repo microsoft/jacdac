@@ -43,6 +43,7 @@ The `stored` reports are generated regardless.
 
     report stored @ 0x90 {
         num_samples: u32 #
+        padding: u8[4]
         avg: f64
         min: f64
         max: f64

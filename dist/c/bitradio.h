@@ -73,7 +73,7 @@ typedef struct jd_bit_radio_number_received_report {
     uint8_t padding[3];  // u8[3]
     double value;  // f64
     char name[0];  // string
-} jd_bit_radio_number_received_report_t;
+} __attribute__((packed)) jd_bit_radio_number_received_report_t;
 
 
 /**

@@ -414,6 +414,7 @@ export function parseServiceSpecificationMarkdownToJSON(
                 case "lowlevel":
                 case "unique":
                 case "restricted":
+                case "packed":
                     startPacket(words)
                     break
                 case "}":
@@ -435,10 +436,16 @@ export function parseServiceSpecificationMarkdownToJSON(
 
     function finishPacket() {
         const paderr = paddingError(packetInfo)
-
         if (paderr) {
-            packetInfo.packed = true
-            error(`${paderr} in ${packetInfo.kind} ${packetInfo.name}`)
+            if (!packetInfo.packed)
+                error(
+                    `${paderr} in ${packetInfo.kind} ${packetInfo.name}; you can also add 'packed' attribute`
+                )
+        } else {
+            if (packetInfo.packed)
+                error(
+                    `${packetInfo.kind} ${packetInfo.name} has unnecessary 'packed' attribute`
+                )
         }
 
         let repeats = false
@@ -548,6 +555,7 @@ export function parseServiceSpecificationMarkdownToJSON(
         let unique: boolean = undefined
         let internal: boolean = undefined
         let volatile: boolean = undefined
+        let packed: boolean = undefined
 
         function processAttributes() {
             while (words.length) {
@@ -563,6 +571,8 @@ export function parseServiceSpecificationMarkdownToJSON(
                     internal = true
                 } else if (words[0] === "volatile") {
                     volatile = true
+                } else if (words[0] === "packed") {
+                    packed = true
                 } else {
                     break
                 }
@@ -617,6 +627,7 @@ export function parseServiceSpecificationMarkdownToJSON(
             unique,
             volatile,
             restricted,
+            packed,
         }
         if (isReport && lastCmd && name == lastCmd.name) {
             packetInfo.secondary = true
@@ -1258,8 +1269,8 @@ export function parseServiceSpecificationMarkdownToJSON(
 
         for (const m of iface.fields) {
             const sz = memberSize(m)
-            if (sz == 0) continue
-            const pad = sz > 4 ? 4 : sz
+            if (sz == 0) break // no checking after zero-sized element
+            const pad = m.type == "bytes" ? 1 : sz > 8 ? 8 : sz
             if (!/^u8\[/.test(m.type) && byteOffset % pad != 0)
                 return `need padding of ${
                     pad - (byteOffset % pad)
@@ -1738,7 +1749,7 @@ export function packFormat(
     pkt: jdspec.PacketInfo,
     useBooleans?: boolean
 ): string {
-    if (pkt.packed || !pkt.fields?.length) return undefined
+    if (!pkt.fields?.length) return undefined
 
     const fmt: string[] = []
     for (const fld of pkt.fields) {

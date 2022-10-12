@@ -159,7 +159,8 @@
     "productIdentifiers": [
       854992189,
       888455511,
-      1035770297
+      1035770297,
+      1049819173
     ],
     "transport": {
       "type": "usb"
@@ -169,6 +170,11 @@
         "name": "Micro:bit Jukebox",
         "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/microbit-jukebox.hex",
         "productIdentifier": 888455511
+      },
+      {
+        "name": "Micro:bit MicroCode",
+        "url": "https://microsoft.github.io/microcode/assets/firmware.hex",
+        "productIdentifier": 1049819173
       }
     ],
     "bootloader": {

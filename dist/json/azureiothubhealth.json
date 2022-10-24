@@ -244,6 +244,8 @@
       "fields": []
     }
   ],
-  "tags": [],
+  "tags": [
+    "management"
+  ],
   "group": "Iot"
 }

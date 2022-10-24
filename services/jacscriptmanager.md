@@ -1,7 +1,7 @@
 # Jacscript Manager
 
     identifier: 0x1134ea2b
-    tags: jacscript
+    tags: jacscript, management
     restricted: true
 
 Allows for deployment and control over Jacscript virtual machine.

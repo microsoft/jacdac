@@ -304,7 +304,8 @@
     }
   ],
   "tags": [
-    "jacscript"
+    "jacscript",
+    "management"
   ],
   "restricted": true
 }

@@ -73,21 +73,6 @@
     }
   },
   {
-    "service": "azureiothubhealth",
-    "client": {
-      "name": "jacdac-azure-iot-hub-health",
-      "targets": [
-        "arcade",
-        "microbit",
-        "maker"
-      ],
-      "repo": "microsoft/pxt-jacdac/azure-iot-hub-health",
-      "qName": "modules.AzureIotHubHealthClient",
-      "default": "modules.azureIotHubHealth",
-      "generated": false
-    }
-  },
-  {
     "service": "brailledisplay",
     "client": {
       "name": "jacdac-braille-display",

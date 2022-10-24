@@ -4,6 +4,7 @@
     camel: azureIotHubHealth
     group: iot
     status: rc
+    tags: management
 
 Health and diagnostics information about the Azure Iot Hub connection.
 

@@ -1,7 +1,7 @@
 # Bootloader
 
     identifier: 0x1ffa9948
-    tags: C
+    tags: C, management
     status: stable
 
 Allows flashing (reprogramming) devices over Jacdac.

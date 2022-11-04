@@ -1666,6 +1666,7 @@ declare namespace roles {
 // Service: Vibration motor
 declare class VibrationMotorRole extends Role {
     vibrate(duration: number, intensity: number): void
+    maxVibrations: JDRegisterNum
 }
 declare namespace roles {
     function vibrationMotor(): VibrationMotorRole

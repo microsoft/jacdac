@@ -8908,6 +8908,24 @@ namespace jacdac {
         export const Vibrate = "r: u8 u0.8"
     }
 
+    export const enum VibrationMotorReg {
+        /**
+         * Constant uint8_t. The maximum number of vibration sequences supported in a single packet.
+         *
+         * ```
+         * const [maxVibrations] = jdunpack<[number]>(buf, "u8")
+         * ```
+         */
+        MaxVibrations = 0x180,
+    }
+
+    export namespace VibrationMotorRegPack {
+        /**
+         * Pack format for 'max_vibrations' register data.
+         */
+        export const MaxVibrations = "u8"
+    }
+
 }
 namespace jacdac {
     // Service Water level constants

@@ -14,3 +14,10 @@ A vibration motor.
     }
 
 Starts a sequence of vibration and pauses. To stop any existing vibration, send an empty payload.
+
+## Registers
+
+    const max_vibrations?: u8 @ 0x180
+
+The maximum number of vibration sequences supported in a single packet.
+

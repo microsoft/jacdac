@@ -14,4 +14,9 @@ typedef struct jd_vibration_motor_vibrate {
 } jd_vibration_motor_vibrate_t;
 
 
+/**
+ * Constant uint8_t. The maximum number of vibration sequences supported in a single packet.
+ */
+#define JD_VIBRATION_MOTOR_REG_MAX_VIBRATIONS 0x180
+
 #endif

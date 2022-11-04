@@ -5707,6 +5707,17 @@ export enum VibrationMotorCmd {
     Vibrate = 0x80,
 }
 
+export enum VibrationMotorReg {
+    /**
+     * Constant uint8_t. The maximum number of vibration sequences supported in a single packet.
+     *
+     * ```
+     * const [maxVibrations] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    MaxVibrations = 0x180,
+}
+
 // Service Water level constants
 export const SRV_WATER_LEVEL = 0x147b62ed
 

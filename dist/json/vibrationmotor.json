@@ -125,6 +125,22 @@
         }
       ],
       "packFormat": "r: u8 u0.8"
+    },
+    {
+      "kind": "const",
+      "name": "max_vibrations",
+      "identifier": 384,
+      "description": "The maximum number of vibration sequences supported in a single packet.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "packFormat": "u8"
     }
   ],
   "tags": []

@@ -610,6 +610,7 @@ declare namespace jdspec {
         vendorId?: number
         productId?: number
         type: TransportType
+        requestDescription?: string
     }
 
     interface ShapeGeneric {

@@ -15,7 +15,8 @@
     1049819173
   ],
   "transport": {
-    "type": "usb"
+    "type": "usb",
+    "requestDescription": "BBC micro:bit CMSIS-DAP"
   },
   "firmwares": [
     {

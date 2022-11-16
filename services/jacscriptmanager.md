@@ -85,6 +85,10 @@ The size of current program.
 
 Return FNV1A hash of the current bytecode.
 
+    ro program_sha256: bytes { max_bytes = 32 } @ 0x182
+
+Return 32-byte long SHA-256 hash of the current bytecode.
+
 ## Events
 
 When program is running, `status_code == Ready`.

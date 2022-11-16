@@ -274,6 +274,22 @@
       "packFormat": "u32"
     },
     {
+      "kind": "ro",
+      "name": "program_sha256",
+      "identifier": 386,
+      "description": "Return 32-byte long SHA-256 hash of the current bytecode.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "bytes",
+          "storage": 32,
+          "isSimpleType": true,
+          "maxBytes": 32
+        }
+      ],
+      "packFormat": "b[32]"
+    },
+    {
       "kind": "event",
       "name": "program_panic",
       "identifier": 128,

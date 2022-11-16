@@ -4144,6 +4144,15 @@ namespace jacdac {
          * ```
          */
         ProgramHash = 0x181,
+
+        /**
+         * Read-only bytes. Return 32-byte long SHA-256 hash of the current bytecode.
+         *
+         * ```
+         * const [programSha256] = jdunpack<[Buffer]>(buf, "b[32]")
+         * ```
+         */
+        ProgramSha256 = 0x182,
     }
 
     export namespace JacscriptManagerRegPack {
@@ -4171,6 +4180,11 @@ namespace jacdac {
          * Pack format for 'program_hash' register data.
          */
         export const ProgramHash = "u32"
+
+        /**
+         * Pack format for 'program_sha256' register data.
+         */
+        export const ProgramSha256 = "b[32]"
     }
 
     export const enum JacscriptManagerEvent {

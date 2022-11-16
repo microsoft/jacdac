@@ -2662,6 +2662,15 @@ export enum JacscriptManagerReg {
      * ```
      */
     ProgramHash = 0x181,
+
+    /**
+     * Read-only bytes. Return 32-byte long SHA-256 hash of the current bytecode.
+     *
+     * ```
+     * const [programSha256] = jdunpack<[Uint8Array]>(buf, "b[32]")
+     * ```
+     */
+    ProgramSha256 = 0x182,
 }
 
 export enum JacscriptManagerEvent {

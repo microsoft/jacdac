@@ -78,6 +78,11 @@ typedef struct jd_jacscript_manager_log_message_report {
 #define JD_JACSCRIPT_MANAGER_REG_PROGRAM_HASH 0x181
 
 /**
+ * Read-only bytes. Return 32-byte long SHA-256 hash of the current bytecode.
+ */
+#define JD_JACSCRIPT_MANAGER_REG_PROGRAM_SHA256 0x182
+
+/**
  * Emitted when the program calls `panic(panic_code)` or `reboot()` (`panic_code == 0` in that case).
  * The byte offset in byte code of the call is given in `program_counter`.
  * The program will restart immediately when `panic_code == 0` or in a few seconds otherwise.

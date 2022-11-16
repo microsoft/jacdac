@@ -836,6 +836,7 @@ declare class JacscriptManagerRole extends Role {
     logging: JDRegisterNum
     programSize: JDRegisterNum
     programHash: JDRegisterNum
+    programSha256: JDRegisterNum
     programPanic: JDEvent
     programChange: JDEvent
 }

@@ -7,7 +7,6 @@ export enum SystemReadingThreshold { // uint8_t
     Active = 0x3,
 }
 
-
 export enum SystemStatusCodes { // uint16_t
     Ready = 0x0,
     Initializing = 0x1,
@@ -1144,7 +1143,6 @@ export enum CharacterScreenVariant { // uint8_t
     Braille = 0x3,
 }
 
-
 export enum CharacterScreenTextDirection { // uint8_t
     LeftToRight = 0x1,
     RightToLeft = 0x2,
@@ -1477,14 +1475,12 @@ export enum ControlCmd {
      */
 }
 
-
 /**
  * pipe_command WrappedCommand
  * ```
  * const [serviceSize, serviceIndex, serviceCommand, payload] = jdunpack<[number, number, number, Uint8Array]>(buf, "u8 u8 u16 b")
  * ```
  */
-
 
 export enum ControlReg {
     /**
@@ -1950,7 +1946,6 @@ export enum GamepadButtons { // uint32_t
     Y = 0x800,
 }
 
-
 export enum GamepadVariant { // uint8_t
     Thumb = 0x1,
     ArcadeBall = 0x2,
@@ -2271,7 +2266,6 @@ export enum HidKeyboardSelector { // uint16_t
     VolumeDown = 0x81,
 }
 
-
 export enum HidKeyboardModifiers { // uint8_t
     None = 0x0,
     LeftControl = 0x1,
@@ -2283,7 +2277,6 @@ export enum HidKeyboardModifiers { // uint8_t
     RightAlt = 0x40,
     RightGUI = 0x80,
 }
-
 
 export enum HidKeyboardAction { // uint8_t
     Press = 0x0,
@@ -2316,7 +2309,6 @@ export enum HidMouseButton { // uint16_t
     Right = 0x2,
     Middle = 0x4,
 }
-
 
 export enum HidMouseButtonEvent { // uint8_t
     Up = 0x1,
@@ -2604,14 +2596,12 @@ export enum JacscriptManagerCmd {
     LogMessage = 0x82,
 }
 
-
 /**
  * pipe_report Bytecode
  * ```
  * const [data] = jdunpack<[Uint8Array]>(buf, "b")
  * ```
  */
-
 
 export enum JacscriptManagerReg {
     /**
@@ -2887,7 +2877,6 @@ export enum LedStripLightType { // uint8_t
     APA102 = 0x10,
     SK9822 = 0x11,
 }
-
 
 export enum LedStripVariant { // uint8_t
     Strip = 0x1,
@@ -4195,14 +4184,12 @@ export enum ProtoTestCmd {
     CReportPipe = 0x90,
 }
 
-
 /**
  * pipe_report PBytes
  * ```
  * const [byte] = jdunpack<[number]>(buf, "u8")
  * ```
  */
-
 
 // Service Proxy constants
 export const SRV_PROXY = 0x16f19949
@@ -4459,14 +4446,12 @@ export enum RoleManagerCmd {
     ListRoles = 0x83,
 }
 
-
 /**
  * pipe_report Roles
  * ```
  * const [deviceId, serviceClass, serviceIdx, role] = jdunpack<[Uint8Array, number, number, string]>(buf, "b[8] u32 u8 s")
  * ```
  */
-
 
 export enum RoleManagerEvent {
     /**
@@ -4766,7 +4751,6 @@ export enum SettingsCmd {
     Clear = 0x85,
 }
 
-
 /**
  * pipe_report ListedKey
  * ```
@@ -4780,7 +4764,6 @@ export enum SettingsCmd {
  * const [key, value] = jdunpack<[string, Uint8Array]>(buf, "z b")
  * ```
  */
-
 
 export enum SettingsEvent {
     /**
@@ -5005,14 +4988,12 @@ export enum SoundPlayerCmd {
     ListSounds = 0x82,
 }
 
-
 /**
  * pipe_report ListSoundsPipe
  * ```
  * const [duration, name] = jdunpack<[number, string]>(buf, "u32 s")
  * ```
  */
-
 
 // Service Sound Recorder with Playback constants
 export const SRV_SOUND_RECORDER_WITH_PLAYBACK = 0x1b72bf50
@@ -5291,7 +5272,6 @@ export enum TcpPipeCmd {
     Error = 0x0,
 }
 
-
 /**
  * pipe_command Outdata
  * ```
@@ -5305,7 +5285,6 @@ export enum TcpPipeCmd {
  * const [data] = jdunpack<[Uint8Array]>(buf, "b")
  * ```
  */
-
 
 // Service Temperature constants
 export const SRV_TEMPERATURE = 0x1421bac7
@@ -5629,7 +5608,6 @@ export enum VerifiedTelemetryStatus { // uint8_t
     Faulty = 0x2,
 }
 
-
 export enum VerifiedTelemetryFingerprintType { // uint8_t
     FallCurve = 0x1,
     CurrentSense = 0x2,
@@ -5950,7 +5928,6 @@ export enum WifiCmd {
     ListKnownNetworks = 0x87,
 }
 
-
 /**
  * pipe_report Results
  * ```
@@ -5964,7 +5941,6 @@ export enum WifiCmd {
  * const [priority, flags, ssid] = jdunpack<[number, number, string]>(buf, "i16 i16 s")
  * ```
  */
-
 
 export enum WifiReg {
     /**
@@ -6105,4 +6081,3 @@ export enum WindSpeedReg {
      */
     MaxWindSpeed = 0x105,
 }
-

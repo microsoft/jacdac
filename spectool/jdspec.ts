@@ -2109,18 +2109,25 @@ function toJacscript(info: jdspec.ServiceSpec) {
         } else if (pkt.kind == "event") {
             tp = "JDEvent"
         } else if (pkt.kind == "command") {
+            r += wrapComment("jacs", cmt.comment)
             r += `    ${camelize(pkt.name)}(${fields}): void\n`
         }
 
-        if (tp) r += `    ${camelize(pkt.name)}: ${tp}\n`
+        if (tp) {
+            r += wrapComment("jacs", cmt.comment)
+            r += `    ${camelize(pkt.name)}: ${tp}\n`
+        }
     }
 
     r += "}\n"
 
     if (info.shortId[0] != "_") {
-        r += "declare namespace roles {\n"
-        r += `    function ${jsQuote(info.camelName)}(): ${clname}\n`
-        r += "}\n\n"
+        r += `declare namespace roles {
+    /**
+     * Declares a new ${info.name} service role.
+    **/
+    function ${jsQuote(info.camelName)}(): ${clname}
+}\n\n`
     } else {
         r += "\n"
     }

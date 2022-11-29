@@ -5,6 +5,7 @@ rm -rf ../services/generated
 tsc
 node built/jdspectool ../services
 node built/jdspectool -d ../devices
+prettier --write ../services/generated/*.ts
 rm -f ../dist/c/*.c
 rm -f ../dist/c/*.h
 rm -f ../dist/json/*.json

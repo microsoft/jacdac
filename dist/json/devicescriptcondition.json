@@ -1,14 +1,14 @@
 {
-  "name": "Jacscript Condition",
+  "name": "DeviceScript Condition",
   "status": "experimental",
-  "shortId": "jacscriptcondition",
-  "camelName": "jacscriptCondition",
-  "shortName": "jacscriptCondition",
+  "shortId": "devicescriptcondition",
+  "camelName": "deviceScriptCondition",
+  "shortName": "deviceScriptCondition",
   "extends": [
     "_base"
   ],
   "notes": {
-    "short": "Conditions are synthetic services used to synchronize threads of executions of a Jacscript VM."
+    "short": "Conditions are synthetic services used to synchronize threads of executions of a DeviceScript VM."
   },
   "classIdentifier": 295074157,
   "enums": {},
@@ -120,7 +120,7 @@
   ],
   "tags": [
     "infrastructure",
-    "jacscript"
+    "devicescript"
   ],
   "restricted": true
 }

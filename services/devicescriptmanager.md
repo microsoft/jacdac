@@ -1,10 +1,10 @@
-# Jacscript Manager
+# DeviceScript Manager
 
     identifier: 0x1134ea2b
-    tags: jacscript, management
+    tags: management, devicescript
     restricted: true
 
-Allows for deployment and control over Jacscript virtual machine.
+Allows for deployment and control over DeviceScript virtual machine.
 
 Programs start automatically after device restart or uploading of new program.
 You can stop programs until next reset by setting the `running` register to `0`.

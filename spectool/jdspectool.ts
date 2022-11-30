@@ -34,8 +34,9 @@ const serviceBuiltins = [
     "rolemanager",
     "bridge",
     "dashboard",
-    "jacscriptcloud",
-    "jacscriptcondition",
+    "devicescriptcloud",
+    "cloudadapter",
+    "devicescriptcondition",
 ]
 
 function values<T>(o: jdspec.SMap<T>): T[] {

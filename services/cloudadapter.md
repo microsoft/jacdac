@@ -2,7 +2,7 @@
 
     identifier: 0x14606e9c
     group: iot
-    tags: infrastructure, jacscript
+    tags: infrastructure, devicescript
 
 Supports cloud connections to upload and download data.
 Note that `f64` values following a label are not necessarily aligned.

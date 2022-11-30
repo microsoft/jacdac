@@ -25,7 +25,7 @@
       "productIdentifier": 1067560617
     },
     {
-      "name": "Jacscript Brain + Azure IoT Hub Cloud Adapter",
+      "name": "DeviceScript Brain + Azure IoT Hub Cloud Adapter",
       "url": "https://github.com/microsoft/jacdac-esp32/releases/latest/download/jacscript-esp32s2.uf2",
       "productIdentifier": 1038170507
     },

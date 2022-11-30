@@ -1,8 +1,8 @@
 {
-  "id": "stmicroelectronics-bl475eiot01ajacscriptv00",
-  "name": "B-L475E-IOT01A Jacscript",
+  "id": "stmicroelectronics-bl475eiot01adevicescriptv00",
+  "name": "B-L475E-IOT01A DeviceScript",
   "company": "STMicroelectronics",
-  "description": "B-L475E-IOT01A running Jacdac firmware accessing built-in sensors and Jacscript. Built with AzureRTOS.",
+  "description": "B-L475E-IOT01A running Jacdac firmware accessing built-in sensors and DeviceScript. Built with AzureRTOS.",
   "firmwareSource": "https://github.com/RLeclair/jacdac-azure-rtos/tree/master/STMicroelectronics/B-L475E-IOT01A",
   "connector": "noConnector",
   "link": "https://github.com/RLeclair/jacdac-azure-rtos/tree/master/STMicroelectronics/B-L475E-IOT01A",

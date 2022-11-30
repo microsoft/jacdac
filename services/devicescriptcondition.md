@@ -1,10 +1,10 @@
-# Jacscript Condition
+# DeviceScript Condition
 
     identifier: 0x1196796d
-    tags: infrastructure, jacscript
+    tags: infrastructure, devicescript
     restricted: true
 
-Conditions are synthetic services used to synchronize threads of executions of a Jacscript VM.
+Conditions are synthetic services used to synchronize threads of executions of a DeviceScript VM.
 
 ## Commands
 

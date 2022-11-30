@@ -1,8 +1,8 @@
 {
-  "id": "microsoft-research-rp2040jacscript59v01",
-  "name": "RP2040 Jacscript",
+  "id": "microsoft-research-rp2040devicescript59v01",
+  "name": "RP2040 DeviceScript",
   "company": "Microsoft Research",
-  "description": "RP2040 brain running Jacscript and related services",
+  "description": "RP2040 brain running DeviceScript and related services",
   "firmwareSource": "https://github.com/microsoft/jacdac-pico",
   "connector": "edgeHighCurrentProvider",
   "link": "https://github.com/microsoft/jacdac-pico",

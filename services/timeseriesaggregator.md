@@ -2,13 +2,13 @@
 
     identifier: 0x1192bdcc
     group: iot
-    tags: infrastructure, jacscript
+    tags: infrastructure, devicescript
     restricted: true
     status: experimental
 
 Supports aggregating timeseries data (especially sensor readings)
 and sending them to a cloud/storage service.
-Used in Jacscript.
+Used in DeviceScript.
 
 Note that `f64` values are not necessarily aligned.
 

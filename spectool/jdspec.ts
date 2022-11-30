@@ -2055,7 +2055,7 @@ function jsQuote(n: string) {
     return n
 }
 
-function toJacscript(info: jdspec.ServiceSpec) {
+function toDeviceScript(info: jdspec.ServiceSpec) {
     let r = `// Service: ${info.name}\n`
 
     for (const en of values(info.enums)) {
@@ -2109,12 +2109,12 @@ function toJacscript(info: jdspec.ServiceSpec) {
         } else if (pkt.kind == "event") {
             tp = "JDEvent"
         } else if (pkt.kind == "command") {
-            r += wrapComment("jacs", cmt.comment)
+            r += wrapComment("devs", cmt.comment)
             r += `    ${camelize(pkt.name)}(${fields}): void\n`
         }
 
         if (tp) {
-            r += wrapComment("jacs", cmt.comment)
+            r += wrapComment("devs", cmt.comment)
             r += `    ${camelize(pkt.name)}: ${tp}\n`
         }
     }
@@ -2228,7 +2228,7 @@ export function converters(): jdspec.SMap<(s: jdspec.ServiceSpec) => string> {
         sts: j => toTypescript(j, "sts"),
         cs: j => toTypescript(j, "cs"),
         py: j => toPython(j, "py"),
-        jacs: toJacscript,
+        devs: toDeviceScript,
         /*
         "cpp": toHPP,
         */

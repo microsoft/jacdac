@@ -8,7 +8,7 @@
     "_base"
   ],
   "notes": {
-    "short": "Supports aggregating timeseries data (especially sensor readings)\nand sending them to a cloud/storage service.\nUsed in Jacscript.\n\nNote that `f64` values are not necessarily aligned."
+    "short": "Supports aggregating timeseries data (especially sensor readings)\nand sending them to a cloud/storage service.\nUsed in DeviceScript.\n\nNote that `f64` values are not necessarily aligned."
   },
   "classIdentifier": 294829516,
   "enums": {},
@@ -325,7 +325,7 @@
   ],
   "tags": [
     "infrastructure",
-    "jacscript"
+    "devicescript"
   ],
   "group": "Iot",
   "restricted": true

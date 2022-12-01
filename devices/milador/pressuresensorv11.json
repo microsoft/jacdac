@@ -1,0 +1,18 @@
+{
+  "id": "milador-pressuresensorv11",
+  "name": "Pressure Sensor",
+  "company": "Milador",
+  "description": "A Jacdac Pressure Sensor Module based on LPS33HW Absolute digital Pressure Sensor.",
+  "repo": "https://github.com/milador/jacdac-milador-modules",
+  "hardwareDesign": "https://github.com/milador/Jacdac-Pressure-Sensor/tree/develop/Hardware/PCB",
+  "link": "https://github.com/milador/Jacdac-Pressure-Sensor",
+  "services": [
+    504462570,
+    337754823
+  ],
+  "productIdentifiers": [
+    867414479
+  ],
+  "version": "1.1",
+  "shape": "ec30_2x2_lr"
+}

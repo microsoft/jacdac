@@ -1305,7 +1305,7 @@ function packed(iface: jdspec.PacketInfo) {
     else return " __attribute__((packed))"
 }
 
-function cStorage(tp: jdspec.StorageType) {
+export function cStorage(tp: jdspec.StorageType) {
     if (tp == 0 || [1, 2, 4, 8].indexOf(Math.abs(tp)) < 0) return "bytes"
     if (tp < 0) return `int${-tp * 8}_t`
     else return `uint${tp * 8}_t`
@@ -1336,11 +1336,11 @@ function canonicalType(tp: jdspec.StorageType): string {
     else return `u${tp * 8}`
 }
 
-function isRegister(k: jdspec.PacketKind) {
+export function isRegister(k: jdspec.PacketKind) {
     return k == "ro" || k == "rw" || k == "const"
 }
 
-function toHex(n: number): string {
+export function toHex(n: number): string {
     if (n === undefined) return ""
     if (n < 0) return "-" + toHex(n)
     return "0x" + n.toString(16)
@@ -1593,7 +1593,7 @@ export function humanify(name: string) {
         .replace(/(-|_)/g, " ")
 }
 
-function addComment(pkt: jdspec.PacketInfo) {
+export function addComment(pkt: jdspec.PacketInfo) {
     let comment = ""
 
     let typeInfo = ""
@@ -1639,7 +1639,7 @@ function addComment(pkt: jdspec.PacketInfo) {
     }
 }
 
-function wrapComment(lang: string, comment: string) {
+export function wrapComment(lang: string, comment: string) {
     if (lang === "cs")
         return (
             "\n/// <summary>\n/// " +
@@ -1654,7 +1654,7 @@ function wrapComment(lang: string, comment: string) {
         )
 }
 
-function wrapSnippet(code: string) {
+export function wrapSnippet(code: string) {
     if (!code) return code
     return `
 \`\`\`
@@ -2050,93 +2050,9 @@ const jsKeywords: Record<string, number> = {
     switch: 1,
 }
 
-function jsQuote(n: string) {
+export function jsQuote(n: string) {
     if (jsKeywords[n]) n += "_"
     return n
-}
-
-function toDeviceScript(info: jdspec.ServiceSpec) {
-    let r = `// Service: ${info.name}\n`
-
-    for (const en of values(info.enums)) {
-        const enPref = enumName(en.name)
-        r += `declare enum ${enPref} { // ${cStorage(en.storage)}\n`
-        for (const k of Object.keys(en.members)) {
-            r += "    " + k + " = " + toHex(en.members[k]) + ",\n"
-        }
-        r += "}\n\n"
-    }
-
-    const clname = upperCamel(info.camelName) + "Role"
-    const baseclass =
-        info.extends.indexOf("_sensor") >= 0 ? "SensorRole" : "Role"
-    r += `declare class ${clname} extends ${baseclass} {\n`
-
-    for (const pkt of info.packets) {
-        if (pkt.derived) continue // ???
-        const cmt = addComment(pkt)
-
-        let tp = ""
-
-        // if there's a startRepeats before last field, we don't put ... before it
-        const earlyRepeats = pkt.fields
-            .slice(0, pkt.fields.length - 1)
-            .some(f => f.startRepeats)
-
-        const fields = pkt.fields
-            .map(f => {
-                const tp =
-                    f.type == "string" || f.type == "string0"
-                        ? "string"
-                        : info.enums[f.type]
-                        ? enumName(f.type)
-                        : "number"
-                if (f.startRepeats && !earlyRepeats)
-                    return `...${f.name}: ${tp}[]`
-                else return `${f.name}: ${tp}`
-            })
-            .join(", ")
-
-        if (isRegister(pkt.kind)) {
-            if (cmt.needsStruct) {
-                tp = `JDRegisterArray`
-                if (pkt.fields.length > 1) tp += ` & { ${fields} }`
-            } else {
-                if (pkt.fields.length == 1 && pkt.fields[0].type == "string")
-                    tp = "JDRegisterString"
-                else tp = "JDRegisterNum"
-            }
-        } else if (pkt.kind == "event") {
-            tp = "JDEvent"
-        } else if (pkt.kind == "command") {
-            r += wrapComment("devs", cmt.comment)
-            r += `    ${camelize(pkt.name)}(${fields}): void\n`
-        }
-
-        if (tp) {
-            r += wrapComment("devs", cmt.comment)
-            r += `    ${camelize(pkt.name)}: ${tp}\n`
-        }
-    }
-
-    r += "}\n"
-
-    if (info.shortId[0] != "_") {
-        r += `declare namespace roles {
-    /**
-     * Declares a new ${info.name} service role.
-    **/
-    function ${jsQuote(info.camelName)}(): ${clname}
-}\n\n`
-    } else {
-        r += "\n"
-    }
-
-    return r.replace(/ *$/gm, "")
-
-    function enumName(n: string) {
-        return upperCamel(info.camelName) + upperCamel(n)
-    }
 }
 
 export function generateDeviceSpecificationId(dev: jdspec.DeviceSpec) {
@@ -2228,7 +2144,6 @@ export function converters(): jdspec.SMap<(s: jdspec.ServiceSpec) => string> {
         sts: j => toTypescript(j, "sts"),
         cs: j => toTypescript(j, "cs"),
         py: j => toPython(j, "py"),
-        devs: toDeviceScript,
         /*
         "cpp": toHPP,
         */

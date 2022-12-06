@@ -1336,11 +1336,11 @@ function canonicalType(tp: jdspec.StorageType): string {
     else return `u${tp * 8}`
 }
 
-export function isRegister(k: jdspec.PacketKind) {
+function isRegister(k: jdspec.PacketKind) {
     return k == "ro" || k == "rw" || k == "const"
 }
 
-export function toHex(n: number): string {
+function toHex(n: number): string {
     if (n === undefined) return ""
     if (n < 0) return "-" + toHex(n)
     return "0x" + n.toString(16)

@@ -13,7 +13,7 @@
 /**
  * Read-only string (bytes). Something like `my-iot-hub.azure-devices.net` if available.
  */
-#define JD_CLOUD_CONFIGURATION_REG_HUB_NAME 0x180
+#define JD_CLOUD_CONFIGURATION_REG_SERVER_NAME 0x180
 
 /**
  * Read-only string (bytes). Device identifier for the device in the cloud if available.

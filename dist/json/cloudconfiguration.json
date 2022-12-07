@@ -115,7 +115,7 @@
     },
     {
       "kind": "ro",
-      "name": "hub_name",
+      "name": "server_name",
       "identifier": 384,
       "description": "Something like `my-iot-hub.azure-devices.net` if available.",
       "fields": [

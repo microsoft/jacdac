@@ -1199,10 +1199,10 @@ export enum CloudConfigurationReg {
    * Read-only string (bytes). Something like `my-iot-hub.azure-devices.net` if available.
    *
    * ```
-   * const [hubName] = jdunpack<[string]>(buf, "s")
+   * const [serverName] = jdunpack<[string]>(buf, "s")
    * ```
    */
-  HubName = 0x180,
+  ServerName = 0x180,
 
   /**
    * Read-only string (bytes). Device identifier for the device in the cloud if available.

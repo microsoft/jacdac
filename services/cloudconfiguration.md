@@ -9,7 +9,7 @@ Connection and diagnostics information about the cloud connection.
 
 ## Registers
 
-    ro hub_name?: string @ 0x180
+    ro server_name?: string @ 0x180
 
 Something like `my-iot-hub.azure-devices.net` if available.
 

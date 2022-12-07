@@ -1,12 +1,11 @@
-# Azure IoT Hub Health
+# Cloud Configuration
 
     identifier: 0x1462eefc
-    camel: azureIotHubHealth
     group: iot
     status: rc
     tags: management
 
-Health and diagnostics information about the Azure Iot Hub connection.
+Connection and diagnostics information about the cloud connection.
 
 ## Registers
 
@@ -14,9 +13,13 @@ Health and diagnostics information about the Azure Iot Hub connection.
 
 Something like `my-iot-hub.azure-devices.net` if available.
 
-    ro hub_device_id?: string @ 0x181
+    ro cloud_device_id?: string @ 0x181
 
-Device identifier in Azure Iot Hub if available.
+Device identifier for the device in the cloud if available.
+
+    const cloud_type?: string @ 0x183
+
+Cloud provider identifier.
 
     enum ConnectionStatus: u16 {
         Connected = 1
@@ -43,17 +46,17 @@ Set to `0` to disable (default).
 
     restricted command connect @ 0x81 { }
 
-Starts a connection to the IoT hub service
+Starts a connection to the cloud service
 
     restricted command disconnect @ 0x82 { }
 
-Starts disconnecting from the IoT hub service
+Starts disconnecting from the cloud service
 
     restricted command set_connection_string @ 0x86 {
         connection_string: string
     }
 
-Restricted command to override the existing connection string to the Azure IoT Hub.
+Restricted command to override the existing connection string to cloud.
 
 ## Events
 

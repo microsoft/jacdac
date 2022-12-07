@@ -1,14 +1,14 @@
 {
-  "name": "Azure IoT Hub Health",
+  "name": "Cloud Configuration",
   "status": "rc",
-  "shortId": "azureiothubhealth",
-  "camelName": "azureIotHubHealth",
-  "shortName": "azureIotHubHealth",
+  "shortId": "cloudconfiguration",
+  "camelName": "cloudConfiguration",
+  "shortName": "cloudConfiguration",
   "extends": [
     "_base"
   ],
   "notes": {
-    "short": "Health and diagnostics information about the Azure Iot Hub connection."
+    "short": "Connection and diagnostics information about the cloud connection."
   },
   "classIdentifier": 342028028,
   "enums": {
@@ -130,9 +130,24 @@
     },
     {
       "kind": "ro",
-      "name": "hub_device_id",
+      "name": "cloud_device_id",
       "identifier": 385,
-      "description": "Device identifier in Azure Iot Hub if available.",
+      "description": "Device identifier for the device in the cloud if available.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "optional": true,
+      "packFormat": "s"
+    },
+    {
+      "kind": "const",
+      "name": "cloud_type",
+      "identifier": 387,
+      "description": "Cloud provider identifier.",
       "fields": [
         {
           "name": "_",
@@ -194,7 +209,7 @@
       "kind": "command",
       "name": "connect",
       "identifier": 129,
-      "description": "Starts a connection to the IoT hub service",
+      "description": "Starts a connection to the cloud service",
       "fields": [],
       "restricted": true
     },
@@ -202,7 +217,7 @@
       "kind": "command",
       "name": "disconnect",
       "identifier": 130,
-      "description": "Starts disconnecting from the IoT hub service",
+      "description": "Starts disconnecting from the cloud service",
       "fields": [],
       "restricted": true
     },
@@ -210,7 +225,7 @@
       "kind": "command",
       "name": "set_connection_string",
       "identifier": 134,
-      "description": "Restricted command to override the existing connection string to the Azure IoT Hub.",
+      "description": "Restricted command to override the existing connection string to cloud.",
       "fields": [
         {
           "name": "connection_string",

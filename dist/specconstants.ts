@@ -522,6 +522,24 @@ export enum AirPressureReg {
    * ```
    */
   PressureError = 0x106,
+
+  /**
+   * Constant hPa u22.10 (uint32_t). Lowest air pressure that can be reported.
+   *
+   * ```
+   * const [minPressure] = jdunpack<[number]>(buf, "u22.10")
+   * ```
+   */
+  MinPressure = 0x104,
+
+  /**
+   * Constant hPa u22.10 (uint32_t). Highest air pressure that can be reported.
+   *
+   * ```
+   * const [maxPressure] = jdunpack<[number]>(buf, "u22.10")
+   * ```
+   */
+  MaxPressure = 0x105,
 }
 
 // Service Air Quality Index constants

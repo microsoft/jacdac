@@ -203,6 +203,42 @@
       "optional": true,
       "identifierName": "reading_error",
       "packFormat": "u22.10"
+    },
+    {
+      "kind": "const",
+      "name": "min_pressure",
+      "identifier": 260,
+      "description": "Lowest air pressure that can be reported.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "hPa",
+          "shift": 10,
+          "type": "u22.10",
+          "storage": 4
+        }
+      ],
+      "optional": true,
+      "identifierName": "min_reading",
+      "packFormat": "u22.10"
+    },
+    {
+      "kind": "const",
+      "name": "max_pressure",
+      "identifier": 261,
+      "description": "Highest air pressure that can be reported.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "hPa",
+          "shift": 10,
+          "type": "u22.10",
+          "storage": 4
+        }
+      ],
+      "optional": true,
+      "identifierName": "max_reading",
+      "packFormat": "u22.10"
     }
   ],
   "tags": [

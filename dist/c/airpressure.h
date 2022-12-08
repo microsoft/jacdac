@@ -14,4 +14,14 @@
  */
 #define JD_AIR_PRESSURE_REG_PRESSURE_ERROR JD_REG_READING_ERROR
 
+/**
+ * Constant hPa u22.10 (uint32_t). Lowest air pressure that can be reported.
+ */
+#define JD_AIR_PRESSURE_REG_MIN_PRESSURE JD_REG_MIN_READING
+
+/**
+ * Constant hPa u22.10 (uint32_t). Highest air pressure that can be reported.
+ */
+#define JD_AIR_PRESSURE_REG_MAX_PRESSURE JD_REG_MAX_READING
+
 #endif

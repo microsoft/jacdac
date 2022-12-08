@@ -19,3 +19,11 @@ The air pressure.
     ro pressure_error?: u22.10 hPa @ reading_error
 
 The real pressure is between `pressure - pressure_error` and `pressure + pressure_error`.
+
+    const min_pressure?: u22.10 hPa @ min_reading
+
+Lowest air pressure that can be reported.
+
+    const max_pressure?: u22.10 hPa @ max_reading
+
+Highest air pressure that can be reported.

@@ -176,15 +176,13 @@
           "shift": 10,
           "type": "u22.10",
           "storage": 4,
-          "absoluteMin": 300,
-          "absoluteMax": 1100,
-          "typicalMin": 940,
-          "typicalMax": 1040
+          "typicalMin": 150,
+          "typicalMax": 1150
         }
       ],
       "volatile": true,
       "identifierName": "reading",
-      "preferredInterval": 60000,
+      "preferredInterval": 1000,
       "packFormat": "u22.10"
     },
     {

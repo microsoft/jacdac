@@ -9,13 +9,6 @@
   "storeLink": [
     "https://www.adafruit.com/product/5405"
   ],
-  "firmwares": [
-    {
-      "name": "DeviceScript + Cloud Connector",
-      "url": "https://github.com/microsoft/jacdac-esp32/releases/latest",
-      "productIdentifier": 915657739
-    }
-  ],
   "services": [
     341864092,
     342028028,
@@ -25,6 +18,13 @@
   "productIdentifiers": [
     866451573,
     915657739
+  ],
+  "firmwares": [
+    {
+      "name": "DeviceScript + Cloud Connector",
+      "url": "https://github.com/microsoft/jacdac-esp32/releases/latest",
+      "productIdentifier": 915657739
+    }
   ],
   "version": "1.0",
   "status": "stable"

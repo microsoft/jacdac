@@ -582,6 +582,11 @@
       }
     ],
     "version": "1.0",
+    "bootloader": {
+      "sequence": "boot-power",
+      "firmwareFormat": "bin",
+      "firmwareUploader": "https://adafruit.github.io/Adafruit_WebSerial_ESPTool/"
+    },
     "status": "stable"
   },
   {

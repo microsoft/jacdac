@@ -760,15 +760,19 @@ declare namespace jdspec {
             /**
              * Known bootloader drive name for flashing
              */
-            driveName: string
+            driveName?: string
             /**
              * Button sequence to enter bootloader mode.
              */
-            sequence?: "reset" | "reset-boot"
+            sequence?: "reset" | "reset-boot" | "boot-power"
             /**
              * File format of firmware files
              */
-            firmwareFormat?: "uf2" | "hex"
+            firmwareFormat?: "uf2" | "hex" | "bin"
+            /**
+             * URL of the tool that can upload the firmware
+             */
+            firmwareUploader?: string
             /**
              * Led pattern when in bootloader mode
              */

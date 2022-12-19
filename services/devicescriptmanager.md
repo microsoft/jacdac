@@ -89,6 +89,14 @@ Return FNV1A hash of the current bytecode.
 
 Return 32-byte long SHA-256 hash of the current bytecode.
 
+    const runtime_version? @ 0x183 {
+        major: u8
+        minor: u8
+        patch: u16
+    }
+
+Returns the runtime version number compatible with [Semver](https://semver.org/).
+
 ## Events
 
 When program is running, `status_code == Ready`.

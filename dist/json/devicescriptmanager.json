@@ -290,6 +290,34 @@
       "packFormat": "b[32]"
     },
     {
+      "kind": "const",
+      "name": "runtime_version",
+      "identifier": 387,
+      "description": "Returns the runtime version number compatible with [Semver](https://semver.org/).\nWhen read as 32-bit little endian integer a version `7.15.500` would be `0x07_0F_01F4`.",
+      "fields": [
+        {
+          "name": "patch",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "minor",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "major",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "packFormat": "u16 u8 u8"
+    },
+    {
       "kind": "event",
       "name": "program_panic",
       "identifier": 128,

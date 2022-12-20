@@ -1827,6 +1827,16 @@ export enum DeviceScriptManagerReg {
    * ```
    */
   ProgramSha256 = 0x182,
+
+  /**
+   * Returns the runtime version number compatible with [Semver](https://semver.org/).
+   * When read as 32-bit little endian integer a version `7.15.500` would be `0x07_0F_01F4`.
+   *
+   * ```
+   * const [patch, minor, major] = jdunpack<[number, number, number]>(buf, "u16 u8 u8")
+   * ```
+   */
+  RuntimeVersion = 0x183,
 }
 
 export enum DeviceScriptManagerEvent {

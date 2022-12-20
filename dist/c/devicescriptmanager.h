@@ -83,6 +83,18 @@ typedef struct jd_device_script_manager_log_message_report {
 #define JD_DEVICE_SCRIPT_MANAGER_REG_PROGRAM_SHA256 0x182
 
 /**
+ * Returns the runtime version number compatible with [Semver](https://semver.org/).
+ * When read as 32-bit little endian integer a version `7.15.500` would be `0x07_0F_01F4`.
+ */
+#define JD_DEVICE_SCRIPT_MANAGER_REG_RUNTIME_VERSION 0x183
+typedef struct jd_device_script_manager_runtime_version {
+    uint16_t patch;
+    uint8_t minor;
+    uint8_t major;
+} jd_device_script_manager_runtime_version_t;
+
+
+/**
  * Emitted when the program calls `panic(panic_code)` or `reboot()` (`panic_code == 0` in that case).
  * The byte offset in byte code of the call is given in `program_counter`.
  * The program will restart immediately when `panic_code == 0` or in a few seconds otherwise.

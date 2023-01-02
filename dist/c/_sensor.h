@@ -2,6 +2,8 @@
 #ifndef _JACDAC_SPEC_SENSOR_H
 #define _JACDAC_SPEC_SENSOR_H 1
 
+#define JD_SERVICE_CLASS_SENSOR  0x1ffffff2
+
 /**
  * Read-write # uint8_t. Asks device to stream a given number of samples
  * (clients will typically write `255` to this register every second or so, while streaming is required).

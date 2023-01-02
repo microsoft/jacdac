@@ -1462,10 +1462,9 @@ function toH(info: jdspec.ServiceSpec) {
 
     if (info.shortId[0] == "_") pref = "JD_"
 
-    if (info.shortId[0] != "_")
-        r += `\n#define JD_SERVICE_CLASS_${toUpper(info.shortName)}  ${toHex(
-            info.classIdentifier
-        )}\n`
+    r += `\n#define JD_SERVICE_CLASS_${toUpper(info.shortName)}  ${toHex(
+        info.classIdentifier
+    )}\n`
 
     for (const cst in info.constants) {
         const { value, hex } = info.constants[cst]

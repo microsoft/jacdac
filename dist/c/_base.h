@@ -2,6 +2,8 @@
 #ifndef _JACDAC_SPEC_BASE_H
 #define _JACDAC_SPEC_BASE_H 1
 
+#define JD_SERVICE_CLASS_BASE  0x1ffffff3
+
 /**
  * This report may be emitted by a server in response to a command (action or register operation)
  * that it does not understand.

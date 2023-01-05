@@ -4633,6 +4633,93 @@ export enum SensorAggregatorReg {
   CurrentSample = 0x101,
 }
 
+// Service Serial constants
+export const SRV_SERIAL = 0x11bae5c4;
+
+export enum SerialParityType { // uint8_t
+  None = 0x0,
+  Even = 0x1,
+  Odd = 0x2,
+}
+
+export enum SerialReg {
+  /**
+   * Read-write bool (uint8_t). Indicates if the serial connection is active.
+   *
+   * ```
+   * const [connected] = jdunpack<[number]>(buf, "u8")
+   * ```
+   */
+  Connected = 0x1,
+
+  /**
+   * Read-write baud uint32_t. A positive, non-zero value indicating the baud rate at which serial communication is be established.
+   *
+   * ```
+   * const [baudRate] = jdunpack<[number]>(buf, "u32")
+   * ```
+   */
+  BaudRate = 0x80,
+
+  /**
+   * Read-write uint8_t. The number of data bits per frame. Either 7 or 8.
+   *
+   * ```
+   * const [dataBits] = jdunpack<[number]>(buf, "u8")
+   * ```
+   */
+  DataBits = 0x81,
+
+  /**
+   * Read-write # uint8_t. The number of stop bits at the end of a frame. Either 1 or 2.
+   *
+   * ```
+   * const [stopBits] = jdunpack<[number]>(buf, "u8")
+   * ```
+   */
+  StopBits = 0x82,
+
+  /**
+   * Read-write ParityType (uint8_t). The parity mode.
+   *
+   * ```
+   * const [parityMode] = jdunpack<[SerialParityType]>(buf, "u8")
+   * ```
+   */
+  ParityMode = 0x83,
+
+  /**
+   * Read-write # uint8_t. A positive, non-zero value indicating the size of the read and write buffers that should be created.
+   *
+   * ```
+   * const [bufferSize] = jdunpack<[number]>(buf, "u8")
+   * ```
+   */
+  BufferSize = 0x84,
+}
+
+export enum SerialCmd {
+  /**
+   * Argument: data bytes. Send a buffer of data over the serial transport.
+   *
+   * ```
+   * const [data] = jdunpack<[Uint8Array]>(buf, "b")
+   * ```
+   */
+  Send = 0x80,
+}
+
+export enum SerialEvent {
+  /**
+   * Argument: data bytes. Raised when a buffer of data is received.
+   *
+   * ```
+   * const [data] = jdunpack<[Uint8Array]>(buf, "b")
+   * ```
+   */
+  Received = 0x80,
+}
+
 // Service Servo constants
 export const SRV_SERVO = 0x12fc9103;
 export enum ServoReg {

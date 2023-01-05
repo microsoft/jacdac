@@ -12,7 +12,7 @@ Settings default to 115200 baud 8N1.
     
 Indicates if the serial connection is active.
 
-    rw baud_rate = 115200: u32 baud = 115200 @ 0x80
+    rw baud_rate = 115200: u32 baud @ 0x80
     
 A positive, non-zero value indicating the baud rate at which serial communication is be established.
 

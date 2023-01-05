@@ -4,6 +4,7 @@
     tags: io
     
 An asynchronous serial communication service capable of sending and receiving buffers of data.
+Settings default to 115200 baud 8N1.
 
 ## Registers
 

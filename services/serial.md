@@ -11,7 +11,7 @@ An asynchronous serial communication service capable of sending and receiving bu
     
 Indicates if the serial connection is active.
 
-    rw baud_rate: u32 # @ 0x80
+    rw baud_rate: u32 baud @ 0x80
     
 A positive, non-zero value indicating the baud rate at which serial communication is be established.
 
@@ -32,7 +32,7 @@ The number of stop bits at the end of a frame. Either 1 or 2.
 
 The parity mode.
 
-    rw buffer_size: u8 @ 0x84
+    rw buffer_size: u8 @ # 0x84
     
 A positive, non-zero value indicating the size of the read and write buffers that should be created.
 

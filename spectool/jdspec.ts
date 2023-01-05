@@ -49,6 +49,7 @@ export const unitDescription: jdspec.SMap<string> = {
     "cd/m2": "candela per square meter (luminance)",
     bit: "bit (information content)",
     "bit/s": "bit per second (data rate)",
+    baud: "symbols per second",
     lat: "degrees latitude",
     lon: "degrees longitude",
     pH: "pH value (acidity; logarithmic quantity)",

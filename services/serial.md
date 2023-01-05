@@ -12,15 +12,15 @@ Settings default to 115200 baud 8N1.
     
 Indicates if the serial connection is active.
 
-    rw baud_rate: u32 baud @ 0x80
+    rw baud_rate = 115200: u32 baud = 115200 @ 0x80
     
 A positive, non-zero value indicating the baud rate at which serial communication is be established.
 
-    rw data_bits: u8 # @ 0x81
+    rw data_bits = 8: u8 { absolute_min: 7, absolute_max: 8 } # @ 0x81
     
 The number of data bits per frame. Either 7 or 8.
 
-    rw stop_bits: u8 # @ 0x82
+    rw stop_bits = 1: u8 # { absolute_min: 1, absolute_max: 2 } @ 0x82
     
 The number of stop bits at the end of a frame. Either 1 or 2.
 
@@ -29,7 +29,7 @@ The number of stop bits at the end of a frame. Either 1 or 2.
       Even = 1,
       Odd = 2
     }
-    rw parity_mode: ParityType @ 0x83
+    rw parity_mode = 0: ParityType @ 0x83
 
 The parity mode.
 

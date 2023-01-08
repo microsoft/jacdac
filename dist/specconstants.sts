@@ -7396,16 +7396,7 @@ namespace jacdac {
          * ```
          */
         Send = 0x80,
-    }
 
-    export namespace SerialCmdPack {
-        /**
-         * Pack format for 'send' register data.
-         */
-        export const Send = "b"
-    }
-
-    export const enum SerialEvent {
         /**
          * Argument: data bytes. Raised when a buffer of data is received.
          *
@@ -7413,11 +7404,15 @@ namespace jacdac {
          * const [data] = jdunpack<[Buffer]>(buf, "b")
          * ```
          */
-        //% block="received"
         Received = 0x80,
     }
 
-    export namespace SerialEventPack {
+    export namespace SerialCmdPack {
+        /**
+         * Pack format for 'send' register data.
+         */
+        export const Send = "b"
+
         /**
          * Pack format for 'received' register data.
          */

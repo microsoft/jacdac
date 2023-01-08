@@ -49,9 +49,7 @@ A positive, non-zero value indicating the size of the read and write buffers tha
 
 Send a buffer of data over the serial transport.
 
-## Events
-
-    event received @ 0x80 {
+    report received @ 0x80 {
        data: bytes
     }
     

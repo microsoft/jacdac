@@ -244,7 +244,7 @@
       "packFormat": "b"
     },
     {
-      "kind": "event",
+      "kind": "report",
       "name": "received",
       "identifier": 128,
       "description": "Raised when a buffer of data is received.",

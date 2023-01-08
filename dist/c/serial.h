@@ -52,6 +52,6 @@
 /**
  * Argument: data bytes. Raised when a buffer of data is received.
  */
-#define JD_SERIAL_EV_RECEIVED 0x80
+#define JD_SERIAL_CMD_RECEIVED 0x80
 
 #endif

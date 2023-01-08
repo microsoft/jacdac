@@ -12,6 +12,10 @@ Settings default to 115200 baud 8N1.
     
 Indicates if the serial connection is active.
 
+    ro connection_name?: string @ 0x181
+
+User-friendly name of the connection.
+
     rw baud_rate = 115200: u32 baud @ 0x80
     
 A positive, non-zero value indicating the baud rate at which serial communication is be established.

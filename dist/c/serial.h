@@ -15,6 +15,11 @@
 #define JD_SERIAL_REG_CONNECTED JD_REG_INTENSITY
 
 /**
+ * Read-only string (bytes). User-friendly name of the connection.
+ */
+#define JD_SERIAL_REG_CONNECTION_NAME 0x181
+
+/**
  * Read-write baud uint32_t. A positive, non-zero value indicating the baud rate at which serial communication is be established.
  */
 #define JD_SERIAL_REG_BAUD_RATE 0x80

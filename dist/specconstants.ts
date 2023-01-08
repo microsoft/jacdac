@@ -4653,6 +4653,15 @@ export enum SerialReg {
   Connected = 0x1,
 
   /**
+   * Read-only string (bytes). User-friendly name of the connection.
+   *
+   * ```
+   * const [connectionName] = jdunpack<[string]>(buf, "s")
+   * ```
+   */
+  ConnectionName = 0x181,
+
+  /**
    * Read-write baud uint32_t. A positive, non-zero value indicating the baud rate at which serial communication is be established.
    *
    * ```

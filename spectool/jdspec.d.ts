@@ -330,6 +330,11 @@ declare namespace jdspec {
         isFlags?: boolean
 
         /**
+         * Other members are possible (defined with 'type' syntax).
+         */
+        isExtensible?: boolean
+
+        /**
          * How is this enum to be stored.
          */
         storage: StorageType

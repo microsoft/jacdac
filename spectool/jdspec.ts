@@ -395,6 +395,7 @@ export function parseServiceSpecificationMarkdownToJSON(
             // allow for `command = Foo.Bar` etc (ie. command is not a keyword there)
             if (words[1] == ":" || words[1] == "=") cmd = ":"
             switch (cmd) {
+                case "type":
                 case "enum":
                 case "flags":
                     startEnum(words)
@@ -1011,16 +1012,30 @@ export function parseServiceSpecificationMarkdownToJSON(
 
     function startEnum(words: string[]) {
         checkBraces(null)
-        if (words[2] != ":" || words[4] != "{")
-            error("expecting: enum NAME : TYPE {")
+        let isClosed = false
+        if (words[0] == "type") {
+            if (words[2] != ":") error("expecting: type NAME : TYPE")
+            if (!words[4]) isClosed = true
+            else if (words[4] == "{") {
+                if (words[5] == "}") isClosed = true
+                else if (words[5]) error("excessive syntax")
+            } else {
+                error("expecting {")
+            }
+        } else {
+            if (words[2] != ":" || words[4] != "{")
+                error("expecting: enum NAME : TYPE {")
+        }
         enumInfo = {
             name: normalizeName(words[1]),
             storage: normalizeStorageType(words[3])[0],
             isFlags: words[0] == "flags" || undefined,
+            isExtensible: words[0] == "type" || undefined,
             members: {},
         }
         if (info.enums[enumInfo.name]) error("enum redefinition")
         info.enums[enumInfo.name] = enumInfo
+        if (isClosed) enumInfo = null
     }
 
     function enumMember(words: string[]) {

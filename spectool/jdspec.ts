@@ -1532,7 +1532,7 @@ function toH(info: jdspec.ServiceSpec) {
 
         if (cmt.needsStruct || isMetaPipe) {
             let tname =
-                "jd_" + toLower(info.camelName) + "_" + toLower(pkt.name)
+                "jd_" + toLower(info.shortName) + "_" + toLower(pkt.name)
             if (pkt.kind == "report") tname += "_report"
             r += `typedef struct ${tname} {\n`
             if (isMetaPipe) {

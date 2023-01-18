@@ -200,7 +200,7 @@
       "kind": "ro",
       "name": "pressed",
       "identifier": 385,
-      "description": "Determines if the button is pressed currently.\n\nIf the event `down` is observed, `pressed` is true; if `up` or `hold` are observed, `pressed` is false.\nTo initialize, wait for any event or timeout to `pressed` is true after 750ms (1.5x hold time).",
+      "description": "Determines if the button is pressed currently.\n\nIf the event `down` or `hold` is observed, `pressed` becomes true; if `up` is observed, `pressed` becomes false.\nThe client should initialize `pressed` to false.",
       "fields": [
         {
           "name": "_",

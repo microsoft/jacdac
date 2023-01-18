@@ -22,8 +22,8 @@ Indicates if the button provides analog `pressure` readings.
 
 Determines if the button is pressed currently.
 
-If the event `down` is observed, `pressed` is true; if `up` or `hold` are observed, `pressed` is false.
-To initialize, wait for any event or timeout to `pressed` is true after 750ms (1.5x hold time).
+If the event `down` or `hold` is observed, `pressed` becomes true; if `up` is observed, `pressed` becomes false.
+The client should initialize `pressed` to false.
 
 ## Events
 

@@ -9,12 +9,6 @@ Allows for deployment and control over DeviceScript virtual machine.
 Programs start automatically after device restart or uploading of new program.
 You can stop programs until next reset by setting the `running` register to `0`.
 
-TODO - debug interface:
-* read-globals command/register
-* globals-changed pipe
-* breakpoint command
-* some performance monitoring?
-
 ## Commands
 
     unique command deploy_bytecode @ 0x80 {

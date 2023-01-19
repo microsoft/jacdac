@@ -1996,11 +1996,11 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "cs") {
         )
             inner = "PipeCmd"
         else if (pkt.kind == "pipe_command" || pkt.kind == "pipe_report")
-            inner = "info"
+            inner = "Pipe"
 
         let text = ""
         let meta = ""
-        if (pkt.secondary || inner == "info") {
+        if (pkt.secondary || inner == "Pipe") {
             if (pack)
                 text = wrapComment(
                     language,
@@ -2023,15 +2023,15 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "cs") {
 
         if (text) tsEnums[inner] = (tsEnums[inner] || "") + text
 
-        // don't line const strings in makecode,
+        // don't emit const strings in makecode,
         // they don't get dropped efficiently
-        if ((csharp || sts) && pkt.packFormat) {
+        if ((csharp || !sts) && pkt.packFormat) {
             const packName = inner + "Pack"
             tsEnums[packName] =
                 (tsEnums[packName] || "") +
                 `${wrapComment(
                     language,
-                    `Pack format for '${pkt.name}' register data.`
+                    `Pack format for '${pkt.name}' ${inner} data.`
                 )}${enumsf}${upperCamel(pkt.name)}${
                     pkt.secondary ? "Report" : ""
                 } = "${pkt.packFormat}"${csharp ? ";" : ""}\n`

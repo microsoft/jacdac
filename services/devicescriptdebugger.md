@@ -13,7 +13,6 @@ Allows for inspecting and affecting the state of a running DeviceScript program.
         Number = 0x01         // v0:v1 - f64
         Special = 0x02        // v0 - ValueSpecial
         Fiber = 0x03          // v0 - FiberHandle
-        RoleMember = 0x04     // v0 - role, v1 - spec-offset
         BuiltinObject = 0x05  // v0 - DEVS_BUILTIN_OBJECT_*
 
         Exotic = 0x06
@@ -26,6 +25,7 @@ Allows for inspecting and affecting the state of a running DeviceScript program.
         ImgStringUTF8 = 0x23
         ImgRole = 0x30          // v1 has number of attached properties
         ImgFunction = 0x31      // never returned, can be used in read_*
+        ImgRoleMember = 0x32    // v0 has role in low DEVS_ROLE_BITS (15) and offset into embedded specs in the high bits
 
         // pointer in v0
         // v1 has number of properties (for map) or indexed length (otherwise)
@@ -42,6 +42,10 @@ Allows for inspecting and affecting the state of a running DeviceScript program.
         ObjAny = 0x50    // never returned, can be used in read_*
         ObjMask = 0xF0
 
+        User1 = 0xF1
+        User2 = 0xF2
+        User3 = 0xF3
+        User4 = 0xF4
     }
 
     enum ValueSpecial : u8 {
@@ -83,6 +87,8 @@ Allows for inspecting and affecting the state of a running DeviceScript program.
     }
     pipe report fiber {
         handle: FiberHandle
+        initial_fn: FunIdx
+        curr_fn: FunIdx
     }
 
 List the currently running fibers (threads).
@@ -145,6 +151,20 @@ Read variable slots in an object.
     }
 
 Read a specific value.
+
+    command read_bytes @ 0x85 {
+        results: pipe
+        v0: u32
+        tag: ValueTag
+        reserved: u8
+        start: u16
+        length: u16
+    }
+    pipe report bytes_value {
+        data: bytes
+    }
+
+Read bytes of a string (UTF8) or buffer value.
 
     command set_breakpoint @ 0x90 {
         break_pc: ProgramCounter

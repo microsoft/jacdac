@@ -25,6 +25,7 @@ Allows for inspecting and affecting the state of a running DeviceScript program.
         ImgStringAscii = 0x22
         ImgStringUTF8 = 0x23
         ImgRole = 0x30          // v1 has number of attached properties
+        ImgFunction = 0x31      // never returned, can be used in read_*
 
         // pointer in v0
         // v1 has number of properties (for map) or indexed length (otherwise)

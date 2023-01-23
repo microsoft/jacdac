@@ -166,19 +166,21 @@ Read a specific value.
 
 Read bytes of a string (UTF8) or buffer value.
 
-    command set_breakpoint @ 0x90 {
+    command set_breakpoints @ 0x90 {
+    repeats:
         break_pc: ProgramCounter
     }
 
-Set breakpoint at a location.
+Set breakpoint(s) at a location(s).
 
-    command clear_breakpoint @ 0x91 {
+    command clear_breakpoints @ 0x91 {
+    repeats:
         break_pc: ProgramCounter
     }
 
-Clear one breakpoint.
+Clear breakpoint(s) at a location(s).
 
-    command clear_breakpoints @ 0x92 {}
+    command clear_all_breakpoints @ 0x92 {}
 
 Clear all breakpoints.
 

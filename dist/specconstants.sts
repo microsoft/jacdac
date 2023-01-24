@@ -64,13 +64,6 @@ namespace jacdac {
         CommandNotImplemented = 0x3,
     }
 
-    export namespace SystemCmdPack {
-        /**
-         * Pack format for 'command_not_implemented' register data.
-         */
-        export const CommandNotImplemented = "u16 u16"
-    }
-
     export const enum SystemReg {
         /**
          * Read-write uint32_t. This is either binary on/off (0 or non-zero), or can be gradual (eg. brightness of an RGB LED strip).
@@ -262,108 +255,6 @@ namespace jacdac {
         InstanceName = 0x109,
     }
 
-    export namespace SystemRegPack {
-        /**
-         * Pack format for 'intensity' register data.
-         */
-        export const Intensity = "u32"
-
-        /**
-         * Pack format for 'value' register data.
-         */
-        export const Value = "i32"
-
-        /**
-         * Pack format for 'min_value' register data.
-         */
-        export const MinValue = "i32"
-
-        /**
-         * Pack format for 'max_value' register data.
-         */
-        export const MaxValue = "i32"
-
-        /**
-         * Pack format for 'max_power' register data.
-         */
-        export const MaxPower = "u16"
-
-        /**
-         * Pack format for 'streaming_samples' register data.
-         */
-        export const StreamingSamples = "u8"
-
-        /**
-         * Pack format for 'streaming_interval' register data.
-         */
-        export const StreamingInterval = "u32"
-
-        /**
-         * Pack format for 'reading' register data.
-         */
-        export const Reading = "i32"
-
-        /**
-         * Pack format for 'reading_range' register data.
-         */
-        export const ReadingRange = "u32"
-
-        /**
-         * Pack format for 'supported_ranges' register data.
-         */
-        export const SupportedRanges = "r: u32"
-
-        /**
-         * Pack format for 'min_reading' register data.
-         */
-        export const MinReading = "i32"
-
-        /**
-         * Pack format for 'max_reading' register data.
-         */
-        export const MaxReading = "i32"
-
-        /**
-         * Pack format for 'reading_error' register data.
-         */
-        export const ReadingError = "u32"
-
-        /**
-         * Pack format for 'reading_resolution' register data.
-         */
-        export const ReadingResolution = "u32"
-
-        /**
-         * Pack format for 'inactive_threshold' register data.
-         */
-        export const InactiveThreshold = "i32"
-
-        /**
-         * Pack format for 'active_threshold' register data.
-         */
-        export const ActiveThreshold = "i32"
-
-        /**
-         * Pack format for 'streaming_preferred_interval' register data.
-         */
-        export const StreamingPreferredInterval = "u32"
-
-        /**
-         * Pack format for 'variant' register data.
-         */
-        export const Variant = "u32"
-
-        /**
-         * Pack format for 'status_code' register data.
-         */
-        export const StatusCode = "u16 u16"
-
-        /**
-         * Pack format for 'instance_name' register data.
-         */
-        export const InstanceName = "s"
-    }
-
     export const enum SystemEvent {
         /**
          * Notifies that the service has been activated (eg. button pressed, network connected, etc.)
@@ -400,13 +291,6 @@ namespace jacdac {
         Neutral = 0x7,
     }
 
-    export namespace SystemEventPack {
-        /**
-         * Pack format for 'status_code_changed' register data.
-         */
-        export const StatusCodeChanged = "u16 u16"
-    }
-
 }
 namespace jacdac {
     // Service Base service constants
@@ -422,13 +306,6 @@ namespace jacdac {
          * ```
          */
         CommandNotImplemented = 0x3,
-    }
-
-    export namespace BaseCmdPack {
-        /**
-         * Pack format for 'command_not_implemented' register data.
-         */
-        export const CommandNotImplemented = "u16 u16"
     }
 
     export const enum BaseReg {
@@ -458,18 +335,6 @@ namespace jacdac {
         StatusCode = 0x103,
     }
 
-    export namespace BaseRegPack {
-        /**
-         * Pack format for 'instance_name' register data.
-         */
-        export const InstanceName = "s"
-
-        /**
-         * Pack format for 'status_code' register data.
-         */
-        export const StatusCode = "u16 u16"
-    }
-
     export const enum BaseEvent {
         /**
          * Notifies that the status code of the service changed.
@@ -480,13 +345,6 @@ namespace jacdac {
          */
         //% block="status code changed"
         StatusCodeChanged = 0x4,
-    }
-
-    export namespace BaseEventPack {
-        /**
-         * Pack format for 'status_code_changed' register data.
-         */
-        export const StatusCodeChanged = "u16 u16"
     }
 
 }
@@ -520,23 +378,6 @@ namespace jacdac {
          * ```
          */
         StreamingPreferredInterval = 0x102,
-    }
-
-    export namespace SensorRegPack {
-        /**
-         * Pack format for 'streaming_samples' register data.
-         */
-        export const StreamingSamples = "u8"
-
-        /**
-         * Pack format for 'streaming_interval' register data.
-         */
-        export const StreamingInterval = "u32"
-
-        /**
-         * Pack format for 'streaming_preferred_interval' register data.
-         */
-        export const StreamingPreferredInterval = "u32"
     }
 
 }
@@ -580,28 +421,6 @@ namespace jacdac {
          * ```
          */
         MaxForcesSupported = 0x10a,
-    }
-
-    export namespace AccelerometerRegPack {
-        /**
-         * Pack format for 'forces' register data.
-         */
-        export const Forces = "i12.20 i12.20 i12.20"
-
-        /**
-         * Pack format for 'forces_error' register data.
-         */
-        export const ForcesError = "u12.20"
-
-        /**
-         * Pack format for 'max_force' register data.
-         */
-        export const MaxForce = "u12.20"
-
-        /**
-         * Pack format for 'max_forces_supported' register data.
-         */
-        export const MaxForcesSupported = "r: u12.20"
     }
 
     export const enum AccelerometerEvent {
@@ -720,28 +539,6 @@ namespace jacdac {
         MaxHumidity = 0x105,
     }
 
-    export namespace AcidityRegPack {
-        /**
-         * Pack format for 'acidity' register data.
-         */
-        export const Acidity = "u4.12"
-
-        /**
-         * Pack format for 'acidity_error' register data.
-         */
-        export const AcidityError = "u4.12"
-
-        /**
-         * Pack format for 'min_acidity' register data.
-         */
-        export const MinAcidity = "u4.12"
-
-        /**
-         * Pack format for 'max_humidity' register data.
-         */
-        export const MaxHumidity = "u4.12"
-    }
-
 }
 namespace jacdac {
     // Service Air Pressure constants
@@ -784,28 +581,6 @@ namespace jacdac {
         MaxPressure = 0x105,
     }
 
-    export namespace AirPressureRegPack {
-        /**
-         * Pack format for 'pressure' register data.
-         */
-        export const Pressure = "u22.10"
-
-        /**
-         * Pack format for 'pressure_error' register data.
-         */
-        export const PressureError = "u22.10"
-
-        /**
-         * Pack format for 'min_pressure' register data.
-         */
-        export const MinPressure = "u22.10"
-
-        /**
-         * Pack format for 'max_pressure' register data.
-         */
-        export const MaxPressure = "u22.10"
-    }
-
 }
 namespace jacdac {
     // Service Air Quality Index constants
@@ -846,28 +621,6 @@ namespace jacdac {
          * ```
          */
         MaxAqiIndex = 0x105,
-    }
-
-    export namespace AirQualityIndexRegPack {
-        /**
-         * Pack format for 'aqi_index' register data.
-         */
-        export const AqiIndex = "u16.16"
-
-        /**
-         * Pack format for 'aqi_index_error' register data.
-         */
-        export const AqiIndexError = "u16.16"
-
-        /**
-         * Pack format for 'min_aqi_index' register data.
-         */
-        export const MinAqiIndex = "u16.16"
-
-        /**
-         * Pack format for 'max_aqi_index' register data.
-         */
-        export const MaxAqiIndex = "u16.16"
     }
 
 }
@@ -920,18 +673,6 @@ namespace jacdac {
         AvailableButtons = 0x180,
     }
 
-    export namespace ArcadeGamepadRegPack {
-        /**
-         * Pack format for 'buttons' register data.
-         */
-        export const Buttons = "r: u8 u0.8"
-
-        /**
-         * Pack format for 'available_buttons' register data.
-         */
-        export const AvailableButtons = "r: u8"
-    }
-
     export const enum ArcadeGamepadEvent {
         /**
          * Argument: button Button (uint8_t). Emitted when button goes from inactive to active.
@@ -954,18 +695,6 @@ namespace jacdac {
         Up = 0x2,
     }
 
-    export namespace ArcadeGamepadEventPack {
-        /**
-         * Pack format for 'down' register data.
-         */
-        export const Down = "u8"
-
-        /**
-         * Pack format for 'up' register data.
-         */
-        export const Up = "u8"
-    }
-
 }
 namespace jacdac {
     // Service Arcade Sound constants
@@ -979,13 +708,6 @@ namespace jacdac {
          * ```
          */
         Play = 0x80,
-    }
-
-    export namespace ArcadeSoundCmdPack {
-        /**
-         * Pack format for 'play' register data.
-         */
-        export const Play = "b"
     }
 
     export const enum ArcadeSoundReg {
@@ -1019,23 +741,6 @@ namespace jacdac {
          * ```
          */
         BufferPending = 0x181,
-    }
-
-    export namespace ArcadeSoundRegPack {
-        /**
-         * Pack format for 'sample_rate' register data.
-         */
-        export const SampleRate = "u22.10"
-
-        /**
-         * Pack format for 'buffer_size' register data.
-         */
-        export const BufferSize = "u32"
-
-        /**
-         * Pack format for 'buffer_pending' register data.
-         */
-        export const BufferPending = "u32"
     }
 
 }
@@ -1092,18 +797,6 @@ namespace jacdac {
         Formats = 0x180,
     }
 
-    export namespace BarcodeReaderRegPack {
-        /**
-         * Pack format for 'enabled' register data.
-         */
-        export const Enabled = "u8"
-
-        /**
-         * Pack format for 'formats' register data.
-         */
-        export const Formats = "r: u8"
-    }
-
     export const enum BarcodeReaderEvent {
         /**
          * Raised when a bar code is detected and decoded. If the reader detects multiple codes, it will issue multiple events.
@@ -1115,13 +808,6 @@ namespace jacdac {
          */
         //% block="detect"
         Detect = 0x1,
-    }
-
-    export namespace BarcodeReaderEventPack {
-        /**
-         * Pack format for 'detect' register data.
-         */
-        export const Detect = "u8 s"
     }
 
 }
@@ -1164,28 +850,6 @@ namespace jacdac {
          * ```
          */
         FrequencyBand = 0x82,
-    }
-
-    export namespace BitRadioRegPack {
-        /**
-         * Pack format for 'enabled' register data.
-         */
-        export const Enabled = "u8"
-
-        /**
-         * Pack format for 'group' register data.
-         */
-        export const Group = "u8"
-
-        /**
-         * Pack format for 'transmission_power' register data.
-         */
-        export const TransmissionPower = "u8"
-
-        /**
-         * Pack format for 'frequency_band' register data.
-         */
-        export const FrequencyBand = "u8"
     }
 
     export const enum BitRadioCmd {
@@ -1251,43 +915,6 @@ namespace jacdac {
          * ```
          */
         BufferReceived = 0x92,
-    }
-
-    export namespace BitRadioCmdPack {
-        /**
-         * Pack format for 'send_string' register data.
-         */
-        export const SendString = "s"
-
-        /**
-         * Pack format for 'send_number' register data.
-         */
-        export const SendNumber = "f64"
-
-        /**
-         * Pack format for 'send_value' register data.
-         */
-        export const SendValue = "f64 s"
-
-        /**
-         * Pack format for 'send_buffer' register data.
-         */
-        export const SendBuffer = "b"
-
-        /**
-         * Pack format for 'string_received' register data.
-         */
-        export const StringReceived = "u32 u32 i8 b[1] s"
-
-        /**
-         * Pack format for 'number_received' register data.
-         */
-        export const NumberReceived = "u32 u32 i8 b[3] f64 s"
-
-        /**
-         * Pack format for 'buffer_received' register data.
-         */
-        export const BufferReceived = "u32 u32 i8 b[1] b"
     }
 
 }
@@ -1358,33 +985,6 @@ namespace jacdac {
          */
     }
 
-    export namespace BootloaderCmdPack {
-        /**
-         * Pack format for 'info' register data.
-         */
-        export const InfoReport = "u32 u32 u32 u32"
-
-        /**
-         * Pack format for 'set_session' register data.
-         */
-        export const SetSession = "u32"
-
-        /**
-         * Pack format for 'set_session' register data.
-         */
-        export const SetSessionReport = "u32"
-
-        /**
-         * Pack format for 'page_data' register data.
-         */
-        export const PageData = "u32 u16 u8 u8 u32 u32 u32 u32 u32 b[208]"
-
-        /**
-         * Pack format for 'page_data' register data.
-         */
-        export const PageDataReport = "u32 u32 u32"
-    }
-
 }
 namespace jacdac {
     // Service Braille display constants
@@ -1418,23 +1018,6 @@ namespace jacdac {
         Length = 0x181,
     }
 
-    export namespace BrailleDisplayRegPack {
-        /**
-         * Pack format for 'enabled' register data.
-         */
-        export const Enabled = "u8"
-
-        /**
-         * Pack format for 'patterns' register data.
-         */
-        export const Patterns = "s"
-
-        /**
-         * Pack format for 'length' register data.
-         */
-        export const Length = "u8"
-    }
-
 }
 namespace jacdac {
     // Service Bridge constants
@@ -1448,13 +1031,6 @@ namespace jacdac {
          * ```
          */
         Enabled = 0x1,
-    }
-
-    export namespace BridgeRegPack {
-        /**
-         * Pack format for 'enabled' register data.
-         */
-        export const Enabled = "u8"
     }
 
 }
@@ -1484,23 +1060,6 @@ namespace jacdac {
          * Read-only bool (uint8_t). Determines if the button is pressed currently.
          */
         Pressed = 0x181,
-    }
-
-    export namespace ButtonRegPack {
-        /**
-         * Pack format for 'pressure' register data.
-         */
-        export const Pressure = "u0.16"
-
-        /**
-         * Pack format for 'analog' register data.
-         */
-        export const Analog = "u8"
-
-        /**
-         * Pack format for 'pressed' register data.
-         */
-        export const Pressed = "u8"
     }
 
     export const enum ButtonEvent {
@@ -1534,18 +1093,6 @@ namespace jacdac {
         Hold = 0x81,
     }
 
-    export namespace ButtonEventPack {
-        /**
-         * Pack format for 'up' register data.
-         */
-        export const Up = "u32"
-
-        /**
-         * Pack format for 'hold' register data.
-         */
-        export const Hold = "u32"
-    }
-
 }
 namespace jacdac {
     // Service Buzzer constants
@@ -1559,13 +1106,6 @@ namespace jacdac {
          * ```
          */
         Volume = 0x1,
-    }
-
-    export namespace BuzzerRegPack {
-        /**
-         * Pack format for 'volume' register data.
-         */
-        export const Volume = "u0.8"
     }
 
     export const enum BuzzerCmd {
@@ -1587,18 +1127,6 @@ namespace jacdac {
         PlayNote = 0x81,
     }
 
-    export namespace BuzzerCmdPack {
-        /**
-         * Pack format for 'play_tone' register data.
-         */
-        export const PlayTone = "u16 u16 u16"
-
-        /**
-         * Pack format for 'play_note' register data.
-         */
-        export const PlayNote = "u16 u0.16 u16"
-    }
-
 }
 namespace jacdac {
     // Service Capacitive Button constants
@@ -1612,13 +1140,6 @@ namespace jacdac {
          * ```
          */
         Threshold = 0x6,
-    }
-
-    export namespace CapacitiveButtonRegPack {
-        /**
-         * Pack format for 'threshold' register data.
-         */
-        export const Threshold = "u0.16"
     }
 
     export const enum CapacitiveButtonCmd {
@@ -1707,38 +1228,6 @@ namespace jacdac {
         Columns = 0x181,
     }
 
-    export namespace CharacterScreenRegPack {
-        /**
-         * Pack format for 'message' register data.
-         */
-        export const Message = "s"
-
-        /**
-         * Pack format for 'brightness' register data.
-         */
-        export const Brightness = "u0.16"
-
-        /**
-         * Pack format for 'variant' register data.
-         */
-        export const Variant = "u8"
-
-        /**
-         * Pack format for 'text_direction' register data.
-         */
-        export const TextDirection = "u8"
-
-        /**
-         * Pack format for 'rows' register data.
-         */
-        export const Rows = "u8"
-
-        /**
-         * Pack format for 'columns' register data.
-         */
-        export const Columns = "u8"
-    }
-
 }
 namespace jacdac {
     // Service Cloud Adapter constants
@@ -1783,23 +1272,6 @@ namespace jacdac {
         AckCloudCommand = 0x83,
     }
 
-    export namespace CloudAdapterCmdPack {
-        /**
-         * Pack format for 'upload' register data.
-         */
-        export const Upload = "z r: f64"
-
-        /**
-         * Pack format for 'upload_bin' register data.
-         */
-        export const UploadBin = "b"
-
-        /**
-         * Pack format for 'ack_cloud_command' register data.
-         */
-        export const AckCloudCommand = "u32 u32 r: f64"
-    }
-
     export const enum CloudAdapterReg {
         /**
          * Read-only bool (uint8_t). Indicate whether we're currently connected to the cloud server.
@@ -1822,18 +1294,6 @@ namespace jacdac {
         ConnectionName = 0x181,
     }
 
-    export namespace CloudAdapterRegPack {
-        /**
-         * Pack format for 'connected' register data.
-         */
-        export const Connected = "u8"
-
-        /**
-         * Pack format for 'connection_name' register data.
-         */
-        export const ConnectionName = "s"
-    }
-
     export const enum CloudAdapterEvent {
         /**
          * Emitted when cloud requests to run some action.
@@ -1850,13 +1310,6 @@ namespace jacdac {
          */
         //% block="change"
         Change = 0x3,
-    }
-
-    export namespace CloudAdapterEventPack {
-        /**
-         * Pack format for 'cloud_command' register data.
-         */
-        export const CloudCommand = "u32 z r: f64"
     }
 
 }
@@ -1934,38 +1387,6 @@ namespace jacdac {
         PushWatchdogPeriod = 0x81,
     }
 
-    export namespace CloudConfigurationRegPack {
-        /**
-         * Pack format for 'server_name' register data.
-         */
-        export const ServerName = "s"
-
-        /**
-         * Pack format for 'cloud_device_id' register data.
-         */
-        export const CloudDeviceId = "s"
-
-        /**
-         * Pack format for 'cloud_type' register data.
-         */
-        export const CloudType = "s"
-
-        /**
-         * Pack format for 'connection_status' register data.
-         */
-        export const ConnectionStatus = "u16"
-
-        /**
-         * Pack format for 'push_period' register data.
-         */
-        export const PushPeriod = "u32"
-
-        /**
-         * Pack format for 'push_watchdog_period' register data.
-         */
-        export const PushWatchdogPeriod = "u32"
-    }
-
     export const enum CloudConfigurationCmd {
         /**
          * No args. Starts a connection to the cloud service
@@ -1987,13 +1408,6 @@ namespace jacdac {
         SetConnectionString = 0x86,
     }
 
-    export namespace CloudConfigurationCmdPack {
-        /**
-         * Pack format for 'set_connection_string' register data.
-         */
-        export const SetConnectionString = "s"
-    }
-
     export const enum CloudConfigurationEvent {
         /**
          * Argument: connection_status ConnectionStatus (uint16_t). Raised when the connection status changes
@@ -2012,13 +1426,6 @@ namespace jacdac {
         MessageSent = 0x80,
     }
 
-    export namespace CloudConfigurationEventPack {
-        /**
-         * Pack format for 'connection_status_change' register data.
-         */
-        export const ConnectionStatusChange = "u16"
-    }
-
 }
 namespace jacdac {
     // Service CODAL Message Bus constants
@@ -2034,13 +1441,6 @@ namespace jacdac {
         Send = 0x80,
     }
 
-    export namespace CodalMessageBusCmdPack {
-        /**
-         * Pack format for 'send' register data.
-         */
-        export const Send = "u16 u16"
-    }
-
     export const enum CodalMessageBusEvent {
         /**
          * Raised by the server is triggered by the server. The filtering logic of which event to send over Jacdac is up to the server implementation.
@@ -2051,13 +1451,6 @@ namespace jacdac {
          */
         //% block="message"
         Message = 0x80,
-    }
-
-    export namespace CodalMessageBusEventPack {
-        /**
-         * Pack format for 'message' register data.
-         */
-        export const Message = "u16 u16"
     }
 
 }
@@ -2073,13 +1466,6 @@ namespace jacdac {
          * ```
          */
         Color = 0x101,
-    }
-
-    export namespace ColorRegPack {
-        /**
-         * Pack format for 'color' register data.
-         */
-        export const Color = "u0.16 u0.16 u0.16"
     }
 
 }
@@ -2113,23 +1499,6 @@ namespace jacdac {
          * ```
          */
         HeadingError = 0x106,
-    }
-
-    export namespace CompassRegPack {
-        /**
-         * Pack format for 'heading' register data.
-         */
-        export const Heading = "u16.16"
-
-        /**
-         * Pack format for 'enabled' register data.
-         */
-        export const Enabled = "u8"
-
-        /**
-         * Pack format for 'heading_error' register data.
-         */
-        export const HeadingError = "u16.16"
     }
 
     export const enum CompassCmd {
@@ -2274,52 +1643,13 @@ namespace jacdac {
          */
     }
 
-    export namespace ControlCmdPack {
+    export const enum ControlPipe {
         /**
-         * Pack format for 'services' register data.
+         * pipe_command WrappedCommand
+         * ```
+         * const [serviceSize, serviceIndex, serviceCommand, payload] = jdunpack<[number, number, number, Buffer]>(buf, "u8 u8 u16 b")
+         * ```
          */
-        export const ServicesReport = "u16 u8 u8 r: u32"
-
-        /**
-         * Pack format for 'flood_ping' register data.
-         */
-        export const FloodPing = "u32 u32 u8"
-
-        /**
-         * Pack format for 'flood_ping' register data.
-         */
-        export const FloodPingReport = "u32 b"
-
-        /**
-         * Pack format for 'set_status_light' register data.
-         */
-        export const SetStatusLight = "u8 u8 u8 u8"
-
-        /**
-         * Pack format for 'reliable_commands' register data.
-         */
-        export const ReliableCommands = "u32"
-
-        /**
-         * Pack format for 'reliable_commands' register data.
-         */
-        export const ReliableCommandsReport = "b[12]"
-    }
-
-
-    /**
-     * pipe_command WrappedCommand
-     * ```
-     * const [serviceSize, serviceIndex, serviceCommand, payload] = jdunpack<[number, number, number, Buffer]>(buf, "u8 u8 u16 b")
-     * ```
-     */
-
-
-    export namespace ControlinfoPack {
-        /**
-         * Pack format for 'wrapped_command' register data.
-         */
-        export const WrappedCommand = "u8 u8 u16 b"
     }
 
     export const enum ControlReg {
@@ -2389,43 +1719,6 @@ namespace jacdac {
         Uptime = 0x186,
     }
 
-    export namespace ControlRegPack {
-        /**
-         * Pack format for 'reset_in' register data.
-         */
-        export const ResetIn = "u32"
-
-        /**
-         * Pack format for 'device_description' register data.
-         */
-        export const DeviceDescription = "s"
-
-        /**
-         * Pack format for 'product_identifier' register data.
-         */
-        export const ProductIdentifier = "u32"
-
-        /**
-         * Pack format for 'bootloader_product_identifier' register data.
-         */
-        export const BootloaderProductIdentifier = "u32"
-
-        /**
-         * Pack format for 'firmware_version' register data.
-         */
-        export const FirmwareVersion = "s"
-
-        /**
-         * Pack format for 'mcu_temperature' register data.
-         */
-        export const McuTemperature = "i16"
-
-        /**
-         * Pack format for 'uptime' register data.
-         */
-        export const Uptime = "u64"
-    }
-
 }
 namespace jacdac {
     // Service Dashboard constants
@@ -2479,33 +1772,6 @@ namespace jacdac {
          * ```
          */
         MaxMeasurement = 0x105,
-    }
-
-    export namespace DcCurrentMeasurementRegPack {
-        /**
-         * Pack format for 'measurement_name' register data.
-         */
-        export const MeasurementName = "s"
-
-        /**
-         * Pack format for 'measurement' register data.
-         */
-        export const Measurement = "f64"
-
-        /**
-         * Pack format for 'measurement_error' register data.
-         */
-        export const MeasurementError = "f64"
-
-        /**
-         * Pack format for 'min_measurement' register data.
-         */
-        export const MinMeasurement = "f64"
-
-        /**
-         * Pack format for 'max_measurement' register data.
-         */
-        export const MaxMeasurement = "f64"
     }
 
 }
@@ -2576,38 +1842,6 @@ namespace jacdac {
         MaxMeasurement = 0x105,
     }
 
-    export namespace DcVoltageMeasurementRegPack {
-        /**
-         * Pack format for 'measurement_type' register data.
-         */
-        export const MeasurementType = "u8"
-
-        /**
-         * Pack format for 'measurement_name' register data.
-         */
-        export const MeasurementName = "s"
-
-        /**
-         * Pack format for 'measurement' register data.
-         */
-        export const Measurement = "f64"
-
-        /**
-         * Pack format for 'measurement_error' register data.
-         */
-        export const MeasurementError = "f64"
-
-        /**
-         * Pack format for 'min_measurement' register data.
-         */
-        export const MinMeasurement = "f64"
-
-        /**
-         * Pack format for 'max_measurement' register data.
-         */
-        export const MaxMeasurement = "f64"
-    }
-
 }
 namespace jacdac {
     // Service DeviceScript Condition constants
@@ -2625,6 +1859,329 @@ namespace jacdac {
          */
         //% block="signalled"
         Signalled = 0x3,
+    }
+
+}
+namespace jacdac {
+    // Service DeviceScript Debugger constants
+    export const SRV_DEVS_DBG = 0x155b5b40
+
+    export const enum DevsDbgValueTag { // uint8_t
+        //% block="number"
+        Number = 0x1,
+        //% block="special"
+        Special = 0x2,
+        //% block="fiber"
+        Fiber = 0x3,
+        //% block="builtin object"
+        BuiltinObject = 0x5,
+        //% block="exotic"
+        Exotic = 0x6,
+        //% block="unhandled"
+        Unhandled = 0x7,
+        //% block="img buffer"
+        ImgBuffer = 0x20,
+        //% block="img string builtin"
+        ImgStringBuiltin = 0x21,
+        //% block="img string ascii"
+        ImgStringAscii = 0x22,
+        //% block="img string utf8"
+        ImgStringUTF8 = 0x23,
+        //% block="img role"
+        ImgRole = 0x30,
+        //% block="img function"
+        ImgFunction = 0x31,
+        //% block="img role member"
+        ImgRoleMember = 0x32,
+        //% block="obj array"
+        ObjArray = 0x51,
+        //% block="obj map"
+        ObjMap = 0x52,
+        //% block="obj buffer"
+        ObjBuffer = 0x53,
+        //% block="obj string"
+        ObjString = 0x54,
+        //% block="obj stack frame"
+        ObjStackFrame = 0x55,
+        //% block="obj packet"
+        ObjPacket = 0x56,
+        //% block="obj bound function"
+        ObjBoundFunction = 0x57,
+        //% block="obj opaque"
+        ObjOpaque = 0x58,
+        //% block="obj any"
+        ObjAny = 0x50,
+        //% block="obj mask"
+        ObjMask = 0xf0,
+        //% block="user1"
+        User1 = 0xf1,
+        //% block="user2"
+        User2 = 0xf2,
+        //% block="user3"
+        User3 = 0xf3,
+        //% block="user4"
+        User4 = 0xf4,
+    }
+
+
+    export const enum DevsDbgValueSpecial { // uint8_t
+        //% block="null"
+        Null = 0x0,
+        //% block="true"
+        True = 0x1,
+        //% block="false"
+        False = 0x2,
+        //% block="globals"
+        Globals = 0x64,
+        //% block="current exception"
+        CurrentException = 0x65,
+    }
+
+
+    export const enum DevsDbgFunIdx { // uint16_t
+        //% block="none"
+        None = 0x0,
+        //% block="main"
+        Main = 0xc34f,
+        //% block="first built in"
+        FirstBuiltIn = 0xc350,
+    }
+
+
+    export const enum DevsDbgFiberHandle { // uint32_t
+        //% block="none"
+        None = 0x0,
+    }
+
+
+    export const enum DevsDbgProgramCounter { // uint32_t
+    }
+
+
+    export const enum DevsDbgObjStackFrame { // uint32_t
+        //% block="null"
+        Null = 0x0,
+    }
+
+
+    export const enum DevsDbgString { // uint32_t
+        //% block="static indicator mask"
+        StaticIndicatorMask = 0x80000001,
+        //% block="static tag mask"
+        StaticTagMask = 0x7f000000,
+        //% block="static index mask"
+        StaticIndexMask = 0xfffffe,
+        //% block="unhandled"
+        Unhandled = 0x0,
+    }
+
+
+    export const enum DevsDbgSuspensionType { // uint8_t
+        //% block="none"
+        None = 0x0,
+        //% block="breakpoint"
+        Breakpoint = 0x1,
+        //% block="unhandled exception"
+        UnhandledException = 0x2,
+        //% block="handled exception"
+        HandledException = 0x3,
+        //% block="halt"
+        Halt = 0x4,
+        //% block="panic"
+        Panic = 0x5,
+        //% block="restart"
+        Restart = 0x6,
+        //% block="debugger stmt"
+        DebuggerStmt = 0x7,
+    }
+
+    export const enum DevsDbgCmd {
+        /**
+         * Argument: results pipe (bytes). List the currently running fibers (threads).
+         *
+         * ```
+         * const [results] = jdunpack<[Buffer]>(buf, "b[12]")
+         * ```
+         */
+        ReadFibers = 0x80,
+
+        /**
+         * List stack frames in a fiber.
+         *
+         * ```
+         * const [results, fiberHandle] = jdunpack<[Buffer, jacdac.DevsDbgFiberHandle]>(buf, "b[12] u32")
+         * ```
+         */
+        ReadStack = 0x81,
+
+        /**
+         * Read variable slots in a stack frame, elements of an array, etc.
+         *
+         * ```
+         * const [results, v0, tag, start, length] = jdunpack<[Buffer, number, jacdac.DevsDbgValueTag, number, number]>(buf, "b[12] u32 u8 x[1] u16 u16")
+         * ```
+         */
+        ReadIndexedValues = 0x82,
+
+        /**
+         * Read variable slots in an object.
+         *
+         * ```
+         * const [results, v0, tag] = jdunpack<[Buffer, number, jacdac.DevsDbgValueTag]>(buf, "b[12] u32 u8")
+         * ```
+         */
+        ReadNamedValues = 0x83,
+
+        /**
+         * Read a specific value.
+         *
+         * ```
+         * const [v0, tag] = jdunpack<[number, jacdac.DevsDbgValueTag]>(buf, "u32 u8")
+         * ```
+         */
+        ReadValue = 0x84,
+
+        /**
+         * report ReadValue
+         * ```
+         * const [v0, v1, fnIdx, tag] = jdunpack<[number, number, jacdac.DevsDbgFunIdx, jacdac.DevsDbgValueTag]>(buf, "u32 u32 u16 u8")
+         * ```
+         */
+
+        /**
+         * Read bytes of a string (UTF8) or buffer value.
+         *
+         * ```
+         * const [results, v0, tag, start, length] = jdunpack<[Buffer, number, jacdac.DevsDbgValueTag, number, number]>(buf, "b[12] u32 u8 x[1] u16 u16")
+         * ```
+         */
+        ReadBytes = 0x85,
+
+        /**
+         * Set breakpoint(s) at a location(s).
+         *
+         * ```
+         * const [breakPc] = jdunpack<[jacdac.DevsDbgProgramCounter[]]>(buf, "u32[]")
+         * ```
+         */
+        SetBreakpoints = 0x90,
+
+        /**
+         * Clear breakpoint(s) at a location(s).
+         *
+         * ```
+         * const [breakPc] = jdunpack<[jacdac.DevsDbgProgramCounter[]]>(buf, "u32[]")
+         * ```
+         */
+        ClearBreakpoints = 0x91,
+
+        /**
+         * No args. Clear all breakpoints.
+         */
+        ClearAllBreakpoints = 0x92,
+
+        /**
+         * No args. Resume program execution after a breakpoint was hit.
+         */
+        Resume = 0x93,
+
+        /**
+         * No args. Try suspending current program. Client needs to wait for `suspended` event afterwards.
+         */
+        Halt = 0x94,
+
+        /**
+         * No args. Start the program from the beginning and halt on first instruction.
+         */
+        RestartAndHalt = 0x95,
+    }
+
+    export const enum DevsDbgPipe {
+        /**
+         * pipe_report Fiber
+         * ```
+         * const [handle, initialFn, currFn] = jdunpack<[jacdac.DevsDbgFiberHandle, jacdac.DevsDbgFunIdx, jacdac.DevsDbgFunIdx]>(buf, "u32 u16 u16")
+         * ```
+         */
+
+        /**
+         * pipe_report Stackframe
+         * ```
+         * const [self, pc, closure, fnIdx] = jdunpack<[jacdac.DevsDbgObjStackFrame, jacdac.DevsDbgProgramCounter, jacdac.DevsDbgObjStackFrame, jacdac.DevsDbgFunIdx]>(buf, "u32 u32 u32 u16 x[2]")
+         * ```
+         */
+
+        /**
+         * pipe_report Value
+         * ```
+         * const [v0, v1, fnIdx, tag] = jdunpack<[number, number, jacdac.DevsDbgFunIdx, jacdac.DevsDbgValueTag]>(buf, "u32 u32 u16 u8")
+         * ```
+         */
+
+        /**
+         * pipe_report KeyValue
+         * ```
+         * const [key, v0, v1, fnIdx, tag] = jdunpack<[jacdac.DevsDbgString, number, number, jacdac.DevsDbgFunIdx, jacdac.DevsDbgValueTag]>(buf, "u32 u32 u32 u16 u8")
+         * ```
+         */
+
+        /**
+         * pipe_report BytesValue
+         * ```
+         * const [data] = jdunpack<[Buffer]>(buf, "b")
+         * ```
+         */
+    }
+
+    export const enum DevsDbgReg {
+        /**
+         * Read-write bool (uint8_t). Turn on/off the debugger interface.
+         *
+         * ```
+         * const [enabled] = jdunpack<[number]>(buf, "u8")
+         * ```
+         */
+        Enabled = 0x1,
+
+        /**
+         * Read-write bool (uint8_t). Wheather to place breakpoint at unhandled exception.
+         *
+         * ```
+         * const [breakAtUnhandledExn] = jdunpack<[number]>(buf, "u8")
+         * ```
+         */
+        BreakAtUnhandledExn = 0x80,
+
+        /**
+         * Read-write bool (uint8_t). Wheather to place breakpoint at handled exception.
+         *
+         * ```
+         * const [breakAtHandledExn] = jdunpack<[number]>(buf, "u8")
+         * ```
+         */
+        BreakAtHandledExn = 0x81,
+
+        /**
+         * Read-only bool (uint8_t). Indicates if the program is currently suspended.
+         * Most commands can only be executed when the program is suspended.
+         *
+         * ```
+         * const [isSuspended] = jdunpack<[number]>(buf, "u8")
+         * ```
+         */
+        IsSuspended = 0x180,
+    }
+
+    export const enum DevsDbgEvent {
+        /**
+         * Emitted when the program hits a breakpoint or similar event in the specified fiber.
+         *
+         * ```
+         * const [fiber, type] = jdunpack<[jacdac.DevsDbgFiberHandle, jacdac.DevsDbgSuspensionType]>(buf, "u32 u8")
+         * ```
+         */
+        //% block="suspended"
+        Suspended = 0x80,
     }
 
 }
@@ -2685,42 +2242,13 @@ namespace jacdac {
         LogMessage = 0x82,
     }
 
-    export namespace DeviceScriptManagerCmdPack {
+    export const enum DeviceScriptManagerPipe {
         /**
-         * Pack format for 'deploy_bytecode' register data.
+         * pipe_report Bytecode
+         * ```
+         * const [data] = jdunpack<[Buffer]>(buf, "b")
+         * ```
          */
-        export const DeployBytecode = "u32"
-
-        /**
-         * Pack format for 'deploy_bytecode' register data.
-         */
-        export const DeployBytecodeReport = "u16"
-
-        /**
-         * Pack format for 'read_bytecode' register data.
-         */
-        export const ReadBytecode = "b[12]"
-
-        /**
-         * Pack format for 'log_message' register data.
-         */
-        export const LogMessage = "u8 u8 s"
-    }
-
-
-    /**
-     * pipe_report Bytecode
-     * ```
-     * const [data] = jdunpack<[Buffer]>(buf, "b")
-     * ```
-     */
-
-
-    export namespace DeviceScriptManagerinfoPack {
-        /**
-         * Pack format for 'bytecode' register data.
-         */
-        export const Bytecode = "b"
     }
 
     export const enum DeviceScriptManagerReg {
@@ -2793,43 +2321,6 @@ namespace jacdac {
         RuntimeVersion = 0x183,
     }
 
-    export namespace DeviceScriptManagerRegPack {
-        /**
-         * Pack format for 'running' register data.
-         */
-        export const Running = "u8"
-
-        /**
-         * Pack format for 'autostart' register data.
-         */
-        export const Autostart = "u8"
-
-        /**
-         * Pack format for 'logging' register data.
-         */
-        export const Logging = "u8"
-
-        /**
-         * Pack format for 'program_size' register data.
-         */
-        export const ProgramSize = "u32"
-
-        /**
-         * Pack format for 'program_hash' register data.
-         */
-        export const ProgramHash = "u32"
-
-        /**
-         * Pack format for 'program_sha256' register data.
-         */
-        export const ProgramSha256 = "b[32]"
-
-        /**
-         * Pack format for 'runtime_version' register data.
-         */
-        export const RuntimeVersion = "u16 u8 u8"
-    }
-
     export const enum DeviceScriptManagerEvent {
         /**
          * Emitted when the program calls `panic(panic_code)` or `reboot()` (`panic_code == 0` in that case).
@@ -2848,13 +2339,6 @@ namespace jacdac {
          */
         //% block="program change"
         ProgramChange = 0x3,
-    }
-
-    export namespace DeviceScriptManagerEventPack {
-        /**
-         * Pack format for 'program_panic' register data.
-         */
-        export const ProgramPanic = "u32 u32"
     }
 
 }
@@ -2920,33 +2404,6 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-    export namespace DistanceRegPack {
-        /**
-         * Pack format for 'distance' register data.
-         */
-        export const Distance = "u16.16"
-
-        /**
-         * Pack format for 'distance_error' register data.
-         */
-        export const DistanceError = "u16.16"
-
-        /**
-         * Pack format for 'min_range' register data.
-         */
-        export const MinRange = "u16.16"
-
-        /**
-         * Pack format for 'max_range' register data.
-         */
-        export const MaxRange = "u16.16"
-
-        /**
-         * Pack format for 'variant' register data.
-         */
-        export const Variant = "u8"
-    }
-
 }
 namespace jacdac {
     // Service DMX constants
@@ -2962,13 +2419,6 @@ namespace jacdac {
         Enabled = 0x1,
     }
 
-    export namespace DmxRegPack {
-        /**
-         * Pack format for 'enabled' register data.
-         */
-        export const Enabled = "u8"
-    }
-
     export const enum DmxCmd {
         /**
          * Argument: channels bytes. Send a DMX packet, up to 236bytes long, including the start code.
@@ -2978,13 +2428,6 @@ namespace jacdac {
          * ```
          */
         Send = 0x80,
-    }
-
-    export namespace DmxCmdPack {
-        /**
-         * Pack format for 'send' register data.
-         */
-        export const Send = "b"
     }
 
 }
@@ -3047,33 +2490,6 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-    export namespace DotMatrixRegPack {
-        /**
-         * Pack format for 'dots' register data.
-         */
-        export const Dots = "b"
-
-        /**
-         * Pack format for 'brightness' register data.
-         */
-        export const Brightness = "u0.8"
-
-        /**
-         * Pack format for 'rows' register data.
-         */
-        export const Rows = "u16"
-
-        /**
-         * Pack format for 'columns' register data.
-         */
-        export const Columns = "u16"
-
-        /**
-         * Pack format for 'variant' register data.
-         */
-        export const Variant = "u8"
-    }
-
 }
 namespace jacdac {
     // Service Dual Motors constants
@@ -3124,33 +2540,6 @@ namespace jacdac {
          * ```
          */
         Reversible = 0x182,
-    }
-
-    export namespace DualMotorsRegPack {
-        /**
-         * Pack format for 'speed' register data.
-         */
-        export const Speed = "i1.15 i1.15"
-
-        /**
-         * Pack format for 'enabled' register data.
-         */
-        export const Enabled = "u8"
-
-        /**
-         * Pack format for 'load_torque' register data.
-         */
-        export const LoadTorque = "u16.16"
-
-        /**
-         * Pack format for 'load_rotation_speed' register data.
-         */
-        export const LoadRotationSpeed = "u16.16"
-
-        /**
-         * Pack format for 'reversible' register data.
-         */
-        export const Reversible = "u8"
     }
 
 }
@@ -3212,33 +2601,6 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-    export namespace ECO2RegPack {
-        /**
-         * Pack format for 'e_CO2' register data.
-         */
-        export const ECO2 = "u22.10"
-
-        /**
-         * Pack format for 'e_CO2_error' register data.
-         */
-        export const ECO2Error = "u22.10"
-
-        /**
-         * Pack format for 'min_e_CO2' register data.
-         */
-        export const MinECO2 = "u22.10"
-
-        /**
-         * Pack format for 'max_e_CO2' register data.
-         */
-        export const MaxECO2 = "u22.10"
-
-        /**
-         * Pack format for 'variant' register data.
-         */
-        export const Variant = "u8"
-    }
-
 }
 namespace jacdac {
     // Service Flex constants
@@ -3261,18 +2623,6 @@ namespace jacdac {
          * ```
          */
         Length = 0x180,
-    }
-
-    export namespace FlexRegPack {
-        /**
-         * Pack format for 'bending' register data.
-         */
-        export const Bending = "i1.15"
-
-        /**
-         * Pack format for 'length' register data.
-         */
-        export const Length = "u16"
     }
 
 }
@@ -3353,23 +2703,6 @@ namespace jacdac {
         ButtonsAvailable = 0x180,
     }
 
-    export namespace GamepadRegPack {
-        /**
-         * Pack format for 'direction' register data.
-         */
-        export const Direction = "u32 i1.15 i1.15"
-
-        /**
-         * Pack format for 'variant' register data.
-         */
-        export const Variant = "u8"
-
-        /**
-         * Pack format for 'buttons_available' register data.
-         */
-        export const ButtonsAvailable = "u32"
-    }
-
     export const enum GamepadEvent {
         /**
          * Argument: buttons Buttons (uint32_t). Emitted whenever the state of buttons changes.
@@ -3380,13 +2713,6 @@ namespace jacdac {
          */
         //% block="buttons changed"
         ButtonsChanged = 0x3,
-    }
-
-    export namespace GamepadEventPack {
-        /**
-         * Pack format for 'buttons_changed' register data.
-         */
-        export const ButtonsChanged = "u32"
     }
 
 }
@@ -3430,28 +2756,6 @@ namespace jacdac {
          * ```
          */
         MaxRatesSupported = 0x10a,
-    }
-
-    export namespace GyroscopeRegPack {
-        /**
-         * Pack format for 'rotation_rates' register data.
-         */
-        export const RotationRates = "i12.20 i12.20 i12.20"
-
-        /**
-         * Pack format for 'rotation_rates_error' register data.
-         */
-        export const RotationRatesError = "u12.20"
-
-        /**
-         * Pack format for 'max_rate' register data.
-         */
-        export const MaxRate = "u12.20"
-
-        /**
-         * Pack format for 'max_rates_supported' register data.
-         */
-        export const MaxRatesSupported = "r: u12.20"
     }
 
 }
@@ -3501,23 +2805,6 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-    export namespace HeartRateRegPack {
-        /**
-         * Pack format for 'heart_rate' register data.
-         */
-        export const HeartRate = "u16.16"
-
-        /**
-         * Pack format for 'heart_rate_error' register data.
-         */
-        export const HeartRateError = "u16.16"
-
-        /**
-         * Pack format for 'variant' register data.
-         */
-        export const Variant = "u8"
-    }
-
 }
 namespace jacdac {
     // Service HID Joystick constants
@@ -3551,23 +2838,6 @@ namespace jacdac {
         AxisCount = 0x182,
     }
 
-    export namespace HidJoystickRegPack {
-        /**
-         * Pack format for 'button_count' register data.
-         */
-        export const ButtonCount = "u8"
-
-        /**
-         * Pack format for 'buttons_analog' register data.
-         */
-        export const ButtonsAnalog = "u32"
-
-        /**
-         * Pack format for 'axis_count' register data.
-         */
-        export const AxisCount = "u8"
-    }
-
     export const enum HidJoystickCmd {
         /**
          * Sets the up/down button state, one byte per button, supports analog buttons. For digital buttons, use `0` for released, `1` for pressed.
@@ -3586,18 +2856,6 @@ namespace jacdac {
          * ```
          */
         SetAxis = 0x81,
-    }
-
-    export namespace HidJoystickCmdPack {
-        /**
-         * Pack format for 'set_buttons' register data.
-         */
-        export const SetButtons = "r: u0.8"
-
-        /**
-         * Pack format for 'set_axis' register data.
-         */
-        export const SetAxis = "r: i1.15"
     }
 
 }
@@ -3917,13 +3175,6 @@ namespace jacdac {
         Clear = 0x81,
     }
 
-    export namespace HidKeyboardCmdPack {
-        /**
-         * Pack format for 'key' register data.
-         */
-        export const Key = "r: u16 u8 u8"
-    }
-
 }
 namespace jacdac {
     // Service HID Mouse constants
@@ -3983,23 +3234,6 @@ namespace jacdac {
         Wheel = 0x82,
     }
 
-    export namespace HidMouseCmdPack {
-        /**
-         * Pack format for 'set_button' register data.
-         */
-        export const SetButton = "u16 u8"
-
-        /**
-         * Pack format for 'move' register data.
-         */
-        export const Move = "i16 i16 u16"
-
-        /**
-         * Pack format for 'wheel' register data.
-         */
-        export const Wheel = "i16 u16"
-    }
-
 }
 namespace jacdac {
     // Service Humidity constants
@@ -4042,28 +3276,6 @@ namespace jacdac {
         MaxHumidity = 0x105,
     }
 
-    export namespace HumidityRegPack {
-        /**
-         * Pack format for 'humidity' register data.
-         */
-        export const Humidity = "u22.10"
-
-        /**
-         * Pack format for 'humidity_error' register data.
-         */
-        export const HumidityError = "u22.10"
-
-        /**
-         * Pack format for 'min_humidity' register data.
-         */
-        export const MinHumidity = "u22.10"
-
-        /**
-         * Pack format for 'max_humidity' register data.
-         */
-        export const MaxHumidity = "u22.10"
-    }
-
 }
 namespace jacdac {
     // Service Illuminance constants
@@ -4086,18 +3298,6 @@ namespace jacdac {
          * ```
          */
         IlluminanceError = 0x106,
-    }
-
-    export namespace IlluminanceRegPack {
-        /**
-         * Pack format for 'illuminance' register data.
-         */
-        export const Illuminance = "u22.10"
-
-        /**
-         * Pack format for 'illuminance_error' register data.
-         */
-        export const IlluminanceError = "u22.10"
     }
 
 }
@@ -4123,18 +3323,6 @@ namespace jacdac {
          * ```
          */
         SetPixels = 0x83,
-    }
-
-    export namespace IndexedScreenCmdPack {
-        /**
-         * Pack format for 'start_update' register data.
-         */
-        export const StartUpdate = "u16 u16 u16 u16"
-
-        /**
-         * Pack format for 'set_pixels' register data.
-         */
-        export const SetPixels = "b"
     }
 
     export const enum IndexedScreenReg {
@@ -4223,48 +3411,6 @@ namespace jacdac {
          * ```
          */
         Rotation = 0x83,
-    }
-
-    export namespace IndexedScreenRegPack {
-        /**
-         * Pack format for 'brightness' register data.
-         */
-        export const Brightness = "u0.8"
-
-        /**
-         * Pack format for 'palette' register data.
-         */
-        export const Palette = "r: u8 u8 u8 u8"
-
-        /**
-         * Pack format for 'bits_per_pixel' register data.
-         */
-        export const BitsPerPixel = "u8"
-
-        /**
-         * Pack format for 'width' register data.
-         */
-        export const Width = "u16"
-
-        /**
-         * Pack format for 'height' register data.
-         */
-        export const Height = "u16"
-
-        /**
-         * Pack format for 'width_major' register data.
-         */
-        export const WidthMajor = "u8"
-
-        /**
-         * Pack format for 'up_sampling' register data.
-         */
-        export const UpSampling = "u8"
-
-        /**
-         * Pack format for 'rotation' register data.
-         */
-        export const Rotation = "u16"
     }
 
 }
@@ -4389,58 +3535,6 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-    export namespace LedRegPack {
-        /**
-         * Pack format for 'pixels' register data.
-         */
-        export const Pixels = "b"
-
-        /**
-         * Pack format for 'brightness' register data.
-         */
-        export const Brightness = "u0.8"
-
-        /**
-         * Pack format for 'actual_brightness' register data.
-         */
-        export const ActualBrightness = "u0.8"
-
-        /**
-         * Pack format for 'num_pixels' register data.
-         */
-        export const NumPixels = "u16"
-
-        /**
-         * Pack format for 'num_columns' register data.
-         */
-        export const NumColumns = "u16"
-
-        /**
-         * Pack format for 'max_power' register data.
-         */
-        export const MaxPower = "u16"
-
-        /**
-         * Pack format for 'leds_per_pixel' register data.
-         */
-        export const LedsPerPixel = "u16"
-
-        /**
-         * Pack format for 'wave_length' register data.
-         */
-        export const WaveLength = "u16"
-
-        /**
-         * Pack format for 'luminous_intensity' register data.
-         */
-        export const LuminousIntensity = "u16"
-
-        /**
-         * Pack format for 'variant' register data.
-         */
-        export const Variant = "u8"
-    }
-
 }
 namespace jacdac {
     // Service LED Single constants
@@ -4466,13 +3560,6 @@ namespace jacdac {
          * ```
          */
         Animate = 0x80,
-    }
-
-    export namespace LedSingleCmdPack {
-        /**
-         * Pack format for 'animate' register data.
-         */
-        export const Animate = "u8 u8 u8 u8"
     }
 
     export const enum LedSingleReg {
@@ -4529,38 +3616,6 @@ namespace jacdac {
          * ```
          */
         Variant = 0x107,
-    }
-
-    export namespace LedSingleRegPack {
-        /**
-         * Pack format for 'color' register data.
-         */
-        export const Color = "u8 u8 u8"
-
-        /**
-         * Pack format for 'max_power' register data.
-         */
-        export const MaxPower = "u16"
-
-        /**
-         * Pack format for 'led_count' register data.
-         */
-        export const LedCount = "u16"
-
-        /**
-         * Pack format for 'wave_length' register data.
-         */
-        export const WaveLength = "u16"
-
-        /**
-         * Pack format for 'luminous_intensity' register data.
-         */
-        export const LuminousIntensity = "u16"
-
-        /**
-         * Pack format for 'variant' register data.
-         */
-        export const Variant = "u8"
     }
 
 }
@@ -4685,53 +3740,6 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-    export namespace LedStripRegPack {
-        /**
-         * Pack format for 'brightness' register data.
-         */
-        export const Brightness = "u0.8"
-
-        /**
-         * Pack format for 'actual_brightness' register data.
-         */
-        export const ActualBrightness = "u0.8"
-
-        /**
-         * Pack format for 'light_type' register data.
-         */
-        export const LightType = "u8"
-
-        /**
-         * Pack format for 'num_pixels' register data.
-         */
-        export const NumPixels = "u16"
-
-        /**
-         * Pack format for 'num_columns' register data.
-         */
-        export const NumColumns = "u16"
-
-        /**
-         * Pack format for 'max_power' register data.
-         */
-        export const MaxPower = "u16"
-
-        /**
-         * Pack format for 'max_pixels' register data.
-         */
-        export const MaxPixels = "u16"
-
-        /**
-         * Pack format for 'num_repeats' register data.
-         */
-        export const NumRepeats = "u16"
-
-        /**
-         * Pack format for 'variant' register data.
-         */
-        export const Variant = "u8"
-    }
-
     export const enum LedStripCmd {
         /**
          * Argument: program bytes. Run the given light "program". See service description for details.
@@ -4741,13 +3749,6 @@ namespace jacdac {
          * ```
          */
         Run = 0x81,
-    }
-
-    export namespace LedStripCmdPack {
-        /**
-         * Pack format for 'run' register data.
-         */
-        export const Run = "b"
     }
 
 }
@@ -4773,18 +3774,6 @@ namespace jacdac {
          * ```
          */
         Dimmable = 0x180,
-    }
-
-    export namespace LightBulbRegPack {
-        /**
-         * Pack format for 'brightness' register data.
-         */
-        export const Brightness = "u0.16"
-
-        /**
-         * Pack format for 'dimmable' register data.
-         */
-        export const Dimmable = "u8"
     }
 
 }
@@ -4828,23 +3817,6 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-    export namespace LightLevelRegPack {
-        /**
-         * Pack format for 'light_level' register data.
-         */
-        export const LightLevel = "u0.16"
-
-        /**
-         * Pack format for 'light_level_error' register data.
-         */
-        export const LightLevelError = "u0.16"
-
-        /**
-         * Pack format for 'variant' register data.
-         */
-        export const Variant = "u8"
-    }
-
 }
 namespace jacdac {
     // Service Logger constants
@@ -4876,13 +3848,6 @@ namespace jacdac {
          * ```
          */
         MinPriority = 0x80,
-    }
-
-    export namespace LoggerRegPack {
-        /**
-         * Pack format for 'min_priority' register data.
-         */
-        export const MinPriority = "u8"
     }
 
     export const enum LoggerCmd {
@@ -4921,28 +3886,6 @@ namespace jacdac {
          * ```
          */
         Error = 0x83,
-    }
-
-    export namespace LoggerCmdPack {
-        /**
-         * Pack format for 'debug' register data.
-         */
-        export const Debug = "s"
-
-        /**
-         * Pack format for 'log' register data.
-         */
-        export const Log = "s"
-
-        /**
-         * Pack format for 'warn' register data.
-         */
-        export const Warn = "s"
-
-        /**
-         * Pack format for 'error' register data.
-         */
-        export const Error = "s"
     }
 
 }
@@ -4998,23 +3941,6 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-    export namespace MagneticFieldLevelRegPack {
-        /**
-         * Pack format for 'strength' register data.
-         */
-        export const Strength = "i1.15"
-
-        /**
-         * Pack format for 'detected' register data.
-         */
-        export const Detected = "u8"
-
-        /**
-         * Pack format for 'variant' register data.
-         */
-        export const Variant = "u8"
-    }
-
     export const enum MagneticFieldLevelEvent {
         /**
          * Emitted when strong-enough magnetic field is detected.
@@ -5052,18 +3978,6 @@ namespace jacdac {
          * ```
          */
         ForcesError = 0x106,
-    }
-
-    export namespace MagnetometerRegPack {
-        /**
-         * Pack format for 'forces' register data.
-         */
-        export const Forces = "i32 i32 i32"
-
-        /**
-         * Pack format for 'forces_error' register data.
-         */
-        export const ForcesError = "i32"
     }
 
     export const enum MagnetometerCmd {
@@ -5140,33 +4054,6 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-    export namespace MatrixKeypadRegPack {
-        /**
-         * Pack format for 'pressed' register data.
-         */
-        export const Pressed = "r: u8"
-
-        /**
-         * Pack format for 'rows' register data.
-         */
-        export const Rows = "u8"
-
-        /**
-         * Pack format for 'columns' register data.
-         */
-        export const Columns = "u8"
-
-        /**
-         * Pack format for 'labels' register data.
-         */
-        export const Labels = "r: z"
-
-        /**
-         * Pack format for 'variant' register data.
-         */
-        export const Variant = "u8"
-    }
-
     export const enum MatrixKeypadEvent {
         /**
          * Argument: uint8_t. Emitted when a key, at the given index, goes from inactive (`pressed == 0`) to active.
@@ -5209,28 +4096,6 @@ namespace jacdac {
         LongClick = 0x81,
     }
 
-    export namespace MatrixKeypadEventPack {
-        /**
-         * Pack format for 'down' register data.
-         */
-        export const Down = "u8"
-
-        /**
-         * Pack format for 'up' register data.
-         */
-        export const Up = "u8"
-
-        /**
-         * Pack format for 'click' register data.
-         */
-        export const Click = "u8"
-
-        /**
-         * Pack format for 'long_click' register data.
-         */
-        export const LongClick = "u8"
-    }
-
 }
 namespace jacdac {
     // Service Microphone constants
@@ -5249,13 +4114,6 @@ namespace jacdac {
         Sample = 0x81,
     }
 
-    export namespace MicrophoneCmdPack {
-        /**
-         * Pack format for 'sample' register data.
-         */
-        export const Sample = "b[12] u32"
-    }
-
     export const enum MicrophoneReg {
         /**
          * Read-write μs uint32_t. Get or set microphone sampling period.
@@ -5266,13 +4124,6 @@ namespace jacdac {
          * ```
          */
         SamplingPeriod = 0x80,
-    }
-
-    export namespace MicrophoneRegPack {
-        /**
-         * Pack format for 'sampling_period' register data.
-         */
-        export const SamplingPeriod = "u32"
     }
 
 }
@@ -5290,13 +4141,6 @@ namespace jacdac {
         Enabled = 0x1,
     }
 
-    export namespace MidiOutputRegPack {
-        /**
-         * Pack format for 'enabled' register data.
-         */
-        export const Enabled = "u8"
-    }
-
     export const enum MidiOutputCmd {
         /**
          * No args. Clears any pending send data that has not yet been sent from the MIDIOutput's queue.
@@ -5311,13 +4155,6 @@ namespace jacdac {
          * ```
          */
         Send = 0x81,
-    }
-
-    export namespace MidiOutputCmdPack {
-        /**
-         * Pack format for 'send' register data.
-         */
-        export const Send = "b"
     }
 
 }
@@ -5370,28 +4207,6 @@ namespace jacdac {
          * const [inputs] = jdunpack<[number]>(buf, "u16")
          * ```
          */
-    }
-
-    export namespace ModelRunnerCmdPack {
-        /**
-         * Pack format for 'set_model' register data.
-         */
-        export const SetModel = "u32"
-
-        /**
-         * Pack format for 'set_model' register data.
-         */
-        export const SetModelReport = "u16"
-
-        /**
-         * Pack format for 'predict' register data.
-         */
-        export const Predict = "b[12]"
-
-        /**
-         * Pack format for 'predict' register data.
-         */
-        export const PredictReport = "u16"
     }
 
     export const enum ModelRunnerReg {
@@ -5502,63 +4317,6 @@ namespace jacdac {
         Parallel = 0x188,
     }
 
-    export namespace ModelRunnerRegPack {
-        /**
-         * Pack format for 'auto_invoke_every' register data.
-         */
-        export const AutoInvokeEvery = "u16"
-
-        /**
-         * Pack format for 'outputs' register data.
-         */
-        export const Outputs = "r: f32"
-
-        /**
-         * Pack format for 'input_shape' register data.
-         */
-        export const InputShape = "r: u16"
-
-        /**
-         * Pack format for 'output_shape' register data.
-         */
-        export const OutputShape = "r: u16"
-
-        /**
-         * Pack format for 'last_run_time' register data.
-         */
-        export const LastRunTime = "u32"
-
-        /**
-         * Pack format for 'allocated_arena_size' register data.
-         */
-        export const AllocatedArenaSize = "u32"
-
-        /**
-         * Pack format for 'model_size' register data.
-         */
-        export const ModelSize = "u32"
-
-        /**
-         * Pack format for 'last_error' register data.
-         */
-        export const LastError = "s"
-
-        /**
-         * Pack format for 'format' register data.
-         */
-        export const Format = "u32"
-
-        /**
-         * Pack format for 'format_version' register data.
-         */
-        export const FormatVersion = "u32"
-
-        /**
-         * Pack format for 'parallel' register data.
-         */
-        export const Parallel = "u8"
-    }
-
 }
 namespace jacdac {
     // Service Motion constants
@@ -5605,28 +4363,6 @@ namespace jacdac {
          * ```
          */
         Variant = 0x107,
-    }
-
-    export namespace MotionRegPack {
-        /**
-         * Pack format for 'moving' register data.
-         */
-        export const Moving = "u8"
-
-        /**
-         * Pack format for 'max_distance' register data.
-         */
-        export const MaxDistance = "u16.16"
-
-        /**
-         * Pack format for 'angle' register data.
-         */
-        export const Angle = "u16"
-
-        /**
-         * Pack format for 'variant' register data.
-         */
-        export const Variant = "u8"
     }
 
     export const enum MotionEvent {
@@ -5690,33 +4426,6 @@ namespace jacdac {
         Reversible = 0x182,
     }
 
-    export namespace MotorRegPack {
-        /**
-         * Pack format for 'speed' register data.
-         */
-        export const Speed = "i1.15"
-
-        /**
-         * Pack format for 'enabled' register data.
-         */
-        export const Enabled = "u8"
-
-        /**
-         * Pack format for 'load_torque' register data.
-         */
-        export const LoadTorque = "u16.16"
-
-        /**
-         * Pack format for 'load_rotation_speed' register data.
-         */
-        export const LoadRotationSpeed = "u16.16"
-
-        /**
-         * Pack format for 'reversible' register data.
-         */
-        export const Reversible = "u8"
-    }
-
 }
 namespace jacdac {
     // Service Multitouch constants
@@ -5732,13 +4441,6 @@ namespace jacdac {
          * ```
          */
         Capacity = 0x101,
-    }
-
-    export namespace MultitouchRegPack {
-        /**
-         * Pack format for 'capacity' register data.
-         */
-        export const Capacity = "r: i16"
     }
 
     export const enum MultitouchEvent {
@@ -5803,38 +4505,6 @@ namespace jacdac {
         SwipeNeg = 0x91,
     }
 
-    export namespace MultitouchEventPack {
-        /**
-         * Pack format for 'touch' register data.
-         */
-        export const Touch = "u8"
-
-        /**
-         * Pack format for 'release' register data.
-         */
-        export const Release = "u8"
-
-        /**
-         * Pack format for 'tap' register data.
-         */
-        export const Tap = "u8"
-
-        /**
-         * Pack format for 'long_press' register data.
-         */
-        export const LongPress = "u8"
-
-        /**
-         * Pack format for 'swipe_pos' register data.
-         */
-        export const SwipePos = "u16 u8 u8"
-
-        /**
-         * Pack format for 'swipe_neg' register data.
-         */
-        export const SwipeNeg = "u16 u8 u8"
-    }
-
 }
 namespace jacdac {
     // Service Planar position constants
@@ -5863,18 +4533,6 @@ namespace jacdac {
          * ```
          */
         Variant = 0x107,
-    }
-
-    export namespace PlanarPositionRegPack {
-        /**
-         * Pack format for 'position' register data.
-         */
-        export const Position = "i22.10 i22.10"
-
-        /**
-         * Pack format for 'variant' register data.
-         */
-        export const Variant = "u8"
     }
 
 }
@@ -5907,18 +4565,6 @@ namespace jacdac {
          * ```
          */
         Variant = 0x107,
-    }
-
-    export namespace PotentiometerRegPack {
-        /**
-         * Pack format for 'position' register data.
-         */
-        export const Position = "u0.16"
-
-        /**
-         * Pack format for 'variant' register data.
-         */
-        export const Variant = "u8"
     }
 
 }
@@ -6029,53 +4675,6 @@ namespace jacdac {
         KeepOnPulsePeriod = 0x81,
     }
 
-    export namespace PowerRegPack {
-        /**
-         * Pack format for 'allowed' register data.
-         */
-        export const Allowed = "u8"
-
-        /**
-         * Pack format for 'max_power' register data.
-         */
-        export const MaxPower = "u16"
-
-        /**
-         * Pack format for 'power_status' register data.
-         */
-        export const PowerStatus = "u8"
-
-        /**
-         * Pack format for 'current_draw' register data.
-         */
-        export const CurrentDraw = "u16"
-
-        /**
-         * Pack format for 'battery_voltage' register data.
-         */
-        export const BatteryVoltage = "u16"
-
-        /**
-         * Pack format for 'battery_charge' register data.
-         */
-        export const BatteryCharge = "u0.16"
-
-        /**
-         * Pack format for 'battery_capacity' register data.
-         */
-        export const BatteryCapacity = "u32"
-
-        /**
-         * Pack format for 'keep_on_pulse_duration' register data.
-         */
-        export const KeepOnPulseDuration = "u16"
-
-        /**
-         * Pack format for 'keep_on_pulse_period' register data.
-         */
-        export const KeepOnPulsePeriod = "u16"
-    }
-
     export const enum PowerCmd {
         /**
          * No args. Sent by the power service periodically, as broadcast.
@@ -6093,13 +4692,6 @@ namespace jacdac {
          */
         //% block="power status changed"
         PowerStatusChanged = 0x3,
-    }
-
-    export namespace PowerEventPack {
-        /**
-         * Pack format for 'power_status_changed' register data.
-         */
-        export const PowerStatusChanged = "u8"
     }
 
 }
@@ -6144,28 +4736,6 @@ namespace jacdac {
         MaximumVoltage = 0x111,
     }
 
-    export namespace PowerSupplyRegPack {
-        /**
-         * Pack format for 'enabled' register data.
-         */
-        export const Enabled = "u8"
-
-        /**
-         * Pack format for 'output_voltage' register data.
-         */
-        export const OutputVoltage = "f64"
-
-        /**
-         * Pack format for 'minimum_voltage' register data.
-         */
-        export const MinimumVoltage = "f64"
-
-        /**
-         * Pack format for 'maximum_voltage' register data.
-         */
-        export const MaximumVoltage = "f64"
-    }
-
 }
 namespace jacdac {
     // Service Pressure Button constants
@@ -6179,13 +4749,6 @@ namespace jacdac {
          * ```
          */
         Threshold = 0x6,
-    }
-
-    export namespace PressureButtonRegPack {
-        /**
-         * Pack format for 'threshold' register data.
-         */
-        export const Threshold = "u0.16"
     }
 
 }
@@ -6320,78 +4883,6 @@ namespace jacdac {
         RoU8String = 0x187,
     }
 
-    export namespace ProtoTestRegPack {
-        /**
-         * Pack format for 'rw_bool' register data.
-         */
-        export const RwBool = "u8"
-
-        /**
-         * Pack format for 'ro_bool' register data.
-         */
-        export const RoBool = "u8"
-
-        /**
-         * Pack format for 'rw_u32' register data.
-         */
-        export const RwU32 = "u32"
-
-        /**
-         * Pack format for 'ro_u32' register data.
-         */
-        export const RoU32 = "u32"
-
-        /**
-         * Pack format for 'rw_i32' register data.
-         */
-        export const RwI32 = "i32"
-
-        /**
-         * Pack format for 'ro_i32' register data.
-         */
-        export const RoI32 = "i32"
-
-        /**
-         * Pack format for 'rw_string' register data.
-         */
-        export const RwString = "s"
-
-        /**
-         * Pack format for 'ro_string' register data.
-         */
-        export const RoString = "s"
-
-        /**
-         * Pack format for 'rw_bytes' register data.
-         */
-        export const RwBytes = "b"
-
-        /**
-         * Pack format for 'ro_bytes' register data.
-         */
-        export const RoBytes = "b"
-
-        /**
-         * Pack format for 'rw_i8_u8_u16_i32' register data.
-         */
-        export const RwI8U8U16I32 = "i8 u8 u16 i32"
-
-        /**
-         * Pack format for 'ro_i8_u8_u16_i32' register data.
-         */
-        export const RoI8U8U16I32 = "i8 u8 u16 i32"
-
-        /**
-         * Pack format for 'rw_u8_string' register data.
-         */
-        export const RwU8String = "u8 s"
-
-        /**
-         * Pack format for 'ro_u8_string' register data.
-         */
-        export const RoU8String = "u8 s"
-    }
-
     export const enum ProtoTestEvent {
         /**
          * Argument: bo bool (uint8_t). An event raised when rw_bool is modified
@@ -6462,43 +4953,6 @@ namespace jacdac {
          */
         //% block="e u8 string"
         EU8String = 0x87,
-    }
-
-    export namespace ProtoTestEventPack {
-        /**
-         * Pack format for 'e_bool' register data.
-         */
-        export const EBool = "u8"
-
-        /**
-         * Pack format for 'e_u32' register data.
-         */
-        export const EU32 = "u32"
-
-        /**
-         * Pack format for 'e_i32' register data.
-         */
-        export const EI32 = "i32"
-
-        /**
-         * Pack format for 'e_string' register data.
-         */
-        export const EString = "s"
-
-        /**
-         * Pack format for 'e_bytes' register data.
-         */
-        export const EBytes = "b"
-
-        /**
-         * Pack format for 'e_i8_u8_u16_i32' register data.
-         */
-        export const EI8U8U16I32 = "i8 u8 u16 i32"
-
-        /**
-         * Pack format for 'e_u8_string' register data.
-         */
-        export const EU8String = "u8 s"
     }
 
     export const enum ProtoTestCmd {
@@ -6575,62 +5029,13 @@ namespace jacdac {
         CReportPipe = 0x90,
     }
 
-    export namespace ProtoTestCmdPack {
+    export const enum ProtoTestPipe {
         /**
-         * Pack format for 'c_bool' register data.
+         * pipe_report PBytes
+         * ```
+         * const [byte] = jdunpack<[number]>(buf, "u8")
+         * ```
          */
-        export const CBool = "u8"
-
-        /**
-         * Pack format for 'c_u32' register data.
-         */
-        export const CU32 = "u32"
-
-        /**
-         * Pack format for 'c_i32' register data.
-         */
-        export const CI32 = "i32"
-
-        /**
-         * Pack format for 'c_string' register data.
-         */
-        export const CString = "s"
-
-        /**
-         * Pack format for 'c_bytes' register data.
-         */
-        export const CBytes = "b"
-
-        /**
-         * Pack format for 'c_i8_u8_u16_i32' register data.
-         */
-        export const CI8U8U16I32 = "i8 u8 u16 i32"
-
-        /**
-         * Pack format for 'c_u8_string' register data.
-         */
-        export const CU8String = "u8 s"
-
-        /**
-         * Pack format for 'c_report_pipe' register data.
-         */
-        export const CReportPipe = "b[12]"
-    }
-
-
-    /**
-     * pipe_report PBytes
-     * ```
-     * const [byte] = jdunpack<[number]>(buf, "u8")
-     * ```
-     */
-
-
-    export namespace ProtoTestinfoPack {
-        /**
-         * Pack format for 'p_bytes' register data.
-         */
-        export const PBytes = "u8"
     }
 
 }
@@ -6661,18 +5066,6 @@ namespace jacdac {
         OxygenError = 0x106,
     }
 
-    export namespace PulseOximeterRegPack {
-        /**
-         * Pack format for 'oxygen' register data.
-         */
-        export const Oxygen = "u8.8"
-
-        /**
-         * Pack format for 'oxygen_error' register data.
-         */
-        export const OxygenError = "u8.8"
-    }
-
 }
 namespace jacdac {
     // Service Rain gauge constants
@@ -6695,18 +5088,6 @@ namespace jacdac {
          * ```
          */
         PrecipitationPrecision = 0x108,
-    }
-
-    export namespace RainGaugeRegPack {
-        /**
-         * Pack format for 'precipitation' register data.
-         */
-        export const Precipitation = "u16.16"
-
-        /**
-         * Pack format for 'precipitation_precision' register data.
-         */
-        export const PrecipitationPrecision = "u16.16"
     }
 
 }
@@ -6761,28 +5142,6 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-    export namespace RealTimeClockRegPack {
-        /**
-         * Pack format for 'local_time' register data.
-         */
-        export const LocalTime = "u16 u8 u8 u8 u8 u8 u8"
-
-        /**
-         * Pack format for 'drift' register data.
-         */
-        export const Drift = "u16.16"
-
-        /**
-         * Pack format for 'precision' register data.
-         */
-        export const Precision = "u16.16"
-
-        /**
-         * Pack format for 'variant' register data.
-         */
-        export const Variant = "u8"
-    }
-
     export const enum RealTimeClockCmd {
         /**
          * Sets the current time and resets the error.
@@ -6792,13 +5151,6 @@ namespace jacdac {
          * ```
          */
         SetTime = 0x80,
-    }
-
-    export namespace RealTimeClockCmdPack {
-        /**
-         * Pack format for 'set_time' register data.
-         */
-        export const SetTime = "u16 u8 u8 u8 u8 u8 u8"
     }
 
 }
@@ -6831,18 +5183,6 @@ namespace jacdac {
          * ```
          */
         Variant = 0x107,
-    }
-
-    export namespace ReflectedLightRegPack {
-        /**
-         * Pack format for 'brightness' register data.
-         */
-        export const Brightness = "u0.16"
-
-        /**
-         * Pack format for 'variant' register data.
-         */
-        export const Variant = "u8"
     }
 
 }
@@ -6888,23 +5228,6 @@ namespace jacdac {
         MaxSwitchingCurrent = 0x180,
     }
 
-    export namespace RelayRegPack {
-        /**
-         * Pack format for 'active' register data.
-         */
-        export const Active = "u8"
-
-        /**
-         * Pack format for 'variant' register data.
-         */
-        export const Variant = "u8"
-
-        /**
-         * Pack format for 'max_switching_current' register data.
-         */
-        export const MaxSwitchingCurrent = "u32"
-    }
-
 }
 namespace jacdac {
     // Service Random Number Generator constants
@@ -6943,18 +5266,6 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-    export namespace RngRegPack {
-        /**
-         * Pack format for 'random' register data.
-         */
-        export const Random = "b"
-
-        /**
-         * Pack format for 'variant' register data.
-         */
-        export const Variant = "u8"
-    }
-
 }
 namespace jacdac {
     // Service Role Manager constants
@@ -6984,18 +5295,6 @@ namespace jacdac {
         AllRolesAllocated = 0x181,
     }
 
-    export namespace RoleManagerRegPack {
-        /**
-         * Pack format for 'auto_bind' register data.
-         */
-        export const AutoBind = "u8"
-
-        /**
-         * Pack format for 'all_roles_allocated' register data.
-         */
-        export const AllRolesAllocated = "u8"
-    }
-
     export const enum RoleManagerCmd {
         /**
          * Set role. Can set to empty to remove role binding.
@@ -7021,32 +5320,13 @@ namespace jacdac {
         ListRoles = 0x83,
     }
 
-    export namespace RoleManagerCmdPack {
+    export const enum RoleManagerPipe {
         /**
-         * Pack format for 'set_role' register data.
+         * pipe_report Roles
+         * ```
+         * const [deviceId, serviceClass, serviceIdx, role] = jdunpack<[Buffer, number, number, string]>(buf, "b[8] u32 u8 s")
+         * ```
          */
-        export const SetRole = "b[8] u8 s"
-
-        /**
-         * Pack format for 'list_roles' register data.
-         */
-        export const ListRoles = "b[12]"
-    }
-
-
-    /**
-     * pipe_report Roles
-     * ```
-     * const [deviceId, serviceClass, serviceIdx, role] = jdunpack<[Buffer, number, number, string]>(buf, "b[8] u32 u8 s")
-     * ```
-     */
-
-
-    export namespace RoleManagerinfoPack {
-        /**
-         * Pack format for 'roles' register data.
-         */
-        export const Roles = "b[8] u32 u8 s"
     }
 
     export const enum RoleManagerEvent {
@@ -7092,23 +5372,6 @@ namespace jacdac {
         Clicker = 0x181,
     }
 
-    export namespace RotaryEncoderRegPack {
-        /**
-         * Pack format for 'position' register data.
-         */
-        export const Position = "i32"
-
-        /**
-         * Pack format for 'clicks_per_turn' register data.
-         */
-        export const ClicksPerTurn = "u16"
-
-        /**
-         * Pack format for 'clicker' register data.
-         */
-        export const Clicker = "u8"
-    }
-
 }
 namespace jacdac {
     // Service Rover constants
@@ -7122,13 +5385,6 @@ namespace jacdac {
          * ```
          */
         Kinematics = 0x101,
-    }
-
-    export namespace RoverRegPack {
-        /**
-         * Pack format for 'kinematics' register data.
-         */
-        export const Kinematics = "i16.16 i16.16 i16.16 i16.16 i16.16"
     }
 
 }
@@ -7153,18 +5409,6 @@ namespace jacdac {
          * ```
          */
         Enabled = 0x1,
-    }
-
-    export namespace SatNavRegPack {
-        /**
-         * Pack format for 'position' register data.
-         */
-        export const Position = "u64 i9.23 i9.23 u16.16 i26.6 u16.16"
-
-        /**
-         * Pack format for 'enabled' register data.
-         */
-        export const Enabled = "u8"
     }
 
     export const enum SatNavEvent {
@@ -7242,33 +5486,6 @@ namespace jacdac {
          * ```
          */
         CurrentSample = 0x101,
-    }
-
-    export namespace SensorAggregatorRegPack {
-        /**
-         * Pack format for 'inputs' register data.
-         */
-        export const Inputs = "u16 u16 u32 r: b[8] u32 u8 u8 u8 i8"
-
-        /**
-         * Pack format for 'num_samples' register data.
-         */
-        export const NumSamples = "u32"
-
-        /**
-         * Pack format for 'sample_size' register data.
-         */
-        export const SampleSize = "u8"
-
-        /**
-         * Pack format for 'streaming_samples' register data.
-         */
-        export const StreamingSamples = "u32"
-
-        /**
-         * Pack format for 'current_sample' register data.
-         */
-        export const CurrentSample = "b"
     }
 
 }
@@ -7350,43 +5567,6 @@ namespace jacdac {
         BufferSize = 0x84,
     }
 
-    export namespace SerialRegPack {
-        /**
-         * Pack format for 'connected' register data.
-         */
-        export const Connected = "u8"
-
-        /**
-         * Pack format for 'connection_name' register data.
-         */
-        export const ConnectionName = "s"
-
-        /**
-         * Pack format for 'baud_rate' register data.
-         */
-        export const BaudRate = "u32"
-
-        /**
-         * Pack format for 'data_bits' register data.
-         */
-        export const DataBits = "u8"
-
-        /**
-         * Pack format for 'stop_bits' register data.
-         */
-        export const StopBits = "u8"
-
-        /**
-         * Pack format for 'parity_mode' register data.
-         */
-        export const ParityMode = "u8"
-
-        /**
-         * Pack format for 'buffer_size' register data.
-         */
-        export const BufferSize = "u8"
-    }
-
     export const enum SerialCmd {
         /**
          * Argument: data bytes. Send a buffer of data over the serial transport.
@@ -7405,18 +5585,6 @@ namespace jacdac {
          * ```
          */
         Received = 0x80,
-    }
-
-    export namespace SerialCmdPack {
-        /**
-         * Pack format for 'send' register data.
-         */
-        export const Send = "b"
-
-        /**
-         * Pack format for 'received' register data.
-         */
-        export const Received = "b"
     }
 
 }
@@ -7515,58 +5683,6 @@ namespace jacdac {
         ActualAngle = 0x101,
     }
 
-    export namespace ServoRegPack {
-        /**
-         * Pack format for 'angle' register data.
-         */
-        export const Angle = "i16.16"
-
-        /**
-         * Pack format for 'enabled' register data.
-         */
-        export const Enabled = "u8"
-
-        /**
-         * Pack format for 'offset' register data.
-         */
-        export const Offset = "i16.16"
-
-        /**
-         * Pack format for 'min_angle' register data.
-         */
-        export const MinAngle = "i16.16"
-
-        /**
-         * Pack format for 'min_pulse' register data.
-         */
-        export const MinPulse = "u16"
-
-        /**
-         * Pack format for 'max_angle' register data.
-         */
-        export const MaxAngle = "i16.16"
-
-        /**
-         * Pack format for 'max_pulse' register data.
-         */
-        export const MaxPulse = "u16"
-
-        /**
-         * Pack format for 'stall_torque' register data.
-         */
-        export const StallTorque = "u16.16"
-
-        /**
-         * Pack format for 'response_speed' register data.
-         */
-        export const ResponseSpeed = "u16.16"
-
-        /**
-         * Pack format for 'actual_angle' register data.
-         */
-        export const ActualAngle = "i16.16"
-    }
-
 }
 namespace jacdac {
     // Service Settings constants
@@ -7630,64 +5746,20 @@ namespace jacdac {
         Clear = 0x85,
     }
 
-    export namespace SettingsCmdPack {
+    export const enum SettingsPipe {
         /**
-         * Pack format for 'get' register data.
+         * pipe_report ListedKey
+         * ```
+         * const [key] = jdunpack<[string]>(buf, "s")
+         * ```
          */
-        export const Get = "s"
-
-        /**
-         * Pack format for 'get' register data.
-         */
-        export const GetReport = "z b"
 
         /**
-         * Pack format for 'set' register data.
+         * pipe_report ListedEntry
+         * ```
+         * const [key, value] = jdunpack<[string, Buffer]>(buf, "z b")
+         * ```
          */
-        export const Set = "z b"
-
-        /**
-         * Pack format for 'delete' register data.
-         */
-        export const Delete = "s"
-
-        /**
-         * Pack format for 'list_keys' register data.
-         */
-        export const ListKeys = "b[12]"
-
-        /**
-         * Pack format for 'list' register data.
-         */
-        export const List = "b[12]"
-    }
-
-
-    /**
-     * pipe_report ListedKey
-     * ```
-     * const [key] = jdunpack<[string]>(buf, "s")
-     * ```
-     */
-
-    /**
-     * pipe_report ListedEntry
-     * ```
-     * const [key, value] = jdunpack<[string, Buffer]>(buf, "z b")
-     * ```
-     */
-
-
-    export namespace SettingsinfoPack {
-        /**
-         * Pack format for 'listed_key' register data.
-         */
-        export const ListedKey = "s"
-
-        /**
-         * Pack format for 'listed_entry' register data.
-         */
-        export const ListedEntry = "z b"
     }
 
     export const enum SettingsEvent {
@@ -7753,45 +5825,11 @@ namespace jacdac {
         DecimalPoint = 0x181,
     }
 
-    export namespace SevenSegmentDisplayRegPack {
-        /**
-         * Pack format for 'digits' register data.
-         */
-        export const Digits = "b"
-
-        /**
-         * Pack format for 'brightness' register data.
-         */
-        export const Brightness = "u0.16"
-
-        /**
-         * Pack format for 'double_dots' register data.
-         */
-        export const DoubleDots = "u8"
-
-        /**
-         * Pack format for 'digit_count' register data.
-         */
-        export const DigitCount = "u8"
-
-        /**
-         * Pack format for 'decimal_point' register data.
-         */
-        export const DecimalPoint = "u8"
-    }
-
     export const enum SevenSegmentDisplayCmd {
         /**
          * Argument: value f64 (uint64_t). Shows the number on the screen using the decimal dot if available.
          */
         SetNumber = 0x80,
-    }
-
-    export namespace SevenSegmentDisplayCmdPack {
-        /**
-         * Pack format for 'set_number' register data.
-         */
-        export const SetNumber = "f64"
     }
 
 }
@@ -7835,23 +5873,6 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-    export namespace SoilMoistureRegPack {
-        /**
-         * Pack format for 'moisture' register data.
-         */
-        export const Moisture = "u0.16"
-
-        /**
-         * Pack format for 'moisture_error' register data.
-         */
-        export const MoistureError = "u0.16"
-
-        /**
-         * Pack format for 'variant' register data.
-         */
-        export const Variant = "u8"
-    }
-
 }
 namespace jacdac {
     // Service Solenoid constants
@@ -7884,18 +5905,6 @@ namespace jacdac {
          * ```
          */
         Variant = 0x107,
-    }
-
-    export namespace SolenoidRegPack {
-        /**
-         * Pack format for 'pulled' register data.
-         */
-        export const Pulled = "u8"
-
-        /**
-         * Pack format for 'variant' register data.
-         */
-        export const Variant = "u8"
     }
 
 }
@@ -7940,28 +5949,6 @@ namespace jacdac {
         QuietThreshold = 0x5,
     }
 
-    export namespace SoundLevelRegPack {
-        /**
-         * Pack format for 'sound_level' register data.
-         */
-        export const SoundLevel = "u0.16"
-
-        /**
-         * Pack format for 'enabled' register data.
-         */
-        export const Enabled = "u8"
-
-        /**
-         * Pack format for 'loud_threshold' register data.
-         */
-        export const LoudThreshold = "u0.16"
-
-        /**
-         * Pack format for 'quiet_threshold' register data.
-         */
-        export const QuietThreshold = "u0.16"
-    }
-
     export const enum SoundLevelEvent {
         /**
          * Generated when a loud sound is detected.
@@ -7991,13 +5978,6 @@ namespace jacdac {
         Volume = 0x1,
     }
 
-    export namespace SoundPlayerRegPack {
-        /**
-         * Pack format for 'volume' register data.
-         */
-        export const Volume = "u0.16"
-    }
-
     export const enum SoundPlayerCmd {
         /**
          * Argument: name string (bytes). Starts playing a sound.
@@ -8023,32 +6003,13 @@ namespace jacdac {
         ListSounds = 0x82,
     }
 
-    export namespace SoundPlayerCmdPack {
+    export const enum SoundPlayerPipe {
         /**
-         * Pack format for 'play' register data.
+         * pipe_report ListSoundsPipe
+         * ```
+         * const [duration, name] = jdunpack<[number, string]>(buf, "u32 s")
+         * ```
          */
-        export const Play = "s"
-
-        /**
-         * Pack format for 'list_sounds' register data.
-         */
-        export const ListSounds = "b[12]"
-    }
-
-
-    /**
-     * pipe_report ListSoundsPipe
-     * ```
-     * const [duration, name] = jdunpack<[number, string]>(buf, "u32 s")
-     * ```
-     */
-
-
-    export namespace SoundPlayerinfoPack {
-        /**
-         * Pack format for 'list_sounds_pipe' register data.
-         */
-        export const ListSoundsPipe = "u32 s"
     }
 
 }
@@ -8086,13 +6047,6 @@ namespace jacdac {
         Cancel = 0x82,
     }
 
-    export namespace SoundRecorderWithPlaybackCmdPack {
-        /**
-         * Pack format for 'record' register data.
-         */
-        export const Record = "u16"
-    }
-
     export const enum SoundRecorderWithPlaybackReg {
         /**
          * Read-only Status (uint8_t). Indicate the current status
@@ -8120,23 +6074,6 @@ namespace jacdac {
          * ```
          */
         Volume = 0x1,
-    }
-
-    export namespace SoundRecorderWithPlaybackRegPack {
-        /**
-         * Pack format for 'status' register data.
-         */
-        export const Status = "u8"
-
-        /**
-         * Pack format for 'time' register data.
-         */
-        export const Time = "u16"
-
-        /**
-         * Pack format for 'volume' register data.
-         */
-        export const Volume = "u0.8"
     }
 
 }
@@ -8200,38 +6137,6 @@ namespace jacdac {
         SmoothingTimeConstant = 0x83,
     }
 
-    export namespace SoundSpectrumRegPack {
-        /**
-         * Pack format for 'frequency_bins' register data.
-         */
-        export const FrequencyBins = "b"
-
-        /**
-         * Pack format for 'enabled' register data.
-         */
-        export const Enabled = "u8"
-
-        /**
-         * Pack format for 'fft_pow2_size' register data.
-         */
-        export const FftPow2Size = "u8"
-
-        /**
-         * Pack format for 'min_decibels' register data.
-         */
-        export const MinDecibels = "i16"
-
-        /**
-         * Pack format for 'max_decibels' register data.
-         */
-        export const MaxDecibels = "i16"
-
-        /**
-         * Pack format for 'smoothing_time_constant' register data.
-         */
-        export const SmoothingTimeConstant = "u0.8"
-    }
-
 }
 namespace jacdac {
     // Service Speech synthesis constants
@@ -8283,33 +6188,6 @@ namespace jacdac {
         Rate = 0x83,
     }
 
-    export namespace SpeechSynthesisRegPack {
-        /**
-         * Pack format for 'enabled' register data.
-         */
-        export const Enabled = "u8"
-
-        /**
-         * Pack format for 'lang' register data.
-         */
-        export const Lang = "s"
-
-        /**
-         * Pack format for 'volume' register data.
-         */
-        export const Volume = "u0.8"
-
-        /**
-         * Pack format for 'pitch' register data.
-         */
-        export const Pitch = "u16.16"
-
-        /**
-         * Pack format for 'rate' register data.
-         */
-        export const Rate = "u16.16"
-    }
-
     export const enum SpeechSynthesisCmd {
         /**
          * Argument: text string (bytes). Adds an utterance to the utterance queue; it will be spoken when any other utterances queued before it have been spoken.
@@ -8324,13 +6202,6 @@ namespace jacdac {
          * No args. Cancels current utterance and all utterances from the utterance queue.
          */
         Cancel = 0x81,
-    }
-
-    export namespace SpeechSynthesisCmdPack {
-        /**
-         * Pack format for 'speak' register data.
-         */
-        export const Speak = "s"
     }
 
 }
@@ -8377,18 +6248,6 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-    export namespace SwitchRegPack {
-        /**
-         * Pack format for 'active' register data.
-         */
-        export const Active = "u8"
-
-        /**
-         * Pack format for 'variant' register data.
-         */
-        export const Variant = "u8"
-    }
-
     export const enum SwitchEvent {
         /**
          * Emitted when switch goes from `off` to `on`.
@@ -8433,18 +6292,6 @@ namespace jacdac {
          */
     }
 
-    export namespace TcpCmdPack {
-        /**
-         * Pack format for 'open' register data.
-         */
-        export const Open = "b[12]"
-
-        /**
-         * Pack format for 'open' register data.
-         */
-        export const OpenReport = "u16"
-    }
-
     export const enum TcpPipeCmd {
         /**
          * Open an SSL connection to a given host:port pair. Can be issued only once on given pipe.
@@ -8467,44 +6314,20 @@ namespace jacdac {
         Error = 0x0,
     }
 
-    export namespace TcpPipeCmdPack {
+    export const enum TcpPipe {
         /**
-         * Pack format for 'open_ssl' register data.
+         * pipe_command Outdata
+         * ```
+         * const [data] = jdunpack<[Buffer]>(buf, "b")
+         * ```
          */
-        export const OpenSsl = "u16 s"
-
-        /**
-         * Pack format for 'error' register data.
-         */
-        export const Error = "i32"
-    }
-
-
-    /**
-     * pipe_command Outdata
-     * ```
-     * const [data] = jdunpack<[Buffer]>(buf, "b")
-     * ```
-     */
-
-    /**
-     * pipe_report Indata
-     * ```
-     * const [data] = jdunpack<[Buffer]>(buf, "b")
-     * ```
-     */
-
-
-    export namespace TcpinfoPack {
-        /**
-         * Pack format for 'outdata' register data.
-         */
-        export const Outdata = "b"
 
         /**
-         * Pack format for 'indata' register data.
+         * pipe_report Indata
+         * ```
+         * const [data] = jdunpack<[Buffer]>(buf, "b")
+         * ```
          */
-        export const Indata = "b"
     }
 
 }
@@ -8568,33 +6391,6 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-    export namespace TemperatureRegPack {
-        /**
-         * Pack format for 'temperature' register data.
-         */
-        export const Temperature = "i22.10"
-
-        /**
-         * Pack format for 'min_temperature' register data.
-         */
-        export const MinTemperature = "i22.10"
-
-        /**
-         * Pack format for 'max_temperature' register data.
-         */
-        export const MaxTemperature = "i22.10"
-
-        /**
-         * Pack format for 'temperature_error' register data.
-         */
-        export const TemperatureError = "u22.10"
-
-        /**
-         * Pack format for 'variant' register data.
-         */
-        export const Variant = "u8"
-    }
-
 }
 namespace jacdac {
     // Service Timeseries Aggregator constants
@@ -8647,28 +6443,6 @@ namespace jacdac {
          * ```
          */
         Stored = 0x90,
-    }
-
-    export namespace TimeseriesAggregatorCmdPack {
-        /**
-         * Pack format for 'update' register data.
-         */
-        export const Update = "f64 s"
-
-        /**
-         * Pack format for 'set_window' register data.
-         */
-        export const SetWindow = "u32 s"
-
-        /**
-         * Pack format for 'set_upload' register data.
-         */
-        export const SetUpload = "u8 s"
-
-        /**
-         * Pack format for 'stored' register data.
-         */
-        export const Stored = "u32 b[4] f64 f64 f64 u32 u32 s"
     }
 
     export const enum TimeseriesAggregatorReg {
@@ -8731,38 +6505,6 @@ namespace jacdac {
         SensorWatchdogPeriod = 0x84,
     }
 
-    export namespace TimeseriesAggregatorRegPack {
-        /**
-         * Pack format for 'now' register data.
-         */
-        export const Now = "u32"
-
-        /**
-         * Pack format for 'fast_start' register data.
-         */
-        export const FastStart = "u8"
-
-        /**
-         * Pack format for 'default_window' register data.
-         */
-        export const DefaultWindow = "u32"
-
-        /**
-         * Pack format for 'default_upload' register data.
-         */
-        export const DefaultUpload = "u8"
-
-        /**
-         * Pack format for 'upload_unlabelled' register data.
-         */
-        export const UploadUnlabelled = "u8"
-
-        /**
-         * Pack format for 'sensor_watchdog_period' register data.
-         */
-        export const SensorWatchdogPeriod = "u32"
-    }
-
 }
 namespace jacdac {
     // Service Traffic Light constants
@@ -8794,23 +6536,6 @@ namespace jacdac {
          * ```
          */
         Green = 0x82,
-    }
-
-    export namespace TrafficLightRegPack {
-        /**
-         * Pack format for 'red' register data.
-         */
-        export const Red = "u8"
-
-        /**
-         * Pack format for 'yellow' register data.
-         */
-        export const Yellow = "u8"
-
-        /**
-         * Pack format for 'green' register data.
-         */
-        export const Green = "u8"
     }
 
 }
@@ -8853,28 +6578,6 @@ namespace jacdac {
          * ```
          */
         MaxTVOC = 0x105,
-    }
-
-    export namespace TvocRegPack {
-        /**
-         * Pack format for 'TVOC' register data.
-         */
-        export const TVOC = "u22.10"
-
-        /**
-         * Pack format for 'TVOC_error' register data.
-         */
-        export const TVOCError = "u22.10"
-
-        /**
-         * Pack format for 'min_TVOC' register data.
-         */
-        export const MinTVOC = "u22.10"
-
-        /**
-         * Pack format for 'max_TVOC' register data.
-         */
-        export const MaxTVOC = "u22.10"
     }
 
 }
@@ -8966,23 +6669,6 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-    export namespace UvIndexRegPack {
-        /**
-         * Pack format for 'uv_index' register data.
-         */
-        export const UvIndex = "u16.16"
-
-        /**
-         * Pack format for 'uv_index_error' register data.
-         */
-        export const UvIndexError = "u16.16"
-
-        /**
-         * Pack format for 'variant' register data.
-         */
-        export const Variant = "u8"
-    }
-
 }
 namespace jacdac {
     // Service Verified Telemetry constants
@@ -9045,28 +6731,6 @@ namespace jacdac {
         FingerprintTemplate = 0x182,
     }
 
-    export namespace VerifiedTelemetryRegPack {
-        /**
-         * Pack format for 'telemetry_status' register data.
-         */
-        export const TelemetryStatus = "u8"
-
-        /**
-         * Pack format for 'telemetry_status_interval' register data.
-         */
-        export const TelemetryStatusInterval = "u32"
-
-        /**
-         * Pack format for 'fingerprint_type' register data.
-         */
-        export const FingerprintType = "u8"
-
-        /**
-         * Pack format for 'fingerprint_template' register data.
-         */
-        export const FingerprintTemplate = "u16 b"
-    }
-
     export const enum VerifiedTelemetryCmd {
         /**
          * No args. This command will clear the template fingerprint of a sensor and collect a new template fingerprint of the attached sensor.
@@ -9097,13 +6761,6 @@ namespace jacdac {
         FingerprintTemplateChange = 0x80,
     }
 
-    export namespace VerifiedTelemetryEventPack {
-        /**
-         * Pack format for 'telemetry_status_change' register data.
-         */
-        export const TelemetryStatusChange = "u8"
-    }
-
 }
 namespace jacdac {
     // Service Vibration motor constants
@@ -9120,13 +6777,6 @@ namespace jacdac {
         Vibrate = 0x80,
     }
 
-    export namespace VibrationMotorCmdPack {
-        /**
-         * Pack format for 'vibrate' register data.
-         */
-        export const Vibrate = "r: u8 u0.8"
-    }
-
     export const enum VibrationMotorReg {
         /**
          * Constant uint8_t. The maximum number of vibration sequences supported in a single packet.
@@ -9136,13 +6786,6 @@ namespace jacdac {
          * ```
          */
         MaxVibrations = 0x180,
-    }
-
-    export namespace VibrationMotorRegPack {
-        /**
-         * Pack format for 'max_vibrations' register data.
-         */
-        export const MaxVibrations = "u8"
     }
 
 }
@@ -9186,23 +6829,6 @@ namespace jacdac {
          * ```
          */
         Variant = 0x107,
-    }
-
-    export namespace WaterLevelRegPack {
-        /**
-         * Pack format for 'level' register data.
-         */
-        export const Level = "u0.16"
-
-        /**
-         * Pack format for 'level_error' register data.
-         */
-        export const LevelError = "u0.16"
-
-        /**
-         * Pack format for 'variant' register data.
-         */
-        export const Variant = "u8"
     }
 
 }
@@ -9294,48 +6920,6 @@ namespace jacdac {
         Variant = 0x107,
     }
 
-    export namespace WeightScaleRegPack {
-        /**
-         * Pack format for 'weight' register data.
-         */
-        export const Weight = "u16.16"
-
-        /**
-         * Pack format for 'weight_error' register data.
-         */
-        export const WeightError = "u16.16"
-
-        /**
-         * Pack format for 'zero_offset' register data.
-         */
-        export const ZeroOffset = "u16.16"
-
-        /**
-         * Pack format for 'gain' register data.
-         */
-        export const Gain = "u16.16"
-
-        /**
-         * Pack format for 'max_weight' register data.
-         */
-        export const MaxWeight = "u16.16"
-
-        /**
-         * Pack format for 'min_weight' register data.
-         */
-        export const MinWeight = "u16.16"
-
-        /**
-         * Pack format for 'weight_resolution' register data.
-         */
-        export const WeightResolution = "u16.16"
-
-        /**
-         * Pack format for 'variant' register data.
-         */
-        export const Variant = "u8"
-    }
-
     export const enum WeightScaleCmd {
         /**
          * No args. Call this command when there is nothing on the scale. If supported, the module should save the calibration data.
@@ -9350,13 +6934,6 @@ namespace jacdac {
          * ```
          */
         CalibrateGain = 0x81,
-    }
-
-    export namespace WeightScaleCmdPack {
-        /**
-         * Pack format for 'calibrate_gain' register data.
-         */
-        export const CalibrateGain = "u22.10"
     }
 
 }
@@ -9457,59 +7034,20 @@ namespace jacdac {
         ListKnownNetworks = 0x87,
     }
 
-    export namespace WifiCmdPack {
+    export const enum WifiPipe {
         /**
-         * Pack format for 'last_scan_results' register data.
+         * pipe_report Results
+         * ```
+         * const [flags, rssi, channel, bssid, ssid] = jdunpack<[jacdac.WifiAPFlags, number, number, Buffer, string]>(buf, "u32 x[4] i8 u8 b[6] s[33]")
+         * ```
          */
-        export const LastScanResults = "b[12]"
-
-        /**
-         * Pack format for 'add_network' register data.
-         */
-        export const AddNetwork = "z z"
 
         /**
-         * Pack format for 'forget_network' register data.
+         * pipe_report NetworkResults
+         * ```
+         * const [priority, flags, ssid] = jdunpack<[number, number, string]>(buf, "i16 i16 s")
+         * ```
          */
-        export const ForgetNetwork = "s"
-
-        /**
-         * Pack format for 'set_network_priority' register data.
-         */
-        export const SetNetworkPriority = "i16 s"
-
-        /**
-         * Pack format for 'list_known_networks' register data.
-         */
-        export const ListKnownNetworks = "b[12]"
-    }
-
-
-    /**
-     * pipe_report Results
-     * ```
-     * const [flags, rssi, channel, bssid, ssid] = jdunpack<[jacdac.WifiAPFlags, number, number, Buffer, string]>(buf, "u32 x[4] i8 u8 b[6] s[33]")
-     * ```
-     */
-
-    /**
-     * pipe_report NetworkResults
-     * ```
-     * const [priority, flags, ssid] = jdunpack<[number, number, string]>(buf, "i16 i16 s")
-     * ```
-     */
-
-
-    export namespace WifiinfoPack {
-        /**
-         * Pack format for 'results' register data.
-         */
-        export const Results = "u32 u32 i8 u8 b[6] s[33]"
-
-        /**
-         * Pack format for 'network_results' register data.
-         */
-        export const NetworkResults = "i16 i16 s"
     }
 
     export const enum WifiReg {
@@ -9560,33 +7098,6 @@ namespace jacdac {
         Ssid = 0x183,
     }
 
-    export namespace WifiRegPack {
-        /**
-         * Pack format for 'rssi' register data.
-         */
-        export const Rssi = "i8"
-
-        /**
-         * Pack format for 'enabled' register data.
-         */
-        export const Enabled = "u8"
-
-        /**
-         * Pack format for 'ip_address' register data.
-         */
-        export const IpAddress = "b[16]"
-
-        /**
-         * Pack format for 'eui_48' register data.
-         */
-        export const Eui48 = "b[6]"
-
-        /**
-         * Pack format for 'ssid' register data.
-         */
-        export const Ssid = "s[32]"
-    }
-
     export const enum WifiEvent {
         /**
          * Emitted upon successful join and IP address assignment.
@@ -9631,18 +7142,6 @@ namespace jacdac {
         ConnectionFailed = 0x82,
     }
 
-    export namespace WifiEventPack {
-        /**
-         * Pack format for 'scan_complete' register data.
-         */
-        export const ScanComplete = "u16 u16"
-
-        /**
-         * Pack format for 'connection_failed' register data.
-         */
-        export const ConnectionFailed = "s"
-    }
-
 }
 namespace jacdac {
     // Service Wind direction constants
@@ -9665,18 +7164,6 @@ namespace jacdac {
          * ```
          */
         WindDirectionError = 0x106,
-    }
-
-    export namespace WindDirectionRegPack {
-        /**
-         * Pack format for 'wind_direction' register data.
-         */
-        export const WindDirection = "u16"
-
-        /**
-         * Pack format for 'wind_direction_error' register data.
-         */
-        export const WindDirectionError = "u16"
     }
 
 }
@@ -9710,23 +7197,6 @@ namespace jacdac {
          * ```
          */
         MaxWindSpeed = 0x105,
-    }
-
-    export namespace WindSpeedRegPack {
-        /**
-         * Pack format for 'wind_speed' register data.
-         */
-        export const WindSpeed = "u16.16"
-
-        /**
-         * Pack format for 'wind_speed_error' register data.
-         */
-        export const WindSpeedError = "u16.16"
-
-        /**
-         * Pack format for 'max_wind_speed' register data.
-         */
-        export const MaxWindSpeed = "u16.16"
     }
 
 }

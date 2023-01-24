@@ -1,0 +1,695 @@
+{
+  "name": "DeviceScript Debugger",
+  "status": "experimental",
+  "shortId": "devicescriptdebugger",
+  "camelName": "devsDbg",
+  "shortName": "devsDbg",
+  "extends": [
+    "_base"
+  ],
+  "notes": {
+    "short": "Allows for inspecting and affecting the state of a running DeviceScript program."
+  },
+  "classIdentifier": 358308672,
+  "enums": {
+    "ValueTag": {
+      "name": "ValueTag",
+      "storage": 1,
+      "members": {
+        "Number": 1,
+        "Special": 2,
+        "Fiber": 3,
+        "BuiltinObject": 5,
+        "Exotic": 6,
+        "Unhandled": 7,
+        "ImgBuffer": 32,
+        "ImgStringBuiltin": 33,
+        "ImgStringAscii": 34,
+        "ImgStringUTF8": 35,
+        "ImgRole": 48,
+        "ImgFunction": 49,
+        "ImgRoleMember": 50,
+        "ObjArray": 81,
+        "ObjMap": 82,
+        "ObjBuffer": 83,
+        "ObjString": 84,
+        "ObjStackFrame": 85,
+        "ObjPacket": 86,
+        "ObjBoundFunction": 87,
+        "ObjOpaque": 88,
+        "ObjAny": 80,
+        "ObjMask": 240,
+        "User1": 241,
+        "User2": 242,
+        "User3": 243,
+        "User4": 244
+      }
+    },
+    "ValueSpecial": {
+      "name": "ValueSpecial",
+      "storage": 1,
+      "members": {
+        "Null": 0,
+        "True": 1,
+        "False": 2,
+        "Globals": 100,
+        "CurrentException": 101
+      }
+    },
+    "FunIdx": {
+      "name": "FunIdx",
+      "storage": 2,
+      "isExtensible": true,
+      "members": {
+        "None": 0,
+        "Main": 49999,
+        "FirstBuiltIn": 50000
+      }
+    },
+    "FiberHandle": {
+      "name": "FiberHandle",
+      "storage": 4,
+      "isExtensible": true,
+      "members": {
+        "None": 0
+      }
+    },
+    "ProgramCounter": {
+      "name": "ProgramCounter",
+      "storage": 4,
+      "isExtensible": true,
+      "members": {}
+    },
+    "ObjStackFrame": {
+      "name": "ObjStackFrame",
+      "storage": 4,
+      "isExtensible": true,
+      "members": {
+        "Null": 0
+      }
+    },
+    "String": {
+      "name": "String",
+      "storage": 4,
+      "isExtensible": true,
+      "members": {
+        "StaticIndicatorMask": 2147483649,
+        "StaticTagMask": 2130706432,
+        "StaticIndexMask": 16777214,
+        "Unhandled": 0
+      }
+    },
+    "SuspensionType": {
+      "name": "SuspensionType",
+      "storage": 1,
+      "members": {
+        "None": 0,
+        "Breakpoint": 1,
+        "UnhandledException": 2,
+        "HandledException": 3,
+        "Halt": 4,
+        "Panic": 5,
+        "Restart": 6,
+        "DebuggerStmt": 7
+      }
+    }
+  },
+  "constants": {},
+  "packets": [
+    {
+      "kind": "report",
+      "name": "command_not_implemented",
+      "identifier": 3,
+      "description": "This report may be emitted by a server in response to a command (action or register operation)\nthat it does not understand.\nThe `service_command` and `packet_crc` fields are copied from the command packet that was unhandled.\nNote that it's possible to get an ACK, followed by such an error report.",
+      "fields": [
+        {
+          "name": "service_command",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "packet_crc",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "identifierName": "command_not_implemented",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
+    {
+      "kind": "const",
+      "name": "instance_name",
+      "identifier": 265,
+      "description": "A friendly name that describes the role of this service instance in the device.\nIt often corresponds to what's printed on the device:\nfor example, `A` for button A, or `S0` for servo channel 0.\nWords like `left` should be avoided because of localization issues (unless they are printed on the device).",
+      "fields": [
+        {
+          "name": "_",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "optional": true,
+      "identifierName": "instance_name",
+      "packFormat": "s",
+      "derived": "_base"
+    },
+    {
+      "kind": "ro",
+      "name": "status_code",
+      "identifier": 259,
+      "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe Jacdac status/error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the announce packet. If a service implements this register,\nit should also support the ``status_code_changed`` event defined below.",
+      "fields": [
+        {
+          "name": "code",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "vendor_code",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "identifierName": "status_code",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
+    {
+      "kind": "event",
+      "name": "status_code_changed",
+      "identifier": 4,
+      "description": "Notifies that the status code of the service changed.",
+      "fields": [
+        {
+          "name": "code",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "vendor_code",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "identifierName": "status_code_changed",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
+    {
+      "kind": "command",
+      "name": "read_fibers",
+      "identifier": 128,
+      "description": "List the currently running fibers (threads).",
+      "fields": [
+        {
+          "name": "results",
+          "type": "pipe",
+          "storage": 12
+        }
+      ],
+      "pipeType": "read_fibers",
+      "packFormat": "b[12]"
+    },
+    {
+      "kind": "pipe_report",
+      "name": "fiber",
+      "identifier": 0,
+      "description": "List the currently running fibers (threads).",
+      "fields": [
+        {
+          "name": "handle",
+          "type": "FiberHandle",
+          "storage": 4
+        },
+        {
+          "name": "initial_fn",
+          "type": "FunIdx",
+          "storage": 2
+        },
+        {
+          "name": "curr_fn",
+          "type": "FunIdx",
+          "storage": 2
+        }
+      ],
+      "pipeType": "read_fibers",
+      "packFormat": "u32 u16 u16"
+    },
+    {
+      "kind": "command",
+      "name": "read_stack",
+      "identifier": 129,
+      "description": "List stack frames in a fiber.",
+      "fields": [
+        {
+          "name": "results",
+          "type": "pipe",
+          "storage": 12
+        },
+        {
+          "name": "fiber_handle",
+          "type": "FiberHandle",
+          "storage": 4
+        }
+      ],
+      "pipeType": "read_stack",
+      "packFormat": "b[12] u32"
+    },
+    {
+      "kind": "pipe_report",
+      "name": "stackframe",
+      "identifier": 0,
+      "description": "List stack frames in a fiber.",
+      "fields": [
+        {
+          "name": "self",
+          "type": "ObjStackFrame",
+          "storage": 4
+        },
+        {
+          "name": "pc",
+          "type": "ProgramCounter",
+          "storage": 4
+        },
+        {
+          "name": "closure",
+          "type": "ObjStackFrame",
+          "storage": 4
+        },
+        {
+          "name": "fn_idx",
+          "type": "FunIdx",
+          "storage": 2
+        },
+        {
+          "name": "reserved",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "pipeType": "read_stack",
+      "packFormat": "u32 u32 u32 u16 u16"
+    },
+    {
+      "kind": "command",
+      "name": "read_indexed_values",
+      "identifier": 130,
+      "description": "Read variable slots in a stack frame, elements of an array, etc.",
+      "fields": [
+        {
+          "name": "results",
+          "type": "pipe",
+          "storage": 12
+        },
+        {
+          "name": "v0",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        },
+        {
+          "name": "tag",
+          "type": "ValueTag",
+          "storage": 1
+        },
+        {
+          "name": "reserved",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "start",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "length",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "pipeType": "read_indexed_values",
+      "packFormat": "b[12] u32 u8 u8 u16 u16"
+    },
+    {
+      "kind": "pipe_report",
+      "name": "value",
+      "identifier": 0,
+      "description": "Read variable slots in a stack frame, elements of an array, etc.",
+      "fields": [
+        {
+          "name": "v0",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        },
+        {
+          "name": "v1",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        },
+        {
+          "name": "fn_idx",
+          "type": "FunIdx",
+          "storage": 2
+        },
+        {
+          "name": "tag",
+          "type": "ValueTag",
+          "storage": 1
+        }
+      ],
+      "pipeType": "read_indexed_values",
+      "packFormat": "u32 u32 u16 u8"
+    },
+    {
+      "kind": "command",
+      "name": "read_named_values",
+      "identifier": 131,
+      "description": "Read variable slots in an object.",
+      "fields": [
+        {
+          "name": "results",
+          "type": "pipe",
+          "storage": 12
+        },
+        {
+          "name": "v0",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        },
+        {
+          "name": "tag",
+          "type": "ValueTag",
+          "storage": 1
+        }
+      ],
+      "pipeType": "read_named_values",
+      "packFormat": "b[12] u32 u8"
+    },
+    {
+      "kind": "pipe_report",
+      "name": "key_value",
+      "identifier": 0,
+      "description": "Read variable slots in an object.",
+      "fields": [
+        {
+          "name": "key",
+          "type": "String",
+          "storage": 4
+        },
+        {
+          "name": "v0",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        },
+        {
+          "name": "v1",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        },
+        {
+          "name": "fn_idx",
+          "type": "FunIdx",
+          "storage": 2
+        },
+        {
+          "name": "tag",
+          "type": "ValueTag",
+          "storage": 1
+        }
+      ],
+      "pipeType": "read_named_values",
+      "packFormat": "u32 u32 u32 u16 u8"
+    },
+    {
+      "kind": "command",
+      "name": "read_value",
+      "identifier": 132,
+      "description": "Read a specific value.",
+      "fields": [
+        {
+          "name": "v0",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        },
+        {
+          "name": "tag",
+          "type": "ValueTag",
+          "storage": 1
+        }
+      ],
+      "hasReport": true,
+      "packFormat": "u32 u8"
+    },
+    {
+      "kind": "report",
+      "name": "read_value",
+      "identifier": 132,
+      "description": "Read a specific value.",
+      "fields": [
+        {
+          "name": "v0",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        },
+        {
+          "name": "v1",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        },
+        {
+          "name": "fn_idx",
+          "type": "FunIdx",
+          "storage": 2
+        },
+        {
+          "name": "tag",
+          "type": "ValueTag",
+          "storage": 1
+        }
+      ],
+      "secondary": true,
+      "packFormat": "u32 u32 u16 u8"
+    },
+    {
+      "kind": "command",
+      "name": "read_bytes",
+      "identifier": 133,
+      "description": "Read bytes of a string (UTF8) or buffer value.",
+      "fields": [
+        {
+          "name": "results",
+          "type": "pipe",
+          "storage": 12
+        },
+        {
+          "name": "v0",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        },
+        {
+          "name": "tag",
+          "type": "ValueTag",
+          "storage": 1
+        },
+        {
+          "name": "reserved",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "start",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "length",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "pipeType": "read_bytes",
+      "packFormat": "b[12] u32 u8 u8 u16 u16"
+    },
+    {
+      "kind": "pipe_report",
+      "name": "bytes_value",
+      "identifier": 0,
+      "description": "Read bytes of a string (UTF8) or buffer value.",
+      "fields": [
+        {
+          "name": "data",
+          "type": "bytes",
+          "storage": 0,
+          "isSimpleType": true
+        }
+      ],
+      "pipeType": "read_bytes",
+      "packFormat": "b"
+    },
+    {
+      "kind": "command",
+      "name": "set_breakpoints",
+      "identifier": 144,
+      "description": "Set breakpoint(s) at a location(s).",
+      "fields": [
+        {
+          "name": "break_pc",
+          "type": "ProgramCounter",
+          "storage": 4,
+          "startRepeats": true
+        }
+      ],
+      "packFormat": "r: u32"
+    },
+    {
+      "kind": "command",
+      "name": "clear_breakpoints",
+      "identifier": 145,
+      "description": "Clear breakpoint(s) at a location(s).",
+      "fields": [
+        {
+          "name": "break_pc",
+          "type": "ProgramCounter",
+          "storage": 4,
+          "startRepeats": true
+        }
+      ],
+      "packFormat": "r: u32"
+    },
+    {
+      "kind": "command",
+      "name": "clear_all_breakpoints",
+      "identifier": 146,
+      "description": "Clear all breakpoints.",
+      "fields": []
+    },
+    {
+      "kind": "command",
+      "name": "resume",
+      "identifier": 147,
+      "description": "Resume program execution after a breakpoint was hit.",
+      "fields": []
+    },
+    {
+      "kind": "command",
+      "name": "halt",
+      "identifier": 148,
+      "description": "Try suspending current program. Client needs to wait for `suspended` event afterwards.",
+      "fields": []
+    },
+    {
+      "kind": "command",
+      "name": "restart_and_halt",
+      "identifier": 149,
+      "description": "Start the program from the beginning and halt on first instruction.",
+      "fields": []
+    },
+    {
+      "kind": "rw",
+      "name": "enabled",
+      "identifier": 1,
+      "description": "Turn on/off the debugger interface.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "bool",
+          "storage": 1
+        }
+      ],
+      "identifierName": "intensity",
+      "packFormat": "u8"
+    },
+    {
+      "kind": "rw",
+      "name": "break_at_unhandled_exn",
+      "identifier": 128,
+      "description": "Wheather to place breakpoint at unhandled exception.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "bool",
+          "storage": 1
+        }
+      ],
+      "packFormat": "u8"
+    },
+    {
+      "kind": "rw",
+      "name": "break_at_handled_exn",
+      "identifier": 129,
+      "description": "Wheather to place breakpoint at handled exception.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "bool",
+          "storage": 1
+        }
+      ],
+      "packFormat": "u8"
+    },
+    {
+      "kind": "ro",
+      "name": "is_suspended",
+      "identifier": 384,
+      "description": "Indicates if the program is currently suspended.\nMost commands can only be executed when the program is suspended.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "bool",
+          "storage": 1
+        }
+      ],
+      "packFormat": "u8"
+    },
+    {
+      "kind": "event",
+      "name": "suspended",
+      "identifier": 128,
+      "description": "Emitted when the program hits a breakpoint or similar event in the specified fiber.",
+      "fields": [
+        {
+          "name": "fiber",
+          "type": "FiberHandle",
+          "storage": 4
+        },
+        {
+          "name": "type",
+          "type": "SuspensionType",
+          "storage": 1
+        }
+      ],
+      "packFormat": "u32 u8"
+    }
+  ],
+  "tags": [
+    "management",
+    "devicescript"
+  ],
+  "restricted": true
+}

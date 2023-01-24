@@ -8,7 +8,7 @@
     "_base"
   ],
   "notes": {
-    "short": "Allows for deployment and control over DeviceScript virtual machine.\n\nPrograms start automatically after device restart or uploading of new program.\nYou can stop programs until next reset by setting the `running` register to `0`.\n\nTODO - debug interface:\n* read-globals command/register\n* globals-changed pipe\n* breakpoint command\n* some performance monitoring?",
+    "short": "Allows for deployment and control over DeviceScript virtual machine.\n\nPrograms start automatically after device restart or uploading of new program.\nYou can stop programs until next reset by setting the `running` register to `0`.",
     "events": "When program is running, `status_code == Ready`.\nWhen there is a valid program, but it is not running, `status_code == Sleeping`.\nWhen there is no valid program, `status_code == WaitingForInput`."
   },
   "classIdentifier": 288680491,

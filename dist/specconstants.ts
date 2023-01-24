@@ -53,6 +53,13 @@ export enum SystemCmd {
     CommandNotImplemented = 0x3,
 }
 
+export namespace SystemCmdPack {
+    /**
+     * Pack format for 'command_not_implemented' Cmd data.
+     */
+    export const CommandNotImplemented = "u16 u16"
+}
+
 export enum SystemReg {
     /**
      * Read-write uint32_t. This is either binary on/off (0 or non-zero), or can be gradual (eg. brightness of an RGB LED strip).
@@ -244,6 +251,108 @@ export enum SystemReg {
     InstanceName = 0x109,
 }
 
+export namespace SystemRegPack {
+    /**
+     * Pack format for 'intensity' Reg data.
+     */
+    export const Intensity = "u32"
+
+    /**
+     * Pack format for 'value' Reg data.
+     */
+    export const Value = "i32"
+
+    /**
+     * Pack format for 'min_value' Reg data.
+     */
+    export const MinValue = "i32"
+
+    /**
+     * Pack format for 'max_value' Reg data.
+     */
+    export const MaxValue = "i32"
+
+    /**
+     * Pack format for 'max_power' Reg data.
+     */
+    export const MaxPower = "u16"
+
+    /**
+     * Pack format for 'streaming_samples' Reg data.
+     */
+    export const StreamingSamples = "u8"
+
+    /**
+     * Pack format for 'streaming_interval' Reg data.
+     */
+    export const StreamingInterval = "u32"
+
+    /**
+     * Pack format for 'reading' Reg data.
+     */
+    export const Reading = "i32"
+
+    /**
+     * Pack format for 'reading_range' Reg data.
+     */
+    export const ReadingRange = "u32"
+
+    /**
+     * Pack format for 'supported_ranges' Reg data.
+     */
+    export const SupportedRanges = "r: u32"
+
+    /**
+     * Pack format for 'min_reading' Reg data.
+     */
+    export const MinReading = "i32"
+
+    /**
+     * Pack format for 'max_reading' Reg data.
+     */
+    export const MaxReading = "i32"
+
+    /**
+     * Pack format for 'reading_error' Reg data.
+     */
+    export const ReadingError = "u32"
+
+    /**
+     * Pack format for 'reading_resolution' Reg data.
+     */
+    export const ReadingResolution = "u32"
+
+    /**
+     * Pack format for 'inactive_threshold' Reg data.
+     */
+    export const InactiveThreshold = "i32"
+
+    /**
+     * Pack format for 'active_threshold' Reg data.
+     */
+    export const ActiveThreshold = "i32"
+
+    /**
+     * Pack format for 'streaming_preferred_interval' Reg data.
+     */
+    export const StreamingPreferredInterval = "u32"
+
+    /**
+     * Pack format for 'variant' Reg data.
+     */
+    export const Variant = "u32"
+
+    /**
+     * Pack format for 'status_code' Reg data.
+     */
+    export const StatusCode = "u16 u16"
+
+    /**
+     * Pack format for 'instance_name' Reg data.
+     */
+    export const InstanceName = "s"
+}
+
 export enum SystemEvent {
     /**
      * Notifies that the service has been activated (eg. button pressed, network connected, etc.)
@@ -275,6 +384,13 @@ export enum SystemEvent {
     Neutral = 0x7,
 }
 
+export namespace SystemEventPack {
+    /**
+     * Pack format for 'status_code_changed' Event data.
+     */
+    export const StatusCodeChanged = "u16 u16"
+}
+
 // Service Base service constants
 export enum BaseCmd {
     /**
@@ -288,6 +404,13 @@ export enum BaseCmd {
      * ```
      */
     CommandNotImplemented = 0x3,
+}
+
+export namespace BaseCmdPack {
+    /**
+     * Pack format for 'command_not_implemented' Cmd data.
+     */
+    export const CommandNotImplemented = "u16 u16"
 }
 
 export enum BaseReg {
@@ -317,6 +440,18 @@ export enum BaseReg {
     StatusCode = 0x103,
 }
 
+export namespace BaseRegPack {
+    /**
+     * Pack format for 'instance_name' Reg data.
+     */
+    export const InstanceName = "s"
+
+    /**
+     * Pack format for 'status_code' Reg data.
+     */
+    export const StatusCode = "u16 u16"
+}
+
 export enum BaseEvent {
     /**
      * Notifies that the status code of the service changed.
@@ -326,6 +461,13 @@ export enum BaseEvent {
      * ```
      */
     StatusCodeChanged = 0x4,
+}
+
+export namespace BaseEventPack {
+    /**
+     * Pack format for 'status_code_changed' Event data.
+     */
+    export const StatusCodeChanged = "u16 u16"
 }
 
 // Service Sensor constants
@@ -357,6 +499,23 @@ export enum SensorReg {
      * ```
      */
     StreamingPreferredInterval = 0x102,
+}
+
+export namespace SensorRegPack {
+    /**
+     * Pack format for 'streaming_samples' Reg data.
+     */
+    export const StreamingSamples = "u8"
+
+    /**
+     * Pack format for 'streaming_interval' Reg data.
+     */
+    export const StreamingInterval = "u32"
+
+    /**
+     * Pack format for 'streaming_preferred_interval' Reg data.
+     */
+    export const StreamingPreferredInterval = "u32"
 }
 
 // Service Accelerometer constants
@@ -398,6 +557,28 @@ export enum AccelerometerReg {
      * ```
      */
     MaxForcesSupported = 0x10a,
+}
+
+export namespace AccelerometerRegPack {
+    /**
+     * Pack format for 'forces' Reg data.
+     */
+    export const Forces = "i12.20 i12.20 i12.20"
+
+    /**
+     * Pack format for 'forces_error' Reg data.
+     */
+    export const ForcesError = "u12.20"
+
+    /**
+     * Pack format for 'max_force' Reg data.
+     */
+    export const MaxForce = "u12.20"
+
+    /**
+     * Pack format for 'max_forces_supported' Reg data.
+     */
+    export const MaxForcesSupported = "r: u12.20"
 }
 
 export enum AccelerometerEvent {
@@ -502,6 +683,28 @@ export enum AcidityReg {
     MaxHumidity = 0x105,
 }
 
+export namespace AcidityRegPack {
+    /**
+     * Pack format for 'acidity' Reg data.
+     */
+    export const Acidity = "u4.12"
+
+    /**
+     * Pack format for 'acidity_error' Reg data.
+     */
+    export const AcidityError = "u4.12"
+
+    /**
+     * Pack format for 'min_acidity' Reg data.
+     */
+    export const MinAcidity = "u4.12"
+
+    /**
+     * Pack format for 'max_humidity' Reg data.
+     */
+    export const MaxHumidity = "u4.12"
+}
+
 // Service Air Pressure constants
 export const SRV_AIR_PRESSURE = 0x1e117cea
 export enum AirPressureReg {
@@ -540,6 +743,28 @@ export enum AirPressureReg {
      * ```
      */
     MaxPressure = 0x105,
+}
+
+export namespace AirPressureRegPack {
+    /**
+     * Pack format for 'pressure' Reg data.
+     */
+    export const Pressure = "u22.10"
+
+    /**
+     * Pack format for 'pressure_error' Reg data.
+     */
+    export const PressureError = "u22.10"
+
+    /**
+     * Pack format for 'min_pressure' Reg data.
+     */
+    export const MinPressure = "u22.10"
+
+    /**
+     * Pack format for 'max_pressure' Reg data.
+     */
+    export const MaxPressure = "u22.10"
 }
 
 // Service Air Quality Index constants
@@ -582,6 +807,28 @@ export enum AirQualityIndexReg {
     MaxAqiIndex = 0x105,
 }
 
+export namespace AirQualityIndexRegPack {
+    /**
+     * Pack format for 'aqi_index' Reg data.
+     */
+    export const AqiIndex = "u16.16"
+
+    /**
+     * Pack format for 'aqi_index_error' Reg data.
+     */
+    export const AqiIndexError = "u16.16"
+
+    /**
+     * Pack format for 'min_aqi_index' Reg data.
+     */
+    export const MinAqiIndex = "u16.16"
+
+    /**
+     * Pack format for 'max_aqi_index' Reg data.
+     */
+    export const MaxAqiIndex = "u16.16"
+}
+
 // Service Arcade Gamepad constants
 export const SRV_ARCADE_GAMEPAD = 0x1deaa06e
 
@@ -620,6 +867,18 @@ export enum ArcadeGamepadReg {
     AvailableButtons = 0x180,
 }
 
+export namespace ArcadeGamepadRegPack {
+    /**
+     * Pack format for 'buttons' Reg data.
+     */
+    export const Buttons = "r: u8 u0.8"
+
+    /**
+     * Pack format for 'available_buttons' Reg data.
+     */
+    export const AvailableButtons = "r: u8"
+}
+
 export enum ArcadeGamepadEvent {
     /**
      * Argument: button Button (uint8_t). Emitted when button goes from inactive to active.
@@ -640,6 +899,18 @@ export enum ArcadeGamepadEvent {
     Up = 0x2,
 }
 
+export namespace ArcadeGamepadEventPack {
+    /**
+     * Pack format for 'down' Event data.
+     */
+    export const Down = "u8"
+
+    /**
+     * Pack format for 'up' Event data.
+     */
+    export const Up = "u8"
+}
+
 // Service Arcade Sound constants
 export const SRV_ARCADE_SOUND = 0x1fc63606
 export enum ArcadeSoundCmd {
@@ -651,6 +922,13 @@ export enum ArcadeSoundCmd {
      * ```
      */
     Play = 0x80,
+}
+
+export namespace ArcadeSoundCmdPack {
+    /**
+     * Pack format for 'play' Cmd data.
+     */
+    export const Play = "b"
 }
 
 export enum ArcadeSoundReg {
@@ -684,6 +962,23 @@ export enum ArcadeSoundReg {
      * ```
      */
     BufferPending = 0x181,
+}
+
+export namespace ArcadeSoundRegPack {
+    /**
+     * Pack format for 'sample_rate' Reg data.
+     */
+    export const SampleRate = "u22.10"
+
+    /**
+     * Pack format for 'buffer_size' Reg data.
+     */
+    export const BufferSize = "u32"
+
+    /**
+     * Pack format for 'buffer_pending' Reg data.
+     */
+    export const BufferPending = "u32"
 }
 
 // Service Barcode reader constants
@@ -725,6 +1020,18 @@ export enum BarcodeReaderReg {
     Formats = 0x180,
 }
 
+export namespace BarcodeReaderRegPack {
+    /**
+     * Pack format for 'enabled' Reg data.
+     */
+    export const Enabled = "u8"
+
+    /**
+     * Pack format for 'formats' Reg data.
+     */
+    export const Formats = "r: u8"
+}
+
 export enum BarcodeReaderEvent {
     /**
      * Raised when a bar code is detected and decoded. If the reader detects multiple codes, it will issue multiple events.
@@ -735,6 +1042,13 @@ export enum BarcodeReaderEvent {
      * ```
      */
     Detect = 0x1,
+}
+
+export namespace BarcodeReaderEventPack {
+    /**
+     * Pack format for 'detect' Event data.
+     */
+    export const Detect = "u8 s"
 }
 
 // Service bit:radio constants
@@ -775,6 +1089,28 @@ export enum BitRadioReg {
      * ```
      */
     FrequencyBand = 0x82,
+}
+
+export namespace BitRadioRegPack {
+    /**
+     * Pack format for 'enabled' Reg data.
+     */
+    export const Enabled = "u8"
+
+    /**
+     * Pack format for 'group' Reg data.
+     */
+    export const Group = "u8"
+
+    /**
+     * Pack format for 'transmission_power' Reg data.
+     */
+    export const TransmissionPower = "u8"
+
+    /**
+     * Pack format for 'frequency_band' Reg data.
+     */
+    export const FrequencyBand = "u8"
 }
 
 export enum BitRadioCmd {
@@ -842,6 +1178,43 @@ export enum BitRadioCmd {
     BufferReceived = 0x92,
 }
 
+export namespace BitRadioCmdPack {
+    /**
+     * Pack format for 'send_string' Cmd data.
+     */
+    export const SendString = "s"
+
+    /**
+     * Pack format for 'send_number' Cmd data.
+     */
+    export const SendNumber = "f64"
+
+    /**
+     * Pack format for 'send_value' Cmd data.
+     */
+    export const SendValue = "f64 s"
+
+    /**
+     * Pack format for 'send_buffer' Cmd data.
+     */
+    export const SendBuffer = "b"
+
+    /**
+     * Pack format for 'string_received' Cmd data.
+     */
+    export const StringReceived = "u32 u32 i8 b[1] s"
+
+    /**
+     * Pack format for 'number_received' Cmd data.
+     */
+    export const NumberReceived = "u32 u32 i8 b[3] f64 s"
+
+    /**
+     * Pack format for 'buffer_received' Cmd data.
+     */
+    export const BufferReceived = "u32 u32 i8 b[1] b"
+}
+
 // Service Bootloader constants
 export const SRV_BOOTLOADER = 0x1ffa9948
 
@@ -903,6 +1276,33 @@ export enum BootloaderCmd {
      */
 }
 
+export namespace BootloaderCmdPack {
+    /**
+     * Pack format for 'info' Cmd data.
+     */
+    export const InfoReport = "u32 u32 u32 u32"
+
+    /**
+     * Pack format for 'set_session' Cmd data.
+     */
+    export const SetSession = "u32"
+
+    /**
+     * Pack format for 'set_session' Cmd data.
+     */
+    export const SetSessionReport = "u32"
+
+    /**
+     * Pack format for 'page_data' Cmd data.
+     */
+    export const PageData = "u32 u16 u8 u8 u32 u32 u32 u32 u32 b[208]"
+
+    /**
+     * Pack format for 'page_data' Cmd data.
+     */
+    export const PageDataReport = "u32 u32 u32"
+}
+
 // Service Braille display constants
 export const SRV_BRAILLE_DISPLAY = 0x13bfb7cc
 export enum BrailleDisplayReg {
@@ -934,6 +1334,23 @@ export enum BrailleDisplayReg {
     Length = 0x181,
 }
 
+export namespace BrailleDisplayRegPack {
+    /**
+     * Pack format for 'enabled' Reg data.
+     */
+    export const Enabled = "u8"
+
+    /**
+     * Pack format for 'patterns' Reg data.
+     */
+    export const Patterns = "s"
+
+    /**
+     * Pack format for 'length' Reg data.
+     */
+    export const Length = "u8"
+}
+
 // Service Bridge constants
 export const SRV_BRIDGE = 0x1fe5b46f
 export enum BridgeReg {
@@ -945,6 +1362,13 @@ export enum BridgeReg {
      * ```
      */
     Enabled = 0x1,
+}
+
+export namespace BridgeRegPack {
+    /**
+     * Pack format for 'enabled' Reg data.
+     */
+    export const Enabled = "u8"
 }
 
 // Service Button constants
@@ -972,6 +1396,23 @@ export enum ButtonReg {
      * Read-only bool (uint8_t). Determines if the button is pressed currently.
      */
     Pressed = 0x181,
+}
+
+export namespace ButtonRegPack {
+    /**
+     * Pack format for 'pressure' Reg data.
+     */
+    export const Pressure = "u0.16"
+
+    /**
+     * Pack format for 'analog' Reg data.
+     */
+    export const Analog = "u8"
+
+    /**
+     * Pack format for 'pressed' Reg data.
+     */
+    export const Pressed = "u8"
 }
 
 export enum ButtonEvent {
@@ -1002,6 +1443,18 @@ export enum ButtonEvent {
     Hold = 0x81,
 }
 
+export namespace ButtonEventPack {
+    /**
+     * Pack format for 'up' Event data.
+     */
+    export const Up = "u32"
+
+    /**
+     * Pack format for 'hold' Event data.
+     */
+    export const Hold = "u32"
+}
+
 // Service Buzzer constants
 export const SRV_BUZZER = 0x1b57b1d7
 export enum BuzzerReg {
@@ -1013,6 +1466,13 @@ export enum BuzzerReg {
      * ```
      */
     Volume = 0x1,
+}
+
+export namespace BuzzerRegPack {
+    /**
+     * Pack format for 'volume' Reg data.
+     */
+    export const Volume = "u0.8"
 }
 
 export enum BuzzerCmd {
@@ -1034,6 +1494,18 @@ export enum BuzzerCmd {
     PlayNote = 0x81,
 }
 
+export namespace BuzzerCmdPack {
+    /**
+     * Pack format for 'play_tone' Cmd data.
+     */
+    export const PlayTone = "u16 u16 u16"
+
+    /**
+     * Pack format for 'play_note' Cmd data.
+     */
+    export const PlayNote = "u16 u0.16 u16"
+}
+
 // Service Capacitive Button constants
 export const SRV_CAPACITIVE_BUTTON = 0x2865adc9
 export enum CapacitiveButtonReg {
@@ -1045,6 +1517,13 @@ export enum CapacitiveButtonReg {
      * ```
      */
     Threshold = 0x6,
+}
+
+export namespace CapacitiveButtonRegPack {
+    /**
+     * Pack format for 'threshold' Reg data.
+     */
+    export const Threshold = "u0.16"
 }
 
 export enum CapacitiveButtonCmd {
@@ -1125,6 +1604,38 @@ export enum CharacterScreenReg {
     Columns = 0x181,
 }
 
+export namespace CharacterScreenRegPack {
+    /**
+     * Pack format for 'message' Reg data.
+     */
+    export const Message = "s"
+
+    /**
+     * Pack format for 'brightness' Reg data.
+     */
+    export const Brightness = "u0.16"
+
+    /**
+     * Pack format for 'variant' Reg data.
+     */
+    export const Variant = "u8"
+
+    /**
+     * Pack format for 'text_direction' Reg data.
+     */
+    export const TextDirection = "u8"
+
+    /**
+     * Pack format for 'rows' Reg data.
+     */
+    export const Rows = "u8"
+
+    /**
+     * Pack format for 'columns' Reg data.
+     */
+    export const Columns = "u8"
+}
+
 // Service Cloud Adapter constants
 export const SRV_CLOUD_ADAPTER = 0x14606e9c
 
@@ -1164,6 +1675,23 @@ export enum CloudAdapterCmd {
     AckCloudCommand = 0x83,
 }
 
+export namespace CloudAdapterCmdPack {
+    /**
+     * Pack format for 'upload' Cmd data.
+     */
+    export const Upload = "z r: f64"
+
+    /**
+     * Pack format for 'upload_bin' Cmd data.
+     */
+    export const UploadBin = "b"
+
+    /**
+     * Pack format for 'ack_cloud_command' Cmd data.
+     */
+    export const AckCloudCommand = "u32 u32 r: f64"
+}
+
 export enum CloudAdapterReg {
     /**
      * Read-only bool (uint8_t). Indicate whether we're currently connected to the cloud server.
@@ -1186,6 +1714,18 @@ export enum CloudAdapterReg {
     ConnectionName = 0x181,
 }
 
+export namespace CloudAdapterRegPack {
+    /**
+     * Pack format for 'connected' Reg data.
+     */
+    export const Connected = "u8"
+
+    /**
+     * Pack format for 'connection_name' Reg data.
+     */
+    export const ConnectionName = "s"
+}
+
 export enum CloudAdapterEvent {
     /**
      * Emitted when cloud requests to run some action.
@@ -1200,6 +1740,13 @@ export enum CloudAdapterEvent {
      * Emitted when we connect or disconnect from the cloud.
      */
     Change = 0x3,
+}
+
+export namespace CloudAdapterEventPack {
+    /**
+     * Pack format for 'cloud_command' Event data.
+     */
+    export const CloudCommand = "u32 z r: f64"
 }
 
 // Service Cloud Configuration constants
@@ -1271,6 +1818,38 @@ export enum CloudConfigurationReg {
     PushWatchdogPeriod = 0x81,
 }
 
+export namespace CloudConfigurationRegPack {
+    /**
+     * Pack format for 'server_name' Reg data.
+     */
+    export const ServerName = "s"
+
+    /**
+     * Pack format for 'cloud_device_id' Reg data.
+     */
+    export const CloudDeviceId = "s"
+
+    /**
+     * Pack format for 'cloud_type' Reg data.
+     */
+    export const CloudType = "s"
+
+    /**
+     * Pack format for 'connection_status' Reg data.
+     */
+    export const ConnectionStatus = "u16"
+
+    /**
+     * Pack format for 'push_period' Reg data.
+     */
+    export const PushPeriod = "u32"
+
+    /**
+     * Pack format for 'push_watchdog_period' Reg data.
+     */
+    export const PushWatchdogPeriod = "u32"
+}
+
 export enum CloudConfigurationCmd {
     /**
      * No args. Starts a connection to the cloud service
@@ -1292,6 +1871,13 @@ export enum CloudConfigurationCmd {
     SetConnectionString = 0x86,
 }
 
+export namespace CloudConfigurationCmdPack {
+    /**
+     * Pack format for 'set_connection_string' Cmd data.
+     */
+    export const SetConnectionString = "s"
+}
+
 export enum CloudConfigurationEvent {
     /**
      * Argument: connection_status ConnectionStatus (uint16_t). Raised when the connection status changes
@@ -1308,6 +1894,13 @@ export enum CloudConfigurationEvent {
     MessageSent = 0x80,
 }
 
+export namespace CloudConfigurationEventPack {
+    /**
+     * Pack format for 'connection_status_change' Event data.
+     */
+    export const ConnectionStatusChange = "u16"
+}
+
 // Service CODAL Message Bus constants
 export const SRV_CODAL_MESSAGE_BUS = 0x121ff81d
 export enum CodalMessageBusCmd {
@@ -1321,6 +1914,13 @@ export enum CodalMessageBusCmd {
     Send = 0x80,
 }
 
+export namespace CodalMessageBusCmdPack {
+    /**
+     * Pack format for 'send' Cmd data.
+     */
+    export const Send = "u16 u16"
+}
+
 export enum CodalMessageBusEvent {
     /**
      * Raised by the server is triggered by the server. The filtering logic of which event to send over Jacdac is up to the server implementation.
@@ -1330,6 +1930,13 @@ export enum CodalMessageBusEvent {
      * ```
      */
     Message = 0x80,
+}
+
+export namespace CodalMessageBusEventPack {
+    /**
+     * Pack format for 'message' Event data.
+     */
+    export const Message = "u16 u16"
 }
 
 // Service Color constants
@@ -1343,6 +1950,13 @@ export enum ColorReg {
      * ```
      */
     Color = 0x101,
+}
+
+export namespace ColorRegPack {
+    /**
+     * Pack format for 'color' Reg data.
+     */
+    export const Color = "u0.16 u0.16 u0.16"
 }
 
 // Service Compass constants
@@ -1374,6 +1988,23 @@ export enum CompassReg {
      * ```
      */
     HeadingError = 0x106,
+}
+
+export namespace CompassRegPack {
+    /**
+     * Pack format for 'heading' Reg data.
+     */
+    export const Heading = "u16.16"
+
+    /**
+     * Pack format for 'enabled' Reg data.
+     */
+    export const Enabled = "u8"
+
+    /**
+     * Pack format for 'heading_error' Reg data.
+     */
+    export const HeadingError = "u16.16"
 }
 
 export enum CompassCmd {
@@ -1502,12 +2133,52 @@ export enum ControlCmd {
      */
 }
 
+export namespace ControlCmdPack {
+    /**
+     * Pack format for 'services' Cmd data.
+     */
+    export const ServicesReport = "u16 u8 u8 r: u32"
+
+    /**
+     * Pack format for 'flood_ping' Cmd data.
+     */
+    export const FloodPing = "u32 u32 u8"
+
+    /**
+     * Pack format for 'flood_ping' Cmd data.
+     */
+    export const FloodPingReport = "u32 b"
+
+    /**
+     * Pack format for 'set_status_light' Cmd data.
+     */
+    export const SetStatusLight = "u8 u8 u8 u8"
+
+    /**
+     * Pack format for 'reliable_commands' Cmd data.
+     */
+    export const ReliableCommands = "u32"
+
+    /**
+     * Pack format for 'reliable_commands' Cmd data.
+     */
+    export const ReliableCommandsReport = "b[12]"
+}
+
+export enum ControlPipe {}
 /**
  * pipe_command WrappedCommand
  * ```
  * const [serviceSize, serviceIndex, serviceCommand, payload] = jdunpack<[number, number, number, Uint8Array]>(buf, "u8 u8 u16 b")
  * ```
  */
+
+export namespace ControlPipePack {
+    /**
+     * Pack format for 'wrapped_command' Pipe data.
+     */
+    export const WrappedCommand = "u8 u8 u16 b"
+}
 
 export enum ControlReg {
     /**
@@ -1576,6 +2247,43 @@ export enum ControlReg {
     Uptime = 0x186,
 }
 
+export namespace ControlRegPack {
+    /**
+     * Pack format for 'reset_in' Reg data.
+     */
+    export const ResetIn = "u32"
+
+    /**
+     * Pack format for 'device_description' Reg data.
+     */
+    export const DeviceDescription = "s"
+
+    /**
+     * Pack format for 'product_identifier' Reg data.
+     */
+    export const ProductIdentifier = "u32"
+
+    /**
+     * Pack format for 'bootloader_product_identifier' Reg data.
+     */
+    export const BootloaderProductIdentifier = "u32"
+
+    /**
+     * Pack format for 'firmware_version' Reg data.
+     */
+    export const FirmwareVersion = "s"
+
+    /**
+     * Pack format for 'mcu_temperature' Reg data.
+     */
+    export const McuTemperature = "i16"
+
+    /**
+     * Pack format for 'uptime' Reg data.
+     */
+    export const Uptime = "u64"
+}
+
 // Service Dashboard constants
 export const SRV_DASHBOARD = 0x1be59107
 // Service DC Current Measurement constants
@@ -1625,6 +2333,33 @@ export enum DcCurrentMeasurementReg {
      * ```
      */
     MaxMeasurement = 0x105,
+}
+
+export namespace DcCurrentMeasurementRegPack {
+    /**
+     * Pack format for 'measurement_name' Reg data.
+     */
+    export const MeasurementName = "s"
+
+    /**
+     * Pack format for 'measurement' Reg data.
+     */
+    export const Measurement = "f64"
+
+    /**
+     * Pack format for 'measurement_error' Reg data.
+     */
+    export const MeasurementError = "f64"
+
+    /**
+     * Pack format for 'min_measurement' Reg data.
+     */
+    export const MinMeasurement = "f64"
+
+    /**
+     * Pack format for 'max_measurement' Reg data.
+     */
+    export const MaxMeasurement = "f64"
 }
 
 // Service DC Voltage Measurement constants
@@ -1691,6 +2426,38 @@ export enum DcVoltageMeasurementReg {
     MaxMeasurement = 0x105,
 }
 
+export namespace DcVoltageMeasurementRegPack {
+    /**
+     * Pack format for 'measurement_type' Reg data.
+     */
+    export const MeasurementType = "u8"
+
+    /**
+     * Pack format for 'measurement_name' Reg data.
+     */
+    export const MeasurementName = "s"
+
+    /**
+     * Pack format for 'measurement' Reg data.
+     */
+    export const Measurement = "f64"
+
+    /**
+     * Pack format for 'measurement_error' Reg data.
+     */
+    export const MeasurementError = "f64"
+
+    /**
+     * Pack format for 'min_measurement' Reg data.
+     */
+    export const MinMeasurement = "f64"
+
+    /**
+     * Pack format for 'max_measurement' Reg data.
+     */
+    export const MaxMeasurement = "f64"
+}
+
 // Service DeviceScript Condition constants
 export const SRV_DEVICE_SCRIPT_CONDITION = 0x1196796d
 export enum DeviceScriptConditionCmd {
@@ -1705,6 +2472,371 @@ export enum DeviceScriptConditionEvent {
      * Triggered by `signal` command.
      */
     Signalled = 0x3,
+}
+
+// Service DeviceScript Debugger constants
+export const SRV_DEVS_DBG = 0x155b5b40
+
+export enum DevsDbgValueTag { // uint8_t
+    Number = 0x1,
+    Special = 0x2,
+    Fiber = 0x3,
+    BuiltinObject = 0x5,
+    Exotic = 0x6,
+    Unhandled = 0x7,
+    ImgBuffer = 0x20,
+    ImgStringBuiltin = 0x21,
+    ImgStringAscii = 0x22,
+    ImgStringUTF8 = 0x23,
+    ImgRole = 0x30,
+    ImgFunction = 0x31,
+    ImgRoleMember = 0x32,
+    ObjArray = 0x51,
+    ObjMap = 0x52,
+    ObjBuffer = 0x53,
+    ObjString = 0x54,
+    ObjStackFrame = 0x55,
+    ObjPacket = 0x56,
+    ObjBoundFunction = 0x57,
+    ObjOpaque = 0x58,
+    ObjAny = 0x50,
+    ObjMask = 0xf0,
+    User1 = 0xf1,
+    User2 = 0xf2,
+    User3 = 0xf3,
+    User4 = 0xf4,
+}
+
+export enum DevsDbgValueSpecial { // uint8_t
+    Null = 0x0,
+    True = 0x1,
+    False = 0x2,
+    Globals = 0x64,
+    CurrentException = 0x65,
+}
+
+export enum DevsDbgFunIdx { // uint16_t
+    None = 0x0,
+    Main = 0xc34f,
+    FirstBuiltIn = 0xc350,
+}
+
+export enum DevsDbgFiberHandle { // uint32_t
+    None = 0x0,
+}
+
+export enum DevsDbgProgramCounter {} // uint32_t
+
+export enum DevsDbgObjStackFrame { // uint32_t
+    Null = 0x0,
+}
+
+export enum DevsDbgString { // uint32_t
+    StaticIndicatorMask = 0x80000001,
+    StaticTagMask = 0x7f000000,
+    StaticIndexMask = 0xfffffe,
+    Unhandled = 0x0,
+}
+
+export enum DevsDbgSuspensionType { // uint8_t
+    None = 0x0,
+    Breakpoint = 0x1,
+    UnhandledException = 0x2,
+    HandledException = 0x3,
+    Halt = 0x4,
+    Panic = 0x5,
+    Restart = 0x6,
+    DebuggerStmt = 0x7,
+}
+
+export enum DevsDbgCmd {
+    /**
+     * Argument: results pipe (bytes). List the currently running fibers (threads).
+     *
+     * ```
+     * const [results] = jdunpack<[Uint8Array]>(buf, "b[12]")
+     * ```
+     */
+    ReadFibers = 0x80,
+
+    /**
+     * List stack frames in a fiber.
+     *
+     * ```
+     * const [results, fiberHandle] = jdunpack<[Uint8Array, DevsDbgFiberHandle]>(buf, "b[12] u32")
+     * ```
+     */
+    ReadStack = 0x81,
+
+    /**
+     * Read variable slots in a stack frame, elements of an array, etc.
+     *
+     * ```
+     * const [results, v0, tag, start, length] = jdunpack<[Uint8Array, number, DevsDbgValueTag, number, number]>(buf, "b[12] u32 u8 x[1] u16 u16")
+     * ```
+     */
+    ReadIndexedValues = 0x82,
+
+    /**
+     * Read variable slots in an object.
+     *
+     * ```
+     * const [results, v0, tag] = jdunpack<[Uint8Array, number, DevsDbgValueTag]>(buf, "b[12] u32 u8")
+     * ```
+     */
+    ReadNamedValues = 0x83,
+
+    /**
+     * Read a specific value.
+     *
+     * ```
+     * const [v0, tag] = jdunpack<[number, DevsDbgValueTag]>(buf, "u32 u8")
+     * ```
+     */
+    ReadValue = 0x84,
+
+    /**
+     * report ReadValue
+     * ```
+     * const [v0, v1, fnIdx, tag] = jdunpack<[number, number, DevsDbgFunIdx, DevsDbgValueTag]>(buf, "u32 u32 u16 u8")
+     * ```
+     */
+
+    /**
+     * Read bytes of a string (UTF8) or buffer value.
+     *
+     * ```
+     * const [results, v0, tag, start, length] = jdunpack<[Uint8Array, number, DevsDbgValueTag, number, number]>(buf, "b[12] u32 u8 x[1] u16 u16")
+     * ```
+     */
+    ReadBytes = 0x85,
+
+    /**
+     * Set breakpoint(s) at a location(s).
+     *
+     * ```
+     * const [breakPc] = jdunpack<[DevsDbgProgramCounter[]]>(buf, "u32[]")
+     * ```
+     */
+    SetBreakpoints = 0x90,
+
+    /**
+     * Clear breakpoint(s) at a location(s).
+     *
+     * ```
+     * const [breakPc] = jdunpack<[DevsDbgProgramCounter[]]>(buf, "u32[]")
+     * ```
+     */
+    ClearBreakpoints = 0x91,
+
+    /**
+     * No args. Clear all breakpoints.
+     */
+    ClearAllBreakpoints = 0x92,
+
+    /**
+     * No args. Resume program execution after a breakpoint was hit.
+     */
+    Resume = 0x93,
+
+    /**
+     * No args. Try suspending current program. Client needs to wait for `suspended` event afterwards.
+     */
+    Halt = 0x94,
+
+    /**
+     * No args. Start the program from the beginning and halt on first instruction.
+     */
+    RestartAndHalt = 0x95,
+}
+
+export namespace DevsDbgCmdPack {
+    /**
+     * Pack format for 'read_fibers' Cmd data.
+     */
+    export const ReadFibers = "b[12]"
+
+    /**
+     * Pack format for 'read_stack' Cmd data.
+     */
+    export const ReadStack = "b[12] u32"
+
+    /**
+     * Pack format for 'read_indexed_values' Cmd data.
+     */
+    export const ReadIndexedValues = "b[12] u32 u8 u8 u16 u16"
+
+    /**
+     * Pack format for 'read_named_values' Cmd data.
+     */
+    export const ReadNamedValues = "b[12] u32 u8"
+
+    /**
+     * Pack format for 'read_value' Cmd data.
+     */
+    export const ReadValue = "u32 u8"
+
+    /**
+     * Pack format for 'read_value' Cmd data.
+     */
+    export const ReadValueReport = "u32 u32 u16 u8"
+
+    /**
+     * Pack format for 'read_bytes' Cmd data.
+     */
+    export const ReadBytes = "b[12] u32 u8 u8 u16 u16"
+
+    /**
+     * Pack format for 'set_breakpoints' Cmd data.
+     */
+    export const SetBreakpoints = "r: u32"
+
+    /**
+     * Pack format for 'clear_breakpoints' Cmd data.
+     */
+    export const ClearBreakpoints = "r: u32"
+}
+
+export enum DevsDbgPipe {}
+/**
+ * pipe_report Fiber
+ * ```
+ * const [handle, initialFn, currFn] = jdunpack<[DevsDbgFiberHandle, DevsDbgFunIdx, DevsDbgFunIdx]>(buf, "u32 u16 u16")
+ * ```
+ */
+
+/**
+ * pipe_report Stackframe
+ * ```
+ * const [self, pc, closure, fnIdx] = jdunpack<[DevsDbgObjStackFrame, DevsDbgProgramCounter, DevsDbgObjStackFrame, DevsDbgFunIdx]>(buf, "u32 u32 u32 u16 x[2]")
+ * ```
+ */
+
+/**
+ * pipe_report Value
+ * ```
+ * const [v0, v1, fnIdx, tag] = jdunpack<[number, number, DevsDbgFunIdx, DevsDbgValueTag]>(buf, "u32 u32 u16 u8")
+ * ```
+ */
+
+/**
+ * pipe_report KeyValue
+ * ```
+ * const [key, v0, v1, fnIdx, tag] = jdunpack<[DevsDbgString, number, number, DevsDbgFunIdx, DevsDbgValueTag]>(buf, "u32 u32 u32 u16 u8")
+ * ```
+ */
+
+/**
+ * pipe_report BytesValue
+ * ```
+ * const [data] = jdunpack<[Uint8Array]>(buf, "b")
+ * ```
+ */
+
+export namespace DevsDbgPipePack {
+    /**
+     * Pack format for 'fiber' Pipe data.
+     */
+    export const Fiber = "u32 u16 u16"
+
+    /**
+     * Pack format for 'stackframe' Pipe data.
+     */
+    export const Stackframe = "u32 u32 u32 u16 u16"
+
+    /**
+     * Pack format for 'value' Pipe data.
+     */
+    export const Value = "u32 u32 u16 u8"
+
+    /**
+     * Pack format for 'key_value' Pipe data.
+     */
+    export const KeyValue = "u32 u32 u32 u16 u8"
+
+    /**
+     * Pack format for 'bytes_value' Pipe data.
+     */
+    export const BytesValue = "b"
+}
+
+export enum DevsDbgReg {
+    /**
+     * Read-write bool (uint8_t). Turn on/off the debugger interface.
+     *
+     * ```
+     * const [enabled] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Enabled = 0x1,
+
+    /**
+     * Read-write bool (uint8_t). Wheather to place breakpoint at unhandled exception.
+     *
+     * ```
+     * const [breakAtUnhandledExn] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    BreakAtUnhandledExn = 0x80,
+
+    /**
+     * Read-write bool (uint8_t). Wheather to place breakpoint at handled exception.
+     *
+     * ```
+     * const [breakAtHandledExn] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    BreakAtHandledExn = 0x81,
+
+    /**
+     * Read-only bool (uint8_t). Indicates if the program is currently suspended.
+     * Most commands can only be executed when the program is suspended.
+     *
+     * ```
+     * const [isSuspended] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    IsSuspended = 0x180,
+}
+
+export namespace DevsDbgRegPack {
+    /**
+     * Pack format for 'enabled' Reg data.
+     */
+    export const Enabled = "u8"
+
+    /**
+     * Pack format for 'break_at_unhandled_exn' Reg data.
+     */
+    export const BreakAtUnhandledExn = "u8"
+
+    /**
+     * Pack format for 'break_at_handled_exn' Reg data.
+     */
+    export const BreakAtHandledExn = "u8"
+
+    /**
+     * Pack format for 'is_suspended' Reg data.
+     */
+    export const IsSuspended = "u8"
+}
+
+export enum DevsDbgEvent {
+    /**
+     * Emitted when the program hits a breakpoint or similar event in the specified fiber.
+     *
+     * ```
+     * const [fiber, type] = jdunpack<[DevsDbgFiberHandle, DevsDbgSuspensionType]>(buf, "u32 u8")
+     * ```
+     */
+    Suspended = 0x80,
+}
+
+export namespace DevsDbgEventPack {
+    /**
+     * Pack format for 'suspended' Event data.
+     */
+    export const Suspended = "u32 u8"
 }
 
 // Service DeviceScript Manager constants
@@ -1762,12 +2894,42 @@ export enum DeviceScriptManagerCmd {
     LogMessage = 0x82,
 }
 
+export namespace DeviceScriptManagerCmdPack {
+    /**
+     * Pack format for 'deploy_bytecode' Cmd data.
+     */
+    export const DeployBytecode = "u32"
+
+    /**
+     * Pack format for 'deploy_bytecode' Cmd data.
+     */
+    export const DeployBytecodeReport = "u16"
+
+    /**
+     * Pack format for 'read_bytecode' Cmd data.
+     */
+    export const ReadBytecode = "b[12]"
+
+    /**
+     * Pack format for 'log_message' Cmd data.
+     */
+    export const LogMessage = "u8 u8 s"
+}
+
+export enum DeviceScriptManagerPipe {}
 /**
  * pipe_report Bytecode
  * ```
  * const [data] = jdunpack<[Uint8Array]>(buf, "b")
  * ```
  */
+
+export namespace DeviceScriptManagerPipePack {
+    /**
+     * Pack format for 'bytecode' Pipe data.
+     */
+    export const Bytecode = "b"
+}
 
 export enum DeviceScriptManagerReg {
     /**
@@ -1839,6 +3001,43 @@ export enum DeviceScriptManagerReg {
     RuntimeVersion = 0x183,
 }
 
+export namespace DeviceScriptManagerRegPack {
+    /**
+     * Pack format for 'running' Reg data.
+     */
+    export const Running = "u8"
+
+    /**
+     * Pack format for 'autostart' Reg data.
+     */
+    export const Autostart = "u8"
+
+    /**
+     * Pack format for 'logging' Reg data.
+     */
+    export const Logging = "u8"
+
+    /**
+     * Pack format for 'program_size' Reg data.
+     */
+    export const ProgramSize = "u32"
+
+    /**
+     * Pack format for 'program_hash' Reg data.
+     */
+    export const ProgramHash = "u32"
+
+    /**
+     * Pack format for 'program_sha256' Reg data.
+     */
+    export const ProgramSha256 = "b[32]"
+
+    /**
+     * Pack format for 'runtime_version' Reg data.
+     */
+    export const RuntimeVersion = "u16 u8 u8"
+}
+
 export enum DeviceScriptManagerEvent {
     /**
      * Emitted when the program calls `panic(panic_code)` or `reboot()` (`panic_code == 0` in that case).
@@ -1855,6 +3054,13 @@ export enum DeviceScriptManagerEvent {
      * Emitted after bytecode of the program has changed.
      */
     ProgramChange = 0x3,
+}
+
+export namespace DeviceScriptManagerEventPack {
+    /**
+     * Pack format for 'program_panic' Event data.
+     */
+    export const ProgramPanic = "u32 u32"
 }
 
 // Service Distance constants
@@ -1914,6 +3120,33 @@ export enum DistanceReg {
     Variant = 0x107,
 }
 
+export namespace DistanceRegPack {
+    /**
+     * Pack format for 'distance' Reg data.
+     */
+    export const Distance = "u16.16"
+
+    /**
+     * Pack format for 'distance_error' Reg data.
+     */
+    export const DistanceError = "u16.16"
+
+    /**
+     * Pack format for 'min_range' Reg data.
+     */
+    export const MinRange = "u16.16"
+
+    /**
+     * Pack format for 'max_range' Reg data.
+     */
+    export const MaxRange = "u16.16"
+
+    /**
+     * Pack format for 'variant' Reg data.
+     */
+    export const Variant = "u8"
+}
+
 // Service DMX constants
 export const SRV_DMX = 0x11cf8c05
 export enum DmxReg {
@@ -1927,6 +3160,13 @@ export enum DmxReg {
     Enabled = 0x1,
 }
 
+export namespace DmxRegPack {
+    /**
+     * Pack format for 'enabled' Reg data.
+     */
+    export const Enabled = "u8"
+}
+
 export enum DmxCmd {
     /**
      * Argument: channels bytes. Send a DMX packet, up to 236bytes long, including the start code.
@@ -1936,6 +3176,13 @@ export enum DmxCmd {
      * ```
      */
     Send = 0x80,
+}
+
+export namespace DmxCmdPack {
+    /**
+     * Pack format for 'send' Cmd data.
+     */
+    export const Send = "b"
 }
 
 // Service Dot Matrix constants
@@ -1994,6 +3241,33 @@ export enum DotMatrixReg {
     Variant = 0x107,
 }
 
+export namespace DotMatrixRegPack {
+    /**
+     * Pack format for 'dots' Reg data.
+     */
+    export const Dots = "b"
+
+    /**
+     * Pack format for 'brightness' Reg data.
+     */
+    export const Brightness = "u0.8"
+
+    /**
+     * Pack format for 'rows' Reg data.
+     */
+    export const Rows = "u16"
+
+    /**
+     * Pack format for 'columns' Reg data.
+     */
+    export const Columns = "u16"
+
+    /**
+     * Pack format for 'variant' Reg data.
+     */
+    export const Variant = "u8"
+}
+
 // Service Dual Motors constants
 export const SRV_DUAL_MOTORS = 0x1529d537
 export enum DualMotorsReg {
@@ -2042,6 +3316,33 @@ export enum DualMotorsReg {
      * ```
      */
     Reversible = 0x182,
+}
+
+export namespace DualMotorsRegPack {
+    /**
+     * Pack format for 'speed' Reg data.
+     */
+    export const Speed = "i1.15 i1.15"
+
+    /**
+     * Pack format for 'enabled' Reg data.
+     */
+    export const Enabled = "u8"
+
+    /**
+     * Pack format for 'load_torque' Reg data.
+     */
+    export const LoadTorque = "u16.16"
+
+    /**
+     * Pack format for 'load_rotation_speed' Reg data.
+     */
+    export const LoadRotationSpeed = "u16.16"
+
+    /**
+     * Pack format for 'reversible' Reg data.
+     */
+    export const Reversible = "u8"
 }
 
 // Service Equivalent CO₂ constants
@@ -2099,6 +3400,33 @@ export enum ECO2Reg {
     Variant = 0x107,
 }
 
+export namespace ECO2RegPack {
+    /**
+     * Pack format for 'e_CO2' Reg data.
+     */
+    export const ECO2 = "u22.10"
+
+    /**
+     * Pack format for 'e_CO2_error' Reg data.
+     */
+    export const ECO2Error = "u22.10"
+
+    /**
+     * Pack format for 'min_e_CO2' Reg data.
+     */
+    export const MinECO2 = "u22.10"
+
+    /**
+     * Pack format for 'max_e_CO2' Reg data.
+     */
+    export const MaxECO2 = "u22.10"
+
+    /**
+     * Pack format for 'variant' Reg data.
+     */
+    export const Variant = "u8"
+}
+
 // Service Flex constants
 export const SRV_FLEX = 0x1f47c6c6
 export enum FlexReg {
@@ -2119,6 +3447,18 @@ export enum FlexReg {
      * ```
      */
     Length = 0x180,
+}
+
+export namespace FlexRegPack {
+    /**
+     * Pack format for 'bending' Reg data.
+     */
+    export const Bending = "i1.15"
+
+    /**
+     * Pack format for 'length' Reg data.
+     */
+    export const Length = "u16"
 }
 
 // Service Gamepad constants
@@ -2180,6 +3520,23 @@ export enum GamepadReg {
     ButtonsAvailable = 0x180,
 }
 
+export namespace GamepadRegPack {
+    /**
+     * Pack format for 'direction' Reg data.
+     */
+    export const Direction = "u32 i1.15 i1.15"
+
+    /**
+     * Pack format for 'variant' Reg data.
+     */
+    export const Variant = "u8"
+
+    /**
+     * Pack format for 'buttons_available' Reg data.
+     */
+    export const ButtonsAvailable = "u32"
+}
+
 export enum GamepadEvent {
     /**
      * Argument: buttons Buttons (uint32_t). Emitted whenever the state of buttons changes.
@@ -2189,6 +3546,13 @@ export enum GamepadEvent {
      * ```
      */
     ButtonsChanged = 0x3,
+}
+
+export namespace GamepadEventPack {
+    /**
+     * Pack format for 'buttons_changed' Event data.
+     */
+    export const ButtonsChanged = "u32"
 }
 
 // Service Gyroscope constants
@@ -2232,6 +3596,28 @@ export enum GyroscopeReg {
     MaxRatesSupported = 0x10a,
 }
 
+export namespace GyroscopeRegPack {
+    /**
+     * Pack format for 'rotation_rates' Reg data.
+     */
+    export const RotationRates = "i12.20 i12.20 i12.20"
+
+    /**
+     * Pack format for 'rotation_rates_error' Reg data.
+     */
+    export const RotationRatesError = "u12.20"
+
+    /**
+     * Pack format for 'max_rate' Reg data.
+     */
+    export const MaxRate = "u12.20"
+
+    /**
+     * Pack format for 'max_rates_supported' Reg data.
+     */
+    export const MaxRatesSupported = "r: u12.20"
+}
+
 // Service Heart Rate constants
 export const SRV_HEART_RATE = 0x166c6dc4
 
@@ -2272,6 +3658,23 @@ export enum HeartRateReg {
     Variant = 0x107,
 }
 
+export namespace HeartRateRegPack {
+    /**
+     * Pack format for 'heart_rate' Reg data.
+     */
+    export const HeartRate = "u16.16"
+
+    /**
+     * Pack format for 'heart_rate_error' Reg data.
+     */
+    export const HeartRateError = "u16.16"
+
+    /**
+     * Pack format for 'variant' Reg data.
+     */
+    export const Variant = "u8"
+}
+
 // Service HID Joystick constants
 export const SRV_HID_JOYSTICK = 0x1a112155
 export enum HidJoystickReg {
@@ -2303,6 +3706,23 @@ export enum HidJoystickReg {
     AxisCount = 0x182,
 }
 
+export namespace HidJoystickRegPack {
+    /**
+     * Pack format for 'button_count' Reg data.
+     */
+    export const ButtonCount = "u8"
+
+    /**
+     * Pack format for 'buttons_analog' Reg data.
+     */
+    export const ButtonsAnalog = "u32"
+
+    /**
+     * Pack format for 'axis_count' Reg data.
+     */
+    export const AxisCount = "u8"
+}
+
 export enum HidJoystickCmd {
     /**
      * Sets the up/down button state, one byte per button, supports analog buttons. For digital buttons, use `0` for released, `1` for pressed.
@@ -2321,6 +3741,18 @@ export enum HidJoystickCmd {
      * ```
      */
     SetAxis = 0x81,
+}
+
+export namespace HidJoystickCmdPack {
+    /**
+     * Pack format for 'set_buttons' Cmd data.
+     */
+    export const SetButtons = "r: u0.8"
+
+    /**
+     * Pack format for 'set_axis' Cmd data.
+     */
+    export const SetAxis = "r: i1.15"
 }
 
 // Service HID Keyboard constants
@@ -2494,6 +3926,13 @@ export enum HidKeyboardCmd {
     Clear = 0x81,
 }
 
+export namespace HidKeyboardCmdPack {
+    /**
+     * Pack format for 'key' Cmd data.
+     */
+    export const Key = "r: u16 u8 u8"
+}
+
 // Service HID Mouse constants
 export const SRV_HID_MOUSE = 0x1885dc1c
 
@@ -2543,6 +3982,23 @@ export enum HidMouseCmd {
     Wheel = 0x82,
 }
 
+export namespace HidMouseCmdPack {
+    /**
+     * Pack format for 'set_button' Cmd data.
+     */
+    export const SetButton = "u16 u8"
+
+    /**
+     * Pack format for 'move' Cmd data.
+     */
+    export const Move = "i16 i16 u16"
+
+    /**
+     * Pack format for 'wheel' Cmd data.
+     */
+    export const Wheel = "i16 u16"
+}
+
 // Service Humidity constants
 export const SRV_HUMIDITY = 0x16c810b8
 export enum HumidityReg {
@@ -2583,6 +4039,28 @@ export enum HumidityReg {
     MaxHumidity = 0x105,
 }
 
+export namespace HumidityRegPack {
+    /**
+     * Pack format for 'humidity' Reg data.
+     */
+    export const Humidity = "u22.10"
+
+    /**
+     * Pack format for 'humidity_error' Reg data.
+     */
+    export const HumidityError = "u22.10"
+
+    /**
+     * Pack format for 'min_humidity' Reg data.
+     */
+    export const MinHumidity = "u22.10"
+
+    /**
+     * Pack format for 'max_humidity' Reg data.
+     */
+    export const MaxHumidity = "u22.10"
+}
+
 // Service Illuminance constants
 export const SRV_ILLUMINANCE = 0x1e6ecaf2
 export enum IlluminanceReg {
@@ -2603,6 +4081,18 @@ export enum IlluminanceReg {
      * ```
      */
     IlluminanceError = 0x106,
+}
+
+export namespace IlluminanceRegPack {
+    /**
+     * Pack format for 'illuminance' Reg data.
+     */
+    export const Illuminance = "u22.10"
+
+    /**
+     * Pack format for 'illuminance_error' Reg data.
+     */
+    export const IlluminanceError = "u22.10"
 }
 
 // Service Indexed screen constants
@@ -2626,6 +4116,18 @@ export enum IndexedScreenCmd {
      * ```
      */
     SetPixels = 0x83,
+}
+
+export namespace IndexedScreenCmdPack {
+    /**
+     * Pack format for 'start_update' Cmd data.
+     */
+    export const StartUpdate = "u16 u16 u16 u16"
+
+    /**
+     * Pack format for 'set_pixels' Cmd data.
+     */
+    export const SetPixels = "b"
 }
 
 export enum IndexedScreenReg {
@@ -2714,6 +4216,48 @@ export enum IndexedScreenReg {
      * ```
      */
     Rotation = 0x83,
+}
+
+export namespace IndexedScreenRegPack {
+    /**
+     * Pack format for 'brightness' Reg data.
+     */
+    export const Brightness = "u0.8"
+
+    /**
+     * Pack format for 'palette' Reg data.
+     */
+    export const Palette = "r: u8 u8 u8 u8"
+
+    /**
+     * Pack format for 'bits_per_pixel' Reg data.
+     */
+    export const BitsPerPixel = "u8"
+
+    /**
+     * Pack format for 'width' Reg data.
+     */
+    export const Width = "u16"
+
+    /**
+     * Pack format for 'height' Reg data.
+     */
+    export const Height = "u16"
+
+    /**
+     * Pack format for 'width_major' Reg data.
+     */
+    export const WidthMajor = "u8"
+
+    /**
+     * Pack format for 'up_sampling' Reg data.
+     */
+    export const UpSampling = "u8"
+
+    /**
+     * Pack format for 'rotation' Reg data.
+     */
+    export const Rotation = "u16"
 }
 
 // Service Infrastructure constants
@@ -2829,6 +4373,58 @@ export enum LedReg {
     Variant = 0x107,
 }
 
+export namespace LedRegPack {
+    /**
+     * Pack format for 'pixels' Reg data.
+     */
+    export const Pixels = "b"
+
+    /**
+     * Pack format for 'brightness' Reg data.
+     */
+    export const Brightness = "u0.8"
+
+    /**
+     * Pack format for 'actual_brightness' Reg data.
+     */
+    export const ActualBrightness = "u0.8"
+
+    /**
+     * Pack format for 'num_pixels' Reg data.
+     */
+    export const NumPixels = "u16"
+
+    /**
+     * Pack format for 'num_columns' Reg data.
+     */
+    export const NumColumns = "u16"
+
+    /**
+     * Pack format for 'max_power' Reg data.
+     */
+    export const MaxPower = "u16"
+
+    /**
+     * Pack format for 'leds_per_pixel' Reg data.
+     */
+    export const LedsPerPixel = "u16"
+
+    /**
+     * Pack format for 'wave_length' Reg data.
+     */
+    export const WaveLength = "u16"
+
+    /**
+     * Pack format for 'luminous_intensity' Reg data.
+     */
+    export const LuminousIntensity = "u16"
+
+    /**
+     * Pack format for 'variant' Reg data.
+     */
+    export const Variant = "u8"
+}
+
 // Service LED Single constants
 export const SRV_LED_SINGLE = 0x1e3048f8
 
@@ -2848,6 +4444,13 @@ export enum LedSingleCmd {
      * ```
      */
     Animate = 0x80,
+}
+
+export namespace LedSingleCmdPack {
+    /**
+     * Pack format for 'animate' Cmd data.
+     */
+    export const Animate = "u8 u8 u8 u8"
 }
 
 export enum LedSingleReg {
@@ -2904,6 +4507,38 @@ export enum LedSingleReg {
      * ```
      */
     Variant = 0x107,
+}
+
+export namespace LedSingleRegPack {
+    /**
+     * Pack format for 'color' Reg data.
+     */
+    export const Color = "u8 u8 u8"
+
+    /**
+     * Pack format for 'max_power' Reg data.
+     */
+    export const MaxPower = "u16"
+
+    /**
+     * Pack format for 'led_count' Reg data.
+     */
+    export const LedCount = "u16"
+
+    /**
+     * Pack format for 'wave_length' Reg data.
+     */
+    export const WaveLength = "u16"
+
+    /**
+     * Pack format for 'luminous_intensity' Reg data.
+     */
+    export const LuminousIntensity = "u16"
+
+    /**
+     * Pack format for 'variant' Reg data.
+     */
+    export const Variant = "u8"
 }
 
 // Service LED Strip constants
@@ -3017,6 +4652,53 @@ export enum LedStripReg {
     Variant = 0x107,
 }
 
+export namespace LedStripRegPack {
+    /**
+     * Pack format for 'brightness' Reg data.
+     */
+    export const Brightness = "u0.8"
+
+    /**
+     * Pack format for 'actual_brightness' Reg data.
+     */
+    export const ActualBrightness = "u0.8"
+
+    /**
+     * Pack format for 'light_type' Reg data.
+     */
+    export const LightType = "u8"
+
+    /**
+     * Pack format for 'num_pixels' Reg data.
+     */
+    export const NumPixels = "u16"
+
+    /**
+     * Pack format for 'num_columns' Reg data.
+     */
+    export const NumColumns = "u16"
+
+    /**
+     * Pack format for 'max_power' Reg data.
+     */
+    export const MaxPower = "u16"
+
+    /**
+     * Pack format for 'max_pixels' Reg data.
+     */
+    export const MaxPixels = "u16"
+
+    /**
+     * Pack format for 'num_repeats' Reg data.
+     */
+    export const NumRepeats = "u16"
+
+    /**
+     * Pack format for 'variant' Reg data.
+     */
+    export const Variant = "u8"
+}
+
 export enum LedStripCmd {
     /**
      * Argument: program bytes. Run the given light "program". See service description for details.
@@ -3026,6 +4708,13 @@ export enum LedStripCmd {
      * ```
      */
     Run = 0x81,
+}
+
+export namespace LedStripCmdPack {
+    /**
+     * Pack format for 'run' Cmd data.
+     */
+    export const Run = "b"
 }
 
 // Service Light bulb constants
@@ -3049,6 +4738,18 @@ export enum LightBulbReg {
      * ```
      */
     Dimmable = 0x180,
+}
+
+export namespace LightBulbRegPack {
+    /**
+     * Pack format for 'brightness' Reg data.
+     */
+    export const Brightness = "u0.16"
+
+    /**
+     * Pack format for 'dimmable' Reg data.
+     */
+    export const Dimmable = "u8"
 }
 
 // Service Light level constants
@@ -3088,6 +4789,23 @@ export enum LightLevelReg {
     Variant = 0x107,
 }
 
+export namespace LightLevelRegPack {
+    /**
+     * Pack format for 'light_level' Reg data.
+     */
+    export const LightLevel = "u0.16"
+
+    /**
+     * Pack format for 'light_level_error' Reg data.
+     */
+    export const LightLevelError = "u0.16"
+
+    /**
+     * Pack format for 'variant' Reg data.
+     */
+    export const Variant = "u8"
+}
+
 // Service Logger constants
 export const SRV_LOGGER = 0x12dc1fca
 
@@ -3112,6 +4830,13 @@ export enum LoggerReg {
      * ```
      */
     MinPriority = 0x80,
+}
+
+export namespace LoggerRegPack {
+    /**
+     * Pack format for 'min_priority' Reg data.
+     */
+    export const MinPriority = "u8"
 }
 
 export enum LoggerCmd {
@@ -3150,6 +4875,28 @@ export enum LoggerCmd {
      * ```
      */
     Error = 0x83,
+}
+
+export namespace LoggerCmdPack {
+    /**
+     * Pack format for 'debug' Cmd data.
+     */
+    export const Debug = "s"
+
+    /**
+     * Pack format for 'log' Cmd data.
+     */
+    export const Log = "s"
+
+    /**
+     * Pack format for 'warn' Cmd data.
+     */
+    export const Warn = "s"
+
+    /**
+     * Pack format for 'error' Cmd data.
+     */
+    export const Error = "s"
 }
 
 // Service Magnetic field level constants
@@ -3197,6 +4944,23 @@ export enum MagneticFieldLevelReg {
     Variant = 0x107,
 }
 
+export namespace MagneticFieldLevelRegPack {
+    /**
+     * Pack format for 'strength' Reg data.
+     */
+    export const Strength = "i1.15"
+
+    /**
+     * Pack format for 'detected' Reg data.
+     */
+    export const Detected = "u8"
+
+    /**
+     * Pack format for 'variant' Reg data.
+     */
+    export const Variant = "u8"
+}
+
 export enum MagneticFieldLevelEvent {
     /**
      * Emitted when strong-enough magnetic field is detected.
@@ -3230,6 +4994,18 @@ export enum MagnetometerReg {
      * ```
      */
     ForcesError = 0x106,
+}
+
+export namespace MagnetometerRegPack {
+    /**
+     * Pack format for 'forces' Reg data.
+     */
+    export const Forces = "i32 i32 i32"
+
+    /**
+     * Pack format for 'forces_error' Reg data.
+     */
+    export const ForcesError = "i32"
 }
 
 export enum MagnetometerCmd {
@@ -3300,6 +5076,33 @@ export enum MatrixKeypadReg {
     Variant = 0x107,
 }
 
+export namespace MatrixKeypadRegPack {
+    /**
+     * Pack format for 'pressed' Reg data.
+     */
+    export const Pressed = "r: u8"
+
+    /**
+     * Pack format for 'rows' Reg data.
+     */
+    export const Rows = "u8"
+
+    /**
+     * Pack format for 'columns' Reg data.
+     */
+    export const Columns = "u8"
+
+    /**
+     * Pack format for 'labels' Reg data.
+     */
+    export const Labels = "r: z"
+
+    /**
+     * Pack format for 'variant' Reg data.
+     */
+    export const Variant = "u8"
+}
+
 export enum MatrixKeypadEvent {
     /**
      * Argument: uint8_t. Emitted when a key, at the given index, goes from inactive (`pressed == 0`) to active.
@@ -3338,6 +5141,28 @@ export enum MatrixKeypadEvent {
     LongClick = 0x81,
 }
 
+export namespace MatrixKeypadEventPack {
+    /**
+     * Pack format for 'down' Event data.
+     */
+    export const Down = "u8"
+
+    /**
+     * Pack format for 'up' Event data.
+     */
+    export const Up = "u8"
+
+    /**
+     * Pack format for 'click' Event data.
+     */
+    export const Click = "u8"
+
+    /**
+     * Pack format for 'long_click' Event data.
+     */
+    export const LongClick = "u8"
+}
+
 // Service Microphone constants
 export const SRV_MICROPHONE = 0x113dac86
 export enum MicrophoneCmd {
@@ -3354,6 +5179,13 @@ export enum MicrophoneCmd {
     Sample = 0x81,
 }
 
+export namespace MicrophoneCmdPack {
+    /**
+     * Pack format for 'sample' Cmd data.
+     */
+    export const Sample = "b[12] u32"
+}
+
 export enum MicrophoneReg {
     /**
      * Read-write μs uint32_t. Get or set microphone sampling period.
@@ -3364,6 +5196,13 @@ export enum MicrophoneReg {
      * ```
      */
     SamplingPeriod = 0x80,
+}
+
+export namespace MicrophoneRegPack {
+    /**
+     * Pack format for 'sampling_period' Reg data.
+     */
+    export const SamplingPeriod = "u32"
 }
 
 // Service MIDI output constants
@@ -3377,6 +5216,13 @@ export enum MidiOutputReg {
      * ```
      */
     Enabled = 0x1,
+}
+
+export namespace MidiOutputRegPack {
+    /**
+     * Pack format for 'enabled' Reg data.
+     */
+    export const Enabled = "u8"
 }
 
 export enum MidiOutputCmd {
@@ -3393,6 +5239,13 @@ export enum MidiOutputCmd {
      * ```
      */
     Send = 0x81,
+}
+
+export namespace MidiOutputCmdPack {
+    /**
+     * Pack format for 'send' Cmd data.
+     */
+    export const Send = "b"
 }
 
 // Service Model Runner constants
@@ -3440,6 +5293,28 @@ export enum ModelRunnerCmd {
      * const [inputs] = jdunpack<[number]>(buf, "u16")
      * ```
      */
+}
+
+export namespace ModelRunnerCmdPack {
+    /**
+     * Pack format for 'set_model' Cmd data.
+     */
+    export const SetModel = "u32"
+
+    /**
+     * Pack format for 'set_model' Cmd data.
+     */
+    export const SetModelReport = "u16"
+
+    /**
+     * Pack format for 'predict' Cmd data.
+     */
+    export const Predict = "b[12]"
+
+    /**
+     * Pack format for 'predict' Cmd data.
+     */
+    export const PredictReport = "u16"
 }
 
 export enum ModelRunnerReg {
@@ -3550,6 +5425,63 @@ export enum ModelRunnerReg {
     Parallel = 0x188,
 }
 
+export namespace ModelRunnerRegPack {
+    /**
+     * Pack format for 'auto_invoke_every' Reg data.
+     */
+    export const AutoInvokeEvery = "u16"
+
+    /**
+     * Pack format for 'outputs' Reg data.
+     */
+    export const Outputs = "r: f32"
+
+    /**
+     * Pack format for 'input_shape' Reg data.
+     */
+    export const InputShape = "r: u16"
+
+    /**
+     * Pack format for 'output_shape' Reg data.
+     */
+    export const OutputShape = "r: u16"
+
+    /**
+     * Pack format for 'last_run_time' Reg data.
+     */
+    export const LastRunTime = "u32"
+
+    /**
+     * Pack format for 'allocated_arena_size' Reg data.
+     */
+    export const AllocatedArenaSize = "u32"
+
+    /**
+     * Pack format for 'model_size' Reg data.
+     */
+    export const ModelSize = "u32"
+
+    /**
+     * Pack format for 'last_error' Reg data.
+     */
+    export const LastError = "s"
+
+    /**
+     * Pack format for 'format' Reg data.
+     */
+    export const Format = "u32"
+
+    /**
+     * Pack format for 'format_version' Reg data.
+     */
+    export const FormatVersion = "u32"
+
+    /**
+     * Pack format for 'parallel' Reg data.
+     */
+    export const Parallel = "u8"
+}
+
 // Service Motion constants
 export const SRV_MOTION = 0x1179a749
 
@@ -3593,6 +5525,28 @@ export enum MotionReg {
      * ```
      */
     Variant = 0x107,
+}
+
+export namespace MotionRegPack {
+    /**
+     * Pack format for 'moving' Reg data.
+     */
+    export const Moving = "u8"
+
+    /**
+     * Pack format for 'max_distance' Reg data.
+     */
+    export const MaxDistance = "u16.16"
+
+    /**
+     * Pack format for 'angle' Reg data.
+     */
+    export const Angle = "u16"
+
+    /**
+     * Pack format for 'variant' Reg data.
+     */
+    export const Variant = "u8"
 }
 
 export enum MotionEvent {
@@ -3653,6 +5607,33 @@ export enum MotorReg {
     Reversible = 0x182,
 }
 
+export namespace MotorRegPack {
+    /**
+     * Pack format for 'speed' Reg data.
+     */
+    export const Speed = "i1.15"
+
+    /**
+     * Pack format for 'enabled' Reg data.
+     */
+    export const Enabled = "u8"
+
+    /**
+     * Pack format for 'load_torque' Reg data.
+     */
+    export const LoadTorque = "u16.16"
+
+    /**
+     * Pack format for 'load_rotation_speed' Reg data.
+     */
+    export const LoadRotationSpeed = "u16.16"
+
+    /**
+     * Pack format for 'reversible' Reg data.
+     */
+    export const Reversible = "u8"
+}
+
 // Service Multitouch constants
 export const SRV_MULTITOUCH = 0x1d112ab5
 export enum MultitouchReg {
@@ -3666,6 +5647,13 @@ export enum MultitouchReg {
      * ```
      */
     Capacity = 0x101,
+}
+
+export namespace MultitouchRegPack {
+    /**
+     * Pack format for 'capacity' Reg data.
+     */
+    export const Capacity = "r: i16"
 }
 
 export enum MultitouchEvent {
@@ -3724,6 +5712,38 @@ export enum MultitouchEvent {
     SwipeNeg = 0x91,
 }
 
+export namespace MultitouchEventPack {
+    /**
+     * Pack format for 'touch' Event data.
+     */
+    export const Touch = "u8"
+
+    /**
+     * Pack format for 'release' Event data.
+     */
+    export const Release = "u8"
+
+    /**
+     * Pack format for 'tap' Event data.
+     */
+    export const Tap = "u8"
+
+    /**
+     * Pack format for 'long_press' Event data.
+     */
+    export const LongPress = "u8"
+
+    /**
+     * Pack format for 'swipe_pos' Event data.
+     */
+    export const SwipePos = "u16 u8 u8"
+
+    /**
+     * Pack format for 'swipe_neg' Event data.
+     */
+    export const SwipeNeg = "u16 u8 u8"
+}
+
 // Service Planar position constants
 export const SRV_PLANAR_POSITION = 0x1dc37f55
 
@@ -3749,6 +5769,18 @@ export enum PlanarPositionReg {
      * ```
      */
     Variant = 0x107,
+}
+
+export namespace PlanarPositionRegPack {
+    /**
+     * Pack format for 'position' Reg data.
+     */
+    export const Position = "i22.10 i22.10"
+
+    /**
+     * Pack format for 'variant' Reg data.
+     */
+    export const Variant = "u8"
 }
 
 // Service Potentiometer constants
@@ -3777,6 +5809,18 @@ export enum PotentiometerReg {
      * ```
      */
     Variant = 0x107,
+}
+
+export namespace PotentiometerRegPack {
+    /**
+     * Pack format for 'position' Reg data.
+     */
+    export const Position = "u0.16"
+
+    /**
+     * Pack format for 'variant' Reg data.
+     */
+    export const Variant = "u8"
 }
 
 // Service Power constants
@@ -3881,6 +5925,53 @@ export enum PowerReg {
     KeepOnPulsePeriod = 0x81,
 }
 
+export namespace PowerRegPack {
+    /**
+     * Pack format for 'allowed' Reg data.
+     */
+    export const Allowed = "u8"
+
+    /**
+     * Pack format for 'max_power' Reg data.
+     */
+    export const MaxPower = "u16"
+
+    /**
+     * Pack format for 'power_status' Reg data.
+     */
+    export const PowerStatus = "u8"
+
+    /**
+     * Pack format for 'current_draw' Reg data.
+     */
+    export const CurrentDraw = "u16"
+
+    /**
+     * Pack format for 'battery_voltage' Reg data.
+     */
+    export const BatteryVoltage = "u16"
+
+    /**
+     * Pack format for 'battery_charge' Reg data.
+     */
+    export const BatteryCharge = "u0.16"
+
+    /**
+     * Pack format for 'battery_capacity' Reg data.
+     */
+    export const BatteryCapacity = "u32"
+
+    /**
+     * Pack format for 'keep_on_pulse_duration' Reg data.
+     */
+    export const KeepOnPulseDuration = "u16"
+
+    /**
+     * Pack format for 'keep_on_pulse_period' Reg data.
+     */
+    export const KeepOnPulsePeriod = "u16"
+}
+
 export enum PowerCmd {
     /**
      * No args. Sent by the power service periodically, as broadcast.
@@ -3897,6 +5988,13 @@ export enum PowerEvent {
      * ```
      */
     PowerStatusChanged = 0x3,
+}
+
+export namespace PowerEventPack {
+    /**
+     * Pack format for 'power_status_changed' Event data.
+     */
+    export const PowerStatusChanged = "u8"
 }
 
 // Service Power supply constants
@@ -3939,6 +6037,28 @@ export enum PowerSupplyReg {
     MaximumVoltage = 0x111,
 }
 
+export namespace PowerSupplyRegPack {
+    /**
+     * Pack format for 'enabled' Reg data.
+     */
+    export const Enabled = "u8"
+
+    /**
+     * Pack format for 'output_voltage' Reg data.
+     */
+    export const OutputVoltage = "f64"
+
+    /**
+     * Pack format for 'minimum_voltage' Reg data.
+     */
+    export const MinimumVoltage = "f64"
+
+    /**
+     * Pack format for 'maximum_voltage' Reg data.
+     */
+    export const MaximumVoltage = "f64"
+}
+
 // Service Pressure Button constants
 export const SRV_PRESSURE_BUTTON = 0x281740c3
 export enum PressureButtonReg {
@@ -3950,6 +6070,13 @@ export enum PressureButtonReg {
      * ```
      */
     Threshold = 0x6,
+}
+
+export namespace PressureButtonRegPack {
+    /**
+     * Pack format for 'threshold' Reg data.
+     */
+    export const Threshold = "u0.16"
 }
 
 // Service Protocol Test constants
@@ -4082,6 +6209,78 @@ export enum ProtoTestReg {
     RoU8String = 0x187,
 }
 
+export namespace ProtoTestRegPack {
+    /**
+     * Pack format for 'rw_bool' Reg data.
+     */
+    export const RwBool = "u8"
+
+    /**
+     * Pack format for 'ro_bool' Reg data.
+     */
+    export const RoBool = "u8"
+
+    /**
+     * Pack format for 'rw_u32' Reg data.
+     */
+    export const RwU32 = "u32"
+
+    /**
+     * Pack format for 'ro_u32' Reg data.
+     */
+    export const RoU32 = "u32"
+
+    /**
+     * Pack format for 'rw_i32' Reg data.
+     */
+    export const RwI32 = "i32"
+
+    /**
+     * Pack format for 'ro_i32' Reg data.
+     */
+    export const RoI32 = "i32"
+
+    /**
+     * Pack format for 'rw_string' Reg data.
+     */
+    export const RwString = "s"
+
+    /**
+     * Pack format for 'ro_string' Reg data.
+     */
+    export const RoString = "s"
+
+    /**
+     * Pack format for 'rw_bytes' Reg data.
+     */
+    export const RwBytes = "b"
+
+    /**
+     * Pack format for 'ro_bytes' Reg data.
+     */
+    export const RoBytes = "b"
+
+    /**
+     * Pack format for 'rw_i8_u8_u16_i32' Reg data.
+     */
+    export const RwI8U8U16I32 = "i8 u8 u16 i32"
+
+    /**
+     * Pack format for 'ro_i8_u8_u16_i32' Reg data.
+     */
+    export const RoI8U8U16I32 = "i8 u8 u16 i32"
+
+    /**
+     * Pack format for 'rw_u8_string' Reg data.
+     */
+    export const RwU8String = "u8 s"
+
+    /**
+     * Pack format for 'ro_u8_string' Reg data.
+     */
+    export const RoU8String = "u8 s"
+}
+
 export enum ProtoTestEvent {
     /**
      * Argument: bo bool (uint8_t). An event raised when rw_bool is modified
@@ -4145,6 +6344,43 @@ export enum ProtoTestEvent {
      * ```
      */
     EU8String = 0x87,
+}
+
+export namespace ProtoTestEventPack {
+    /**
+     * Pack format for 'e_bool' Event data.
+     */
+    export const EBool = "u8"
+
+    /**
+     * Pack format for 'e_u32' Event data.
+     */
+    export const EU32 = "u32"
+
+    /**
+     * Pack format for 'e_i32' Event data.
+     */
+    export const EI32 = "i32"
+
+    /**
+     * Pack format for 'e_string' Event data.
+     */
+    export const EString = "s"
+
+    /**
+     * Pack format for 'e_bytes' Event data.
+     */
+    export const EBytes = "b"
+
+    /**
+     * Pack format for 'e_i8_u8_u16_i32' Event data.
+     */
+    export const EI8U8U16I32 = "i8 u8 u16 i32"
+
+    /**
+     * Pack format for 'e_u8_string' Event data.
+     */
+    export const EU8String = "u8 s"
 }
 
 export enum ProtoTestCmd {
@@ -4221,12 +6457,62 @@ export enum ProtoTestCmd {
     CReportPipe = 0x90,
 }
 
+export namespace ProtoTestCmdPack {
+    /**
+     * Pack format for 'c_bool' Cmd data.
+     */
+    export const CBool = "u8"
+
+    /**
+     * Pack format for 'c_u32' Cmd data.
+     */
+    export const CU32 = "u32"
+
+    /**
+     * Pack format for 'c_i32' Cmd data.
+     */
+    export const CI32 = "i32"
+
+    /**
+     * Pack format for 'c_string' Cmd data.
+     */
+    export const CString = "s"
+
+    /**
+     * Pack format for 'c_bytes' Cmd data.
+     */
+    export const CBytes = "b"
+
+    /**
+     * Pack format for 'c_i8_u8_u16_i32' Cmd data.
+     */
+    export const CI8U8U16I32 = "i8 u8 u16 i32"
+
+    /**
+     * Pack format for 'c_u8_string' Cmd data.
+     */
+    export const CU8String = "u8 s"
+
+    /**
+     * Pack format for 'c_report_pipe' Cmd data.
+     */
+    export const CReportPipe = "b[12]"
+}
+
+export enum ProtoTestPipe {}
 /**
  * pipe_report PBytes
  * ```
  * const [byte] = jdunpack<[number]>(buf, "u8")
  * ```
  */
+
+export namespace ProtoTestPipePack {
+    /**
+     * Pack format for 'p_bytes' Pipe data.
+     */
+    export const PBytes = "u8"
+}
 
 // Service Proxy constants
 export const SRV_PROXY = 0x16f19949
@@ -4252,6 +6538,18 @@ export enum PulseOximeterReg {
     OxygenError = 0x106,
 }
 
+export namespace PulseOximeterRegPack {
+    /**
+     * Pack format for 'oxygen' Reg data.
+     */
+    export const Oxygen = "u8.8"
+
+    /**
+     * Pack format for 'oxygen_error' Reg data.
+     */
+    export const OxygenError = "u8.8"
+}
+
 // Service Rain gauge constants
 export const SRV_RAIN_GAUGE = 0x13734c95
 export enum RainGaugeReg {
@@ -4272,6 +6570,18 @@ export enum RainGaugeReg {
      * ```
      */
     PrecipitationPrecision = 0x108,
+}
+
+export namespace RainGaugeRegPack {
+    /**
+     * Pack format for 'precipitation' Reg data.
+     */
+    export const Precipitation = "u16.16"
+
+    /**
+     * Pack format for 'precipitation_precision' Reg data.
+     */
+    export const PrecipitationPrecision = "u16.16"
 }
 
 // Service Real time clock constants
@@ -4321,6 +6631,28 @@ export enum RealTimeClockReg {
     Variant = 0x107,
 }
 
+export namespace RealTimeClockRegPack {
+    /**
+     * Pack format for 'local_time' Reg data.
+     */
+    export const LocalTime = "u16 u8 u8 u8 u8 u8 u8"
+
+    /**
+     * Pack format for 'drift' Reg data.
+     */
+    export const Drift = "u16.16"
+
+    /**
+     * Pack format for 'precision' Reg data.
+     */
+    export const Precision = "u16.16"
+
+    /**
+     * Pack format for 'variant' Reg data.
+     */
+    export const Variant = "u8"
+}
+
 export enum RealTimeClockCmd {
     /**
      * Sets the current time and resets the error.
@@ -4330,6 +6662,13 @@ export enum RealTimeClockCmd {
      * ```
      */
     SetTime = 0x80,
+}
+
+export namespace RealTimeClockCmdPack {
+    /**
+     * Pack format for 'set_time' Cmd data.
+     */
+    export const SetTime = "u16 u8 u8 u8 u8 u8 u8"
 }
 
 // Service Reflected light constants
@@ -4358,6 +6697,18 @@ export enum ReflectedLightReg {
      * ```
      */
     Variant = 0x107,
+}
+
+export namespace ReflectedLightRegPack {
+    /**
+     * Pack format for 'brightness' Reg data.
+     */
+    export const Brightness = "u0.16"
+
+    /**
+     * Pack format for 'variant' Reg data.
+     */
+    export const Variant = "u8"
 }
 
 // Service Relay constants
@@ -4398,6 +6749,23 @@ export enum RelayReg {
     MaxSwitchingCurrent = 0x180,
 }
 
+export namespace RelayRegPack {
+    /**
+     * Pack format for 'active' Reg data.
+     */
+    export const Active = "u8"
+
+    /**
+     * Pack format for 'variant' Reg data.
+     */
+    export const Variant = "u8"
+
+    /**
+     * Pack format for 'max_switching_current' Reg data.
+     */
+    export const MaxSwitchingCurrent = "u32"
+}
+
 // Service Random Number Generator constants
 export const SRV_RNG = 0x1789f0a2
 
@@ -4431,6 +6799,18 @@ export enum RngReg {
     Variant = 0x107,
 }
 
+export namespace RngRegPack {
+    /**
+     * Pack format for 'random' Reg data.
+     */
+    export const Random = "b"
+
+    /**
+     * Pack format for 'variant' Reg data.
+     */
+    export const Variant = "u8"
+}
+
 // Service Role Manager constants
 export const SRV_ROLE_MANAGER = 0x1e4b7e66
 export enum RoleManagerReg {
@@ -4458,6 +6838,18 @@ export enum RoleManagerReg {
     AllRolesAllocated = 0x181,
 }
 
+export namespace RoleManagerRegPack {
+    /**
+     * Pack format for 'auto_bind' Reg data.
+     */
+    export const AutoBind = "u8"
+
+    /**
+     * Pack format for 'all_roles_allocated' Reg data.
+     */
+    export const AllRolesAllocated = "u8"
+}
+
 export enum RoleManagerCmd {
     /**
      * Set role. Can set to empty to remove role binding.
@@ -4483,12 +6875,32 @@ export enum RoleManagerCmd {
     ListRoles = 0x83,
 }
 
+export namespace RoleManagerCmdPack {
+    /**
+     * Pack format for 'set_role' Cmd data.
+     */
+    export const SetRole = "b[8] u8 s"
+
+    /**
+     * Pack format for 'list_roles' Cmd data.
+     */
+    export const ListRoles = "b[12]"
+}
+
+export enum RoleManagerPipe {}
 /**
  * pipe_report Roles
  * ```
  * const [deviceId, serviceClass, serviceIdx, role] = jdunpack<[Uint8Array, number, number, string]>(buf, "b[8] u32 u8 s")
  * ```
  */
+
+export namespace RoleManagerPipePack {
+    /**
+     * Pack format for 'roles' Pipe data.
+     */
+    export const Roles = "b[8] u32 u8 s"
+}
 
 export enum RoleManagerEvent {
     /**
@@ -4530,6 +6942,23 @@ export enum RotaryEncoderReg {
     Clicker = 0x181,
 }
 
+export namespace RotaryEncoderRegPack {
+    /**
+     * Pack format for 'position' Reg data.
+     */
+    export const Position = "i32"
+
+    /**
+     * Pack format for 'clicks_per_turn' Reg data.
+     */
+    export const ClicksPerTurn = "u16"
+
+    /**
+     * Pack format for 'clicker' Reg data.
+     */
+    export const Clicker = "u8"
+}
+
 // Service Rover constants
 export const SRV_ROVER = 0x19f4d06b
 export enum RoverReg {
@@ -4541,6 +6970,13 @@ export enum RoverReg {
      * ```
      */
     Kinematics = 0x101,
+}
+
+export namespace RoverRegPack {
+    /**
+     * Pack format for 'kinematics' Reg data.
+     */
+    export const Kinematics = "i16.16 i16.16 i16.16 i16.16 i16.16"
 }
 
 // Service Satellite Navigation System constants
@@ -4563,6 +6999,18 @@ export enum SatNavReg {
      * ```
      */
     Enabled = 0x1,
+}
+
+export namespace SatNavRegPack {
+    /**
+     * Pack format for 'position' Reg data.
+     */
+    export const Position = "u64 i9.23 i9.23 u16.16 i26.6 u16.16"
+
+    /**
+     * Pack format for 'enabled' Reg data.
+     */
+    export const Enabled = "u8"
 }
 
 export enum SatNavEvent {
@@ -4631,6 +7079,33 @@ export enum SensorAggregatorReg {
      * ```
      */
     CurrentSample = 0x101,
+}
+
+export namespace SensorAggregatorRegPack {
+    /**
+     * Pack format for 'inputs' Reg data.
+     */
+    export const Inputs = "u16 u16 u32 r: b[8] u32 u8 u8 u8 i8"
+
+    /**
+     * Pack format for 'num_samples' Reg data.
+     */
+    export const NumSamples = "u32"
+
+    /**
+     * Pack format for 'sample_size' Reg data.
+     */
+    export const SampleSize = "u8"
+
+    /**
+     * Pack format for 'streaming_samples' Reg data.
+     */
+    export const StreamingSamples = "u32"
+
+    /**
+     * Pack format for 'current_sample' Reg data.
+     */
+    export const CurrentSample = "b"
 }
 
 // Service Serial constants
@@ -4707,6 +7182,43 @@ export enum SerialReg {
     BufferSize = 0x84,
 }
 
+export namespace SerialRegPack {
+    /**
+     * Pack format for 'connected' Reg data.
+     */
+    export const Connected = "u8"
+
+    /**
+     * Pack format for 'connection_name' Reg data.
+     */
+    export const ConnectionName = "s"
+
+    /**
+     * Pack format for 'baud_rate' Reg data.
+     */
+    export const BaudRate = "u32"
+
+    /**
+     * Pack format for 'data_bits' Reg data.
+     */
+    export const DataBits = "u8"
+
+    /**
+     * Pack format for 'stop_bits' Reg data.
+     */
+    export const StopBits = "u8"
+
+    /**
+     * Pack format for 'parity_mode' Reg data.
+     */
+    export const ParityMode = "u8"
+
+    /**
+     * Pack format for 'buffer_size' Reg data.
+     */
+    export const BufferSize = "u8"
+}
+
 export enum SerialCmd {
     /**
      * Argument: data bytes. Send a buffer of data over the serial transport.
@@ -4725,6 +7237,18 @@ export enum SerialCmd {
      * ```
      */
     Received = 0x80,
+}
+
+export namespace SerialCmdPack {
+    /**
+     * Pack format for 'send' Cmd data.
+     */
+    export const Send = "b"
+
+    /**
+     * Pack format for 'received' Cmd data.
+     */
+    export const Received = "b"
 }
 
 // Service Servo constants
@@ -4821,6 +7345,58 @@ export enum ServoReg {
     ActualAngle = 0x101,
 }
 
+export namespace ServoRegPack {
+    /**
+     * Pack format for 'angle' Reg data.
+     */
+    export const Angle = "i16.16"
+
+    /**
+     * Pack format for 'enabled' Reg data.
+     */
+    export const Enabled = "u8"
+
+    /**
+     * Pack format for 'offset' Reg data.
+     */
+    export const Offset = "i16.16"
+
+    /**
+     * Pack format for 'min_angle' Reg data.
+     */
+    export const MinAngle = "i16.16"
+
+    /**
+     * Pack format for 'min_pulse' Reg data.
+     */
+    export const MinPulse = "u16"
+
+    /**
+     * Pack format for 'max_angle' Reg data.
+     */
+    export const MaxAngle = "i16.16"
+
+    /**
+     * Pack format for 'max_pulse' Reg data.
+     */
+    export const MaxPulse = "u16"
+
+    /**
+     * Pack format for 'stall_torque' Reg data.
+     */
+    export const StallTorque = "u16.16"
+
+    /**
+     * Pack format for 'response_speed' Reg data.
+     */
+    export const ResponseSpeed = "u16.16"
+
+    /**
+     * Pack format for 'actual_angle' Reg data.
+     */
+    export const ActualAngle = "i16.16"
+}
+
 // Service Settings constants
 export const SRV_SETTINGS = 0x1107dc4a
 export enum SettingsCmd {
@@ -4882,6 +7458,39 @@ export enum SettingsCmd {
     Clear = 0x85,
 }
 
+export namespace SettingsCmdPack {
+    /**
+     * Pack format for 'get' Cmd data.
+     */
+    export const Get = "s"
+
+    /**
+     * Pack format for 'get' Cmd data.
+     */
+    export const GetReport = "z b"
+
+    /**
+     * Pack format for 'set' Cmd data.
+     */
+    export const Set = "z b"
+
+    /**
+     * Pack format for 'delete' Cmd data.
+     */
+    export const Delete = "s"
+
+    /**
+     * Pack format for 'list_keys' Cmd data.
+     */
+    export const ListKeys = "b[12]"
+
+    /**
+     * Pack format for 'list' Cmd data.
+     */
+    export const List = "b[12]"
+}
+
+export enum SettingsPipe {}
 /**
  * pipe_report ListedKey
  * ```
@@ -4895,6 +7504,18 @@ export enum SettingsCmd {
  * const [key, value] = jdunpack<[string, Uint8Array]>(buf, "z b")
  * ```
  */
+
+export namespace SettingsPipePack {
+    /**
+     * Pack format for 'listed_key' Pipe data.
+     */
+    export const ListedKey = "s"
+
+    /**
+     * Pack format for 'listed_entry' Pipe data.
+     */
+    export const ListedEntry = "z b"
+}
 
 export enum SettingsEvent {
     /**
@@ -4956,11 +7577,45 @@ export enum SevenSegmentDisplayReg {
     DecimalPoint = 0x181,
 }
 
+export namespace SevenSegmentDisplayRegPack {
+    /**
+     * Pack format for 'digits' Reg data.
+     */
+    export const Digits = "b"
+
+    /**
+     * Pack format for 'brightness' Reg data.
+     */
+    export const Brightness = "u0.16"
+
+    /**
+     * Pack format for 'double_dots' Reg data.
+     */
+    export const DoubleDots = "u8"
+
+    /**
+     * Pack format for 'digit_count' Reg data.
+     */
+    export const DigitCount = "u8"
+
+    /**
+     * Pack format for 'decimal_point' Reg data.
+     */
+    export const DecimalPoint = "u8"
+}
+
 export enum SevenSegmentDisplayCmd {
     /**
      * Argument: value f64 (uint64_t). Shows the number on the screen using the decimal dot if available.
      */
     SetNumber = 0x80,
+}
+
+export namespace SevenSegmentDisplayCmdPack {
+    /**
+     * Pack format for 'set_number' Cmd data.
+     */
+    export const SetNumber = "f64"
 }
 
 // Service Soil moisture constants
@@ -5000,6 +7655,23 @@ export enum SoilMoistureReg {
     Variant = 0x107,
 }
 
+export namespace SoilMoistureRegPack {
+    /**
+     * Pack format for 'moisture' Reg data.
+     */
+    export const Moisture = "u0.16"
+
+    /**
+     * Pack format for 'moisture_error' Reg data.
+     */
+    export const MoistureError = "u0.16"
+
+    /**
+     * Pack format for 'variant' Reg data.
+     */
+    export const Variant = "u8"
+}
+
 // Service Solenoid constants
 export const SRV_SOLENOID = 0x171723ca
 
@@ -5027,6 +7699,18 @@ export enum SolenoidReg {
      * ```
      */
     Variant = 0x107,
+}
+
+export namespace SolenoidRegPack {
+    /**
+     * Pack format for 'pulled' Reg data.
+     */
+    export const Pulled = "u8"
+
+    /**
+     * Pack format for 'variant' Reg data.
+     */
+    export const Variant = "u8"
 }
 
 // Service Sound level constants
@@ -5069,6 +7753,28 @@ export enum SoundLevelReg {
     QuietThreshold = 0x5,
 }
 
+export namespace SoundLevelRegPack {
+    /**
+     * Pack format for 'sound_level' Reg data.
+     */
+    export const SoundLevel = "u0.16"
+
+    /**
+     * Pack format for 'enabled' Reg data.
+     */
+    export const Enabled = "u8"
+
+    /**
+     * Pack format for 'loud_threshold' Reg data.
+     */
+    export const LoudThreshold = "u0.16"
+
+    /**
+     * Pack format for 'quiet_threshold' Reg data.
+     */
+    export const QuietThreshold = "u0.16"
+}
+
 export enum SoundLevelEvent {
     /**
      * Generated when a loud sound is detected.
@@ -5092,6 +7798,13 @@ export enum SoundPlayerReg {
      * ```
      */
     Volume = 0x1,
+}
+
+export namespace SoundPlayerRegPack {
+    /**
+     * Pack format for 'volume' Reg data.
+     */
+    export const Volume = "u0.16"
 }
 
 export enum SoundPlayerCmd {
@@ -5119,12 +7832,32 @@ export enum SoundPlayerCmd {
     ListSounds = 0x82,
 }
 
+export namespace SoundPlayerCmdPack {
+    /**
+     * Pack format for 'play' Cmd data.
+     */
+    export const Play = "s"
+
+    /**
+     * Pack format for 'list_sounds' Cmd data.
+     */
+    export const ListSounds = "b[12]"
+}
+
+export enum SoundPlayerPipe {}
 /**
  * pipe_report ListSoundsPipe
  * ```
  * const [duration, name] = jdunpack<[number, string]>(buf, "u32 s")
  * ```
  */
+
+export namespace SoundPlayerPipePack {
+    /**
+     * Pack format for 'list_sounds_pipe' Pipe data.
+     */
+    export const ListSoundsPipe = "u32 s"
+}
 
 // Service Sound Recorder with Playback constants
 export const SRV_SOUND_RECORDER_WITH_PLAYBACK = 0x1b72bf50
@@ -5156,6 +7889,13 @@ export enum SoundRecorderWithPlaybackCmd {
     Cancel = 0x82,
 }
 
+export namespace SoundRecorderWithPlaybackCmdPack {
+    /**
+     * Pack format for 'record' Cmd data.
+     */
+    export const Record = "u16"
+}
+
 export enum SoundRecorderWithPlaybackReg {
     /**
      * Read-only Status (uint8_t). Indicate the current status
@@ -5183,6 +7923,23 @@ export enum SoundRecorderWithPlaybackReg {
      * ```
      */
     Volume = 0x1,
+}
+
+export namespace SoundRecorderWithPlaybackRegPack {
+    /**
+     * Pack format for 'status' Reg data.
+     */
+    export const Status = "u8"
+
+    /**
+     * Pack format for 'time' Reg data.
+     */
+    export const Time = "u16"
+
+    /**
+     * Pack format for 'volume' Reg data.
+     */
+    export const Volume = "u0.8"
 }
 
 // Service Sound Spectrum constants
@@ -5244,6 +8001,38 @@ export enum SoundSpectrumReg {
     SmoothingTimeConstant = 0x83,
 }
 
+export namespace SoundSpectrumRegPack {
+    /**
+     * Pack format for 'frequency_bins' Reg data.
+     */
+    export const FrequencyBins = "b"
+
+    /**
+     * Pack format for 'enabled' Reg data.
+     */
+    export const Enabled = "u8"
+
+    /**
+     * Pack format for 'fft_pow2_size' Reg data.
+     */
+    export const FftPow2Size = "u8"
+
+    /**
+     * Pack format for 'min_decibels' Reg data.
+     */
+    export const MinDecibels = "i16"
+
+    /**
+     * Pack format for 'max_decibels' Reg data.
+     */
+    export const MaxDecibels = "i16"
+
+    /**
+     * Pack format for 'smoothing_time_constant' Reg data.
+     */
+    export const SmoothingTimeConstant = "u0.8"
+}
+
 // Service Speech synthesis constants
 export const SRV_SPEECH_SYNTHESIS = 0x1204d995
 export enum SpeechSynthesisReg {
@@ -5293,6 +8082,33 @@ export enum SpeechSynthesisReg {
     Rate = 0x83,
 }
 
+export namespace SpeechSynthesisRegPack {
+    /**
+     * Pack format for 'enabled' Reg data.
+     */
+    export const Enabled = "u8"
+
+    /**
+     * Pack format for 'lang' Reg data.
+     */
+    export const Lang = "s"
+
+    /**
+     * Pack format for 'volume' Reg data.
+     */
+    export const Volume = "u0.8"
+
+    /**
+     * Pack format for 'pitch' Reg data.
+     */
+    export const Pitch = "u16.16"
+
+    /**
+     * Pack format for 'rate' Reg data.
+     */
+    export const Rate = "u16.16"
+}
+
 export enum SpeechSynthesisCmd {
     /**
      * Argument: text string (bytes). Adds an utterance to the utterance queue; it will be spoken when any other utterances queued before it have been spoken.
@@ -5307,6 +8123,13 @@ export enum SpeechSynthesisCmd {
      * No args. Cancels current utterance and all utterances from the utterance queue.
      */
     Cancel = 0x81,
+}
+
+export namespace SpeechSynthesisCmdPack {
+    /**
+     * Pack format for 'speak' Cmd data.
+     */
+    export const Speak = "s"
 }
 
 // Service Switch constants
@@ -5341,6 +8164,18 @@ export enum SwitchReg {
      * ```
      */
     Variant = 0x107,
+}
+
+export namespace SwitchRegPack {
+    /**
+     * Pack format for 'active' Reg data.
+     */
+    export const Active = "u8"
+
+    /**
+     * Pack format for 'variant' Reg data.
+     */
+    export const Variant = "u8"
 }
 
 export enum SwitchEvent {
@@ -5381,6 +8216,18 @@ export enum TcpCmd {
      */
 }
 
+export namespace TcpCmdPack {
+    /**
+     * Pack format for 'open' Cmd data.
+     */
+    export const Open = "b[12]"
+
+    /**
+     * Pack format for 'open' Cmd data.
+     */
+    export const OpenReport = "u16"
+}
+
 export enum TcpPipeCmd {
     /**
      * Open an SSL connection to a given host:port pair. Can be issued only once on given pipe.
@@ -5403,6 +8250,19 @@ export enum TcpPipeCmd {
     Error = 0x0,
 }
 
+export namespace TcpPipeCmdPack {
+    /**
+     * Pack format for 'open_ssl' PipeCmd data.
+     */
+    export const OpenSsl = "u16 s"
+
+    /**
+     * Pack format for 'error' PipeCmd data.
+     */
+    export const Error = "i32"
+}
+
+export enum TcpPipe {}
 /**
  * pipe_command Outdata
  * ```
@@ -5416,6 +8276,18 @@ export enum TcpPipeCmd {
  * const [data] = jdunpack<[Uint8Array]>(buf, "b")
  * ```
  */
+
+export namespace TcpPipePack {
+    /**
+     * Pack format for 'outdata' Pipe data.
+     */
+    export const Outdata = "b"
+
+    /**
+     * Pack format for 'indata' Pipe data.
+     */
+    export const Indata = "b"
+}
 
 // Service Temperature constants
 export const SRV_TEMPERATURE = 0x1421bac7
@@ -5473,6 +8345,33 @@ export enum TemperatureReg {
     Variant = 0x107,
 }
 
+export namespace TemperatureRegPack {
+    /**
+     * Pack format for 'temperature' Reg data.
+     */
+    export const Temperature = "i22.10"
+
+    /**
+     * Pack format for 'min_temperature' Reg data.
+     */
+    export const MinTemperature = "i22.10"
+
+    /**
+     * Pack format for 'max_temperature' Reg data.
+     */
+    export const MaxTemperature = "i22.10"
+
+    /**
+     * Pack format for 'temperature_error' Reg data.
+     */
+    export const TemperatureError = "u22.10"
+
+    /**
+     * Pack format for 'variant' Reg data.
+     */
+    export const Variant = "u8"
+}
+
 // Service Timeseries Aggregator constants
 export const SRV_TIMESERIES_AGGREGATOR = 0x1192bdcc
 export enum TimeseriesAggregatorCmd {
@@ -5523,6 +8422,28 @@ export enum TimeseriesAggregatorCmd {
      * ```
      */
     Stored = 0x90,
+}
+
+export namespace TimeseriesAggregatorCmdPack {
+    /**
+     * Pack format for 'update' Cmd data.
+     */
+    export const Update = "f64 s"
+
+    /**
+     * Pack format for 'set_window' Cmd data.
+     */
+    export const SetWindow = "u32 s"
+
+    /**
+     * Pack format for 'set_upload' Cmd data.
+     */
+    export const SetUpload = "u8 s"
+
+    /**
+     * Pack format for 'stored' Cmd data.
+     */
+    export const Stored = "u32 b[4] f64 f64 f64 u32 u32 s"
 }
 
 export enum TimeseriesAggregatorReg {
@@ -5585,6 +8506,38 @@ export enum TimeseriesAggregatorReg {
     SensorWatchdogPeriod = 0x84,
 }
 
+export namespace TimeseriesAggregatorRegPack {
+    /**
+     * Pack format for 'now' Reg data.
+     */
+    export const Now = "u32"
+
+    /**
+     * Pack format for 'fast_start' Reg data.
+     */
+    export const FastStart = "u8"
+
+    /**
+     * Pack format for 'default_window' Reg data.
+     */
+    export const DefaultWindow = "u32"
+
+    /**
+     * Pack format for 'default_upload' Reg data.
+     */
+    export const DefaultUpload = "u8"
+
+    /**
+     * Pack format for 'upload_unlabelled' Reg data.
+     */
+    export const UploadUnlabelled = "u8"
+
+    /**
+     * Pack format for 'sensor_watchdog_period' Reg data.
+     */
+    export const SensorWatchdogPeriod = "u32"
+}
+
 // Service Traffic Light constants
 export const SRV_TRAFFIC_LIGHT = 0x15c38d9b
 export enum TrafficLightReg {
@@ -5614,6 +8567,23 @@ export enum TrafficLightReg {
      * ```
      */
     Green = 0x82,
+}
+
+export namespace TrafficLightRegPack {
+    /**
+     * Pack format for 'red' Reg data.
+     */
+    export const Red = "u8"
+
+    /**
+     * Pack format for 'yellow' Reg data.
+     */
+    export const Yellow = "u8"
+
+    /**
+     * Pack format for 'green' Reg data.
+     */
+    export const Green = "u8"
 }
 
 // Service Total Volatile organic compound constants
@@ -5654,6 +8624,28 @@ export enum TvocReg {
      * ```
      */
     MaxTVOC = 0x105,
+}
+
+export namespace TvocRegPack {
+    /**
+     * Pack format for 'TVOC' Reg data.
+     */
+    export const TVOC = "u22.10"
+
+    /**
+     * Pack format for 'TVOC_error' Reg data.
+     */
+    export const TVOCError = "u22.10"
+
+    /**
+     * Pack format for 'min_TVOC' Reg data.
+     */
+    export const MinTVOC = "u22.10"
+
+    /**
+     * Pack format for 'max_TVOC' Reg data.
+     */
+    export const MaxTVOC = "u22.10"
 }
 
 // Service Unique Brain constants
@@ -5730,6 +8722,23 @@ export enum UvIndexReg {
     Variant = 0x107,
 }
 
+export namespace UvIndexRegPack {
+    /**
+     * Pack format for 'uv_index' Reg data.
+     */
+    export const UvIndex = "u16.16"
+
+    /**
+     * Pack format for 'uv_index_error' Reg data.
+     */
+    export const UvIndexError = "u16.16"
+
+    /**
+     * Pack format for 'variant' Reg data.
+     */
+    export const Variant = "u8"
+}
+
 // Service Verified Telemetry constants
 export const SRV_VERIFIED_TELEMETRY = 0x2194841f
 
@@ -5783,6 +8792,28 @@ export enum VerifiedTelemetryReg {
     FingerprintTemplate = 0x182,
 }
 
+export namespace VerifiedTelemetryRegPack {
+    /**
+     * Pack format for 'telemetry_status' Reg data.
+     */
+    export const TelemetryStatus = "u8"
+
+    /**
+     * Pack format for 'telemetry_status_interval' Reg data.
+     */
+    export const TelemetryStatusInterval = "u32"
+
+    /**
+     * Pack format for 'fingerprint_type' Reg data.
+     */
+    export const FingerprintType = "u8"
+
+    /**
+     * Pack format for 'fingerprint_template' Reg data.
+     */
+    export const FingerprintTemplate = "u16 b"
+}
+
 export enum VerifiedTelemetryCmd {
     /**
      * No args. This command will clear the template fingerprint of a sensor and collect a new template fingerprint of the attached sensor.
@@ -5811,6 +8842,13 @@ export enum VerifiedTelemetryEvent {
     FingerprintTemplateChange = 0x80,
 }
 
+export namespace VerifiedTelemetryEventPack {
+    /**
+     * Pack format for 'telemetry_status_change' Event data.
+     */
+    export const TelemetryStatusChange = "u8"
+}
+
 // Service Vibration motor constants
 export const SRV_VIBRATION_MOTOR = 0x183fc4a2
 export enum VibrationMotorCmd {
@@ -5825,6 +8863,13 @@ export enum VibrationMotorCmd {
     Vibrate = 0x80,
 }
 
+export namespace VibrationMotorCmdPack {
+    /**
+     * Pack format for 'vibrate' Cmd data.
+     */
+    export const Vibrate = "r: u8 u0.8"
+}
+
 export enum VibrationMotorReg {
     /**
      * Constant uint8_t. The maximum number of vibration sequences supported in a single packet.
@@ -5834,6 +8879,13 @@ export enum VibrationMotorReg {
      * ```
      */
     MaxVibrations = 0x180,
+}
+
+export namespace VibrationMotorRegPack {
+    /**
+     * Pack format for 'max_vibrations' Reg data.
+     */
+    export const MaxVibrations = "u8"
 }
 
 // Service Water level constants
@@ -5872,6 +8924,23 @@ export enum WaterLevelReg {
      * ```
      */
     Variant = 0x107,
+}
+
+export namespace WaterLevelRegPack {
+    /**
+     * Pack format for 'level' Reg data.
+     */
+    export const Level = "u0.16"
+
+    /**
+     * Pack format for 'level_error' Reg data.
+     */
+    export const LevelError = "u0.16"
+
+    /**
+     * Pack format for 'variant' Reg data.
+     */
+    export const Variant = "u8"
 }
 
 // Service Weight Scale constants
@@ -5958,6 +9027,48 @@ export enum WeightScaleReg {
     Variant = 0x107,
 }
 
+export namespace WeightScaleRegPack {
+    /**
+     * Pack format for 'weight' Reg data.
+     */
+    export const Weight = "u16.16"
+
+    /**
+     * Pack format for 'weight_error' Reg data.
+     */
+    export const WeightError = "u16.16"
+
+    /**
+     * Pack format for 'zero_offset' Reg data.
+     */
+    export const ZeroOffset = "u16.16"
+
+    /**
+     * Pack format for 'gain' Reg data.
+     */
+    export const Gain = "u16.16"
+
+    /**
+     * Pack format for 'max_weight' Reg data.
+     */
+    export const MaxWeight = "u16.16"
+
+    /**
+     * Pack format for 'min_weight' Reg data.
+     */
+    export const MinWeight = "u16.16"
+
+    /**
+     * Pack format for 'weight_resolution' Reg data.
+     */
+    export const WeightResolution = "u16.16"
+
+    /**
+     * Pack format for 'variant' Reg data.
+     */
+    export const Variant = "u8"
+}
+
 export enum WeightScaleCmd {
     /**
      * No args. Call this command when there is nothing on the scale. If supported, the module should save the calibration data.
@@ -5972,6 +9083,13 @@ export enum WeightScaleCmd {
      * ```
      */
     CalibrateGain = 0x81,
+}
+
+export namespace WeightScaleCmdPack {
+    /**
+     * Pack format for 'calibrate_gain' Cmd data.
+     */
+    export const CalibrateGain = "u22.10"
 }
 
 // Service WIFI constants
@@ -6059,6 +9177,34 @@ export enum WifiCmd {
     ListKnownNetworks = 0x87,
 }
 
+export namespace WifiCmdPack {
+    /**
+     * Pack format for 'last_scan_results' Cmd data.
+     */
+    export const LastScanResults = "b[12]"
+
+    /**
+     * Pack format for 'add_network' Cmd data.
+     */
+    export const AddNetwork = "z z"
+
+    /**
+     * Pack format for 'forget_network' Cmd data.
+     */
+    export const ForgetNetwork = "s"
+
+    /**
+     * Pack format for 'set_network_priority' Cmd data.
+     */
+    export const SetNetworkPriority = "i16 s"
+
+    /**
+     * Pack format for 'list_known_networks' Cmd data.
+     */
+    export const ListKnownNetworks = "b[12]"
+}
+
+export enum WifiPipe {}
 /**
  * pipe_report Results
  * ```
@@ -6072,6 +9218,18 @@ export enum WifiCmd {
  * const [priority, flags, ssid] = jdunpack<[number, number, string]>(buf, "i16 i16 s")
  * ```
  */
+
+export namespace WifiPipePack {
+    /**
+     * Pack format for 'results' Pipe data.
+     */
+    export const Results = "u32 u32 i8 u8 b[6] s[33]"
+
+    /**
+     * Pack format for 'network_results' Pipe data.
+     */
+    export const NetworkResults = "i16 i16 s"
+}
 
 export enum WifiReg {
     /**
@@ -6121,6 +9279,33 @@ export enum WifiReg {
     Ssid = 0x183,
 }
 
+export namespace WifiRegPack {
+    /**
+     * Pack format for 'rssi' Reg data.
+     */
+    export const Rssi = "i8"
+
+    /**
+     * Pack format for 'enabled' Reg data.
+     */
+    export const Enabled = "u8"
+
+    /**
+     * Pack format for 'ip_address' Reg data.
+     */
+    export const IpAddress = "b[16]"
+
+    /**
+     * Pack format for 'eui_48' Reg data.
+     */
+    export const Eui48 = "b[6]"
+
+    /**
+     * Pack format for 'ssid' Reg data.
+     */
+    export const Ssid = "s[32]"
+}
+
 export enum WifiEvent {
     /**
      * Emitted upon successful join and IP address assignment.
@@ -6160,6 +9345,18 @@ export enum WifiEvent {
     ConnectionFailed = 0x82,
 }
 
+export namespace WifiEventPack {
+    /**
+     * Pack format for 'scan_complete' Event data.
+     */
+    export const ScanComplete = "u16 u16"
+
+    /**
+     * Pack format for 'connection_failed' Event data.
+     */
+    export const ConnectionFailed = "s"
+}
+
 // Service Wind direction constants
 export const SRV_WIND_DIRECTION = 0x186be92b
 export enum WindDirectionReg {
@@ -6180,6 +9377,18 @@ export enum WindDirectionReg {
      * ```
      */
     WindDirectionError = 0x106,
+}
+
+export namespace WindDirectionRegPack {
+    /**
+     * Pack format for 'wind_direction' Reg data.
+     */
+    export const WindDirection = "u16"
+
+    /**
+     * Pack format for 'wind_direction_error' Reg data.
+     */
+    export const WindDirectionError = "u16"
 }
 
 // Service Wind speed constants
@@ -6211,4 +9420,21 @@ export enum WindSpeedReg {
      * ```
      */
     MaxWindSpeed = 0x105,
+}
+
+export namespace WindSpeedRegPack {
+    /**
+     * Pack format for 'wind_speed' Reg data.
+     */
+    export const WindSpeed = "u16.16"
+
+    /**
+     * Pack format for 'wind_speed_error' Reg data.
+     */
+    export const WindSpeedError = "u16.16"
+
+    /**
+     * Pack format for 'max_wind_speed' Reg data.
+     */
+    export const MaxWindSpeed = "u16.16"
 }

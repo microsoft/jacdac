@@ -1,6 +1,6 @@
 {
   "name": "Sensor",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "_sensor",
   "camelName": "sensor",
   "shortName": "sensor",

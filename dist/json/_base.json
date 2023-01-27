@@ -1,6 +1,6 @@
 {
   "name": "Base service",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "_base",
   "camelName": "base",
   "shortName": "base",

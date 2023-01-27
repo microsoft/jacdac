@@ -1,6 +1,7 @@
 # Base service
 
     camel: base
+    status: stable
 
 Base class for all services.
 

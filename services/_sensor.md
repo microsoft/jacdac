@@ -1,6 +1,7 @@
 # Sensor
 
     camel: sensor
+    status: stable
 
 Base class for sensors.
 

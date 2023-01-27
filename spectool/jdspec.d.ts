@@ -313,6 +313,11 @@ declare namespace jdspec {
          * Set if all packets are restricted.
          */
         restricted?: boolean
+
+        /**
+         * For custom services, specify false or a separate catalog root that supports the same routing
+         */
+        catalog?: false | string
     }
 
     /**

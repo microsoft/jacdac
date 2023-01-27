@@ -37,6 +37,7 @@ const serviceBuiltins = [
     "devicescriptcloud",
     "cloudadapter",
     "devicescriptcondition",
+    "devicescriptdebugger",
 ]
 
 function values<T>(o: jdspec.SMap<T>): T[] {
@@ -409,13 +410,14 @@ ${toMetaComments(
         .fill(0)
         .map(
             (_, i) => `
-    //% fixedInstance whenUsed weight=${
-                1 + i
-            } block="${humanify(spec.camelName).toLocaleLowerCase()}${i + 1}"
+    //% fixedInstance whenUsed weight=${1 + i} block="${humanify(
+                spec.camelName
+            ).toLocaleLowerCase()}${i + 1}"
     export const ${tsify(spec.camelName)}${
                 i + 1
             } = new ${className}("${humanify(spec.camelName)}${i + 1}");`
-        ).join("\n")}
+        )
+        .join("\n")}
 }`
 }
 
@@ -494,7 +496,9 @@ class ${className}(${baseType}):
     """
 
     def __init__(self, bus: Bus, role: str${
-        reading ? `, *, ${missingReadingField}: Optional[${readingType}] = None` : ""
+        reading
+            ? `, *, ${missingReadingField}: Optional[${readingType}] = None`
+            : ""
     }) -> None:
         super().__init__(${ctorArgs.join(", ")})
 ${
@@ -1187,15 +1191,19 @@ function processDevices(upperName: string) {
                     console.error(`${d.id}: device not found ${did}`)
                 )
         )
-    
-    const statusScores : Record<jdspec.StabilityStatus, number> = {
-        "deprecated": 100,
-        "experimental": 50,
-        "rc": 10,
-        "stable": 0,
+
+    const statusScores: Record<jdspec.StabilityStatus, number> = {
+        deprecated: 100,
+        experimental: 50,
+        rc: 10,
+        stable: 0,
     }
     // push experimentals at the back
-    allDevices.sort((a,b) => statusScores[a.status || "experimental"] - statusScores[b.status || "experimental"])
+    allDevices.sort(
+        (a, b) =>
+            statusScores[a.status || "experimental"] -
+            statusScores[b.status || "experimental"]
+    )
     const ofn = path.join("../dist", "devices.json")
     console.log(`writing ${ofn}`)
     fs.writeFileSync(ofn, JSON.stringify(allDevices, null, 2))

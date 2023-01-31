@@ -2538,6 +2538,12 @@ export enum DevsDbgString { // uint32_t
     Unhandled = 0x0,
 }
 
+export enum DevsDbgStepFlags { // uint16_t
+    StepOut = 0x1,
+    StepIn = 0x2,
+    Throw = 0x4,
+}
+
 export enum DevsDbgSuspensionType { // uint8_t
     None = 0x0,
     Breakpoint = 0x1,
@@ -2547,6 +2553,7 @@ export enum DevsDbgSuspensionType { // uint8_t
     Panic = 0x5,
     Restart = 0x6,
     DebuggerStmt = 0x7,
+    Step = 0x8,
 }
 
 export enum DevsDbgCmd {
@@ -2645,9 +2652,19 @@ export enum DevsDbgCmd {
     Halt = 0x94,
 
     /**
-     * No args. Start the program from the beginning and halt on first instruction.
+     * No args. Run the program from the beginning and halt on first instruction.
      */
     RestartAndHalt = 0x95,
+
+    /**
+     * Set breakpoints that only trigger in the specified stackframe and resume program.
+     * The breakpoints are cleared automatically on next suspension (regardless of the reason).
+     *
+     * ```
+     * const [stackframe, flags, breakPc] = jdunpack<[DevsDbgObjStackFrame, DevsDbgStepFlags, DevsDbgProgramCounter[]]>(buf, "u32 u16 x[2] u32[]")
+     * ```
+     */
+    Step = 0x96,
 }
 
 export namespace DevsDbgCmdPack {
@@ -2695,6 +2712,11 @@ export namespace DevsDbgCmdPack {
      * Pack format for 'clear_breakpoints' Cmd data.
      */
     export const ClearBreakpoints = "r: u32"
+
+    /**
+     * Pack format for 'step' Cmd data.
+     */
+    export const Step = "u32 u16 u16 r: u32"
 }
 
 export enum DevsDbgPipe {}

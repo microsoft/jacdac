@@ -59,6 +59,11 @@
 #define JD_DEVS_DBG_STRING_STATIC_INDEX_MASK 0xfffffe
 #define JD_DEVS_DBG_STRING_UNHANDLED 0x0
 
+// enum StepFlags (uint16_t)
+#define JD_DEVS_DBG_STEP_FLAGS_STEP_OUT 0x1
+#define JD_DEVS_DBG_STEP_FLAGS_STEP_IN 0x2
+#define JD_DEVS_DBG_STEP_FLAGS_THROW 0x4
+
 // enum SuspensionType (uint8_t)
 #define JD_DEVS_DBG_SUSPENSION_TYPE_NONE 0x0
 #define JD_DEVS_DBG_SUSPENSION_TYPE_BREAKPOINT 0x1
@@ -68,6 +73,7 @@
 #define JD_DEVS_DBG_SUSPENSION_TYPE_PANIC 0x5
 #define JD_DEVS_DBG_SUSPENSION_TYPE_RESTART 0x6
 #define JD_DEVS_DBG_SUSPENSION_TYPE_DEBUGGER_STMT 0x7
+#define JD_DEVS_DBG_SUSPENSION_TYPE_STEP 0x8
 
 /**
  * Argument: results pipe (bytes). List the currently running fibers (threads).
@@ -227,9 +233,22 @@ typedef struct jd_devs_dbg_clear_breakpoints {
 #define JD_DEVS_DBG_CMD_HALT 0x94
 
 /**
- * No args. Start the program from the beginning and halt on first instruction.
+ * No args. Run the program from the beginning and halt on first instruction.
  */
 #define JD_DEVS_DBG_CMD_RESTART_AND_HALT 0x95
+
+/**
+ * Set breakpoints that only trigger in the specified stackframe and resume program.
+ * The breakpoints are cleared automatically on next suspension (regardless of the reason).
+ */
+#define JD_DEVS_DBG_CMD_STEP 0x96
+typedef struct jd_devs_dbg_step {
+    uint32_t stackframe;  // ObjStackFrame
+    uint16_t flags;  // StepFlags
+    uint16_t reserved;
+    uint32_t break_pc[0];  // ProgramCounter
+} jd_devs_dbg_step_t;
+
 
 /**
  * Read-write bool (uint8_t). Turn on/off the debugger interface.

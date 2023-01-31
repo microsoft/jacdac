@@ -1976,6 +1976,16 @@ namespace jacdac {
     }
 
 
+    export const enum DevsDbgStepFlags { // uint16_t
+        //% block="step out"
+        StepOut = 0x1,
+        //% block="step in"
+        StepIn = 0x2,
+        //% block="throw"
+        Throw = 0x4,
+    }
+
+
     export const enum DevsDbgSuspensionType { // uint8_t
         //% block="none"
         None = 0x0,
@@ -1993,6 +2003,8 @@ namespace jacdac {
         Restart = 0x6,
         //% block="debugger stmt"
         DebuggerStmt = 0x7,
+        //% block="step"
+        Step = 0x8,
     }
 
     export const enum DevsDbgCmd {
@@ -2091,9 +2103,19 @@ namespace jacdac {
         Halt = 0x94,
 
         /**
-         * No args. Start the program from the beginning and halt on first instruction.
+         * No args. Run the program from the beginning and halt on first instruction.
          */
         RestartAndHalt = 0x95,
+
+        /**
+         * Set breakpoints that only trigger in the specified stackframe and resume program.
+         * The breakpoints are cleared automatically on next suspension (regardless of the reason).
+         *
+         * ```
+         * const [stackframe, flags, breakPc] = jdunpack<[jacdac.DevsDbgObjStackFrame, jacdac.DevsDbgStepFlags, jacdac.DevsDbgProgramCounter[]]>(buf, "u32 u16 x[2] u32[]")
+         * ```
+         */
+        Step = 0x96,
     }
 
     export const enum DevsDbgPipe {

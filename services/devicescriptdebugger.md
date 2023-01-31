@@ -194,7 +194,23 @@ Try suspending current program. Client needs to wait for `suspended` event after
 
     command restart_and_halt @ 0x95 {}
 
-Start the program from the beginning and halt on first instruction.
+Run the program from the beginning and halt on first instruction.
+
+    flags StepFlags: u16 {
+        StepOut = 0x0001 // also stop when the stackframe returns
+        StepIn = 0x0002  // also stop when the stackframe calls something
+        Throw = 0x0004   // also stop on throw which would pop the stackframe
+    }
+    command step @ 0x96 {
+        stackframe: ObjStackFrame
+        flags: StepFlags
+        reserved: u16
+    repeats:
+        break_pc: ProgramCounter
+    }
+
+Set breakpoints that only trigger in the specified stackframe and resume program.
+The breakpoints are cleared automatically on next suspension (regardless of the reason).
 
 ## Registers
 
@@ -226,6 +242,7 @@ Most commands can only be executed when the program is suspended.
         Panic = 5
         Restart = 6
         DebuggerStmt = 7
+        Step = 8
     }
 
     event suspended @ 0x80 {

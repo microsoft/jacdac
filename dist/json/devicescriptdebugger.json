@@ -99,6 +99,16 @@
         "Unhandled": 0
       }
     },
+    "StepFlags": {
+      "name": "StepFlags",
+      "storage": 2,
+      "isFlags": true,
+      "members": {
+        "StepOut": 1,
+        "StepIn": 2,
+        "Throw": 4
+      }
+    },
     "SuspensionType": {
       "name": "SuspensionType",
       "storage": 1,
@@ -110,7 +120,8 @@
         "Halt": 4,
         "Panic": 5,
         "Restart": 6,
-        "DebuggerStmt": 7
+        "DebuggerStmt": 7,
+        "Step": 8
       }
     }
   },
@@ -607,8 +618,39 @@
       "kind": "command",
       "name": "restart_and_halt",
       "identifier": 149,
-      "description": "Start the program from the beginning and halt on first instruction.",
+      "description": "Run the program from the beginning and halt on first instruction.",
       "fields": []
+    },
+    {
+      "kind": "command",
+      "name": "step",
+      "identifier": 150,
+      "description": "Set breakpoints that only trigger in the specified stackframe and resume program.\nThe breakpoints are cleared automatically on next suspension (regardless of the reason).",
+      "fields": [
+        {
+          "name": "stackframe",
+          "type": "ObjStackFrame",
+          "storage": 4
+        },
+        {
+          "name": "flags",
+          "type": "StepFlags",
+          "storage": 2
+        },
+        {
+          "name": "reserved",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "break_pc",
+          "type": "ProgramCounter",
+          "storage": 4,
+          "startRepeats": true
+        }
+      ],
+      "packFormat": "u32 u16 u16 r: u32"
     },
     {
       "kind": "rw",

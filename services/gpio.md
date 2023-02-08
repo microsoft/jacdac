@@ -11,14 +11,21 @@ and should **not** be exposed to the user.
 
 ## Registers
 
-    ro state: bytes @ reading
+    ro state @ reading {
+        digital_values: u8[16]
+    repeats:
+        analog_pin: u8
+        reserved: u8
+        analog_value: u0.16
+    }
 
-For every pin set to `Input*` or `Output*` the corresponding **bit** will be `1` if and only if the pin is high.
-When `Disconnected` or `AnalogIn` the value is `0`.
+For every pin set to `Input*` or `Output*` the corresponding **bit** in `digital_values` will be `1` if and only if the pin is high.
+When `Disconnected` or `AnalogIn` the digital value is `0`.
+For every pin set to `AnalogIn` its value is reported in the remainder of the packet.
 This is normally streamed at low-ish speed, but it's also automatically reported whenever
-an input pin changes value.
+a digital input pin changes value (throttled to ~100Hz).
 
-    ro num_pins: u8 # @ 0x180
+    ro num_pins: u8 # { absolute_max=128 } @ 0x180
 
 Number of pins that can be operated through this service.
 
@@ -26,13 +33,16 @@ Number of pins that can be operated through this service.
 ## Commands
 
     enum PinMode : u8 {
-        Disconnected   = 0x00
+        Off            = 0x00
+        OffPullUp      = 0x10
+        OffPullDown    = 0x20
         InputNoPull    = 0x01
         InputPullUp    = 0x11
         InputPullDown  = 0x21
         OutputHigh     = 0x12
         OutputLow      = 0x22
         AnalogIn       = 0x03
+        Alternative    = 0x04
     }
     command configure @ 0x80 {
     repeats:
@@ -41,6 +51,7 @@ Number of pins that can be operated through this service.
     }
 
 Configure (including setting the value) zero or more pins.
+`Alternative` settings means the pin is controlled by other service (SPI, I2C, UART, PWM, etc.).
 
     flags PinCapabilities : u16 {
         PullUp     = 0x0001
@@ -62,22 +73,14 @@ Configure (including setting the value) zero or more pins.
 
 Report capabilities and name of a pin.
 
-    command analog_read @ 0x82 {
-    repeats:
-        pin: u8
-    }
-    report {
-    repeats:
-        pin: u8
-        reserved: u8
-        value: u0.16
-    }
-
-Configure pin(s) as `AnalogIn` if needed and read the value.
-The pins stay `AnalogIn` afterwards.
-
     command pin_by_label @ 0x83 {
         label: string
+    }
+
+This responds with `pin_info` report.
+
+    command pin_by_hw_pin @ 0x84 {
+        hw_pin: u8
     }
 
 This responds with `pin_info` report.

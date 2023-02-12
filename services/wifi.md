@@ -21,7 +21,7 @@ Updating networks (setting password, priorties, forgetting) does not trigger an 
 
 ## Captive portals
 
-If the Wifi is not able to join an AP because it needs to receive a password, it may decide to enter a mode 
+If the Wifi is not able to join an AP because it needs to receive a password, it may decide to enter a mode
 where it waits for user input. Typical example of this mode would be a captive portal or waiting for a BLE interaction.
 In that situation, the `status_code` should set to `WaitingForInput`.
 
@@ -105,7 +105,7 @@ Return list of known WiFi networks.
 
 ## Registers
 
-    ro rssi: i8 dB {typical_min = -128, typical_max = -20} @ reading
+    ro rssi: i8 dB {typical_min = -128, typical_max = -20, preferred_interval=15000 } @ reading
 
 Current signal strength. Returns -128 when not connected.
 

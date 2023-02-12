@@ -4,6 +4,7 @@
     camel: wifi
     group: iot
     status: rc
+    base: _sensor
 
 Discovery and connection to WiFi networks. Separate TCP service can be used for data transfer.
 
@@ -43,7 +44,7 @@ In that situation, the `status_code` should set to `WaitingForInput`.
     command last_scan_results @ 0x80 {
         results: pipe
     }
-    pipe report results {
+    pipe report scan_results {
         flags: APFlags
         reserved: u32
         rssi: i8 dB {typical_min = -100, typical_max = -20}

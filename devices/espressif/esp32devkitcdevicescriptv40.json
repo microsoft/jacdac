@@ -15,6 +15,10 @@
   "productIdentifiers": [
     1011907077
   ],
+  "transport": {
+    "type": "serial",
+    "vendorId": 4292
+  },
   "firmwares": [
     {
       "name": "DeviceScript + Cloud Connector",
@@ -27,10 +31,6 @@
     "sequence": "boot-power",
     "firmwareFormat": "bin",
     "firmwareUploader": "https://adafruit.github.io/Adafruit_WebSerial_ESPTool/"
-  },
-  "transport": {
-    "type": "serial",
-    "vendorId": 4292
   },
   "status": "stable"
 }

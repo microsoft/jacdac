@@ -6,6 +6,9 @@
   "firmwareSource": "https://github.com/microsoft/jacdac-esp32",
   "connector": "noConnector",
   "link": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32/hw-reference/esp32/get-started-devkitc.html",
+  "storeLink": [
+    "https://www.espressif.com/en/products/devkits/esp32-devkitc"
+  ],
   "services": [
     341864092,
     342028028,

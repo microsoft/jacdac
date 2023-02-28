@@ -2508,9 +2508,10 @@ export enum DevsDbgValueTag { // uint8_t
 }
 
 export enum DevsDbgValueSpecial { // uint8_t
-    Null = 0x0,
+    Undefined = 0x0,
     True = 0x1,
     False = 0x2,
+    Null = 0x3,
     Globals = 0x64,
     CurrentException = 0x65,
 }

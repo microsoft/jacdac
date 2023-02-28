@@ -49,9 +49,10 @@
       "name": "ValueSpecial",
       "storage": 1,
       "members": {
-        "Null": 0,
+        "Undefined": 0,
         "True": 1,
         "False": 2,
+        "Null": 3,
         "Globals": 100,
         "CurrentException": 101
       }

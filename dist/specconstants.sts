@@ -1925,12 +1925,14 @@ namespace jacdac {
 
 
     export const enum DevsDbgValueSpecial { // uint8_t
-        //% block="null"
-        Null = 0x0,
+        //% block="undefined"
+        Undefined = 0x0,
         //% block="true"
         True = 0x1,
         //% block="false"
         False = 0x2,
+        //% block="null"
+        Null = 0x3,
         //% block="globals"
         Globals = 0x64,
         //% block="current exception"

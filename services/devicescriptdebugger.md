@@ -49,9 +49,10 @@ Allows for inspecting and affecting the state of a running DeviceScript program.
     }
 
     enum ValueSpecial : u8 {
-        Null = 0
+        Undefined = 0
         True = 1
         False = 2
+        Null = 3
 
         // These can be used in read_* and are never returned
         Globals = 100

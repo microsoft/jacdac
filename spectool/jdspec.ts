@@ -290,7 +290,8 @@ export function parseServiceSpecificationMarkdownToJSON(
     const systemInfo = includes?.["_system"]
     const usedIds: jdspec.SMap<string> = {}
     for (const prev of values(includes || {})) {
-        if (prev.classIdentifier) usedIds[prev.classIdentifier + ""] = prev.name
+        if (prev.catalog && prev.classIdentifier)
+            usedIds[prev.classIdentifier + ""] = prev.name
     }
 
     try {

@@ -1232,26 +1232,15 @@ namespace jacdac {
 namespace jacdac {
     // Service Cloud Adapter constants
     export const SRV_CLOUD_ADAPTER = 0x14606e9c
-
-    export const enum CloudAdapterCommandStatus { // uint32_t
-        //% block="ok"
-        OK = 0xc8,
-        //% block="not found"
-        NotFound = 0x194,
-        //% block="busy"
-        Busy = 0x1ad,
-    }
-
     export const enum CloudAdapterCmd {
         /**
-         * Upload a labelled tuple of values to the cloud.
-         * The tuple will be automatically tagged with timestamp and originating device.
+         * Argument: json string (bytes). Upload a JSON-encoded message to the cloud.
          *
          * ```
-         * const [label, value] = jdunpack<[string, number[]]>(buf, "z f64[]")
+         * const [json] = jdunpack<[string]>(buf, "s")
          * ```
          */
-        Upload = 0x80,
+        UploadJson = 0x80,
 
         /**
          * Argument: payload bytes. Upload a binary message to the cloud.
@@ -1260,22 +1249,13 @@ namespace jacdac {
          * const [payload] = jdunpack<[Buffer]>(buf, "b")
          * ```
          */
-        UploadBin = 0x81,
-
-        /**
-         * Should be called when it finishes handling a `cloud_command`.
-         *
-         * ```
-         * const [seqNo, status, result] = jdunpack<[number, jacdac.CloudAdapterCommandStatus, number[]]>(buf, "u32 u32 f64[]")
-         * ```
-         */
-        AckCloudCommand = 0x83,
+        UploadBinary = 0x81,
     }
 
     export const enum CloudAdapterReg {
         /**
          * Read-only bool (uint8_t). Indicate whether we're currently connected to the cloud server.
-         * When offline, `upload` commands are queued, and `get_twin` respond with cached values.
+         * When offline, `upload` commands are queued.
          *
          * ```
          * const [connected] = jdunpack<[number]>(buf, "u8")
@@ -1296,14 +1276,24 @@ namespace jacdac {
 
     export const enum CloudAdapterEvent {
         /**
-         * Emitted when cloud requests to run some action.
+         * Argument: json string (bytes). Emitted when cloud send us a JSON message.
          *
          * ```
-         * const [seqNo, command, argument] = jdunpack<[number, string, number[]]>(buf, "u32 z f64[]")
+         * const [json] = jdunpack<[string]>(buf, "s")
          * ```
          */
-        //% block="cloud command"
-        CloudCommand = 0x81,
+        //% block="on json"
+        OnJson = 0x80,
+
+        /**
+         * Argument: payload bytes. Emitted when cloud send us a binary message.
+         *
+         * ```
+         * const [payload] = jdunpack<[Buffer]>(buf, "b")
+         * ```
+         */
+        //% block="on binary"
+        OnBinary = 0x81,
 
         /**
          * Emitted when we connect or disconnect from the cloud.
@@ -7221,6 +7211,141 @@ namespace jacdac {
          * ```
          */
         MaxWindSpeed = 0x105,
+    }
+
+}
+namespace jacdac {
+    // Service WSSK constants
+    export const SRV_WSSK = 0x13b739fe
+
+    export const enum WsskDataType { // uint8_t
+        //% block="binary"
+        Binary = 0x1,
+        //% block="json"
+        JSON = 0x2,
+    }
+
+    export const enum WsskCmd {
+        /**
+         * Argument: message string (bytes). Issued when a command fails.
+         *
+         * ```
+         * const [message] = jdunpack<[string]>(buf, "s")
+         * ```
+         */
+        Error = 0xff,
+
+        /**
+         * Argument: en bool (uint8_t). Enable/disable forwarding of all Jacdac frames.
+         *
+         * ```
+         * const [en] = jdunpack<[number]>(buf, "u8")
+         * ```
+         */
+        SetForwarding = 0x90,
+
+        /**
+         * Argument: payload bytes. Send from gateway when it wants to see if the device is alive.
+         * The device currently only support 0-length payload.
+         *
+         * ```
+         * const [payload] = jdunpack<[Buffer]>(buf, "b")
+         * ```
+         */
+        PingDevice = 0x91,
+
+        /**
+         * report PingDevice
+         * ```
+         * const [payload] = jdunpack<[Buffer]>(buf, "b")
+         * ```
+         */
+
+        /**
+         * Argument: payload bytes. Send from device to gateway to test connection.
+         *
+         * ```
+         * const [payload] = jdunpack<[Buffer]>(buf, "b")
+         * ```
+         */
+        PingCloud = 0x92,
+
+        /**
+         * report PingCloud
+         * ```
+         * const [payload] = jdunpack<[Buffer]>(buf, "b")
+         * ```
+         */
+
+        /**
+         * No args. Get SHA256 of the currently deployed program.
+         */
+        GetHash = 0x93,
+
+        /**
+         * report GetHash
+         * ```
+         * const [sha256] = jdunpack<[Buffer]>(buf, "b[32]")
+         * ```
+         */
+
+        /**
+         * Argument: size B uint32_t. Start deployment of a new program.
+         *
+         * ```
+         * const [size] = jdunpack<[number]>(buf, "u32")
+         * ```
+         */
+        DeployStart = 0x94,
+
+        /**
+         * Argument: payload bytes. Payload length must be multiple of 32 bytes.
+         *
+         * ```
+         * const [payload] = jdunpack<[Buffer]>(buf, "b")
+         * ```
+         */
+        DeployWrite = 0x95,
+
+        /**
+         * No args. Finish deployment.
+         */
+        DeployFinish = 0x96,
+
+        /**
+         * Upload a labelled tuple of values to the cloud.
+         * The tuple will be automatically tagged with timestamp and originating device.
+         *
+         * ```
+         * const [datatype, payload] = jdunpack<[jacdac.WsskDataType, Buffer]>(buf, "u8 b")
+         * ```
+         */
+        C2d = 0x97,
+
+        /**
+         * Upload a binary message to the cloud.
+         *
+         * ```
+         * const [datatype, payload] = jdunpack<[jacdac.WsskDataType, Buffer]>(buf, "u8 b")
+         * ```
+         */
+        D2c = 0x98,
+
+        /**
+         * Argument: frame bytes. Sent both ways.
+         *
+         * ```
+         * const [frame] = jdunpack<[Buffer]>(buf, "b")
+         * ```
+         */
+        JacdacPacket = 0x99,
+
+        /**
+         * report JacdacPacket
+         * ```
+         * const [frame] = jdunpack<[Buffer]>(buf, "b")
+         * ```
+         */
     }
 
 }

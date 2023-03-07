@@ -4,41 +4,19 @@
 
 #define JD_SERVICE_CLASS_CLOUD_ADAPTER  0x14606e9c
 
-// enum CommandStatus (uint32_t)
-#define JD_CLOUD_ADAPTER_COMMAND_STATUS_OK 0xc8
-#define JD_CLOUD_ADAPTER_COMMAND_STATUS_NOT_FOUND 0x194
-#define JD_CLOUD_ADAPTER_COMMAND_STATUS_BUSY 0x1ad
-
 /**
- * Upload a labelled tuple of values to the cloud.
- * The tuple will be automatically tagged with timestamp and originating device.
+ * Argument: json string (bytes). Upload a JSON-encoded message to the cloud.
  */
-#define JD_CLOUD_ADAPTER_CMD_UPLOAD 0x80
-typedef struct jd_cloud_adapter_upload {
-    char label[0];  // string0
-    // double value[0];  // f64
-} jd_cloud_adapter_upload_t;
-
+#define JD_CLOUD_ADAPTER_CMD_UPLOAD_JSON 0x80
 
 /**
  * Argument: payload bytes. Upload a binary message to the cloud.
  */
-#define JD_CLOUD_ADAPTER_CMD_UPLOAD_BIN 0x81
-
-/**
- * Should be called when it finishes handling a `cloud_command`.
- */
-#define JD_CLOUD_ADAPTER_CMD_ACK_CLOUD_COMMAND 0x83
-typedef struct jd_cloud_adapter_ack_cloud_command {
-    uint32_t seq_no;
-    uint32_t status;  // CommandStatus
-    double result[0];  // f64
-} jd_cloud_adapter_ack_cloud_command_t;
-
+#define JD_CLOUD_ADAPTER_CMD_UPLOAD_BINARY 0x81
 
 /**
  * Read-only bool (uint8_t). Indicate whether we're currently connected to the cloud server.
- * When offline, `upload` commands are queued, and `get_twin` respond with cached values.
+ * When offline, `upload` commands are queued.
  */
 #define JD_CLOUD_ADAPTER_REG_CONNECTED 0x180
 
@@ -49,15 +27,14 @@ typedef struct jd_cloud_adapter_ack_cloud_command {
 #define JD_CLOUD_ADAPTER_REG_CONNECTION_NAME 0x181
 
 /**
- * Emitted when cloud requests to run some action.
+ * Argument: json string (bytes). Emitted when cloud send us a JSON message.
  */
-#define JD_CLOUD_ADAPTER_EV_CLOUD_COMMAND 0x81
-typedef struct jd_cloud_adapter_cloud_command {
-    uint32_t seq_no;
-    char command[0];  // string0
-    // double argument[0];  // f64
-} jd_cloud_adapter_cloud_command_t;
+#define JD_CLOUD_ADAPTER_EV_ON_JSON 0x80
 
+/**
+ * Argument: payload bytes. Emitted when cloud send us a binary message.
+ */
+#define JD_CLOUD_ADAPTER_EV_ON_BINARY 0x81
 
 /**
  * Emitted when we connect or disconnect from the cloud.

@@ -16,11 +16,20 @@ This is not used as a regular Jacdac service.
 
 Issued when a command fails.
 
-    command set_forwarding @ 0x90 {
-        en: bool
+    enum StreamingType : u16 {
+        Jacdac = 0x0001
+        Dmesg = 0x0002
+        Exceptions = 0x0100
+        TemporaryMask = 0x00ff
+        PermamentMask = 0xff00
+        DefaultMask = 0x0100
     }
 
-Enable/disable forwarding of all Jacdac frames.
+    command set_streaming @ 0x90 {
+        status: StreamingType
+    }
+
+Enable/disable forwarding of all Jacdac frames, exception reporting, and `dmesg` streaming.
 
     command ping_device @ 0x91 {
         payload: bytes
@@ -73,6 +82,7 @@ Finish deployment.
     }
     command c2d @ 0x97 {
         datatype: DataType
+        topic: string0
         payload: bytes
     }
 
@@ -81,6 +91,7 @@ The tuple will be automatically tagged with timestamp and originating device.
 
     report d2c @ 0x98 {
         datatype: DataType
+        topic: string0
         payload: bytes
     }
 
@@ -94,3 +105,16 @@ Upload a binary message to the cloud.
     }
 
 Sent both ways.
+
+    report dmesg @ 0x9a {
+        logs: bytes
+    }
+
+The `logs` field is string in UTF-8 encoding, however it can be split in the middle of UTF-8 code point.
+Controlled via `dmesg_en`.
+
+    report exception_report @ 0x9b {
+        logs: bytes
+    }
+
+The format is the same as `dmesg` but this is sent on exceptions only and is controlled separately via `exception_en`.

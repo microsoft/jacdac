@@ -11,12 +11,14 @@ Note that `f64` values following a label are not necessarily aligned.
 ## Commands
 
     command upload_json @ 0x80 {
+        topic: string0
         json: string
     }
 
 Upload a JSON-encoded message to the cloud.
 
     command upload_binary @ 0x81 {
+        topic: string0
         payload: bytes
     }
 
@@ -37,12 +39,14 @@ and/or type of cloud service (`"something.cloud.net (Provider IoT)"`).
 ## Events
 
     event on_json @ 0x80 {
+        topic: string0
         json: string
     }
 
 Emitted when cloud send us a JSON message.
 
     event on_binary @ 0x81 {
+        topic: string0
         payload: bytes
     }
 

@@ -5,14 +5,24 @@
 #define JD_SERVICE_CLASS_CLOUD_ADAPTER  0x14606e9c
 
 /**
- * Argument: json string (bytes). Upload a JSON-encoded message to the cloud.
+ * Upload a JSON-encoded message to the cloud.
  */
 #define JD_CLOUD_ADAPTER_CMD_UPLOAD_JSON 0x80
+typedef struct jd_cloud_adapter_upload_json {
+    char topic[0];  // string0
+    // char json[0];  // string
+} jd_cloud_adapter_upload_json_t;
+
 
 /**
- * Argument: payload bytes. Upload a binary message to the cloud.
+ * Upload a binary message to the cloud.
  */
 #define JD_CLOUD_ADAPTER_CMD_UPLOAD_BINARY 0x81
+typedef struct jd_cloud_adapter_upload_binary {
+    char topic[0];  // string0
+    // uint8_t payload[0];
+} jd_cloud_adapter_upload_binary_t;
+
 
 /**
  * Read-only bool (uint8_t). Indicate whether we're currently connected to the cloud server.
@@ -27,14 +37,24 @@
 #define JD_CLOUD_ADAPTER_REG_CONNECTION_NAME 0x181
 
 /**
- * Argument: json string (bytes). Emitted when cloud send us a JSON message.
+ * Emitted when cloud send us a JSON message.
  */
 #define JD_CLOUD_ADAPTER_EV_ON_JSON 0x80
+typedef struct jd_cloud_adapter_on_json {
+    char topic[0];  // string0
+    // char json[0];  // string
+} jd_cloud_adapter_on_json_t;
+
 
 /**
- * Argument: payload bytes. Emitted when cloud send us a binary message.
+ * Emitted when cloud send us a binary message.
  */
 #define JD_CLOUD_ADAPTER_EV_ON_BINARY 0x81
+typedef struct jd_cloud_adapter_on_binary {
+    char topic[0];  // string0
+    // uint8_t payload[0];
+} jd_cloud_adapter_on_binary_t;
+
 
 /**
  * Emitted when we connect or disconnect from the cloud.

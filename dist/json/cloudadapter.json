@@ -109,12 +109,17 @@
       "description": "Upload a JSON-encoded message to the cloud.",
       "fields": [
         {
+          "name": "topic",
+          "type": "string0",
+          "storage": 0
+        },
+        {
           "name": "json",
           "type": "string",
           "storage": 0
         }
       ],
-      "packFormat": "s"
+      "packFormat": "z s"
     },
     {
       "kind": "command",
@@ -123,13 +128,18 @@
       "description": "Upload a binary message to the cloud.",
       "fields": [
         {
+          "name": "topic",
+          "type": "string0",
+          "storage": 0
+        },
+        {
           "name": "payload",
           "type": "bytes",
           "storage": 0,
           "isSimpleType": true
         }
       ],
-      "packFormat": "b"
+      "packFormat": "z b"
     },
     {
       "kind": "ro",
@@ -166,12 +176,17 @@
       "description": "Emitted when cloud send us a JSON message.",
       "fields": [
         {
+          "name": "topic",
+          "type": "string0",
+          "storage": 0
+        },
+        {
           "name": "json",
           "type": "string",
           "storage": 0
         }
       ],
-      "packFormat": "s"
+      "packFormat": "z s"
     },
     {
       "kind": "event",
@@ -180,13 +195,18 @@
       "description": "Emitted when cloud send us a binary message.",
       "fields": [
         {
+          "name": "topic",
+          "type": "string0",
+          "storage": 0
+        },
+        {
           "name": "payload",
           "type": "bytes",
           "storage": 0,
           "isSimpleType": true
         }
       ],
-      "packFormat": "b"
+      "packFormat": "z b"
     },
     {
       "kind": "event",

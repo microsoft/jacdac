@@ -12,6 +12,18 @@
   },
   "classIdentifier": 330775038,
   "enums": {
+    "StreamingType": {
+      "name": "StreamingType",
+      "storage": 2,
+      "members": {
+        "Jacdac": 1,
+        "Dmesg": 2,
+        "Exceptions": 256,
+        "TemporaryMask": 255,
+        "PermamentMask": 65280,
+        "DefaultMask": 256
+      }
+    },
     "DataType": {
       "name": "DataType",
       "storage": 1,
@@ -127,17 +139,17 @@
     },
     {
       "kind": "command",
-      "name": "set_forwarding",
+      "name": "set_streaming",
       "identifier": 144,
-      "description": "Enable/disable forwarding of all Jacdac frames.",
+      "description": "Enable/disable forwarding of all Jacdac frames, exception reporting, and `dmesg` streaming.",
       "fields": [
         {
-          "name": "en",
-          "type": "bool",
-          "storage": 1
+          "name": "status",
+          "type": "StreamingType",
+          "storage": 2
         }
       ],
-      "packFormat": "u8"
+      "packFormat": "u16"
     },
     {
       "kind": "command",
@@ -303,13 +315,18 @@
           "storage": 1
         },
         {
+          "name": "topic",
+          "type": "string0",
+          "storage": 0
+        },
+        {
           "name": "payload",
           "type": "bytes",
           "storage": 0,
           "isSimpleType": true
         }
       ],
-      "packFormat": "u8 b"
+      "packFormat": "u8 z b"
     },
     {
       "kind": "report",
@@ -323,13 +340,18 @@
           "storage": 1
         },
         {
+          "name": "topic",
+          "type": "string0",
+          "storage": 0
+        },
+        {
           "name": "payload",
           "type": "bytes",
           "storage": 0,
           "isSimpleType": true
         }
       ],
-      "packFormat": "u8 b"
+      "packFormat": "u8 z b"
     },
     {
       "kind": "command",
@@ -361,6 +383,36 @@
         }
       ],
       "secondary": true,
+      "packFormat": "b"
+    },
+    {
+      "kind": "report",
+      "name": "dmesg",
+      "identifier": 154,
+      "description": "The `logs` field is string in UTF-8 encoding, however it can be split in the middle of UTF-8 code point.\nControlled via `dmesg_en`.",
+      "fields": [
+        {
+          "name": "logs",
+          "type": "bytes",
+          "storage": 0,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "b"
+    },
+    {
+      "kind": "report",
+      "name": "exception_report",
+      "identifier": 155,
+      "description": "The format is the same as `dmesg` but this is sent on exceptions only and is controlled separately via `exception_en`.",
+      "fields": [
+        {
+          "name": "logs",
+          "type": "bytes",
+          "storage": 0,
+          "isSimpleType": true
+        }
+      ],
       "packFormat": "b"
     }
   ],

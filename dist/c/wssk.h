@@ -4,6 +4,14 @@
 
 #define JD_SERVICE_CLASS_WSSK  0x13b739fe
 
+// enum StreamingType (uint16_t)
+#define JD_WSSK_STREAMING_TYPE_JACDAC 0x1
+#define JD_WSSK_STREAMING_TYPE_DMESG 0x2
+#define JD_WSSK_STREAMING_TYPE_EXCEPTIONS 0x100
+#define JD_WSSK_STREAMING_TYPE_TEMPORARY_MASK 0xff
+#define JD_WSSK_STREAMING_TYPE_PERMAMENT_MASK 0xff00
+#define JD_WSSK_STREAMING_TYPE_DEFAULT_MASK 0x100
+
 // enum DataType (uint8_t)
 #define JD_WSSK_DATA_TYPE_BINARY 0x1
 #define JD_WSSK_DATA_TYPE_JSON 0x2
@@ -14,9 +22,9 @@
 #define JD_WSSK_CMD_ERROR 0xff
 
 /**
- * Argument: en bool (uint8_t). Enable/disable forwarding of all Jacdac frames.
+ * Argument: status StreamingType (uint16_t). Enable/disable forwarding of all Jacdac frames, exception reporting, and `dmesg` streaming.
  */
-#define JD_WSSK_CMD_SET_FORWARDING 0x90
+#define JD_WSSK_CMD_SET_STREAMING 0x90
 
 /**
  * Argument: payload bytes. Send from gateway when it wants to see if the device is alive.
@@ -80,7 +88,8 @@
 #define JD_WSSK_CMD_C2D 0x97
 typedef struct jd_wssk_c2d {
     uint8_t datatype;  // DataType
-    uint8_t payload[0];
+    char topic[0];  // string0
+    // uint8_t payload[0];
 } jd_wssk_c2d_t;
 
 
@@ -90,7 +99,8 @@ typedef struct jd_wssk_c2d {
 #define JD_WSSK_CMD_D2C 0x98
 typedef struct jd_wssk_d2c_report {
     uint8_t datatype;  // DataType
-    uint8_t payload[0];
+    char topic[0];  // string0
+    // uint8_t payload[0];
 } jd_wssk_d2c_report_t;
 
 
@@ -102,5 +112,16 @@ typedef struct jd_wssk_d2c_report {
 /**
  * Report: Argument: frame bytes
  */
+
+/**
+ * Argument: logs bytes. The `logs` field is string in UTF-8 encoding, however it can be split in the middle of UTF-8 code point.
+ * Controlled via `dmesg_en`.
+ */
+#define JD_WSSK_CMD_DMESG 0x9a
+
+/**
+ * Argument: logs bytes. The format is the same as `dmesg` but this is sent on exceptions only and is controlled separately via `exception_en`.
+ */
+#define JD_WSSK_CMD_EXCEPTION_REPORT 0x9b
 
 #endif

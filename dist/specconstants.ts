@@ -1638,23 +1638,15 @@ export namespace CharacterScreenRegPack {
 
 // Service Cloud Adapter constants
 export const SRV_CLOUD_ADAPTER = 0x14606e9c
-
-export enum CloudAdapterCommandStatus { // uint32_t
-    OK = 0xc8,
-    NotFound = 0x194,
-    Busy = 0x1ad,
-}
-
 export enum CloudAdapterCmd {
     /**
-     * Upload a labelled tuple of values to the cloud.
-     * The tuple will be automatically tagged with timestamp and originating device.
+     * Argument: json string (bytes). Upload a JSON-encoded message to the cloud.
      *
      * ```
-     * const [label, value] = jdunpack<[string, number[]]>(buf, "z f64[]")
+     * const [json] = jdunpack<[string]>(buf, "s")
      * ```
      */
-    Upload = 0x80,
+    UploadJson = 0x80,
 
     /**
      * Argument: payload bytes. Upload a binary message to the cloud.
@@ -1663,39 +1655,25 @@ export enum CloudAdapterCmd {
      * const [payload] = jdunpack<[Uint8Array]>(buf, "b")
      * ```
      */
-    UploadBin = 0x81,
-
-    /**
-     * Should be called when it finishes handling a `cloud_command`.
-     *
-     * ```
-     * const [seqNo, status, result] = jdunpack<[number, CloudAdapterCommandStatus, number[]]>(buf, "u32 u32 f64[]")
-     * ```
-     */
-    AckCloudCommand = 0x83,
+    UploadBinary = 0x81,
 }
 
 export namespace CloudAdapterCmdPack {
     /**
-     * Pack format for 'upload' Cmd data.
+     * Pack format for 'upload_json' Cmd data.
      */
-    export const Upload = "z r: f64"
+    export const UploadJson = "s"
 
     /**
-     * Pack format for 'upload_bin' Cmd data.
+     * Pack format for 'upload_binary' Cmd data.
      */
-    export const UploadBin = "b"
-
-    /**
-     * Pack format for 'ack_cloud_command' Cmd data.
-     */
-    export const AckCloudCommand = "u32 u32 r: f64"
+    export const UploadBinary = "b"
 }
 
 export enum CloudAdapterReg {
     /**
      * Read-only bool (uint8_t). Indicate whether we're currently connected to the cloud server.
-     * When offline, `upload` commands are queued, and `get_twin` respond with cached values.
+     * When offline, `upload` commands are queued.
      *
      * ```
      * const [connected] = jdunpack<[number]>(buf, "u8")
@@ -1728,13 +1706,22 @@ export namespace CloudAdapterRegPack {
 
 export enum CloudAdapterEvent {
     /**
-     * Emitted when cloud requests to run some action.
+     * Argument: json string (bytes). Emitted when cloud send us a JSON message.
      *
      * ```
-     * const [seqNo, command, argument] = jdunpack<[number, string, number[]]>(buf, "u32 z f64[]")
+     * const [json] = jdunpack<[string]>(buf, "s")
      * ```
      */
-    CloudCommand = 0x81,
+    OnJson = 0x80,
+
+    /**
+     * Argument: payload bytes. Emitted when cloud send us a binary message.
+     *
+     * ```
+     * const [payload] = jdunpack<[Uint8Array]>(buf, "b")
+     * ```
+     */
+    OnBinary = 0x81,
 
     /**
      * Emitted when we connect or disconnect from the cloud.
@@ -1744,9 +1731,14 @@ export enum CloudAdapterEvent {
 
 export namespace CloudAdapterEventPack {
     /**
-     * Pack format for 'cloud_command' Event data.
+     * Pack format for 'on_json' Event data.
      */
-    export const CloudCommand = "u32 z r: f64"
+    export const OnJson = "s"
+
+    /**
+     * Pack format for 'on_binary' Event data.
+     */
+    export const OnBinary = "b"
 }
 
 // Service Cloud Configuration constants
@@ -2508,9 +2500,10 @@ export enum DevsDbgValueTag { // uint8_t
 }
 
 export enum DevsDbgValueSpecial { // uint8_t
-    Null = 0x0,
+    Undefined = 0x0,
     True = 0x1,
     False = 0x2,
+    Null = 0x3,
     Globals = 0x64,
     CurrentException = 0x65,
 }
@@ -9459,4 +9452,202 @@ export namespace WindSpeedRegPack {
      * Pack format for 'max_wind_speed' Reg data.
      */
     export const MaxWindSpeed = "u16.16"
+}
+
+// Service WSSK constants
+export const SRV_WSSK = 0x13b739fe
+
+export enum WsskDataType { // uint8_t
+    Binary = 0x1,
+    JSON = 0x2,
+}
+
+export enum WsskCmd {
+    /**
+     * Argument: message string (bytes). Issued when a command fails.
+     *
+     * ```
+     * const [message] = jdunpack<[string]>(buf, "s")
+     * ```
+     */
+    Error = 0xff,
+
+    /**
+     * Argument: en bool (uint8_t). Enable/disable forwarding of all Jacdac frames.
+     *
+     * ```
+     * const [en] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    SetForwarding = 0x90,
+
+    /**
+     * Argument: payload bytes. Send from gateway when it wants to see if the device is alive.
+     * The device currently only support 0-length payload.
+     *
+     * ```
+     * const [payload] = jdunpack<[Uint8Array]>(buf, "b")
+     * ```
+     */
+    PingDevice = 0x91,
+
+    /**
+     * report PingDevice
+     * ```
+     * const [payload] = jdunpack<[Uint8Array]>(buf, "b")
+     * ```
+     */
+
+    /**
+     * Argument: payload bytes. Send from device to gateway to test connection.
+     *
+     * ```
+     * const [payload] = jdunpack<[Uint8Array]>(buf, "b")
+     * ```
+     */
+    PingCloud = 0x92,
+
+    /**
+     * report PingCloud
+     * ```
+     * const [payload] = jdunpack<[Uint8Array]>(buf, "b")
+     * ```
+     */
+
+    /**
+     * No args. Get SHA256 of the currently deployed program.
+     */
+    GetHash = 0x93,
+
+    /**
+     * report GetHash
+     * ```
+     * const [sha256] = jdunpack<[Uint8Array]>(buf, "b[32]")
+     * ```
+     */
+
+    /**
+     * Argument: size B uint32_t. Start deployment of a new program.
+     *
+     * ```
+     * const [size] = jdunpack<[number]>(buf, "u32")
+     * ```
+     */
+    DeployStart = 0x94,
+
+    /**
+     * Argument: payload bytes. Payload length must be multiple of 32 bytes.
+     *
+     * ```
+     * const [payload] = jdunpack<[Uint8Array]>(buf, "b")
+     * ```
+     */
+    DeployWrite = 0x95,
+
+    /**
+     * No args. Finish deployment.
+     */
+    DeployFinish = 0x96,
+
+    /**
+     * Upload a labelled tuple of values to the cloud.
+     * The tuple will be automatically tagged with timestamp and originating device.
+     *
+     * ```
+     * const [datatype, payload] = jdunpack<[WsskDataType, Uint8Array]>(buf, "u8 b")
+     * ```
+     */
+    C2d = 0x97,
+
+    /**
+     * Upload a binary message to the cloud.
+     *
+     * ```
+     * const [datatype, payload] = jdunpack<[WsskDataType, Uint8Array]>(buf, "u8 b")
+     * ```
+     */
+    D2c = 0x98,
+
+    /**
+     * Argument: frame bytes. Sent both ways.
+     *
+     * ```
+     * const [frame] = jdunpack<[Uint8Array]>(buf, "b")
+     * ```
+     */
+    JacdacPacket = 0x99,
+
+    /**
+     * report JacdacPacket
+     * ```
+     * const [frame] = jdunpack<[Uint8Array]>(buf, "b")
+     * ```
+     */
+}
+
+export namespace WsskCmdPack {
+    /**
+     * Pack format for 'error' Cmd data.
+     */
+    export const Error = "s"
+
+    /**
+     * Pack format for 'set_forwarding' Cmd data.
+     */
+    export const SetForwarding = "u8"
+
+    /**
+     * Pack format for 'ping_device' Cmd data.
+     */
+    export const PingDevice = "b"
+
+    /**
+     * Pack format for 'ping_device' Cmd data.
+     */
+    export const PingDeviceReport = "b"
+
+    /**
+     * Pack format for 'ping_cloud' Cmd data.
+     */
+    export const PingCloud = "b"
+
+    /**
+     * Pack format for 'ping_cloud' Cmd data.
+     */
+    export const PingCloudReport = "b"
+
+    /**
+     * Pack format for 'get_hash' Cmd data.
+     */
+    export const GetHashReport = "b[32]"
+
+    /**
+     * Pack format for 'deploy_start' Cmd data.
+     */
+    export const DeployStart = "u32"
+
+    /**
+     * Pack format for 'deploy_write' Cmd data.
+     */
+    export const DeployWrite = "b"
+
+    /**
+     * Pack format for 'c2d' Cmd data.
+     */
+    export const C2d = "u8 b"
+
+    /**
+     * Pack format for 'd2c' Cmd data.
+     */
+    export const D2c = "u8 b"
+
+    /**
+     * Pack format for 'jacdac_packet' Cmd data.
+     */
+    export const JacdacPacket = "b"
+
+    /**
+     * Pack format for 'jacdac_packet' Cmd data.
+     */
+    export const JacdacPacketReport = "b"
 }

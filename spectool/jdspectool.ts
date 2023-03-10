@@ -14,6 +14,7 @@ import {
     snakify,
     TYPESCRIPT_STATIC_NAMESPACE,
     isNumericType,
+    genFieldInfo,
 } from "./jdspec"
 import { packetsToRegisters } from "./jdutils"
 
@@ -827,44 +828,6 @@ ${commands
     .join("")}
     }
 }`
-}
-
-function genFieldInfo(reg: jdspec.PacketInfo, field: jdspec.PacketMember) {
-    const isReading = reg.identifier === Reading
-    const name =
-        field.name === "_"
-            ? reg.name
-            : isReading
-            ? field.name
-            : `${reg.name}${capitalize(field.name)}`
-    const min = pick(
-        field.typicalMin,
-        field.absoluteMin,
-        field.unit === "/" ? (field.type[0] === "i" ? -100 : 0) : undefined,
-        field.type === "u8" || field.type === "u16" ? 0 : undefined
-    )
-    const max = pick(
-        field.typicalMax,
-        field.absoluteMax,
-        field.unit === "/" ? 100 : undefined,
-        field.type === "u8" ? 0xff : field.type === "u16" ? 0xffff : undefined
-    )
-    const defl = field.defaultValue || (field.unit === "/" ? "100" : undefined)
-    const valueScaler: (s: string) => string =
-        field.unit === "/"
-            ? s => `${s} * 100`
-            : field.type === "bool"
-            ? s => `!!${s}`
-            : s => s
-    const valueUnscaler: (s: string) => string =
-        field.unit === "/"
-            ? s => `${s} / 100`
-            : field.type === "bool"
-            ? s => `${s} ? 1 : 0`
-            : s => s
-    const scale = field.unit === "/" ? 100 : undefined
-    const unit = field.unit === "/" ? "\\\\%" : field.unit
-    return { name, min, max, defl, scale, valueScaler, valueUnscaler, unit }
 }
 
 function toHex(n: number): string {

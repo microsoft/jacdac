@@ -11,17 +11,7 @@
     "short": "Supports cloud connections to upload and download data.\nNote that `f64` values following a label are not necessarily aligned."
   },
   "classIdentifier": 341864092,
-  "enums": {
-    "CommandStatus": {
-      "name": "CommandStatus",
-      "storage": 4,
-      "members": {
-        "OK": 200,
-        "NotFound": 404,
-        "Busy": 429
-      }
-    }
-  },
+  "enums": {},
   "constants": {},
   "packets": [
     {
@@ -114,29 +104,21 @@
     },
     {
       "kind": "command",
-      "name": "upload",
+      "name": "upload_json",
       "identifier": 128,
-      "description": "Upload a labelled tuple of values to the cloud.\nThe tuple will be automatically tagged with timestamp and originating device.",
+      "description": "Upload a JSON-encoded message to the cloud.",
       "fields": [
         {
-          "name": "label",
-          "type": "string0",
+          "name": "json",
+          "type": "string",
           "storage": 0
-        },
-        {
-          "name": "value",
-          "isFloat": true,
-          "type": "f64",
-          "storage": 8,
-          "startRepeats": true
         }
       ],
-      "restricted": true,
-      "packFormat": "z r: f64"
+      "packFormat": "s"
     },
     {
       "kind": "command",
-      "name": "upload_bin",
+      "name": "upload_binary",
       "identifier": 129,
       "description": "Upload a binary message to the cloud.",
       "fields": [
@@ -147,43 +129,13 @@
           "isSimpleType": true
         }
       ],
-      "restricted": true,
       "packFormat": "b"
-    },
-    {
-      "kind": "command",
-      "name": "ack_cloud_command",
-      "identifier": 131,
-      "description": "Should be called when it finishes handling a `cloud_command`.",
-      "fields": [
-        {
-          "name": "seq_no",
-          "type": "u32",
-          "storage": 4,
-          "isSimpleType": true
-        },
-        {
-          "name": "status",
-          "type": "CommandStatus",
-          "storage": 4
-        },
-        {
-          "name": "result",
-          "isFloat": true,
-          "type": "f64",
-          "storage": 8,
-          "startRepeats": true
-        }
-      ],
-      "lowLevel": true,
-      "restricted": true,
-      "packFormat": "u32 u32 r: f64"
     },
     {
       "kind": "ro",
       "name": "connected",
       "identifier": 384,
-      "description": "Indicate whether we're currently connected to the cloud server.\nWhen offline, `upload` commands are queued, and `get_twin` respond with cached values.",
+      "description": "Indicate whether we're currently connected to the cloud server.\nWhen offline, `upload` commands are queued.",
       "fields": [
         {
           "name": "_",
@@ -209,31 +161,32 @@
     },
     {
       "kind": "event",
-      "name": "cloud_command",
-      "identifier": 129,
-      "description": "Emitted when cloud requests to run some action.",
+      "name": "on_json",
+      "identifier": 128,
+      "description": "Emitted when cloud send us a JSON message.",
       "fields": [
         {
-          "name": "seq_no",
-          "type": "u32",
-          "storage": 4,
-          "isSimpleType": true
-        },
-        {
-          "name": "command",
-          "type": "string0",
+          "name": "json",
+          "type": "string",
           "storage": 0
-        },
-        {
-          "name": "argument",
-          "isFloat": true,
-          "type": "f64",
-          "storage": 8,
-          "startRepeats": true
         }
       ],
-      "lowLevel": true,
-      "packFormat": "u32 z r: f64"
+      "packFormat": "s"
+    },
+    {
+      "kind": "event",
+      "name": "on_binary",
+      "identifier": 129,
+      "description": "Emitted when cloud send us a binary message.",
+      "fields": [
+        {
+          "name": "payload",
+          "type": "bytes",
+          "storage": 0,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "b"
     },
     {
       "kind": "event",
@@ -248,5 +201,6 @@
     "infrastructure",
     "devicescript"
   ],
-  "group": "Iot"
+  "group": "Iot",
+  "restricted": true
 }

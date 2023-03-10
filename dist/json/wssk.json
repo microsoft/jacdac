@@ -1,0 +1,372 @@
+{
+  "name": "WSSK",
+  "status": "experimental",
+  "shortId": "wssk",
+  "camelName": "wssk",
+  "shortName": "wssk",
+  "extends": [
+    "_base"
+  ],
+  "notes": {
+    "short": "Defines a binary protocol for IoT devices to talk to DeviceScript gateway over encrypted websockets.\nThis is not used as a regular Jacdac service."
+  },
+  "classIdentifier": 330775038,
+  "enums": {
+    "DataType": {
+      "name": "DataType",
+      "storage": 1,
+      "members": {
+        "Binary": 1,
+        "JSON": 2
+      }
+    }
+  },
+  "constants": {},
+  "packets": [
+    {
+      "kind": "report",
+      "name": "command_not_implemented",
+      "identifier": 3,
+      "description": "This report may be emitted by a server in response to a command (action or register operation)\nthat it does not understand.\nThe `service_command` and `packet_crc` fields are copied from the command packet that was unhandled.\nNote that it's possible to get an ACK, followed by such an error report.",
+      "fields": [
+        {
+          "name": "service_command",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "packet_crc",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "identifierName": "command_not_implemented",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
+    {
+      "kind": "const",
+      "name": "instance_name",
+      "identifier": 265,
+      "description": "A friendly name that describes the role of this service instance in the device.\nIt often corresponds to what's printed on the device:\nfor example, `A` for button A, or `S0` for servo channel 0.\nWords like `left` should be avoided because of localization issues (unless they are printed on the device).",
+      "fields": [
+        {
+          "name": "_",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "optional": true,
+      "identifierName": "instance_name",
+      "packFormat": "s",
+      "derived": "_base"
+    },
+    {
+      "kind": "ro",
+      "name": "status_code",
+      "identifier": 259,
+      "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe Jacdac status/error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the announce packet. If a service implements this register,\nit should also support the ``status_code_changed`` event defined below.",
+      "fields": [
+        {
+          "name": "code",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "vendor_code",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "identifierName": "status_code",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
+    {
+      "kind": "event",
+      "name": "status_code_changed",
+      "identifier": 4,
+      "description": "Notifies that the status code of the service changed.",
+      "fields": [
+        {
+          "name": "code",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "vendor_code",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "identifierName": "status_code_changed",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
+    {
+      "kind": "report",
+      "name": "error",
+      "identifier": 255,
+      "description": "Issued when a command fails.",
+      "fields": [
+        {
+          "name": "message",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "packFormat": "s"
+    },
+    {
+      "kind": "command",
+      "name": "set_forwarding",
+      "identifier": 144,
+      "description": "Enable/disable forwarding of all Jacdac frames.",
+      "fields": [
+        {
+          "name": "en",
+          "type": "bool",
+          "storage": 1
+        }
+      ],
+      "packFormat": "u8"
+    },
+    {
+      "kind": "command",
+      "name": "ping_device",
+      "identifier": 145,
+      "description": "Send from gateway when it wants to see if the device is alive.\nThe device currently only support 0-length payload.",
+      "fields": [
+        {
+          "name": "payload",
+          "type": "bytes",
+          "storage": 0,
+          "isSimpleType": true
+        }
+      ],
+      "hasReport": true,
+      "packFormat": "b"
+    },
+    {
+      "kind": "report",
+      "name": "ping_device",
+      "identifier": 145,
+      "description": "Send from gateway when it wants to see if the device is alive.\nThe device currently only support 0-length payload.",
+      "fields": [
+        {
+          "name": "payload",
+          "type": "bytes",
+          "storage": 0,
+          "isSimpleType": true
+        }
+      ],
+      "secondary": true,
+      "packFormat": "b"
+    },
+    {
+      "kind": "command",
+      "name": "ping_cloud",
+      "identifier": 146,
+      "description": "Send from device to gateway to test connection.",
+      "fields": [
+        {
+          "name": "payload",
+          "type": "bytes",
+          "storage": 0,
+          "isSimpleType": true
+        }
+      ],
+      "hasReport": true,
+      "packFormat": "b"
+    },
+    {
+      "kind": "report",
+      "name": "ping_cloud",
+      "identifier": 146,
+      "description": "Send from device to gateway to test connection.",
+      "fields": [
+        {
+          "name": "payload",
+          "type": "bytes",
+          "storage": 0,
+          "isSimpleType": true
+        }
+      ],
+      "secondary": true,
+      "packFormat": "b"
+    },
+    {
+      "kind": "command",
+      "name": "get_hash",
+      "identifier": 147,
+      "description": "Get SHA256 of the currently deployed program.",
+      "fields": [],
+      "hasReport": true
+    },
+    {
+      "kind": "report",
+      "name": "get_hash",
+      "identifier": 147,
+      "description": "Get SHA256 of the currently deployed program.",
+      "fields": [
+        {
+          "name": "sha256",
+          "type": "u8[32]",
+          "storage": 32
+        }
+      ],
+      "secondary": true,
+      "packFormat": "b[32]"
+    },
+    {
+      "kind": "command",
+      "name": "deploy_start",
+      "identifier": 148,
+      "description": "Start deployment of a new program.",
+      "fields": [
+        {
+          "name": "size",
+          "unit": "B",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        }
+      ],
+      "hasReport": true,
+      "packFormat": "u32"
+    },
+    {
+      "kind": "report",
+      "name": "deploy_start",
+      "identifier": 148,
+      "description": "Start deployment of a new program.",
+      "fields": [],
+      "secondary": true
+    },
+    {
+      "kind": "command",
+      "name": "deploy_write",
+      "identifier": 149,
+      "description": "Payload length must be multiple of 32 bytes.",
+      "fields": [
+        {
+          "name": "payload",
+          "type": "bytes",
+          "storage": 0,
+          "isSimpleType": true
+        }
+      ],
+      "hasReport": true,
+      "packFormat": "b"
+    },
+    {
+      "kind": "report",
+      "name": "deploy_write",
+      "identifier": 149,
+      "description": "Payload length must be multiple of 32 bytes.",
+      "fields": [],
+      "secondary": true
+    },
+    {
+      "kind": "command",
+      "name": "deploy_finish",
+      "identifier": 150,
+      "description": "Finish deployment.",
+      "fields": [],
+      "hasReport": true
+    },
+    {
+      "kind": "report",
+      "name": "deploy_finish",
+      "identifier": 150,
+      "description": "Finish deployment.",
+      "fields": [],
+      "secondary": true
+    },
+    {
+      "kind": "command",
+      "name": "c2d",
+      "identifier": 151,
+      "description": "Upload a labelled tuple of values to the cloud.\nThe tuple will be automatically tagged with timestamp and originating device.",
+      "fields": [
+        {
+          "name": "datatype",
+          "type": "DataType",
+          "storage": 1
+        },
+        {
+          "name": "payload",
+          "type": "bytes",
+          "storage": 0,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u8 b"
+    },
+    {
+      "kind": "report",
+      "name": "d2c",
+      "identifier": 152,
+      "description": "Upload a binary message to the cloud.",
+      "fields": [
+        {
+          "name": "datatype",
+          "type": "DataType",
+          "storage": 1
+        },
+        {
+          "name": "payload",
+          "type": "bytes",
+          "storage": 0,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u8 b"
+    },
+    {
+      "kind": "command",
+      "name": "jacdac_packet",
+      "identifier": 153,
+      "description": "Sent both ways.",
+      "fields": [
+        {
+          "name": "frame",
+          "type": "bytes",
+          "storage": 0,
+          "isSimpleType": true
+        }
+      ],
+      "hasReport": true,
+      "packFormat": "b"
+    },
+    {
+      "kind": "report",
+      "name": "jacdac_packet",
+      "identifier": 153,
+      "description": "Sent both ways.",
+      "fields": [
+        {
+          "name": "frame",
+          "type": "bytes",
+          "storage": 0,
+          "isSimpleType": true
+        }
+      ],
+      "secondary": true,
+      "packFormat": "b"
+    }
+  ],
+  "tags": [
+    "infrastructure",
+    "devicescript"
+  ],
+  "group": "Iot"
+}

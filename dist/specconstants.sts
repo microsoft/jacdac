@@ -2302,6 +2302,25 @@ namespace jacdac {
          * ```
          */
         RuntimeVersion = 0x183,
+
+        /**
+         * Read-only string (bytes). The name of currently running program. The compiler takes is from `package.json`.
+         *
+         * ```
+         * const [programName] = jdunpack<[string]>(buf, "s")
+         * ```
+         */
+        ProgramName = 0x184,
+
+        /**
+         * Read-only string (bytes). The version number of currently running program. The compiler takes is from `package.json`
+         * and `git`.
+         *
+         * ```
+         * const [programVersion] = jdunpack<[string]>(buf, "s")
+         * ```
+         */
+        ProgramVersion = 0x185,
     }
 
     export const enum DeviceScriptManagerEvent {

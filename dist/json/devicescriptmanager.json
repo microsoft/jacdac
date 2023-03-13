@@ -271,6 +271,34 @@
       "packFormat": "u16 u8 u8"
     },
     {
+      "kind": "ro",
+      "name": "program_name",
+      "identifier": 388,
+      "description": "The name of currently running program. The compiler takes is from `package.json`.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "packFormat": "s"
+    },
+    {
+      "kind": "ro",
+      "name": "program_version",
+      "identifier": 389,
+      "description": "The version number of currently running program. The compiler takes is from `package.json`\nand `git`.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "packFormat": "s"
+    },
+    {
       "kind": "event",
       "name": "program_panic",
       "identifier": 128,

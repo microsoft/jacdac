@@ -69,6 +69,17 @@ typedef struct jd_device_script_manager_runtime_version {
 
 
 /**
+ * Read-only string (bytes). The name of currently running program. The compiler takes is from `package.json`.
+ */
+#define JD_DEVICE_SCRIPT_MANAGER_REG_PROGRAM_NAME 0x184
+
+/**
+ * Read-only string (bytes). The version number of currently running program. The compiler takes is from `package.json`
+ * and `git`.
+ */
+#define JD_DEVICE_SCRIPT_MANAGER_REG_PROGRAM_VERSION 0x185
+
+/**
  * Emitted when the program calls `panic(panic_code)` or `reboot()` (`panic_code == 0` in that case).
  * The byte offset in byte code of the call is given in `program_counter`.
  * The program will restart immediately when `panic_code == 0` or in a few seconds otherwise.

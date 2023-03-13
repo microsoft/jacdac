@@ -2979,6 +2979,25 @@ export enum DeviceScriptManagerReg {
      * ```
      */
     RuntimeVersion = 0x183,
+
+    /**
+     * Read-only string (bytes). The name of currently running program. The compiler takes is from `package.json`.
+     *
+     * ```
+     * const [programName] = jdunpack<[string]>(buf, "s")
+     * ```
+     */
+    ProgramName = 0x184,
+
+    /**
+     * Read-only string (bytes). The version number of currently running program. The compiler takes is from `package.json`
+     * and `git`.
+     *
+     * ```
+     * const [programVersion] = jdunpack<[string]>(buf, "s")
+     * ```
+     */
+    ProgramVersion = 0x185,
 }
 
 export namespace DeviceScriptManagerRegPack {
@@ -3011,6 +3030,16 @@ export namespace DeviceScriptManagerRegPack {
      * Pack format for 'runtime_version' Reg data.
      */
     export const RuntimeVersion = "u16 u8 u8"
+
+    /**
+     * Pack format for 'program_name' Reg data.
+     */
+    export const ProgramName = "s"
+
+    /**
+     * Pack format for 'program_version' Reg data.
+     */
+    export const ProgramVersion = "s"
 }
 
 export enum DeviceScriptManagerEvent {

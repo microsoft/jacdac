@@ -70,6 +70,16 @@ Return 32-byte long SHA-256 hash of the current bytecode.
 Returns the runtime version number compatible with [Semver](https://semver.org/).
 When read as 32-bit little endian integer a version `7.15.500` would be `0x07_0F_01F4`.
 
+    ro program_name: string @ 0x184
+
+The name of currently running program. The compiler takes is from `package.json`.
+
+    ro program_version: string @ 0x185
+
+The version number of currently running program. The compiler takes is from `package.json`
+and `git`.
+
+
 ## Events
 
 When program is running, `status_code == Ready`.

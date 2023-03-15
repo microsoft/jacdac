@@ -4065,6 +4065,66 @@ export namespace HumidityRegPack {
     export const MaxHumidity = "u22.10"
 }
 
+// Service I2C constants
+export const SRV_I2C = 0x1c18ca43
+
+export enum I2CStatus { // uint8_t
+    OK = 0x0,
+    NAckAddr = 0x1,
+    NAckData = 0x2,
+    NoI2C = 0x3,
+}
+
+export enum I2CReg {
+    /**
+     * Read-only bool (uint8_t). Indicates whether the I2C is working.
+     *
+     * ```
+     * const [ok] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    Ok = 0x180,
+}
+
+export namespace I2CRegPack {
+    /**
+     * Pack format for 'ok' Reg data.
+     */
+    export const Ok = "u8"
+}
+
+export enum I2CCmd {
+    /**
+     * `address` is 7-bit.
+     * `num_read` can be 0 if nothing needs to be read.
+     * The `write_buf` includes the register address if required (first one or two bytes).
+     *
+     * ```
+     * const [address, numRead, writeBuf] = jdunpack<[number, number, Uint8Array]>(buf, "u8 u8 b")
+     * ```
+     */
+    Transaction = 0x80,
+
+    /**
+     * report Transaction
+     * ```
+     * const [status, readBuf] = jdunpack<[I2CStatus, Uint8Array]>(buf, "u8 b")
+     * ```
+     */
+}
+
+export namespace I2CCmdPack {
+    /**
+     * Pack format for 'transaction' Cmd data.
+     */
+    export const Transaction = "u8 u8 b"
+
+    /**
+     * Pack format for 'transaction' Cmd data.
+     */
+    export const TransactionReport = "u8 b"
+}
+
 // Service Illuminance constants
 export const SRV_ILLUMINANCE = 0x1e6ecaf2
 export enum IlluminanceReg {

@@ -148,6 +148,50 @@
     "status": "stable"
   },
   {
+    "id": "raspberry-pi-picov00",
+    "name": "Pico",
+    "company": "Raspberry Pi",
+    "description": "Raspberry Pi Pico is a low-cost, high-performance microcontroller board with flexible digital interfaces.",
+    "repo": "https://github.com/microsoft/jacdac-pico",
+    "firmwareSource": "https://github.com/microsoft/jacdac-pico/blob/main/boards/rp2040/pico.board.json",
+    "connector": "noConnector",
+    "link": "https://www.raspberrypi.com/documentation/microcontrollers/raspberry-pi-pico.html",
+    "storeLink": [
+      "https://www.raspberrypi.com/products/raspberry-pi-pico/"
+    ],
+    "productIdentifiers": [
+      1064181516
+    ],
+    "version": "0.0",
+    "status": "stable"
+  },
+  {
+    "id": "raspberry-pi-picowv00",
+    "name": "Pico W",
+    "company": "Raspberry Pi",
+    "description": "Raspberry Pi Pico is a low-cost, high-performance microcontroller board with flexible digital interfaces. Raspberry Pi Pico W adds on-board single-band 2.4GHz wireless interfaces (802.11n) using the Infineon CYW43439 while retaining the Pico form factor. ",
+    "repo": "https://github.com/microsoft/jacdac-pico",
+    "firmwareSource": "https://github.com/microsoft/jacdac-pico/blob/main/boards/rp2040w/pico_w.board.json",
+    "connector": "noConnector",
+    "link": "https://www.raspberrypi.com/documentation/microcontrollers/raspberry-pi-pico.html",
+    "storeLink": [
+      "https://www.raspberrypi.com/products/raspberry-pi-pico/"
+    ],
+    "services": [
+      413852154,
+      342028028,
+      341864092,
+      471386691,
+      343122531,
+      400333340
+    ],
+    "productIdentifiers": [
+      978399748
+    ],
+    "version": "0.0",
+    "status": "stable"
+  },
+  {
     "id": "microbit-educational-foundation-microbitv2",
     "name": "micro:bit V2",
     "company": "microbit Educational Foundation",
@@ -627,6 +671,28 @@
       "firmwareUploader": "https://adafruit.github.io/Adafruit_WebSerial_ESPTool/"
     },
     "status": "stable"
+  },
+  {
+    "id": "unexpected-maker-feathers2esp32s2v20",
+    "name": "FeatherS2 ESP32-S2",
+    "company": "Unexpected Maker",
+    "description": "The full-featured ESP32-S2 based development board in a Feather format from Unexpected Maker. The FeatherS2 is a power house, fully souped up with 16 MB of Flash memory (for firmware and file storage) and 8 MB of QSPI-based external PSRAM so you can have massive storage buffers.",
+    "repo": "https://github.com/microsoft/jacdac-esp32",
+    "firmwareSource": "https://github.com/microsoft/jacdac-esp32/blob/main/boards/esp32s2/feather_s2.board.json",
+    "connector": "noConnector",
+    "link": "https://feathers2.io/",
+    "services": [
+      413852154,
+      342028028,
+      341864092,
+      471386691,
+      343122531,
+      400333340
+    ],
+    "productIdentifiers": [
+      824637191
+    ],
+    "version": "2.0"
   },
   {
     "id": "milador-jmpressuresensorv10",
@@ -1931,6 +1997,30 @@
     "version": "4.2",
     "designIdentifier": "205",
     "shape": "ec30_2x2_lr"
+  },
+  {
+    "id": "espressif-esp32c3rustdevkitv12a",
+    "name": "ESP32-C3-RUST-DevKit",
+    "company": "Espressif",
+    "description": "This board is based on the ESP32-C3, and includes sensors, LEDs, buttons, a battery charger, and USB type-C connector.",
+    "repo": "https://github.com/microsoft/jacdac-esp32",
+    "firmwareSource": "https://github.com/microsoft/jacdac-esp32/blob/main/boards/esp32c3/esp32c3_rust_devkit.board.json",
+    "hardwareDesign": "https://github.com/esp-rs/esp-rust-board",
+    "connector": "noConnector",
+    "link": "https://github.com/esp-rs/esp-rust-board",
+    "services": [
+      413852154,
+      342028028,
+      341864092,
+      337754823,
+      382210232,
+      471386691,
+      343122531
+    ],
+    "productIdentifiers": [
+      871537753
+    ],
+    "version": "1.2a"
   },
   {
     "id": "microsoft-research-jmaccelerometer30v02",

@@ -1,0 +1,18 @@
+{
+  "id": "raspberry-pi-picov00",
+  "name": "Pico",
+  "company": "Raspberry Pi",
+  "description": "Raspberry Pi Pico is a low-cost, high-performance microcontroller board with flexible digital interfaces.",
+  "repo": "https://github.com/microsoft/jacdac-pico",
+  "firmwareSource": "https://github.com/microsoft/jacdac-pico/blob/main/boards/rp2040/pico.board.json",
+  "connector": "noConnector",
+  "link": "https://www.raspberrypi.com/documentation/microcontrollers/raspberry-pi-pico.html",
+  "storeLink": [
+    "https://www.raspberrypi.com/products/raspberry-pi-pico/"
+  ],
+  "productIdentifiers": [
+    1064181516
+  ],
+  "version": "0.0",
+  "status": "stable"
+}

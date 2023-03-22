@@ -1,0 +1,24 @@
+{
+  "id": "espressif-esp32c3rustdevkitv12a",
+  "name": "ESP32-C3-RUST-DevKit",
+  "company": "Espressif",
+  "description": "This board is based on the ESP32-C3, and includes sensors, LEDs, buttons, a battery charger, and USB type-C connector.",
+  "repo": "https://github.com/microsoft/jacdac-esp32",
+  "firmwareSource": "https://github.com/microsoft/jacdac-esp32/blob/main/boards/esp32c3/esp32c3_rust_devkit.board.json",
+  "hardwareDesign": "https://github.com/esp-rs/esp-rust-board",
+  "connector": "noConnector",
+  "link": "https://github.com/esp-rs/esp-rust-board",
+  "services": [
+    413852154,
+    342028028,
+    341864092,
+    337754823,
+    382210232,
+    471386691,
+    343122531
+  ],
+  "productIdentifiers": [
+    871537753
+  ],
+  "version": "1.2a"
+}

@@ -1,6 +1,6 @@
 {
   "name": "Verified Telemetry",
-  "status": "experimental",
+  "status": "deprecated",
   "shortId": "verifiedtelemetrysensor",
   "camelName": "verifiedTelemetry",
   "shortName": "verifiedTelemetry",

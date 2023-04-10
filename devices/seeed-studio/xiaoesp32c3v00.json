@@ -1,0 +1,23 @@
+{
+  "id": "seeed-studio-xiaoesp32c3v00",
+  "name": "XIAO ESP32C3",
+  "company": "Seeed Studio",
+  "description": "A tiny dev-board with ESP32-C3 from Seeed.",
+  "repo": "https://github.com/microsoft/jacdac-esp32",
+  "firmwareSource": "https://github.com/microsoft/jacdac-esp32/blob/main/boards/esp32c3/seeed_xiao_esp32c3.board.json",
+  "connector": "noConnector",
+  "storeLink": [
+    "https://www.seeedstudio.com/Seeed-XIAO-ESP32C3-p-5431.html"
+  ],
+  "services": [
+    413852154,
+    342028028,
+    341864092,
+    343122531
+  ],
+  "productIdentifiers": [
+    1056926545
+  ],
+  "version": "0.0",
+  "status": "stable"
+}

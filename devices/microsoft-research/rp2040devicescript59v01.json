@@ -3,9 +3,9 @@
   "name": "RP2040 DeviceScript",
   "company": "Microsoft Research",
   "description": "RP2040 brain running DeviceScript and related services",
-  "firmwareSource": "https://github.com/microsoft/jacdac-pico",
+  "firmwareSource": "https://github.com/microsoft/devicescript-pico",
   "connector": "edgeHighCurrentProvider",
-  "link": "https://github.com/microsoft/jacdac-pico",
+  "link": "https://github.com/microsoft/devicescript-pico",
   "services": [
     530893146,
     414210922,

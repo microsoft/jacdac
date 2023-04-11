@@ -114,8 +114,8 @@
     "name": "XIAO ESP32C3",
     "company": "Seeed Studio",
     "description": "A tiny dev-board with ESP32-C3 from Seeed.",
-    "repo": "https://github.com/microsoft/jacdac-esp32",
-    "firmwareSource": "https://github.com/microsoft/jacdac-esp32/blob/main/boards/esp32c3/seeed_xiao_esp32c3.board.json",
+    "repo": "https://github.com/microsoft/devicescript-esp32",
+    "firmwareSource": "https://github.com/microsoft/devicescript-esp32/blob/main/boards/esp32c3/seeed_xiao_esp32c3.board.json",
     "connector": "noConnector",
     "storeLink": [
       "https://www.seeedstudio.com/Seeed-XIAO-ESP32C3-p-5431.html"
@@ -175,8 +175,8 @@
     "name": "Pico",
     "company": "Raspberry Pi",
     "description": "Raspberry Pi Pico is a low-cost, high-performance microcontroller board with flexible digital interfaces.",
-    "repo": "https://github.com/microsoft/jacdac-pico",
-    "firmwareSource": "https://github.com/microsoft/jacdac-pico/blob/main/boards/rp2040/pico.board.json",
+    "repo": "https://github.com/microsoft/devicescript-pico",
+    "firmwareSource": "https://github.com/microsoft/devicescript-pico/blob/main/boards/rp2040/pico.board.json",
     "connector": "noConnector",
     "link": "https://www.raspberrypi.com/documentation/microcontrollers/raspberry-pi-pico.html",
     "storeLink": [
@@ -193,8 +193,8 @@
     "name": "Pico W",
     "company": "Raspberry Pi",
     "description": "Raspberry Pi Pico is a low-cost, high-performance microcontroller board with flexible digital interfaces. Raspberry Pi Pico W adds on-board single-band 2.4GHz wireless interfaces (802.11n) using the Infineon CYW43439 while retaining the Pico form factor. ",
-    "repo": "https://github.com/microsoft/jacdac-pico",
-    "firmwareSource": "https://github.com/microsoft/jacdac-pico/blob/main/boards/rp2040w/pico_w.board.json",
+    "repo": "https://github.com/microsoft/devicescript-pico",
+    "firmwareSource": "https://github.com/microsoft/devicescript-pico/blob/main/boards/rp2040w/pico_w.board.json",
     "connector": "noConnector",
     "link": "https://www.raspberrypi.com/documentation/microcontrollers/raspberry-pi-pico.html",
     "storeLink": [
@@ -625,7 +625,7 @@
     "name": "ESP32-DevKitC DeviceScript",
     "company": "Espressif",
     "description": "This will also work with NodeMCU etc.",
-    "firmwareSource": "https://github.com/microsoft/jacdac-esp32",
+    "firmwareSource": "https://github.com/microsoft/devicescript-esp32",
     "connector": "noConnector",
     "link": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32/hw-reference/esp32/get-started-devkitc.html",
     "storeLink": [
@@ -647,7 +647,7 @@
     "firmwares": [
       {
         "name": "DeviceScript + Cloud Connector",
-        "url": "https://github.com/microsoft/jacdac-esp32/releases/latest",
+        "url": "https://github.com/microsoft/devicescript-esp32/releases/latest",
         "productIdentifier": 1011907077
       }
     ],
@@ -664,7 +664,7 @@
     "name": "QT Py ESP32-C3 WiFi Dev Board",
     "company": "Adafruit",
     "description": "The ESP32-C3 integrates a rich set of peripherals, ranging from UART, I2C, I2S, remote control peripheral, LED PWM controller, general DMA controller, TWAI controller, USB Serial/JTAG controller, temperature sensor, and ADC. It also includes SPI, Dual SPI, and Quad SPI interfaces.",
-    "firmwareSource": "https://github.com/microsoft/jacdac-esp32",
+    "firmwareSource": "https://github.com/microsoft/devicescript-esp32",
     "connector": "noConnector",
     "link": "https://www.adafruit.com/product/5405",
     "storeLink": [
@@ -683,7 +683,7 @@
     "firmwares": [
       {
         "name": "DeviceScript + Cloud Connector",
-        "url": "https://github.com/microsoft/jacdac-esp32/releases/latest",
+        "url": "https://github.com/microsoft/devicescript-esp32/releases/latest",
         "productIdentifier": 915657739
       }
     ],
@@ -700,8 +700,8 @@
     "name": "FeatherS2 ESP32-S2",
     "company": "Unexpected Maker",
     "description": "The full-featured ESP32-S2 based development board in a Feather format from Unexpected Maker. The FeatherS2 is a power house, fully souped up with 16 MB of Flash memory (for firmware and file storage) and 8 MB of QSPI-based external PSRAM so you can have massive storage buffers.",
-    "repo": "https://github.com/microsoft/jacdac-esp32",
-    "firmwareSource": "https://github.com/microsoft/jacdac-esp32/blob/main/boards/esp32s2/feather_s2.board.json",
+    "repo": "https://github.com/microsoft/devicescript-esp32",
+    "firmwareSource": "https://github.com/microsoft/devicescript-esp32/blob/main/boards/esp32s2/feather_s2.board.json",
     "connector": "noConnector",
     "link": "https://feathers2.io/",
     "services": [
@@ -1062,12 +1062,12 @@
       },
       {
         "name": "DeviceScript Brain + Azure IoT Hub Cloud Adapter",
-        "url": "https://github.com/microsoft/jacdac-esp32/releases/latest/download/devicescript-esp32s2.uf2",
+        "url": "https://github.com/microsoft/devicescript-esp32/releases/latest/download/devicescript-esp32s2.uf2",
         "productIdentifier": 1038170507
       },
       {
         "name": "Azure IoT Hub Cloud Adapter",
-        "url": "https://github.com/microsoft/jacdac-esp32/releases/latest/download/devicescript-esp32s2-nojacs.uf2",
+        "url": "https://github.com/microsoft/devicescript-esp32/releases/latest/download/devicescript-esp32s2-nojacs.uf2",
         "productIdentifier": 816040071
       }
     ],
@@ -1930,9 +1930,9 @@
     "name": "RP2040 DeviceScript",
     "company": "Microsoft Research",
     "description": "RP2040 brain running DeviceScript and related services",
-    "firmwareSource": "https://github.com/microsoft/jacdac-pico",
+    "firmwareSource": "https://github.com/microsoft/devicescript-pico",
     "connector": "edgeHighCurrentProvider",
-    "link": "https://github.com/microsoft/jacdac-pico",
+    "link": "https://github.com/microsoft/devicescript-pico",
     "services": [
       530893146,
       414210922,
@@ -2026,8 +2026,8 @@
     "name": "ESP32-C3-RUST-DevKit",
     "company": "Espressif",
     "description": "This board is based on the ESP32-C3, and includes sensors, LEDs, buttons, a battery charger, and USB type-C connector.",
-    "repo": "https://github.com/microsoft/jacdac-esp32",
-    "firmwareSource": "https://github.com/microsoft/jacdac-esp32/blob/main/boards/esp32c3/esp32c3_rust_devkit.board.json",
+    "repo": "https://github.com/microsoft/devicescript-esp32",
+    "firmwareSource": "https://github.com/microsoft/devicescript-esp32/blob/main/boards/esp32c3/esp32c3_rust_devkit.board.json",
     "hardwareDesign": "https://github.com/esp-rs/esp-rust-board",
     "connector": "noConnector",
     "link": "https://github.com/esp-rs/esp-rust-board",

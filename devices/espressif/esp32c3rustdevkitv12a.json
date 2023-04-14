@@ -8,6 +8,9 @@
   "hardwareDesign": "https://github.com/esp-rs/esp-rust-board",
   "connector": "noConnector",
   "link": "https://github.com/esp-rs/esp-rust-board",
+  "storeLink": [
+    "https://github.com/esp-rs/esp-rust-board"
+  ],
   "services": [
     413852154,
     342028028,
@@ -20,5 +23,6 @@
   "productIdentifiers": [
     871537753
   ],
-  "version": "1.2a"
+  "version": "1.2a",
+  "status": "stable"
 }

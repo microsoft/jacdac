@@ -1,0 +1,26 @@
+{
+  "id": "unexpected-maker-feathers2esp32s2v20",
+  "name": "FeatherS2 ESP32-S2",
+  "company": "Unexpected Maker",
+  "description": "The full-featured ESP32-S2 based development board in a Feather format from Unexpected Maker. The FeatherS2 is a power house, fully souped up with 16 MB of Flash memory (for firmware and file storage) and 8 MB of QSPI-based external PSRAM so you can have massive storage buffers.",
+  "repo": "https://github.com/microsoft/devicescript-esp32",
+  "firmwareSource": "https://github.com/microsoft/devicescript-esp32/blob/main/boards/esp32s2/feather_s2.board.json",
+  "connector": "noConnector",
+  "link": "https://feathers2.io/",
+  "storeLink": [
+    "https://unexpectedmaker.com/shop/feathers2-esp32-s2"
+  ],
+  "services": [
+    413852154,
+    342028028,
+    341864092,
+    471386691,
+    343122531,
+    400333340
+  ],
+  "productIdentifiers": [
+    824637191
+  ],
+  "version": "2.0",
+  "status": "stable"
+}

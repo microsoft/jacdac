@@ -1,0 +1,26 @@
+{
+  "id": "raspberry-pi-picowv00",
+  "name": "Pico W",
+  "company": "Raspberry Pi",
+  "description": "Raspberry Pi Pico is a low-cost, high-performance microcontroller board with flexible digital interfaces. Raspberry Pi Pico W adds on-board single-band 2.4GHz wireless interfaces (802.11n) using the Infineon CYW43439 while retaining the Pico form factor. ",
+  "repo": "https://github.com/microsoft/devicescript-pico",
+  "firmwareSource": "https://github.com/microsoft/devicescript-pico/blob/main/boards/rp2040w/pico_w.board.json",
+  "connector": "noConnector",
+  "link": "https://www.raspberrypi.com/documentation/microcontrollers/raspberry-pi-pico.html",
+  "storeLink": [
+    "https://www.raspberrypi.com/products/raspberry-pi-pico/"
+  ],
+  "services": [
+    413852154,
+    342028028,
+    341864092,
+    471386691,
+    343122531,
+    400333340
+  ],
+  "productIdentifiers": [
+    978399748
+  ],
+  "version": "0.0",
+  "status": "stable"
+}

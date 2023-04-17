@@ -1,0 +1,16 @@
+{
+  "id": "microsoft-research-devicescriptsimulatorv10",
+  "name": "DeviceScript Simulator",
+  "company": "Microsoft Research",
+  "description": "A virtual DeviceScript Manager simulator.",
+  "firmwareSource": "https://github.com/microsoft/devicescript",
+  "connector": "noConnector",
+  "services": [
+    358308672
+  ],
+  "productIdentifiers": [
+    1072018543,
+    288680491
+  ],
+  "version": "1.0"
+}

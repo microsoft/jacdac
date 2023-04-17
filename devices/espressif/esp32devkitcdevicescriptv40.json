@@ -1,0 +1,39 @@
+{
+  "id": "espressif-esp32devkitcdevicescriptv40",
+  "name": "ESP32-DevKitC DeviceScript",
+  "company": "Espressif",
+  "description": "This will also work with NodeMCU etc.",
+  "firmwareSource": "https://github.com/microsoft/devicescript-esp32",
+  "connector": "noConnector",
+  "link": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32/hw-reference/esp32/get-started-devkitc.html",
+  "storeLink": [
+    "https://www.espressif.com/en/products/devkits/esp32-devkitc"
+  ],
+  "services": [
+    341864092,
+    342028028,
+    413852154,
+    288680491
+  ],
+  "productIdentifiers": [
+    1011907077
+  ],
+  "transport": {
+    "type": "serial",
+    "vendorId": 4292
+  },
+  "firmwares": [
+    {
+      "name": "DeviceScript + Cloud Connector",
+      "url": "https://github.com/microsoft/devicescript-esp32/releases/latest",
+      "productIdentifier": 1011907077
+    }
+  ],
+  "version": "4.0",
+  "bootloader": {
+    "sequence": "boot-power",
+    "firmwareFormat": "bin",
+    "firmwareUploader": "https://adafruit.github.io/Adafruit_WebSerial_ESPTool/"
+  },
+  "status": "stable"
+}

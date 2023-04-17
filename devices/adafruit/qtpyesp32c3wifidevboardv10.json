@@ -3,7 +3,7 @@
   "name": "QT Py ESP32-C3 WiFi Dev Board",
   "company": "Adafruit",
   "description": "The ESP32-C3 integrates a rich set of peripherals, ranging from UART, I2C, I2S, remote control peripheral, LED PWM controller, general DMA controller, TWAI controller, USB Serial/JTAG controller, temperature sensor, and ADC. It also includes SPI, Dual SPI, and Quad SPI interfaces.",
-  "firmwareSource": "https://github.com/microsoft/jacdac-esp32",
+  "firmwareSource": "https://github.com/microsoft/devicescript-esp32",
   "connector": "noConnector",
   "link": "https://www.adafruit.com/product/5405",
   "storeLink": [
@@ -22,7 +22,7 @@
   "firmwares": [
     {
       "name": "DeviceScript + Cloud Connector",
-      "url": "https://github.com/microsoft/jacdac-esp32/releases/latest",
+      "url": "https://github.com/microsoft/devicescript-esp32/releases/latest",
       "productIdentifier": 915657739
     }
   ],

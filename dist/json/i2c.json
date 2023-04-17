@@ -1,33 +1,25 @@
 {
-  "name": "Verified Telemetry",
-  "status": "deprecated",
-  "shortId": "verifiedtelemetrysensor",
-  "camelName": "verifiedTelemetry",
-  "shortName": "verifiedTelemetry",
+  "name": "I2C",
+  "status": "experimental",
+  "shortId": "i2c",
+  "camelName": "I2C",
+  "shortName": "I2C",
   "extends": [
     "_base"
   ],
   "notes": {
-    "short": "A mixin service that exposes verified telemetry information for a sensor (see https://github.com/Azure/Verified-Telemetry/tree/main/PnPModel)."
+    "short": "Inter-Integrated Circuit (I2C, I²C, IIC) serial communication bus lets you communicate with\nmany sensors and actuators."
   },
-  "classIdentifier": 563381279,
+  "classIdentifier": 471386691,
   "enums": {
     "Status": {
       "name": "Status",
       "storage": 1,
       "members": {
-        "Unknown": 0,
-        "Working": 1,
-        "Faulty": 2
-      }
-    },
-    "FingerprintType": {
-      "name": "FingerprintType",
-      "storage": 1,
-      "members": {
-        "FallCurve": 1,
-        "CurrentSense": 2,
-        "Custom": 3
+        "OK": 0,
+        "NAckAddr": 1,
+        "NAckData": 2,
+        "NoI2C": 3
       }
     }
   },
@@ -123,108 +115,71 @@
     },
     {
       "kind": "ro",
-      "name": "telemetry_status",
+      "name": "ok",
       "identifier": 384,
-      "description": "Reads the telemetry working status, where ``true`` is working and ``false`` is faulty.",
+      "description": "Indicates whether the I2C is working.",
       "fields": [
         {
           "name": "_",
-          "type": "Status",
+          "type": "bool",
           "storage": 1
         }
       ],
       "packFormat": "u8"
     },
     {
-      "kind": "rw",
-      "name": "telemetry_status_interval",
+      "kind": "command",
+      "name": "transaction",
       "identifier": 128,
-      "description": "Specifies the interval between computing the fingerprint information.",
+      "description": "`address` is 7-bit.\n`num_read` can be 0 if nothing needs to be read.\nThe `write_buf` includes the register address if required (first one or two bytes).",
       "fields": [
         {
-          "name": "_",
-          "unit": "ms",
-          "type": "u32",
-          "storage": 4,
-          "isSimpleType": true
-        }
-      ],
-      "optional": true,
-      "packFormat": "u32"
-    },
-    {
-      "kind": "const",
-      "name": "fingerprint_type",
-      "identifier": 385,
-      "description": "Type of the fingerprint.",
-      "fields": [
-        {
-          "name": "_",
-          "type": "FingerprintType",
-          "storage": 1
-        }
-      ],
-      "packFormat": "u8"
-    },
-    {
-      "kind": "ro",
-      "name": "fingerprint_template",
-      "identifier": 386,
-      "description": "Template Fingerprint information of a working sensor.",
-      "fields": [
-        {
-          "name": "confidence",
-          "unit": "%",
-          "type": "u16",
-          "storage": 2,
+          "name": "address",
+          "type": "u8",
+          "storage": 1,
           "isSimpleType": true
         },
         {
-          "name": "template",
+          "name": "num_read",
+          "unit": "B",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "write_buf",
           "type": "bytes",
           "storage": 0,
           "isSimpleType": true
         }
       ],
-      "packFormat": "u16 b"
+      "unique": true,
+      "hasReport": true,
+      "packFormat": "u8 u8 b"
     },
     {
-      "kind": "command",
-      "name": "reset_fingerprint_template",
+      "kind": "report",
+      "name": "transaction",
       "identifier": 128,
-      "description": "This command will clear the template fingerprint of a sensor and collect a new template fingerprint of the attached sensor.",
-      "fields": []
-    },
-    {
-      "kind": "command",
-      "name": "retrain_fingerprint_template",
-      "identifier": 129,
-      "description": "This command will append a new template fingerprint to the `fingerprintTemplate`. Appending more fingerprints will increase the accuracy in detecting the telemetry status.",
-      "fields": [],
-      "unique": true
-    },
-    {
-      "kind": "event",
-      "name": "telemetry_status_change",
-      "identifier": 3,
-      "description": "The telemetry status of the device was updated.",
+      "description": "`address` is 7-bit.\n`num_read` can be 0 if nothing needs to be read.\nThe `write_buf` includes the register address if required (first one or two bytes).",
       "fields": [
         {
-          "name": "telemetry_status",
+          "name": "status",
           "type": "Status",
           "storage": 1
+        },
+        {
+          "name": "read_buf",
+          "type": "bytes",
+          "storage": 0,
+          "isSimpleType": true
         }
       ],
-      "identifierName": "change",
-      "packFormat": "u8"
-    },
-    {
-      "kind": "event",
-      "name": "fingerprint_template_change",
-      "identifier": 128,
-      "description": "The fingerprint template was updated",
-      "fields": []
+      "secondary": true,
+      "packFormat": "u8 b"
     }
   ],
-  "tags": []
+  "tags": [
+    "io"
+  ]
 }

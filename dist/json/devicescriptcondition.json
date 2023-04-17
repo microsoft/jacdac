@@ -1,6 +1,6 @@
 {
   "name": "DeviceScript Condition",
-  "status": "experimental",
+  "status": "deprecated",
   "shortId": "devicescriptcondition",
   "camelName": "deviceScriptCondition",
   "shortName": "deviceScriptCondition",
@@ -8,7 +8,7 @@
     "_base"
   ],
   "notes": {
-    "short": "Conditions are synthetic services used to synchronize threads of executions of a DeviceScript VM."
+    "short": "Conditions are synthetic services used to synchronize threads of executions of a DeviceScript VM.\n**This is no longer used**."
   },
   "classIdentifier": 295074157,
   "enums": {},

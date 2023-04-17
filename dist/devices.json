@@ -59,6 +59,32 @@
     "status": "stable"
   },
   {
+    "id": "unexpected-maker-feathers2esp32s2v20",
+    "name": "FeatherS2 ESP32-S2",
+    "company": "Unexpected Maker",
+    "description": "The full-featured ESP32-S2 based development board in a Feather format from Unexpected Maker. The FeatherS2 is a power house, fully souped up with 16 MB of Flash memory (for firmware and file storage) and 8 MB of QSPI-based external PSRAM so you can have massive storage buffers.",
+    "repo": "https://github.com/microsoft/devicescript-esp32",
+    "firmwareSource": "https://github.com/microsoft/devicescript-esp32/blob/main/boards/esp32s2/feather_s2.board.json",
+    "connector": "noConnector",
+    "link": "https://feathers2.io/",
+    "storeLink": [
+      "https://unexpectedmaker.com/shop/feathers2-esp32-s2"
+    ],
+    "services": [
+      413852154,
+      342028028,
+      341864092,
+      471386691,
+      343122531,
+      400333340
+    ],
+    "productIdentifiers": [
+      824637191
+    ],
+    "version": "2.0",
+    "status": "stable"
+  },
+  {
     "id": "stmicroelectronics-bl475eiot01adevicescriptv00",
     "name": "B-L475E-IOT01A DeviceScript",
     "company": "STMicroelectronics",
@@ -110,6 +136,29 @@
     "status": "stable"
   },
   {
+    "id": "seeed-studio-xiaoesp32c3v00",
+    "name": "XIAO ESP32C3",
+    "company": "Seeed Studio",
+    "description": "A tiny dev-board with ESP32-C3 from Seeed.",
+    "repo": "https://github.com/microsoft/devicescript-esp32",
+    "firmwareSource": "https://github.com/microsoft/devicescript-esp32/blob/main/boards/esp32c3/seeed_xiao_esp32c3.board.json",
+    "connector": "noConnector",
+    "storeLink": [
+      "https://www.seeedstudio.com/Seeed-XIAO-ESP32C3-p-5431.html"
+    ],
+    "services": [
+      413852154,
+      342028028,
+      341864092,
+      343122531
+    ],
+    "productIdentifiers": [
+      1056926545
+    ],
+    "version": "0.0",
+    "status": "stable"
+  },
+  {
     "id": "roger-wagner-makerbitv10",
     "name": "MakerBit",
     "company": "Roger Wagner",
@@ -145,6 +194,50 @@
       1018020097
     ],
     "version": "1.0",
+    "status": "stable"
+  },
+  {
+    "id": "raspberry-pi-picov00",
+    "name": "Pico",
+    "company": "Raspberry Pi",
+    "description": "Raspberry Pi Pico is a low-cost, high-performance microcontroller board with flexible digital interfaces.",
+    "repo": "https://github.com/microsoft/devicescript-pico",
+    "firmwareSource": "https://github.com/microsoft/devicescript-pico/blob/main/boards/rp2040/pico.board.json",
+    "connector": "noConnector",
+    "link": "https://www.raspberrypi.com/documentation/microcontrollers/raspberry-pi-pico.html",
+    "storeLink": [
+      "https://www.raspberrypi.com/products/raspberry-pi-pico/"
+    ],
+    "productIdentifiers": [
+      1064181516
+    ],
+    "version": "0.0",
+    "status": "stable"
+  },
+  {
+    "id": "raspberry-pi-picowv00",
+    "name": "Pico W",
+    "company": "Raspberry Pi",
+    "description": "Raspberry Pi Pico is a low-cost, high-performance microcontroller board with flexible digital interfaces. Raspberry Pi Pico W adds on-board single-band 2.4GHz wireless interfaces (802.11n) using the Infineon CYW43439 while retaining the Pico form factor. ",
+    "repo": "https://github.com/microsoft/devicescript-pico",
+    "firmwareSource": "https://github.com/microsoft/devicescript-pico/blob/main/boards/rp2040w/pico_w.board.json",
+    "connector": "noConnector",
+    "link": "https://www.raspberrypi.com/documentation/microcontrollers/raspberry-pi-pico.html",
+    "storeLink": [
+      "https://www.raspberrypi.com/products/raspberry-pi-pico/"
+    ],
+    "services": [
+      413852154,
+      342028028,
+      341864092,
+      471386691,
+      343122531,
+      400333340
+    ],
+    "productIdentifiers": [
+      978399748
+    ],
+    "version": "0.0",
     "status": "stable"
   },
   {
@@ -195,6 +288,7 @@
     "description": "A passthrough cable hub.",
     "connector": "edgePassive",
     "storeLink": [
+      "https://www.amazon.com/KittenBot-Jacdac-Starter-Jacdaptor-Micro/dp/B0BQ6WMBPZ",
       "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-for-micro-bit",
       "https://www.aliexpress.com/item/3256804237465484.html",
       "https://www.pakronics.com.au/products/kittenbot-jacdac-kit-a-with-adaptor-for-micro-bit-v2-pakr-a0410"
@@ -211,6 +305,7 @@
     "company": "KittenBot",
     "description": "A kit of Jacdac modules.",
     "storeLink": [
+      "https://www.amazon.com/KittenBot-Jacdac-Starter-Jacdaptor-Micro/dp/B0BQ6WMBPZ",
       "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-for-micro-bit",
       "https://www.aliexpress.com/item/3256804237465484.html",
       "https://www.pakronics.com.au/products/kittenbot-jacdac-kit-a-with-adaptor-for-micro-bit-v2-pakr-a0410"
@@ -245,6 +340,7 @@
     "company": "KittenBot",
     "connector": "edgeLowCurrentProviderConsumer",
     "storeLink": [
+      "https://www.amazon.com/KittenBot-Jacdac-Starter-Jacdaptor-Micro/dp/B0BQ6WMBPZ",
       "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-for-micro-bit",
       "https://www.aliexpress.com/item/3256804237465484.html",
       "https://www.pakronics.com.au/products/kittenbot-jacdac-kit-a-with-adaptor-for-micro-bit-v2-pakr-a0410"
@@ -269,6 +365,7 @@
     "company": "KittenBot",
     "description": "A keycap keyboard button.",
     "storeLink": [
+      "https://www.amazon.com/KittenBot-Jacdac-Starter-Jacdaptor-Micro/dp/B0BQ6WMBPZ",
       "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-for-micro-bit",
       "https://www.aliexpress.com/item/3256804237465484.html",
       "https://www.pakronics.com.au/products/kittenbot-jacdac-kit-a-with-adaptor-for-micro-bit-v2-pakr-a0410"
@@ -289,6 +386,7 @@
     "company": "KittenBot",
     "description": "A light level sensor.",
     "storeLink": [
+      "https://www.amazon.com/KittenBot-Jacdac-Starter-Jacdaptor-Micro/dp/B0BQ6WMBPZ",
       "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-for-micro-bit",
       "https://www.aliexpress.com/item/3256804237465484.html",
       "https://www.pakronics.com.au/products/kittenbot-jacdac-kit-a-with-adaptor-for-micro-bit-v2-pakr-a0410"
@@ -310,6 +408,7 @@
     "company": "KittenBot",
     "description": "A magnetic field sensor.",
     "storeLink": [
+      "https://www.amazon.com/KittenBot-Jacdac-Starter-Jacdaptor-Micro/dp/B0BQ6WMBPZ",
       "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-for-micro-bit",
       "https://www.aliexpress.com/item/3256804237465484.html",
       "https://www.pakronics.com.au/products/kittenbot-jacdac-kit-a-with-adaptor-for-micro-bit-v2-pakr-a0410"
@@ -331,6 +430,7 @@
     "company": "KittenBot",
     "description": "A ring of 8 colored programmable LEDs.",
     "storeLink": [
+      "https://www.amazon.com/KittenBot-Jacdac-Starter-Jacdaptor-Micro/dp/B0BQ6WMBPZ",
       "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-for-micro-bit",
       "https://www.aliexpress.com/item/3256804237465484.html",
       "https://www.pakronics.com.au/products/kittenbot-jacdac-kit-a-with-adaptor-for-micro-bit-v2-pakr-a0410"
@@ -351,6 +451,7 @@
     "company": "KittenBot",
     "description": "A rotary encoder and button.",
     "storeLink": [
+      "https://www.amazon.com/KittenBot-Jacdac-Starter-Jacdaptor-Micro/dp/B0BQ6WMBPZ",
       "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-for-micro-bit",
       "https://www.aliexpress.com/item/3256804237465484.html",
       "https://www.pakronics.com.au/products/kittenbot-jacdac-kit-a-with-adaptor-for-micro-bit-v2-pakr-a0410"
@@ -372,6 +473,7 @@
     "company": "KittenBot",
     "description": "A slider.",
     "storeLink": [
+      "https://www.amazon.com/KittenBot-Jacdac-Starter-Jacdaptor-Micro/dp/B0BQ6WMBPZ",
       "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-for-micro-bit",
       "https://www.aliexpress.com/item/3256804237465484.html",
       "https://www.pakronics.com.au/products/kittenbot-jacdac-kit-a-with-adaptor-for-micro-bit-v2-pakr-a0410"
@@ -554,11 +656,78 @@
     "status": "stable"
   },
   {
+    "id": "espressif-esp32c3rustdevkitv12a",
+    "name": "ESP32-C3-RUST-DevKit",
+    "company": "Espressif",
+    "description": "This board is based on the ESP32-C3, and includes sensors, LEDs, buttons, a battery charger, and USB type-C connector.",
+    "repo": "https://github.com/microsoft/devicescript-esp32",
+    "firmwareSource": "https://github.com/microsoft/devicescript-esp32/blob/main/boards/esp32c3/esp32c3_rust_devkit.board.json",
+    "hardwareDesign": "https://github.com/esp-rs/esp-rust-board",
+    "connector": "noConnector",
+    "link": "https://github.com/esp-rs/esp-rust-board",
+    "storeLink": [
+      "https://github.com/esp-rs/esp-rust-board"
+    ],
+    "services": [
+      413852154,
+      342028028,
+      341864092,
+      337754823,
+      382210232,
+      471386691,
+      343122531
+    ],
+    "productIdentifiers": [
+      871537753
+    ],
+    "version": "1.2a",
+    "status": "stable"
+  },
+  {
+    "id": "espressif-esp32devkitcdevicescriptv40",
+    "name": "ESP32-DevKitC DeviceScript",
+    "company": "Espressif",
+    "description": "This will also work with NodeMCU etc.",
+    "firmwareSource": "https://github.com/microsoft/devicescript-esp32",
+    "connector": "noConnector",
+    "link": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32/hw-reference/esp32/get-started-devkitc.html",
+    "storeLink": [
+      "https://www.espressif.com/en/products/devkits/esp32-devkitc"
+    ],
+    "services": [
+      341864092,
+      342028028,
+      413852154,
+      288680491
+    ],
+    "productIdentifiers": [
+      1011907077
+    ],
+    "transport": {
+      "type": "serial",
+      "vendorId": 4292
+    },
+    "firmwares": [
+      {
+        "name": "DeviceScript + Cloud Connector",
+        "url": "https://github.com/microsoft/devicescript-esp32/releases/latest",
+        "productIdentifier": 1011907077
+      }
+    ],
+    "version": "4.0",
+    "bootloader": {
+      "sequence": "boot-power",
+      "firmwareFormat": "bin",
+      "firmwareUploader": "https://adafruit.github.io/Adafruit_WebSerial_ESPTool/"
+    },
+    "status": "stable"
+  },
+  {
     "id": "adafruit-qtpyesp32c3wifidevboardv10",
     "name": "QT Py ESP32-C3 WiFi Dev Board",
     "company": "Adafruit",
     "description": "The ESP32-C3 integrates a rich set of peripherals, ranging from UART, I2C, I2S, remote control peripheral, LED PWM controller, general DMA controller, TWAI controller, USB Serial/JTAG controller, temperature sensor, and ADC. It also includes SPI, Dual SPI, and Quad SPI interfaces.",
-    "firmwareSource": "https://github.com/microsoft/jacdac-esp32",
+    "firmwareSource": "https://github.com/microsoft/devicescript-esp32",
     "connector": "noConnector",
     "link": "https://www.adafruit.com/product/5405",
     "storeLink": [
@@ -577,7 +746,7 @@
     "firmwares": [
       {
         "name": "DeviceScript + Cloud Connector",
-        "url": "https://github.com/microsoft/jacdac-esp32/releases/latest",
+        "url": "https://github.com/microsoft/devicescript-esp32/releases/latest",
         "productIdentifier": 915657739
       }
     ],
@@ -685,6 +854,22 @@
     "version": "1.0",
     "designIdentifier": "117",
     "shape": "ec30_2x2_lr"
+  },
+  {
+    "id": "microsoft-research-devicescriptsimulatorv10",
+    "name": "DeviceScript Simulator",
+    "company": "Microsoft Research",
+    "description": "A virtual DeviceScript Manager simulator.",
+    "firmwareSource": "https://github.com/microsoft/devicescript",
+    "connector": "noConnector",
+    "services": [
+      358308672
+    ],
+    "productIdentifiers": [
+      1072018543,
+      288680491
+    ],
+    "version": "1.0"
   },
   {
     "id": "microsoft-research-hub114v10",
@@ -918,12 +1103,12 @@
       },
       {
         "name": "DeviceScript Brain + Azure IoT Hub Cloud Adapter",
-        "url": "https://github.com/microsoft/jacdac-esp32/releases/latest/download/devicescript-esp32s2.uf2",
+        "url": "https://github.com/microsoft/devicescript-esp32/releases/latest/download/devicescript-esp32s2.uf2",
         "productIdentifier": 1038170507
       },
       {
         "name": "Azure IoT Hub Cloud Adapter",
-        "url": "https://github.com/microsoft/jacdac-esp32/releases/latest/download/devicescript-esp32s2-nojacs.uf2",
+        "url": "https://github.com/microsoft/devicescript-esp32/releases/latest/download/devicescript-esp32s2-nojacs.uf2",
         "productIdentifier": 816040071
       }
     ],
@@ -1786,9 +1971,9 @@
     "name": "RP2040 DeviceScript",
     "company": "Microsoft Research",
     "description": "RP2040 brain running DeviceScript and related services",
-    "firmwareSource": "https://github.com/microsoft/jacdac-pico",
+    "firmwareSource": "https://github.com/microsoft/devicescript-pico",
     "connector": "edgeHighCurrentProvider",
-    "link": "https://github.com/microsoft/jacdac-pico",
+    "link": "https://github.com/microsoft/devicescript-pico",
     "services": [
       530893146,
       414210922,

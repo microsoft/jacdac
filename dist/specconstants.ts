@@ -3559,6 +3559,167 @@ export namespace GamepadEventPack {
     export const ButtonsChanged = "u32"
 }
 
+// Service GPIO constants
+export const SRV_GPIO = 0x10d85a69
+
+export enum GPIOMode { // uint8_t
+    Off = 0x0,
+    OffPullUp = 0x10,
+    OffPullDown = 0x20,
+    Input = 0x1,
+    InputPullUp = 0x11,
+    InputPullDown = 0x21,
+    Output = 0x2,
+    OutputHigh = 0x12,
+    OutputLow = 0x22,
+    AnalogIn = 0x3,
+    Alternative = 0x4,
+    BaseModeMask = 0xf,
+}
+
+export enum GPIOCapabilities { // uint16_t
+    PullUp = 0x1,
+    PullDown = 0x2,
+    Input = 0x4,
+    Output = 0x8,
+    Analog = 0x10,
+}
+
+export enum GPIOReg {
+    /**
+     * Read-only digital_values bytes. For every pin set to `Input*` the corresponding **bit** in `digital_values` will be `1` if and only if
+     * the pin is high.
+     * For other pins, the bit is `0`.
+     * This is normally streamed at low-ish speed, but it's also automatically reported whenever
+     * a digital input pin changes value (throttled to ~100Hz).
+     * The analog values can be read with the `ADC` service.
+     *
+     * ```
+     * const [digitalValues] = jdunpack<[Uint8Array]>(buf, "b")
+     * ```
+     */
+    State = 0x101,
+
+    /**
+     * Read-only # uint8_t. Number of pins that can be operated through this service.
+     *
+     * ```
+     * const [numPins] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    NumPins = 0x180,
+}
+
+export namespace GPIORegPack {
+    /**
+     * Pack format for 'state' Reg data.
+     */
+    export const State = "b"
+
+    /**
+     * Pack format for 'num_pins' Reg data.
+     */
+    export const NumPins = "u8"
+}
+
+export enum GPIOCmd {
+    /**
+     * Configure (including setting the value) zero or more pins.
+     * `Alternative` settings means the pin is controlled by other service (SPI, I2C, UART, PWM, etc.).
+     *
+     * ```
+     * const [rest] = jdunpack<[([number, GPIOMode])[]]>(buf, "r: u8 u8")
+     * const [pin, mode] = rest[0]
+     * ```
+     */
+    Configure = 0x80,
+
+    /**
+     * Argument: pin uint8_t. Report capabilities and name of a pin.
+     *
+     * ```
+     * const [pin] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    PinInfo = 0x81,
+
+    /**
+     * report PinInfo
+     * ```
+     * const [pin, hwPin, capabilities, mode, label] = jdunpack<[number, number, GPIOCapabilities, GPIOMode, string]>(buf, "u8 u8 u16 u8 s")
+     * ```
+     */
+
+    /**
+     * Argument: label string (bytes). This responds with `pin_info` report.
+     *
+     * ```
+     * const [label] = jdunpack<[string]>(buf, "s")
+     * ```
+     */
+    PinByLabel = 0x83,
+
+    /**
+     * report PinByLabel
+     * ```
+     * const [pin, hwPin, capabilities, mode, label] = jdunpack<[number, number, GPIOCapabilities, GPIOMode, string]>(buf, "u8 u8 u16 u8 s")
+     * ```
+     */
+
+    /**
+     * Argument: hw_pin uint8_t. This responds with `pin_info` report.
+     *
+     * ```
+     * const [hwPin] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    PinByHwPin = 0x84,
+
+    /**
+     * report PinByHwPin
+     * ```
+     * const [pin, hwPin, capabilities, mode, label] = jdunpack<[number, number, GPIOCapabilities, GPIOMode, string]>(buf, "u8 u8 u16 u8 s")
+     * ```
+     */
+}
+
+export namespace GPIOCmdPack {
+    /**
+     * Pack format for 'configure' Cmd data.
+     */
+    export const Configure = "r: u8 u8"
+
+    /**
+     * Pack format for 'pin_info' Cmd data.
+     */
+    export const PinInfo = "u8"
+
+    /**
+     * Pack format for 'pin_info' Cmd data.
+     */
+    export const PinInfoReport = "u8 u8 u16 u8 s"
+
+    /**
+     * Pack format for 'pin_by_label' Cmd data.
+     */
+    export const PinByLabel = "s"
+
+    /**
+     * Pack format for 'pin_by_label' Cmd data.
+     */
+    export const PinByLabelReport = "u8 u8 u16 u8 s"
+
+    /**
+     * Pack format for 'pin_by_hw_pin' Cmd data.
+     */
+    export const PinByHwPin = "u8"
+
+    /**
+     * Pack format for 'pin_by_hw_pin' Cmd data.
+     */
+    export const PinByHwPinReport = "u8 u8 u16 u8 s"
+}
+
 // Service Gyroscope constants
 export const SRV_GYROSCOPE = 0x1e1b06f2
 export enum GyroscopeReg {

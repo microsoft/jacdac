@@ -16,8 +16,9 @@ and should **not** be exposed to the user.
         digital_values: bytes
     }
 
-For every pin set to `Input*` or `Output*` the corresponding **bit** in `digital_values` will be `1` if and only if the pin is high.
-When `Disconnected` or `AnalogIn` the digital value is `0`.
+For every pin set to `Input*` the corresponding **bit** in `digital_values` will be `1` if and only if
+the pin is high.
+For other pins, the bit is `0`.
 This is normally streamed at low-ish speed, but it's also automatically reported whenever
 a digital input pin changes value (throttled to ~100Hz).
 The analog values can be read with the `ADC` service.

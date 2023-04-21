@@ -763,7 +763,8 @@
     "name": "XIAO ESP32C3 with MSR218 base",
     "company": "Seeed Studio",
     "description": "XIAO ESP32C3 + Prototype Carrier board for Xiao, Jacdac, Grove, Qwiic, Stemma QT, Analog.",
-    "firmwareSource": "https://github.com/microsoft/devicescript-esp32",
+    "repo": "https://github.com/microsoft/devicescript-esp32",
+    "firmwareSource": "https://github.com/microsoft/devicescript-esp32/blob/main/boards/esp32c3/seeed_xiao_esp32c3.board.json",
     "connector": "edgeHighCurrentProvider",
     "services": [
       282614377,

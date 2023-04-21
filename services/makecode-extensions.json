@@ -137,8 +137,6 @@
     "client": {
       "name": "jacdac-cloud-adapter",
       "targets": [
-        "microbit",
-        "arcade",
         "maker"
       ],
       "repo": "microsoft/pxt-jacdac/cloud-adapter",

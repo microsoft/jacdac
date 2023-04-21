@@ -2026,13 +2026,13 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "cs") {
 
         // don't emit const strings in makecode,
         // they don't get dropped efficiently
-        if ((csharp || !sts) && pkt.packFormat) {
+        if ((csharp || sts) && pkt.packFormat) {
             const packName = inner + "Pack"
             tsEnums[packName] =
                 (tsEnums[packName] || "") +
                 `${wrapComment(
                     language,
-                    `Pack format for '${pkt.name}' ${inner} data.`
+                    `Pack format for '${pkt.name}' data.`
                 )}${enumsf}${upperCamel(pkt.name)}${
                     pkt.secondary ? "Report" : ""
                 } = "${pkt.packFormat}"${csharp ? ";" : ""}\n`

@@ -17,4 +17,3 @@ cp ../services/generated/*.sts ../dist/
 cp ../services/generated/c/*.h ../dist/c/
 cp ../services/generated/c/*.c ../dist/c/
 cp ../services/generated/json/*.json ../dist/json/
-rm -rf ../services/generated

@@ -1906,6 +1906,7 @@ function memberSize(fld: jdspec.PacketMember) {
 }
 
 function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "cs") {
+    const ts = language === "ts"
     const sts = language === "sts"
     const csharp = language === "cs"
     const useNamespace = sts || csharp
@@ -2026,7 +2027,7 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "cs") {
 
         // don't emit const strings in makecode,
         // they don't get dropped efficiently
-        if ((csharp || sts) && pkt.packFormat) {
+        if ((csharp || sts || ts) && pkt.packFormat) {
             const packName = inner + "Pack"
             tsEnums[packName] =
                 (tsEnums[packName] || "") +

@@ -1,0 +1,12 @@
+{
+    "id": "xiaoesp32c3withmsr218basev46",
+    "name": "XIAO ESP32C3 with MSR218 base",
+    "company": "Seeed Studio",
+    "description": "XIAO ESP32C3 + Prototype Carrier board for Xiao, Jacdac, Grove, Qwiic, Stemma QT, Analog.",
+    "firmwareSource": "https://github.com/microsoft/devicescript-esp32",
+    "connector": "edgeHighCurrentProvider",
+    "services": [282614377, 413852154, 342028028, 341864092, 471386691],
+    "productIdentifiers": [917915687],
+    "version": "4.6",
+    "shape": "ec30_4x3_l2"
+}

@@ -759,7 +759,7 @@
     "status": "stable"
   },
   {
-    "id": "seeed-studio-xiaoesp32c3withmsr218basev46",
+    "id": "seeed-studio-xiaoesp32c3withmsr218base218v46",
     "name": "XIAO ESP32C3 with MSR218 base",
     "company": "Seeed Studio",
     "description": "XIAO ESP32C3 + Prototype Carrier board for Xiao, Jacdac, Grove, Qwiic, Stemma QT, Analog.",
@@ -777,6 +777,7 @@
       917915687
     ],
     "version": "4.6",
+    "designIdentifier": 218,
     "shape": "ec30_4x3_l2"
   },
   {

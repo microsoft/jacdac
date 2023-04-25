@@ -2125,6 +2125,7 @@ export function normalizeDeviceSpecification(dev: jdspec.DeviceSpec) {
         requiredDevices: dev.requiredDevices,
         shape: dev.shape,
         order: dev.order,
+        makecodeExtensions: dev.makecodeExtensions,
     }
     // delete empty files
     const anyClone: any = clone

@@ -845,6 +845,11 @@ declare namespace jdspec {
          * Allows to specify a priority in the catalog
          */
         order?: number
+
+        /**
+         * A set of additional MakeCode extension (owner/repo)
+         */
+        makecodeExtensions?: string[]
     }
 
     /**

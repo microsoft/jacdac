@@ -82,6 +82,23 @@
       "derived": "_base"
     },
     {
+      "kind": "rw",
+      "name": "client_variant",
+      "identifier": 9,
+      "description": "An optional register in the format of a URL query string where the client can provide hints how\nthe device twin should be rendered. If the register is not implemented, the client library can simulate the register client side.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "optional": true,
+      "identifierName": "client_variant",
+      "packFormat": "s",
+      "derived": "_base"
+    },
+    {
       "kind": "event",
       "name": "status_code_changed",
       "identifier": 4,

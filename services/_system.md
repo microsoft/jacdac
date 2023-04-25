@@ -12,9 +12,10 @@ Their code is listed as say `@ intensity` and not `@ 0x01` (the spectool enforce
 ## Commands
 
 Command codes are subdivided as follows:
-* Commands `0x000-0x07f` - common to all services
-* Commands `0x080-0xeff` - defined per-service
-* Commands `0xf00-0xfff` - reserved for implementation
+
+-   Commands `0x000-0x07f` - common to all services
+-   Commands `0x080-0xeff` - defined per-service
+-   Commands `0xf00-0xfff` - reserved for implementation
 
 Commands follow.
 
@@ -23,7 +24,7 @@ Commands follow.
     report { ... }
 
 Enumeration data for control service; service-specific advertisement data otherwise.
-Control broadcasts it automatically every ``announce_interval``ms, but other service have to be queried to provide it.
+Control broadcasts it automatically every `announce_interval`ms, but other service have to be queried to provide it.
 
     command get_register @ 0x1000 {}
     report { ... }
@@ -54,12 +55,13 @@ Note that it's possible to get an ACK, followed by such an error report.
 ## Registers
 
 Register codes are subdivided as follows:
-* Registers `0x001-0x07f` - r/w common to all services
-* Registers `0x080-0x0ff` - r/w defined per-service
-* Registers `0x100-0x17f` - r/o common to all services
-* Registers `0x180-0x1ff` - r/o defined per-service
-* Registers `0x200-0xeff` - custom, defined per-service
-* Registers `0xf00-0xfff` - reserved for implementation, should not be seen on the wire
+
+-   Registers `0x001-0x07f` - r/w common to all services
+-   Registers `0x080-0x0ff` - r/w defined per-service
+-   Registers `0x100-0x17f` - r/o common to all services
+-   Registers `0x180-0x1ff` - r/o defined per-service
+-   Registers `0x200-0xeff` - custom, defined per-service
+-   Registers `0xf00-0xfff` - reserved for implementation, should not be seen on the wire
 
 The types listed are typical. Check spec for particular service for exact type,
 and a service-specific name for a register (eg. `value` could be `pulse_length`).
@@ -123,7 +125,7 @@ The highest value that can be reported by the sensor.
     ro volatile reading_error: u32 @ 0x106
 
 The real value of whatever is measured is between `reading - reading_error` and `reading + reading_error`. It should be computed from the internal state of the sensor. This register is often, but not always `const`. If the register value is modified,
-send a report in the same frame of the ``reading`` report.
+send a report in the same frame of the `reading` report.
 
     const reading_resolution: u32 @ 0x108
 
@@ -136,11 +138,11 @@ Smallest, yet distinguishable change in reading.
     }
     rw inactive_threshold: i32 @ 0x05
 
-Threshold when reading data gets inactive and triggers a ``inactive``.
+Threshold when reading data gets inactive and triggers a `inactive`.
 
     rw active_threshold: i32 @ 0x06
 
-Thresholds when reading data gets active and triggers a ``active`` event.
+Thresholds when reading data gets active and triggers a `active` event.
 
     const streaming_preferred_interval: u32 ms @ 0x102
 
@@ -150,6 +152,11 @@ Preferred default streaming interval for sensor in milliseconds.
 
 The hardware variant of the service.
 For services which support this, there's an enum defining the meaning.
+
+    rw client_variant: string @ 0x09
+
+An optional register in the format of a URL query string where the client can provide hints how
+the device twin should be rendered. If the register is not implemented, the client library can simulate the register client side.
 
     enum StatusCodes: u16 {
         Ready = 0
@@ -167,8 +174,8 @@ For services which support this, there's an enum defining the meaning.
         vendor_code: u16
     }
 
-Reports the current state or error status of the device. ``code`` is a standardized value from 
-the Jacdac status/error codes. ``vendor_code`` is any vendor specific error code describing the device
+Reports the current state or error status of the device. `code` is a standardized value from
+the Jacdac status/error codes. `vendor_code` is any vendor specific error code describing the device
 state. This report is typically not queried, when a device has an error, it will typically
 add this report in frame along with the announce packet.
 
@@ -179,8 +186,9 @@ A friendly name that describes the role of this service instance in the device.
 ## Events
 
 Events codes are 8-bit and are subdivided as follows:
-* Events `0x00-0x7f` - common to all services
-* Events `0x80-0xff` - defined per-service
+
+-   Events `0x00-0x7f` - common to all services
+-   Events `0x80-0xff` - defined per-service
 
     event active @ 0x01 { }
 
@@ -203,4 +211,4 @@ Notifies that the status code of the service changed.
 
     event neutral @ 0x07 {}
 
-Notifies that the threshold is back between ``low`` and ``high``.
+Notifies that the threshold is back between `low` and `high`.

@@ -38,6 +38,11 @@ state. This report is typically not queried, when a device has an error, it will
 add this report in frame along with the announce packet. If a service implements this register,
 it should also support the ``status_code_changed`` event defined below.
 
+    rw client_variant?: string @ client_variant
+
+An optional register in the format of a URL query string where the client can provide hints how
+the device twin should be rendered. If the register is not implemented, the client library can simulate the register client side.
+
 ## Events
 
     event status_code_changed? @ status_code_changed {

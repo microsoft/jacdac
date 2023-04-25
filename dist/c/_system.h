@@ -20,7 +20,7 @@
 
 /**
  * No args. Enumeration data for control service; service-specific advertisement data otherwise.
- * Control broadcasts it automatically every ``announce_interval``ms, but other service have to be queried to provide it.
+ * Control broadcasts it automatically every `announce_interval`ms, but other service have to be queried to provide it.
  */
 #define JD_CMD_ANNOUNCE 0x0
 
@@ -136,7 +136,7 @@ typedef struct jd_system_supported_ranges {
 
 /**
  * Read-only uint32_t. The real value of whatever is measured is between `reading - reading_error` and `reading + reading_error`. It should be computed from the internal state of the sensor. This register is often, but not always `const`. If the register value is modified,
- * send a report in the same frame of the ``reading`` report.
+ * send a report in the same frame of the `reading` report.
  */
 #define JD_REG_READING_ERROR 0x106
 
@@ -146,12 +146,12 @@ typedef struct jd_system_supported_ranges {
 #define JD_REG_READING_RESOLUTION 0x108
 
 /**
- * Read-write int32_t. Threshold when reading data gets inactive and triggers a ``inactive``.
+ * Read-write int32_t. Threshold when reading data gets inactive and triggers a `inactive`.
  */
 #define JD_REG_INACTIVE_THRESHOLD 0x5
 
 /**
- * Read-write int32_t. Thresholds when reading data gets active and triggers a ``active`` event.
+ * Read-write int32_t. Thresholds when reading data gets active and triggers a `active` event.
  */
 #define JD_REG_ACTIVE_THRESHOLD 0x6
 
@@ -167,8 +167,14 @@ typedef struct jd_system_supported_ranges {
 #define JD_REG_VARIANT 0x107
 
 /**
- * Reports the current state or error status of the device. ``code`` is a standardized value from 
- * the Jacdac status/error codes. ``vendor_code`` is any vendor specific error code describing the device
+ * Read-write string (bytes). An optional register in the format of a URL query string where the client can provide hints how
+ * the device twin should be rendered. If the register is not implemented, the client library can simulate the register client side.
+ */
+#define JD_REG_CLIENT_VARIANT 0x9
+
+/**
+ * Reports the current state or error status of the device. `code` is a standardized value from
+ * the Jacdac status/error codes. `vendor_code` is any vendor specific error code describing the device
  * state. This report is typically not queried, when a device has an error, it will typically
  * add this report in frame along with the announce packet.
  */
@@ -210,7 +216,7 @@ typedef struct jd_system_status_code_changed {
 
 
 /**
- * Notifies that the threshold is back between ``low`` and ``high``.
+ * Notifies that the threshold is back between `low` and `high`.
  */
 #define JD_EV_NEUTRAL 0x7
 

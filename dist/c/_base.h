@@ -37,6 +37,11 @@ typedef struct jd_base_status_code {
 
 
 /**
+ * Read-write string (bytes). An optional register in the format of a URL query string where the client can provide hints how
+ * the device twin should be rendered. If the register is not implemented, the client library can simulate the register client side.
+ */
+
+/**
  * Notifies that the status code of the service changed.
  */
 typedef struct jd_base_status_code_changed {

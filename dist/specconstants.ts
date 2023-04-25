@@ -19,7 +19,7 @@ export enum SystemStatusCodes { // uint16_t
 export enum SystemCmd {
     /**
      * No args. Enumeration data for control service; service-specific advertisement data otherwise.
-     * Control broadcasts it automatically every ``announce_interval``ms, but other service have to be queried to provide it.
+     * Control broadcasts it automatically every `announce_interval`ms, but other service have to be queried to provide it.
      */
     Announce = 0x0,
 
@@ -175,7 +175,7 @@ export enum SystemReg {
 
     /**
      * Read-only uint32_t. The real value of whatever is measured is between `reading - reading_error` and `reading + reading_error`. It should be computed from the internal state of the sensor. This register is often, but not always `const`. If the register value is modified,
-     * send a report in the same frame of the ``reading`` report.
+     * send a report in the same frame of the `reading` report.
      *
      * ```
      * const [readingError] = jdunpack<[number]>(buf, "u32")
@@ -193,7 +193,7 @@ export enum SystemReg {
     ReadingResolution = 0x108,
 
     /**
-     * Read-write int32_t. Threshold when reading data gets inactive and triggers a ``inactive``.
+     * Read-write int32_t. Threshold when reading data gets inactive and triggers a `inactive`.
      *
      * ```
      * const [inactiveThreshold] = jdunpack<[number]>(buf, "i32")
@@ -202,7 +202,7 @@ export enum SystemReg {
     InactiveThreshold = 0x5,
 
     /**
-     * Read-write int32_t. Thresholds when reading data gets active and triggers a ``active`` event.
+     * Read-write int32_t. Thresholds when reading data gets active and triggers a `active` event.
      *
      * ```
      * const [activeThreshold] = jdunpack<[number]>(buf, "i32")
@@ -230,8 +230,18 @@ export enum SystemReg {
     Variant = 0x107,
 
     /**
-     * Reports the current state or error status of the device. ``code`` is a standardized value from
-     * the Jacdac status/error codes. ``vendor_code`` is any vendor specific error code describing the device
+     * Read-write string (bytes). An optional register in the format of a URL query string where the client can provide hints how
+     * the device twin should be rendered. If the register is not implemented, the client library can simulate the register client side.
+     *
+     * ```
+     * const [clientVariant] = jdunpack<[string]>(buf, "s")
+     * ```
+     */
+    ClientVariant = 0x9,
+
+    /**
+     * Reports the current state or error status of the device. `code` is a standardized value from
+     * the Jacdac status/error codes. `vendor_code` is any vendor specific error code describing the device
      * state. This report is typically not queried, when a device has an error, it will typically
      * add this report in frame along with the announce packet.
      *
@@ -343,6 +353,11 @@ export namespace SystemRegPack {
     export const Variant = "u32"
 
     /**
+     * Pack format for 'client_variant' data.
+     */
+    export const ClientVariant = "s"
+
+    /**
      * Pack format for 'status_code' data.
      */
     export const StatusCode = "u16 u16"
@@ -379,7 +394,7 @@ export enum SystemEvent {
     StatusCodeChanged = 0x4,
 
     /**
-     * Notifies that the threshold is back between ``low`` and ``high``.
+     * Notifies that the threshold is back between `low` and `high`.
      */
     Neutral = 0x7,
 }
@@ -438,6 +453,16 @@ export enum BaseReg {
      * ```
      */
     StatusCode = 0x103,
+
+    /**
+     * Read-write string (bytes). An optional register in the format of a URL query string where the client can provide hints how
+     * the device twin should be rendered. If the register is not implemented, the client library can simulate the register client side.
+     *
+     * ```
+     * const [clientVariant] = jdunpack<[string]>(buf, "s")
+     * ```
+     */
+    ClientVariant = 0x9,
 }
 
 export namespace BaseRegPack {
@@ -450,6 +475,11 @@ export namespace BaseRegPack {
      * Pack format for 'status_code' data.
      */
     export const StatusCode = "u16 u16"
+
+    /**
+     * Pack format for 'client_variant' data.
+     */
+    export const ClientVariant = "s"
 }
 
 export enum BaseEvent {

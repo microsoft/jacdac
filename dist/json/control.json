@@ -369,6 +369,23 @@
       "packFormat": "u8 u8 u16 b"
     },
     {
+      "kind": "command",
+      "name": "standby",
+      "identifier": 135,
+      "description": "Attempt to put devices into lowest power sleep mode for a specified time - most likely involving a full reset on wake-up.",
+      "fields": [
+        {
+          "name": "duration",
+          "unit": "ms",
+          "type": "u32",
+          "storage": 4,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "packFormat": "u32"
+    },
+    {
       "kind": "rw",
       "name": "reset_in",
       "identifier": 128,

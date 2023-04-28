@@ -115,6 +115,12 @@ and should be set to a random value by the client.
 Note that while the commands sends this way are delivered exactly once, the
 responses might get lost.
 
+    command standby? @ 0x87 {
+        duration: u32 ms
+    }
+
+Attempt to put devices into lowest power sleep mode for a specified time - most likely involving a full reset on wake-up.
+
 ## Registers
 
     rw internal reset_in? : u32 us @ 0x80

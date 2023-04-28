@@ -2153,6 +2153,15 @@ export enum ControlCmd {
      * const [commands] = jdunpack<[Uint8Array]>(buf, "b[12]")
      * ```
      */
+
+    /**
+     * Argument: duration ms uint32_t. Attempt to put devices into lowest power sleep mode for a specified time - most likely involving a full reset on wake-up.
+     *
+     * ```
+     * const [duration] = jdunpack<[number]>(buf, "u32")
+     * ```
+     */
+    Standby = 0x87,
 }
 
 export namespace ControlCmdPack {
@@ -2185,6 +2194,11 @@ export namespace ControlCmdPack {
      * Pack format for 'reliable_commands' data.
      */
     export const ReliableCommandsReport = "b[12]"
+
+    /**
+     * Pack format for 'standby' data.
+     */
+    export const Standby = "u32"
 }
 
 export enum ControlPipe {}

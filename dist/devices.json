@@ -656,6 +656,22 @@
     "status": "stable"
   },
   {
+    "id": "forward-education-breakoutboardrelaypumpv10",
+    "name": "Breakout Board + Relay + Pump",
+    "company": "Forward Education",
+    "description": "0x3412171b\n",
+    "link": "https://forwardedu.com",
+    "storeLink": [
+      "https://forwardedu.com"
+    ],
+    "services": [
+      406840918,
+      318542083
+    ],
+    "version": "1.0",
+    "status": "stable"
+  },
+  {
     "id": "espressif-esp32c3rustdevkitv12a",
     "name": "ESP32-C3-RUST-DevKit",
     "company": "Espressif",

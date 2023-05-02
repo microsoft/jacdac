@@ -656,6 +656,25 @@
     "status": "stable"
   },
   {
+    "id": "forward-education-breakoutboardrelaypumpv10",
+    "name": "Breakout Board + Relay + Pump",
+    "company": "Forward Education",
+    "description": "A micro:bit carrier board",
+    "link": "https://forwardedu.com",
+    "storeLink": [
+      "https://forwardedu.com"
+    ],
+    "services": [
+      406840918,
+      318542083
+    ],
+    "productIdentifiers": [
+      873600795
+    ],
+    "version": "1.0",
+    "status": "stable"
+  },
+  {
     "id": "espressif-esp32c3rustdevkitv12a",
     "name": "ESP32-C3-RUST-DevKit",
     "company": "Espressif",

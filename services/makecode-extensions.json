@@ -783,7 +783,7 @@
       "repo": "microsoft/pxt-jacdac/servo",
       "qName": "modules.ServoClient",
       "default": "modules.servo",
-      "generated": true
+      "generated": false
     }
   },
   {

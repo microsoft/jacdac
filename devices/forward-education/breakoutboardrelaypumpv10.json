@@ -2,7 +2,7 @@
   "id": "forward-education-breakoutboardrelaypumpv10",
   "name": "Breakout Board + Relay + Pump",
   "company": "Forward Education",
-  "description": "0x3412171b\n",
+  "description": "A micro:bit carrier board",
   "link": "https://forwardedu.com",
   "storeLink": [
     "https://forwardedu.com"
@@ -10,6 +10,9 @@
   "services": [
     406840918,
     318542083
+  ],
+  "productIdentifiers": [
+    873600795
   ],
   "version": "1.0",
   "status": "stable"

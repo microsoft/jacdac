@@ -677,6 +677,12 @@ declare namespace jdspec {
 
     type Shape = ShapeGeneric | ShapeWellKnown
 
+    interface RepoSpec {
+        target: string
+        name: string
+        slug: string
+    }
+
     interface DeviceSpec extends DeviceClassSpec {
         /**
          * URL-friendly id.
@@ -729,13 +735,9 @@ declare namespace jdspec {
         repo?: string
 
         /**
-         * Github repository containing the MakeCode extension, for software-only devices
+         * A set of additional MakeCode extension
          */
-        makeCodeRepo?: {
-            target: string
-            name: string
-            slug: string
-        }[]
+        makeCodeRepo?: RepoSpec[]
 
         /**
          * Links image urls
@@ -845,11 +847,6 @@ declare namespace jdspec {
          * Allows to specify a priority in the catalog
          */
         order?: number
-
-        /**
-         * A set of additional MakeCode extension (owner/repo)
-         */
-        makecodeExtensions?: string[]
     }
 
     /**

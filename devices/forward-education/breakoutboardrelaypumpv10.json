@@ -3,6 +3,13 @@
   "name": "Breakout Board + Relay + Pump",
   "company": "Forward Education",
   "description": "A micro:bit carrier board",
+  "makeCodeRepo": [
+    {
+      "target": "microbit",
+      "name": "forward-education-breakoutboardrelaypumpv10",
+      "slug": "climate-action-kits/pxt-fwd-edu/fwd-breakout"
+    }
+  ],
   "link": "https://forwardedu.com",
   "storeLink": [
     "https://forwardedu.com"

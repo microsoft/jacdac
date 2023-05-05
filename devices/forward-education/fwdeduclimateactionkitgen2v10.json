@@ -1,0 +1,41 @@
+{
+  "id": "forward-education-climate-action-kit-gen2-v10",
+  "name": "Climate Action Kit",
+  "company": "Forward Education",
+  "description": "Purpose-driven STEM education for a brighter future.  Explore climate action with our STEM kit and online lessons.",
+  "makeCodeRepo": [
+    {
+      "target": "microbit",
+      "name": "forward-education-breakoutboardrelaypumpv10",
+      "slug": "climate-action-kits/pxt-fwd-edu/"
+    }
+  ],
+  "link": "https://forwardedu.com",
+  "storeLink": [
+    "https://forwardedu.com"
+  ],
+  "devices": [
+		"forward-education-linesensorv10",
+		"forward-education-breakoutboardrelaypumpv10",
+		"forward-education-climate-action-kit-gen2-v10",
+		"forward-education-ledlightsv10",
+		"forward-education-touchsensorv10",
+		"forward-education-dialbuttonv10",
+		"forward-education-sonarsensorv10",
+		"forward-education-solarsensorv10",
+		"forward-education-moisturesensorv10"
+  ], 
+  "relatedDevices": [
+    "microbit-educational-foundation-microbitv2"
+  ],
+  "requiredDevices": [
+		"forward-education-breakoutboardrelaypumpv10",
+    "microbit-educational-foundation-microbitv2"
+  ],
+  "tags": [
+    "kit",
+    "microbit"
+  ],
+  "version": "1.0",
+  "status": "stable"
+}

@@ -3,12 +3,22 @@
   "name": "Solar Sensor",
   "company": "Forward Education",
   "description": "Solar Sensor is a photoresistor sensor compatible with the jacdac framework and part of the Climate Action Kit by Forward Education",
+  "makeCodeRepo": [
+    {
+      "target": "microbit",
+      "name": "fwd-edu-solar",
+      "slug": "climate-action-kits/pxt-fwd-edu/fwd-solar"
+    }
+  ],
   "link": "https://forwardedu.com",
   "storeLink": [
     "https://forwardedu.com"
   ],
   "services": [
     400333340
+  ],
+  "productIdentifiers": [
+    1005257879
   ],
   "version": "1.0",
   "status": "stable"

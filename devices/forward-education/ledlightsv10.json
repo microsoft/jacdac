@@ -3,12 +3,22 @@
   "name": "LED Lights",
   "company": "Forward Education",
   "description": "LED Lights is a ws2812 LED ring compatible with the jacdac framework and part of the Climate Action Kit by Forward Education\n",
+  "makeCodeRepo": [
+    {
+      "target": "microbit",
+      "name": "fwd-edu-led",
+      "slug": "climate-action-kits/pxt-fwd-edu/fwd-led"
+    }
+  ],
   "link": "https://forwardedu.com",
   "storeLink": [
     "https://forwardedu.com"
   ],
   "services": [
     369743088
+  ],
+  "productIdentifiers": [
+    1054009247
   ],
   "version": "1.0",
   "status": "stable"

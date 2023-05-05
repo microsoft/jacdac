@@ -3,12 +3,22 @@
   "name": "Touch Sensor",
   "company": "Forward Education",
   "description": "Touch Sensor is a capacitive touch sensor compatible with the jacdac framework and part of the Climate Action Kit by Forward Education\n",
+  "makeCodeRepo": [
+    {
+      "target": "microbit",
+      "name": "fwd-edu-touch",
+      "slug": "climate-action-kits/pxt-fwd-edu/fwd-touch"
+    }
+  ],
   "link": "https://forwardedu.com",
   "storeLink": [
     "https://forwardedu.com"
   ],
   "services": [
     343122531
+  ],
+  "productIdentifiers": [
+    1064434129
   ],
   "version": "1.0",
   "status": "stable"

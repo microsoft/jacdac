@@ -3,6 +3,13 @@
   "name": "Line Sensor",
   "company": "Forward Education",
   "description": "Line Sensor is a multi-reflected light sensor compatible with the jacdac framework and part of the Climate Action Kit by Forward Education\n",
+  "makeCodeRepo": [
+    {
+      "target": "microbit",
+      "name": "fwdi-edu-line",
+      "slug": "climate-action-kits/pxt-fwd-edu/fwd-line"
+    }
+  ],
   "link": "https://forwardedu.com",
   "storeLink": [
     "https://forwardedu.com"
@@ -11,6 +18,9 @@
     309087410,
     309087410,
     309087410
+  ],
+  "productIdentifiers": [
+    1000568338
   ],
   "version": "1.0",
   "status": "stable"

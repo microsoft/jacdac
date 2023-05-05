@@ -6,7 +6,7 @@
   "makeCodeRepo": [
     {
       "target": "microbit",
-      "name": "fwdi-edu-line",
+      "name": "fwd-edu-line",
       "slug": "climate-action-kits/pxt-fwd-edu/fwd-line"
     }
   ],

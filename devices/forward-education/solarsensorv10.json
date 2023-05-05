@@ -10,6 +10,9 @@
   "services": [
     400333340
   ],
+  "productIdentifiers": [
+    1005257879
+  ],
   "version": "1.0",
   "status": "stable"
 }

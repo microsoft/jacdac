@@ -1,0 +1,15 @@
+{
+  "id": "forward-education-touchsensorv10",
+  "name": "Touch Sensor",
+  "company": "Forward Education",
+  "description": "Touch Sensor is a capacitive touch sensor compatible with the jacdac framework and part of the Climate Action Kit by Forward Education\n",
+  "link": "https://forwardedu.com",
+  "storeLink": [
+    "https://forwardedu.com"
+  ],
+  "services": [
+    343122531
+  ],
+  "version": "1.0",
+  "status": "stable"
+}

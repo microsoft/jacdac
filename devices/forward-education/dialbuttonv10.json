@@ -1,0 +1,16 @@
+{
+  "id": "forward-education-dialbuttonv10",
+  "name": "Dial Button",
+  "company": "Forward Education",
+  "description": "Dial Button is a rotary encoder and button compatible with the jacdac framework and part of the Climate Action Kit by Forward Education\n",
+  "link": "https://forwardedu.com",
+  "storeLink": [
+    "https://forwardedu.com"
+  ],
+  "services": [
+    343122531,
+    284830153
+  ],
+  "version": "1.0",
+  "status": "stable"
+}

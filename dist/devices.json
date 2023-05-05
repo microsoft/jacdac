@@ -686,6 +686,114 @@
     "status": "stable"
   },
   {
+    "id": "forward-education-dialbuttonv10",
+    "name": "Dial Button",
+    "company": "Forward Education",
+    "description": "Dial Button is a rotary encoder and button compatible with the jacdac framework and part of the Climate Action Kit by Forward Education\n",
+    "link": "https://forwardedu.com",
+    "storeLink": [
+      "https://forwardedu.com"
+    ],
+    "services": [
+      343122531,
+      284830153
+    ],
+    "version": "1.0",
+    "status": "stable"
+  },
+  {
+    "id": "forward-education-ledlightsv10",
+    "name": "LED Lights",
+    "company": "Forward Education",
+    "description": "LED Lights is a ws2812 LED ring compatible with the jacdac framework and part of the Climate Action Kit by Forward Education\n",
+    "link": "https://forwardedu.com",
+    "storeLink": [
+      "https://forwardedu.com"
+    ],
+    "services": [
+      369743088
+    ],
+    "version": "1.0",
+    "status": "stable"
+  },
+  {
+    "id": "forward-education-linesensorv10",
+    "name": "Line Sensor",
+    "company": "Forward Education",
+    "description": "Line Sensor is a multi-reflected light sensor compatible with the jacdac framework and part of the Climate Action Kit by Forward Education\n",
+    "link": "https://forwardedu.com",
+    "storeLink": [
+      "https://forwardedu.com"
+    ],
+    "services": [
+      309087410,
+      309087410,
+      309087410
+    ],
+    "version": "1.0",
+    "status": "stable"
+  },
+  {
+    "id": "forward-education-moisturesensorv10",
+    "name": "Moisture Sensor",
+    "company": "Forward Education",
+    "description": "Moisture Sensor is a capacitive soil moisture sensor compatible with the jacdac framework and part of the Climate Action Kit by Forward Education\n",
+    "link": "https://forwardedu.com",
+    "storeLink": [
+      "https://forwardedu.com"
+    ],
+    "services": [
+      491430835
+    ],
+    "version": "1.0",
+    "status": "stable"
+  },
+  {
+    "id": "forward-education-solarsensorv10",
+    "name": "Solar Sensor",
+    "company": "Forward Education",
+    "description": "Solar Sensor is a photoresistor sensor compatible with the jacdac framework and part of the Climate Action Kit by Forward Education",
+    "link": "https://forwardedu.com",
+    "storeLink": [
+      "https://forwardedu.com"
+    ],
+    "services": [
+      400333340
+    ],
+    "version": "1.0",
+    "status": "stable"
+  },
+  {
+    "id": "forward-education-sonarsensorv10",
+    "name": "Sonar Sensor",
+    "company": "Forward Education",
+    "description": "Sonar Sensor is an ultrasonic/radar sensor compatible with the jacdac framework and part of the Climate Action Kit by Forward Education\n",
+    "link": "https://forwardedu.com",
+    "storeLink": [
+      "https://forwardedu.com"
+    ],
+    "services": [
+      337275786
+    ],
+    "version": "1.0",
+    "status": "stable"
+  },
+  {
+    "id": "forward-education-touchsensorv10",
+    "name": "Touch Sensor",
+    "company": "Forward Education",
+    "description": "Touch Sensor is a capacitive touch sensor compatible with the jacdac framework and part of the Climate Action Kit by Forward Education\n",
+    "link": "https://forwardedu.com",
+    "storeLink": [
+      "https://forwardedu.com"
+    ],
+    "services": [
+      343122531
+    ],
+    "version": "1.0",
+    "status": "stable"
+  },
+  {
     "id": "espressif-esp32c3rustdevkitv12a",
     "name": "ESP32-C3-RUST-DevKit",
     "company": "Espressif",

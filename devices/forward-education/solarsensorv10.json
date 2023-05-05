@@ -1,0 +1,15 @@
+{
+  "id": "forward-education-solarsensorv10",
+  "name": "Solar Sensor",
+  "company": "Forward Education",
+  "description": "Solar Sensor is a photoresistor sensor compatible with the jacdac framework and part of the Climate Action Kit by Forward Education",
+  "link": "https://forwardedu.com",
+  "storeLink": [
+    "https://forwardedu.com"
+  ],
+  "services": [
+    400333340
+  ],
+  "version": "1.0",
+  "status": "stable"
+}

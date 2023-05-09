@@ -26,3 +26,5 @@
 *.jpg binary
 *.jpeg binary
 *.gif binary
+
+dist/** -diff merge=binary linguist-generated

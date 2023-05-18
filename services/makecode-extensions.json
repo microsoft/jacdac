@@ -232,7 +232,7 @@
       "repo": "microsoft/pxt-jacdac/distance",
       "qName": "modules.DistanceClient",
       "default": "modules.distance",
-      "generated": true
+      "generated": false
     }
   },
   {
@@ -408,7 +408,7 @@
       "repo": "microsoft/pxt-jacdac/humidity",
       "qName": "modules.HumidityClient",
       "default": "modules.humidity",
-      "generated": true
+      "generated": false
     }
   },
   {
@@ -618,21 +618,6 @@
       "repo": "microsoft/pxt-jacdac/potentiometer",
       "qName": "modules.PotentiometerClient",
       "default": "modules.potentiometer",
-      "generated": true
-    }
-  },
-  {
-    "service": "power",
-    "client": {
-      "name": "jacdac-power",
-      "targets": [
-        "arcade",
-        "microbit",
-        "maker"
-      ],
-      "repo": "microsoft/pxt-jacdac/power",
-      "qName": "modules.PowerClient",
-      "default": "modules.power",
       "generated": true
     }
   },
@@ -902,7 +887,7 @@
       "repo": "microsoft/pxt-jacdac/temperature",
       "qName": "modules.TemperatureClient",
       "default": "modules.temperature",
-      "generated": true
+      "generated": false
     }
   },
   {

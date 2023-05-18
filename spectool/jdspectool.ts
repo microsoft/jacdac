@@ -39,6 +39,7 @@ const serviceBuiltins = [
     "cloudadapter",
     "devicescriptcondition",
     "devicescriptdebugger",
+    "power"
 ]
 
 function values<T>(o: jdspec.SMap<T>): T[] {

@@ -2219,7 +2219,8 @@ export function genFieldInfo(
             ? s => `${s} ? 1 : 0`
             : s => s
     const scale = field.unit === "/" ? 100 : undefined
-    const unit = field.unit === "/" ? "\\\\%" : field.unit
+    let unit: string = field.unit === "/" ? "%" : field.unit
+    unit = unit?.replace("%", "\\\\%")
     return { name, min, max, defl, scale, valueScaler, valueUnscaler, unit }
 
     function pick(...values: number[]) {

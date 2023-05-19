@@ -1,0 +1,14 @@
+{
+  "id": "kittenbot-relayv10",
+  "name": "Relay",
+  "company": "KittenBot",
+  "description": "This relay module is designed for low voltage and low current applications. It's recommended to use a voltage of 5V and a current no greater than 1A.\nWhen using a relay module, it's important to be aware of electrical safety. It's recommended that you use the relay module under adult supervision, especially if you are not familiar with electrical circuits and how to use them safely.",
+  "services": [
+    406840918
+  ],
+  "productIdentifiers": [
+    830413461
+  ],
+  "version": "1.0",
+  "shape": "ec30_2x2_l"
+}

@@ -1,0 +1,15 @@
+{
+  "id": "kittenbot-envsensorv10",
+  "name": "Env Sensor",
+  "company": "KittenBot",
+  "description": "Env Sensor is a device used to measure both the temperature and humidity of the surrounding environment.",
+  "services": [
+    337754823,
+    382210232
+  ],
+  "productIdentifiers": [
+    998683858
+  ],
+  "version": "1.0",
+  "shape": "ec30_2x2_lr"
+}

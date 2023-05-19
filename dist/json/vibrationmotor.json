@@ -1,6 +1,6 @@
 {
   "name": "Vibration motor",
-  "status": "rc",
+  "status": "stable",
   "shortId": "vibrationmotor",
   "camelName": "vibrationMotor",
   "shortName": "vibrationMotor",

@@ -2,7 +2,7 @@
 
     identifier: 0x12fc9103
     tags: C
-    status: rc
+    status: stable
 
 Servo is a small motor with arm that can be pointing at a specific direction.
 Typically a servo angle is between 0° and 180° where 90° is the middle resting position.

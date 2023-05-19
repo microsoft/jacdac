@@ -1,6 +1,6 @@
 {
   "name": "Temperature",
-  "status": "rc",
+  "status": "stable",
   "shortId": "temperature",
   "camelName": "temperature",
   "shortName": "temperature",

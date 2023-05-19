@@ -4,7 +4,7 @@
     camel: ledStrip
     tags: C
     group: light
-    status: rc
+    status: stable
 
 A controller for strips of individually controlled RGB LEDs.
 

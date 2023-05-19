@@ -1,6 +1,6 @@
 {
   "name": "LED Strip",
-  "status": "rc",
+  "status": "stable",
   "shortId": "ledstrip",
   "camelName": "ledStrip",
   "shortName": "ledStrip",

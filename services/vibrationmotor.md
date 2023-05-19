@@ -1,7 +1,7 @@
 # Vibration motor
 
     identifier: 0x183fc4a2
-    status: rc
+    status: stable
 
 A vibration motor.
 

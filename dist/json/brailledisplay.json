@@ -1,6 +1,6 @@
 {
   "name": "Braille display",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "brailledisplay",
   "camelName": "brailleDisplay",
   "shortName": "brailleDisplay",

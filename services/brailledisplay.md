@@ -2,6 +2,7 @@
 
     identifier: 0x13bfb7cc
     group: display
+    status: stable
 
 A Braille pattern display module. This module display [unicode braille patterns](https://www.unicode.org/charts/PDF/U2800.pdf), country specific encoding have to be implemented by the clients.
 

@@ -1,0 +1,14 @@
+{
+  "id": "kittenbot-hapticoutputv10",
+  "name": "Haptic Output",
+  "company": "KittenBot",
+  "description": "The Haptic Output module is essentially a vibration motor that can be used to provide haptic feedback in electronic devices.",
+  "services": [
+    406832290
+  ],
+  "productIdentifiers": [
+    837852806
+  ],
+  "version": "1.0",
+  "shape": "ec30_2x2_lr"
+}

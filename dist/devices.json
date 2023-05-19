@@ -282,6 +282,61 @@
     ]
   },
   {
+    "id": "kittenbot-accelerometerv10",
+    "name": "Accelerometer",
+    "company": "KittenBot",
+    "description": "Accelerometer sensors are devices used to measure acceleration or motion.",
+    "storeLink": [
+      "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-b-for-micro-bit"
+    ],
+    "services": [
+      521405449
+    ],
+    "productIdentifiers": [
+      1031216668
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "shape": "ec30_2x2_lr"
+  },
+  {
+    "id": "kittenbot-envsensorv10",
+    "name": "Env Sensor",
+    "company": "KittenBot",
+    "description": "Env Sensor is a device used to measure both the temperature and humidity of the surrounding environment.",
+    "storeLink": [
+      "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-b-for-micro-bit"
+    ],
+    "services": [
+      337754823,
+      382210232
+    ],
+    "productIdentifiers": [
+      998683858
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "shape": "ec30_2x2_lr"
+  },
+  {
+    "id": "kittenbot-hapticoutputv10",
+    "name": "Haptic Output",
+    "company": "KittenBot",
+    "description": "The Haptic Output module is essentially a vibration motor that can be used to provide haptic feedback in electronic devices.",
+    "storeLink": [
+      "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-b-for-micro-bit"
+    ],
+    "services": [
+      406832290
+    ],
+    "productIdentifiers": [
+      837852806
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "shape": "ec30_2x2_lr"
+  },
+  {
     "id": "kittenbot-hubv10",
     "name": "Hub",
     "company": "KittenBot",
@@ -425,6 +480,43 @@
     "shape": "ec30_2x2_lr"
   },
   {
+    "id": "kittenbot-powerv10",
+    "name": "Power",
+    "company": "KittenBot",
+    "description": "Power module is used to supply high-current JACDAC modules such as servo modules.It can also be used to supply power to the entire JACDAC electronic system.It has overcurrent protection and a maximum output current of 1A.",
+    "connector": "edgeHighCurrentProvider",
+    "storeLink": [
+      "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-b-for-micro-bit"
+    ],
+    "services": [
+      524302175
+    ],
+    "productIdentifiers": [
+      1015787249
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "shape": "ec30_4x2_l"
+  },
+  {
+    "id": "kittenbot-relayv10",
+    "name": "Relay",
+    "company": "KittenBot",
+    "description": "This relay module is designed for low voltage and low current applications. It's recommended to use a voltage of 5V and a current no greater than 1A.\nWhen using a relay module, it's important to be aware of electrical safety. It's recommended that you use the relay module under adult supervision, especially if you are not familiar with electrical circuits and how to use them safely.",
+    "storeLink": [
+      "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-b-for-micro-bit"
+    ],
+    "services": [
+      406840918
+    ],
+    "productIdentifiers": [
+      830413461
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "shape": "ec30_2x2_l"
+  },
+  {
     "id": "kittenbot-rgbringv10",
     "name": "RGB Ring",
     "company": "KittenBot",
@@ -444,6 +536,24 @@
     "version": "1.0",
     "status": "stable",
     "shape": "ec30_3x3_l"
+  },
+  {
+    "id": "kittenbot-rgbstripv10",
+    "name": "RGB Strip",
+    "company": "KittenBot",
+    "description": "RGB Strip module is used to drive WS2812 LED strips. If you're driving a large number of LEDs, such as more than 10, it's recommended to provide additional power to the LED strip to ensure stable and reliable operation.",
+    "storeLink": [
+      "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-b-for-micro-bit"
+    ],
+    "services": [
+      309264608
+    ],
+    "productIdentifiers": [
+      1033734884
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "shape": "ec30_2x2_l"
   },
   {
     "id": "kittenbot-rotarybuttonv10",
@@ -468,6 +578,25 @@
     "shape": "ec30_3x2_lr"
   },
   {
+    "id": "kittenbot-servov10",
+    "name": "Servo",
+    "company": "KittenBot",
+    "description": "Servo module is used to drive standard 3-wire analog servos. It has two output channels and can operate in two different current output modes: 500mA and 1A.",
+    "connector": "edgeLowCurrentProvider",
+    "storeLink": [
+      "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-b-for-micro-bit"
+    ],
+    "services": [
+      318542083
+    ],
+    "productIdentifiers": [
+      918447378
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "shape": "ec30_3x2_l"
+  },
+  {
     "id": "kittenbot-sliderv10",
     "name": "Slider",
     "company": "KittenBot",
@@ -483,6 +612,24 @@
     ],
     "productIdentifiers": [
       1054684252
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "shape": "ec30_5x2_lr"
+  },
+  {
+    "id": "kittenbot-ultrasonicsensorv10",
+    "name": "Ultrasonic Sensor",
+    "company": "KittenBot",
+    "description": "The Ultrasonic Distance Measurement module has a detection range of approximately 3.5 meters.",
+    "storeLink": [
+      "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-b-for-micro-bit"
+    ],
+    "services": [
+      337275786
+    ],
+    "productIdentifiers": [
+      983895657
     ],
     "version": "1.0",
     "status": "stable",
@@ -2331,121 +2478,6 @@
     "version": "4.2",
     "designIdentifier": "205",
     "shape": "ec30_2x2_lr"
-  },
-  {
-    "id": "kittenbot-accelerometerv10",
-    "name": "Accelerometer",
-    "company": "KittenBot",
-    "description": "Accelerometer sensors are devices used to measure acceleration or motion.",
-    "services": [
-      521405449
-    ],
-    "productIdentifiers": [
-      1031216668
-    ],
-    "version": "1.0",
-    "shape": "ec30_2x2_lr"
-  },
-  {
-    "id": "kittenbot-envsensorv10",
-    "name": "Env Sensor",
-    "company": "KittenBot",
-    "description": "Env Sensor is a device used to measure both the temperature and humidity of the surrounding environment.",
-    "services": [
-      337754823,
-      382210232
-    ],
-    "productIdentifiers": [
-      998683858
-    ],
-    "version": "1.0",
-    "shape": "ec30_2x2_lr"
-  },
-  {
-    "id": "kittenbot-hapticoutputv10",
-    "name": "Haptic Output",
-    "company": "KittenBot",
-    "description": "The Haptic Output module is essentially a vibration motor that can be used to provide haptic feedback in electronic devices.",
-    "services": [
-      406832290
-    ],
-    "productIdentifiers": [
-      837852806
-    ],
-    "version": "1.0",
-    "shape": "ec30_2x2_lr"
-  },
-  {
-    "id": "kittenbot-powerv10",
-    "name": "Power",
-    "company": "KittenBot",
-    "description": "Power module is used to supply high-current JACDAC modules such as servo modules.It can also be used to supply power to the entire JACDAC electronic system.It has overcurrent protection and a maximum output current of 1A.",
-    "connector": "edgeLowCurrentProvider",
-    "services": [
-      524302175
-    ],
-    "productIdentifiers": [
-      1015787249
-    ],
-    "version": "1.0",
-    "shape": "ec30_4x2_l"
-  },
-  {
-    "id": "kittenbot-relayv10",
-    "name": "Relay",
-    "company": "KittenBot",
-    "description": "This relay module is designed for low voltage and low current applications. It's recommended to use a voltage of 5V and a current no greater than 1A.\nWhen using a relay module, it's important to be aware of electrical safety. It's recommended that you use the relay module under adult supervision, especially if you are not familiar with electrical circuits and how to use them safely.",
-    "services": [
-      406840918
-    ],
-    "productIdentifiers": [
-      830413461
-    ],
-    "version": "1.0",
-    "shape": "ec30_2x2_l"
-  },
-  {
-    "id": "kittenbot-rgbstripv10",
-    "name": "RGB Strip",
-    "company": "KittenBot",
-    "description": "RGB Strip module is used to drive WS2812 LED strips. If you're driving a large number of LEDs, such as more than 10, it's recommended to provide additional power to the LED strip to ensure stable and reliable operation.",
-    "services": [
-      309264608
-    ],
-    "productIdentifiers": [
-      1033734884
-    ],
-    "version": "1.0",
-    "shape": "ec30_2x2_l"
-  },
-  {
-    "id": "kittenbot-servov10",
-    "name": "Servo",
-    "company": "KittenBot",
-    "description": "Servo module is used to drive standard 3-wire analog servos. It has two output channels and can operate in two different current output modes: 500mA and 1A.",
-    "connector": "edgeLowCurrentProvider",
-    "services": [
-      318542083
-    ],
-    "productIdentifiers": [
-      918447378
-    ],
-    "version": "1.0",
-    "shape": "ec30_3x2_l"
-  },
-  {
-    "id": "kittenbot-ultrasonicsensorv10",
-    "name": "Ultrasonic Sensor",
-    "company": "KittenBot",
-    "description": "The Ultrasonic Distance Measurement module has a detection range of approximately 3.5 meters.",
-    "services": [
-      337275786
-    ],
-    "productIdentifiers": [
-      983895657
-    ],
-    "version": "1.0",
-    "shape": "ec30_5x2_lr"
   },
   {
     "id": "microsoft-research-jmaccelerometer30v02",

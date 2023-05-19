@@ -3,6 +3,9 @@
   "name": "Haptic Output",
   "company": "KittenBot",
   "description": "The Haptic Output module is essentially a vibration motor that can be used to provide haptic feedback in electronic devices.",
+  "storeLink": [
+    "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-b-for-micro-bit"
+  ],
   "services": [
     406832290
   ],
@@ -10,5 +13,6 @@
     837852806
   ],
   "version": "1.0",
+  "status": "stable",
   "shape": "ec30_2x2_lr"
 }

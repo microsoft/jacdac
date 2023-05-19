@@ -3,6 +3,9 @@
   "name": "Relay",
   "company": "KittenBot",
   "description": "This relay module is designed for low voltage and low current applications. It's recommended to use a voltage of 5V and a current no greater than 1A.\nWhen using a relay module, it's important to be aware of electrical safety. It's recommended that you use the relay module under adult supervision, especially if you are not familiar with electrical circuits and how to use them safely.",
+  "storeLink": [
+    "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-b-for-micro-bit"
+  ],
   "services": [
     406840918
   ],
@@ -10,5 +13,6 @@
     830413461
   ],
   "version": "1.0",
+  "status": "stable",
   "shape": "ec30_2x2_l"
 }

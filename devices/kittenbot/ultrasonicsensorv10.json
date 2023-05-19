@@ -3,6 +3,9 @@
   "name": "Ultrasonic Sensor",
   "company": "KittenBot",
   "description": "The Ultrasonic Distance Measurement module has a detection range of approximately 3.5 meters.",
+  "storeLink": [
+    "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-b-for-micro-bit"
+  ],
   "services": [
     337275786
   ],
@@ -10,5 +13,6 @@
     983895657
   ],
   "version": "1.0",
+  "status": "stable",
   "shape": "ec30_5x2_lr"
 }

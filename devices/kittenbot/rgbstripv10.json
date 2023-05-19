@@ -3,6 +3,9 @@
   "name": "RGB Strip",
   "company": "KittenBot",
   "description": "RGB Strip module is used to drive WS2812 LED strips. If you're driving a large number of LEDs, such as more than 10, it's recommended to provide additional power to the LED strip to ensure stable and reliable operation.",
+  "storeLink": [
+    "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-b-for-micro-bit"
+  ],
   "services": [
     309264608
   ],
@@ -10,5 +13,6 @@
     1033734884
   ],
   "version": "1.0",
+  "status": "stable",
   "shape": "ec30_2x2_l"
 }

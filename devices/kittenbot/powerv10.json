@@ -3,7 +3,10 @@
   "name": "Power",
   "company": "KittenBot",
   "description": "Power module is used to supply high-current JACDAC modules such as servo modules.It can also be used to supply power to the entire JACDAC electronic system.It has overcurrent protection and a maximum output current of 1A.",
-  "connector": "edgeLowCurrentProvider",
+  "connector": "edgeHighCurrentProvider",
+  "storeLink": [
+    "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-b-for-micro-bit"
+  ],
   "services": [
     524302175
   ],
@@ -11,5 +14,6 @@
     1015787249
   ],
   "version": "1.0",
+  "status": "stable",
   "shape": "ec30_4x2_l"
 }

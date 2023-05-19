@@ -1,0 +1,14 @@
+{
+  "id": "kittenbot-accelerometerv10",
+  "name": "Accelerometer",
+  "company": "KittenBot",
+  "description": "Accelerometer sensors are devices used to measure acceleration or motion.",
+  "services": [
+    521405449
+  ],
+  "productIdentifiers": [
+    1031216668
+  ],
+  "version": "1.0",
+  "shape": "ec30_2x2_lr"
+}

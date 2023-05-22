@@ -496,7 +496,7 @@
     ],
     "version": "1.0",
     "status": "stable",
-    "shape": "ec30_4x2_l"
+    "shape": "ec30_2x4_l2"
   },
   {
     "id": "kittenbot-relayv10",

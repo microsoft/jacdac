@@ -3111,6 +3111,41 @@ export namespace DeviceScriptManagerEventPack {
     export const ProgramPanic = "u32 u32"
 }
 
+// Service DeviceScript Test Controller constants
+export const SRV_DEVS_TEST = 0x1a489319
+export enum DevsTestCmd {
+    /**
+     * Argument: tests pipe (bytes). Retreives the list of tests to run. If empty, run all tests.
+     *
+     * ```
+     * const [tests] = jdunpack<[Uint8Array]>(buf, "b[12]")
+     * ```
+     */
+    ListTests = 0x80,
+}
+
+export namespace DevsTestCmdPack {
+    /**
+     * Pack format for 'list_tests' data.
+     */
+    export const ListTests = "b[12]"
+}
+
+export enum DevsTestPipe {}
+/**
+ * pipe_report Tests
+ * ```
+ * const [testId] = jdunpack<[string]>(buf, "s")
+ * ```
+ */
+
+export namespace DevsTestPipePack {
+    /**
+     * Pack format for 'tests' data.
+     */
+    export const Tests = "s"
+}
+
 // Service Distance constants
 export const SRV_DISTANCE = 0x141a6b8a
 

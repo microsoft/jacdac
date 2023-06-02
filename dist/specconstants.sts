@@ -7787,28 +7787,19 @@ namespace jacdac {
     export const SRV_ROS = 0x1524f42c
     export const enum RosCmd {
         /**
-         * Assigns a node namespace and name to the current service. Any client of the service should periodically advertise itself.
-         *
-         * ```
-         * const [name, namespace] = jdunpack<[string, string]>(buf, "z s")
-         * ```
-         */
-        AdvertiseNode = 0x80,
-
-        /**
          * Publishes a JSON-encoded message to the given topic.
          *
          * ```
-         * const [topic, message] = jdunpack<[string, string]>(buf, "z s")
+         * const [node, topic, message] = jdunpack<[string, string, string]>(buf, "z z s")
          * ```
          */
         PublishMessage = 0x81,
 
         /**
-         * Argument: topic string0 (bytes). Subscribes to a message topic. Subscribed topics will emit message reports.
+         * Subscribes to a message topic. Subscribed topics will emit message reports.
          *
          * ```
-         * const [topic] = jdunpack<[string]>(buf, "z")
+         * const [node, topic] = jdunpack<[string, string]>(buf, "z s")
          * ```
          */
         SubscribeMessage = 0x82,
@@ -7825,19 +7816,14 @@ namespace jacdac {
 
     export namespace RosCmdPack {
         /**
-         * Pack format for 'advertise_node' data.
-         */
-        export const AdvertiseNode = "z s"
-
-        /**
          * Pack format for 'publish_message' data.
          */
-        export const PublishMessage = "z s"
+        export const PublishMessage = "z z s"
 
         /**
          * Pack format for 'subscribe_message' data.
          */
-        export const SubscribeMessage = "z"
+        export const SubscribeMessage = "z s"
 
         /**
          * Pack format for 'message' data.

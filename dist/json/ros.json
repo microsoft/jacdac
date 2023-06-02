@@ -121,29 +121,15 @@
     },
     {
       "kind": "command",
-      "name": "advertise_node",
-      "identifier": 128,
-      "description": "Assigns a node namespace and name to the current service. Any client of the service should periodically advertise itself.",
-      "fields": [
-        {
-          "name": "name",
-          "type": "string0",
-          "storage": 0
-        },
-        {
-          "name": "namespace",
-          "type": "string",
-          "storage": 0
-        }
-      ],
-      "packFormat": "z s"
-    },
-    {
-      "kind": "command",
       "name": "publish_message",
       "identifier": 129,
       "description": "Publishes a JSON-encoded message to the given topic.",
       "fields": [
+        {
+          "name": "node",
+          "type": "string0",
+          "storage": 0
+        },
         {
           "name": "topic",
           "type": "string0",
@@ -155,7 +141,7 @@
           "storage": 0
         }
       ],
-      "packFormat": "z s"
+      "packFormat": "z z s"
     },
     {
       "kind": "command",
@@ -164,12 +150,17 @@
       "description": "Subscribes to a message topic. Subscribed topics will emit message reports.",
       "fields": [
         {
-          "name": "topic",
+          "name": "node",
           "type": "string0",
+          "storage": 0
+        },
+        {
+          "name": "topic",
+          "type": "string",
           "storage": 0
         }
       ],
-      "packFormat": "z"
+      "packFormat": "z s"
     },
     {
       "kind": "report",

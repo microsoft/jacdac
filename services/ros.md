@@ -8,14 +8,8 @@ A ROS (Robot Operating System https://www.ros.org/) controller that can act as a
 
 ## Commands
 
-    command advertise_node @ 0x80 {
-        name: string0
-        namespace: string
-    }
-
-Assigns a node namespace and name to the current service. Any client of the service should periodically advertise itself.
-
     command publish_message @ 0x81 {
+        node: string0,
         topic: string0,
         message: string
     }
@@ -23,7 +17,8 @@ Assigns a node namespace and name to the current service. Any client of the serv
 Publishes a JSON-encoded message to the given topic.
 
     command subscribe_message @ 0x82 {
-        topic: string0
+        node: string0,
+        topic: string
     }
 
 Subscribes to a message topic. Subscribed topics will emit message reports.

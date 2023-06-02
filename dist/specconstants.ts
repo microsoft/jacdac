@@ -7178,6 +7178,68 @@ export enum RoleManagerEvent {
     Change = 0x3,
 }
 
+// Service ROS constants
+export const SRV_ROS = 0x1524f42c
+export enum RosCmd {
+    /**
+     * Assigns a node namespace and name to the current service. Any client of the service should periodically advertise itself.
+     *
+     * ```
+     * const [name, namespace] = jdunpack<[string, string]>(buf, "z s")
+     * ```
+     */
+    AdvertiseNode = 0x80,
+
+    /**
+     * Publishes a JSON-encoded message to the given topic.
+     *
+     * ```
+     * const [topic, message] = jdunpack<[string, string]>(buf, "z s")
+     * ```
+     */
+    PublishMessage = 0x81,
+
+    /**
+     * Argument: topic string0 (bytes). Subscribes to a message topic. Subscribed topics will emit message reports.
+     *
+     * ```
+     * const [topic] = jdunpack<[string]>(buf, "z")
+     * ```
+     */
+    SubscribeMessage = 0x82,
+
+    /**
+     * A message published on the bus. Message is JSON encoded.
+     *
+     * ```
+     * const [topic, message] = jdunpack<[string, string]>(buf, "z s")
+     * ```
+     */
+    Message = 0x83,
+}
+
+export namespace RosCmdPack {
+    /**
+     * Pack format for 'advertise_node' data.
+     */
+    export const AdvertiseNode = "z s"
+
+    /**
+     * Pack format for 'publish_message' data.
+     */
+    export const PublishMessage = "z s"
+
+    /**
+     * Pack format for 'subscribe_message' data.
+     */
+    export const SubscribeMessage = "z"
+
+    /**
+     * Pack format for 'message' data.
+     */
+    export const Message = "z s"
+}
+
 // Service Rotary encoder constants
 export const SRV_ROTARY_ENCODER = 0x10fa29c9
 export enum RotaryEncoderReg {

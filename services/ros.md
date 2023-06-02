@@ -2,6 +2,7 @@
 
     identifier: 0x1524f42c
     tags: robotics
+    camel: ros
     
 A ROS (Robot Operating System https://www.ros.org/) controller that can act as a broker for messages.
 

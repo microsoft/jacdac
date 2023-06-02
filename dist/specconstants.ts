@@ -7204,7 +7204,7 @@ export enum RosCmd {
      * A message published on the bus. Message is JSON encoded.
      *
      * ```
-     * const [topic, message] = jdunpack<[string, string]>(buf, "z s")
+     * const [node, topic, message] = jdunpack<[string, string, string]>(buf, "z z s")
      * ```
      */
     Message = 0x83,
@@ -7224,7 +7224,7 @@ export namespace RosCmdPack {
     /**
      * Pack format for 'message' data.
      */
-    export const Message = "z s"
+    export const Message = "z z s"
 }
 
 // Service Rotary encoder constants

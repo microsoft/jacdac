@@ -24,6 +24,7 @@ Publishes a JSON-encoded message to the given topic.
 Subscribes to a message topic. Subscribed topics will emit message reports.
 
     report message @ 0x83 {
+        node: string0
         topic: string0
         message: string
     }

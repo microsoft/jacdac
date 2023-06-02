@@ -169,6 +169,11 @@
       "description": "A message published on the bus. Message is JSON encoded.",
       "fields": [
         {
+          "name": "node",
+          "type": "string0",
+          "storage": 0
+        },
+        {
           "name": "topic",
           "type": "string0",
           "storage": 0
@@ -179,7 +184,7 @@
           "storage": 0
         }
       ],
-      "packFormat": "z s"
+      "packFormat": "z z s"
     }
   ],
   "tags": [

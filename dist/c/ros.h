@@ -30,7 +30,8 @@ typedef struct jd_ros_subscribe_message {
  */
 #define JD_ROS_CMD_MESSAGE 0x83
 typedef struct jd_ros_message_report {
-    char topic[0];  // string0
+    char node[0];  // string0
+    // char topic[0];  // string0
     // char message[0];  // string
 } jd_ros_message_report_t;
 

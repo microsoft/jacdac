@@ -919,7 +919,10 @@ function processSpec(dn: string) {
     console.log(`jacdac-dotnet: ${jacdacCsDir}`)
 
     const fmtStats: { [index: string]: number } = {}
-    const concats: jdspec.SMap<string> = {}
+    const concats: jdspec.SMap<string> = {
+        ts: `/* eslint-disable @typescript-eslint/no-namespace */
+`
+    }
     const markdowns: jdspec.ServiceMarkdownSpec[] = []
     for (const fn of files) {
         if (!/\.md$/.test(fn) || fn[0] == ".") continue

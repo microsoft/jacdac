@@ -24,7 +24,6 @@ Publishes a JSON-encoded message to the given topic.
     command subscribe_message @ 0x82 {
         topic: string0
     }
-    report { }
 
 Subscribes to a message topic. Subscribed topics will emit message reports.
 

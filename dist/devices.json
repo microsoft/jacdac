@@ -2480,6 +2480,25 @@
     "shape": "ec30_2x2_lr"
   },
   {
+    "id": "espressif-esp32s3devkitmv10",
+    "name": "ESP32-S3 DevKitM",
+    "company": "Espressif",
+    "description": "An ESP32-S3 dev-board with RGB LED and all pins",
+    "repo": "https://github.com/microsoft/devicescript-esp32",
+    "firmwareSource": "https://github.com/microsoft/devicescript-esp32/blob/main/boards/esp32s3/esp32s3_devkit_m.board.json",
+    "connector": "noConnector",
+    "link": "https://docs.espressif.com/projects/esp-idf/en/latest/esp32s3/hw-reference/esp32s3/user-guide-devkitm-1.html",
+    "services": [
+      413852154,
+      342028028,
+      341864092
+    ],
+    "productIdentifiers": [
+      896848503
+    ],
+    "version": "1.0"
+  },
+  {
     "id": "microsoft-research-jmaccelerometer30v02",
     "name": "JM Accelerometer",
     "company": "Microsoft Research",

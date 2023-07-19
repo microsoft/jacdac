@@ -4,9 +4,9 @@
     tags: SPI
     status: rc
 
-A screen with indexed colors.
+A screen with indexed colors from a palette.
 
-This is often run over an SPI connection, not regular single-wire Jacdac.
+This is often run over an SPI connection or directly on the MCU, not regular single-wire Jacdac.
 
 ## Commands
 
@@ -35,20 +35,17 @@ If set to `0` the display may go to sleep.
 
     rw palette @ 0x80 {
     repeats:
-        blue: u8
-        green: u8
-        red: u8
-        padding: u8
+        color: u32
     }
 
-The current palette.
+The current palette. The colors are `[r,g,b, padding]` 32bit color entries.
 The color entry repeats `1 << bits_per_pixel` times.
 This register may be write-only.
 
     const bits_per_pixel: u8 bit @ 0x180
 
 Determines the number of palette entries.
-Typical values are 1, 2, 4, or 8.
+Typical values are 1 or 4.
 
     const width: u16 px @ 0x181
 
@@ -58,7 +55,7 @@ Screen width in "natural" orientation.
 
 Screen height in "natural" orientation.
 
-    rw width_major: bool @ 0x81
+    rw width_major?: bool @ 0x81
 
 If true, consecutive pixels in the "width" direction are sent next to each other (this is typical for graphics cards).
 If false, consecutive pixels in the "height" direction are sent next to each other.
@@ -67,13 +64,13 @@ For embedded screen controllers, this is typically true iff `width < height`
 Some controllers may allow the user to change this (though the refresh order may not be optimal then).
 This is independent of the `rotation` register.
 
-    rw up_sampling: u8 px @ 0x82
+    rw up_sampling?: u8 px @ 0x82
 
 Every pixel sent over wire is represented by `up_sampling x up_sampling` square of physical pixels.
 Some displays may allow changing this (which will also result in changes to `width` and `height`).
 Typical values are 1 and 2.
 
-    rw rotation: u16 ° @ 0x83
+    rw rotation?: u16 ° @ 0x83
 
 Possible values are 0, 90, 180 and 270 only.
 Write to this register do not affect `width` and `height` registers,

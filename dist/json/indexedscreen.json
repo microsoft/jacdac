@@ -8,7 +8,7 @@
     "_base"
   ],
   "notes": {
-    "short": "A screen with indexed colors.\n\nThis is often run over an SPI connection, not regular single-wire Jacdac."
+    "short": "A screen with indexed colors from a palette.\n\nThis is often run over an SPI connection or directly on the MCU, not regular single-wire Jacdac."
   },
   "classIdentifier": 385496805,
   "enums": {},
@@ -193,41 +193,23 @@
       "kind": "rw",
       "name": "palette",
       "identifier": 128,
-      "description": "The current palette.\nThe color entry repeats `1 << bits_per_pixel` times.\nThis register may be write-only.",
+      "description": "The current palette. The colors are `[r,g,b, padding]` 32bit color entries.\nThe color entry repeats `1 << bits_per_pixel` times.\nThis register may be write-only.",
       "fields": [
         {
-          "name": "blue",
-          "type": "u8",
-          "storage": 1,
+          "name": "color",
+          "type": "u32",
+          "storage": 4,
           "isSimpleType": true,
           "startRepeats": true
-        },
-        {
-          "name": "green",
-          "type": "u8",
-          "storage": 1,
-          "isSimpleType": true
-        },
-        {
-          "name": "red",
-          "type": "u8",
-          "storage": 1,
-          "isSimpleType": true
-        },
-        {
-          "name": "padding",
-          "type": "u8",
-          "storage": 1,
-          "isSimpleType": true
         }
       ],
-      "packFormat": "r: u8 u8 u8 u8"
+      "packFormat": "r: u32"
     },
     {
       "kind": "const",
       "name": "bits_per_pixel",
       "identifier": 384,
-      "description": "Determines the number of palette entries.\nTypical values are 1, 2, 4, or 8.",
+      "description": "Determines the number of palette entries.\nTypical values are 1 or 4.",
       "fields": [
         {
           "name": "_",
@@ -283,6 +265,7 @@
           "storage": 1
         }
       ],
+      "optional": true,
       "packFormat": "u8"
     },
     {
@@ -299,6 +282,7 @@
           "isSimpleType": true
         }
       ],
+      "optional": true,
       "packFormat": "u8"
     },
     {
@@ -315,6 +299,7 @@
           "isSimpleType": true
         }
       ],
+      "optional": true,
       "packFormat": "u16"
     }
   ],

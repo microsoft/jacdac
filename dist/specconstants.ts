@@ -4412,12 +4412,12 @@ export enum IndexedScreenReg {
     Brightness = 0x1,
 
     /**
-     * Read-write. The current palette. The colors are `[r,g,b, padding]` 32bit color entries.
+     * Read-write bytes. The current palette. The colors are `[r,g,b, padding]` 32bit color entries.
      * The color entry repeats `1 << bits_per_pixel` times.
      * This register may be write-only.
      *
      * ```
-     * const [color] = jdunpack<[number[]]>(buf, "u32[]")
+     * const [palette] = jdunpack<[Uint8Array]>(buf, "b")
      * ```
      */
     Palette = 0x80,
@@ -4496,7 +4496,7 @@ export namespace IndexedScreenRegPack {
     /**
      * Pack format for 'palette' data.
      */
-    export const Palette = "r: u32"
+    export const Palette = "b"
 
     /**
      * Pack format for 'bits_per_pixel' data.

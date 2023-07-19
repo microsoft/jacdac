@@ -196,14 +196,13 @@
       "description": "The current palette. The colors are `[r,g,b, padding]` 32bit color entries.\nThe color entry repeats `1 << bits_per_pixel` times.\nThis register may be write-only.",
       "fields": [
         {
-          "name": "color",
-          "type": "u32",
-          "storage": 4,
-          "isSimpleType": true,
-          "startRepeats": true
+          "name": "_",
+          "type": "bytes",
+          "storage": 0,
+          "isSimpleType": true
         }
       ],
-      "packFormat": "r: u32"
+      "packFormat": "b"
     },
     {
       "kind": "const",

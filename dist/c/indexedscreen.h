@@ -29,15 +29,11 @@ typedef struct jd_indexed_screen_start_update {
 #define JD_INDEXED_SCREEN_REG_BRIGHTNESS JD_REG_INTENSITY
 
 /**
- * Read-write. The current palette. The colors are `[r,g,b, padding]` 32bit color entries.
+ * Read-write bytes. The current palette. The colors are `[r,g,b, padding]` 32bit color entries.
  * The color entry repeats `1 << bits_per_pixel` times.
  * This register may be write-only.
  */
 #define JD_INDEXED_SCREEN_REG_PALETTE 0x80
-typedef struct jd_indexed_screen_palette {
-    uint32_t color[0];
-} jd_indexed_screen_palette_t;
-
 
 /**
  * Constant bit uint8_t. Determines the number of palette entries.

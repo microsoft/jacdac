@@ -33,10 +33,7 @@ Each "line" of data is aligned to a byte.
 Set backlight brightness.
 If set to `0` the display may go to sleep.
 
-    rw palette @ 0x80 {
-    repeats:
-        color: u32
-    }
+    rw palette: bytes @ 0x80
 
 The current palette. The colors are `[r,g,b, padding]` 32bit color entries.
 The color entry repeats `1 << bits_per_pixel` times.

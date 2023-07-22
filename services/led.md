@@ -5,10 +5,12 @@
     group: light
     status: stable
 
-A controller for small displays of individually controlled RGB LEDs.
+A controller for displays of individually controlled RGB LEDs.
 
-This service handles displays with 64 or less LEDs.
-Use the [LED strip service](/services/ledstrip) for longer light strips.
+For 64 or less LEDs, the service should support the pack the pixels in the pixels register.
+Beyond this size, the register should return an empty payload as the amount of data exceeds
+the size of a packet. Typically services that use more than 64 LEDs
+will run on the same MCU and will maintain the pixels buffer internally.
 
 ## Registers
 
@@ -17,7 +19,8 @@ Use the [LED strip service](/services/ledstrip) for longer light strips.
 
 A buffer of 24bit RGB color entries for each LED, in R, G, B order.
 When writing, if the buffer is too short, the remaining pixels are set to `#000000`;
-if the buffer is too long, the write may be ignored, or the additional pixels may be ignored.
+If the buffer is too long, the write may be ignored, or the additional pixels may be ignored.
+If the number of pixels is greater than `max_pixels_length`, the read should return an empty payload.
 
     rw brightness = 0.05: u0.8 / @ intensity
 

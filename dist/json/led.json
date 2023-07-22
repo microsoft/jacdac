@@ -8,7 +8,7 @@
     "_base"
   ],
   "notes": {
-    "short": "A controller for small displays of individually controlled RGB LEDs.\n\nThis service handles displays with 64 or less LEDs.\nUse the [LED strip service](/services/ledstrip) for longer light strips."
+    "short": "A controller for displays of individually controlled RGB LEDs.\n\nFor 64 or less LEDs, the service should support the pack the pixels in the pixels register.\nBeyond this size, the register should return an empty payload as the amount of data exceeds\nthe size of a packet. Typically services that use more than 64 LEDs\nwill run on the same MCU and will maintain the pixels buffer internally."
   },
   "classIdentifier": 369743088,
   "enums": {
@@ -140,7 +140,7 @@
       "kind": "rw",
       "name": "pixels",
       "identifier": 2,
-      "description": "A buffer of 24bit RGB color entries for each LED, in R, G, B order.\nWhen writing, if the buffer is too short, the remaining pixels are set to `#000000`;\nif the buffer is too long, the write may be ignored, or the additional pixels may be ignored.",
+      "description": "A buffer of 24bit RGB color entries for each LED, in R, G, B order.\nWhen writing, if the buffer is too short, the remaining pixels are set to `#000000`;\nIf the buffer is too long, the write may be ignored, or the additional pixels may be ignored.\nIf the number of pixels is greater than `max_pixels_length`, the read should return an empty payload.",
       "fields": [
         {
           "name": "_",

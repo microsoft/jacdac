@@ -4547,7 +4547,8 @@ export enum LedReg {
     /**
      * Read-write bytes. A buffer of 24bit RGB color entries for each LED, in R, G, B order.
      * When writing, if the buffer is too short, the remaining pixels are set to `#000000`;
-     * if the buffer is too long, the write may be ignored, or the additional pixels may be ignored.
+     * If the buffer is too long, the write may be ignored, or the additional pixels may be ignored.
+     * If the number of pixels is greater than `max_pixels_length`, the read should return an empty payload.
      *
      * ```
      * const [pixels] = jdunpack<[Uint8Array]>(buf, "b")

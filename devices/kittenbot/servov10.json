@@ -5,7 +5,7 @@
   "description": "Servo module is used to drive standard 3-wire analog servos. It has two output channels and can operate in two different current output modes: 500mA and 1A.",
   "connector": "edgeLowCurrentProvider",
   "storeLink": [
-    "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-b-for-micro-bit"
+    "https://www.kittenbot.cc/products/jacdac-kit-b-elite-module-suite-redefining-electronic-interfacing"
   ],
   "services": [
     318542083

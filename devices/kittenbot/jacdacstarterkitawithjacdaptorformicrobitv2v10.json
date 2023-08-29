@@ -10,7 +10,8 @@
     "https://www.pakronics.com.au/products/kittenbot-jacdac-kit-a-with-adaptor-for-micro-bit-v2-pakr-a0410"
   ],
   "tags": [
-    "kit"
+    "kit",
+    "microbit"
   ],
   "version": "1.0",
   "status": "stable",

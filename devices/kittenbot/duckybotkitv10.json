@@ -14,16 +14,15 @@
   "status": "stable",
   "devices": [
     "kittenbot-powerv10",
+    "kittenbot-hapticoutputv10",
+    "kittenbot-accelerometerv10",
     "kittenbot-relayv10",
+    "kittenbot-envsensorv10",
+    "kittenbot-rgbstripv10",
     "kittenbot-servov10",
-    "kittenbot-ultrasonicv10",
-    "kittenbot-hubv10"
-  ],
-  "relatedDevices": [
-    "kittenbot-jacdacstarterkitav10",
-    "microbit-educational-foundation-microbitv2"
-  ],
-  "requiredDevices": [
+    "kittenbot-ultrasonicsensorv10",
+    "kittenbot-hubv10",
+    "kittenbot-jacdaptorformicrobitv2v10",
     "microbit-educational-foundation-microbitv2"
   ]
 }

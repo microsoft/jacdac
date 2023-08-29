@@ -1,12 +1,28 @@
 {
-  "id": "kittenbot-jacdacdeveloperstoolelectonicmoudlekitbv10",
-  "name": "Jacdac Developer's-tool Electonic moudle Kit B",
+  "id": "kittenbot-jacdacdeveloperstoolelectronicmodulekitbv10",
+  "name": "Jacdac Developer's-tool Electronic module Kit B",
   "company": "KittenBot",
   "description": "Dive deep into the forefront of electronic interfacing with the Jacdac Elite Module Suite. Built on the bedrock of Microsoft's avant-garde Jacdac protocol, this suite aggregates an array of meticulously crafted modules, setting the gold standard for next-gen electronic projects.\n\nIt Includes:\n\nJacdac-Power\tX1\nJacdac-Haptic Output\tX1\nJacdac-Accelerometer\tX1\nJacdac-Relay\tX1\nJacdac-Env Sensor\tX1\nJacdac-RGB Strip\tX1\nJacdac-Servo\tX1\nJacdac-Ultrasonic\tX1\nJacdac-Hub_B\tX1\nJacdac Cable  10 cm\tX2\nJacdac Cable 35 cm\tX2\nJacdac Cable  100 cm\tX1",
-  "connector": "noConnector",
   "storeLink": [
     "https://www.kittenbot.cc/products/jacdac-kit-b-elite-module-suite-redefining-electronic-interfacing"
   ],
+  "tags": [
+    "kit"
+  ],
   "version": "1.0",
-  "status": "stable"
+  "status": "stable",
+  "devices": [
+    "kittenbot-powerv10",
+    "kittenbot-hapticoutputv10",
+    "kittenbot-accelerometerv10",
+    "kittenbot-relayv10",
+    "kittenbot-envsensorv10",
+    "kittenbot-rgbstripv10",
+    "kittenbot-servov10",
+    "kittenbot-ultrasonicsensorv10",
+    "kittenbot-hubv10"
+  ],
+  "relatedDevices": [
+    "kittenbot-jacdacstarterkitav10"
+  ]
 }

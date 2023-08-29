@@ -300,16 +300,53 @@
     "shape": "ec30_2x2_lr"
   },
   {
+    "id": "kittenbot-brainrp2040v10",
+    "name": "Brain RP2040",
+    "company": "KittenBot",
+    "description": "Elevate your embedded projects with our cutting-edge development board, powered by Raspberry Pi's RP2040 and tailored for DeviceScript. Experience the unmatched synergy of TypeScript in the realm of microcontroller programming, where precision, efficiency, and modern development practices converge.",
+    "connector": "edgeLowCurrentProviderConsumer",
+    "storeLink": [
+      "https://www.kittenbot.cc/products/devicescript-enhanced-development-board-with-rp2040"
+    ],
+    "services": [
+      411425820,
+      414210922,
+      524302175
+    ],
+    "productIdentifiers": [
+      983895657
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "shape": "ec30_3x2_r"
+  },
+  {
     "id": "kittenbot-duckybotkitv10",
     "name": "DuckyBot Kit",
     "company": "KittenBot",
     "description": " Dive into the enchanting world of robotics with DuckyBot, a delightful cardboard robot shaped like a cheerful yellow duck. Engineered around the groundbreaking Jacdac Elite Module Suite, DuckyBot offers young learners a quirky and entertaining gateway into the vast realm of electronics and robotics, integrating seamlessly with Microbit and Makecode platforms.",
-    "connector": "noConnector",
     "storeLink": [
       "https://www.kittenbot.cc/products/jacdac-kit-b-elite-module-suite-redefining-electronic-interfacing"
     ],
+    "tags": [
+      "kit"
+    ],
     "version": "1.0",
-    "status": "stable"
+    "status": "stable",
+    "devices": [
+      "kittenbot-powerv10",
+      "kittenbot-relayv10",
+      "kittenbot-servov10",
+      "kittenbot-ultrasonicv10",
+      "kittenbot-hubv10"
+    ],
+    "relatedDevices": [
+      "kittenbot-jacdacstarterkitav10",
+      "microbit-educational-foundation-microbitv2"
+    ],
+    "requiredDevices": [
+      "microbit-educational-foundation-microbitv2"
+    ]
   },
   {
     "id": "kittenbot-envsensorv10",
@@ -367,16 +404,32 @@
     "status": "stable"
   },
   {
-    "id": "kittenbot-jacdacdeveloperstoolelectonicmoudlekitbv10",
-    "name": "Jacdac Developer's-tool Electonic moudle Kit B",
+    "id": "kittenbot-jacdacdeveloperstoolelectronicmodulekitbv10",
+    "name": "Jacdac Developer's-tool Electronic module Kit B",
     "company": "KittenBot",
     "description": "Dive deep into the forefront of electronic interfacing with the Jacdac Elite Module Suite. Built on the bedrock of Microsoft's avant-garde Jacdac protocol, this suite aggregates an array of meticulously crafted modules, setting the gold standard for next-gen electronic projects.\n\nIt Includes:\n\nJacdac-Power\tX1\nJacdac-Haptic Output\tX1\nJacdac-Accelerometer\tX1\nJacdac-Relay\tX1\nJacdac-Env Sensor\tX1\nJacdac-RGB Strip\tX1\nJacdac-Servo\tX1\nJacdac-Ultrasonic\tX1\nJacdac-Hub_B\tX1\nJacdac Cable  10 cm\tX2\nJacdac Cable 35 cm\tX2\nJacdac Cable  100 cm\tX1",
-    "connector": "noConnector",
     "storeLink": [
       "https://www.kittenbot.cc/products/jacdac-kit-b-elite-module-suite-redefining-electronic-interfacing"
     ],
+    "tags": [
+      "kit"
+    ],
     "version": "1.0",
-    "status": "stable"
+    "status": "stable",
+    "devices": [
+      "kittenbot-powerv10",
+      "kittenbot-hapticoutputv10",
+      "kittenbot-accelerometerv10",
+      "kittenbot-relayv10",
+      "kittenbot-envsensorv10",
+      "kittenbot-rgbstripv10",
+      "kittenbot-servov10",
+      "kittenbot-ultrasonicsensorv10",
+      "kittenbot-hubv10"
+    ],
+    "relatedDevices": [
+      "kittenbot-jacdacstarterkitav10"
+    ]
   },
   {
     "id": "kittenbot-jacdacstarterkitawithjacdaptorformicrobitv2v10",
@@ -437,27 +490,6 @@
       "microbit-educational-foundation-microbitv2"
     ],
     "shape": "ec30_1x7_r7"
-  },
-  {
-    "id": "kittenbot-kbbrainrp2040v10",
-    "name": "KB Brain RP2040",
-    "company": "KittenBot",
-    "description": "Elevate your embedded projects with our cutting-edge development board, powered by Raspberry Pi's RP2040 and tailored for DeviceScript. Experience the unmatched synergy of TypeScript in the realm of microcontroller programming, where precision, efficiency, and modern development practices converge.",
-    "connector": "edgeLowCurrentProviderConsumer",
-    "storeLink": [
-      "https://www.kittenbot.cc/products/devicescript-enhanced-development-board-with-rp2040"
-    ],
-    "services": [
-      411425820,
-      414210922,
-      524302175
-    ],
-    "productIdentifiers": [
-      983895657
-    ],
-    "version": "1.0",
-    "status": "stable",
-    "shape": "ec30_3x2_l"
   },
   {
     "id": "kittenbot-keycapbuttonv10",

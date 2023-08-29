@@ -287,7 +287,7 @@
     "company": "KittenBot",
     "description": "Accelerometer sensors are devices used to measure acceleration or motion.",
     "storeLink": [
-      "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-b-for-micro-bit"
+      "https://www.kittenbot.cc/products/jacdac-kit-b-elite-module-suite-redefining-electronic-interfacing"
     ],
     "services": [
       521405449
@@ -300,12 +300,24 @@
     "shape": "ec30_2x2_lr"
   },
   {
+    "id": "kittenbot-duckybotkitv10",
+    "name": "DuckyBot Kit",
+    "company": "KittenBot",
+    "description": " Dive into the enchanting world of robotics with DuckyBot, a delightful cardboard robot shaped like a cheerful yellow duck. Engineered around the groundbreaking Jacdac Elite Module Suite, DuckyBot offers young learners a quirky and entertaining gateway into the vast realm of electronics and robotics, integrating seamlessly with Microbit and Makecode platforms.",
+    "connector": "noConnector",
+    "storeLink": [
+      "https://www.kittenbot.cc/products/jacdac-kit-b-elite-module-suite-redefining-electronic-interfacing"
+    ],
+    "version": "1.0",
+    "status": "stable"
+  },
+  {
     "id": "kittenbot-envsensorv10",
     "name": "Env Sensor",
     "company": "KittenBot",
     "description": "Env Sensor is a device used to measure both the temperature and humidity of the surrounding environment.",
     "storeLink": [
-      "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-b-for-micro-bit"
+      "https://www.kittenbot.cc/products/jacdac-kit-b-elite-module-suite-redefining-electronic-interfacing"
     ],
     "services": [
       337754823,
@@ -324,7 +336,7 @@
     "company": "KittenBot",
     "description": "The Haptic Output module is essentially a vibration motor that can be used to provide haptic feedback in electronic devices.",
     "storeLink": [
-      "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-b-for-micro-bit"
+      "https://www.kittenbot.cc/products/jacdac-kit-b-elite-module-suite-redefining-electronic-interfacing"
     ],
     "services": [
       406832290
@@ -350,6 +362,18 @@
     ],
     "tags": [
       "hub"
+    ],
+    "version": "1.0",
+    "status": "stable"
+  },
+  {
+    "id": "kittenbot-jacdacdeveloperstoolelectonicmoudlekitbv10",
+    "name": "Jacdac Developer's-tool Electonic moudle Kit B",
+    "company": "KittenBot",
+    "description": "Dive deep into the forefront of electronic interfacing with the Jacdac Elite Module Suite. Built on the bedrock of Microsoft's avant-garde Jacdac protocol, this suite aggregates an array of meticulously crafted modules, setting the gold standard for next-gen electronic projects.\n\nIt Includes:\n\nJacdac-Power\tX1\nJacdac-Haptic Output\tX1\nJacdac-Accelerometer\tX1\nJacdac-Relay\tX1\nJacdac-Env Sensor\tX1\nJacdac-RGB Strip\tX1\nJacdac-Servo\tX1\nJacdac-Ultrasonic\tX1\nJacdac-Hub_B\tX1\nJacdac Cable  10 cm\tX2\nJacdac Cable 35 cm\tX2\nJacdac Cable  100 cm\tX1",
+    "connector": "noConnector",
+    "storeLink": [
+      "https://www.kittenbot.cc/products/jacdac-kit-b-elite-module-suite-redefining-electronic-interfacing"
     ],
     "version": "1.0",
     "status": "stable"
@@ -507,7 +531,7 @@
     "description": "Power module is used to supply high-current JACDAC modules such as servo modules.It can also be used to supply power to the entire JACDAC electronic system.It has overcurrent protection and a maximum output current of 1A.",
     "connector": "edgeHighCurrentProvider",
     "storeLink": [
-      "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-b-for-micro-bit"
+      "https://www.kittenbot.cc/products/jacdac-kit-b-elite-module-suite-redefining-electronic-interfacing"
     ],
     "services": [
       530893146
@@ -525,7 +549,7 @@
     "company": "KittenBot",
     "description": "This relay module is designed for low voltage and low current applications. It's recommended to use a voltage of 5V and a current no greater than 1A.\nWhen using a relay module, it's important to be aware of electrical safety. It's recommended that you use the relay module under adult supervision, especially if you are not familiar with electrical circuits and how to use them safely.",
     "storeLink": [
-      "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-b-for-micro-bit"
+      "https://www.kittenbot.cc/products/jacdac-kit-b-elite-module-suite-redefining-electronic-interfacing"
     ],
     "services": [
       406840918
@@ -564,7 +588,7 @@
     "company": "KittenBot",
     "description": "RGB Strip module is used to drive WS2812 LED strips. If you're driving a large number of LEDs, such as more than 10, it's recommended to provide additional power to the LED strip to ensure stable and reliable operation.",
     "storeLink": [
-      "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-b-for-micro-bit"
+      "https://www.kittenbot.cc/products/jacdac-kit-b-elite-module-suite-redefining-electronic-interfacing"
     ],
     "services": [
       309264608
@@ -605,7 +629,7 @@
     "description": "Servo module is used to drive standard 3-wire analog servos. It has two output channels and can operate in two different current output modes: 500mA and 1A.",
     "connector": "edgeLowCurrentProvider",
     "storeLink": [
-      "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-b-for-micro-bit"
+      "https://www.kittenbot.cc/products/jacdac-kit-b-elite-module-suite-redefining-electronic-interfacing"
     ],
     "services": [
       318542083
@@ -644,7 +668,7 @@
     "company": "KittenBot",
     "description": "The Ultrasonic Distance Measurement module has a detection range of approximately 3.5 meters.",
     "storeLink": [
-      "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-b-for-micro-bit"
+      "https://www.kittenbot.cc/products/jacdac-kit-b-elite-module-suite-redefining-electronic-interfacing"
     ],
     "services": [
       337275786

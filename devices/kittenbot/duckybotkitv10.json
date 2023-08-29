@@ -24,5 +24,8 @@
     "kittenbot-hubv10",
     "kittenbot-jacdaptorformicrobitv2v10",
     "microbit-educational-foundation-microbitv2"
+  ],
+  "relatedDevices": [
+    "microbit-educational-foundation-microbitv2"
   ]
 }

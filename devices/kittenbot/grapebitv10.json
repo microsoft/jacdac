@@ -18,5 +18,9 @@
     952937357
   ],
   "version": "1.0",
-  "status": "stable"
+  "status": "stable",
+  "transport": {
+    "type": "serial",
+    "vendorId": 4292
+  }
 }

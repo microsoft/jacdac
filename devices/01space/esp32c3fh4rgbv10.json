@@ -1,7 +1,7 @@
 {
-  "id": "c1space-esp32c3fh4rgbv10",
+  "id": "01space-esp32c3fh4rgbv10",
   "name": "ESP32-C3FH4-RGB",
-  "company": "C1Space",
+  "company": "01Space",
   "description": "Small ESP32-C3 board with 5x5 LED color matrix",
   "connector": "noConnector",
   "link": "https://github.com/01Space/ESP32-C3FH4-RGB",

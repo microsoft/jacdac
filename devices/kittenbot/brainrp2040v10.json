@@ -1,6 +1,6 @@
 {
   "id": "kittenbot-brainrp2040v10",
-  "name": "Brain RP2040",
+  "name": "NanoScript 2040",
   "company": "KittenBot",
   "description": "Elevate your embedded projects with our cutting-edge development board, powered by Raspberry Pi's RP2040 and tailored for DeviceScript. Experience the unmatched synergy of TypeScript in the realm of microcontroller programming, where precision, efficiency, and modern development practices converge.",
   "connector": "edgeLowCurrentProviderConsumer",
@@ -13,7 +13,7 @@
     524302175
   ],
   "productIdentifiers": [
-    983895657
+    935525573
   ],
   "version": "1.0",
   "status": "stable",

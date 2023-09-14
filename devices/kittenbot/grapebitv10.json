@@ -1,0 +1,27 @@
+{
+  "id": "kittenbot-grapebitv10",
+  "name": "Grape:bit",
+  "company": "KittenBot",
+  "description": "Grape:bit is a programming main control board mainly for the second to third grade information technology learning and institutional teaching. Its core is the ESP32, which has the characteristics of high performance, wireless communication, and graphical programming.",
+  "connector": "edgeLowCurrentProviderConsumer",
+  "storeLink": [
+    "https://www.kittenbot.cc/products/kittenbot-grapebit-20-pack"
+  ],
+  "services": [
+    288680491,
+    521405449,
+    343122531,
+    458731991,
+    282614377,
+    385895640
+  ],
+  "productIdentifiers": [
+    952937357
+  ],
+  "transport": {
+    "type": "serial",
+    "vendorId": 4292
+  },
+  "version": "1.0",
+  "status": "stable"
+}

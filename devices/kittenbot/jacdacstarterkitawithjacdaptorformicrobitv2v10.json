@@ -10,7 +10,8 @@
     "https://www.pakronics.com.au/products/kittenbot-jacdac-kit-a-with-adaptor-for-micro-bit-v2-pakr-a0410"
   ],
   "tags": [
-    "kit"
+    "kit",
+    "microbit"
   ],
   "version": "1.0",
   "status": "stable",
@@ -25,8 +26,9 @@
     "kittenbot-jacdaptorformicrobitv2v10"
   ],
   "relatedDevices": [
-    "kittenbot-jacdacstarterkitav10",
-    "microbit-educational-foundation-microbitv2"
+    "microbit-educational-foundation-microbitv2",
+    "kittenbot-jacdacdeveloperstoolelectronicmodulekitbv10",
+    "kittenbot-brainrp2040v10"
   ],
   "requiredDevices": [
     "microbit-educational-foundation-microbitv2"

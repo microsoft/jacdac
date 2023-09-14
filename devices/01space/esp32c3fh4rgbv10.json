@@ -1,0 +1,21 @@
+{
+  "id": "01space-esp32c3fh4rgbv10",
+  "name": "ESP32-C3FH4-RGB",
+  "company": "01Space",
+  "description": "Small ESP32-C3 board with 5x5 LED color matrix",
+  "connector": "noConnector",
+  "link": "https://github.com/01Space/ESP32-C3FH4-RGB",
+  "storeLink": [
+    "https://usa.banggood.com/ESP32-C3-Development-Board-RISC-V-WiFi-Bluetooth-IoT-Development-Board-Compatible-with-Python-p-1914005.html?imageAb=2&akmClientCountry=America&a=1694552315.7453&akmClientCountry=America&cur_warehouse=CN"
+  ],
+  "services": [
+    288680491,
+    369743088,
+    343122531
+  ],
+  "productIdentifiers": [
+    982550620
+  ],
+  "version": "1.0",
+  "status": "stable"
+}

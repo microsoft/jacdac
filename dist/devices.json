@@ -287,7 +287,7 @@
     "company": "KittenBot",
     "description": "Accelerometer sensors are devices used to measure acceleration or motion.",
     "storeLink": [
-      "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-b-for-micro-bit"
+      "https://www.kittenbot.cc/products/jacdac-kit-b-elite-module-suite-redefining-electronic-interfacing"
     ],
     "services": [
       521405449
@@ -300,12 +300,64 @@
     "shape": "ec30_2x2_lr"
   },
   {
+    "id": "kittenbot-brainrp2040v10",
+    "name": "Brain RP2040",
+    "company": "KittenBot",
+    "description": "Elevate your embedded projects with our cutting-edge development board, powered by Raspberry Pi's RP2040 and tailored for DeviceScript. Experience the unmatched synergy of TypeScript in the realm of microcontroller programming, where precision, efficiency, and modern development practices converge.",
+    "connector": "edgeLowCurrentProviderConsumer",
+    "storeLink": [
+      "https://www.kittenbot.cc/products/devicescript-enhanced-development-board-with-rp2040"
+    ],
+    "services": [
+      411425820,
+      414210922,
+      524302175
+    ],
+    "productIdentifiers": [
+      983895657
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "shape": "ec30_3x2_r"
+  },
+  {
+    "id": "kittenbot-duckybotkitv10",
+    "name": "DuckyBot Kit",
+    "company": "KittenBot",
+    "description": " Dive into the enchanting world of robotics with DuckyBot, a delightful cardboard robot shaped like a cheerful yellow duck. Engineered around the groundbreaking Jacdac Elite Module Suite, DuckyBot offers young learners a quirky and entertaining gateway into the vast realm of electronics and robotics, integrating seamlessly with Microbit and Makecode platforms.",
+    "storeLink": [
+      "https://www.kittenbot.cc/products/duckybot-crafting-coding-and-quacking-with-robotics"
+    ],
+    "tags": [
+      "kit",
+      "microbit"
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "devices": [
+      "kittenbot-powerv10",
+      "kittenbot-hapticoutputv10",
+      "kittenbot-accelerometerv10",
+      "kittenbot-relayv10",
+      "kittenbot-envsensorv10",
+      "kittenbot-rgbstripv10",
+      "kittenbot-servov10",
+      "kittenbot-ultrasonicsensorv10",
+      "kittenbot-hubv10",
+      "kittenbot-jacdaptorformicrobitv2v10",
+      "microbit-educational-foundation-microbitv2"
+    ],
+    "relatedDevices": [
+      "microbit-educational-foundation-microbitv2"
+    ]
+  },
+  {
     "id": "kittenbot-envsensorv10",
     "name": "Env Sensor",
     "company": "KittenBot",
     "description": "Env Sensor is a device used to measure both the temperature and humidity of the surrounding environment.",
     "storeLink": [
-      "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-b-for-micro-bit"
+      "https://www.kittenbot.cc/products/jacdac-kit-b-elite-module-suite-redefining-electronic-interfacing"
     ],
     "services": [
       337754823,
@@ -319,12 +371,39 @@
     "shape": "ec30_2x2_lr"
   },
   {
+    "id": "kittenbot-grapebitv10",
+    "name": "Grape:bit",
+    "company": "KittenBot",
+    "description": "Grape:bit is a programming main control board mainly for the second to third grade information technology learning and institutional teaching. Its core is the ESP32, which has the characteristics of high performance, wireless communication, and graphical programming.",
+    "connector": "edgeLowCurrentProviderConsumer",
+    "storeLink": [
+      "https://www.kittenbot.cc/products/kittenbot-grapebit-20-pack"
+    ],
+    "services": [
+      288680491,
+      521405449,
+      343122531,
+      458731991,
+      282614377,
+      385895640
+    ],
+    "productIdentifiers": [
+      952937357
+    ],
+    "transport": {
+      "type": "serial",
+      "vendorId": 4292
+    },
+    "version": "1.0",
+    "status": "stable"
+  },
+  {
     "id": "kittenbot-hapticoutputv10",
     "name": "Haptic Output",
     "company": "KittenBot",
     "description": "The Haptic Output module is essentially a vibration motor that can be used to provide haptic feedback in electronic devices.",
     "storeLink": [
-      "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-b-for-micro-bit"
+      "https://www.kittenbot.cc/products/jacdac-kit-b-elite-module-suite-redefining-electronic-interfacing"
     ],
     "services": [
       406832290
@@ -355,6 +434,35 @@
     "status": "stable"
   },
   {
+    "id": "kittenbot-jacdacdeveloperstoolelectronicmodulekitbv10",
+    "name": "Jacdac Developer's-tool Electronic module Kit B",
+    "company": "KittenBot",
+    "description": "Dive deep into the forefront of electronic interfacing with the Jacdac Elite Module Suite. Built on the bedrock of Microsoft's avant-garde Jacdac protocol, this suite aggregates an array of meticulously crafted modules, setting the gold standard for next-gen electronic projects.\n\nIt Includes:\n\nJacdac-Power\tX1\nJacdac-Haptic Output\tX1\nJacdac-Accelerometer\tX1\nJacdac-Relay\tX1\nJacdac-Env Sensor\tX1\nJacdac-RGB Strip\tX1\nJacdac-Servo\tX1\nJacdac-Ultrasonic\tX1\nJacdac-Hub_B\tX1\nJacdac Cable  10 cm\tX2\nJacdac Cable 35 cm\tX2\nJacdac Cable  100 cm\tX1",
+    "storeLink": [
+      "https://www.kittenbot.cc/products/jacdac-kit-b-elite-module-suite-redefining-electronic-interfacing"
+    ],
+    "tags": [
+      "kit"
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "devices": [
+      "kittenbot-powerv10",
+      "kittenbot-hapticoutputv10",
+      "kittenbot-accelerometerv10",
+      "kittenbot-relayv10",
+      "kittenbot-envsensorv10",
+      "kittenbot-rgbstripv10",
+      "kittenbot-servov10",
+      "kittenbot-ultrasonicsensorv10",
+      "kittenbot-hubv10"
+    ],
+    "relatedDevices": [
+      "kittenbot-jacdacstarterkitawithjacdaptorformicrobitv2v10",
+      "kittenbot-brainrp2040v10"
+    ]
+  },
+  {
     "id": "kittenbot-jacdacstarterkitawithjacdaptorformicrobitv2v10",
     "name": "Jacdac Starter Kit A with Jacdaptor for micro:bit V2",
     "company": "KittenBot",
@@ -366,7 +474,8 @@
       "https://www.pakronics.com.au/products/kittenbot-jacdac-kit-a-with-adaptor-for-micro-bit-v2-pakr-a0410"
     ],
     "tags": [
-      "kit"
+      "kit",
+      "microbit"
     ],
     "version": "1.0",
     "status": "stable",
@@ -381,8 +490,9 @@
       "kittenbot-jacdaptorformicrobitv2v10"
     ],
     "relatedDevices": [
-      "kittenbot-jacdacstarterkitav10",
-      "microbit-educational-foundation-microbitv2"
+      "microbit-educational-foundation-microbitv2",
+      "kittenbot-jacdacdeveloperstoolelectronicmodulekitbv10",
+      "kittenbot-brainrp2040v10"
     ],
     "requiredDevices": [
       "microbit-educational-foundation-microbitv2"
@@ -486,7 +596,7 @@
     "description": "Power module is used to supply high-current JACDAC modules such as servo modules.It can also be used to supply power to the entire JACDAC electronic system.It has overcurrent protection and a maximum output current of 1A.",
     "connector": "edgeHighCurrentProvider",
     "storeLink": [
-      "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-b-for-micro-bit"
+      "https://www.kittenbot.cc/products/jacdac-kit-b-elite-module-suite-redefining-electronic-interfacing"
     ],
     "services": [
       530893146
@@ -504,7 +614,7 @@
     "company": "KittenBot",
     "description": "This relay module is designed for low voltage and low current applications. It's recommended to use a voltage of 5V and a current no greater than 1A.\nWhen using a relay module, it's important to be aware of electrical safety. It's recommended that you use the relay module under adult supervision, especially if you are not familiar with electrical circuits and how to use them safely.",
     "storeLink": [
-      "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-b-for-micro-bit"
+      "https://www.kittenbot.cc/products/jacdac-kit-b-elite-module-suite-redefining-electronic-interfacing"
     ],
     "services": [
       406840918
@@ -543,7 +653,7 @@
     "company": "KittenBot",
     "description": "RGB Strip module is used to drive WS2812 LED strips. If you're driving a large number of LEDs, such as more than 10, it's recommended to provide additional power to the LED strip to ensure stable and reliable operation.",
     "storeLink": [
-      "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-b-for-micro-bit"
+      "https://www.kittenbot.cc/products/jacdac-kit-b-elite-module-suite-redefining-electronic-interfacing"
     ],
     "services": [
       309264608
@@ -584,7 +694,7 @@
     "description": "Servo module is used to drive standard 3-wire analog servos. It has two output channels and can operate in two different current output modes: 500mA and 1A.",
     "connector": "edgeLowCurrentProvider",
     "storeLink": [
-      "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-b-for-micro-bit"
+      "https://www.kittenbot.cc/products/jacdac-kit-b-elite-module-suite-redefining-electronic-interfacing"
     ],
     "services": [
       318542083
@@ -623,7 +733,7 @@
     "company": "KittenBot",
     "description": "The Ultrasonic Distance Measurement module has a detection range of approximately 3.5 meters.",
     "storeLink": [
-      "https://www.kittenbot.cc/collections/frontpage/products/kittenbot-jacdac-kit-b-for-micro-bit"
+      "https://www.kittenbot.cc/products/jacdac-kit-b-elite-module-suite-redefining-electronic-interfacing"
     ],
     "services": [
       337275786
@@ -823,7 +933,8 @@
       318542083
     ],
     "productIdentifiers": [
-      873600795
+      873600795,
+      943529908
     ],
     "tags": [
       "adapter",
@@ -1151,6 +1262,27 @@
       "firmwareFormat": "bin",
       "firmwareUploader": "https://adafruit.github.io/Adafruit_WebSerial_ESPTool/"
     },
+    "status": "stable"
+  },
+  {
+    "id": "01space-esp32c3fh4rgbv10",
+    "name": "ESP32-C3FH4-RGB",
+    "company": "01Space",
+    "description": "Small ESP32-C3 board with 5x5 LED color matrix",
+    "connector": "noConnector",
+    "link": "https://github.com/01Space/ESP32-C3FH4-RGB",
+    "storeLink": [
+      "https://usa.banggood.com/ESP32-C3-Development-Board-RISC-V-WiFi-Bluetooth-IoT-Development-Board-Compatible-with-Python-p-1914005.html?imageAb=2&akmClientCountry=America&a=1694552315.7453&akmClientCountry=America&cur_warehouse=CN"
+    ],
+    "services": [
+      288680491,
+      369743088,
+      343122531
+    ],
+    "productIdentifiers": [
+      982550620
+    ],
+    "version": "1.0",
     "status": "stable"
   },
   {

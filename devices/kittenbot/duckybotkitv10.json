@@ -1,0 +1,31 @@
+{
+  "id": "kittenbot-duckybotkitv10",
+  "name": "DuckyBot Kit",
+  "company": "KittenBot",
+  "description": " Dive into the enchanting world of robotics with DuckyBot, a delightful cardboard robot shaped like a cheerful yellow duck. Engineered around the groundbreaking Jacdac Elite Module Suite, DuckyBot offers young learners a quirky and entertaining gateway into the vast realm of electronics and robotics, integrating seamlessly with Microbit and Makecode platforms.",
+  "storeLink": [
+    "https://www.kittenbot.cc/products/duckybot-crafting-coding-and-quacking-with-robotics"
+  ],
+  "tags": [
+    "kit",
+    "microbit"
+  ],
+  "version": "1.0",
+  "status": "stable",
+  "devices": [
+    "kittenbot-powerv10",
+    "kittenbot-hapticoutputv10",
+    "kittenbot-accelerometerv10",
+    "kittenbot-relayv10",
+    "kittenbot-envsensorv10",
+    "kittenbot-rgbstripv10",
+    "kittenbot-servov10",
+    "kittenbot-ultrasonicsensorv10",
+    "kittenbot-hubv10",
+    "kittenbot-jacdaptorformicrobitv2v10",
+    "microbit-educational-foundation-microbitv2"
+  ],
+  "relatedDevices": [
+    "microbit-educational-foundation-microbitv2"
+  ]
+}

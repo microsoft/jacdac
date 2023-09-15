@@ -18,7 +18,8 @@
       "storage": 1,
       "members": {
         "Slider": 1,
-        "Rotary": 2
+        "Rotary": 2,
+        "Hall": 3
       }
     }
   },

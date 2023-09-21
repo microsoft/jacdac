@@ -17,6 +17,7 @@ The relative position of the slider.
     enum Variant: u8 {
         Slider = 1,
         Rotary = 2,
+        Hall = 3,
     }
     const variant?: Variant @ variant
 

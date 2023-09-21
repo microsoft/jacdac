@@ -6611,6 +6611,8 @@ namespace jacdac {
         Slider = 0x1,
         //% block="rotary"
         Rotary = 0x2,
+        //% block="hall"
+        Hall = 0x3,
     }
 
     export const enum PotentiometerReg {

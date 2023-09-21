@@ -7,6 +7,7 @@
 // enum Variant (uint8_t)
 #define JD_POTENTIOMETER_VARIANT_SLIDER 0x1
 #define JD_POTENTIOMETER_VARIANT_ROTARY 0x2
+#define JD_POTENTIOMETER_VARIANT_HALL 0x3
 
 /**
  * Read-only ratio u0.16 (uint16_t). The relative position of the slider.

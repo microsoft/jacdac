@@ -6059,6 +6059,7 @@ export const SRV_POTENTIOMETER = 0x1f274746
 export enum PotentiometerVariant { // uint8_t
     Slider = 0x1,
     Rotary = 0x2,
+    Hall = 0x3,
 }
 
 export enum PotentiometerReg {

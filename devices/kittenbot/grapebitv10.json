@@ -3,18 +3,11 @@
   "name": "Grape:bit",
   "company": "KittenBot",
   "description": "Grape:bit is a programming main control board mainly for the second to third grade information technology learning and institutional teaching. Its core is the ESP32, which has the characteristics of high performance, wireless communication, and graphical programming.",
-  "connector": "edgeLowCurrentProviderConsumer",
   "repo": "https://github.com/KittenBot/devicescript-esp32/tree/grapebit",
   "firmwareSource": "https://github.com/KittenBot/devicescript-esp32/blob/grapebit/boards/esp32c3/kitten_grapebit_c3.board.json",
+  "connector": "edgeLowCurrentProviderConsumer",
   "storeLink": [
     "https://www.kittenbot.cc/products/kittenbot-grapebit-20-pack"
-  ],
-  "firmwares": [
-    {
-      "name": "Grape:bit",
-      "url": "https://github.com/KittenBot/devicescript-esp32/releases/latest",
-      "productIdentifier": 952937357
-    }
   ],
   "services": [
     288680491,
@@ -31,6 +24,13 @@
     "type": "serial",
     "vendorId": 4292
   },
+  "firmwares": [
+    {
+      "name": "Grape:bit",
+      "url": "https://github.com/KittenBot/devicescript-esp32/releases/latest",
+      "productIdentifier": 952937357
+    }
+  ],
   "version": "1.0",
   "status": "stable"
 }

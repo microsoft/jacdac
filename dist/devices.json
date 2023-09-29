@@ -282,6 +282,26 @@
     ]
   },
   {
+    "id": "maker-go-esp32c3superminiv10",
+    "name": "ESP32-C3 SuperMini",
+    "company": "Maker go",
+    "description": "A tiny ESP32-C3 development board.",
+    "connector": "noConnector",
+    "link": "https://usa.banggood.com/ESP32-C3-Development-Board-ESP32-SuperMini-WiFi-Bluetooth-Mini-Module-p-1997449.html",
+    "storeLink": [
+      "https://usa.banggood.com/ESP32-C3-Development-Board-ESP32-SuperMini-WiFi-Bluetooth-Mini-Module-p-1997449.html"
+    ],
+    "services": [
+      288680491,
+      413852154
+    ],
+    "productIdentifiers": [
+      1024631722
+    ],
+    "version": "1.0",
+    "status": "stable"
+  },
+  {
     "id": "kittenbot-accelerometerv10",
     "name": "Accelerometer",
     "company": "KittenBot",

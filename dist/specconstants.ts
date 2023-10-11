@@ -6866,7 +6866,7 @@ export enum RealTimeClockVariant { // uint8_t
 
 export enum RealTimeClockReg {
     /**
-     * Current time in 24h representation.
+     * Current time in 24h representation. Default streaming period is 1 second.
      *
      * ```
      * const [year, month, dayOfMonth, dayOfWeek, hour, min, sec] = jdunpack<[number, number, number, number, number, number, number]>(buf, "u16 u8 u8 u8 u8 u8 u8")

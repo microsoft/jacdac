@@ -12,17 +12,17 @@ Real time clock to support collecting data with precise time stamps.
     ro local_time @ reading {
         year: u16 { preferred_interval=1000 }
         month: u8 { absolute_min=1, absolute_max=12 }
-        day_of_month: u8 { absolute_min=1, absolute_max=31 }
+        day_of_month: u8 { absolute_min=0, absolute_max=31 }
         day_of_week: u8 { absolute_min=1, absolute_max=7 }
         hour: u8 { absolute_min=0, absolute_max=23 }
         min: u8 { absolute_min=0, absolute_max=59 }
         sec: u8 { absolute_min=0, absolute_max=60 }
     }
 
-Current time in 24h representation.
+Current time in 24h representation. Default streaming period is 1 second.
 
 -   `day_of_month` is day of the month, starting at `1`
--   `day_of_week` is day of the week, starting at `1` as monday. Default streaming period is 1 second.
+-   `day_of_week` is day of the week, starting at `1` as monday. Leave at 0 if unsupported.
 
         ro volatile drift?: u16.16 s @ 0x180
 

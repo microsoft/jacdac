@@ -10,7 +10,7 @@
 #define JD_REAL_TIME_CLOCK_VARIANT_CUCKOO 0x3
 
 /**
- * Current time in 24h representation.
+ * Current time in 24h representation. Default streaming period is 1 second.
  */
 #define JD_REAL_TIME_CLOCK_REG_LOCAL_TIME JD_REG_READING
 typedef struct jd_real_time_clock_local_time {

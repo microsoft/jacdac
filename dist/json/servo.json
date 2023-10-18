@@ -173,15 +173,14 @@
       "kind": "const",
       "name": "min_angle",
       "identifier": 272,
-      "description": "Lowest angle that can be set, typiclly 0 °.",
+      "description": "Lowest angle that can be set, typically 0 °.",
       "fields": [
         {
           "name": "_",
           "unit": "°",
           "shift": 16,
           "type": "i16.16",
-          "storage": -4,
-          "defaultValue": 0
+          "storage": -4
         }
       ],
       "identifierName": "min_value",
@@ -216,8 +215,7 @@
           "unit": "°",
           "shift": 16,
           "type": "i16.16",
-          "storage": -4,
-          "defaultValue": 180
+          "storage": -4
         }
       ],
       "identifierName": "max_value",
@@ -245,7 +243,7 @@
       "kind": "const",
       "name": "stall_torque",
       "identifier": 384,
-      "description": "The servo motor will stop rotating when it is trying to move a ``stall_torque`` weight at a radial distance of ``1.0`` cm.",
+      "description": "The servo motor will stop rotating when it is trying to move a `stall_torque` weight at a radial distance of `1.0` cm.",
       "fields": [
         {
           "name": "_",

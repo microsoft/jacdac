@@ -20,7 +20,7 @@
 #define JD_SERVO_REG_OFFSET 0x81
 
 /**
- * Constant ° i16.16 (int32_t). Lowest angle that can be set, typiclly 0 °.
+ * Constant ° i16.16 (int32_t). Lowest angle that can be set, typically 0 °.
  */
 #define JD_SERVO_REG_MIN_ANGLE JD_REG_MIN_VALUE
 
@@ -40,7 +40,7 @@
 #define JD_SERVO_REG_MAX_PULSE 0x85
 
 /**
- * Constant kg/cm u16.16 (uint32_t). The servo motor will stop rotating when it is trying to move a ``stall_torque`` weight at a radial distance of ``1.0`` cm.
+ * Constant kg/cm u16.16 (uint32_t). The servo motor will stop rotating when it is trying to move a `stall_torque` weight at a radial distance of `1.0` cm.
  */
 #define JD_SERVO_REG_STALL_TORQUE 0x180
 

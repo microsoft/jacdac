@@ -11,6 +11,10 @@
   "productIdentifiers": [
     860332754
   ],
+  "transport": {
+    "type": "usb",
+    "requestDescription": "Calliope mini V3 CMSIS-DAP"
+  },
   "version": "3.0",
   "status": "stable"
 }

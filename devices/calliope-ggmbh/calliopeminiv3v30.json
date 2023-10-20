@@ -1,0 +1,16 @@
+{
+  "id": "calliope-ggmbh-calliopeminiv3v30",
+  "name": "Calliope mini V3",
+  "company": "Calliope gGmbH",
+  "description": "Calliope mini is an easy-to-program microcontroller that has quite a few internal sensors and, in addition to a pin header and two Grove connectors it also features two JacDac connectors to connect sensors and actuators directly to the board.",
+  "connector": "edgeLowCurrentProvider",
+  "link": "https://calliope.cc",
+  "storeLink": [
+    "https://shop.calliope.cc"
+  ],
+  "productIdentifiers": [
+    860332754
+  ],
+  "version": "3.0",
+  "status": "stable"
+}

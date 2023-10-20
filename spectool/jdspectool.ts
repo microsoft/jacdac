@@ -57,7 +57,7 @@ function toPxtJson(spec: jdspec.ServiceSpec) {
             description: notes["short"],
             files: ["constants.ts", "client.g.ts"],
             testFiles: ["test.ts"],
-            supportedTargets: ["microbit", "arcade", "maker"],
+            supportedTargets: ["microbit", "arcade", "maker", "calliopemini"],
             dependencies: {
                 core: "*",
                 jacdac: "github:microsoft/pxt-jacdac",

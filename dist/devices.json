@@ -136,6 +136,25 @@
     "status": "stable"
   },
   {
+    "id": "seeed-studio-soilmoisturev14",
+    "name": "Soil Moisture",
+    "company": "Seeed Studio",
+    "description": "Soil Moisture Sensor can measure soil moisture for plants. The soil moisture sensor consists of two probes that allow the current to pass through the soil and then obtain resistance values to measure soil moisture content.",
+    "hardwareDesign": "https://wiki.seeedstudio.com/Grove-Moisture_Sensor/",
+    "link": "https://www.seeedstudio.com/Grove-Moisture-Sensor.html",
+    "storeLink": [
+      "https://www.seeedstudio.com/Grove-Moisture-Sensor.html"
+    ],
+    "services": [
+      491430835
+    ],
+    "productIdentifiers": [
+      814817380
+    ],
+    "version": "1.4",
+    "status": "stable"
+  },
+  {
     "id": "seeed-studio-xiaoesp32c3v00",
     "name": "XIAO ESP32C3",
     "company": "Seeed Studio",
@@ -939,25 +958,6 @@
       901245225
     ],
     "version": "1.0",
-    "status": "stable"
-  },
-  {
-    "id": "grove-soilmoisturev14",
-    "name": "soil moisture",
-    "company": "Grove",
-    "description": "Grove - Soil Moisture Sensor can measure soil moisture for plants. The soil moisture sensor consists of two probes that allow the current to pass through the soil and then obtain resistance values to measure soil moisture content.",
-    "hardwareDesign": "https://wiki.seeedstudio.com/Grove-Moisture_Sensor/",
-    "link": "https://www.seeedstudio.com/Grove-Moisture-Sensor.html",
-    "storeLink": [
-      "https://www.seeedstudio.com/Grove-Moisture-Sensor.html"
-    ],
-    "services": [
-      491430835
-    ],
-    "productIdentifiers": [
-      814817380
-    ],
-    "version": "1.4",
     "status": "stable"
   },
   {
@@ -2528,15 +2528,15 @@
       "microsoft-research-jmflexv10",
       "microsoft-research-jmkeyboardkey46v10",
       "microsoft-research-jmkeyboardkey46v11",
-      "microsoft-research-jmrgbledbar10v01",
+      "microsoft-research-jmrgbledbar58v01",
       "microsoft-research-jmrgbledgeneric60v01",
       "microsoft-research-jmrgbledring37v20",
       "microsoft-research-jmrgbledring37v21",
       "microsoft-research-jmrotarycontrolbuttonv10",
       "microsoft-research-jmrotarycontrolbuttonv11",
-      "microsoft-research-jmsinglergb-led42v01",
+      "microsoft-research-jmsinglergbled42v01",
       "microsoft-research-jmslider49v11",
-      "microsoft-research-jmtemphumidity18v11"
+      "microsoft-research-jmtemperaturehumidity18v11"
     ]
   },
   {

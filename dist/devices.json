@@ -155,6 +155,25 @@
     "status": "stable"
   },
   {
+    "id": "seeed-studio-ultrasonicdistancesensorv20",
+    "name": "Ultrasonic Distance Sensor",
+    "company": "Seeed Studio",
+    "description": "This Grove - Ultrasonic ranger is a non-contact distance measurement module which works at 40KHz. When we provide a pulse trigger signal with more than 10uS through signal pin, the Grove_Ultrasonic_Ranger will issue 8 cycles of 40kHz cycle level and detect the echo. The pulse width of the echo signal is proportional to the measured distance.",
+    "connector": "noConnector",
+    "link": "https://www.seeedstudio.com/Grove-Ultrasonic-Distance-Sensor.html",
+    "storeLink": [
+      "https://www.seeedstudio.com/Grove-Ultrasonic-Distance-Sensor.html"
+    ],
+    "services": [
+      337275786
+    ],
+    "productIdentifiers": [
+      1068863164
+    ],
+    "version": "2.0",
+    "status": "stable"
+  },
+  {
     "id": "seeed-studio-xiaoesp32c3v00",
     "name": "XIAO ESP32C3",
     "company": "Seeed Studio",
@@ -1294,6 +1313,27 @@
       "requestDescription": "Calliope mini V3 CMSIS-DAP"
     },
     "version": "3.0",
+    "status": "stable"
+  },
+  {
+    "id": "calliope-ggmbh-calliopescd40v10",
+    "name": "Calliope SCD40",
+    "company": "Calliope gGmbH",
+    "description": "The SCD40 is a miniature CO2 sensor from Sensirion. This sensor builds on the photoacoustic NDIR sensing principle. It provides On-chip signal \ncompensation with the build-in humidity and temperature sensor.",
+    "connector": "noConnector",
+    "link": "https://shop.calliope.cc/en/products/scd40-calliope-mini-co2-sensor",
+    "storeLink": [
+      "https://shop.calliope.cc/en/products/scd40-calliope-mini-co2-sensor"
+    ],
+    "services": [
+      379362758,
+      382210232,
+      337754823
+    ],
+    "productIdentifiers": [
+      895527115
+    ],
+    "version": "1.0",
     "status": "stable"
   },
   {

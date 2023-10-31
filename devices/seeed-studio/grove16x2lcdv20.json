@@ -1,0 +1,19 @@
+{
+  "id": "seeed-studio-grove16x2lcdv20",
+  "name": "Grove-16x2 LCD",
+  "company": "Seeed Studio",
+  "description": "Seeedstudio Grove - 16 x 2 LCD is a I2C LCD display. 16x2 means two lines and each line has 16 columns, 32 characters in total.",
+  "connector": "noConnector",
+  "link": "https://wiki.seeedstudio.com/Grove-16x2_LCD_Series/",
+  "storeLink": [
+    "https://www.seeedstudio.com/Grove-16-x-2-LCD-Black-on-Yellow.html"
+  ],
+  "services": [
+    523748714
+  ],
+  "productIdentifiers": [
+    877317536
+  ],
+  "version": "2.0",
+  "status": "stable"
+}

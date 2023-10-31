@@ -642,6 +642,8 @@ declare namespace jdspec {
         | "edgeLowCurrentProviderConsumer"
         | "edgeHighCurrentProviderConsumer"
         | "edgePassive"
+        | "grove"
+        | "qwiic"
 
     interface TransportSpec {
         vendorId?: number

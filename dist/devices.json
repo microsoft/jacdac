@@ -140,7 +140,7 @@
     "name": "Grove-16x2 LCD",
     "company": "Seeed Studio",
     "description": "Seeedstudio Grove - 16 x 2 LCD is a I2C LCD display. 16x2 means two lines and each line has 16 columns, 32 characters in total.",
-    "connector": "noConnector",
+    "connector": "grove",
     "link": "https://wiki.seeedstudio.com/Grove-16x2_LCD_Series/",
     "storeLink": [
       "https://www.seeedstudio.com/Grove-16-x-2-LCD-Black-on-Yellow.html"
@@ -160,6 +160,7 @@
     "company": "Seeed Studio",
     "description": "Soil Moisture Sensor can measure soil moisture for plants. The soil moisture sensor consists of two probes that allow the current to pass through the soil and then obtain resistance values to measure soil moisture content.",
     "hardwareDesign": "https://wiki.seeedstudio.com/Grove-Moisture_Sensor/",
+    "connector": "grove",
     "link": "https://www.seeedstudio.com/Grove-Moisture-Sensor.html",
     "storeLink": [
       "https://www.seeedstudio.com/Grove-Moisture-Sensor.html"
@@ -178,7 +179,7 @@
     "name": "Ultrasonic Distance Sensor",
     "company": "Seeed Studio",
     "description": "This Grove - Ultrasonic ranger is a non-contact distance measurement module which works at 40KHz. When we provide a pulse trigger signal with more than 10uS through signal pin, the Grove_Ultrasonic_Ranger will issue 8 cycles of 40kHz cycle level and detect the echo. The pulse width of the echo signal is proportional to the measured distance.",
-    "connector": "noConnector",
+    "connector": "grove",
     "link": "https://www.seeedstudio.com/Grove-Ultrasonic-Distance-Sensor.html",
     "storeLink": [
       "https://www.seeedstudio.com/Grove-Ultrasonic-Distance-Sensor.html"

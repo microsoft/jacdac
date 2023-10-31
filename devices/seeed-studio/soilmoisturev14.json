@@ -4,6 +4,7 @@
   "company": "Seeed Studio",
   "description": "Soil Moisture Sensor can measure soil moisture for plants. The soil moisture sensor consists of two probes that allow the current to pass through the soil and then obtain resistance values to measure soil moisture content.",
   "hardwareDesign": "https://wiki.seeedstudio.com/Grove-Moisture_Sensor/",
+  "connector": "grove",
   "link": "https://www.seeedstudio.com/Grove-Moisture-Sensor.html",
   "storeLink": [
     "https://www.seeedstudio.com/Grove-Moisture-Sensor.html"

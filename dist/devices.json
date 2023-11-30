@@ -155,6 +155,25 @@
     "status": "stable"
   },
   {
+    "id": "seeed-studio-relayv12",
+    "name": "Relay",
+    "company": "Seeed Studio",
+    "description": "The Grove-Relay module is a digital normally-open switch. Through it, you can control circuit of high voltage with low voltage, 3.3-5V on the controller. There is an indicator LED on the board, which will light up when the controlled terminals get closed.",
+    "connector": "grove",
+    "link": "https://wiki.seeedstudio.com/Grove-Relay/",
+    "storeLink": [
+      "https://www.seeedstudio.com/Grove-Relay.html"
+    ],
+    "services": [
+      406840918
+    ],
+    "productIdentifiers": [
+      808015809
+    ],
+    "version": "1.2",
+    "status": "stable"
+  },
+  {
     "id": "seeed-studio-soilmoisturev14",
     "name": "Soil Moisture",
     "company": "Seeed Studio",

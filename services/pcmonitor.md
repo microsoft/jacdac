@@ -1,7 +1,7 @@
 # PC monitor
 
     identifier: 0x18627b15
-    extends: _sensor
+    status: experimental
 
 Measures PC monitor.
 

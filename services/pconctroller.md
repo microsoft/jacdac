@@ -1,7 +1,7 @@
 # PC controller
 
     identifier: 0x113d0987
-    extends: _sensor
+    status: experimental
 
 Send various events to PC, including opening a URL, start an app, sending text, etc.
 

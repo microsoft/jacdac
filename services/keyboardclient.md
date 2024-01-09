@@ -1,7 +1,7 @@
 # Keyboard client
 
     identifier: 0x113d023e
-    extends: _sensor
+    status: experimental
 
 Measures KeyboardClient.
 

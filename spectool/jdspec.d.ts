@@ -89,6 +89,7 @@ declare namespace senml {
         | "Mbit/s"
         | "B/s"
         | "MB/s"
+        | "KB"
         | "mV"
         | "mA"
         | "dBm"

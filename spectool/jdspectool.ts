@@ -842,7 +842,7 @@ function packedSensorSpec(info: jdspec.ServiceSpec) {
     const reading = info.packets.find(
         pkt => pkt.kind === "ro" && pkt.identifierName === "reading"
     )
-    if (reading.fields.length != 1) return ""
+    if (reading?.fields?.length !== 1) return ""
     const fld = reading.fields[0]
     const tp = fld.storage
     if ([1, 2, 4, 8].indexOf(Math.abs(tp)) < 0) return ""

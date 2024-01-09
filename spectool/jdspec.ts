@@ -112,6 +112,7 @@ export const secondaryUnitConverters: jdspec.SMap<{
         scale: 3.6,
         offset: 0,
     },
+    KB: { name: "kilobyte", unit: "B", scale: 1000, offset: 0 },
     KiB: { name: "kibibyte", unit: "B", scale: 1024, offset: 0 },
     GB: { name: "gigabyte", unit: "B", scale: 1.0e9, offset: 0 },
     "Mbit/s": {
@@ -205,7 +206,7 @@ export function units(): { name: string; description: string }[] {
                 r.push({
                     name: scd,
                     description: secondaryUnitConverters[scd].name,
-                })
+                }),
             )
     })
     r.sort((l, r) => l.name.localeCompare(r.name))
@@ -258,7 +259,7 @@ const identifierRanges: { [index: string]: [number, number][] } = {
 export function parseServiceSpecificationMarkdownToJSON(
     filecontent: string,
     includes?: jdspec.SMap<jdspec.ServiceSpec>,
-    filename = ""
+    filename = "",
 ): jdspec.ServiceSpec {
     filecontent = (filecontent || "").replace(/\r/g, "")
     const info: jdspec.ServiceSpec = {
@@ -315,7 +316,7 @@ export function parseServiceSpecificationMarkdownToJSON(
             info.name
                 .replace(/\s+/g, " ")
                 .replace(/[ -](.)/g, (f, l) => l.toUpperCase())
-                .replace(/[^\w]+/g, "_")
+                .replace(/[^\w]+/g, "_"),
         )
     if (!info.shortName) info.shortName = info.camelName
 
@@ -442,12 +443,12 @@ export function parseServiceSpecificationMarkdownToJSON(
         if (paderr) {
             if (!packetInfo.packed)
                 error(
-                    `${paderr} in ${packetInfo.kind} ${packetInfo.name}; you can also add 'packed' attribute`
+                    `${paderr} in ${packetInfo.kind} ${packetInfo.name}; you can also add 'packed' attribute`,
                 )
         } else {
             if (packetInfo.packed)
                 error(
-                    `${packetInfo.kind} ${packetInfo.name} has unnecessary 'packed' attribute`
+                    `${packetInfo.kind} ${packetInfo.name} has unnecessary 'packed' attribute`,
                 )
         }
 
@@ -456,21 +457,21 @@ export function parseServiceSpecificationMarkdownToJSON(
         for (const p of packetInfo.fields) {
             if (hadzero) {
                 error(
-                    `field ${p.name} in ${packetInfo.kind} ${packetInfo.name} follows a variable-sized field`
+                    `field ${p.name} in ${packetInfo.kind} ${packetInfo.name} follows a variable-sized field`,
                 )
                 break
             }
             if (p.startRepeats) {
                 if (repeats)
                     error(
-                        `repeats: can only be specified once; in ${packetInfo.kind} ${packetInfo.name}`
+                        `repeats: can only be specified once; in ${packetInfo.kind} ${packetInfo.name}`,
                     )
                 repeats = true
             }
             if (p.storage == 0 && p.type != "string0") {
                 if (repeats) {
                     error(
-                        `variable-sized field ${p.name} in ${packetInfo.kind} ${packetInfo.name} cannot repeat`
+                        `variable-sized field ${p.name} in ${packetInfo.kind} ${packetInfo.name} cannot repeat`,
                     )
                     break
                 }
@@ -488,10 +489,10 @@ export function parseServiceSpecificationMarkdownToJSON(
         )
             error(
                 `${packetInfo.name} identifier ${toHex(
-                    pid
+                    pid,
                 )} out of range, expected in ${ranges
                     .map(range => `[${range.map(toHex).join(", ")}]`)
-                    .join(", ")}`
+                    .join(", ")}`,
             )
 
         // additional checks for specific packets
@@ -506,12 +507,12 @@ export function parseServiceSpecificationMarkdownToJSON(
             const regid = packetInfo.identifierName
             if (packetInfo.fields.length > 1) error(`${regid} must be a number`)
             const reading = info.packets.find(
-                pkt => pkt.kind === "ro" && pkt.identifierName === "reading"
+                pkt => pkt.kind === "ro" && pkt.identifierName === "reading",
             )
             if (!reading) error(`${regid} register without a reading register`)
             else if (packetInfo.fields[0].unit !== reading.fields[0].unit)
                 error(
-                    `${regid} unit (${packetInfo.fields[0].unit}) and reading unit (${reading.fields[0].unit}) must match`
+                    `${regid} unit (${packetInfo.fields[0].unit}) and reading unit (${reading.fields[0].unit}) must match`,
                 )
         }
 
@@ -659,7 +660,7 @@ export function parseServiceSpecificationMarkdownToJSON(
         if (/pipe/.test(kind)) {
             if (!pipePacket)
                 error(
-                    "pipe definitions can only occur after the pipe-open packet"
+                    "pipe definitions can only occur after the pipe-open packet",
                 )
             else packetInfo.pipeType = pipePacket.pipeType
         }
@@ -677,14 +678,14 @@ export function parseServiceSpecificationMarkdownToJSON(
                 isSet = false
                 if (systemInfo) {
                     const systemPacket = systemInfo.packets.find(
-                        p => p.name == w
+                        p => p.name == w,
                     )
                     if (systemPacket) {
                         v = systemPacket.identifier
                         packetInfo.identifierName = w
                         if (systemPacket.kind != kind)
                             error(
-                                `kind mismatch on ${w}: ${systemPacket.kind} vs ${kind}`
+                                `kind mismatch on ${w}: ${systemPacket.kind} vs ${kind}`,
                             )
                         else isSet = true
                     } else error(`${w} not found in _system`)
@@ -732,15 +733,15 @@ export function parseServiceSpecificationMarkdownToJSON(
                 if (!packetInfo.identifierName)
                     warn(
                         `${kind} @ ${toHex(
-                            v
-                        )} should be expressed with a name from _system.md`
+                            v,
+                        )} should be expressed with a name from _system.md`,
                     )
             } else if (isHigh) {
                 if (!info.highCommands)
                     warn(
                         `${kind} @ ${toHex(
-                            v
-                        )} is from the extended range but 'high: 1' missing`
+                            v,
+                        )} is from the extended range but 'high: 1' missing`,
                     )
             }
 
@@ -757,7 +758,7 @@ export function parseServiceSpecificationMarkdownToJSON(
                     generalKind(p.kind) == generalKind(packetInfo.kind) &&
                     (!/pipe/.test(p.kind) ||
                         p.pipeType == packetInfo.pipeType) &&
-                    p.identifier == packetInfo.identifier
+                    p.identifier == packetInfo.identifier,
             )
         ) {
             error("packet identifier already used")
@@ -901,7 +902,7 @@ export function parseServiceSpecificationMarkdownToJSON(
             // / units should be used with ui0. data
             if (!/^(u0|i1)\.\d+$/.test(tp))
                 error(
-                    `fraction unit must be used with u0.yyy or i1.yyy data types (got ${tp})`
+                    `fraction unit must be used with u0.yyy or i1.yyy data types (got ${tp})`,
                 )
 
             shift = Math.abs(storage) * 8
@@ -956,7 +957,7 @@ export function parseServiceSpecificationMarkdownToJSON(
                             // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         ;(packetInfo as any)[tok] = rangeCheck(
                             "u32",
-                            parseVal(words)
+                            parseVal(words),
                         )
                         break
                     }
@@ -1044,7 +1045,7 @@ export function parseServiceSpecificationMarkdownToJSON(
             error(`expecting: FIELD_NAME = INTEGER`)
         enumInfo.members[normalizeName(words[0])] = rangeCheck(
             canonicalType(enumInfo.storage),
-            parseIntCheck(words[2])
+            parseIntCheck(words[2]),
         )
     }
 
@@ -1108,10 +1109,10 @@ export function parseServiceSpecificationMarkdownToJSON(
                 if (usedIds[info.classIdentifier + ""])
                     error(
                         `class identifier ${toHex(
-                            info.classIdentifier
+                            info.classIdentifier,
                         )} already used in ${
                             usedIds[info.classIdentifier + ""]
-                        }; ${gen}`
+                        }; ${gen}`,
                     )
                 break
             }
@@ -1127,7 +1128,7 @@ export function parseServiceSpecificationMarkdownToJSON(
             case "status":
                 if (
                     ["stable", "experimental", "deprecated", "rc"].indexOf(
-                        words[2]
+                        words[2],
                     ) > -1
                 )
                     info.status = <any>words[2]
@@ -1176,9 +1177,9 @@ export function parseServiceSpecificationMarkdownToJSON(
                     !info.packets.find(
                         ipkt =>
                             ipkt.kind === pkt.kind &&
-                            ipkt.identifier === pkt.identifier
-                    )
-            )
+                            ipkt.identifier === pkt.identifier,
+                    ),
+            ),
         )
         innerPackets.forEach(pkt => (pkt.derived = name))
         info.packets = [...info.packets, ...innerPackets]
@@ -1209,7 +1210,7 @@ export function parseServiceSpecificationMarkdownToJSON(
     }
 
     function normalizeStorageType(
-        tp: string
+        tp: string,
     ): [jdspec.StorageType, string, number] {
         if (info.enums[tp]) return [info.enums[tp].storage, tp, 0]
         if (!tp) error("expecting type here")
@@ -1223,7 +1224,7 @@ export function parseServiceSpecificationMarkdownToJSON(
                 error(`fixed point ${tp} can't be ${len} bits`)
             if (a == 0 && m[1] == "i")
                 error(
-                    `fixed point ${tp} can't be i0.X; has to be at least i1.X`
+                    `fixed point ${tp} can't be i0.X; has to be at least i1.X`,
                 )
             return [(m[1] == "i" ? -1 : 1) * (len >> 3), tp2, b]
         }
@@ -1397,15 +1398,15 @@ function toPython(info: jdspec.ServiceSpec, language: "py" | "cpy" | "mpy") {
     if (info.shortId[0] != "_")
         r.push(
             `JD_SERVICE_CLASS_${toUpper(info.shortName)} = const(${toHex(
-                info.classIdentifier
-            )})`
+                info.classIdentifier,
+            )})`,
         )
     for (const cst in info.constants) {
         const { value, hex } = info.constants[cst]
         r.push(
             `JD_${toUpper(cst)} = const(${
                 hex ? value.toString() : toHex(value)
-            })\n`
+            })\n`,
         )
     }
 
@@ -1415,8 +1416,8 @@ function toPython(info: jdspec.ServiceSpec, language: "py" | "cpy" | "mpy") {
             r.push("")
             r.push(
                 `class ${upperCamel(info.shortName)}${upperCamel(
-                    en.name
-                )}(IntEnum):`
+                    en.name,
+                )}(IntEnum):`,
             )
             for (const k of Object.keys(en.members))
                 r.push(`    ${toUpper(k)} = const(${toHex(en.members[k])})`)
@@ -1461,7 +1462,7 @@ function toPython(info: jdspec.ServiceSpec, language: "py" | "cpy" | "mpy") {
     r.push(
         Object.keys(packFormats)
             .map(k => `    ${k}: "${packFormats[k]}"`)
-            .join(",\n")
+            .join(",\n"),
     )
     r.push(`}`)
 
@@ -1480,7 +1481,7 @@ function toH(info: jdspec.ServiceSpec) {
     if (info.shortId[0] == "_") pref = "JD_"
 
     r += `\n#define JD_SERVICE_CLASS_${toUpper(info.shortName)}  ${toHex(
-        info.classIdentifier
+        info.classIdentifier,
     )}\n`
 
     for (const cst in info.constants) {
@@ -1684,7 +1685,7 @@ function packFormatForField(
     info: jdspec.ServiceSpec,
     fld: jdspec.PacketMember,
     isStatic?: boolean,
-    useBooleans?: boolean
+    useBooleans?: boolean,
 ) {
     const sz = memberSize(fld)
     const szSuff = sz ? `[${sz}]` : ``
@@ -1763,7 +1764,7 @@ function packFormatForField(
 export function packFormat(
     sinfo: jdspec.ServiceSpec,
     pkt: jdspec.PacketInfo,
-    useBooleans?: boolean
+    useBooleans?: boolean,
 ): string {
     if (!pkt.fields?.length) return undefined
 
@@ -1785,7 +1786,7 @@ export function packInfo(
         isStatic?: boolean
         useBooleans?: boolean
         useJDOM?: boolean
-    }
+    },
 ) {
     const {
         isStatic = false,
@@ -1819,7 +1820,7 @@ export function packInfo(
         if (!f0 || /(reserved|padding)/.test(fld.name)) {
             if (!f0)
                 console.log(
-                    `${pkt.name}/${fld.name} - can't get format for '${fld.type}'`
+                    `${pkt.name}/${fld.name} - can't get format for '${fld.type}'`,
                 )
             fmt += `x[${memberSize(fld)}] `
         } else {
@@ -1857,26 +1858,26 @@ export function packInfo(
             for (let i = 0; i < vars.length; ++i)
                 buffers += `const ${vars[i]}: ${vartp[i]} = ...\n`
             buffers += `await service.sendCmdPackedAsync(${capitalize(
-                info.camelName
+                info.camelName,
             )}Reg.${capitalize(pktName)}, [${vars.join(", ")}])\n`
         } else if (isRegister(kind)) {
             buffers +=
                 "// get (register to REPORT_UPDATE event to enable background refresh)\n"
             buffers += `const ${pktName}Reg = service.register(${capitalize(
-                info.camelName
+                info.camelName,
             )}Reg.${capitalize(pktName)})\n`
             buffers += `const [${vars.join(", ")}] : [${vartp.join(
-                ", "
+                ", ",
             )}] = ${pktName}Reg.unpackedValue\n`
             if (kind === "rw") {
                 buffers += "// set\n"
                 buffers += `await ${pktName}Reg.sendSetPackedAsync([${vars.join(
-                    ", "
+                    ", ",
                 )}])\n`
             }
         } else if (kind === "event") {
             buffers += `const ${pktName}Event = service.event(${capitalize(
-                info.camelName
+                info.camelName,
             )}Event.${capitalize(pktName)})\n`
             buffers += `${pktName}Event.on("change", () => {
     // if you need to read the event values
@@ -1885,7 +1886,7 @@ export function packInfo(
         }
     } else {
         buffers += `const [${vars.join(", ")}] = jdunpack<[${vartp.join(
-            ", "
+            ", ",
         )}]>(buf, "${fmt}")\n`
     }
     if (repeats) buffers += `const [${repeats.join(", ")}] = rest[0]\n`
@@ -1942,7 +1943,7 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "cs") {
             indent +
             (csharp ? indent : "") +
             `${exportkw} const ${numberkw}${name} = ${toHex(
-                info.classIdentifier
+                info.classIdentifier,
             )}${cskw}\n`
     }
     const pref = upperCamel(info.camelName)
@@ -2008,7 +2009,7 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "cs") {
                     language,
                     `${pkt.kind} ${upperCamel(pkt.name)}${
                         pkt.client ? "" : wrapSnippet(pack)
-                    }`
+                    }`,
                 )
         } else {
             const val = toHex(pkt.identifier)
@@ -2018,7 +2019,7 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "cs") {
             text = `${
                 wrapComment(
                     language,
-                    cmt.comment + (pkt.client ? "" : wrapSnippet(pack))
+                    cmt.comment + (pkt.client ? "" : wrapSnippet(pack)),
                 ) + meta
             }${upperCamel(pkt.name)} = ${val},\n`
         }
@@ -2033,7 +2034,7 @@ function toTypescript(info: jdspec.ServiceSpec, language: "ts" | "sts" | "cs") {
                 (tsEnums[packName] || "") +
                 `${wrapComment(
                     language,
-                    `Pack format for '${pkt.name}' data.`
+                    `Pack format for '${pkt.name}' data.`,
                 )}${enumsf}${upperCamel(pkt.name)}${
                     pkt.secondary ? "Report" : ""
                 } = "${pkt.packFormat}"${csharp ? ";" : ""}\n`
@@ -2095,7 +2096,7 @@ export function normalizeDeviceSpecification(dev: jdspec.DeviceSpec) {
             ...(dev.firmwares
                 ?.map(fw => fw.productIdentifier)
                 .filter(pi => !!pi) || []),
-        ]).values()
+        ]).values(),
     )
 
     // reorder fields
@@ -2180,7 +2181,7 @@ export function isNumericType(field: jdspec.PacketMember) {
 const Reading = 0x101
 export function genFieldInfo(
     reg: jdspec.PacketInfo,
-    field: jdspec.PacketMember
+    field: jdspec.PacketMember,
 ) {
     const isReading = reg.identifier === Reading
     const name =
@@ -2197,13 +2198,13 @@ export function genFieldInfo(
                 ? -100
                 : 0
             : undefined,
-        field.type === "u8" || field.type === "u16" ? 0 : undefined
+        field.type === "u8" || field.type === "u16" ? 0 : undefined,
     )
     const max = pick(
         field.typicalMax,
         field.absoluteMax,
         field.unit === "/" || /^%/.test(field.unit) ? 100 : undefined,
-        field.type === "u8" ? 0xff : field.type === "u16" ? 0xffff : undefined
+        field.type === "u8" ? 0xff : field.type === "u16" ? 0xffff : undefined,
     )
     const defl = field.defaultValue || (field.unit === "/" ? "100" : undefined)
     const valueScaler: (s: string) => string =

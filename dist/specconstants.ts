@@ -6048,84 +6048,8 @@ export namespace MultitouchEventPack {
     export const SwipeNeg = "u16 u8 u8"
 }
 
-// Service PC monitor constants
-export const SRV_P_CMONITOR = 0x18627b15
-export enum PCMonitorReg {
-    /**
-     * Read-only % uint8_t. CPU usage in percent.
-     *
-     * ```
-     * const [cpuUsage] = jdunpack<[number]>(buf, "u8")
-     * ```
-     */
-    CpuUsage = 0x190,
-
-    /**
-     * Read-only °C uint8_t. CPU temperature in Celsius.
-     *
-     * ```
-     * const [cpuTemp] = jdunpack<[number]>(buf, "u8")
-     * ```
-     */
-    CpuTemp = 0x191,
-
-    /**
-     * Read-only % uint8_t. RAM usage in percent.
-     *
-     * ```
-     * const [ramUsage] = jdunpack<[number]>(buf, "u8")
-     * ```
-     */
-    RamUsage = 0x192,
-
-    /**
-     * GPU info.
-     *
-     * ```
-     * const [usage, temp] = jdunpack<[number, number]>(buf, "u8 u8")
-     * ```
-     */
-    GpuInfo = 0x193,
-
-    /**
-     * Network transmit/receive speed in Kbytes per second.
-     *
-     * ```
-     * const [tx, rx] = jdunpack<[number, number]>(buf, "u16 u16")
-     * ```
-     */
-    NetInfo = 0x195,
-}
-
-export namespace PCMonitorRegPack {
-    /**
-     * Pack format for 'cpu_usage' data.
-     */
-    export const CpuUsage = "u8"
-
-    /**
-     * Pack format for 'cpu_temp' data.
-     */
-    export const CpuTemp = "u8"
-
-    /**
-     * Pack format for 'ram_usage' data.
-     */
-    export const RamUsage = "u8"
-
-    /**
-     * Pack format for 'gpu_info' data.
-     */
-    export const GpuInfo = "u8 u8"
-
-    /**
-     * Pack format for 'net_info' data.
-     */
-    export const NetInfo = "u16 u16"
-}
-
 // Service PC controller constants
-export const SRV_P_CCONTROLLER = 0x113d0987
+export const SRV_PCCONTROLLER = 0x113d0987
 export enum PCControllerCmd {
     /**
      * Argument: url string (bytes). Open a URL in the default browser.
@@ -6184,6 +6108,82 @@ export namespace PCControllerCmdPack {
      * Pack format for 'run_script' data.
      */
     export const RunScript = "s"
+}
+
+// Service PC monitor constants
+export const SRV_PCMONITOR = 0x18627b15
+export enum PCMonitorReg {
+    /**
+     * Read-only % uint8_t. CPU usage in percent.
+     *
+     * ```
+     * const [cpuUsage] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    CpuUsage = 0x190,
+
+    /**
+     * Read-only °C uint8_t. CPU temperature in Celsius.
+     *
+     * ```
+     * const [cpuTemperature] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    CpuTemperature = 0x191,
+
+    /**
+     * Read-only % uint8_t. RAM usage in percent.
+     *
+     * ```
+     * const [ramUsage] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    RamUsage = 0x192,
+
+    /**
+     * GPU info.
+     *
+     * ```
+     * const [usage, temperature] = jdunpack<[number, number]>(buf, "u8 u8")
+     * ```
+     */
+    GpuInformation = 0x193,
+
+    /**
+     * Network transmit/receive speed in Kbytes per second.
+     *
+     * ```
+     * const [tx, rx] = jdunpack<[number, number]>(buf, "u16 u16")
+     * ```
+     */
+    NetworkInformation = 0x195,
+}
+
+export namespace PCMonitorRegPack {
+    /**
+     * Pack format for 'cpu_usage' data.
+     */
+    export const CpuUsage = "u8"
+
+    /**
+     * Pack format for 'cpu_temperature' data.
+     */
+    export const CpuTemperature = "u8"
+
+    /**
+     * Pack format for 'ram_usage' data.
+     */
+    export const RamUsage = "u8"
+
+    /**
+     * Pack format for 'gpu_information' data.
+     */
+    export const GpuInformation = "u8 u8"
+
+    /**
+     * Pack format for 'network_information' data.
+     */
+    export const NetworkInformation = "u16 u16"
 }
 
 // Service Planar position constants

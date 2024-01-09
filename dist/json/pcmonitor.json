@@ -2,8 +2,8 @@
   "name": "PC monitor",
   "status": "experimental",
   "shortId": "pcmonitor",
-  "camelName": "pCMonitor",
-  "shortName": "pCMonitor",
+  "camelName": "PCMonitor",
+  "shortName": "PCMonitor",
   "extends": [
     "_base"
   ],
@@ -137,7 +137,7 @@
     },
     {
       "kind": "ro",
-      "name": "cpu_temp",
+      "name": "cpu_temperature",
       "identifier": 401,
       "description": "CPU temperature in Celsius.",
       "fields": [
@@ -169,7 +169,7 @@
     },
     {
       "kind": "ro",
-      "name": "gpu_info",
+      "name": "gpu_information",
       "identifier": 403,
       "description": "GPU info.",
       "fields": [
@@ -181,7 +181,7 @@
           "isSimpleType": true
         },
         {
-          "name": "temp",
+          "name": "temperature",
           "unit": "°C",
           "type": "u8",
           "storage": 1,
@@ -192,7 +192,7 @@
     },
     {
       "kind": "ro",
-      "name": "net_info",
+      "name": "network_information",
       "identifier": 405,
       "description": "Network transmit/receive speed in Kbytes per second.\n\nA measure of PC monitor.",
       "fields": [

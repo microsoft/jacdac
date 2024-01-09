@@ -2,6 +2,7 @@
 
     identifier: 0x113d0987
     status: experimental
+    camel: PCController
 
 Send various events to PC, including opening a URL, start an app, sending text, etc.
 

@@ -1,9 +1,9 @@
 {
   "name": "PC controller",
   "status": "experimental",
-  "shortId": "pconctroller",
-  "camelName": "pCController",
-  "shortName": "pCController",
+  "shortId": "pccontroller",
+  "camelName": "PCController",
+  "shortName": "PCController",
   "extends": [
     "_base"
   ],

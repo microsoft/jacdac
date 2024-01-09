@@ -2,6 +2,7 @@
 
     identifier: 0x18627b15
     status: experimental
+    camel: PCMonitor
 
 Measures PC monitor.
 
@@ -11,7 +12,7 @@ Measures PC monitor.
 
 CPU usage in percent.
 
-    ro cpu_temp: u8 °C @ 0x191
+    ro cpu_temperature: u8 °C @ 0x191
 
 CPU temperature in Celsius.
 
@@ -19,14 +20,14 @@ CPU temperature in Celsius.
 
 RAM usage in percent.
 
-    ro gpu_info @ 0x193 {
+    ro gpu_information @ 0x193 {
         usage: u8 %
-        temp: u8 °C
+        temperature: u8 °C
     }
 
 GPU info.
 
-    ro net_info @ 0x195 {
+    ro network_information @ 0x195 {
         tx: u16 KB
         rx: u16 KB
     }

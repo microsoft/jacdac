@@ -1,0 +1,24 @@
+{
+  "id": "kittenbot-agilewhiskernumerickeypadv10",
+  "name": "AgileWhisker Numeric Keypad",
+  "company": "KittenBot",
+  "description": "This is the first numeric keypad in the Jacdac system, featuring an OLED screen, a rotary encoder, RGB LED lighting, and one Jacdac interface. It is powered by the RP2040 microcontroller.",
+  "connector": "edgeLowCurrentProviderConsumer",
+  "link": "https://w.kittenbot.net/",
+  "storeLink": [
+    "https://w.kittenbot.net/"
+  ],
+  "services": [
+    309264608,
+    414210922,
+    437330261,
+    411425820,
+    284830153,
+    523748714
+  ],
+  "productIdentifiers": [
+    988197346
+  ],
+  "version": "1.0",
+  "status": "stable"
+}

@@ -627,6 +627,38 @@
     }
   },
   {
+    "service": "pccontroller",
+    "client": {
+      "name": "jacdac-pccontroller",
+      "targets": [
+        "microbit",
+        "arcade",
+        "maker",
+        "calliopemini"
+      ],
+      "repo": "microsoft/pxt-jacdac/pccontroller",
+      "qName": "modules.PCControllerClient",
+      "default": "modules.PCController",
+      "generated": true
+    }
+  },
+  {
+    "service": "pcmonitor",
+    "client": {
+      "name": "jacdac-pcmonitor",
+      "targets": [
+        "microbit",
+        "arcade",
+        "maker",
+        "calliopemini"
+      ],
+      "repo": "microsoft/pxt-jacdac/pcmonitor",
+      "qName": "modules.PCMonitorClient",
+      "default": "modules.PCMonitor",
+      "generated": true
+    }
+  },
+  {
     "service": "planarposition",
     "client": {
       "name": "jacdac-planar-position",

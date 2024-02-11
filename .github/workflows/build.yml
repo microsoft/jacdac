@@ -4,7 +4,9 @@ on: [push]
 
 jobs:
   build:
-
+    permissions: 
+      actions: read
+      contents: write
     runs-on: ubuntu-latest
 
     strategy:

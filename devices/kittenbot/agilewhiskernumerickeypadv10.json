@@ -4,9 +4,9 @@
   "company": "KittenBot",
   "description": "This is the first numeric keypad in the Jacdac system, featuring an OLED screen, a rotary encoder, RGB LED lighting, and one Jacdac interface. It is powered by the RP2040 microcontroller.",
   "connector": "edgeLowCurrentProviderConsumer",
-  "link": "https://w.kittenbot.net/",
+  "link": "https://w.kittenbot.cc/",
   "storeLink": [
-    "https://w.kittenbot.net/"
+    "https://w.kittenbot.cc/"
   ],
   "services": [
     309264608,

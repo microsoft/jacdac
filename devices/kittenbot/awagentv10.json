@@ -4,9 +4,9 @@
   "company": "KittenBot",
   "description": "AW Agent, short for AgileWhisker Agent, is a small software for PC computers that is designed to be used in conjunction with AgileWhisker Keyboard Elite60 and other keyboards. It is an open-source software. It functions as a virtual hardware within the jacdac ecosystem. It incorporates MQTT services to retrieve hardware information from the computer and trigger computer events, among other functionalities.",
   "connector": "noConnector",
-  "link": "https://w.kittenbot.net/",
+  "link": "https://w.kittenbot.cc/",
   "storeLink": [
-    "https://w.kittenbot.net/"
+    "https://w.kittenbot.cc/"
   ],
   "services": [
     457422603,

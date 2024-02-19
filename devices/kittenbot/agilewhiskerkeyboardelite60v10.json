@@ -4,9 +4,9 @@
   "company": "KittenBot",
   "description": "This is the first mechanical keyboard in the Jacdac system, featuring a 60% layout, a rotary encoder, RGB LED lighting, and two Jacdac interfaces. It is powered by the RP2040 microcontroller.",
   "connector": "edgeHighCurrentProvider",
-  "link": "https://w.kittenbot.net/",
+  "link": "https://w.kittenbot.cc/",
   "storeLink": [
-    "https://w.kittenbot.net/"
+    "https://w.kittenbot.cc/"
   ],
   "services": [
     309264608,

@@ -396,6 +396,25 @@
     "status": "stable"
   },
   {
+    "id": "m-klein-callicolorv30",
+    "name": "Callicolor",
+    "company": "M.Klein",
+    "description": "Selfmade Neopixelring for Calliope mini.",
+    "connector": "noConnector",
+    "link": "https://www.hackster.io/MKlein/callicolor-01cc4b",
+    "storeLink": [
+      "https://www.hackster.io/MKlein/callicolor-01cc4b"
+    ],
+    "services": [
+      309264608
+    ],
+    "productIdentifiers": [
+      877317536
+    ],
+    "version": "3.0",
+    "status": "stable"
+  },
+  {
     "id": "kittenbot-accelerometerv10",
     "name": "Accelerometer",
     "company": "KittenBot",

@@ -1,0 +1,218 @@
+{
+  "name": "PC monitor",
+  "status": "experimental",
+  "shortId": "pcmonitor",
+  "camelName": "PCMonitor",
+  "shortName": "PCMonitor",
+  "extends": [
+    "_base"
+  ],
+  "notes": {
+    "short": "Measures PC monitor."
+  },
+  "classIdentifier": 409107221,
+  "enums": {},
+  "constants": {},
+  "packets": [
+    {
+      "kind": "report",
+      "name": "command_not_implemented",
+      "identifier": 3,
+      "description": "This report may be emitted by a server in response to a command (action or register operation)\nthat it does not understand.\nThe `service_command` and `packet_crc` fields are copied from the command packet that was unhandled.\nNote that it's possible to get an ACK, followed by such an error report.",
+      "fields": [
+        {
+          "name": "service_command",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "packet_crc",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "identifierName": "command_not_implemented",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
+    {
+      "kind": "const",
+      "name": "instance_name",
+      "identifier": 265,
+      "description": "A friendly name that describes the role of this service instance in the device.\nIt often corresponds to what's printed on the device:\nfor example, `A` for button A, or `S0` for servo channel 0.\nWords like `left` should be avoided because of localization issues (unless they are printed on the device).",
+      "fields": [
+        {
+          "name": "_",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "optional": true,
+      "identifierName": "instance_name",
+      "packFormat": "s",
+      "derived": "_base"
+    },
+    {
+      "kind": "ro",
+      "name": "status_code",
+      "identifier": 259,
+      "description": "Reports the current state or error status of the device. ``code`` is a standardized value from \nthe Jacdac status/error codes. ``vendor_code`` is any vendor specific error code describing the device\nstate. This report is typically not queried, when a device has an error, it will typically\nadd this report in frame along with the announce packet. If a service implements this register,\nit should also support the ``status_code_changed`` event defined below.",
+      "fields": [
+        {
+          "name": "code",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "vendor_code",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "identifierName": "status_code",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
+    {
+      "kind": "rw",
+      "name": "client_variant",
+      "identifier": 9,
+      "description": "An optional register in the format of a URL query string where the client can provide hints how\nthe device twin should be rendered. If the register is not implemented, the client library can simulate the register client side.",
+      "fields": [
+        {
+          "name": "_",
+          "type": "string",
+          "storage": 0
+        }
+      ],
+      "optional": true,
+      "identifierName": "client_variant",
+      "packFormat": "s",
+      "derived": "_base"
+    },
+    {
+      "kind": "event",
+      "name": "status_code_changed",
+      "identifier": 4,
+      "description": "Notifies that the status code of the service changed.",
+      "fields": [
+        {
+          "name": "code",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "vendor_code",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "optional": true,
+      "identifierName": "status_code_changed",
+      "packFormat": "u16 u16",
+      "derived": "_base"
+    },
+    {
+      "kind": "ro",
+      "name": "cpu_usage",
+      "identifier": 400,
+      "description": "CPU usage in percent.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "%",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u8"
+    },
+    {
+      "kind": "ro",
+      "name": "cpu_temperature",
+      "identifier": 401,
+      "description": "CPU temperature in Celsius.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "°C",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u8"
+    },
+    {
+      "kind": "ro",
+      "name": "ram_usage",
+      "identifier": 402,
+      "description": "RAM usage in percent.",
+      "fields": [
+        {
+          "name": "_",
+          "unit": "%",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u8"
+    },
+    {
+      "kind": "ro",
+      "name": "gpu_information",
+      "identifier": 403,
+      "description": "GPU info.",
+      "fields": [
+        {
+          "name": "usage",
+          "unit": "%",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        },
+        {
+          "name": "temperature",
+          "unit": "°C",
+          "type": "u8",
+          "storage": 1,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u8 u8"
+    },
+    {
+      "kind": "ro",
+      "name": "network_information",
+      "identifier": 405,
+      "description": "Network transmit/receive speed in Kbytes per second.\n\nA measure of PC monitor.",
+      "fields": [
+        {
+          "name": "tx",
+          "unit": "KB",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        },
+        {
+          "name": "rx",
+          "unit": "KB",
+          "type": "u16",
+          "storage": 2,
+          "isSimpleType": true
+        }
+      ],
+      "packFormat": "u16 u16"
+    }
+  ],
+  "tags": []
+}

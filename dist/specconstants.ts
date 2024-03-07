@@ -4531,6 +4531,40 @@ export namespace IndexedScreenRegPack {
 
 // Service Infrastructure constants
 export const SRV_INFRASTRUCTURE = 0x1e1589eb
+// Service Keyboard client constants
+export const SRV_KEYBOARD_CLIENT = 0x113d023e
+export enum KeyboardClientEvent {
+    /**
+     * Argument: key uint16_t. Emitted when a key is pressed.
+     *
+     * ```
+     * const [key] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    Down = 0x1,
+
+    /**
+     * Argument: key uint16_t. Emitted when a key is held.
+     *
+     * ```
+     * const [key] = jdunpack<[number]>(buf, "u16")
+     * ```
+     */
+    Hold = 0x81,
+}
+
+export namespace KeyboardClientEventPack {
+    /**
+     * Pack format for 'down' data.
+     */
+    export const Down = "u16"
+
+    /**
+     * Pack format for 'hold' data.
+     */
+    export const Hold = "u16"
+}
+
 // Service LED constants
 export const SRV_LED = 0x1609d4f0
 export const CONST_LED_MAX_PIXELS_LENGTH = 0x40
@@ -6012,6 +6046,144 @@ export namespace MultitouchEventPack {
      * Pack format for 'swipe_neg' data.
      */
     export const SwipeNeg = "u16 u8 u8"
+}
+
+// Service PC controller constants
+export const SRV_PCCONTROLLER = 0x113d0987
+export enum PCControllerCmd {
+    /**
+     * Argument: url string (bytes). Open a URL in the default browser.
+     *
+     * ```
+     * const [url] = jdunpack<[string]>(buf, "s")
+     * ```
+     */
+    OpenUrl = 0x80,
+
+    /**
+     * Argument: name string (bytes). Start an app.
+     *
+     * ```
+     * const [name] = jdunpack<[string]>(buf, "s")
+     * ```
+     */
+    StartApp = 0x81,
+
+    /**
+     * Argument: text string (bytes). Send text to the active window.
+     *
+     * ```
+     * const [text] = jdunpack<[string]>(buf, "s")
+     * ```
+     */
+    SendText = 0x82,
+
+    /**
+     * Argument: script string (bytes). Run a script.
+     *
+     * ```
+     * const [script] = jdunpack<[string]>(buf, "s")
+     * ```
+     */
+    RunScript = 0x83,
+}
+
+export namespace PCControllerCmdPack {
+    /**
+     * Pack format for 'open_url' data.
+     */
+    export const OpenUrl = "s"
+
+    /**
+     * Pack format for 'start_app' data.
+     */
+    export const StartApp = "s"
+
+    /**
+     * Pack format for 'send_text' data.
+     */
+    export const SendText = "s"
+
+    /**
+     * Pack format for 'run_script' data.
+     */
+    export const RunScript = "s"
+}
+
+// Service PC monitor constants
+export const SRV_PCMONITOR = 0x18627b15
+export enum PCMonitorReg {
+    /**
+     * Read-only % uint8_t. CPU usage in percent.
+     *
+     * ```
+     * const [cpuUsage] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    CpuUsage = 0x190,
+
+    /**
+     * Read-only °C uint8_t. CPU temperature in Celsius.
+     *
+     * ```
+     * const [cpuTemperature] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    CpuTemperature = 0x191,
+
+    /**
+     * Read-only % uint8_t. RAM usage in percent.
+     *
+     * ```
+     * const [ramUsage] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+    RamUsage = 0x192,
+
+    /**
+     * GPU info.
+     *
+     * ```
+     * const [usage, temperature] = jdunpack<[number, number]>(buf, "u8 u8")
+     * ```
+     */
+    GpuInformation = 0x193,
+
+    /**
+     * Network transmit/receive speed in Kbytes per second.
+     *
+     * ```
+     * const [tx, rx] = jdunpack<[number, number]>(buf, "u16 u16")
+     * ```
+     */
+    NetworkInformation = 0x195,
+}
+
+export namespace PCMonitorRegPack {
+    /**
+     * Pack format for 'cpu_usage' data.
+     */
+    export const CpuUsage = "u8"
+
+    /**
+     * Pack format for 'cpu_temperature' data.
+     */
+    export const CpuTemperature = "u8"
+
+    /**
+     * Pack format for 'ram_usage' data.
+     */
+    export const RamUsage = "u8"
+
+    /**
+     * Pack format for 'gpu_information' data.
+     */
+    export const GpuInformation = "u8 u8"
+
+    /**
+     * Pack format for 'network_information' data.
+     */
+    export const NetworkInformation = "u16 u16"
 }
 
 // Service Planar position constants

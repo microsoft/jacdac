@@ -89,6 +89,7 @@ declare namespace senml {
         | "Mbit/s"
         | "B/s"
         | "MB/s"
+        | "KB"
         | "mV"
         | "mA"
         | "dBm"
@@ -642,6 +643,8 @@ declare namespace jdspec {
         | "edgeLowCurrentProviderConsumer"
         | "edgeHighCurrentProviderConsumer"
         | "edgePassive"
+        | "grove"
+        | "qwiic"
 
     interface TransportSpec {
         vendorId?: number

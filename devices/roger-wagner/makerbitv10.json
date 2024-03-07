@@ -20,7 +20,7 @@
       "slug": "1010Technologies/pxt-makerbit-lcd1602/jacdac"
     }
   ],
-  "connector": "noConnector",
+  "connector": "grove",
   "link": "https://makerbit.com/",
   "storeLink": [
     "https://makerbit.com/"

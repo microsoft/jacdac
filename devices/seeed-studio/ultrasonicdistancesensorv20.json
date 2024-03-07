@@ -1,0 +1,19 @@
+{
+  "id": "seeed-studio-ultrasonicdistancesensorv20",
+  "name": "Ultrasonic Distance Sensor",
+  "company": "Seeed Studio",
+  "description": "This Grove - Ultrasonic ranger is a non-contact distance measurement module which works at 40KHz. When we provide a pulse trigger signal with more than 10uS through signal pin, the Grove_Ultrasonic_Ranger will issue 8 cycles of 40kHz cycle level and detect the echo. The pulse width of the echo signal is proportional to the measured distance.",
+  "connector": "grove",
+  "link": "https://www.seeedstudio.com/Grove-Ultrasonic-Distance-Sensor.html",
+  "storeLink": [
+    "https://www.seeedstudio.com/Grove-Ultrasonic-Distance-Sensor.html"
+  ],
+  "services": [
+    337275786
+  ],
+  "productIdentifiers": [
+    1068863164
+  ],
+  "version": "2.0",
+  "status": "stable"
+}

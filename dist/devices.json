@@ -65,7 +65,7 @@
     "description": "The full-featured ESP32-S2 based development board in a Feather format from Unexpected Maker. The FeatherS2 is a power house, fully souped up with 16 MB of Flash memory (for firmware and file storage) and 8 MB of QSPI-based external PSRAM so you can have massive storage buffers.",
     "repo": "https://github.com/microsoft/devicescript-esp32",
     "firmwareSource": "https://github.com/microsoft/devicescript-esp32/blob/main/boards/esp32s2/feather_s2.board.json",
-    "connector": "noConnector",
+    "connector": "qwiic",
     "link": "https://feathers2.io/",
     "storeLink": [
       "https://unexpectedmaker.com/shop/feathers2-esp32-s2"
@@ -136,6 +136,83 @@
     "status": "stable"
   },
   {
+    "id": "seeed-studio-grove16x2lcdv20",
+    "name": "Grove-16x2 LCD",
+    "company": "Seeed Studio",
+    "description": "Seeedstudio Grove - 16 x 2 LCD is a I2C LCD display. 16x2 means two lines and each line has 16 columns, 32 characters in total.",
+    "connector": "grove",
+    "link": "https://wiki.seeedstudio.com/Grove-16x2_LCD_Series/",
+    "storeLink": [
+      "https://www.seeedstudio.com/Grove-16-x-2-LCD-Black-on-Yellow.html"
+    ],
+    "services": [
+      523748714
+    ],
+    "productIdentifiers": [
+      877317536
+    ],
+    "version": "2.0",
+    "status": "stable"
+  },
+  {
+    "id": "seeed-studio-relayv12",
+    "name": "Relay",
+    "company": "Seeed Studio",
+    "description": "The Grove-Relay module is a digital normally-open switch. Through it, you can control circuit of high voltage with low voltage, 3.3-5V on the controller. There is an indicator LED on the board, which will light up when the controlled terminals get closed.",
+    "connector": "grove",
+    "link": "https://wiki.seeedstudio.com/Grove-Relay/",
+    "storeLink": [
+      "https://www.seeedstudio.com/Grove-Relay.html"
+    ],
+    "services": [
+      406840918
+    ],
+    "productIdentifiers": [
+      808015809
+    ],
+    "version": "1.2",
+    "status": "stable"
+  },
+  {
+    "id": "seeed-studio-soilmoisturev14",
+    "name": "Soil Moisture",
+    "company": "Seeed Studio",
+    "description": "Soil Moisture Sensor can measure soil moisture for plants. The soil moisture sensor consists of two probes that allow the current to pass through the soil and then obtain resistance values to measure soil moisture content.",
+    "hardwareDesign": "https://wiki.seeedstudio.com/Grove-Moisture_Sensor/",
+    "connector": "grove",
+    "link": "https://www.seeedstudio.com/Grove-Moisture-Sensor.html",
+    "storeLink": [
+      "https://www.seeedstudio.com/Grove-Moisture-Sensor.html"
+    ],
+    "services": [
+      491430835
+    ],
+    "productIdentifiers": [
+      814817380
+    ],
+    "version": "1.4",
+    "status": "stable"
+  },
+  {
+    "id": "seeed-studio-ultrasonicdistancesensorv20",
+    "name": "Ultrasonic Distance Sensor",
+    "company": "Seeed Studio",
+    "description": "This Grove - Ultrasonic ranger is a non-contact distance measurement module which works at 40KHz. When we provide a pulse trigger signal with more than 10uS through signal pin, the Grove_Ultrasonic_Ranger will issue 8 cycles of 40kHz cycle level and detect the echo. The pulse width of the echo signal is proportional to the measured distance.",
+    "connector": "grove",
+    "link": "https://www.seeedstudio.com/Grove-Ultrasonic-Distance-Sensor.html",
+    "storeLink": [
+      "https://www.seeedstudio.com/Grove-Ultrasonic-Distance-Sensor.html"
+    ],
+    "services": [
+      337275786
+    ],
+    "productIdentifiers": [
+      1068863164
+    ],
+    "version": "2.0",
+    "status": "stable"
+  },
+  {
     "id": "seeed-studio-xiaoesp32c3v00",
     "name": "XIAO ESP32C3",
     "company": "Seeed Studio",
@@ -180,7 +257,7 @@
         "slug": "1010Technologies/pxt-makerbit-lcd1602/jacdac"
       }
     ],
-    "connector": "noConnector",
+    "connector": "grove",
     "link": "https://makerbit.com/",
     "storeLink": [
       "https://makerbit.com/"
@@ -302,6 +379,42 @@
     "status": "stable"
   },
   {
+    "id": "m5stack-cardputerv10",
+    "name": "Cardputer",
+    "company": "M5Stack",
+    "description": "Cardputer is a card-sized portable computer that is perfect for engineers. At the heart of Cardputer is the M5StampS3, a mini development board based on the ESP32-S3 chip. Cardputer features a powerful dual-core processor, supports Wi-Fi functionality and integrates various peripherals and sensors, making it ideal for rapid functional verification, industrial control and home automation systems.",
+    "repo": "https://github.com/m5stack/M5Cardputer-UserDemo",
+    "firmwareSource": "https://github.com/m5stack/M5Cardputer-UserDemo",
+    "connector": "grove",
+    "storeLink": [
+      "https://shop.m5stack.com/products/m5stack-cardputer-kit-w-m5stamps3"
+    ],
+    "productIdentifiers": [
+      854823074
+    ],
+    "version": "1.0",
+    "status": "stable"
+  },
+  {
+    "id": "m-klein-callicolorv30",
+    "name": "Callicolor",
+    "company": "M.Klein",
+    "description": "Selfmade Neopixelring for Calliope mini.",
+    "connector": "noConnector",
+    "link": "https://www.hackster.io/MKlein/callicolor-01cc4b",
+    "storeLink": [
+      "https://www.hackster.io/MKlein/callicolor-01cc4b"
+    ],
+    "services": [
+      309264608
+    ],
+    "productIdentifiers": [
+      877317536
+    ],
+    "version": "3.0",
+    "status": "stable"
+  },
+  {
     "id": "kittenbot-accelerometerv10",
     "name": "Accelerometer",
     "company": "KittenBot",
@@ -318,6 +431,73 @@
     "version": "1.0",
     "status": "stable",
     "shape": "ec30_2x2_lr"
+  },
+  {
+    "id": "kittenbot-agilewhiskerkeyboardelite60v10",
+    "name": "AgileWhisker Keyboard Elite60",
+    "company": "KittenBot",
+    "description": "This is the first mechanical keyboard in the Jacdac system, featuring a 60% layout, a rotary encoder, RGB LED lighting, and two Jacdac interfaces. It is powered by the RP2040 microcontroller.",
+    "connector": "edgeHighCurrentProvider",
+    "link": "https://w.kittenbot.cc/",
+    "storeLink": [
+      "https://w.kittenbot.cc/"
+    ],
+    "services": [
+      309264608,
+      414210922,
+      437330261,
+      411425820,
+      284830153
+    ],
+    "productIdentifiers": [
+      878230570
+    ],
+    "version": "1.0",
+    "status": "stable"
+  },
+  {
+    "id": "kittenbot-agilewhiskernumerickeypadv10",
+    "name": "AgileWhisker Numeric Keypad",
+    "company": "KittenBot",
+    "description": "This is the first numeric keypad in the Jacdac system, featuring an OLED screen, a rotary encoder, RGB LED lighting, and one Jacdac interface. It is powered by the RP2040 microcontroller.",
+    "connector": "edgeLowCurrentProviderConsumer",
+    "link": "https://w.kittenbot.cc/",
+    "storeLink": [
+      "https://w.kittenbot.cc/"
+    ],
+    "services": [
+      309264608,
+      414210922,
+      437330261,
+      411425820,
+      284830153,
+      523748714
+    ],
+    "productIdentifiers": [
+      988197346
+    ],
+    "version": "1.0",
+    "status": "stable"
+  },
+  {
+    "id": "kittenbot-awagentv10",
+    "name": "AW Agent",
+    "company": "KittenBot",
+    "description": "AW Agent, short for AgileWhisker Agent, is a small software for PC computers that is designed to be used in conjunction with AgileWhisker Keyboard Elite60 and other keyboards. It is an open-source software. It functions as a virtual hardware within the jacdac ecosystem. It incorporates MQTT services to retrieve hardware information from the computer and trigger computer events, among other functionalities.",
+    "connector": "noConnector",
+    "link": "https://w.kittenbot.cc/",
+    "storeLink": [
+      "https://w.kittenbot.cc/"
+    ],
+    "services": [
+      457422603,
+      289210942
+    ],
+    "productIdentifiers": [
+      1020385313
+    ],
+    "version": "1.0",
+    "status": "stable"
   },
   {
     "id": "kittenbot-duckybotkitv10",
@@ -1278,12 +1458,33 @@
     "status": "stable"
   },
   {
+    "id": "calliope-ggmbh-calliopescd40v10",
+    "name": "Calliope SCD40",
+    "company": "Calliope gGmbH",
+    "description": "The SCD40 is a miniature CO2 sensor from Sensirion. This sensor builds on the photoacoustic NDIR sensing principle. It provides On-chip signal \ncompensation with the build-in humidity and temperature sensor.",
+    "connector": "grove",
+    "link": "https://shop.calliope.cc/en/products/scd40-calliope-mini-co2-sensor",
+    "storeLink": [
+      "https://shop.calliope.cc/en/products/scd40-calliope-mini-co2-sensor"
+    ],
+    "services": [
+      379362758,
+      382210232,
+      337754823
+    ],
+    "productIdentifiers": [
+      895527115
+    ],
+    "version": "1.0",
+    "status": "stable"
+  },
+  {
     "id": "adafruit-qtpyesp32c3wifidevboardv10",
     "name": "QT Py ESP32-C3 WiFi Dev Board",
     "company": "Adafruit",
     "description": "The ESP32-C3 integrates a rich set of peripherals, ranging from UART, I2C, I2S, remote control peripheral, LED PWM controller, general DMA controller, TWAI controller, USB Serial/JTAG controller, temperature sensor, and ADC. It also includes SPI, Dual SPI, and Quad SPI interfaces.",
     "firmwareSource": "https://github.com/microsoft/devicescript-esp32",
-    "connector": "noConnector",
+    "connector": "qwiic",
     "link": "https://www.adafruit.com/product/5405",
     "storeLink": [
       "https://www.adafruit.com/product/5405"
@@ -2509,15 +2710,15 @@
       "microsoft-research-jmflexv10",
       "microsoft-research-jmkeyboardkey46v10",
       "microsoft-research-jmkeyboardkey46v11",
-      "microsoft-research-jmrgbledbar10v01",
+      "microsoft-research-jmrgbledbar58v01",
       "microsoft-research-jmrgbledgeneric60v01",
       "microsoft-research-jmrgbledring37v20",
       "microsoft-research-jmrgbledring37v21",
       "microsoft-research-jmrotarycontrolbuttonv10",
       "microsoft-research-jmrotarycontrolbuttonv11",
-      "microsoft-research-jmsinglergb-led42v01",
+      "microsoft-research-jmsinglergbled42v01",
       "microsoft-research-jmslider49v11",
-      "microsoft-research-jmtemphumidity18v11"
+      "microsoft-research-jmtemperaturehumidity18v11"
     ]
   },
   {

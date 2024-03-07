@@ -25,14 +25,14 @@
     "microsoft-research-jmflexv10",
     "microsoft-research-jmkeyboardkey46v10",
     "microsoft-research-jmkeyboardkey46v11",
-    "microsoft-research-jmrgbledbar10v01",
+    "microsoft-research-jmrgbledbar58v01",
     "microsoft-research-jmrgbledgeneric60v01",
     "microsoft-research-jmrgbledring37v20",
     "microsoft-research-jmrgbledring37v21",
     "microsoft-research-jmrotarycontrolbuttonv10",
     "microsoft-research-jmrotarycontrolbuttonv11",
-    "microsoft-research-jmsinglergb-led42v01",
+    "microsoft-research-jmsinglergbled42v01",
     "microsoft-research-jmslider49v11",
-    "microsoft-research-jmtemphumidity18v11"
+    "microsoft-research-jmtemperaturehumidity18v11"
   ]
 }

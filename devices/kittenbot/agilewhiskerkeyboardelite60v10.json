@@ -1,0 +1,23 @@
+{
+  "id": "kittenbot-agilewhiskerkeyboardelite60v10",
+  "name": "AgileWhisker Keyboard Elite60",
+  "company": "KittenBot",
+  "description": "This is the first mechanical keyboard in the Jacdac system, featuring a 60% layout, a rotary encoder, RGB LED lighting, and two Jacdac interfaces. It is powered by the RP2040 microcontroller.",
+  "connector": "edgeHighCurrentProvider",
+  "link": "https://w.kittenbot.cc/",
+  "storeLink": [
+    "https://w.kittenbot.cc/"
+  ],
+  "services": [
+    309264608,
+    414210922,
+    437330261,
+    411425820,
+    284830153
+  ],
+  "productIdentifiers": [
+    878230570
+  ],
+  "version": "1.0",
+  "status": "stable"
+}

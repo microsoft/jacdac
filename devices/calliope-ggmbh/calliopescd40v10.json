@@ -1,0 +1,21 @@
+{
+  "id": "calliope-ggmbh-calliopescd40v10",
+  "name": "Calliope SCD40",
+  "company": "Calliope gGmbH",
+  "description": "The SCD40 is a miniature CO2 sensor from Sensirion. This sensor builds on the photoacoustic NDIR sensing principle. It provides On-chip signal \ncompensation with the build-in humidity and temperature sensor.",
+  "connector": "grove",
+  "link": "https://shop.calliope.cc/en/products/scd40-calliope-mini-co2-sensor",
+  "storeLink": [
+    "https://shop.calliope.cc/en/products/scd40-calliope-mini-co2-sensor"
+  ],
+  "services": [
+    379362758,
+    382210232,
+    337754823
+  ],
+  "productIdentifiers": [
+    895527115
+  ],
+  "version": "1.0",
+  "status": "stable"
+}

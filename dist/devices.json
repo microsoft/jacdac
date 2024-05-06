@@ -1188,7 +1188,6 @@
       "microbit-educational-foundation-microbitv2"
     ],
     "requiredDevices": [
-      "forward-education-breakoutboardrelaypumpv10",
       "microbit-educational-foundation-microbitv2"
     ]
   },

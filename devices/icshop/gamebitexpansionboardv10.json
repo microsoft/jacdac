@@ -1,0 +1,25 @@
+{
+    "id": "icshop-gamebitexpansionboardv10",
+    "name": "Game:bit Expansion Board",
+    "company": "iCShop",
+    "description": "Game:Bit is a brand new product based on Microsoft Arcade games , providing users with different choices for learning micro:bit. Break away from the previous model of using expansion boards and sensors to create projects, and use the method of creating interesting games to stimulate learners' different programming thinking. From how to set the scoring method, character movements, background and music matching, to the judgment of victory and defeat and the ending process, everything in the entire game is decided by the game creator.",
+    "connector": "edgeLowCurrentProviderConsumer",
+    "storeLink": [
+        "https://www.icshop.com.tw/products/368112100137?locale=en"
+    ],
+    "productIdentifiers": [
+      9355259573
+    ],
+    "tags": [
+        "adapter",
+        "microbit"
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "relatedDevices": [
+        "microbit-educational-foundation-microbitv2"
+    ],
+    "requiredDevices": [
+        "microbit-educational-foundation-microbitv2"
+    ]
+}

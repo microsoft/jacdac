@@ -1,25 +1,25 @@
 {
-    "id": "elecfreaks-retroprogrammingarcadev10",
-    "name": "micro:bit Retro Programming Arcade",
-    "company": "ELECFREAKS",
-    "description": "micro:bit Retro Arcade is a color screen joystick expansion board for micro:bit V2, it contains a TFT 160*128 color screen, 4 directional buttons, two A/B buttons and a reset button. micro:bit Retro Arcade can be used with micro:bit V2 to program games online and play offline on the Microsoft Arcade programming platform. It is a simple and fun way to help children write their own games and understand the mystery behind them. It also supports custom game characters, diverse scenarios and plot design using graphical programming software, making it easy for everyone to achieve fun electronic creations and unlimited game ideas. micro:bit Retro Arcade can also be used as a remote control handle in addition to a game programming learning machine.",
-    "connector": "edgeLowCurrentProviderConsumer",
-    "storeLink": [
-        "https://shop.elecfreaks.com/products/micro-bit-retro-programming-arcade"
-    ],
-    "productIdentifiers": [
-        814450363
-    ],
-    "tags": [
-        "adapter",
-        "microbit"
-    ],
-    "version": "1.0",
-    "status": "stable",
-    "relatedDevices": [
-        "microbit-educational-foundation-microbitv2"
-    ],
-    "requiredDevices": [
-        "microbit-educational-foundation-microbitv2"
-    ]
+  "id": "elecfreaks-microbitretroprogrammingarcadev10",
+  "name": "micro:bit Retro Programming Arcade",
+  "company": "ELECFREAKS",
+  "description": "micro:bit Retro Arcade is a color screen joystick expansion board for micro:bit V2, it contains a TFT 160*128 color screen, 4 directional buttons, two A/B buttons and a reset button. micro:bit Retro Arcade can be used with micro:bit V2 to program games online and play offline on the Microsoft Arcade programming platform. It is a simple and fun way to help children write their own games and understand the mystery behind them. It also supports custom game characters, diverse scenarios and plot design using graphical programming software, making it easy for everyone to achieve fun electronic creations and unlimited game ideas. micro:bit Retro Arcade can also be used as a remote control handle in addition to a game programming learning machine.",
+  "connector": "edgeLowCurrentProviderConsumer",
+  "storeLink": [
+    "https://shop.elecfreaks.com/products/micro-bit-retro-programming-arcade"
+  ],
+  "productIdentifiers": [
+    814450363
+  ],
+  "tags": [
+    "adapter",
+    "microbit"
+  ],
+  "version": "1.0",
+  "status": "stable",
+  "relatedDevices": [
+    "microbit-educational-foundation-microbitv2"
+  ],
+  "requiredDevices": [
+    "microbit-educational-foundation-microbitv2"
+  ]
 }

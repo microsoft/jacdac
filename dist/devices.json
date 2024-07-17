@@ -799,6 +799,31 @@
     "shape": "ec30_3x2_r"
   },
   {
+    "id": "kittenbot-newbitarcadeshieldexpansionboardformicrobitv2v10",
+    "name": "Newbit Arcade Shield Expansion Board for Micro:bit V2",
+    "company": "KittenBot",
+    "description": "KittenBot Newbit Arcade Shield is an expansion board developed exclusively for Micro:bit V2. It provides Micro:bit V2 the ability not only to be a console, but also to create programmable games. Equipped with the Newbit Arcade Shield, you can use Micro:bit to design games online in MakeCodeArcade, or play games offline, which will broaden your experience of programming with Micro:bit V2.",
+    "connector": "edgeLowCurrentProviderConsumer",
+    "storeLink": [
+      "https://www.kittenbot.cc/products/newbit-arcade-shield"
+    ],
+    "productIdentifiers": [
+      1042371620
+    ],
+    "tags": [
+      "adapter",
+      "microbit"
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "relatedDevices": [
+      "microbit-educational-foundation-microbitv2"
+    ],
+    "requiredDevices": [
+      "microbit-educational-foundation-microbitv2"
+    ]
+  },
+  {
     "id": "kittenbot-powerv10",
     "name": "Power",
     "company": "KittenBot",
@@ -1122,6 +1147,31 @@
     "status": "stable"
   },
   {
+    "id": "icshop-gamebitexpansionboardv10",
+    "name": "Game:bit Expansion Board",
+    "company": "iCShop",
+    "description": "Game:Bit is a brand new product based on Microsoft Arcade games , providing users with different choices for learning micro:bit. Break away from the previous model of using expansion boards and sensors to create projects, and use the method of creating interesting games to stimulate learners' different programming thinking. From how to set the scoring method, character movements, background and music matching, to the judgment of victory and defeat and the ending process, everything in the entire game is decided by the game creator.",
+    "connector": "edgeLowCurrentProviderConsumer",
+    "storeLink": [
+      "https://www.icshop.com.tw/products/368112100137?locale=en"
+    ],
+    "productIdentifiers": [
+      860567421
+    ],
+    "tags": [
+      "adapter",
+      "microbit"
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "relatedDevices": [
+      "microbit-educational-foundation-microbitv2"
+    ],
+    "requiredDevices": [
+      "microbit-educational-foundation-microbitv2"
+    ]
+  },
+  {
     "id": "forward-education-breakoutboardrelaypumpv10",
     "name": "Breakout Board + Relay + Pump",
     "company": "Forward Education",
@@ -1435,6 +1485,31 @@
       "firmwareUploader": "https://adafruit.github.io/Adafruit_WebSerial_ESPTool/"
     },
     "status": "stable"
+  },
+  {
+    "id": "elecfreaks-microbitretroprogrammingarcadev10",
+    "name": "micro:bit Retro Programming Arcade",
+    "company": "ELECFREAKS",
+    "description": "micro:bit Retro Arcade is a color screen joystick expansion board for micro:bit V2, it contains a TFT 160*128 color screen, 4 directional buttons, two A/B buttons and a reset button. micro:bit Retro Arcade can be used with micro:bit V2 to program games online and play offline on the Microsoft Arcade programming platform. It is a simple and fun way to help children write their own games and understand the mystery behind them. It also supports custom game characters, diverse scenarios and plot design using graphical programming software, making it easy for everyone to achieve fun electronic creations and unlimited game ideas. micro:bit Retro Arcade can also be used as a remote control handle in addition to a game programming learning machine.",
+    "connector": "edgeLowCurrentProviderConsumer",
+    "storeLink": [
+      "https://shop.elecfreaks.com/products/micro-bit-retro-programming-arcade"
+    ],
+    "productIdentifiers": [
+      814450363
+    ],
+    "tags": [
+      "adapter",
+      "microbit"
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "relatedDevices": [
+      "microbit-educational-foundation-microbitv2"
+    ],
+    "requiredDevices": [
+      "microbit-educational-foundation-microbitv2"
+    ]
   },
   {
     "id": "calliope-ggmbh-calliopeminiv3v30",

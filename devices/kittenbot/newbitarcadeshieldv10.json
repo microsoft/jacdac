@@ -1,25 +1,25 @@
 {
-    "id": "kittenbot-newbitarcadeshieldv10",
-    "name": "Newbit Arcade Shield Expansion Board for Micro:bit V2",
-    "company": "KittenBot",
-    "description": "KittenBot Newbit Arcade Shield is an expansion board developed exclusively for Micro:bit V2. It provides Micro:bit V2 the ability not only to be a console, but also to create programmable games. Equipped with the Newbit Arcade Shield, you can use Micro:bit to design games online in MakeCodeArcade, or play games offline, which will broaden your experience of programming with Micro:bit V2.",
-    "connector": "edgeLowCurrentProviderConsumer",
-    "storeLink": [
-        "https://www.kittenbot.cc/products/newbit-arcade-shield"
-    ],
-    "productIdentifiers": [
-        1042371620
-    ],
-    "tags": [
-        "adapter",
-        "microbit"
-    ],
-    "version": "1.0",
-    "status": "stable",
-    "relatedDevices": [
-        "microbit-educational-foundation-microbitv2"
-    ],
-    "requiredDevices": [
-        "microbit-educational-foundation-microbitv2"
-    ]
+  "id": "kittenbot-newbitarcadeshieldexpansionboardformicrobitv2v10",
+  "name": "Newbit Arcade Shield Expansion Board for Micro:bit V2",
+  "company": "KittenBot",
+  "description": "KittenBot Newbit Arcade Shield is an expansion board developed exclusively for Micro:bit V2. It provides Micro:bit V2 the ability not only to be a console, but also to create programmable games. Equipped with the Newbit Arcade Shield, you can use Micro:bit to design games online in MakeCodeArcade, or play games offline, which will broaden your experience of programming with Micro:bit V2.",
+  "connector": "edgeLowCurrentProviderConsumer",
+  "storeLink": [
+    "https://www.kittenbot.cc/products/newbit-arcade-shield"
+  ],
+  "productIdentifiers": [
+    1042371620
+  ],
+  "tags": [
+    "adapter",
+    "microbit"
+  ],
+  "version": "1.0",
+  "status": "stable",
+  "relatedDevices": [
+    "microbit-educational-foundation-microbitv2"
+  ],
+  "requiredDevices": [
+    "microbit-educational-foundation-microbitv2"
+  ]
 }

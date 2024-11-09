@@ -1,0 +1,20 @@
+{
+  "id": "m-klein-calliogamerv10",
+  "name": "Calliogamer",
+  "company": "M.Klein",
+  "description": "The CallioGamer can easyly plugged under your calliope mini and provides eight gamepad buttons to control whatever you want.\nOnly a male 2x15 pin header and 8 tactile switches are needed to built your own CallioGamer!",
+  "firmwareSource": "https://github.com/MKleinSB/pxt-calliogamer-jacdac",
+  "connector": "noConnector",
+  "link": "https://www.hackster.io/MKlein/calliogamer-f57906",
+  "storeLink": [
+    "https://www.hackster.io/MKlein/calliogamer-f57906"
+  ],
+  "services": [
+    277836886
+  ],
+  "productIdentifiers": [
+    992191103
+  ],
+  "version": "1.0",
+  "status": "stable"
+}

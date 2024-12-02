@@ -9,6 +9,7 @@ This repository contains the service specifications and device definitions.
 * Read online documentation at https://aka.ms/jacdac
 * Join the dicussions as https://github.com/microsoft/jacdac/discussions
 * File an issue at https://github.com/microsoft/jacdac/issues
+* hello jacdac
 
 ## Contributing
 

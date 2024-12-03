@@ -1507,6 +1507,25 @@
     "status": "stable"
   },
   {
+    "id": "elecfreaks-buzzerv10",
+    "name": "Buzzer",
+    "company": "ELECFREAKS",
+    "description": "The Buzzer is a sound module designed for the micro:bit, capable of producing various tones through programming. It connects using the Jacdac protocol, is easy to use, and is suitable for educational purposes. It helps students learn the basics of sound and music while also being ideal for creating interactive sound projects.",
+    "connector": "edgeLowCurrentProviderConsumer",
+    "storeLink": [
+      "https://shop.elecfreaks.com/products/edge-buzzer"
+    ],
+    "services": [
+      458731991
+    ],
+    "productIdentifiers": [
+      870706665
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "shape": "ec30_3x2_lr"
+  },
+  {
     "id": "elecfreaks-microbitretroprogrammingarcadev10",
     "name": "micro:bit Retro Programming Arcade",
     "company": "ELECFREAKS",

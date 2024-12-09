@@ -1,18 +1,18 @@
 {
-    "id": "elecfreaks-jacdacledring8v10",
-    "name": "Jacdac LED Ring 8",
-    "company": "ELECFREAKS",
-    "description": "A Jacdac LED Ring 8.",
-    "storeLink": [
-        "https://shop.elecfreaks.com/products/jacdacledring8"
-      ],
-    "services": [
-        369743088
-    ],
-    "productIdentifiers": [
-        930068017
-    ],
-    "version": "1.0",
-    "status": "stable",
-    "shape": "ec30_3x3_l" 
-  }
+  "id": "elecfreaks-jacdacledring8v10",
+  "name": "Jacdac LED Ring 8",
+  "company": "ELECFREAKS",
+  "description": "A Jacdac LED Ring 8.",
+  "storeLink": [
+    "https://shop.elecfreaks.com/products/jacdacledring8"
+  ],
+  "services": [
+    369743088
+  ],
+  "productIdentifiers": [
+    930068017
+  ],
+  "version": "1.0",
+  "status": "stable",
+  "shape": "ec30_3x3_l"
+}

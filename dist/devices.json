@@ -1507,19 +1507,221 @@
     "status": "stable"
   },
   {
-    "id": "elecfreaks-buzzerv10",
-    "name": "Buzzer",
+    "id": "elecfreaks-jacdacbitv10",
+    "name": "Jacdac:bit",
     "company": "ELECFREAKS",
-    "description": "The Buzzer is a sound module designed for the micro:bit, capable of producing various tones through programming. It connects using the Jacdac protocol, is easy to use, and is suitable for educational purposes. It helps students learn the basics of sound and music while also being ideal for creating interactive sound projects.",
+    "description": "Jacdac:bit is a micro:bit interface module for easy connection to Jacdac devices, ideal for learning and interactive projects.",
     "connector": "edgeLowCurrentProviderConsumer",
     "storeLink": [
-      "https://shop.elecfreaks.com/products/edge-buzzer"
+      "https://shop.elecfreaks.com/products/Jacdacbit"
+    ],
+    "tags": [
+      "adapter",
+      "microbit"
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "requiredDevices": [
+      "microbit-educational-foundation-microbitv2"
+    ],
+    "shape": "ec30_1x7_r7"
+  },
+  {
+    "id": "elecfreaks-jacdacbuttonv10",
+    "name": "Jacdac Button",
+    "company": "ELECFREAKS",
+    "description": "A Jacdac Button.",
+    "storeLink": [
+      "https://shop.elecfreaks.com/products/jacdacbutton"
+    ],
+    "services": [
+      343122531
+    ],
+    "productIdentifiers": [
+      968336045
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "shape": "ec30_3x2_lr"
+  },
+  {
+    "id": "elecfreaks-jacdacbuzzerv10",
+    "name": "Jacdac Buzzer",
+    "company": "ELECFREAKS",
+    "description": "A Jacdac Buzzer.",
+    "connector": "edgeLowCurrentProviderConsumer",
+    "storeLink": [
+      "https://shop.elecfreaks.com/products/jacdacbuzzer"
     ],
     "services": [
       458731991
     ],
     "productIdentifiers": [
       870706665
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "shape": "ec30_3x2_lr"
+  },
+  {
+    "id": "elecfreaks-jacdachallsensorv10",
+    "name": "Jacdac Hall Sensor",
+    "company": "ELECFREAKS",
+    "description": "A Jacdac Hall Sensor.",
+    "storeLink": [
+      "https://shop.elecfreaks.com/products/jacdachallsensor"
+    ],
+    "services": [
+      318642191
+    ],
+    "productIdentifiers": [
+      809663828
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "shape": "ec30_3x2_lr"
+  },
+  {
+    "id": "elecfreaks-jacdacledring8v10",
+    "name": "Jacdac LED Ring 8",
+    "company": "ELECFREAKS",
+    "description": "A Jacdac LED Ring 8.",
+    "storeLink": [
+      "https://shop.elecfreaks.com/products/jacdacledring8"
+    ],
+    "services": [
+      369743088
+    ],
+    "productIdentifiers": [
+      930068017
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "shape": "ec30_3x3_l"
+  },
+  {
+    "id": "elecfreaks-jacdacservov10",
+    "name": "Jacdac Servo",
+    "company": "ELECFREAKS",
+    "description": "A Jacdac Light Sensor.",
+    "storeLink": [
+      "https://shop.elecfreaks.com/products/jacdaclightsensor"
+    ],
+    "services": [
+      400333340
+    ],
+    "productIdentifiers": [
+      933513617
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "shape": "ec30_3x2_lr"
+  },
+  {
+    "id": "elecfreaks-jacdacmoisturesensorv10",
+    "name": "Jacdac Moisture Sensor",
+    "company": "ELECFREAKS",
+    "description": "A Jacdac Motion Sensor.",
+    "storeLink": [
+      "https://shop.elecfreaks.com/products/jacdacmoisturesensor"
+    ],
+    "services": [
+      491430835
+    ],
+    "productIdentifiers": [
+      976986401
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "shape": "ec30_3x2_lr"
+  },
+  {
+    "id": "elecfreaks-jacdacmotionsensorv10",
+    "name": "Jacdac Motion Sensor",
+    "company": "ELECFREAKS",
+    "description": "A Jacdac Motion Sensor.",
+    "storeLink": [
+      "https://shop.elecfreaks.com/products/jacdacmotionsensor"
+    ],
+    "services": [
+      293185353
+    ],
+    "productIdentifiers": [
+      1066930108
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "shape": "ec30_3x2_lr"
+  },
+  {
+    "id": "elecfreaks-jacdacrotrayencoderv10",
+    "name": "Jacdac Rotray Encoder",
+    "company": "ELECFREAKS",
+    "description": "A Jacdac Rotray Encoder.",
+    "storeLink": [
+      "https://shop.elecfreaks.com/products/jacdacrotrayencoder"
+    ],
+    "services": [
+      284830153,
+      343122531
+    ],
+    "productIdentifiers": [
+      805917517
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "shape": "ec30_3x2_lr"
+  },
+  {
+    "id": "elecfreaks-jacdacservov10",
+    "name": "Jacdac Servo",
+    "company": "ELECFREAKS",
+    "description": "A Jacdac Servo.",
+    "storeLink": [
+      "https://shop.elecfreaks.com/products/jacdacservo"
+    ],
+    "services": [
+      318542083
+    ],
+    "productIdentifiers": [
+      943192226
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "shape": "ec30_3x2_lr"
+  },
+  {
+    "id": "elecfreaks-jacdactemprhsensorv10",
+    "name": "Jacdac TempRH Sensor",
+    "company": "ELECFREAKS",
+    "description": "A Jacdac TempRH Sensor.",
+    "storeLink": [
+      "https://shop.elecfreaks.com/products/jacdactemprhsensor"
+    ],
+    "services": [
+      337754823,
+      382210232
+    ],
+    "productIdentifiers": [
+      927402146
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "shape": "ec30_3x2_lr"
+  },
+  {
+    "id": "elecfreaks-jacdacuvisensorv10",
+    "name": "Jacdac UVI Sensor",
+    "company": "ELECFREAKS",
+    "description": "A Jacdac UVI Sensor.",
+    "storeLink": [
+      "https://shop.elecfreaks.com/products/jacdacuvisensor"
+    ],
+    "services": [
+      527306128
+    ],
+    "productIdentifiers": [
+      944940108
     ],
     "version": "1.0",
     "status": "stable",

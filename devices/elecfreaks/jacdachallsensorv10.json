@@ -1,18 +1,18 @@
 {
-    "id": "elecfreaks-jacdachallsensorv10",
-    "name": "Jacdac Hall Sensor",
-    "company": "ELECFREAKS",
-    "description": "A Jacdac Hall Sensor.",
-    "storeLink": [
-        "https://shop.elecfreaks.com/products/jacdachallsensor"
-      ],
-    "services": [
-        318642191 
-    ],
-    "productIdentifiers": [
-        809663828 
-    ],
-    "version": "1.0",
-    "status": "stable",
-    "shape": "ec30_3x2_lr" 
-  }
+  "id": "elecfreaks-jacdachallsensorv10",
+  "name": "Jacdac Hall Sensor",
+  "company": "ELECFREAKS",
+  "description": "A Jacdac Hall Sensor.",
+  "storeLink": [
+    "https://shop.elecfreaks.com/products/jacdachallsensor"
+  ],
+  "services": [
+    318642191
+  ],
+  "productIdentifiers": [
+    809663828
+  ],
+  "version": "1.0",
+  "status": "stable",
+  "shape": "ec30_3x2_lr"
+}

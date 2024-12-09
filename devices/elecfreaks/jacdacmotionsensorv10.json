@@ -1,0 +1,18 @@
+{
+    "id": "elecfreaks-jacdacmotionsensorv10",
+    "name": "Jacdac Motion Sensor",
+    "company": "ELECFREAKS",
+    "description": "A Jacdac Motion Sensor.",
+    "storeLink": [
+        "https://shop.elecfreaks.com/products/jacdacmotionsensor"
+      ],
+    "services": [
+        293185353 
+    ],
+    "productIdentifiers": [
+        1066930108 
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "shape": "ec30_3x2_lr" 
+  }

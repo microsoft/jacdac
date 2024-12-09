@@ -1,0 +1,18 @@
+{
+    "id": "elecfreaks-jacdacmoisturesensorv10",
+    "name": "Jacdac Moisture Sensor",
+    "company": "ELECFREAKS",
+    "description": "A Jacdac Motion Sensor.",
+    "storeLink": [
+        "https://shop.elecfreaks.com/products/jacdacmoisturesensor"
+      ],
+    "services": [
+        491430835 
+    ],
+    "productIdentifiers": [
+        976986401 
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "shape": "ec30_3x2_lr" 
+  }

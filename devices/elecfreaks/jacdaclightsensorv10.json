@@ -1,0 +1,18 @@
+{
+    "id": "elecfreaks-jacdaclightsensorv10",
+    "name": "Jacdac Servo",
+    "company": "ELECFREAKS",
+    "description": "A Jacdac Light Sensor.",
+    "storeLink": [
+        "https://shop.elecfreaks.com/products/jacdaclightsensor"
+      ],
+    "services": [
+        400333340
+    ],
+    "productIdentifiers": [
+       933513617
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "shape": "ec30_3x2_lr" 
+  }

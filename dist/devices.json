@@ -1600,8 +1600,8 @@
     "shape": "ec30_3x3_l"
   },
   {
-    "id": "elecfreaks-jacdacservov10",
-    "name": "Jacdac Servo",
+    "id": "elecfreaks-jacdaclightsensorv10",
+    "name": "Jacdac Light Sensor",
     "company": "ELECFREAKS",
     "description": "A Jacdac Light Sensor.",
     "storeLink": [
@@ -1654,12 +1654,12 @@
     "shape": "ec30_3x2_lr"
   },
   {
-    "id": "elecfreaks-jacdacrotrayencoderv10",
-    "name": "Jacdac Rotray Encoder",
+    "id": "elecfreaks-jacdacrotaryencoderv10",
+    "name": "Jacdac Rotary Encoder",
     "company": "ELECFREAKS",
-    "description": "A Jacdac Rotray Encoder.",
+    "description": "A Jacdac Rotary Encoder.",
     "storeLink": [
-      "https://shop.elecfreaks.com/products/jacdacrotrayencoder"
+      "https://shop.elecfreaks.com/products/jacdacrotaryencoder"
     ],
     "services": [
       284830153,

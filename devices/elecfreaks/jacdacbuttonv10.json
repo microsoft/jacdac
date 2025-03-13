@@ -1,18 +1,20 @@
 {
-    "id": "elecfreaks-jacdacbuttonv10",
-    "name": "Jacdac Button",
-    "company": "ELECFREAKS",
-    "description": "A Jacdac Button.",
-    "storeLink": [
-        "https://shop.elecfreaks.com/products/jacdacbutton"
-      ],
-    "services": [
-        343122531 
-    ],
-    "productIdentifiers": [
-        968336045
-    ],
-    "version": "1.0",
-    "status": "stable",
-    "shape": "ec30_3x2_lr" 
-  }
+
+  "id": "elecfreaks-jacdacbuttonv10",
+  "name": "Jacdac Button",
+  "company": "ELECFREAKS",
+  "description": "A Jacdac Button.",
+  "storeLink": [
+    "https://shop.elecfreaks.com/products/jacdacbutton"
+  ],
+  "services": [
+    343122531
+  ],
+  "productIdentifiers": [
+    968336045
+  ],
+  "version": "1.0",
+  "status": "stable",
+  "shape": "ec30_3x2_lr"
+}
+

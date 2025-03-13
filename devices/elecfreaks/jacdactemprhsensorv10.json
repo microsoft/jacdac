@@ -1,19 +1,20 @@
 {
-    "id": "elecfreaks-jacdactemprhsensorv10",
-    "name": "Jacdac TempRH Sensor",
-    "company": "ELECFREAKS",
-    "description": "A Jacdac TempRH Sensor.",
-    "storeLink": [
-        "https://shop.elecfreaks.com/products/jacdactemprhsensor"
-      ],
-    "services": [
-        337754823,
-        382210232
-    ],
-    "productIdentifiers": [
-        927402146
-    ],
-    "version": "1.0",
-    "status": "stable",
-    "shape": "ec30_3x2_lr" 
-  }
+  "id": "elecfreaks-jacdactemprhsensorv10",
+  "name": "Jacdac TempRH Sensor",
+  "company": "ELECFREAKS",
+  "description": "A Jacdac TempRH Sensor.",
+  "storeLink": [
+    "https://shop.elecfreaks.com/products/jacdactemprhsensor"
+  ],
+  "services": [
+    337754823,
+    382210232
+  ],
+  "productIdentifiers": [
+    927402146
+  ],
+  "version": "1.0",
+  "status": "stable",
+  "shape": "ec30_3x2_lr"
+}
+

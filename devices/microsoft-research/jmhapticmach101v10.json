@@ -3,8 +3,8 @@
   "name": "JM Haptic MACH-1.0",
   "company": "Microsoft Research",
   "description": "JM Haptic MACH-1.0",
-  "repo": "https://github.com/microsoft/jacdac-msr-modules",
-  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-haptic-1.0/profile/haptic.c",
+  "repo": "https://github.com/jacdac/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-haptic-1.0/profile/haptic.c",
   "services": [
     406832290
   ],

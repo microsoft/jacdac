@@ -3,8 +3,8 @@
   "name": "JM-Hall (magnetic switch)",
   "company": "Microsoft Research",
   "description": "JM-Hall (magnetic switch) 81 v4.0",
-  "repo": "https://github.com/microsoft/jacdac-msr-modules",
-  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v4.0/profile/hall-81.c",
+  "repo": "https://github.com/jacdac/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v4.0/profile/hall-81.c",
   "services": [
     450008066
   ],

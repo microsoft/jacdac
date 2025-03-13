@@ -3,9 +3,9 @@
   "name": "JM Proto",
   "company": "Microsoft Research",
   "description": "A prototype multi-function board.\n* ``0x3f9bc26a`` JM Touch-Proto v2.0",
-  "repo": "https://github.com/microsoft/jacdac-msr-modules",
-  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v2.0p/profile/proto.c",
-  "link": "https://github.com/microsoft/jacdac-msr-modules",
+  "repo": "https://github.com/jacdac/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v2.0p/profile/proto.c",
+  "link": "https://github.com/jacdac/jacdac-msr-modules",
   "productIdentifiers": [
     1052138004
   ],

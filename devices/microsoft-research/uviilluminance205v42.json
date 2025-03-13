@@ -2,7 +2,7 @@
   "id": "microsoft-research-uviilluminance205v42",
   "name": "UVI/Illuminance",
   "company": "Microsoft Research",
-  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "repo": "https://github.com/jacdac/jacdac-msr-modules",
   "services": [
     510577394,
     527306128

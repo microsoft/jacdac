@@ -2,8 +2,8 @@
   "id": "microsoft-research-jmaccelerometer30v02",
   "name": "JM Accelerometer",
   "company": "Microsoft Research",
-  "repo": "https://github.com/microsoft/jacdac-msr-modules",
-  "link": "https://github.com/microsoft/jacdac-msr-modules",
+  "repo": "https://github.com/jacdac/jacdac-msr-modules",
+  "link": "https://github.com/jacdac/jacdac-msr-modules",
   "services": [
     521405449
   ],

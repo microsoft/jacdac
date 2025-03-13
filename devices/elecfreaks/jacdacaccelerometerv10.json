@@ -1,0 +1,20 @@
+{
+    "id": "elecfreaks-jacdacaccelerometerv10",
+    "name": "Jacdac Accelerometer Sensor",
+    "company": "ELECFREAKS",
+    "description": "A Jacdac Accelerometer Sensor.",
+    "storeLink": [
+        "https://shop.elecfreaks.com/products/jacdacaccelerometer"
+      ],
+    "services": [
+        527306128
+    ],
+    "productIdentifiers": [
+        952491663 
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "shape": "ec30_3x2_lr" 
+  }
+
+  

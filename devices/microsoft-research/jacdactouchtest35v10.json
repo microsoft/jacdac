@@ -2,7 +2,7 @@
   "id": "microsoft-research-jacdactouchtest35v10",
   "name": "JacdacTouchTest",
   "company": "Microsoft Research",
-  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "repo": "https://github.com/jacdac/jacdac-msr-modules",
   "services": [
     677752265
   ],

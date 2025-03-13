@@ -7,22 +7,22 @@ A power-provider service.
 
 ## Power negotiation protocol
 
-The purpose of the power negotiation is to ensure that there is no more than [I<sub>out_hc(max)</sub>](https://microsoft.github.io/jacdac-docs/reference/electrical-spec/#power-providers) delivered to the power rail.
+The purpose of the power negotiation is to ensure that there is no more than [I<sub>out_hc(max)</sub>](https://jacdac.github.io/jacdac-docs/reference/electrical-spec/#power-providers) delivered to the power rail.
 This is realized by limiting the number of enabled power provider services to one.
 
 Note, that it's also possible to have low-current power providers,
-which are limited to [I<sub>out_lc(max)</sub>](https://microsoft.github.io/jacdac-docs/reference/electrical-spec/#power-providers) and do not run a power provider service.
+which are limited to [I<sub>out_lc(max)</sub>](https://jacdac.github.io/jacdac-docs/reference/electrical-spec/#power-providers) and do not run a power provider service.
 These are **not** accounted for in the power negotiation protocol.
 
 Power providers can have multiple _channels_, typically multiple Jacdac ports on the provider.
-Each channel can be limited to [I<sub>out_hc(max)</sub>](https://microsoft.github.io/jacdac-docs/reference/electrical-spec/#power-providers) separately.
+Each channel can be limited to [I<sub>out_hc(max)</sub>](https://jacdac.github.io/jacdac-docs/reference/electrical-spec/#power-providers) separately.
 In normal operation, the data lines of each channels are connected together.
 The ground lines are always connected together.
 Multi-channel power providers are also called _powered hubs_.
 
 While channels have separate current limits, there's nothing to prevent the user
 from joining two or more channels outside of the provider using a passive hub.
-This would allow more than [I<sub>out_hc(max)</sub>](https://microsoft.github.io/jacdac-docs/reference/electrical-spec/#power-providers) of current to be drawn, resulting in cables or components
+This would allow more than [I<sub>out_hc(max)</sub>](https://jacdac.github.io/jacdac-docs/reference/electrical-spec/#power-providers) of current to be drawn, resulting in cables or components
 getting hot and/or malfunctioning.
 Thus, the power negotiation protocol seeks to detect situations where
 multiple channels of power provider(s) are bridged together

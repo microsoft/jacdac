@@ -2,8 +2,8 @@
   "id": "microsoft-research-jacdacjoystick440344v03",
   "name": "JacdacJoystick 44-0.3",
   "company": "Microsoft Research",
-  "firmwareSource": "https://github.com/jacdac/jacdac-padauk/tree/main/jm-joystick-44-0.2",
-  "link": "https://github.com/jacdac/jacdac-padauk",
+  "firmwareSource": "https://github.com/microsoft/jacdac-padauk/tree/main/jm-joystick-44-0.2",
+  "link": "https://github.com/microsoft/jacdac-padauk",
   "services": [
     277836886
   ],

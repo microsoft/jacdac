@@ -9,7 +9,7 @@
         "microbit",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/accelerometer",
+      "repo": "microsoft/pxt-jacdac/accelerometer",
       "qName": "modules.AccelerometerClient",
       "default": "modules.accelerometer",
       "generated": true
@@ -25,7 +25,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/acidity",
+      "repo": "microsoft/pxt-jacdac/acidity",
       "qName": "modules.AcidityClient",
       "default": "modules.acidity",
       "generated": true
@@ -41,7 +41,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/air-pressure",
+      "repo": "microsoft/pxt-jacdac/air-pressure",
       "qName": "modules.AirPressureClient",
       "default": "modules.airPressure",
       "generated": true
@@ -57,7 +57,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/air-quality-index",
+      "repo": "microsoft/pxt-jacdac/air-quality-index",
       "qName": "modules.AirQualityIndexClient",
       "default": "modules.airQualityIndex",
       "generated": true
@@ -70,7 +70,7 @@
       "targets": [
         "arcade"
       ],
-      "repo": "jacdac/pxt-jacdac/arcade-gamepad",
+      "repo": "microsoft/pxt-jacdac/arcade-gamepad",
       "qName": "modules.ArcadeGamepadClient",
       "default": "modules.arcadeGamepad",
       "generated": false
@@ -86,7 +86,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/braille-display",
+      "repo": "microsoft/pxt-jacdac/braille-display",
       "qName": "modules.BrailleDisplayClient",
       "default": "modules.brailleDisplay",
       "generated": false
@@ -102,7 +102,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/button",
+      "repo": "microsoft/pxt-jacdac/button",
       "qName": "modules.ButtonClient",
       "default": "modules.button",
       "generated": false
@@ -118,7 +118,7 @@
         "microbit",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/buzzer",
+      "repo": "microsoft/pxt-jacdac/buzzer",
       "qName": "modules.BuzzerClient",
       "default": "modules.buzzer",
       "generated": false
@@ -134,7 +134,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/character-screen",
+      "repo": "microsoft/pxt-jacdac/character-screen",
       "qName": "modules.CharacterScreenClient",
       "default": "modules.characterScreen",
       "generated": false
@@ -147,7 +147,7 @@
       "targets": [
         "maker"
       ],
-      "repo": "jacdac/pxt-jacdac/cloud-adapter",
+      "repo": "microsoft/pxt-jacdac/cloud-adapter",
       "qName": "modules.CloudAdapterClient",
       "default": "modules.cloudAdapter",
       "generated": false
@@ -163,7 +163,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/codal-message-bus",
+      "repo": "microsoft/pxt-jacdac/codal-message-bus",
       "qName": "modules.CodalMessageBusClient",
       "default": "modules.codalMessageBus",
       "generated": false
@@ -179,7 +179,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/color",
+      "repo": "microsoft/pxt-jacdac/color",
       "qName": "modules.ColorClient",
       "default": "modules.color",
       "generated": true
@@ -195,7 +195,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/compass",
+      "repo": "microsoft/pxt-jacdac/compass",
       "qName": "modules.CompassClient",
       "default": "modules.compass",
       "generated": true
@@ -211,7 +211,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/dc-current-measurement",
+      "repo": "microsoft/pxt-jacdac/dc-current-measurement",
       "qName": "modules.DcCurrentMeasurementClient",
       "default": "modules.dcCurrentMeasurement",
       "generated": true
@@ -227,7 +227,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/dc-voltage-measurement",
+      "repo": "microsoft/pxt-jacdac/dc-voltage-measurement",
       "qName": "modules.DcVoltageMeasurementClient",
       "default": "modules.dcVoltageMeasurement",
       "generated": true
@@ -243,7 +243,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/distance",
+      "repo": "microsoft/pxt-jacdac/distance",
       "qName": "modules.DistanceClient",
       "default": "modules.distance",
       "generated": false
@@ -259,7 +259,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/dmx",
+      "repo": "microsoft/pxt-jacdac/dmx",
       "qName": "modules.DmxClient",
       "default": "modules.dmx",
       "generated": true
@@ -275,7 +275,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/dot-matrix",
+      "repo": "microsoft/pxt-jacdac/dot-matrix",
       "qName": "modules.DotMatrixClient",
       "default": "modules.dotMatrix",
       "generated": false
@@ -291,7 +291,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/dual-motors",
+      "repo": "microsoft/pxt-jacdac/dual-motors",
       "qName": "modules.DualMotorsClient",
       "default": "modules.dualMotors",
       "generated": false
@@ -307,7 +307,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/e-co2",
+      "repo": "microsoft/pxt-jacdac/e-co2",
       "qName": "modules.ECO2Client",
       "default": "modules.eCO2",
       "generated": true
@@ -323,7 +323,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/flex",
+      "repo": "microsoft/pxt-jacdac/flex",
       "qName": "modules.FlexClient",
       "default": "modules.flex",
       "generated": true
@@ -336,7 +336,7 @@
       "targets": [
         "arcade"
       ],
-      "repo": "jacdac/pxt-jacdac/gamepad",
+      "repo": "microsoft/pxt-jacdac/gamepad",
       "qName": "modules.GamepadClient",
       "default": "modules.gamepad",
       "generated": false
@@ -352,7 +352,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/gyroscope",
+      "repo": "microsoft/pxt-jacdac/gyroscope",
       "qName": "modules.GyroscopeClient",
       "default": "modules.gyroscope",
       "generated": true
@@ -368,7 +368,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/heart-rate",
+      "repo": "microsoft/pxt-jacdac/heart-rate",
       "qName": "modules.HeartRateClient",
       "default": "modules.heartRate",
       "generated": true
@@ -384,7 +384,7 @@
         "microbit",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/hid-joystick",
+      "repo": "microsoft/pxt-jacdac/hid-joystick",
       "qName": "modules.HidJoystickClient",
       "default": "modules.hidJoystick",
       "generated": false
@@ -398,7 +398,7 @@
         "arcade",
         "maker"
       ],
-      "repo": "jacdac/pxt-jacdac/hid-keyboard",
+      "repo": "microsoft/pxt-jacdac/hid-keyboard",
       "qName": "modules.HidKeyboardClient",
       "default": "modules.hidKeyboard",
       "generated": false
@@ -412,7 +412,7 @@
         "arcade",
         "maker"
       ],
-      "repo": "jacdac/pxt-jacdac/hid-mouse",
+      "repo": "microsoft/pxt-jacdac/hid-mouse",
       "qName": "modules.HidMouseClient",
       "default": "modules.hidMouse",
       "generated": false
@@ -428,7 +428,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/humidity",
+      "repo": "microsoft/pxt-jacdac/humidity",
       "qName": "modules.HumidityClient",
       "default": "modules.humidity",
       "generated": false
@@ -444,7 +444,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/illuminance",
+      "repo": "microsoft/pxt-jacdac/illuminance",
       "qName": "modules.IlluminanceClient",
       "default": "modules.illuminance",
       "generated": true
@@ -460,7 +460,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/led",
+      "repo": "microsoft/pxt-jacdac/led",
       "qName": "modules.LedClient",
       "default": "modules.led",
       "generated": false
@@ -476,7 +476,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/led-single",
+      "repo": "microsoft/pxt-jacdac/led-single",
       "qName": "modules.LedSingleClient",
       "default": "modules.ledSingle",
       "generated": false
@@ -492,7 +492,7 @@
         "microbit",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/led-strip",
+      "repo": "microsoft/pxt-jacdac/led-strip",
       "qName": "modules.LedStripClient",
       "default": "modules.ledStrip",
       "generated": false
@@ -508,7 +508,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/light-bulb",
+      "repo": "microsoft/pxt-jacdac/light-bulb",
       "qName": "modules.LightBulbClient",
       "default": "modules.lightBulb",
       "generated": true
@@ -524,7 +524,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/light-level",
+      "repo": "microsoft/pxt-jacdac/light-level",
       "qName": "modules.LightLevelClient",
       "default": "modules.lightLevel",
       "generated": true
@@ -540,7 +540,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/magnetic-field-level",
+      "repo": "microsoft/pxt-jacdac/magnetic-field-level",
       "qName": "modules.MagneticFieldLevelClient",
       "default": "modules.magneticFieldLevel",
       "generated": true
@@ -556,7 +556,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/magnetometer",
+      "repo": "microsoft/pxt-jacdac/magnetometer",
       "qName": "modules.MagnetometerClient",
       "default": "modules.magnetometer",
       "generated": true
@@ -572,7 +572,7 @@
         "microbit",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/model-runner",
+      "repo": "microsoft/pxt-jacdac/model-runner",
       "qName": "modules.ModelRunnerClient",
       "default": "modules.modelRunner",
       "generated": false
@@ -588,7 +588,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/motion",
+      "repo": "microsoft/pxt-jacdac/motion",
       "qName": "modules.MotionClient",
       "default": "modules.motion",
       "generated": true
@@ -604,7 +604,7 @@
         "microbit",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/motor",
+      "repo": "microsoft/pxt-jacdac/motor",
       "qName": "modules.MotorClient",
       "default": "modules.motor",
       "generated": false
@@ -620,7 +620,7 @@
         "microbit",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/multitouch",
+      "repo": "microsoft/pxt-jacdac/multitouch",
       "qName": "modules.MultitouchClient",
       "default": "modules.multitouch",
       "generated": false
@@ -636,7 +636,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/pccontroller",
+      "repo": "microsoft/pxt-jacdac/pccontroller",
       "qName": "modules.PCControllerClient",
       "default": "modules.PCController",
       "generated": true
@@ -652,7 +652,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/pcmonitor",
+      "repo": "microsoft/pxt-jacdac/pcmonitor",
       "qName": "modules.PCMonitorClient",
       "default": "modules.PCMonitor",
       "generated": true
@@ -668,7 +668,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/planar-position",
+      "repo": "microsoft/pxt-jacdac/planar-position",
       "qName": "modules.PlanarPositionClient",
       "default": "modules.planarPosition",
       "generated": true
@@ -684,7 +684,7 @@
         "microbit",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/potentiometer",
+      "repo": "microsoft/pxt-jacdac/potentiometer",
       "qName": "modules.PotentiometerClient",
       "default": "modules.potentiometer",
       "generated": true
@@ -700,7 +700,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/pulse-oximeter",
+      "repo": "microsoft/pxt-jacdac/pulse-oximeter",
       "qName": "modules.PulseOximeterClient",
       "default": "modules.pulseOximeter",
       "generated": true
@@ -716,7 +716,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/rain-gauge",
+      "repo": "microsoft/pxt-jacdac/rain-gauge",
       "qName": "modules.RainGaugeClient",
       "default": "modules.rainGauge",
       "generated": true
@@ -732,7 +732,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/real-time-clock",
+      "repo": "microsoft/pxt-jacdac/real-time-clock",
       "qName": "modules.RealTimeClockClient",
       "default": "modules.realTimeClock",
       "generated": true
@@ -748,7 +748,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/reflected-light",
+      "repo": "microsoft/pxt-jacdac/reflected-light",
       "qName": "modules.ReflectedLightClient",
       "default": "modules.reflectedLight",
       "generated": true
@@ -764,7 +764,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/relay",
+      "repo": "microsoft/pxt-jacdac/relay",
       "qName": "modules.RelayClient",
       "default": "modules.relay",
       "generated": true
@@ -780,7 +780,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/rng",
+      "repo": "microsoft/pxt-jacdac/rng",
       "qName": "modules.RngClient",
       "default": "modules.rng",
       "generated": true
@@ -796,7 +796,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/rotary-encoder",
+      "repo": "microsoft/pxt-jacdac/rotary-encoder",
       "qName": "modules.RotaryEncoderClient",
       "default": "modules.rotaryEncoder",
       "generated": false
@@ -812,7 +812,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/sat-nav",
+      "repo": "microsoft/pxt-jacdac/sat-nav",
       "qName": "modules.SatNavClient",
       "default": "modules.satNav",
       "generated": true
@@ -828,7 +828,7 @@
         "microbit",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/sensor-aggregator",
+      "repo": "microsoft/pxt-jacdac/sensor-aggregator",
       "qName": "modules.SensorAggregatorClient",
       "default": "modules.sensorAggregator",
       "generated": false
@@ -844,7 +844,7 @@
         "microbit",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/servo",
+      "repo": "microsoft/pxt-jacdac/servo",
       "qName": "modules.ServoClient",
       "default": "modules.servo",
       "generated": false
@@ -860,7 +860,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/seven-segment-display",
+      "repo": "microsoft/pxt-jacdac/seven-segment-display",
       "qName": "modules.SevenSegmentDisplayClient",
       "default": "modules.sevenSegmentDisplay",
       "generated": false
@@ -876,7 +876,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/soil-moisture",
+      "repo": "microsoft/pxt-jacdac/soil-moisture",
       "qName": "modules.SoilMoistureClient",
       "default": "modules.soilMoisture",
       "generated": true
@@ -892,7 +892,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/solenoid",
+      "repo": "microsoft/pxt-jacdac/solenoid",
       "qName": "modules.SolenoidClient",
       "default": "modules.solenoid",
       "generated": true
@@ -908,7 +908,7 @@
         "microbit",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/sound-level",
+      "repo": "microsoft/pxt-jacdac/sound-level",
       "qName": "modules.SoundLevelClient",
       "default": "modules.soundLevel",
       "generated": true
@@ -924,7 +924,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/speech-synthesis",
+      "repo": "microsoft/pxt-jacdac/speech-synthesis",
       "qName": "modules.SpeechSynthesisClient",
       "default": "modules.speechSynthesis",
       "generated": true
@@ -940,7 +940,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/switch",
+      "repo": "microsoft/pxt-jacdac/switch",
       "qName": "modules.SwitchClient",
       "default": "modules.switch",
       "generated": true
@@ -955,7 +955,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/tcp",
+      "repo": "microsoft/pxt-jacdac/tcp",
       "qName": "modules.TcpClient",
       "default": "modules.tcp",
       "generated": false
@@ -971,7 +971,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/temperature",
+      "repo": "microsoft/pxt-jacdac/temperature",
       "qName": "modules.TemperatureClient",
       "default": "modules.temperature",
       "generated": false
@@ -987,7 +987,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/traffic-light",
+      "repo": "microsoft/pxt-jacdac/traffic-light",
       "qName": "modules.TrafficLightClient",
       "default": "modules.trafficLight",
       "generated": false
@@ -1003,7 +1003,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/tvoc",
+      "repo": "microsoft/pxt-jacdac/tvoc",
       "qName": "modules.TvocClient",
       "default": "modules.tvoc",
       "generated": true
@@ -1019,7 +1019,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/uv-index",
+      "repo": "microsoft/pxt-jacdac/uv-index",
       "qName": "modules.UvIndexClient",
       "default": "modules.uvIndex",
       "generated": true
@@ -1035,7 +1035,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/vibration-motor",
+      "repo": "microsoft/pxt-jacdac/vibration-motor",
       "qName": "modules.VibrationMotorClient",
       "default": "modules.vibrationMotor",
       "generated": false
@@ -1051,7 +1051,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/water-level",
+      "repo": "microsoft/pxt-jacdac/water-level",
       "qName": "modules.WaterLevelClient",
       "default": "modules.waterLevel",
       "generated": true
@@ -1067,7 +1067,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/weight-scale",
+      "repo": "microsoft/pxt-jacdac/weight-scale",
       "qName": "modules.WeightScaleClient",
       "default": "modules.weightScale",
       "generated": true
@@ -1080,7 +1080,7 @@
       "targets": [
         "maker"
       ],
-      "repo": "jacdac/pxt-jacdac/wifi",
+      "repo": "microsoft/pxt-jacdac/wifi",
       "qName": "modules.WifiClient",
       "default": "modules.wifi",
       "generated": false
@@ -1096,7 +1096,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/wind-direction",
+      "repo": "microsoft/pxt-jacdac/wind-direction",
       "qName": "modules.WindDirectionClient",
       "default": "modules.windDirection",
       "generated": true
@@ -1112,7 +1112,7 @@
         "maker",
         "calliopemini"
       ],
-      "repo": "jacdac/pxt-jacdac/wind-speed",
+      "repo": "microsoft/pxt-jacdac/wind-speed",
       "qName": "modules.WindSpeedClient",
       "default": "modules.windSpeed",
       "generated": true

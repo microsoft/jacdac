@@ -3,9 +3,9 @@
   "name": "JM Touch-Proto",
   "company": "Microsoft Research",
   "description": "A multi-touch sensor based on proto board.",
-  "repo": "https://github.com/jacdac/jacdac-msr-modules",
-  "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v2.0p/profile/multitouch.c",
-  "link": "https://github.com/jacdac/jacdac-msr-modules",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v2.0p/profile/multitouch.c",
+  "link": "https://github.com/microsoft/jacdac-msr-modules",
   "services": [
     416636459
   ],

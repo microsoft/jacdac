@@ -2,9 +2,9 @@
   "id": "microsoft-research-jmslider49v11",
   "name": "JM Slider",
   "company": "Microsoft Research",
-  "repo": "https://github.com/jacdac/jacdac-msr-modules",
-  "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-slider-49-1.1/profile/slider.c",
-  "link": "https://github.com/jacdac/jacdac-msr-modules",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-slider-49-1.1/profile/slider.c",
+  "link": "https://github.com/microsoft/jacdac-msr-modules",
   "services": [
     522667846
   ],

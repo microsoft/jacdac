@@ -3,7 +3,7 @@
   "name": "JM Brain F4",
   "company": "Microsoft Research",
   "connector": "edgeHighCurrentProvider",
-  "link": "https://github.com/jacdac/pxt-jacdac",
+  "link": "https://github.com/microsoft/pxt-jacdac",
   "services": [
     414210922,
     411425820
@@ -20,12 +20,12 @@
   "firmwares": [
     {
       "name": "HID Keyboard + Mouse",
-      "url": "https://github.com/jacdac/pxt-jacdac/releases/latest/download/hid-servers-f4.uf2",
+      "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/hid-servers-f4.uf2",
       "productIdentifier": 819577746
     },
     {
       "name": "HID Joystick",
-      "url": "https://github.com/jacdac/pxt-jacdac/releases/latest/download/hid-joystick-f4.uf2",
+      "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/hid-joystick-f4.uf2",
       "productIdentifier": 1009312972
     }
   ],

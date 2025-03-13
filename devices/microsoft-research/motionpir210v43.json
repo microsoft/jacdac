@@ -3,7 +3,7 @@
   "name": "Motion (PIR)",
   "company": "Microsoft Research",
   "description": "Detects motion using infra-red",
-  "repo": "https://github.com/jacdac/jacdac-msr-modules",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
   "services": [
     293185353
   ],

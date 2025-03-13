@@ -60,7 +60,7 @@ function toPxtJson(spec: jdspec.ServiceSpec) {
             supportedTargets: ["microbit", "arcade", "maker", "calliopemini"],
             dependencies: {
                 core: "*",
-                jacdac: "github:jacdac/pxt-jacdac",
+                jacdac: "github:microsoft/pxt-jacdac",
             },
         },
         null,
@@ -491,7 +491,7 @@ class ${className}(${baseType}):
     ${(spec.notes["short"] || "").split("\n").join("\n     * ")}
     Implements a client for the \`${
         spec.name
-    } <https://jacdac.github.io/jacdac-docs/services/${
+    } <https://microsoft.github.io/jacdac-docs/services/${
         spec.shortId
     }>\`_ service.
 
@@ -663,7 +663,7 @@ namespace Jacdac.Clients
     /// ${(spec.notes["short"] || "").split("\n").join("\n     /// ")}
     /// Implements a client for the ${spec.name} service.
     /// </summary>
-    /// <seealso cref="https://jacdac.github.io/jacdac-docs/services/${
+    /// <seealso cref="https://microsoft.github.io/jacdac-docs/services/${
         spec.shortId
     }/" />
     public partial class ${className} : ${baseType}
@@ -885,7 +885,7 @@ function processSpec(dn: string) {
         upgrades: Record<string, string>
     } = {
         packages: {
-            approvedRepos: ["jacdac/pxt-jacdac"],
+            approvedRepos: ["microsoft/pxt-jacdac"],
         },
         upgrades: {},
     }
@@ -905,7 +905,7 @@ function processSpec(dn: string) {
         )
         pxtJacdacVersion = pxtJacdacjson.version
         mkcTargetConfig.upgrades[
-            "jacdac/pxt-jacdac"
+            "microsoft/pxt-jacdac"
         ] = `min:v${pxtJacdacVersion}`
     }
 
@@ -958,7 +958,7 @@ function processSpec(dn: string) {
                 supportedTargets?: string[]
                 files: string[]
             } = JSON.parse(fs.readFileSync(mkcdpxtjson, { encoding: "utf8" }))
-            const repo = `jacdac/pxt-jacdac/${mkcdsrvdirname}`
+            const repo = `microsoft/pxt-jacdac/${mkcdsrvdirname}`
             mkcdServices.push({
                 service: json.shortId,
                 client: {

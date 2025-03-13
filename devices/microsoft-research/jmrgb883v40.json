@@ -3,8 +3,8 @@
   "name": "JM RGB-8",
   "company": "Microsoft Research",
   "description": "Circular 8 programmable LED display.",
-  "repo": "https://github.com/jacdac/jacdac-msr-modules",
-  "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v4.0/profile/rgb-83.c",
+  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v4.0/profile/rgb-83.c",
   "services": [
     369743088
   ],

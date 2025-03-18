@@ -1,6 +1,6 @@
 {
   "name": "Acidity",
-  "status": "experimental",
+  "status": "stable",
   "shortId": "acidity",
   "camelName": "acidity",
   "shortName": "acidity",
@@ -242,7 +242,7 @@
     },
     {
       "kind": "const",
-      "name": "max_humidity",
+      "name": "max_acidity",
       "identifier": 261,
       "description": "Highest acidity that can be reported.",
       "fields": [

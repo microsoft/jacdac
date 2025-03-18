@@ -4,6 +4,7 @@
     extends: _sensor
     tags: C, 8bit
     group: environment
+    status: stable
 
 A sensor measuring water acidity, commonly called pH.
 
@@ -21,6 +22,6 @@ Error on the acidity reading.
 
 Lowest acidity that can be reported.
 
-    const max_humidity?: u4.12 pH @ max_reading
+    const max_acidity?: u4.12 pH @ max_reading
 
 Highest acidity that can be reported.

@@ -1,20 +1,19 @@
 {
-    "id": "elecfreaks-jacdacbuzzerv10",
-    "name": "Jacdac Buzzer",
-    "company": "ELECFREAKS",
-    "description": "A Jacdac Buzzer.",
-    "connector": "edgeLowCurrentProviderConsumer",
-    "storeLink": [
-        "https://shop.elecfreaks.com/products/jacdacbuzzer"
-      ],
-    "services": [
-        458731991
-    ],
-    "productIdentifiers": [
-        870706665
-    ],
-    "version": "1.0",
-    "status": "stable",
-    "shape": "ec30_3x2_lr"
-  }
-
+  "id": "elecfreaks-jacdacbuzzerv10",
+  "name": "Jacdac Buzzer",
+  "company": "ELECFREAKS",
+  "description": "A Jacdac Buzzer.",
+  "connector": "edgeLowCurrentProviderConsumer",
+  "storeLink": [
+    "https://shop.elecfreaks.com/products/jacdacbuzzer"
+  ],
+  "services": [
+    458731991
+  ],
+  "productIdentifiers": [
+    870706665
+  ],
+  "version": "1.0",
+  "status": "stable",
+  "shape": "ec30_3x2_lr"
+}

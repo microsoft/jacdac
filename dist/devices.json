@@ -1527,6 +1527,44 @@
     "shape": "ec30_1x7_r7"
   },
   {
+    "id": "elecfreaks-jacdacaccelerometersensorv10",
+    "name": "Jacdac Accelerometer Sensor",
+    "company": "ELECFREAKS",
+    "description": "A Jacdac Accelerometer Sensor.",
+    "storeLink": [
+      "https://shop.elecfreaks.com/products/jacdacaccelerometer"
+    ],
+    "services": [
+      527306128
+    ],
+    "productIdentifiers": [
+      952491663
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "shape": "ec30_3x2_lr"
+  },
+  {
+    "id": "elecfreaks-jacdacbitv10",
+    "name": "Jacdac:bit",
+    "company": "ELECFREAKS",
+    "description": "Jacdac:bit is a micro:bit interface module for easy connection to Jacdac devices, ideal for learning and interactive projects.",
+    "connector": "edgeLowCurrentProviderConsumer",
+    "storeLink": [
+      "https://shop.elecfreaks.com/products/Jacdacbit"
+    ],
+    "tags": [
+      "adapter",
+      "microbit"
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "requiredDevices": [
+      "microbit-educational-foundation-microbitv2"
+    ],
+    "shape": "ec30_1x7_r7"
+  },
+  {
     "id": "elecfreaks-jacdacbuttonv10",
     "name": "Jacdac Button",
     "company": "ELECFREAKS",
@@ -1660,6 +1698,25 @@
     "description": "A Jacdac Rotary Encoder.",
     "storeLink": [
       "https://shop.elecfreaks.com/products/jacdacrotaryencoder"
+    ],
+    "services": [
+      284830153,
+      343122531
+    ],
+    "productIdentifiers": [
+      805917517
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "shape": "ec30_3x2_lr"
+  },
+  {
+    "id": "elecfreaks-jacdacrotrayencoderv10",
+    "name": "Jacdac Rotray Encoder",
+    "company": "ELECFREAKS",
+    "description": "A Jacdac Rotray Encoder.",
+    "storeLink": [
+      "https://shop.elecfreaks.com/products/jacdacrotrayencoder"
     ],
     "services": [
       284830153,

@@ -1527,10 +1527,10 @@
     "shape": "ec30_1x7_r7"
   },
   {
-    "id": "elecfreaks-jacdacaccelerometersensorv10",
-    "name": "Jacdac Accelerometer Sensor",
+    "id": "elecfreaks-jacdacaccelerometerv10",
+    "name": "Jacdac Accelerometer",
     "company": "ELECFREAKS",
-    "description": "A Jacdac Accelerometer Sensor.",
+    "description": "A Jacdac Accelerometer.",
     "storeLink": [
       "https://shop.elecfreaks.com/products/jacdacaccelerometer"
     ],

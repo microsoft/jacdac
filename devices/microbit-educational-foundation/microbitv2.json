@@ -4,7 +4,7 @@
   "company": "microbit Educational Foundation",
   "description": "The new micro:bit V2 has a built-in microphone and speaker to allow sound-sensing and sound-making without the need to attach another device. It also introduces capacitive touch sensing, a power-saving mode and more computing power for the classroom.",
   "connector": "noConnector",
-  "link": "https://microsoft.github.io/jacdac-docs/clients/makecode/microbit-jukebox/",
+  "link": "https://jacdac.github.io/jacdac-docs/clients/makecode/microbit-jukebox/",
   "storeLink": [
     "https://www.microbit.org/buy/"
   ],
@@ -21,12 +21,12 @@
   "firmwares": [
     {
       "name": "Micro:bit Jukebox",
-      "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/microbit-jukebox.hex",
+      "url": "https://github.com/jacdac/pxt-jacdac/releases/latest/download/microbit-jukebox.hex",
       "productIdentifier": 888455511
     },
     {
       "name": "Micro:bit MicroCode",
-      "url": "https://microsoft.github.io/microcode/assets/firmware.hex",
+      "url": "https://jacdac.github.io/microcode/assets/firmware.hex",
       "productIdentifier": 1049819173
     }
   ],

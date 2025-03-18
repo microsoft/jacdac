@@ -22,6 +22,6 @@
 /**
  * Constant pH u4.12 (uint16_t). Highest acidity that can be reported.
  */
-#define JD_ACIDITY_REG_MAX_HUMIDITY JD_REG_MAX_READING
+#define JD_ACIDITY_REG_MAX_ACIDITY JD_REG_MAX_READING
 
 #endif

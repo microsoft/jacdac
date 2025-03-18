@@ -708,10 +708,10 @@ export enum AcidityReg {
      * Constant pH u4.12 (uint16_t). Highest acidity that can be reported.
      *
      * ```
-     * const [maxHumidity] = jdunpack<[number]>(buf, "u4.12")
+     * const [maxAcidity] = jdunpack<[number]>(buf, "u4.12")
      * ```
      */
-    MaxHumidity = 0x105,
+    MaxAcidity = 0x105,
 }
 
 export namespace AcidityRegPack {
@@ -731,9 +731,9 @@ export namespace AcidityRegPack {
     export const MinAcidity = "u4.12"
 
     /**
-     * Pack format for 'max_humidity' data.
+     * Pack format for 'max_acidity' data.
      */
-    export const MaxHumidity = "u4.12"
+    export const MaxAcidity = "u4.12"
 }
 
 // Service Air Pressure constants

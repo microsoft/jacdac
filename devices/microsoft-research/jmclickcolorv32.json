@@ -2,9 +2,9 @@
   "id": "microsoft-research-jmclickcolorv32",
   "name": "JM-Click Color",
   "company": "Microsoft Research",
-  "repo": "https://github.com/microsoft/jacdac-msr-modules",
-  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v3.2/profile/colorclick.c",
-  "link": "https://github.com/microsoft/jacdac-msr-modules",
+  "repo": "https://github.com/jacdac/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v3.2/profile/colorclick.c",
+  "link": "https://github.com/jacdac/jacdac-msr-modules",
   "services": [
     372299111
   ],

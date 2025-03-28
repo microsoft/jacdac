@@ -1507,6 +1507,24 @@
     "status": "stable"
   },
   {
+    "id": "elecfreaks-jacdacaccelerometerv10",
+    "name": "Jacdac Accelerometer",
+    "company": "ELECFREAKS",
+    "description": "A Jacdac Accelerometer.",
+    "storeLink": [
+      "https://shop.elecfreaks.com/products/jacdacaccelerometer"
+    ],
+    "services": [
+      521405449
+    ],
+    "productIdentifiers": [
+      952491663
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "shape": "ec30_3x2_lr"
+  },
+  {
     "id": "elecfreaks-jacdacbitv10",
     "name": "Jacdac:bit",
     "company": "ELECFREAKS",

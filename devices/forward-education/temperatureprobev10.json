@@ -1,0 +1,20 @@
+{
+  "id": "forward-education-temperatureprobev10",
+  "name": "Temperature Probe",
+  "company": "Forward Education",
+  "description": "Measure temperature precisely with the Forward Education Jacdac Temperature Sensor.  This module utilizes a digital DS18B20 sensor for reliable and accurate readings.  Connect instantly via Jacdac to bring temperature data into your projects.",
+  "firmwareSource": "https://github.com/Forward-Education/firmware",
+  "hardwareDesign": "https://github.com/Forward-Education/hw-probe",
+  "link": "https://forwardedu.com/",
+  "storeLink": [
+    "https://forwardedu.com/collections/"
+  ],
+  "services": [
+    337754823
+  ],
+  "productIdentifiers": [
+    908127835
+  ],
+  "version": "1.0",
+  "status": "stable"
+}

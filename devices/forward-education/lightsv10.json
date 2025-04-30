@@ -1,0 +1,20 @@
+{
+  "id": "forward-education-lightsv10",
+  "name": "Lights",
+  "company": "Forward Education",
+  "description": "Control dimmable LED light strips with the Forward Education Jacdac \"Lights\" module.  It uses an external 5V or 12V power supply to safely power and manage brightness levels for your LEDs.  Integrate and command your lighting easily through the standard Jacdac connection.",
+  "firmwareSource": "https://github.com/Forward-Education/firmware",
+  "hardwareDesign": "https://github.com/Forward-Education/hw-led-pwm",
+  "link": "https://forwardedu.com/",
+  "storeLink": [
+    "https://forwardedu.com/collections/"
+  ],
+  "services": [
+    480970060
+  ],
+  "productIdentifiers": [
+    906605059
+  ],
+  "version": "1.0",
+  "status": "stable"
+}

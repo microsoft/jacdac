@@ -1,4 +1,5 @@
 {
+
   "id": "elecfreaks-jacdachallsensorv10",
   "name": "Jacdac Hall Sensor",
   "company": "ELECFREAKS",
@@ -16,3 +17,4 @@
   "status": "stable",
   "shape": "ec30_3x2_lr"
 }
+

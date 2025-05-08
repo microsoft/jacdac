@@ -1,0 +1,20 @@
+{
+  "id": "forward-education-floatsensorv10",
+  "name": "Float Sensor",
+  "company": "Forward Education",
+  "description": "This Forward Education Jacdac sensor monitors when water reaches a specific level. It uses a simple internal float that activates a signal at a set water height. Your project reads this signal through the Jacdac connection to know the level status.",
+  "firmwareSource": "https://github.com/Forward-Education/firmware",
+  "hardwareDesign": "https://github.com/Forward-Education/hw-float",
+  "link": "https://forwardedu.com/",
+  "storeLink": [
+    "https://forwardedu.com/collections/"
+  ],
+  "services": [
+    343122531
+  ],
+  "productIdentifiers": [
+    842766033
+  ],
+  "version": "1.0",
+  "status": "stable"
+}

@@ -3,8 +3,8 @@
   "name": "JM-Matrix",
   "company": "Microsoft Research",
   "description": "5x5 LED dot matrix",
-  "repo": "https://github.com/microsoft/jacdac-msr-modules",
-  "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v4.0matrix/profile/matrix-87.c",
+  "repo": "https://github.com/jacdac/jacdac-msr-modules",
+  "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v4.0matrix/profile/matrix-87.c",
   "services": [
     286070091
   ],

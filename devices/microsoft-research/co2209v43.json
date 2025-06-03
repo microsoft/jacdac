@@ -3,7 +3,7 @@
   "name": "CO2",
   "company": "Microsoft Research",
   "description": "Measures real CO2 concentration using SCD40 sensor (plus temperature and humidity)",
-  "repo": "https://github.com/microsoft/jacdac-msr-modules",
+  "repo": "https://github.com/jacdac/jacdac-msr-modules",
   "services": [
     337754823,
     382210232,

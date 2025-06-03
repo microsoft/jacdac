@@ -323,7 +323,7 @@
     "company": "microbit Educational Foundation",
     "description": "The new micro:bit V2 has a built-in microphone and speaker to allow sound-sensing and sound-making without the need to attach another device. It also introduces capacitive touch sensing, a power-saving mode and more computing power for the classroom.",
     "connector": "noConnector",
-    "link": "https://microsoft.github.io/jacdac-docs/clients/makecode/microbit-jukebox/",
+    "link": "https://jacdac.github.io/jacdac-docs/clients/makecode/microbit-jukebox/",
     "storeLink": [
       "https://www.microbit.org/buy/"
     ],
@@ -340,12 +340,12 @@
     "firmwares": [
       {
         "name": "Micro:bit Jukebox",
-        "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/microbit-jukebox.hex",
+        "url": "https://github.com/jacdac/pxt-jacdac/releases/latest/download/microbit-jukebox.hex",
         "productIdentifier": 888455511
       },
       {
         "name": "Micro:bit MicroCode",
-        "url": "https://microsoft.github.io/microcode/assets/firmware.hex",
+        "url": "https://jacdac.github.io/microcode/assets/firmware.hex",
         "productIdentifier": 1049819173
       }
     ],
@@ -1961,7 +1961,7 @@
     "name": "CableExtender",
     "company": "Microsoft Research",
     "description": "Cable extender",
-    "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/altium/hub-designs/JacdacCableExtender%2038-1.1",
+    "hardwareDesign": "https://github.com/jacdac/jacdac-ddk/tree/main/electronics/altium/hub-designs/JacdacCableExtender%2038-1.1",
     "connector": "edgePassive",
     "productIdentifiers": [
       943041789
@@ -1974,7 +1974,7 @@
     "name": "CO2",
     "company": "Microsoft Research",
     "description": "Measures real CO2 concentration using SCD40 sensor (plus temperature and humidity)",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       337754823,
       382210232,
@@ -1992,9 +1992,9 @@
     "name": "Developer RGB",
     "company": "Microsoft Research",
     "description": "Developer module with 10-pin header and RGB LED",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/developer-rgb-117/profile/developer-rgb-117-v1.0.c",
-    "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/altium/module-designs/JacdacDevRgbEc30%20117-1.0",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/developer-rgb-117/profile/developer-rgb-117-v1.0.c",
+    "hardwareDesign": "https://github.com/jacdac/jacdac-ddk/tree/main/electronics/altium/module-designs/JacdacDevRgbEc30%20117-1.0",
     "services": [
       506480888
     ],
@@ -2026,7 +2026,7 @@
     "name": "Hub",
     "company": "Microsoft Research",
     "description": "Passive hub with 6 ports",
-    "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/altium/hub-designs/JacdacEc30Hub10x40%20114-1.0",
+    "hardwareDesign": "https://github.com/jacdac/jacdac-ddk/tree/main/electronics/altium/hub-designs/JacdacEc30Hub10x40%20114-1.0",
     "connector": "edgePassive",
     "version": "1.0",
     "designIdentifier": "114",
@@ -2036,8 +2036,8 @@
     "id": "microsoft-research-jacdacjoystick440344v03",
     "name": "JacdacJoystick 44-0.3",
     "company": "Microsoft Research",
-    "firmwareSource": "https://github.com/microsoft/jacdac-padauk/tree/main/jm-joystick-44-0.2",
-    "link": "https://github.com/microsoft/jacdac-padauk",
+    "firmwareSource": "https://github.com/jacdac/jacdac-padauk/tree/main/jm-joystick-44-0.2",
+    "link": "https://github.com/jacdac/jacdac-padauk",
     "services": [
       277836886
     ],
@@ -2064,7 +2064,7 @@
     "id": "microsoft-research-jacdacmotiondetection54v01",
     "name": "JacdacMotionDetection ",
     "company": "Microsoft Research",
-    "link": "https://github.com/microsoft/jacdac-padauk",
+    "link": "https://github.com/jacdac/jacdac-padauk",
     "services": [
       293185353
     ],
@@ -2090,7 +2090,7 @@
     "id": "microsoft-research-jacdactouchtest35v10",
     "name": "JacdacTouchTest",
     "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       677752265
     ],
@@ -2120,8 +2120,8 @@
     "name": "JM-3-Slider",
     "company": "Microsoft Research",
     "description": "Triple slider",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v4.0/profile/slider-85.c",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v4.0/profile/slider-85.c",
     "services": [
       522667846,
       522667846,
@@ -2138,8 +2138,8 @@
     "id": "microsoft-research-jmaccelerometer30v10",
     "name": "JM Accelerometer",
     "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-accelerometer-30-1.0/profile/accelerometer.c",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-accelerometer-30-1.0/profile/accelerometer.c",
     "services": [
       521405449
     ],
@@ -2153,8 +2153,8 @@
     "id": "microsoft-research-jmaccessswitchinput34v13",
     "name": "JM Access Switch Input",
     "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-access-switch-input-34-1.3/profile/xac.c",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-access-switch-input-34-1.3/profile/xac.c",
     "services": [
       343122531,
       522667846,
@@ -2170,9 +2170,9 @@
     "id": "microsoft-research-jmaccessswitchoutputv11",
     "name": "JM Access Switch Output",
     "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-access-switch-output-1.1/profile/relay.c",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-access-switch-output-1.1/profile/relay.c",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       406840918
     ],
@@ -2185,9 +2185,9 @@
     "id": "microsoft-research-jmambientlight55v01",
     "name": "JM Ambient Light",
     "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-padauk/tree/main/jm-ambient-lightsensor-55-0.1",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-padauk/tree/main/jm-ambient-lightsensor-55-0.1",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       400333340
     ],
@@ -2201,8 +2201,8 @@
     "id": "microsoft-research-jmanalogjoystick44v02",
     "name": "JM Analog Joystick",
     "company": "Microsoft Research",
-    "firmwareSource": "https://github.com/microsoft/jacdac-padauk/tree/main/jm-joystick-44-0.2",
-    "link": "https://github.com/microsoft/jacdac-padauk",
+    "firmwareSource": "https://github.com/jacdac/jacdac-padauk/tree/main/jm-joystick-44-0.2",
+    "link": "https://github.com/jacdac/jacdac-padauk",
     "services": [
       277836886
     ],
@@ -2248,7 +2248,7 @@
     "firmwares": [
       {
         "name": "Azure IoT Hub Uploader",
-        "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/uploader-esp32s2.uf2",
+        "url": "https://github.com/jacdac/pxt-jacdac/releases/latest/download/uploader-esp32s2.uf2",
         "productIdentifier": 1067560617
       },
       {
@@ -2276,7 +2276,7 @@
     "name": "JM Brain F4",
     "company": "Microsoft Research",
     "connector": "edgeHighCurrentProvider",
-    "link": "https://github.com/microsoft/pxt-jacdac",
+    "link": "https://github.com/jacdac/pxt-jacdac",
     "services": [
       414210922,
       411425820
@@ -2293,12 +2293,12 @@
     "firmwares": [
       {
         "name": "HID Keyboard + Mouse",
-        "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/hid-servers-f4.uf2",
+        "url": "https://github.com/jacdac/pxt-jacdac/releases/latest/download/hid-servers-f4.uf2",
         "productIdentifier": 819577746
       },
       {
         "name": "HID Joystick",
-        "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/hid-joystick-f4.uf2",
+        "url": "https://github.com/jacdac/pxt-jacdac/releases/latest/download/hid-joystick-f4.uf2",
         "productIdentifier": 1009312972
       }
     ],
@@ -2316,7 +2316,7 @@
     "name": "JM Brain RP2040",
     "company": "Microsoft Research",
     "connector": "edgeHighCurrentProvider",
-    "link": "https://github.com/microsoft/pxt-jacdac",
+    "link": "https://github.com/jacdac/pxt-jacdac",
     "services": [
       414210922,
       411425820
@@ -2336,12 +2336,12 @@
     "firmwares": [
       {
         "name": "HID Keyboard + Mouse",
-        "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/hid-servers-rp2040.uf2",
+        "url": "https://github.com/jacdac/pxt-jacdac/releases/latest/download/hid-servers-rp2040.uf2",
         "productIdentifier": 883764657
       },
       {
         "name": "HID Joystick",
-        "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/hid-joystick-rp2040.uf2",
+        "url": "https://github.com/jacdac/pxt-jacdac/releases/latest/download/hid-joystick-rp2040.uf2",
         "productIdentifier": 983850333
       }
     ],
@@ -2357,7 +2357,7 @@
     "id": "microsoft-research-jmbutton10v13",
     "name": "JM Button",
     "company": "Microsoft Research",
-    "link": "https://github.com/microsoft/jacdac-padauk",
+    "link": "https://github.com/jacdac/jacdac-padauk",
     "services": [
       343122531
     ],
@@ -2371,8 +2371,8 @@
     "id": "microsoft-research-jmbutton40v02",
     "name": "JM Button",
     "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-button-40-0.2/profile/button.c",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-button-40-0.2/profile/button.c",
     "services": [
       343122531
     ],
@@ -2386,8 +2386,8 @@
     "id": "microsoft-research-jmbuttonterminal62v01",
     "name": "JM Button Terminal",
     "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       343122531
     ],
@@ -2401,8 +2401,8 @@
     "id": "microsoft-research-jmbuzzer89",
     "name": "JM-Buzzer",
     "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v4.0/profile/buzzer-89.c",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v4.0/profile/buzzer-89.c",
     "services": [
       458731991
     ],
@@ -2417,8 +2417,8 @@
     "name": "JM Capacitive Soil Moisture",
     "company": "Microsoft Research",
     "description": "JM Capacitive Soil Moisture v3.3",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v3.3/profile/soilmoisture.c",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v3.3/profile/soilmoisture.c",
     "services": [
       491430835
     ],
@@ -2431,9 +2431,9 @@
     "id": "microsoft-research-jmclickairquality4v32",
     "name": "JM-Click Airquality4",
     "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v3.2/profile/airquality4click.c",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v3.2/profile/airquality4click.c",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       379362758,
       312849815
@@ -2447,9 +2447,9 @@
     "id": "microsoft-research-jmclickcolorv32",
     "name": "JM-Click Color",
     "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v3.2/profile/colorclick.c",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v3.2/profile/colorclick.c",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       372299111
     ],
@@ -2463,8 +2463,8 @@
     "name": "JM CO2/TVOC/Temp/Hum SGP30+SHT30",
     "company": "Microsoft Research",
     "description": "JM CO2/TVOC/Temp/Hum SGP30+SHT30 66 v3.7",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v3.6/profile/co2.c",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v3.6/profile/co2.c",
     "services": [
       379362758,
       312849815,
@@ -2482,8 +2482,8 @@
     "name": "JM Dual Key",
     "company": "Microsoft Research",
     "description": "JM 2Key 69 v3.7",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v3.6/profile/key2.c",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v3.6/profile/key2.c",
     "services": [
       343122531,
       343122531
@@ -2498,7 +2498,7 @@
     "id": "microsoft-research-jmenvironment204v42",
     "name": "JM-Environment",
     "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       337754823,
       382210232,
@@ -2516,9 +2516,9 @@
     "id": "microsoft-research-jmflexv10",
     "name": "JM Flex",
     "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-flex-sensor-1.0/profile/flex.c",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-flex-sensor-1.0/profile/flex.c",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       524797638
     ],
@@ -2532,9 +2532,9 @@
     "name": "JM GamePad",
     "company": "Microsoft Research",
     "description": "Lets you convert a plastic d-pad controller, so that it can be connected to a Jacdac network.",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v2.0/profile/dpad.c",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v2.0/profile/dpad.c",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       501915758
     ],
@@ -2548,8 +2548,8 @@
     "name": "JM-Hall (magnetic switch)",
     "company": "Microsoft Research",
     "description": "JM-Hall (magnetic switch) 81 v4.0",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v4.0/profile/hall-81.c",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v4.0/profile/hall-81.c",
     "services": [
       450008066
     ],
@@ -2565,8 +2565,8 @@
     "name": "JM Haptic MACH-1.0",
     "company": "Microsoft Research",
     "description": "JM Haptic MACH-1.0",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-haptic-1.0/profile/haptic.c",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-haptic-1.0/profile/haptic.c",
     "services": [
       406832290
     ],
@@ -2592,8 +2592,8 @@
     "name": "JM Jacscript Star-Brain",
     "company": "Microsoft Research",
     "description": "A Jacscript brain",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/star-brain/profile/devicescript.c",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/star-brain/profile/devicescript.c",
     "services": [
       288680491
     ],
@@ -2610,7 +2610,7 @@
     "id": "microsoft-research-jmkeyboardkey46v12",
     "name": "JM Keyboard Key",
     "company": "Microsoft Research",
-    "link": "https://github.com/microsoft/jacdac-padauk",
+    "link": "https://github.com/jacdac/jacdac-padauk",
     "services": [
       343122531
     ],
@@ -2625,8 +2625,8 @@
     "name": "JM Key v3.7",
     "company": "Microsoft Research",
     "description": "JM Key 68 v3.7",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v3.6/profile/key.c",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v3.6/profile/key.c",
     "services": [
       343122531
     ],
@@ -2641,8 +2641,8 @@
     "name": "JM-Matrix",
     "company": "Microsoft Research",
     "description": "5x5 LED dot matrix",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v4.0matrix/profile/matrix-87.c",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v4.0matrix/profile/matrix-87.c",
     "services": [
       286070091
     ],
@@ -2657,7 +2657,7 @@
     "id": "microsoft-research-jmmicrobitshieldlp29v05",
     "name": "JM MicroBit Shield LP",
     "company": "Microsoft Research",
-    "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/deprecated_form_factor/altium_deprecated/reference-designs/JacdacMicroBitShieldLP%2029-0.6",
+    "hardwareDesign": "https://github.com/jacdac/jacdac-ddk/tree/main/electronics/deprecated_form_factor/altium_deprecated/reference-designs/JacdacMicroBitShieldLP%2029-0.6",
     "connector": "edgeLowCurrentProvider",
     "productIdentifiers": [
       974031363
@@ -2674,8 +2674,8 @@
     "name": "JM Module Tester",
     "company": "Microsoft Research",
     "description": "A module that controls the Jacdac bus voltage and measures the bus current consumption.",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-module-tester-91-0.1/board.h",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-module-tester-91-0.1/board.h",
     "services": [
       524302175,
       420661422,
@@ -2695,8 +2695,8 @@
     "name": "JM Motion PIR v3.8",
     "company": "Microsoft Research",
     "description": "JM Motion PIR 74 v3.8",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v3.3/profile/pir.c",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v3.3/profile/pir.c",
     "link": "https://aka.ms/aaaaad",
     "services": [
       293185353
@@ -2713,7 +2713,7 @@
     "name": "JM Pin Header",
     "company": "Microsoft Research",
     "description": "A regulated passive adapter from Jacdac to pin headers.",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "productIdentifiers": [
       994328823
     ],
@@ -2725,8 +2725,8 @@
     "name": "JM Pressure v3.8",
     "company": "Microsoft Research",
     "description": "JM Pressure MPL3115A2 72 v3.8",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v3.6/profile/barometer2.c",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v3.6/profile/barometer2.c",
     "link": "https://aka.ms/aaaabb",
     "services": [
       504462570,
@@ -2744,8 +2744,8 @@
     "name": "JM Relay MACH-0.1",
     "company": "Microsoft Research",
     "description": "JM Relay MACH-0.1",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-relay-1.0/profile/relay.c",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-relay-1.0/profile/relay.c",
     "services": [
       406840918
     ],
@@ -2759,8 +2759,8 @@
     "name": "JM RGB-8",
     "company": "Microsoft Research",
     "description": "Circular 8 programmable LED display.",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v4.0/profile/rgb-83.c",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v4.0/profile/rgb-83.c",
     "services": [
       369743088
     ],
@@ -2775,9 +2775,9 @@
     "id": "microsoft-research-jmrgbledbar58v01",
     "name": "JM RGB LED Bar",
     "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-rgb-led-bar-58-0.1/profile/npx.c",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-rgb-led-bar-58-0.1/profile/npx.c",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       309264608
     ],
@@ -2791,9 +2791,9 @@
     "id": "microsoft-research-jmrgbledgeneric60v01",
     "name": "JM RGB LED Generic",
     "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-rgb-led-generic-60-0.1/profile/npx.c",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-rgb-led-generic-60-0.1/profile/npx.c",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       309264608
     ],
@@ -2807,9 +2807,9 @@
     "id": "microsoft-research-jmrgbledring37v21",
     "name": "JM RGB LED Ring",
     "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-rgb-led-ring-37-2.1/profile/npx.c",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-rgb-led-ring-37-2.1/profile/npx.c",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       309264608
     ],
@@ -2824,7 +2824,7 @@
     "name": "JM RGB-Ring",
     "company": "Microsoft Research",
     "description": "JM RGB-Ring 67 v3.7",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       309264608
     ],
@@ -2839,8 +2839,8 @@
     "name": "JM Rotary + Btn",
     "company": "Microsoft Research",
     "description": "Rotary encoder with button in the standard shape.",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v4.0rot/profile/rotary-82.c",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v4.0rot/profile/rotary-82.c",
     "services": [
       284830153,
       343122531
@@ -2856,9 +2856,9 @@
     "id": "microsoft-research-jmrotarycontrolbuttonv11",
     "name": "JM Rotary Control + Button",
     "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-rotary-control-26-1.1/profile/rotary_ctrl.c",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-rotary-control-26-1.1/profile/rotary_ctrl.c",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       284830153,
       343122531
@@ -2873,8 +2873,8 @@
     "name": "JM SHT30 Temperature/Humidity",
     "company": "Microsoft Research",
     "description": "JM SHT30 64 v3.6",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v3.6/profile/env30.c",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v3.6/profile/env30.c",
     "services": [
       337754823,
       382210232
@@ -2889,8 +2889,8 @@
     "id": "microsoft-research-jmsinglergbled42v01",
     "name": "JM Single RGB LED",
     "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       506480888
     ],
@@ -2904,9 +2904,9 @@
     "id": "microsoft-research-jmslider49v11",
     "name": "JM Slider",
     "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-slider-49-1.1/profile/slider.c",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-slider-49-1.1/profile/slider.c",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       522667846
     ],
@@ -2921,8 +2921,8 @@
     "name": "JM Soil Temperature DS18B20",
     "company": "Microsoft Research",
     "description": "JM Soil Temperature DS18B20 v3.3",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v3.3one/profile/soiltemp.c",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v3.3one/profile/soiltemp.c",
     "services": [
       337754823
     ],
@@ -2935,8 +2935,8 @@
     "id": "microsoft-research-jmspeechsynthesis61v33",
     "name": "JM Speech Synthesis",
     "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v3.3/profile/ttsclick.c",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v3.3/profile/ttsclick.c",
     "services": [
       302307733
     ],
@@ -2951,8 +2951,8 @@
     "name": "JM SPI bridge",
     "company": "Microsoft Research",
     "description": "JM SPI bridge v3.7",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-spi-bridge-v3.7/profile/bridge.c",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-spi-bridge-v3.7/profile/bridge.c",
     "services": [
       535147631,
       530893146
@@ -2970,9 +2970,9 @@
     "id": "microsoft-research-jmtemperaturehumidity18v11",
     "name": "JM Temperature + Humidity",
     "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-temp-humidity-18-1.1/profile/env3.c",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-temp-humidity-18-1.1/profile/env3.c",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       337754823,
       382210232
@@ -2987,8 +2987,8 @@
     "id": "microsoft-research-jmtemperaturehumidity202v41",
     "name": "JM-Temperature/Humidity",
     "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v4.0/profile/temphum-202.c",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v4.0/profile/temphum-202.c",
     "services": [
       337754823,
       382210232
@@ -3005,8 +3005,8 @@
     "name": "JM Thermocouple MAX6675 73 v3.8",
     "company": "Microsoft Research",
     "description": "JM Thermocouple MAX6675 v3.8",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-c/blob/main/drivers/max6675.c",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-c/blob/main/drivers/max6675.c",
     "link": "https://aka.ms/aaaabc",
     "services": [
       337754823
@@ -3022,8 +3022,8 @@
     "name": "JM UVI/Illuminance 65 v3.6",
     "company": "Microsoft Research",
     "description": "JM UVI/Illuminance 65 v3.6",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v3.6/profile/uv.c",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v3.6/profile/uv.c",
     "services": [
       510577394,
       527306128
@@ -3088,7 +3088,7 @@
     "name": "Motion (PIR)",
     "company": "Microsoft Research",
     "description": "Detects motion using infra-red",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       293185353
     ],
@@ -3104,7 +3104,7 @@
     "name": "Pressure",
     "company": "Microsoft Research",
     "description": "Measures atmospheric pressure",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       337754823,
       504462570
@@ -3145,7 +3145,7 @@
     "name": "Tact",
     "company": "Microsoft Research",
     "description": "Tact style push switch.",
-    "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/altium/module-designs/JacdacTactEc30%20115-1.1",
+    "hardwareDesign": "https://github.com/jacdac/jacdac-ddk/tree/main/electronics/altium/module-designs/JacdacTactEc30%20115-1.1",
     "services": [
       343122531
     ],
@@ -3161,10 +3161,10 @@
     "name": "Temp & RH",
     "company": "Microsoft Research",
     "description": "Temperature and relative humidity sensor module.",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/temp-rh-116/profile/temp-rh-116-v1.0.c",
-    "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/altium/module-designs/JacdacTempRhEc30%20116-1.0",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/temp-rh-116/profile/temp-rh-116-v1.0.c",
+    "hardwareDesign": "https://github.com/jacdac/jacdac-ddk/tree/main/electronics/altium/module-designs/JacdacTempRhEc30%20116-1.0",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       337754823,
       382210232
@@ -3181,10 +3181,10 @@
     "name": "Temp & RH",
     "company": "Microsoft Research",
     "description": "Temperature and relative humidity sensor module.",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/temp-rh-116/profile/temp-rh-116-v1.1.c",
-    "hardwareDesign": "https://github.com/microsoft/jacdac-ddk/tree/main/electronics/altium/module-designs/JacdacTempRhEc30%20116-1.1",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/temp-rh-116/profile/temp-rh-116-v1.1.c",
+    "hardwareDesign": "https://github.com/jacdac/jacdac-ddk/tree/main/electronics/altium/module-designs/JacdacTempRhEc30%20116-1.1",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       337754823,
       382210232
@@ -3200,7 +3200,7 @@
     "id": "microsoft-research-uviilluminance205v42",
     "name": "UVI/Illuminance",
     "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       510577394,
       527306128
@@ -3235,8 +3235,8 @@
     "id": "microsoft-research-jmaccelerometer30v02",
     "name": "JM Accelerometer",
     "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       521405449
     ],
@@ -3252,9 +3252,9 @@
     "name": "JM Accelerometer v2.0",
     "company": "Microsoft Research",
     "description": "A 3-axis accelerometer. 16G range.",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v2.0i/profile/acc.c",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v2.0i/profile/acc.c",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       521405449
     ],
@@ -3268,9 +3268,9 @@
     "name": "JM ArcadeBtn v2.0",
     "company": "Microsoft Research",
     "description": "Lets you connect a single arcade button with an LED.",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v2.0/profile/btnled.c",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v2.0/profile/btnled.c",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       343122531
     ],
@@ -3284,9 +3284,9 @@
     "name": "JM Arcade Controls v2.0",
     "company": "Microsoft Research",
     "description": "Lets you connect arcade buttons and joystick to a Jacdac network.",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v2.0/profile/arcade.c",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v2.0/profile/arcade.c",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       501915758
     ],
@@ -3313,7 +3313,7 @@
     "firmwares": [
       {
         "name": "IoT Uploader",
-        "url": "https://github.com/microsoft/pxt-jacdac/releases/latest/download/uploader-esp32s2.uf2",
+        "url": "https://github.com/jacdac/pxt-jacdac/releases/latest/download/uploader-esp32s2.uf2",
         "productIdentifier": 1067560617
       }
     ],
@@ -3326,9 +3326,9 @@
     "name": "JM Buzzer v2.0",
     "company": "Microsoft Research",
     "description": "A simple buzzer.",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v2.0/profile/snd.c",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v2.0/profile/snd.c",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       458731991
     ],
@@ -3342,9 +3342,9 @@
     "name": "JM Crank + Button",
     "company": "Microsoft Research",
     "description": "A rotary encoder with a push button.",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v2.0/profile/crank-btn.c",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v2.0/profile/crank-btn.c",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       284830153,
       343122531
@@ -3360,9 +3360,9 @@
     "name": "JM Crank",
     "company": "Microsoft Research",
     "description": "A rotary encoder without a push button.",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v2.0/profile/crank.c",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v2.0/profile/crank.c",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       284830153
     ],
@@ -3376,7 +3376,7 @@
     "id": "microsoft-research-jmkeyboardkey46v10",
     "name": "JM Keyboard Key",
     "company": "Microsoft Research",
-    "link": "https://github.com/microsoft/jacdac-padauk",
+    "link": "https://github.com/jacdac/jacdac-padauk",
     "services": [
       343122531
     ],
@@ -3391,8 +3391,8 @@
     "id": "microsoft-research-jmkeyboardkey46v11",
     "name": "JM Keyboard Key",
     "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       343122531
     ],
@@ -3409,7 +3409,7 @@
     "company": "Microsoft Research",
     "description": "Lets you run machine learning models on data coming from Jacdac network.",
     "repo": "https://github.com/microsoft/pxt-tensorflow",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       336566904,
       496034245
@@ -3421,9 +3421,9 @@
     "name": "JM Motor",
     "company": "Microsoft Research",
     "description": "Lets you control a single DC motor (up to 5V; yellow plastic ones work well).",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v2.1/profile/motor.c",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v2.1/profile/motor.c",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       385895640
     ],
@@ -3438,7 +3438,7 @@
     "name": "JM Pin Header",
     "company": "Microsoft Research",
     "description": "A unregulated passive adapter from Jacdac to pin headers.",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "productIdentifiers": [
       939230090
     ],
@@ -3451,8 +3451,8 @@
     "name": "JM Power",
     "company": "Microsoft Research",
     "description": "Lets you supply power to Jacdac network from a MicroUSB connection (eg. a USB battery pack).",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       530893146
     ],
@@ -3466,9 +3466,9 @@
     "name": "JM Proto",
     "company": "Microsoft Research",
     "description": "A prototype multi-function board.\n* ``0x3f9bc26a`` JM Touch-Proto v2.0",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v2.0p/profile/proto.c",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v2.0p/profile/proto.c",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "productIdentifiers": [
       1052138004
     ],
@@ -3480,8 +3480,8 @@
     "name": "JM PWM (npx)",
     "company": "Microsoft Research",
     "description": "A light-strip controller. Supports WS2812B, APA102, and SK9822.",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       309264608
     ],
@@ -3496,8 +3496,8 @@
     "name": "JM PWM (npx)",
     "company": "Microsoft Research",
     "description": "A light-strip controller with MicroUSB connector for power. Supports WS2812B, APA102, and SK9822.",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       309264608
     ],
@@ -3512,9 +3512,9 @@
     "name": "JM PWM (Servo)",
     "company": "Microsoft Research",
     "description": "A controller for a 5V servo.",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v2.0/profile/servo.c",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v2.0/profile/servo.c",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       318542083
     ],
@@ -3529,9 +3529,9 @@
     "name": "JM PWM (Servo)",
     "company": "Microsoft Research",
     "description": "A controller for a 5V servo, with MicroUSB connector for power.",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v2.1/profile/servo.c",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v2.1/profile/servo.c",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       318542083
     ],
@@ -3545,9 +3545,9 @@
     "id": "microsoft-research-jmrgbledring37v20",
     "name": "JM RGB LED Ring",
     "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-rgb-led-ring-37-2.0/profile/npx.c",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-rgb-led-ring-37-2.0/profile/npx.c",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       309264608
     ],
@@ -3562,9 +3562,9 @@
     "id": "microsoft-research-jmrotarycontrolbuttonv10",
     "name": "JM Rotary Control + Button",
     "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-rotary-control-26-1.0/profile/rotary_ctrl.c",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-rotary-control-26-1.0/profile/rotary_ctrl.c",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       284830153,
       343122531
@@ -3579,9 +3579,9 @@
     "id": "microsoft-research-jmslider49v10",
     "name": "JM Slider",
     "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-slider-49-1.0/profile/slider.c#",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-slider-49-1.0/profile/slider.c#",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       522667846
     ],
@@ -3597,9 +3597,9 @@
     "name": "JM Slider",
     "company": "Microsoft Research",
     "description": "A linear potentiometer (slider).",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v2.0/profile/slider.c",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v2.0/profile/slider.c",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       522667846
     ],
@@ -3613,9 +3613,9 @@
     "id": "microsoft-research-jmtemperaturehumidity18v10a",
     "name": "JM Temperature + Humidity",
     "company": "Microsoft Research",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-temp-humidity-18-1.0A/profile/env3.c",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-temp-humidity-18-1.0A/profile/env3.c",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       337754823,
       382210232
@@ -3632,9 +3632,9 @@
     "name": "JM Touch-Proto",
     "company": "Microsoft Research",
     "description": "A multi-touch sensor based on proto board.",
-    "repo": "https://github.com/microsoft/jacdac-msr-modules",
-    "firmwareSource": "https://github.com/microsoft/jacdac-msr-modules/blob/main/targets/jm-v2.0p/profile/multitouch.c",
-    "link": "https://github.com/microsoft/jacdac-msr-modules",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-v2.0p/profile/multitouch.c",
+    "link": "https://github.com/jacdac/jacdac-msr-modules",
     "services": [
       416636459
     ],

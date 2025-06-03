@@ -1,5 +1,4 @@
 {
-
   "id": "elecfreaks-jacdacuvisensorv10",
   "name": "Jacdac UVI Sensor",
   "company": "ELECFREAKS",
@@ -17,4 +16,3 @@
   "status": "stable",
   "shape": "ec30_3x2_lr"
 }
-

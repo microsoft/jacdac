@@ -1288,6 +1288,47 @@
     "status": "stable"
   },
   {
+    "id": "forward-education-floatsensorv10",
+    "name": "Float Sensor",
+    "company": "Forward Education",
+    "description": "This Forward Education Jacdac sensor monitors when water reaches a specific level. It uses a simple internal float that activates a signal at a set water height. Your project reads this signal through the Jacdac connection to know the level status.",
+    "firmwareSource": "https://github.com/Forward-Education/firmware",
+    "hardwareDesign": "https://github.com/Forward-Education/hw-float",
+    "link": "https://forwardedu.com/",
+    "storeLink": [
+      "https://forwardedu.com/collections/"
+    ],
+    "services": [
+      343122531
+    ],
+    "productIdentifiers": [
+      842766033
+    ],
+    "version": "1.0",
+    "status": "stable"
+  },
+  {
+    "id": "forward-education-learntosolderkitv10",
+    "name": "Learn to Solder Kit",
+    "company": "Forward Education",
+    "description": "Learn to solder by assembling this module's through-hole components yourself. Once built, you'll have a device with 3 LEDs and 3 buttons that can be quickly integrated with your Jacdac projects via code, or powered standalone using a coin cell battery.",
+    "firmwareSource": "https://github.com/Forward-Education/firmware",
+    "hardwareDesign": "https://github.com/Forward-Education/hw-LearnToSolder",
+    "link": "https://forwardedu.com/",
+    "storeLink": [
+      "https://forwardedu.com/collections/"
+    ],
+    "services": [
+      480970060,
+      343122531
+    ],
+    "productIdentifiers": [
+      869502978
+    ],
+    "version": "1.0",
+    "status": "stable"
+  },
+  {
     "id": "forward-education-ledlightsv10",
     "name": "LED Lights",
     "company": "Forward Education",
@@ -1308,6 +1349,26 @@
     ],
     "productIdentifiers": [
       1054009247
+    ],
+    "version": "1.0",
+    "status": "stable"
+  },
+  {
+    "id": "forward-education-lightsv10",
+    "name": "Lights",
+    "company": "Forward Education",
+    "description": "Control dimmable LED light strips with the Forward Education Jacdac \"Lights\" module.  It uses an external 5V or 12V power supply to safely power and manage brightness levels for your LEDs.  Integrate and command your lighting easily through the standard Jacdac connection.",
+    "firmwareSource": "https://github.com/Forward-Education/firmware",
+    "hardwareDesign": "https://github.com/Forward-Education/hw-led-pwm",
+    "link": "https://forwardedu.com/",
+    "storeLink": [
+      "https://forwardedu.com/collections/"
+    ],
+    "services": [
+      480970060
+    ],
+    "productIdentifiers": [
+      906605059
     ],
     "version": "1.0",
     "status": "stable"
@@ -1433,6 +1494,26 @@
     "status": "stable"
   },
   {
+    "id": "forward-education-temperatureprobev10",
+    "name": "Temperature Probe",
+    "company": "Forward Education",
+    "description": "Measure temperature precisely with the Forward Education Jacdac Temperature Sensor.  This module utilizes a digital DS18B20 sensor for reliable and accurate readings.  Connect instantly via Jacdac to bring temperature data into your projects.",
+    "firmwareSource": "https://github.com/Forward-Education/firmware",
+    "hardwareDesign": "https://github.com/Forward-Education/hw-probe",
+    "link": "https://forwardedu.com/",
+    "storeLink": [
+      "https://forwardedu.com/collections/"
+    ],
+    "services": [
+      337754823
+    ],
+    "productIdentifiers": [
+      908127835
+    ],
+    "version": "1.0",
+    "status": "stable"
+  },
+  {
     "id": "forward-education-touchsensorv10",
     "name": "Touch Sensor",
     "company": "Forward Education",
@@ -1525,18 +1606,38 @@
     "status": "stable"
   },
   {
-    "id": "elecfreaks-jacdacaccelerometerv10",
-    "name": "Jacdac Accelerometer",
+    "id": "elecfreaks-jacdacbitv10",
+    "name": "Jacdac:bit",
     "company": "ELECFREAKS",
-    "description": "A Jacdac Accelerometer.",
+    "description": "Jacdac:bit is a micro:bit interface module for easy connection to Jacdac devices, ideal for learning and interactive projects.",
+    "connector": "edgeLowCurrentProviderConsumer",
+    "storeLink": [
+      "https://shop.elecfreaks.com/products/Jacdacbit"
+    ],
+    "tags": [
+      "adapter",
+      "microbit"
+    ],
+    "version": "1.0",
+    "status": "stable",
+    "requiredDevices": [
+      "microbit-educational-foundation-microbitv2"
+    ],
+    "shape": "ec30_1x7_r7"
+  },
+  {
+    "id": "elecfreaks-jacdacaccelerometersensorv10",
+    "name": "Jacdac Accelerometer Sensor",
+    "company": "ELECFREAKS",
+    "description": "A Jacdac Accelerometer Sensor.",
     "storeLink": [
       "https://shop.elecfreaks.com/products/jacdacaccelerometer"
     ],
     "services": [
-      521405449
+      527306128
     ],
     "productIdentifiers": [
-      952491663
+      1014694623
     ],
     "version": "1.0",
     "status": "stable",

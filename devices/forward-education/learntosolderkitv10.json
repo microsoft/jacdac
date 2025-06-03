@@ -1,0 +1,21 @@
+{
+  "id": "forward-education-learntosolderkitv10",
+  "name": "Learn to Solder Kit",
+  "company": "Forward Education",
+  "description": "Learn to solder by assembling this module's through-hole components yourself. Once built, you'll have a device with 3 LEDs and 3 buttons that can be quickly integrated with your Jacdac projects via code, or powered standalone using a coin cell battery.",
+  "firmwareSource": "https://github.com/Forward-Education/firmware",
+  "hardwareDesign": "https://github.com/Forward-Education/hw-LearnToSolder",
+  "link": "https://forwardedu.com/",
+  "storeLink": [
+    "https://forwardedu.com/collections/"
+  ],
+  "services": [
+    480970060,
+    343122531
+  ],
+  "productIdentifiers": [
+    869502978
+  ],
+  "version": "1.0",
+  "status": "stable"
+}

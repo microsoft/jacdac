@@ -1606,26 +1606,6 @@
     "status": "stable"
   },
   {
-    "id": "elecfreaks-jacdacbitv10",
-    "name": "Jacdac:bit",
-    "company": "ELECFREAKS",
-    "description": "Jacdac:bit is a micro:bit interface module for easy connection to Jacdac devices, ideal for learning and interactive projects.",
-    "connector": "edgeLowCurrentProviderConsumer",
-    "storeLink": [
-      "https://shop.elecfreaks.com/products/Jacdacbit"
-    ],
-    "tags": [
-      "adapter",
-      "microbit"
-    ],
-    "version": "1.0",
-    "status": "stable",
-    "requiredDevices": [
-      "microbit-educational-foundation-microbitv2"
-    ],
-    "shape": "ec30_1x7_r7"
-  },
-  {
     "id": "elecfreaks-jacdacaccelerometersensorv10",
     "name": "Jacdac Accelerometer Sensor",
     "company": "ELECFREAKS",
@@ -1634,7 +1614,7 @@
       "https://shop.elecfreaks.com/products/jacdacaccelerometer"
     ],
     "services": [
-      527306128
+      521405449
     ],
     "productIdentifiers": [
       1014694623

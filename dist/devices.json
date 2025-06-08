@@ -1398,5 +1398,211 @@
     },
     "version": "3.0",
     "status": "stable"
+  },
+  {
+    "id": "microsoft-research-jmbase86v41",
+    "name": "JM Base",
+    "company": "Microsoft Research",
+    "description": "A breadboard like PCB to screw mount Jacdac modules.",
+    "connector": "edgePassive",
+    "tags": [
+      "ec30",
+      "hub"
+    ],
+    "version": "4.1",
+    "designIdentifier": "86"
+  },
+  {
+    "id": "microsoft-research-jmbrainesp3248v03",
+    "name": "JM Brain ESP32",
+    "company": "Microsoft Research",
+    "connector": "edgeHighCurrentProvider",
+    "services": [
+      342028028,
+      341864092
+    ],
+    "productIdentifiers": [
+      917230668,
+      983264687,
+      1067560617,
+      1038170507,
+      816040071
+    ],
+    "transport": {
+      "type": "serial",
+      "vendorId": 12346
+    },
+    "firmwares": [
+      {
+        "name": "Azure IoT Hub Uploader",
+        "url": "https://github.com/jacdac/pxt-jacdac/releases/latest/download/uploader-esp32s2.uf2",
+        "productIdentifier": 1067560617
+      },
+      {
+        "name": "DeviceScript Brain + Azure IoT Hub Cloud Adapter",
+        "url": "https://github.com/microsoft/devicescript-esp32/releases/latest/download/devicescript-esp32s2.uf2",
+        "productIdentifier": 1038170507
+      },
+      {
+        "name": "Azure IoT Hub Cloud Adapter",
+        "url": "https://github.com/microsoft/devicescript-esp32/releases/latest/download/devicescript-esp32s2-nojacs.uf2",
+        "productIdentifier": 816040071
+      }
+    ],
+    "version": "0.3",
+    "designIdentifier": "48",
+    "bootloader": {
+      "sequence": "reset-boot",
+      "driveName": "IOT-BOOT",
+      "firmwareFormat": "uf2",
+      "ledAnimation": "blue-glow"
+    }
+  },
+  {
+    "id": "microsoft-research-jmbrainf441v02",
+    "name": "JM Brain F4",
+    "company": "Microsoft Research",
+    "connector": "edgeHighCurrentProvider",
+    "link": "https://github.com/jacdac/pxt-jacdac",
+    "services": [
+      414210922,
+      411425820
+    ],
+    "productIdentifiers": [
+      1003209864,
+      970267564,
+      819577746,
+      1009312972
+    ],
+    "transport": {
+      "type": "usb"
+    },
+    "firmwares": [
+      {
+        "name": "HID Keyboard + Mouse",
+        "url": "https://github.com/jacdac/pxt-jacdac/releases/latest/download/hid-servers-f4.uf2",
+        "productIdentifier": 819577746
+      },
+      {
+        "name": "HID Joystick",
+        "url": "https://github.com/jacdac/pxt-jacdac/releases/latest/download/hid-joystick-f4.uf2",
+        "productIdentifier": 1009312972
+      }
+    ],
+    "version": "0.2",
+    "designIdentifier": "41",
+    "bootloader": {
+      "sequence": "reset",
+      "driveName": "JACDACF4",
+      "firmwareFormat": "uf2",
+      "ledAnimation": "blue-glow"
+    }
+  },
+  {
+    "id": "microsoft-research-jmbrainrp204059v01",
+    "name": "JM Brain RP2040",
+    "company": "Microsoft Research",
+    "connector": "edgeHighCurrentProvider",
+    "link": "https://github.com/jacdac/pxt-jacdac",
+    "services": [
+      414210922,
+      411425820
+    ],
+    "productIdentifiers": [
+      884301483,
+      999933064,
+      883764657,
+      983850333
+    ],
+    "transport": {
+      "type": "usb"
+    },
+    "tags": [
+      "adapter"
+    ],
+    "firmwares": [
+      {
+        "name": "HID Keyboard + Mouse",
+        "url": "https://github.com/jacdac/pxt-jacdac/releases/latest/download/hid-servers-rp2040.uf2",
+        "productIdentifier": 883764657
+      },
+      {
+        "name": "HID Joystick",
+        "url": "https://github.com/jacdac/pxt-jacdac/releases/latest/download/hid-joystick-rp2040.uf2",
+        "productIdentifier": 983850333
+      }
+    ],
+    "version": "0.1",
+    "designIdentifier": "59",
+    "bootloader": {
+      "sequence": "reset-boot",
+      "driveName": "RPI-RP2",
+      "firmwareFormat": "uf2"
+    }
+  },
+  {
+    "id": "microsoft-research-jmjacscriptstarbrainv33",
+    "name": "JM Jacscript Star-Brain",
+    "company": "Microsoft Research",
+    "description": "A Jacscript brain",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/star-brain/profile/devicescript.c",
+    "services": [
+      288680491
+    ],
+    "productIdentifiers": [
+      1025500463
+    ],
+    "transport": {
+      "type": "serial",
+      "vendorId": 6790
+    },
+    "version": "3.3"
+  },
+  {
+    "id": "microsoft-research-jmspibridgev37",
+    "name": "JM SPI bridge",
+    "company": "Microsoft Research",
+    "description": "JM SPI bridge v3.7",
+    "repo": "https://github.com/jacdac/jacdac-msr-modules",
+    "firmwareSource": "https://github.com/jacdac/jacdac-msr-modules/blob/main/targets/jm-spi-bridge-v3.7/profile/bridge.c",
+    "services": [
+      535147631,
+      530893146
+    ],
+    "productIdentifiers": [
+      882232420
+    ],
+    "tags": [
+      "adapter",
+      "pi"
+    ],
+    "version": "3.7"
+  },
+  {
+    "id": "microsoft-research-jmbrainesp3248v02",
+    "name": "JM Brain ESP32",
+    "company": "Microsoft Research",
+    "connector": "edgeHighCurrentProvider",
+    "services": [
+      342028028
+    ],
+    "productIdentifiers": [
+      1067560617
+    ],
+    "transport": {
+      "type": "serial",
+      "vendorId": 12346
+    },
+    "firmwares": [
+      {
+        "name": "IoT Uploader",
+        "url": "https://github.com/jacdac/pxt-jacdac/releases/latest/download/uploader-esp32s2.uf2",
+        "productIdentifier": 1067560617
+      }
+    ],
+    "version": "0.2",
+    "designIdentifier": "48",
+    "status": "deprecated"
   }
 ]

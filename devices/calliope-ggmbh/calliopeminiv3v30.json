@@ -8,9 +8,6 @@
   "storeLink": [
     "https://shop.calliope.cc"
   ],
-  "tags": [
-    "brain"
-  ],
   "productIdentifiers": [
     860332754
   ],
@@ -18,6 +15,9 @@
     "type": "usb",
     "requestDescription": "Calliope mini V3 CMSIS-DAP"
   },
+  "tags": [
+    "brain"
+  ],
   "version": "3.0",
   "status": "stable"
 }

@@ -6,15 +6,15 @@
   "storeLink": [
     "https://shop.elecfreaks.com/products/jacdacservo"
   ],
-  "tags": [
-    "module",
-    "actuator"
-  ],
   "services": [
     318542083
   ],
   "productIdentifiers": [
     943192226
+  ],
+  "tags": [
+    "module",
+    "actuator"
   ],
   "version": "1.0",
   "status": "stable",

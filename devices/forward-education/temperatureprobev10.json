@@ -9,15 +9,15 @@
   "storeLink": [
     "https://forwardedu.com/collections/"
   ],
-  "tags": [
-    "module",
-    "sensor"
-  ],
   "services": [
     337754823
   ],
   "productIdentifiers": [
     908127835
+  ],
+  "tags": [
+    "module",
+    "sensor"
   ],
   "version": "1.0",
   "status": "stable"

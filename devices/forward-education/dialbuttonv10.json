@@ -10,10 +10,6 @@
       "slug": "climate-action-kits/pxt-fwd-edu/fwd-dial"
     }
   ],
-  "tags": [
-    "module",
-    "user input"
-  ],
   "link": "https://forwardedu.com",
   "storeLink": [
     "https://forwardedu.com"
@@ -24,6 +20,10 @@
   ],
   "productIdentifiers": [
     932148851
+  ],
+  "tags": [
+    "module",
+    "user input"
   ],
   "version": "1.0",
   "status": "stable"

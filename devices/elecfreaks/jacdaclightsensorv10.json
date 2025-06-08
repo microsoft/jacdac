@@ -6,15 +6,15 @@
   "storeLink": [
     "https://shop.elecfreaks.com/products/jacdaclightsensor"
   ],
-  "tags": [
-    "module",
-    "sensor"
-  ],
   "services": [
     400333340
   ],
   "productIdentifiers": [
     933513617
+  ],
+  "tags": [
+    "module",
+    "sensor"
   ],
   "version": "1.0",
   "status": "stable",

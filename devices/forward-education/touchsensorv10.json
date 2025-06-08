@@ -10,10 +10,6 @@
       "slug": "climate-action-kits/pxt-fwd-edu/fwd-touch"
     }
   ],
-  "tags": [
-    "module",
-    "sensor"
-  ],
   "link": "https://forwardedu.com",
   "storeLink": [
     "https://forwardedu.com"
@@ -23,6 +19,10 @@
   ],
   "productIdentifiers": [
     1064434129
+  ],
+  "tags": [
+    "module",
+    "sensor"
   ],
   "version": "1.0",
   "status": "stable"

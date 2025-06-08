@@ -10,10 +10,6 @@
       "slug": "climate-action-kits/pxt-fwd-edu/fwd-line"
     }
   ],
-  "tags": [
-    "module",
-    "sensor"
-  ],
   "link": "https://forwardedu.com",
   "storeLink": [
     "https://forwardedu.com"
@@ -25,6 +21,10 @@
   ],
   "productIdentifiers": [
     1000568338
+  ],
+  "tags": [
+    "module",
+    "sensor"
   ],
   "version": "1.0",
   "status": "stable"

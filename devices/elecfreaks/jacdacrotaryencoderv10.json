@@ -6,16 +6,16 @@
   "storeLink": [
     "https://shop.elecfreaks.com/products/jacdacrotaryencoder"
   ],
-  "tags": [
-    "module",
-    "user input"
-  ],
   "services": [
     284830153,
     343122531
   ],
   "productIdentifiers": [
     805917517
+  ],
+  "tags": [
+    "module",
+    "user input"
   ],
   "version": "1.0",
   "status": "stable",

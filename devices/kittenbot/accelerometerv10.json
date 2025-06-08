@@ -9,12 +9,12 @@
   "services": [
     521405449
   ],
+  "productIdentifiers": [
+    1031216668
+  ],
   "tags": [
     "module",
     "sensor"
-  ],
-  "productIdentifiers": [
-    1031216668
   ],
   "version": "1.0",
   "status": "stable",

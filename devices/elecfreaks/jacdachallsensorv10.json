@@ -6,15 +6,15 @@
   "storeLink": [
     "https://shop.elecfreaks.com/products/jacdachallsensor"
   ],
-  "tags": [
-    "module",
-    "sensor"
-  ],
   "services": [
     318642191
   ],
   "productIdentifiers": [
     809663828
+  ],
+  "tags": [
+    "module",
+    "sensor"
   ],
   "version": "1.0",
   "status": "stable",

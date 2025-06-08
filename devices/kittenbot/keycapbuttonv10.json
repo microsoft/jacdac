@@ -9,15 +9,15 @@
     "https://www.aliexpress.com/item/3256804237465484.html",
     "https://www.pakronics.com.au/products/kittenbot-jacdac-kit-a-with-adaptor-for-micro-bit-v2-pakr-a0410"
   ],
-  "tags": [
-    "module",
-    "user input"
-  ],
   "services": [
     343122531
   ],
   "productIdentifiers": [
     926152985
+  ],
+  "tags": [
+    "module",
+    "user input"
   ],
   "version": "1.0",
   "status": "stable",

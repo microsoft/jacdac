@@ -7,15 +7,15 @@
   "storeLink": [
     "https://shop.elecfreaks.com/products/jacdacbuzzer"
   ],
-  "tags": [
-    "module",
-    "user output"
-  ],
   "services": [
     458731991
   ],
   "productIdentifiers": [
     870706665
+  ],
+  "tags": [
+    "module",
+    "user output"
   ],
   "version": "1.0",
   "status": "stable",

@@ -57,6 +57,10 @@
     "productIdentifiers": [
       1031216668
     ],
+    "tags": [
+      "module",
+      "sensor"
+    ],
     "version": "1.0",
     "status": "stable",
     "shape": "ec30_2x2_lr"
@@ -81,6 +85,10 @@
     "productIdentifiers": [
       878230570
     ],
+    "tags": [
+      "module",
+      "user input"
+    ],
     "version": "1.0",
     "status": "stable"
   },
@@ -104,6 +112,10 @@
     ],
     "productIdentifiers": [
       988197346
+    ],
+    "tags": [
+      "module",
+      "user input"
     ],
     "version": "1.0",
     "status": "stable"
@@ -174,6 +186,10 @@
     "productIdentifiers": [
       998683858
     ],
+    "tags": [
+      "module",
+      "sensor"
+    ],
     "version": "1.0",
     "status": "stable",
     "shape": "ec30_2x2_lr"
@@ -230,6 +246,10 @@
     ],
     "productIdentifiers": [
       837852806
+    ],
+    "tags": [
+      "module",
+      "user output"
     ],
     "version": "1.0",
     "status": "stable",
@@ -361,6 +381,10 @@
     "productIdentifiers": [
       926152985
     ],
+    "tags": [
+      "module",
+      "user input"
+    ],
     "version": "1.0",
     "status": "stable",
     "shape": "ec30_3x2_lr"
@@ -383,6 +407,10 @@
       973683863,
       1017391393
     ],
+    "tags": [
+      "module",
+      "sensor"
+    ],
     "version": "1.0",
     "status": "stable",
     "shape": "ec30_2x2_lr"
@@ -404,6 +432,10 @@
     "productIdentifiers": [
       881631743,
       1018441315
+    ],
+    "tags": [
+      "module",
+      "sensor"
     ],
     "version": "1.0",
     "status": "stable",
@@ -473,6 +505,10 @@
     "productIdentifiers": [
       1015787249
     ],
+    "tags": [
+      "module",
+      "power"
+    ],
     "version": "1.0",
     "status": "stable",
     "shape": "ec30_2x4_l2"
@@ -490,6 +526,10 @@
     ],
     "productIdentifiers": [
       830413461
+    ],
+    "tags": [
+      "module",
+      "actuator"
     ],
     "version": "1.0",
     "status": "stable",
@@ -512,6 +552,10 @@
     "productIdentifiers": [
       924243657
     ],
+    "tags": [
+      "module",
+      "user output"
+    ],
     "version": "1.0",
     "status": "stable",
     "shape": "ec30_3x3_l"
@@ -529,6 +573,10 @@
     ],
     "productIdentifiers": [
       1033734884
+    ],
+    "tags": [
+      "module",
+      "user output"
     ],
     "version": "1.0",
     "status": "stable",
@@ -552,6 +600,10 @@
     "productIdentifiers": [
       984959466
     ],
+    "tags": [
+      "module",
+      "user input"
+    ],
     "version": "1.0",
     "status": "stable",
     "shape": "ec30_3x2_lr"
@@ -570,6 +622,10 @@
     ],
     "productIdentifiers": [
       918447378
+    ],
+    "tags": [
+      "module",
+      "actuator"
     ],
     "version": "1.0",
     "status": "stable",
@@ -592,6 +648,10 @@
     "productIdentifiers": [
       1054684252
     ],
+    "tags": [
+      "module",
+      "user input"
+    ],
     "version": "1.0",
     "status": "stable",
     "shape": "ec30_5x2_lr"
@@ -609,6 +669,10 @@
     ],
     "productIdentifiers": [
       983895657
+    ],
+    "tags": [
+      "module",
+      "sensor"
     ],
     "version": "1.0",
     "status": "stable",
@@ -732,6 +796,10 @@
     "productIdentifiers": [
       932148851
     ],
+    "tags": [
+      "module",
+      "user input"
+    ],
     "version": "1.0",
     "status": "stable"
   },
@@ -751,6 +819,10 @@
     ],
     "productIdentifiers": [
       842766033
+    ],
+    "tags": [
+      "module",
+      "sensor"
     ],
     "version": "1.0",
     "status": "stable"
@@ -772,6 +844,11 @@
     ],
     "productIdentifiers": [
       869502978
+    ],
+    "tags": [
+      "module",
+      "user input",
+      "user output"
     ],
     "version": "1.0",
     "status": "stable"
@@ -798,6 +875,10 @@
     "productIdentifiers": [
       1054009247
     ],
+    "tags": [
+      "module",
+      "user output"
+    ],
     "version": "1.0",
     "status": "stable"
   },
@@ -817,6 +898,10 @@
     ],
     "productIdentifiers": [
       906605059
+    ],
+    "tags": [
+      "module",
+      "user output"
     ],
     "version": "1.0",
     "status": "stable"
@@ -845,6 +930,10 @@
     "productIdentifiers": [
       1000568338
     ],
+    "tags": [
+      "module",
+      "sensor"
+    ],
     "version": "1.0",
     "status": "stable"
   },
@@ -870,6 +959,10 @@
     "productIdentifiers": [
       870361737
     ],
+    "tags": [
+      "module",
+      "sensor"
+    ],
     "version": "1.0",
     "status": "stable"
   },
@@ -887,6 +980,10 @@
     ],
     "productIdentifiers": [
       931094303
+    ],
+    "tags": [
+      "module",
+      "sensor"
     ],
     "version": "1.0",
     "status": "stable"
@@ -913,6 +1010,10 @@
     "productIdentifiers": [
       1005257879
     ],
+    "tags": [
+      "module",
+      "sensor"
+    ],
     "version": "1.0",
     "status": "stable"
   },
@@ -938,6 +1039,10 @@
     "productIdentifiers": [
       926591985
     ],
+    "tags": [
+      "module",
+      "sensor"
+    ],
     "version": "1.0",
     "status": "stable"
   },
@@ -957,6 +1062,10 @@
     ],
     "productIdentifiers": [
       908127835
+    ],
+    "tags": [
+      "module",
+      "sensor"
     ],
     "version": "1.0",
     "status": "stable"
@@ -983,6 +1092,10 @@
     "productIdentifiers": [
       1064434129
     ],
+    "tags": [
+      "module",
+      "sensor"
+    ],
     "version": "1.0",
     "status": "stable"
   },
@@ -999,6 +1112,10 @@
     ],
     "productIdentifiers": [
       1014694623
+    ],
+    "tags": [
+      "module",
+      "sensor"
     ],
     "version": "1.0",
     "status": "stable",
@@ -1038,6 +1155,10 @@
     "productIdentifiers": [
       968336045
     ],
+    "tags": [
+      "module",
+      "user input"
+    ],
     "version": "1.0",
     "status": "stable",
     "shape": "ec30_3x2_lr"
@@ -1057,6 +1178,10 @@
     "productIdentifiers": [
       870706665
     ],
+    "tags": [
+      "module",
+      "user output"
+    ],
     "version": "1.0",
     "status": "stable",
     "shape": "ec30_3x2_lr"
@@ -1074,6 +1199,10 @@
     ],
     "productIdentifiers": [
       809663828
+    ],
+    "tags": [
+      "module",
+      "sensor"
     ],
     "version": "1.0",
     "status": "stable",
@@ -1093,6 +1222,10 @@
     "productIdentifiers": [
       930068017
     ],
+    "tags": [
+      "module",
+      "user output"
+    ],
     "version": "1.0",
     "status": "stable",
     "shape": "ec30_3x3_l"
@@ -1110,6 +1243,10 @@
     ],
     "productIdentifiers": [
       933513617
+    ],
+    "tags": [
+      "module",
+      "sensor"
     ],
     "version": "1.0",
     "status": "stable",
@@ -1129,6 +1266,10 @@
     "productIdentifiers": [
       976986401
     ],
+    "tags": [
+      "module",
+      "sensor"
+    ],
     "version": "1.0",
     "status": "stable",
     "shape": "ec30_3x2_lr"
@@ -1146,6 +1287,10 @@
     ],
     "productIdentifiers": [
       1066930108
+    ],
+    "tags": [
+      "module",
+      "sensor"
     ],
     "version": "1.0",
     "status": "stable",
@@ -1166,6 +1311,10 @@
     "productIdentifiers": [
       805917517
     ],
+    "tags": [
+      "module",
+      "user input"
+    ],
     "version": "1.0",
     "status": "stable",
     "shape": "ec30_3x2_lr"
@@ -1183,6 +1332,10 @@
     ],
     "productIdentifiers": [
       943192226
+    ],
+    "tags": [
+      "module",
+      "actuator"
     ],
     "version": "1.0",
     "status": "stable",
@@ -1203,6 +1356,10 @@
     "productIdentifiers": [
       927402146
     ],
+    "tags": [
+      "module",
+      "sensor"
+    ],
     "version": "1.0",
     "status": "stable",
     "shape": "ec30_3x2_lr"
@@ -1220,6 +1377,10 @@
     ],
     "productIdentifiers": [
       944940108
+    ],
+    "tags": [
+      "module",
+      "sensor"
     ],
     "version": "1.0",
     "status": "stable",

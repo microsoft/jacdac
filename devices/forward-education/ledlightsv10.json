@@ -10,10 +10,6 @@
       "slug": "climate-action-kits/pxt-fwd-edu/fwd-led"
     }
   ],
-  "tags": [
-    "module",
-    "user output"
-  ],
   "link": "https://forwardedu.com",
   "storeLink": [
     "https://forwardedu.com"
@@ -23,6 +19,10 @@
   ],
   "productIdentifiers": [
     1054009247
+  ],
+  "tags": [
+    "module",
+    "user output"
   ],
   "version": "1.0",
   "status": "stable"

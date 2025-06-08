@@ -6,15 +6,15 @@
   "storeLink": [
     "https://shop.elecfreaks.com/products/jacdacuvisensor"
   ],
-  "tags": [
-    "module",
-    "sensor"
-  ],
   "services": [
     527306128
   ],
   "productIdentifiers": [
     944940108
+  ],
+  "tags": [
+    "module",
+    "sensor"
   ],
   "version": "1.0",
   "status": "stable",

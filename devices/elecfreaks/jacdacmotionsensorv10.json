@@ -6,15 +6,15 @@
   "storeLink": [
     "https://shop.elecfreaks.com/products/jacdacmotionsensor"
   ],
-  "tags": [
-    "module",
-    "sensor"
-  ],
   "services": [
     293185353
   ],
   "productIdentifiers": [
     1066930108
+  ],
+  "tags": [
+    "module",
+    "sensor"
   ],
   "version": "1.0",
   "status": "stable",

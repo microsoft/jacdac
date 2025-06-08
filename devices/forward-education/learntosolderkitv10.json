@@ -9,17 +9,17 @@
   "storeLink": [
     "https://forwardedu.com/collections/"
   ],
-  "tags": [
-    "module",
-    "user input",
-    "user output"
-  ],
   "services": [
     480970060,
     343122531
   ],
   "productIdentifiers": [
     869502978
+  ],
+  "tags": [
+    "module",
+    "user input",
+    "user output"
   ],
   "version": "1.0",
   "status": "stable"

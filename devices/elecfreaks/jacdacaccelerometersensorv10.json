@@ -6,15 +6,15 @@
   "storeLink": [
     "https://shop.elecfreaks.com/products/jacdacaccelerometer"
   ],
-  "tags": [
-    "module",
-    "sensor"
-  ],
   "services": [
     521405449
   ],
   "productIdentifiers": [
     1014694623
+  ],
+  "tags": [
+    "module",
+    "sensor"
   ],
   "version": "1.0",
   "status": "stable",

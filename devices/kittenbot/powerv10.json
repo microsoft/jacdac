@@ -7,15 +7,15 @@
   "storeLink": [
     "https://www.kittenbot.cc/products/jacdac-kit-b-elite-module-suite-redefining-electronic-interfacing"
   ],
-  "tags": [
-    "module",
-    "power"
-  ],
   "services": [
     530893146
   ],
   "productIdentifiers": [
     1015787249
+  ],
+  "tags": [
+    "module",
+    "power"
   ],
   "version": "1.0",
   "status": "stable",

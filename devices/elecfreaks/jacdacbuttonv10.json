@@ -6,15 +6,15 @@
   "storeLink": [
     "https://shop.elecfreaks.com/products/jacdacbutton"
   ],
-  "tags": [
-    "module",
-    "user input"
-  ],
   "services": [
     343122531
   ],
   "productIdentifiers": [
     968336045
+  ],
+  "tags": [
+    "module",
+    "user input"
   ],
   "version": "1.0",
   "status": "stable",

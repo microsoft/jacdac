@@ -7,9 +7,6 @@
   "storeLink": [
     "https://www.kittenbot.cc/products/devicescript-enhanced-development-board-with-rp2040"
   ],
-  "tags": [
-    "brain"
-  ],
   "services": [
     411425820,
     414210922,
@@ -17,6 +14,9 @@
   ],
   "productIdentifiers": [
     935525573
+  ],
+  "tags": [
+    "brain"
   ],
   "version": "1.0",
   "status": "stable",

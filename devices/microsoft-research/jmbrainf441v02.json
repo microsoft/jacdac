@@ -8,9 +8,6 @@
     414210922,
     411425820
   ],
-  "tags": [
-    "brain"
-  ],
   "productIdentifiers": [
     1003209864,
     970267564,
@@ -20,6 +17,9 @@
   "transport": {
     "type": "usb"
   },
+  "tags": [
+    "brain"
+  ],
   "firmwares": [
     {
       "name": "HID Keyboard + Mouse",

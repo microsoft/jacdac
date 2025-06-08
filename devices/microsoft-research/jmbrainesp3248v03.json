@@ -7,9 +7,6 @@
     342028028,
     341864092
   ],
-  "tags": [
-    "brain"
-  ],
   "productIdentifiers": [
     917230668,
     983264687,
@@ -21,6 +18,9 @@
     "type": "serial",
     "vendorId": 12346
   },
+  "tags": [
+    "brain"
+  ],
   "firmwares": [
     {
       "name": "Azure IoT Hub Uploader",

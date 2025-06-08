@@ -19,6 +19,9 @@
       "type": "usb",
       "requestDescription": "BBC micro:bit CMSIS-DAP"
     },
+    "tags": [
+      "brain"
+    ],
     "firmwares": [
       {
         "name": "Micro:bit Jukebox",
@@ -201,6 +204,9 @@
       "type": "serial",
       "vendorId": 4292
     },
+    "tags": [
+      "brain"
+    ],
     "firmwares": [
       {
         "name": "Grape:bit",
@@ -420,6 +426,9 @@
     "productIdentifiers": [
       935525573
     ],
+    "tags": [
+      "brain"
+    ],
     "version": "1.0",
     "status": "stable",
     "shape": "ec30_3x2_r"
@@ -604,144 +613,6 @@
     "version": "1.0",
     "status": "stable",
     "shape": "ec30_5x2_lr"
-  },
-  {
-    "id": "kitronik-accessbitv11",
-    "name": "ACCESS:bit",
-    "company": "Kitronik",
-    "description": "The ACCESS:bit is a bolt-on/clip-on board for the BBC microbit that simulates an access barrier.",
-    "makeCodeRepo": [
-      {
-        "target": "microbit",
-        "name": "kitronik-accessbitv11",
-        "slug": "pelikhan/pxt-kitronik-accessbit/jacdac"
-      }
-    ],
-    "connector": "noConnector",
-    "link": "https://kitronik.co.uk/products/5646-accessbit-for-bbc-microbit",
-    "storeLink": [
-      "https://kitronik.co.uk/products/5646-accessbit-for-bbc-microbit"
-    ],
-    "services": [
-      318542083
-    ],
-    "productIdentifiers": [
-      1053651806
-    ],
-    "version": "1.1",
-    "status": "stable"
-  },
-  {
-    "id": "kitronik-airqualityboardv10",
-    "name": "Air Quality Board",
-    "company": "Kitronik",
-    "description": "The Kitronik Air Quality Board provides a complete air monitoring and reporting solution for the BBC micro:bit . The wealth of onboard sensors and connection points allow you to collect extensive air quality data that can be stored in onboard memory and displayed on the OLED screen or transferred to a computer for analysis.",
-    "makeCodeRepo": [
-      {
-        "target": "microbit",
-        "name": "kitronik-airqualityboardv10",
-        "slug": "pelikhan/pxt-kitronik-air-quality/jacdac/"
-      }
-    ],
-    "connector": "edgeIndependent",
-    "link": "https://kitronik.co.uk/products/5674-kitronik-air-quality-board-for-bbc-micro-bit",
-    "storeLink": [
-      "https://kitronik.co.uk/products/5674-kitronik-air-quality-board-for-bbc-micro-bit"
-    ],
-    "services": [
-      337754823,
-      504462570,
-      382210232,
-      379362758,
-      445323816,
-      523748714
-    ],
-    "productIdentifiers": [
-      854008423
-    ],
-    "version": "1.0",
-    "status": "stable"
-  },
-  {
-    "id": "kitronik-gamezip64v12",
-    "name": "Game Zip 64",
-    "company": "Kitronik",
-    "makeCodeRepo": [
-      {
-        "target": "microbit",
-        "name": "kitronik-gamezip64v12",
-        "slug": "pelikhan/pxt-kitronik-zip-64/jacdac"
-      }
-    ],
-    "connector": "noConnector",
-    "link": "https://kitronik.co.uk/products/5626-game-zip-64-for-the-bbc-microbit",
-    "storeLink": [
-      "https://kitronik.co.uk/products/5626-game-zip-64-for-the-bbc-microbit"
-    ],
-    "services": [
-      277836886,
-      369743088,
-      406832290
-    ],
-    "productIdentifiers": [
-      888103518
-    ],
-    "version": "1.2",
-    "status": "stable"
-  },
-  {
-    "id": "kitronik-servolitev10",
-    "name": "SERVO:LITE",
-    "company": "Kitronik",
-    "description": "The Servo:Lite board for the BBC micro:bit is a simple board that allows you to easily connect and control low power servo motors (servo's must be capable of operating at 3.3V) using the BBC micro:bit. It is connected to the micro:bit using five bolts. Connect two servos in standard configuration and it can drive up to 3 servos if the addressable 'ZIP' LEDs aren’t needed.",
-    "makeCodeRepo": [
-      {
-        "target": "microbit",
-        "name": "kitronik-servolitev10",
-        "slug": "pelikhan/pxt-kitronik-servo-lite/jacdac"
-      }
-    ],
-    "connector": "noConnector",
-    "link": "https://kitronik.co.uk/products/5623-servolite-board-for-move-mini",
-    "storeLink": [
-      "https://kitronik.co.uk/products/5623-servolite-board-for-move-mini"
-    ],
-    "services": [
-      369743088,
-      318542083,
-      318542083
-    ],
-    "productIdentifiers": [
-      995306847
-    ],
-    "version": "1.0",
-    "status": "stable"
-  },
-  {
-    "id": "kitronik-stopbitv10",
-    "name": "STOP:bit",
-    "company": "Kitronik",
-    "description": "The STOP:bit for the BBC micro:bit is the ultimate upgrade for traffic light/pedestrian crossing projects.",
-    "makeCodeRepo": [
-      {
-        "target": "microbit",
-        "name": "kitronik-stopbit-jacdac",
-        "slug": "pelikhan/pxt-kitronik-stopbit/jacdac"
-      }
-    ],
-    "connector": "noConnector",
-    "link": "https://kitronik.co.uk/products/5642-stopbit-traffic-light-for-bbc-microbit",
-    "storeLink": [
-      "https://kitronik.co.uk/products/5642-stopbit-traffic-light-for-bbc-microbit"
-    ],
-    "services": [
-      365137307
-    ],
-    "productIdentifiers": [
-      1058995861
-    ],
-    "version": "1.0",
-    "status": "stable"
   },
   {
     "id": "icshop-gamebitexpansionboardv10",
@@ -1396,6 +1267,9 @@
       "type": "usb",
       "requestDescription": "Calliope mini V3 CMSIS-DAP"
     },
+    "tags": [
+      "brain"
+    ],
     "version": "3.0",
     "status": "stable"
   },
@@ -1432,6 +1306,9 @@
       "type": "serial",
       "vendorId": 12346
     },
+    "tags": [
+      "brain"
+    ],
     "firmwares": [
       {
         "name": "Azure IoT Hub Uploader",
@@ -1477,6 +1354,9 @@
     "transport": {
       "type": "usb"
     },
+    "tags": [
+      "brain"
+    ],
     "firmwares": [
       {
         "name": "HID Keyboard + Mouse",
@@ -1557,6 +1437,9 @@
       "type": "serial",
       "vendorId": 6790
     },
+    "tags": [
+      "brain"
+    ],
     "version": "3.3"
   },
   {
@@ -1594,6 +1477,9 @@
       "type": "serial",
       "vendorId": 12346
     },
+    "tags": [
+      "brain"
+    ],
     "firmwares": [
       {
         "name": "IoT Uploader",

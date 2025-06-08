@@ -8,9 +8,6 @@
   "storeLink": [
     "https://www.microbit.org/buy/"
   ],
-  "tags": [
-    "brain"
-  ],
   "productIdentifiers": [
     854992189,
     888455511,
@@ -21,6 +18,9 @@
     "type": "usb",
     "requestDescription": "BBC micro:bit CMSIS-DAP"
   },
+  "tags": [
+    "brain"
+  ],
   "firmwares": [
     {
       "name": "Micro:bit Jukebox",

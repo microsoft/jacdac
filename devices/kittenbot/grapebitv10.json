@@ -9,9 +9,6 @@
   "storeLink": [
     "https://www.kittenbot.cc/products/kittenbot-grapebit-20-pack"
   ],
-  "tags": [
-    "brain"
-  ],
   "services": [
     288680491,
     521405449,
@@ -27,6 +24,9 @@
     "type": "serial",
     "vendorId": 4292
   },
+  "tags": [
+    "brain"
+  ],
   "firmwares": [
     {
       "name": "Grape:bit",

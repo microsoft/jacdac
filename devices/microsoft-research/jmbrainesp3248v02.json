@@ -9,13 +9,13 @@
   "productIdentifiers": [
     1067560617
   ],
-  "tags": [
-    "brain"
-  ],
   "transport": {
     "type": "serial",
     "vendorId": 12346
   },
+  "tags": [
+    "brain"
+  ],
   "firmwares": [
     {
       "name": "IoT Uploader",

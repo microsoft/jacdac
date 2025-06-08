@@ -10,6 +10,10 @@
       "slug": "climate-action-kits/pxt-fwd-edu/fwd-sonar"
     }
   ],
+  "tags": [
+    "module",
+    "sensor"
+  ],
   "link": "https://forwardedu.com",
   "storeLink": [
     "https://forwardedu.com"

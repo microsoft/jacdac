@@ -8,6 +8,10 @@
   "storeLink": [
     "https://w.kittenbot.cc/"
   ],
+  "tags": [
+    "module",
+    "user input"
+  ],
   "services": [
     309264608,
     414210922,

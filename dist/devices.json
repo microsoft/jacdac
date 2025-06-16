@@ -804,6 +804,25 @@
     "status": "stable"
   },
   {
+    "id": "forward-education-energysensorv10",
+    "name": "Energy Sensor",
+    "company": "Forward Education",
+    "description": "Energy Sensor is a sensor module compatible with the jacdac framework and part of the sensor module ecosystem by Forward Education",
+    "link": "https://forwardedu.com/",
+    "storeLink": [
+      "https://forwardedu.com/collections/"
+    ],
+    "services": [
+      420661422,
+      372485145
+    ],
+    "productIdentifiers": [
+      919046000
+    ],
+    "version": "1.0",
+    "status": "stable"
+  },
+  {
     "id": "forward-education-floatsensorv10",
     "name": "Float Sensor",
     "company": "Forward Education",
@@ -818,7 +837,7 @@
       343122531
     ],
     "productIdentifiers": [
-      842766033
+      884365778
     ],
     "tags": [
       "module",
@@ -843,7 +862,7 @@
       343122531
     ],
     "productIdentifiers": [
-      869502978
+      884365785
     ],
     "tags": [
       "module",
@@ -897,7 +916,7 @@
       480970060
     ],
     "productIdentifiers": [
-      906605059
+      827772839
     ],
     "tags": [
       "module",
@@ -979,7 +998,7 @@
       513243333
     ],
     "productIdentifiers": [
-      931094303
+      1067983758
     ],
     "tags": [
       "module",
@@ -1061,7 +1080,7 @@
       337754823
     ],
     "productIdentifiers": [
-      908127835
+      827772841
     ],
     "tags": [
       "module",

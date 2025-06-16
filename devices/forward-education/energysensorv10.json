@@ -1,0 +1,20 @@
+{
+  "id": "forward-education-energysensorv10",
+  "name": "Energy Sensor",
+  "company": "Forward Education",
+  "description": "Energy Sensor is a sensor module compatible with the jacdac framework and part of the sensor module ecosystem by Forward Education",
+  "link": "https://forwardedu.com/",
+  "storeLink": [
+    "https://forwardedu.com/collections/"
+  ],
+  "services": [
+    420661422,
+    372485145
+
+  ],
+  "productIdentifiers": [
+    919046000
+  ],
+  "version": "1.0",
+  "status": "stable"
+}

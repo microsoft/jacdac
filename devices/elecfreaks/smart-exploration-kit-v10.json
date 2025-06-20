@@ -1,0 +1,30 @@
+{
+  "id": "elecfreaks-smart-exploration-kit-v10",
+  "name": "Smart Exploration Kit",
+  "company": "Elecfreaks",
+  "description": "TBD",
+  "link": "https://shop.elecfreaks.com/",
+  "storeLink": [
+    "https://shop.elecfreaks.com/"
+  ],
+  "tags": [
+    "kit",
+    "microbit"
+  ],
+  "version": "1.0",
+  "status": "stable",
+  "devices": [
+    "elecfreaks-jacdacaccelerometersensorv10",
+    "elecfreaks-jacdacbitv10",
+    "elecfreaks-jacdacbuttonv10",
+    "elecfreaks-jacdacbuzzerv10",
+
+
+  ],
+  "relatedDevices": [
+    "microbit-educational-foundation-microbitv2"
+  ],
+  "requiredDevices": [
+    "microbit-educational-foundation-microbitv2"
+  ]
+}

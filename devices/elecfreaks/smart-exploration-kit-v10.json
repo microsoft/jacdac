@@ -1,0 +1,32 @@
+{
+  "id": "elecfreaks-smart-exploration-kit-v10",
+  "name": "Smart Exploration Kit",
+  "company": "ELECFREAKS",
+  "description": "Help beginners get started quickly with the micro:bit and stimulate their interest in programming and electronic components",
+  "link": "https://www.elecfreaks.com/",
+  "storeLink": [
+    "https://shop.elecfreaks.com/"
+  ],
+  "tags": [
+    "kit",
+    "microbit"
+  ],
+  "version": "1.0",
+  "status": "stable",
+  "devices": [
+    "elecfreaks-jacdacbitv10",
+    "elecfreaks-jacdacmotionsensorv10",
+    "elecfreaks-jacdacbuttonv10",
+    "elecfreaks-jacdacrotaryencoderv10",
+    "elecfreaks-jacdachallsensorv10",
+    "elecfreaks-jacdacledring8v10",
+    "elecfreaks-jacdaclightsensorv10"
+
+  ],
+  "relatedDevices": [
+    "microbit-educational-foundation-microbitv2"
+  ],
+  "requiredDevices": [
+    "microbit-educational-foundation-microbitv2"
+  ]
+}

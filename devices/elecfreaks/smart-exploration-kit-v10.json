@@ -1,5 +1,5 @@
 {
-  "id": "elecfreaks-smart-exploration-kit-v10",
+  "id": "elecfreaks-smartexplorationkitv10",
   "name": "Smart Exploration Kit",
   "company": "ELECFREAKS",
   "description": "Help beginners get started quickly with the micro:bit and stimulate their interest in programming and electronic components",
@@ -21,7 +21,6 @@
     "elecfreaks-jacdachallsensorv10",
     "elecfreaks-jacdacledring8v10",
     "elecfreaks-jacdaclightsensorv10"
-
   ],
   "relatedDevices": [
     "microbit-educational-foundation-microbitv2"

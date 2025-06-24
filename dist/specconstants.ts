@@ -2,13 +2,15 @@
 // Service Common registers and commands constants
 export const CONST_SYSTEM_ANNOUNCE_INTERVAL = 0x1f4
 
-export enum SystemReadingThreshold { // uint8_t
+export enum SystemReadingThreshold {
+    // uint8_t
     Neutral = 0x1,
     Inactive = 0x2,
     Active = 0x3,
 }
 
-export enum SystemStatusCodes { // uint16_t
+export enum SystemStatusCodes {
+    // uint16_t
     Ready = 0x0,
     Initializing = 0x1,
     Calibrating = 0x2,
@@ -863,7 +865,8 @@ export namespace AirQualityIndexRegPack {
 // Service Arcade Gamepad constants
 export const SRV_ARCADE_GAMEPAD = 0x1deaa06e
 
-export enum ArcadeGamepadButton { // uint8_t
+export enum ArcadeGamepadButton {
+    // uint8_t
     Left = 0x1,
     Up = 0x2,
     Right = 0x3,
@@ -1015,7 +1018,8 @@ export namespace ArcadeSoundRegPack {
 // Service Barcode reader constants
 export const SRV_BARCODE_READER = 0x1c739e6c
 
-export enum BarcodeReaderFormat { // uint8_t
+export enum BarcodeReaderFormat {
+    // uint8_t
     Aztec = 0x1,
     Code128 = 0x2,
     Code39 = 0x3,
@@ -1249,7 +1253,8 @@ export namespace BitRadioCmdPack {
 // Service Bootloader constants
 export const SRV_BOOTLOADER = 0x1ffa9948
 
-export enum BootloaderError { // uint32_t
+export enum BootloaderError {
+    // uint32_t
     NoError = 0x0,
     PacketTooSmall = 0x1,
     OutOfFlashableRange = 0x2,
@@ -1568,13 +1573,15 @@ export enum CapacitiveButtonCmd {
 // Service Character Screen constants
 export const SRV_CHARACTER_SCREEN = 0x1f37c56a
 
-export enum CharacterScreenVariant { // uint8_t
+export enum CharacterScreenVariant {
+    // uint8_t
     LCD = 0x1,
     OLED = 0x2,
     Braille = 0x3,
 }
 
-export enum CharacterScreenTextDirection { // uint8_t
+export enum CharacterScreenTextDirection {
+    // uint8_t
     LeftToRight = 0x1,
     RightToLeft = 0x2,
 }
@@ -1775,7 +1782,8 @@ export namespace CloudAdapterEventPack {
 // Service Cloud Configuration constants
 export const SRV_CLOUD_CONFIGURATION = 0x1462eefc
 
-export enum CloudConfigurationConnectionStatus { // uint16_t
+export enum CloudConfigurationConnectionStatus {
+    // uint16_t
     Connected = 0x1,
     Disconnected = 0x2,
     Connecting = 0x3,
@@ -2040,7 +2048,8 @@ export enum CompassCmd {
 // Service Control constants
 export const SRV_CONTROL = 0x0
 
-export enum ControlAnnounceFlags { // uint16_t
+export enum ControlAnnounceFlags {
+    // uint16_t
     RestartCounterSteady = 0xf,
     RestartCounter1 = 0x1,
     RestartCounter2 = 0x2,
@@ -2202,13 +2211,14 @@ export namespace ControlCmdPack {
     export const Standby = "u32"
 }
 
-export enum ControlPipe {}
-/**
- * pipe_command WrappedCommand
- * ```
- * const [serviceSize, serviceIndex, serviceCommand, payload] = jdunpack<[number, number, number, Uint8Array]>(buf, "u8 u8 u16 b")
- * ```
- */
+export enum ControlPipe {
+    /**
+     * pipe_command WrappedCommand
+     * ```
+     * const [serviceSize, serviceIndex, serviceCommand, payload] = jdunpack<[number, number, number, Uint8Array]>(buf, "u8 u8 u16 b")
+     * ```
+     */
+}
 
 export namespace ControlPipePack {
     /**
@@ -2402,7 +2412,8 @@ export namespace DcCurrentMeasurementRegPack {
 // Service DC Voltage Measurement constants
 export const SRV_DC_VOLTAGE_MEASUREMENT = 0x1633ac19
 
-export enum DcVoltageMeasurementVoltageMeasurementType { // uint8_t
+export enum DcVoltageMeasurementVoltageMeasurementType {
+    // uint8_t
     Absolute = 0x0,
     Differential = 0x1,
 }
@@ -2514,7 +2525,8 @@ export enum DeviceScriptConditionEvent {
 // Service DeviceScript Debugger constants
 export const SRV_DEVS_DBG = 0x155b5b40
 
-export enum DevsDbgValueTag { // uint8_t
+export enum DevsDbgValueTag {
+    // uint8_t
     Number = 0x1,
     Special = 0x2,
     Fiber = 0x3,
@@ -2544,7 +2556,8 @@ export enum DevsDbgValueTag { // uint8_t
     User4 = 0xf4,
 }
 
-export enum DevsDbgValueSpecial { // uint8_t
+export enum DevsDbgValueSpecial {
+    // uint8_t
     Undefined = 0x0,
     True = 0x1,
     False = 0x2,
@@ -2553,36 +2566,44 @@ export enum DevsDbgValueSpecial { // uint8_t
     CurrentException = 0x65,
 }
 
-export enum DevsDbgFunIdx { // uint16_t
+export enum DevsDbgFunIdx {
+    // uint16_t
     None = 0x0,
     Main = 0xc34f,
     FirstBuiltIn = 0xc350,
 }
 
-export enum DevsDbgFiberHandle { // uint32_t
+export enum DevsDbgFiberHandle {
+    // uint32_t
     None = 0x0,
 }
 
-export enum DevsDbgProgramCounter {} // uint32_t
+export enum DevsDbgProgramCounter {
+    // uint32_t
+}
 
-export enum DevsDbgObjStackFrame { // uint32_t
+export enum DevsDbgObjStackFrame {
+    // uint32_t
     Null = 0x0,
 }
 
-export enum DevsDbgString { // uint32_t
+export enum DevsDbgString {
+    // uint32_t
     StaticIndicatorMask = 0x80000001,
     StaticTagMask = 0x7f000000,
     StaticIndexMask = 0xfffffe,
     Unhandled = 0x0,
 }
 
-export enum DevsDbgStepFlags { // uint16_t
+export enum DevsDbgStepFlags {
+    // uint16_t
     StepOut = 0x1,
     StepIn = 0x2,
     Throw = 0x4,
 }
 
-export enum DevsDbgSuspensionType { // uint8_t
+export enum DevsDbgSuspensionType {
+    // uint8_t
     None = 0x0,
     Breakpoint = 0x1,
     UnhandledException = 0x2,
@@ -2757,41 +2778,38 @@ export namespace DevsDbgCmdPack {
     export const Step = "u32 u16 u16 r: u32"
 }
 
-export enum DevsDbgPipe {}
-/**
- * pipe_report Fiber
- * ```
- * const [handle, initialFn, currFn] = jdunpack<[DevsDbgFiberHandle, DevsDbgFunIdx, DevsDbgFunIdx]>(buf, "u32 u16 u16")
- * ```
- */
-
-/**
- * pipe_report Stackframe
- * ```
- * const [self, pc, closure, fnIdx] = jdunpack<[DevsDbgObjStackFrame, DevsDbgProgramCounter, DevsDbgObjStackFrame, DevsDbgFunIdx]>(buf, "u32 u32 u32 u16 x[2]")
- * ```
- */
-
-/**
- * pipe_report Value
- * ```
- * const [v0, v1, fnIdx, tag] = jdunpack<[number, number, DevsDbgFunIdx, DevsDbgValueTag]>(buf, "u32 u32 u16 u8")
- * ```
- */
-
-/**
- * pipe_report KeyValue
- * ```
- * const [key, v0, v1, fnIdx, tag] = jdunpack<[DevsDbgString, number, number, DevsDbgFunIdx, DevsDbgValueTag]>(buf, "u32 u32 u32 u16 u8")
- * ```
- */
-
-/**
- * pipe_report BytesValue
- * ```
- * const [data] = jdunpack<[Uint8Array]>(buf, "b")
- * ```
- */
+export enum DevsDbgPipe {
+    /**
+     * pipe_report Fiber
+     * ```
+     * const [handle, initialFn, currFn] = jdunpack<[DevsDbgFiberHandle, DevsDbgFunIdx, DevsDbgFunIdx]>(buf, "u32 u16 u16")
+     * ```
+     */
+    /**
+     * pipe_report Stackframe
+     * ```
+     * const [self, pc, closure, fnIdx] = jdunpack<[DevsDbgObjStackFrame, DevsDbgProgramCounter, DevsDbgObjStackFrame, DevsDbgFunIdx]>(buf, "u32 u32 u32 u16 x[2]")
+     * ```
+     */
+    /**
+     * pipe_report Value
+     * ```
+     * const [v0, v1, fnIdx, tag] = jdunpack<[number, number, DevsDbgFunIdx, DevsDbgValueTag]>(buf, "u32 u32 u16 u8")
+     * ```
+     */
+    /**
+     * pipe_report KeyValue
+     * ```
+     * const [key, v0, v1, fnIdx, tag] = jdunpack<[DevsDbgString, number, number, DevsDbgFunIdx, DevsDbgValueTag]>(buf, "u32 u32 u32 u16 u8")
+     * ```
+     */
+    /**
+     * pipe_report BytesValue
+     * ```
+     * const [data] = jdunpack<[Uint8Array]>(buf, "b")
+     * ```
+     */
+}
 
 export namespace DevsDbgPipePack {
     /**
@@ -2951,13 +2969,14 @@ export namespace DeviceScriptManagerCmdPack {
     export const ReadBytecode = "b[12]"
 }
 
-export enum DeviceScriptManagerPipe {}
-/**
- * pipe_report Bytecode
- * ```
- * const [data] = jdunpack<[Uint8Array]>(buf, "b")
- * ```
- */
+export enum DeviceScriptManagerPipe {
+    /**
+     * pipe_report Bytecode
+     * ```
+     * const [data] = jdunpack<[Uint8Array]>(buf, "b")
+     * ```
+     */
+}
 
 export namespace DeviceScriptManagerPipePack {
     /**
@@ -3115,7 +3134,8 @@ export namespace DeviceScriptManagerEventPack {
 // Service Distance constants
 export const SRV_DISTANCE = 0x141a6b8a
 
-export enum DistanceVariant { // uint8_t
+export enum DistanceVariant {
+    // uint8_t
     Ultrasonic = 0x1,
     Infrared = 0x2,
     LiDAR = 0x3,
@@ -3237,7 +3257,8 @@ export namespace DmxCmdPack {
 // Service Dot Matrix constants
 export const SRV_DOT_MATRIX = 0x110d154b
 
-export enum DotMatrixVariant { // uint8_t
+export enum DotMatrixVariant {
+    // uint8_t
     LED = 0x1,
     Braille = 0x2,
 }
@@ -3397,7 +3418,8 @@ export namespace DualMotorsRegPack {
 // Service Equivalent CO₂ constants
 export const SRV_E_CO2 = 0x169c9dc6
 
-export enum ECO2Variant { // uint8_t
+export enum ECO2Variant {
+    // uint8_t
     VOC = 0x1,
     NDIR = 0x2,
 }
@@ -3513,7 +3535,8 @@ export namespace FlexRegPack {
 // Service Gamepad constants
 export const SRV_GAMEPAD = 0x108f7456
 
-export enum GamepadButtons { // uint32_t
+export enum GamepadButtons {
+    // uint32_t
     Left = 0x1,
     Up = 0x2,
     Right = 0x4,
@@ -3528,7 +3551,8 @@ export enum GamepadButtons { // uint32_t
     Y = 0x800,
 }
 
-export enum GamepadVariant { // uint8_t
+export enum GamepadVariant {
+    // uint8_t
     Thumb = 0x1,
     ArcadeBall = 0x2,
     ArcadeStick = 0x3,
@@ -3607,7 +3631,8 @@ export namespace GamepadEventPack {
 // Service GPIO constants
 export const SRV_GPIO = 0x10d85a69
 
-export enum GPIOMode { // uint8_t
+export enum GPIOMode {
+    // uint8_t
     Off = 0x0,
     OffPullUp = 0x10,
     OffPullDown = 0x20,
@@ -3622,7 +3647,8 @@ export enum GPIOMode { // uint8_t
     BaseModeMask = 0xf,
 }
 
-export enum GPIOCapabilities { // uint16_t
+export enum GPIOCapabilities {
+    // uint16_t
     PullUp = 0x1,
     PullDown = 0x2,
     Input = 0x4,
@@ -3831,7 +3857,8 @@ export namespace GyroscopeRegPack {
 // Service Heart Rate constants
 export const SRV_HEART_RATE = 0x166c6dc4
 
-export enum HeartRateVariant { // uint8_t
+export enum HeartRateVariant {
+    // uint8_t
     Finger = 0x1,
     Chest = 0x2,
     Wrist = 0x3,
@@ -3968,7 +3995,8 @@ export namespace HidJoystickCmdPack {
 // Service HID Keyboard constants
 export const SRV_HID_KEYBOARD = 0x18b05b6a
 
-export enum HidKeyboardSelector { // uint16_t
+export enum HidKeyboardSelector {
+    // uint16_t
     None = 0x0,
     ErrorRollOver = 0x1,
     PostFail = 0x2,
@@ -4101,7 +4129,8 @@ export enum HidKeyboardSelector { // uint16_t
     VolumeDown = 0x81,
 }
 
-export enum HidKeyboardModifiers { // uint8_t
+export enum HidKeyboardModifiers {
+    // uint8_t
     None = 0x0,
     LeftControl = 0x1,
     LeftShift = 0x2,
@@ -4113,7 +4142,8 @@ export enum HidKeyboardModifiers { // uint8_t
     RightGUI = 0x80,
 }
 
-export enum HidKeyboardAction { // uint8_t
+export enum HidKeyboardAction {
+    // uint8_t
     Press = 0x0,
     Up = 0x1,
     Down = 0x2,
@@ -4146,13 +4176,15 @@ export namespace HidKeyboardCmdPack {
 // Service HID Mouse constants
 export const SRV_HID_MOUSE = 0x1885dc1c
 
-export enum HidMouseButton { // uint16_t
+export enum HidMouseButton {
+    // uint16_t
     Left = 0x1,
     Right = 0x2,
     Middle = 0x4,
 }
 
-export enum HidMouseButtonEvent { // uint8_t
+export enum HidMouseButtonEvent {
+    // uint8_t
     Up = 0x1,
     Down = 0x2,
     Click = 0x3,
@@ -4274,7 +4306,8 @@ export namespace HumidityRegPack {
 // Service I2C constants
 export const SRV_I2C = 0x1c18ca43
 
-export enum I2CStatus { // uint8_t
+export enum I2CStatus {
+    // uint8_t
     OK = 0x0,
     NAckAddr = 0x1,
     NAckData = 0x2,
@@ -4569,7 +4602,8 @@ export namespace KeyboardClientEventPack {
 export const SRV_LED = 0x1609d4f0
 export const CONST_LED_MAX_PIXELS_LENGTH = 0x40
 
-export enum LedVariant { // uint8_t
+export enum LedVariant {
+    // uint8_t
     Strip = 0x1,
     Ring = 0x2,
     Stick = 0x3,
@@ -4732,7 +4766,8 @@ export namespace LedRegPack {
 // Service LED Single constants
 export const SRV_LED_SINGLE = 0x1e3048f8
 
-export enum LedSingleVariant { // uint8_t
+export enum LedSingleVariant {
+    // uint8_t
     ThroughHole = 0x1,
     SMD = 0x2,
     Power = 0x3,
@@ -4848,13 +4883,15 @@ export namespace LedSingleRegPack {
 // Service LED Strip constants
 export const SRV_LED_STRIP = 0x126f00e0
 
-export enum LedStripLightType { // uint8_t
+export enum LedStripLightType {
+    // uint8_t
     WS2812B_GRB = 0x0,
     APA102 = 0x10,
     SK9822 = 0x11,
 }
 
-export enum LedStripVariant { // uint8_t
+export enum LedStripVariant {
+    // uint8_t
     Strip = 0x1,
     Ring = 0x2,
     Stick = 0x3,
@@ -5059,7 +5096,8 @@ export namespace LightBulbRegPack {
 // Service Light level constants
 export const SRV_LIGHT_LEVEL = 0x17dc9a1c
 
-export enum LightLevelVariant { // uint8_t
+export enum LightLevelVariant {
+    // uint8_t
     PhotoResistor = 0x1,
     ReverseBiasedLED = 0x2,
 }
@@ -5113,7 +5151,8 @@ export namespace LightLevelRegPack {
 // Service Logger constants
 export const SRV_LOGGER = 0x12dc1fca
 
-export enum LoggerPriority { // uint8_t
+export enum LoggerPriority {
+    // uint8_t
     Debug = 0x0,
     Log = 0x1,
     Warning = 0x2,
@@ -5206,7 +5245,8 @@ export namespace LoggerCmdPack {
 // Service Magnetic field level constants
 export const SRV_MAGNETIC_FIELD_LEVEL = 0x12fe180f
 
-export enum MagneticFieldLevelVariant { // uint8_t
+export enum MagneticFieldLevelVariant {
+    // uint8_t
     AnalogNS = 0x1,
     AnalogN = 0x2,
     AnalogS = 0x3,
@@ -5323,7 +5363,8 @@ export enum MagnetometerCmd {
 // Service Matrix Keypad constants
 export const SRV_MATRIX_KEYPAD = 0x13062dc8
 
-export enum MatrixKeypadVariant { // uint8_t
+export enum MatrixKeypadVariant {
+    // uint8_t
     Membrane = 0x1,
     Keyboard = 0x2,
     Elastomer = 0x3,
@@ -5555,7 +5596,8 @@ export namespace MidiOutputCmdPack {
 // Service Model Runner constants
 export const SRV_MODEL_RUNNER = 0x140f9a78
 
-export enum ModelRunnerModelFormat { // uint32_t
+export enum ModelRunnerModelFormat {
+    // uint32_t
     TFLite = 0x334c4654,
     ML4F = 0x30470f62,
     EdgeImpulseCompiled = 0x30564945,
@@ -5789,7 +5831,8 @@ export namespace ModelRunnerRegPack {
 // Service Motion constants
 export const SRV_MOTION = 0x1179a749
 
-export enum MotionVariant { // uint8_t
+export enum MotionVariant {
+    // uint8_t
     PIR = 0x1,
 }
 
@@ -6189,7 +6232,8 @@ export namespace PCMonitorRegPack {
 // Service Planar position constants
 export const SRV_PLANAR_POSITION = 0x1dc37f55
 
-export enum PlanarPositionVariant { // uint8_t
+export enum PlanarPositionVariant {
+    // uint8_t
     OpticalMousePosition = 0x1,
 }
 
@@ -6228,7 +6272,8 @@ export namespace PlanarPositionRegPack {
 // Service Potentiometer constants
 export const SRV_POTENTIOMETER = 0x1f274746
 
-export enum PotentiometerVariant { // uint8_t
+export enum PotentiometerVariant {
+    // uint8_t
     Slider = 0x1,
     Rotary = 0x2,
     Hall = 0x3,
@@ -6269,7 +6314,8 @@ export namespace PotentiometerRegPack {
 // Service Power constants
 export const SRV_POWER = 0x1fa4c95a
 
-export enum PowerPowerStatus { // uint8_t
+export enum PowerPowerStatus {
+    // uint8_t
     Disallowed = 0x0,
     Powering = 0x1,
     Overload = 0x2,
@@ -6942,13 +6988,14 @@ export namespace ProtoTestCmdPack {
     export const CReportPipe = "b[12]"
 }
 
-export enum ProtoTestPipe {}
-/**
- * pipe_report PBytes
- * ```
- * const [byte] = jdunpack<[number]>(buf, "u8")
- * ```
- */
+export enum ProtoTestPipe {
+    /**
+     * pipe_report PBytes
+     * ```
+     * const [byte] = jdunpack<[number]>(buf, "u8")
+     * ```
+     */
+}
 
 export namespace ProtoTestPipePack {
     /**
@@ -7030,7 +7077,8 @@ export namespace RainGaugeRegPack {
 // Service Real time clock constants
 export const SRV_REAL_TIME_CLOCK = 0x1a8b1a28
 
-export enum RealTimeClockVariant { // uint8_t
+export enum RealTimeClockVariant {
+    // uint8_t
     Computer = 0x1,
     Crystal = 0x2,
     Cuckoo = 0x3,
@@ -7117,7 +7165,8 @@ export namespace RealTimeClockCmdPack {
 // Service Reflected light constants
 export const SRV_REFLECTED_LIGHT = 0x126c4cb2
 
-export enum ReflectedLightVariant { // uint8_t
+export enum ReflectedLightVariant {
+    // uint8_t
     InfraredDigital = 0x1,
     InfraredAnalog = 0x2,
 }
@@ -7157,7 +7206,8 @@ export namespace ReflectedLightRegPack {
 // Service Relay constants
 export const SRV_RELAY = 0x183fe656
 
-export enum RelayVariant { // uint8_t
+export enum RelayVariant {
+    // uint8_t
     Electromechanical = 0x1,
     SolidState = 0x2,
     Reed = 0x3,
@@ -7212,7 +7262,8 @@ export namespace RelayRegPack {
 // Service Random Number Generator constants
 export const SRV_RNG = 0x1789f0a2
 
-export enum RngVariant { // uint8_t
+export enum RngVariant {
+    // uint8_t
     Quantum = 0x1,
     ADCNoise = 0x2,
     WebCrypto = 0x3,
@@ -7330,13 +7381,14 @@ export namespace RoleManagerCmdPack {
     export const ListRoles = "b[12]"
 }
 
-export enum RoleManagerPipe {}
-/**
- * pipe_report Roles
- * ```
- * const [deviceId, serviceClass, serviceIdx, role] = jdunpack<[Uint8Array, number, number, string]>(buf, "b[8] u32 u8 s")
- * ```
- */
+export enum RoleManagerPipe {
+    /**
+     * pipe_report Roles
+     * ```
+     * const [deviceId, serviceClass, serviceIdx, role] = jdunpack<[Uint8Array, number, number, string]>(buf, "b[8] u32 u8 s")
+     * ```
+     */
+}
 
 export namespace RoleManagerPipePack {
     /**
@@ -7514,7 +7566,8 @@ export enum SatNavEvent {
 // Service Sensor Aggregator constants
 export const SRV_SENSOR_AGGREGATOR = 0x1d90e1c5
 
-export enum SensorAggregatorSampleType { // uint8_t
+export enum SensorAggregatorSampleType {
+    // uint8_t
     U8 = 0x8,
     I8 = 0x88,
     U16 = 0x10,
@@ -7602,7 +7655,8 @@ export namespace SensorAggregatorRegPack {
 // Service Serial constants
 export const SRV_SERIAL = 0x11bae5c4
 
-export enum SerialParityType { // uint8_t
+export enum SerialParityType {
+    // uint8_t
     None = 0x0,
     Even = 0x1,
     Odd = 0x2,
@@ -7981,20 +8035,20 @@ export namespace SettingsCmdPack {
     export const List = "b[12]"
 }
 
-export enum SettingsPipe {}
-/**
- * pipe_report ListedKey
- * ```
- * const [key] = jdunpack<[string]>(buf, "s")
- * ```
- */
-
-/**
- * pipe_report ListedEntry
- * ```
- * const [key, value] = jdunpack<[string, Uint8Array]>(buf, "z b")
- * ```
- */
+export enum SettingsPipe {
+    /**
+     * pipe_report ListedKey
+     * ```
+     * const [key] = jdunpack<[string]>(buf, "s")
+     * ```
+     */
+    /**
+     * pipe_report ListedEntry
+     * ```
+     * const [key, value] = jdunpack<[string, Uint8Array]>(buf, "z b")
+     * ```
+     */
+}
 
 export namespace SettingsPipePack {
     /**
@@ -8112,7 +8166,8 @@ export namespace SevenSegmentDisplayCmdPack {
 // Service Soil moisture constants
 export const SRV_SOIL_MOISTURE = 0x1d4aa3b3
 
-export enum SoilMoistureVariant { // uint8_t
+export enum SoilMoistureVariant {
+    // uint8_t
     Resistive = 0x1,
     Capacitive = 0x2,
 }
@@ -8166,7 +8221,8 @@ export namespace SoilMoistureRegPack {
 // Service Solenoid constants
 export const SRV_SOLENOID = 0x171723ca
 
-export enum SolenoidVariant { // uint8_t
+export enum SolenoidVariant {
+    // uint8_t
     PushPull = 0x1,
     Valve = 0x2,
     Latch = 0x3,
@@ -8335,13 +8391,14 @@ export namespace SoundPlayerCmdPack {
     export const ListSounds = "b[12]"
 }
 
-export enum SoundPlayerPipe {}
-/**
- * pipe_report ListSoundsPipe
- * ```
- * const [duration, name] = jdunpack<[number, string]>(buf, "u32 s")
- * ```
- */
+export enum SoundPlayerPipe {
+    /**
+     * pipe_report ListSoundsPipe
+     * ```
+     * const [duration, name] = jdunpack<[number, string]>(buf, "u32 s")
+     * ```
+     */
+}
 
 export namespace SoundPlayerPipePack {
     /**
@@ -8353,7 +8410,8 @@ export namespace SoundPlayerPipePack {
 // Service Sound Recorder with Playback constants
 export const SRV_SOUND_RECORDER_WITH_PLAYBACK = 0x1b72bf50
 
-export enum SoundRecorderWithPlaybackStatus { // uint8_t
+export enum SoundRecorderWithPlaybackStatus {
+    // uint8_t
     Idle = 0x0,
     Recording = 0x1,
     Playing = 0x2,
@@ -8626,7 +8684,8 @@ export namespace SpeechSynthesisCmdPack {
 // Service Switch constants
 export const SRV_SWITCH = 0x1ad29402
 
-export enum SwitchVariant { // uint8_t
+export enum SwitchVariant {
+    // uint8_t
     Slide = 0x1,
     Tilt = 0x2,
     PushButton = 0x3,
@@ -8684,7 +8743,8 @@ export enum SwitchEvent {
 // Service TCP constants
 export const SRV_TCP = 0x1b43b70b
 
-export enum TcpTcpError { // int32_t
+export enum TcpTcpError {
+    // int32_t
     InvalidCommand = 0x1,
     InvalidCommandPayload = 0x2,
 }
@@ -8753,20 +8813,20 @@ export namespace TcpPipeCmdPack {
     export const Error = "i32"
 }
 
-export enum TcpPipe {}
-/**
- * pipe_command Outdata
- * ```
- * const [data] = jdunpack<[Uint8Array]>(buf, "b")
- * ```
- */
-
-/**
- * pipe_report Indata
- * ```
- * const [data] = jdunpack<[Uint8Array]>(buf, "b")
- * ```
- */
+export enum TcpPipe {
+    /**
+     * pipe_command Outdata
+     * ```
+     * const [data] = jdunpack<[Uint8Array]>(buf, "b")
+     * ```
+     */
+    /**
+     * pipe_report Indata
+     * ```
+     * const [data] = jdunpack<[Uint8Array]>(buf, "b")
+     * ```
+     */
+}
 
 export namespace TcpPipePack {
     /**
@@ -8783,7 +8843,8 @@ export namespace TcpPipePack {
 // Service Temperature constants
 export const SRV_TEMPERATURE = 0x1421bac7
 
-export enum TemperatureVariant { // uint8_t
+export enum TemperatureVariant {
+    // uint8_t
     Outdoor = 0x1,
     Indoor = 0x2,
     Body = 0x3,
@@ -9144,7 +9205,8 @@ export const SRV_UNIQUE_BRAIN = 0x103c4ee5
 // Service USB Bridge constants
 export const SRV_USB_BRIDGE = 0x18f61a4a
 
-export enum UsbBridgeQByte { // uint8_t
+export enum UsbBridgeQByte {
+    // uint8_t
     Magic = 0xfe,
     LiteralMagic = 0xf8,
     Reserved = 0xf9,
@@ -9179,7 +9241,8 @@ export enum UsbBridgeCmd {
 // Service UV index constants
 export const SRV_UV_INDEX = 0x1f6e0d90
 
-export enum UvIndexVariant { // uint8_t
+export enum UvIndexVariant {
+    // uint8_t
     UVA_UVB = 0x1,
     Visible_IR = 0x2,
 }
@@ -9233,13 +9296,15 @@ export namespace UvIndexRegPack {
 // Service Verified Telemetry constants
 export const SRV_VERIFIED_TELEMETRY = 0x2194841f
 
-export enum VerifiedTelemetryStatus { // uint8_t
+export enum VerifiedTelemetryStatus {
+    // uint8_t
     Unknown = 0x0,
     Working = 0x1,
     Faulty = 0x2,
 }
 
-export enum VerifiedTelemetryFingerprintType { // uint8_t
+export enum VerifiedTelemetryFingerprintType {
+    // uint8_t
     FallCurve = 0x1,
     CurrentSense = 0x2,
     Custom = 0x3,
@@ -9382,7 +9447,8 @@ export namespace VibrationMotorRegPack {
 // Service Water level constants
 export const SRV_WATER_LEVEL = 0x147b62ed
 
-export enum WaterLevelVariant { // uint8_t
+export enum WaterLevelVariant {
+    // uint8_t
     Resistive = 0x1,
     ContactPhotoElectric = 0x2,
     NonContactPhotoElectric = 0x3,
@@ -9437,7 +9503,8 @@ export namespace WaterLevelRegPack {
 // Service Weight Scale constants
 export const SRV_WEIGHT_SCALE = 0x1f4d5040
 
-export enum WeightScaleVariant { // uint8_t
+export enum WeightScaleVariant {
+    // uint8_t
     Body = 0x1,
     Food = 0x2,
     Jewelry = 0x3,
@@ -9586,7 +9653,8 @@ export namespace WeightScaleCmdPack {
 // Service WIFI constants
 export const SRV_WIFI = 0x18aae1fa
 
-export enum WifiAPFlags { // uint32_t
+export enum WifiAPFlags {
+    // uint32_t
     HasPassword = 0x1,
     WPS = 0x2,
     HasSecondaryChannelAbove = 0x4,
@@ -9695,20 +9763,20 @@ export namespace WifiCmdPack {
     export const ListKnownNetworks = "b[12]"
 }
 
-export enum WifiPipe {}
-/**
- * pipe_report Results
- * ```
- * const [flags, rssi, channel, bssid, ssid] = jdunpack<[WifiAPFlags, number, number, Uint8Array, string]>(buf, "u32 x[4] i8 u8 b[6] s[33]")
- * ```
- */
-
-/**
- * pipe_report NetworkResults
- * ```
- * const [priority, flags, ssid] = jdunpack<[number, number, string]>(buf, "i16 i16 s")
- * ```
- */
+export enum WifiPipe {
+    /**
+     * pipe_report Results
+     * ```
+     * const [flags, rssi, channel, bssid, ssid] = jdunpack<[WifiAPFlags, number, number, Uint8Array, string]>(buf, "u32 x[4] i8 u8 b[6] s[33]")
+     * ```
+     */
+    /**
+     * pipe_report NetworkResults
+     * ```
+     * const [priority, flags, ssid] = jdunpack<[number, number, string]>(buf, "i16 i16 s")
+     * ```
+     */
+}
 
 export namespace WifiPipePack {
     /**
@@ -9933,7 +10001,8 @@ export namespace WindSpeedRegPack {
 // Service WSSK constants
 export const SRV_WSSK = 0x13b739fe
 
-export enum WsskStreamingType { // uint16_t
+export enum WsskStreamingType {
+    // uint16_t
     Jacdac = 0x1,
     Dmesg = 0x2,
     Exceptions = 0x100,
@@ -9942,7 +10011,8 @@ export enum WsskStreamingType { // uint16_t
     DefaultMask = 0x100,
 }
 
-export enum WsskDataType { // uint8_t
+export enum WsskDataType {
+    // uint8_t
     Binary = 0x1,
     JSON = 0x2,
 }

@@ -1,0 +1,22 @@
+{
+  "id": "elecfreaks-jacdacmagnetsensorv10",
+  "name": "Jacdac Magnet Sensor",
+  "company": "ELECFREAKS",
+  "description": "A Jacdac Magnet Sensor.",
+  "storeLink": [
+    "https://shop.elecfreaks.com/products/elecfreaks-jacdac-magnet-sensor"
+  ],
+  "services": [
+    318642191
+  ],
+  "productIdentifiers": [
+    809663828
+  ],
+  "tags": [
+    "module",
+    "sensor"
+  ],
+  "version": "1.0",
+  "status": "stable",
+  "shape": "ec30_3x2_lr"
+}

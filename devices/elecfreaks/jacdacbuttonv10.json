@@ -1,0 +1,22 @@
+{
+  "id": "elecfreaks-jacdacbuttonv10",
+  "name": "Jacdac Button",
+  "company": "ELECFREAKS",
+  "description": "A Jacdac Button.",
+  "storeLink": [
+    "https://shop.elecfreaks.com/products/jacdac-button-sensor"
+  ],
+  "services": [
+    343122531
+  ],
+  "productIdentifiers": [
+    968336045
+  ],
+  "tags": [
+    "module",
+    "user input"
+  ],
+  "version": "1.0",
+  "status": "stable",
+  "shape": "ec30_3x2_lr"
+}

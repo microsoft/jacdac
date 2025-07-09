@@ -1,0 +1,23 @@
+{
+  "id": "elecfreaks-jacdacpowerv10",
+  "name": "Jacdac Power",
+  "company": "ELECFREAKS",
+  "description": "The power module supplies high-current JACDAC devices like servos, powers the entire system, has overcurrent protection, and offers up to 1A output.",
+  "connector": "edgeHighCurrentProvider",
+  "storeLink": [
+    "https://shop.elecfreaks.com/products/elecfreaks-jacdac-power"
+  ],
+  "services": [
+    530893146
+  ],
+  "productIdentifiers": [
+    517173569
+  ],
+  "tags": [
+    "module",
+    "power"
+  ],
+  "version": "1.0",
+  "status": "stable",
+  "shape": "ec30_2x4_l2"
+}

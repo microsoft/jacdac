@@ -1,3 +1,6 @@
+> [!IMPORTANT]
+> This repository has moved to https://github.com/jacdac/jacdac 
+
 # Jacdac Specification, Device and Service Catalogs
 
 **Jacdac** is a bus-based plug-and-play hardware/software stack 
